@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+    <xs:element name="baseball_card">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="card_id" type="xs:integer">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="card_brand" type="xs:string">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:whiteSpace value="collapse"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="card_year" type="xs:integer">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="1800"/>
+                            <xs:maxInclusive value="9999"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="card_number" type="xs:integer">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minExclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="card_value" type="xs:double">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:double">
+                            <xs:fractionDigits value="2"/>
+                            <xs:minExclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="card_count" type="xs:integer">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minExclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="player_name" type="xs:string">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:whiteSpace value="collapse"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="player_position" type="xs:string">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:whiteSpace value="collapse"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
