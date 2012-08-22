@@ -1,7 +1,5 @@
-package baseball.data;
+package bbct.data;
 
-import bbct.data.BaseballCard;
-import bbct.data.BaseballCardJDBCIO;
 import bbct.exceptions.IOException;
 import java.sql.*;
 import java.util.List;
@@ -19,17 +17,33 @@ public class BaseballCardJDBCIONominalTest {
     private Connection conn = null;
     private Statement stmt = null;
 
+    /**
+     * 
+     */
     public BaseballCardJDBCIONominalTest() {
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
 
+    /**
+     * 
+     * @throws IOException
+     * @throws SQLException
+     */
     @Before
     public void setUp() throws IOException, SQLException {
         try {
@@ -44,6 +58,11 @@ public class BaseballCardJDBCIONominalTest {
         }
     }
 
+    /**
+     * 
+     * @throws IOException
+     * @throws SQLException
+     */
     @After
     public void tearDown() throws IOException, SQLException {
         // Drop the table. The tests in this class are for a single insert only.
@@ -55,6 +74,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      * Test for {@link baseball.data.BaseballCardJDBCIO#BaseballCardJDBCIO}.
+     * @throws Exception 
      */
     @Test
     public void testConstructor() throws Exception {
@@ -73,6 +93,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      * Test for {@link baseball.data.BaseballCardJDBCIO#close()}.
+     * @throws Exception 
      */
     @Test
     public void testClose() throws Exception {
@@ -81,6 +102,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      * Test for {@link baseball.data.BaseballCardJDBCIO#insertBaseballCard(baseball.data.BaseballCard)}.
+     * @throws Exception 
      */
     @Test
     public void testInsertBaseballCard() throws Exception {
@@ -102,41 +124,45 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardByYear(int)}.
+     * @throws Exception 
      */
     @Test
     public void testGetBaseballCardByYear() throws Exception {
         BaseballCard card = this.insertCard();
-        List result = this.instance.getBaseballCardByYear(card.getYear());
+        List result = this.instance.getBaseballCardsByYear(card.getYear());
         Assert.assertEquals(card, result.get(0));
     }
 
     /**
      * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardByNumber(int)}.
+     * @throws Exception 
      */
     @Test
     public void testGetBaseballCardByNumber() throws Exception {
         BaseballCard card = this.insertCard();
-        List result = this.instance.getBaseballCardByNumber(card.getNumber());
+        List result = this.instance.getBaseballCardsByNumber(card.getNumber());
         Assert.assertEquals(card, result.get(0));
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardByYearAndNumber(int, int)}.
+     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
+     * @throws Exception 
      */
     @Test
     public void testGetBaseballCardByYearAndNumber() throws Exception {
         BaseballCard card = this.insertCard();
-        List result = this.instance.getBaseballCardByYearAndNumber(card.getYear(), card.getNumber());
+        List result = this.instance.getBaseballCardsByYearAndNumber(card.getYear(), card.getNumber());
         Assert.assertEquals(card, result.get(0));
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardByPlayerName(String)}.
+     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByPlayerName(String)}.
+     * @throws Exception 
      */
     @Test
     public void testGetBaseballCardByPlayerName() throws Exception {
         BaseballCard card = this.insertCard();
-        List result = this.instance.getBaseballCardByPlayerName(card.getPlayerName());
+        List result = this.instance.getBaseballCardsByPlayerName(card.getPlayerName());
         Assert.assertEquals(card, result.get(0));
     }
 

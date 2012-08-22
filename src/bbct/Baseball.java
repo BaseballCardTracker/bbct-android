@@ -8,6 +8,8 @@ import bbct.gui.GUIResources;
 import javax.swing.JOptionPane;
 
 /**
+ * TODO: Licensing info in every file
+ * 
  * This is the driver class for the Baseball Card Tracker program.
  *
  * @author codeguru <codeguru@users.sourceforge.net>

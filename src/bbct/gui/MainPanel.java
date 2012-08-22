@@ -1,6 +1,7 @@
 package bbct.gui;
 
 import bbct.data.BaseballCardIO;
+import java.awt.Container;
 
 /**
  *
@@ -11,10 +12,36 @@ import bbct.data.BaseballCardIO;
 public class MainPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form MainPanel
+     * Creates {@link MainPanel}.
      */
     public MainPanel() {
         initComponents();
+    }
+    
+    /**
+     * Creates {@link MainPanel}.
+     * @param bcio 
+     */
+    public MainPanel(BaseballCardIO bcio) {
+        this.bcio = bcio;
+        
+        initComponents();
+        
+        FindCardsByPanel yearInputPanel = new FindCardsByYearPanel(this.bcio);
+        FindCardsPanel findCardsByYearPanel = new FindCardsPanel(bcio, yearInputPanel);
+        this.add(findCardsByYearPanel, BBCTFrame.FIND_CARDS_BY_YEAR_CARD_NAME);
+
+        FindCardsByPanel numberInputPanel = new FindCardsByNumberPanel(this.bcio);
+        FindCardsPanel findCardsByNumberPanel = new FindCardsPanel(bcio, numberInputPanel);
+        this.add(findCardsByNumberPanel, BBCTFrame.FIND_CARDS_BY_NUMBER_CARD_NAME);
+
+        FindCardsByPanel yearAndNumberInputPanel = new FindCardsByYearAndNumberPanel(this.bcio);
+        FindCardsPanel findCardsByYearAndNumberPanel = new FindCardsPanel(bcio, yearAndNumberInputPanel);
+        this.add(findCardsByYearAndNumberPanel, BBCTFrame.FIND_CARDS_BY_YEAR_AND_NUMBER_CARD_NAME);
+
+        FindCardsByPanel playerNameInputPanel = new FindCardsByPlayerNamePanel(this.bcio);
+        FindCardsPanel findCardsByPlayerNamePanel = new FindCardsPanel(bcio, playerNameInputPanel);
+        this.add(findCardsByPlayerNamePanel, BBCTFrame.FIND_CARDS_BY_PLAYER_NAME_CARD_NAME);
     }
     
     /**
@@ -28,22 +55,14 @@ public class MainPanel extends javax.swing.JPanel {
 
         bbct.gui.MenuPanel menuPanel = new bbct.gui.MenuPanel();
         bbct.gui.AddCardsPanel addCardsPanel = new AddCardsPanel(this.bcio);
-        bbct.gui.FindCardsPanel findCardsPanel = new FindCardsPanel();
-        bbct.gui.FindCardsByYearPanel findCardsByYearPanel = new FindCardsByYearPanel(this.bcio);
-        bbct.gui.FindCardsByNumberPanel findCardsByNumberPanel = new FindCardsByNumberPanel(this.bcio);
-        bbct.gui.FindCardsByYearAndNumberPanel findCardsByYearAndNumberPanel = new FindCardsByYearAndNumberPanel(this.bcio);
-        bbct.gui.FindCardsByPlayerNamePanel findCardsByPlayerNamePanel = new FindCardsByPlayerNamePanel(this.bcio);
+        bbct.gui.FindCardsMenuPanel findCardsMenuPanel = new FindCardsMenuPanel(this.bcio);
         bbct.gui.AboutPanel aboutPanel = new bbct.gui.AboutPanel();
 
         setLayout(new java.awt.CardLayout());
-        add(menuPanel, "menuPanel");
-        add(addCardsPanel, "addCardsPanel");
-        add(findCardsPanel, "findCardsPanel");
-        add(findCardsByYearPanel, "findCardsByYear");
-        add(findCardsByNumberPanel, "findCardsByNumber");
-        add(findCardsByYearAndNumberPanel, "findCardsByYearAndNumber");
-        add(findCardsByPlayerNamePanel, "findCardsByPlayerName");
-        add(aboutPanel, "aboutPanel");
+        add(menuPanel, "menu");
+        add(addCardsPanel, "addCards");
+        add(findCardsMenuPanel, "findCardsMenu");
+        add(aboutPanel, "about");
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

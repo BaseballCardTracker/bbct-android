@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package bbct.gui;
 
 /**
@@ -19,6 +15,10 @@ public class InstructionPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    /**
+     * 
+     * @param instructions
+     */
     public void setInstructions(String instructions) {
         this.instructionLabel.setText(instructions);
     }

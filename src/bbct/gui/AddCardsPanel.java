@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  * TODO: When error occurs, request focus on appropriate text field
  * 
  * TODO: Update instructions as user interacts with interface
- *
+ * 
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class AddCardsPanel extends javax.swing.JPanel {
@@ -35,6 +35,7 @@ public class AddCardsPanel extends javax.swing.JPanel {
 
     /**
      * Creates a new AddCardsPanel.
+     * @param bcio 
      */
     public AddCardsPanel(BaseballCardIO bcio) {
         this.bcio = bcio;

@@ -1,7 +1,14 @@
 package bbct.gui;
 
+import bbct.data.BaseballCard;
+import bbct.data.BaseballCardIO;
+import bbct.exceptions.IOException;
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  * TODO: JavaDoc
@@ -11,10 +18,25 @@ import java.awt.Container;
 public class FindCardsPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form FindCardsPanel
+     * Creates new {@link FindCardsPanel}.
      */
     public FindCardsPanel() {
         initComponents();
+    }
+
+    /**
+     * Creates new {@link FindCardsPanel}.
+     *
+     * @param bcio
+     * @param inputPanel  
+     */
+    public FindCardsPanel(BaseballCardIO bcio, FindCardsByPanel inputPanel) {
+        this.bcio = bcio;
+        this.inputPanel = inputPanel;
+
+        initComponents();
+        
+        this.add(this.inputPanel, BorderLayout.CENTER);
     }
 
     /**
@@ -26,57 +48,20 @@ public class FindCardsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        findCardsByYearButton = new javax.swing.JButton();
-        findCardsByNumberButton = new javax.swing.JButton();
-        findCardsByYearAndNumberButton = new javax.swing.JButton();
-        findCardsByPlayerNameButton = new javax.swing.JButton();
+        buttonsPanel = new javax.swing.JPanel();
+        findButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
 
-        setBorder(javax.swing.BorderFactory.createEmptyBorder(40, 70, 40, 70));
-        setMinimumSize(new java.awt.Dimension(370, 360));
-        setPreferredSize(new java.awt.Dimension(370, 360));
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
-            }
-        });
-        setLayout(new java.awt.GridLayout(5, 1, 0, 30));
+        setLayout(new java.awt.BorderLayout());
 
-        findCardsByYearButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        findCardsByYearButton.setText("Find Cards By Year");
-        findCardsByYearButton.addActionListener(new java.awt.event.ActionListener() {
+        findButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        findButton.setText("Find");
+        findButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                findCardsByYearButtonActionPerformed(evt);
+                findButtonActionPerformed(evt);
             }
         });
-        add(findCardsByYearButton);
-
-        findCardsByNumberButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        findCardsByNumberButton.setText("Find Cards By Number");
-        findCardsByNumberButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                findCardsByNumberButtonActionPerformed(evt);
-            }
-        });
-        add(findCardsByNumberButton);
-
-        findCardsByYearAndNumberButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        findCardsByYearAndNumberButton.setText("Find Cards By Year and Number");
-        findCardsByYearAndNumberButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                findCardsByYearAndNumberButtonActionPerformed(evt);
-            }
-        });
-        add(findCardsByYearAndNumberButton);
-
-        findCardsByPlayerNameButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        findCardsByPlayerNameButton.setText("Find Cards By Player Name");
-        findCardsByPlayerNameButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                findCardsByPlayerNameButtonActionPerformed(evt);
-            }
-        });
-        add(findCardsByPlayerNameButton);
+        buttonsPanel.add(findButton);
 
         backButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         backButton.setText("Back");
@@ -85,55 +70,38 @@ public class FindCardsPanel extends javax.swing.JPanel {
                 backButtonActionPerformed(evt);
             }
         });
-        add(backButton);
-    }// </editor-fold>//GEN-END:initComponents
+        buttonsPanel.add(backButton);
 
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        BBCTFrame frame = (BBCTFrame)this.getTopLevelAncestor();
-        
-        frame.setTitle(GUIResources.MAIN_PANEL_TITLE);
-        frame.setInstructions("Chose an option:");
-    }//GEN-LAST:event_formComponentShown
+        add(buttonsPanel, java.awt.BorderLayout.SOUTH);
+    }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         Container parent = this.getParent();
         CardLayout cl = (CardLayout) parent.getLayout();
 
-        cl.show(parent, BBCTFrame.MENU_CARD_NAME);
+        cl.show(parent, BBCTFrame.FIND_CARDS_MENU_CARD_NAME);
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void findCardsByYearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findCardsByYearButtonActionPerformed
-        Container parent = this.getParent();
-        CardLayout cl = (CardLayout) parent.getLayout();
+    private void findButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findButtonActionPerformed
+        try {
+            List<BaseballCard> cards = this.inputPanel.getBaseballCards();
+            JPanel editCardsPanel = new EditCardsPanel(cards, this.bcio);
 
-        cl.show(parent, BBCTFrame.FIND_CARDS_BY_YEAR_CARD_NAME);
-    }//GEN-LAST:event_findCardsByYearButtonActionPerformed
+            // TODO: Fix this...
+            Container parent = this.getParent();
+            CardLayout cl = (CardLayout) parent.getLayout();
 
-    private void findCardsByNumberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findCardsByNumberButtonActionPerformed
-        Container parent = this.getParent();
-        CardLayout cl = (CardLayout) parent.getLayout();
-
-        cl.show(parent, BBCTFrame.FIND_CARDS_BY_NUMBER_CARD_NAME);
-    }//GEN-LAST:event_findCardsByNumberButtonActionPerformed
-
-    private void findCardsByYearAndNumberButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findCardsByYearAndNumberButtonActionPerformed
-        Container parent = this.getParent();
-        CardLayout cl = (CardLayout) parent.getLayout();
-
-        cl.show(parent, BBCTFrame.FIND_CARDS_BY_YEAR_AND_NUMBER_CARD_NAME);
-    }//GEN-LAST:event_findCardsByYearAndNumberButtonActionPerformed
-
-    private void findCardsByPlayerNameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findCardsByPlayerNameButtonActionPerformed
-        Container parent = this.getParent();
-        CardLayout cl = (CardLayout) parent.getLayout();
-
-        cl.show(parent, BBCTFrame.FIND_CARDS_BY_PLAYER_NAME_CARD_NAME);
-    }//GEN-LAST:event_findCardsByPlayerNameButtonActionPerformed
+            parent.add(editCardsPanel, BBCTFrame.EDIT_CARDS_PANEL_NAME);
+            cl.show(parent, BBCTFrame.EDIT_CARDS_PANEL_NAME);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_findButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
-    private javax.swing.JButton findCardsByNumberButton;
-    private javax.swing.JButton findCardsByPlayerNameButton;
-    private javax.swing.JButton findCardsByYearAndNumberButton;
-    private javax.swing.JButton findCardsByYearButton;
+    private javax.swing.JPanel buttonsPanel;
+    private javax.swing.JButton findButton;
     // End of variables declaration//GEN-END:variables
+    private BaseballCardIO bcio = null;
+    private FindCardsByPanel inputPanel = null;
 }

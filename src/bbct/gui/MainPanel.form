@@ -23,7 +23,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="menuPanel"/>
+          <CardConstraints cardName="menu"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -35,67 +35,19 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="addCardsPanel"/>
+          <CardConstraints cardName="addCards"/>
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="bbct.gui.FindCardsPanel" name="findCardsPanel">
+    <Component class="bbct.gui.FindCardsMenuPanel" name="findCardsMenuPanel">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new FindCardsPanel()"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new FindCardsMenuPanel(this.bcio)"/>
         <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="findCardsPanel"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="bbct.gui.FindCardsByYearPanel" name="findCardsByYearPanel">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new FindCardsByYearPanel(this.bcio)"/>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="findCardsByYear"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="bbct.gui.FindCardsByNumberPanel" name="findCardsByNumberPanel">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new FindCardsByNumberPanel(this.bcio)"/>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="findCardsByNumber"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="bbct.gui.FindCardsByYearAndNumberPanel" name="findCardsByYearAndNumberPanel">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new FindCardsByYearAndNumberPanel(this.bcio)"/>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="findCardsByYearAndNumber"/>
-        </Constraint>
-      </Constraints>
-    </Component>
-    <Component class="bbct.gui.FindCardsByPlayerNamePanel" name="findCardsByPlayerNamePanel">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new FindCardsByPlayerNamePanel(this.bcio)"/>
-        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
-        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
-      </AuxValues>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="findCardsByPlayerName"/>
+          <CardConstraints cardName="findCardsMenu"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -106,7 +58,7 @@
       </AuxValues>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-          <CardConstraints cardName="aboutPanel"/>
+          <CardConstraints cardName="about"/>
         </Constraint>
       </Constraints>
     </Component>

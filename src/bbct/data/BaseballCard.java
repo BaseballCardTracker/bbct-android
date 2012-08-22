@@ -62,25 +62,42 @@ public class BaseballCard {
     /**
      * Get the monetary value of this {@link BaseballCard}.
      *
-     * @return the value of value
+     * @return The monetary value of this {@link BaseballCard}.
      */
     public int getValue() {
         return value;
     }
+    
+    /**
+     * Set the monetary value of this {@link BaseballCard}.
+     *
+     * @param value The monetary value of this {@link BaseballCard}
+     */
+    public void setValue(int value) {
+        this.value = value;
+    }
 
     /**
-     * Get the count of copies of this {@link BaseballCard}s owned
+     * Get the count of copies of this {@link BaseballCard}s owned.
      *
-     * @return the value of count
+     * @return The count of copies of this {@link BaseballCard}s owned.
      */
     public int getCount() {
         return count;
     }
 
     /**
+     * Set the count of copies of this {@link BaseballCard}s owned.
+     * @param count The count of copies of this {@link BaseballCard}s owned.
+     */
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    /**
      * Get the name of the player on this {@link BaseballCard}.
      *
-     * @return the value of playerName
+     * @return The name of the player on this {@link BaseballCard}.
      */
     public String getPlayerName() {
         return playerName;
@@ -89,7 +106,7 @@ public class BaseballCard {
     /**
      * Get the position played by the player on this {@link BaseballCard}.
      *
-     * @return the value of playerPosition
+     * @return The position played by the player on this {@link BaseballCard}.
      */
     public String getPlayerPosition() {
         return playerPosition;
@@ -145,7 +162,10 @@ public class BaseballCard {
      */
     @Override
     public String toString() {
-        return "BaseballCard{" + "cardBrand=" + brand + ", cardYear=" + year + ", cardNumber=" + number + ", cardValue=" + value + ", cardCount=" + count + ", playerName=" + playerName + ", playerPosition=" + playerPosition + '}';
+        return "BaseballCard{" + "cardBrand=" + brand + ", cardYear=" + year
+                + ", cardNumber=" + number + ", cardValue=" + value
+                + ", cardCount=" + count + ", playerName=" + playerName
+                + ", playerPosition=" + playerPosition + '}';
     }
     private String brand = "";
     private int year = 0;

@@ -23,12 +23,42 @@ public class CardDetailsPanel extends javax.swing.JPanel {
 
     /**
      * Creates new {@link CardDetailsPanel}.
+     *
+     * @param allEditable
      */
     public CardDetailsPanel(boolean allEditable) {
         this.allEditable = allEditable;
         initComponents();
     }
-    
+
+    /**
+     * Creates new {@link CardDetailsPanel}.
+     *
+     * @param card
+     * @param allEditable
+     */
+    public CardDetailsPanel(BaseballCard card, boolean allEditable) {
+        this.card = card;
+        this.allEditable = allEditable;
+
+        initComponents();
+
+        this.cardBrandTextField.setText(this.card.getBrand());
+        this.cardYearTextField.setText(Integer.toString(this.card.getYear()));
+        this.cardNumberTextField.setText(Integer.toString(this.card.getNumber()));
+
+        // TODO: Fix formatting
+        this.cardValueTextField.setText(Integer.toString(this.card.getValue()));
+        this.cardCountTextField.setText(Integer.toString(this.card.getCount()));
+        this.playerNameTextField.setText(this.card.getPlayerName());
+        this.playerPositionTextField.setText(this.card.getPlayerPosition());
+    }
+
+    /**
+     *
+     * @return @throws InputException 
+     * @throws InputException
+     */
     public BaseballCard getBaseballCard() throws InputException {
         if (this.cardBrandTextField.getText().equals("")) {
             throw new InputException("Please enter a card brand.");
@@ -68,6 +98,9 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         return new BaseballCard(cardBrand, cardYear, cardNumber, cardValue, cardCount, playerName, playerPosition);
     }
 
+    /**
+     * Reset all text fields to blank strings and set focus to {@link cardBrandTextField}.
+     */
     public void reset() {
         this.cardBrandTextField.setText("");
         this.cardCountTextField.setText("");
@@ -266,10 +299,9 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cardBrandTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cardBrandTextFieldFocusGained
-        BBCTFrame frame = (BBCTFrame)this.getTopLevelAncestor();
+        BBCTFrame frame = (BBCTFrame) this.getTopLevelAncestor();
         frame.setInstructions("Enter card brand name.");
     }//GEN-LAST:event_cardBrandTextFieldFocusGained
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cardBrandTextField;
     private javax.swing.JFormattedTextField cardCountTextField;
@@ -280,4 +312,5 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField playerPositionTextField;
     // End of variables declaration//GEN-END:variables
     private boolean allEditable = true;
+    private BaseballCard card = null;
 }

@@ -2,6 +2,7 @@ package bbct.gui;
 
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.IOException;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
@@ -16,27 +17,39 @@ public class BBCTFrame extends javax.swing.JFrame {
     /**
      * Name used for card with {@link MainPanel}.
      */
-    public static final String MENU_CARD_NAME = "menuPanel";
+    public static final String MENU_CARD_NAME = "menu";
     /**
      * Name used for card with {@link AddCardsPanel}.
      */
-    public static final String ADD_CARDS_CARD_NAME = "addCardsPanel";
+    public static final String ADD_CARDS_CARD_NAME = "addCards";
     /**
-     * Name used for card with {@link FindCardsPanel}.
+     * Name used for card with {@link FindCardsMenuPanel}.
      */
-    public static final String FIND_CARDS_CARD_NAME = "findCardsPanel";
+    public static final String FIND_CARDS_MENU_CARD_NAME = "findCardsMenu";
     /**
      * Name used for card with {@link EditCardPanel}.
      */
-    public static final String EDIT_CARD_PANEL_NAME = "editCardPanel";
+    public static final String EDIT_CARDS_PANEL_NAME = "editCards";
+    /**
+     * 
+     */
+    public static final String FIND_CARDS_BY_YEAR_CARD_NAME = "findCardsByYear";
+    /**
+     * 
+     */
+    public static final String FIND_CARDS_BY_NUMBER_CARD_NAME = "findCardsByNumber";
+    /**
+     * 
+     */
+    public static final String FIND_CARDS_BY_YEAR_AND_NUMBER_CARD_NAME = "findCardsByYearAndNumber";
+    /**
+     * 
+     */
+    public static final String FIND_CARDS_BY_PLAYER_NAME_CARD_NAME = "findCardsByPlayerName";
     /**
      * Name used for card with {@link AboutPanel}.
      */
     public static final String ABOUT_CARD_NAME = "aboutPanel";
-    public static final String FIND_CARDS_BY_YEAR_CARD_NAME = "findCardsByYear";
-    public static final String FIND_CARDS_BY_NUMBER_CARD_NAME = "findCardsByNumber";
-    public static final String FIND_CARDS_BY_YEAR_AND_NUMBER_CARD_NAME = "findCardsByYearAndNumber";
-    public static final String FIND_CARDS_BY_PLAYER_NAME_CARD_NAME = "findCardsByPlayerName";
 
     /**
      * Creates new form BBCTFrame
@@ -48,6 +61,8 @@ public class BBCTFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form BBCTFrame
+     *
+     * @param bcio
      */
     public BBCTFrame(BaseballCardIO bcio) {
         this.bcio = bcio;
@@ -55,8 +70,21 @@ public class BBCTFrame extends javax.swing.JFrame {
         this.centerFrame();
     }
 
+    /**
+     *
+     * @param instructions
+     */
     public void setInstructions(String instructions) {
         this.instructionPanel.setInstructions(instructions);
+    }
+
+    /**
+     * 
+     * @param cmpnt
+     * @param cardName
+     */
+    public void addToMainPanel(Component cmpnt, String cardName) {
+        this.mainPanel.add(cmpnt, cardName);
     }
 
     private void centerFrame() {
@@ -76,7 +104,7 @@ public class BBCTFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        mainPanel = new bbct.gui.MainPanel();
+        mainPanel = new MainPanel(this.bcio);
         instructionPanel = new bbct.gui.InstructionPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);

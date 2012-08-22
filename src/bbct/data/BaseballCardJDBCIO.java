@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package bbct.data;
 
 import bbct.exceptions.IOException;
@@ -16,15 +12,44 @@ import java.util.List;
  */
 public class BaseballCardJDBCIO implements BaseballCardIO {
     
+    /**
+     * 
+     */
     public static final String TABLE_NAME = "baseball_cards";
+    /**
+     * 
+     */
     public static final String BRAND_COL_NAME = "brand";
+    /**
+     * 
+     */
     public static final String YEAR_COL_NAME = "year";
+    /**
+     * 
+     */
     public static final String NUMBER_COL_NAME = "number";
+    /**
+     * 
+     */
     public static final String VALUE_COL_NAME = "value";
+    /**
+     * 
+     */
     public static final String COUNT_COL_NAME = "card_count";
+    /**
+     * 
+     */
     public static final String NAME_COL_NAME = "player_name";
+    /**
+     * 
+     */
     public static final String POSITION_COL_NAME = "player_position";
     
+    /**
+     * 
+     * @param url
+     * @throws IOException
+     */
     public BaseballCardJDBCIO(String url) throws IOException {
         try {
             this.conn = DriverManager.getConnection(url);
@@ -37,6 +62,10 @@ public class BaseballCardJDBCIO implements BaseballCardIO {
         }
     }
     
+    /**
+     * 
+     * @throws IOException
+     */
     @Override
     public void close() throws IOException {
         try {
@@ -46,6 +75,11 @@ public class BaseballCardJDBCIO implements BaseballCardIO {
         }
     }
     
+    /**
+     * 
+     * @param card
+     * @throws IOException
+     */
     @Override
     public void insertBaseballCard(BaseballCard card) throws IOException {
         String sqlInsert = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -64,8 +98,14 @@ public class BaseballCardJDBCIO implements BaseballCardIO {
         }
     }
     
+    /**
+     * 
+     * @param year
+     * @return
+     * @throws IOException
+     */
     @Override
-    public List<BaseballCard> getBaseballCardByYear(int year) throws IOException {
+    public List<BaseballCard> getBaseballCardsByYear(int year) throws IOException {
         try {
             String sqlQuery = "SELECT * " +
                               "  FROM " + TABLE_NAME +
@@ -81,8 +121,14 @@ public class BaseballCardJDBCIO implements BaseballCardIO {
         }
     }
 
+    /**
+     * 
+     * @param number
+     * @return
+     * @throws IOException
+     */
     @Override
-    public List<BaseballCard> getBaseballCardByNumber(int number) throws IOException {
+    public List<BaseballCard> getBaseballCardsByNumber(int number) throws IOException {
         try {
             String sqlQuery = "SELECT * " +
                               "  FROM " + TABLE_NAME +
@@ -97,8 +143,15 @@ public class BaseballCardJDBCIO implements BaseballCardIO {
         }
     }
 
+    /**
+     * 
+     * @param year
+     * @param number
+     * @return
+     * @throws IOException
+     */
     @Override
-    public List<BaseballCard> getBaseballCardByYearAndNumber(int year, int number) throws IOException {
+    public List<BaseballCard> getBaseballCardsByYearAndNumber(int year, int number) throws IOException {
         try {
             String sqlQuery = "SELECT * " +
                               "  FROM " + TABLE_NAME +
@@ -115,8 +168,14 @@ public class BaseballCardJDBCIO implements BaseballCardIO {
         }
     }
 
+    /**
+     * 
+     * @param playerName
+     * @return
+     * @throws IOException
+     */
     @Override
-    public List<BaseballCard> getBaseballCardByPlayerName(String playerName) throws IOException {
+    public List<BaseballCard> getBaseballCardsByPlayerName(String playerName) throws IOException {
         try {
             String sqlQuery = "SELECT * " +
                               "  FROM " + TABLE_NAME +

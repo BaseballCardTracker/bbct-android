@@ -7,6 +7,10 @@ package bbct.exceptions;
  */
 public class IOException extends Exception {
     
+    /**
+     * 
+     * @param source
+     */
     public IOException(Exception source) {
         super(source);
     }

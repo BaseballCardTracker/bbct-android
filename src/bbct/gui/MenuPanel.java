@@ -90,7 +90,7 @@ public class MenuPanel extends javax.swing.JPanel {
         Container parent = this.getParent();
         CardLayout cl = (CardLayout) parent.getLayout();
 
-        cl.show(parent, BBCTFrame.FIND_CARDS_CARD_NAME);
+        cl.show(parent, BBCTFrame.FIND_CARDS_MENU_CARD_NAME);
     }//GEN-LAST:event_findCardsButtonActionPerformed
 
     private void aboutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutButtonActionPerformed
