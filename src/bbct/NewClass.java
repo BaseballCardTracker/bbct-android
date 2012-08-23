@@ -16,21 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.exceptions;
+package bbct;
 
 /**
- * TODO: JavaDoc
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class IOException extends Exception {
-    
-    /**
-     * 
-     * @param source
-     */
-    public IOException(Exception source) {
-        super(source);
-    }
+public class NewClass {
     
 }
