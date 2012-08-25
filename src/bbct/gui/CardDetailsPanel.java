@@ -20,13 +20,15 @@ package bbct.gui;
 
 import bbct.data.BaseballCard;
 import bbct.exceptions.InputException;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
 
 /**
  * TODO: cardValueTextField needs to be formatted as currency
  *
- * TODO: Figure out when to call this.cardBrandTextField.requestFocusInWindow();
- *
  * TODO: JavaDoc
+ *
+ * TODO: Instructions should change depending on value of allEditable field.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -74,7 +76,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
 
     /**
      *
-     * @return @throws InputException 
+     * @return @throws InputException
      * @throws InputException
      */
     public BaseballCard getBaseballCard() throws InputException {
@@ -158,6 +160,15 @@ public class CardDetailsPanel extends javax.swing.JPanel {
 
         setMinimumSize(new java.awt.Dimension(375, 350));
         setPreferredSize(new java.awt.Dimension(375, 350));
+        addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                formAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         cardDetailsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Card Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
         // card postinit
@@ -192,6 +203,11 @@ public class CardDetailsPanel extends javax.swing.JPanel {
 
         cardYearTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         cardYearTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        cardYearTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                formattedTextFieldFocustLost(evt);
+            }
+        });
 
         cardValueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         cardValueTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -320,6 +336,24 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         BBCTFrame frame = (BBCTFrame) this.getTopLevelAncestor();
         frame.setInstructions("Enter card brand name.");
     }//GEN-LAST:event_cardBrandTextFieldFocusGained
+
+    private void formattedTextFieldFocustLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formattedTextFieldFocustLost
+        JFormattedTextField source = (JFormattedTextField) evt.getComponent();
+
+        if (!source.isEditValid()) {
+            // TODO: Need a better error message.
+            JOptionPane.showMessageDialog(this, "Invalid input.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            source.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_formattedTextFieldFocustLost
+
+    private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
+        if (this.allEditable) {
+            this.cardBrandTextField.requestFocusInWindow();
+        } else {
+            this.cardValueTextField.requestFocusInWindow();
+        }
+    }//GEN-LAST:event_formAncestorAdded
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cardBrandTextField;
     private javax.swing.JFormattedTextField cardCountTextField;

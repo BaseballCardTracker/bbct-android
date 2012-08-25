@@ -21,7 +21,12 @@ package bbct.gui;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.IOException;
+import bbct.gui.event.UpdateInstructionsFocusListener;
+import bbct.gui.event.UpdateTitleAncestorListener;
+import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.JFormattedTextField;
@@ -36,8 +41,6 @@ import javax.swing.text.NumberFormatter;
  * TODO: JavaDoc
  *
  * TODO: Tweak component placement and size
- *
- * TODO: Update instructions as user interacts with interface
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -65,6 +68,13 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
         return this.bcio.getBaseballCardsByYear(year);
     }
 
+    @Override
+    protected void setFocus() {
+        // TODO: Is this the correct place to clear the text field?
+        this.yearTextField.setText("");
+        this.yearTextField.requestFocusInWindow();
+    }
+
     private void initComponents() {
         this.setLayout(new FlowLayout());
 
@@ -76,7 +86,10 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
         this.yearTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
         this.yearTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         this.yearTextField.setColumns(10);
+        this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card year."));
         this.add(this.yearTextField);
+
+        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_BY_YEAR_PANEL_TITLE));
     }
     
     private JFormattedTextField yearTextField;

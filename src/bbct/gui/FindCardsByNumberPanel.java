@@ -21,13 +21,19 @@ package bbct.gui;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.IOException;
+import bbct.gui.event.UpdateInstructionsFocusListener;
+import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
@@ -35,8 +41,6 @@ import javax.swing.text.NumberFormatter;
  * TODO: JavaDoc
  *
  * TODO: Tweak component placement and size
- *
- * TODO: Update instructions as user interacts with interface
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -64,6 +68,13 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
         return this.bcio.getBaseballCardsByNumber(number);
     }
 
+    @Override
+    protected void setFocus() {
+        // TODO: Is this the correct place to clear the text field?
+        this.numberTextField.setText("");
+        this.numberTextField.requestFocusInWindow();
+    }
+
     private void initComponents() {
         this.setLayout(new FlowLayout());
 
@@ -75,7 +86,10 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
         this.numberTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
         this.numberTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.numberTextField.setColumns(10);
+        this.numberTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card number."));
         this.add(this.numberTextField);
+        
+        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_BY_NUMBER_PANEL_TITLE));
     }
 
     private JFormattedTextField numberTextField;

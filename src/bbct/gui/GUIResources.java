@@ -19,58 +19,55 @@
 package bbct.gui;
 
 /**
- * TODO: JavaDoc
+ * TODO: Add titles for all panels
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class GUIResources {
 
     /**
-     * 
+     * URL for the database which stores baseball card data. This is used by JDBC to load the correct driver and open a
+     * connection to the database.
      */
     public static String DB_URL = "jdbc:hsqldb:file:db/baseball_cards.db";
     /**
-     * 
-     */
-    public static int DB_ERROR = 1;
-    /**
-     * 
+     * Base title shown in the BBCT window.
      */
     public static final String BASEBALL_FRAME_TITLE = "Baseball Card Tracker";
     /**
-     * 
+     * Title shown in the BBCT window when {@link MainPanel} is visible.
      */
     public static final String MAIN_PANEL_TITLE = BASEBALL_FRAME_TITLE;
     /**
-     * 
+     * Title shown in the BBCT window when {@link AddCardsPanel} is visible.
      */
     public static final String ADD_CARDS_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Add Cards";
     /**
-     * 
+     * Title shown in the BBCT window when {@link FindCardsMenuPanel} is visible.
      */
-    public static final String FIND_CARDS_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards";
+    public static final String FIND_CARDS_MENU_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards";
     /**
-     * 
+     * Title shown in the BBCT window when {@link FindCardsByYearPanel} is visible.
      */
     public static final String FIND_CARDS_BY_YEAR_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards by Year";
     /**
-     * 
+     * Title shown in the BBCT window when {@link FindCardsByNumberPanel} is visible.
      */
-    public static final String FIND_CARDS_PANEL_BY_NUMBER_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards by Number";
+    public static final String FIND_CARDS_BY_NUMBER_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards by Number";
     /**
-     * 
+     * Title shown in the BBCT window when {@link FindCardsByNumberPanel} is visible.
      */
     public static final String FIND_CARDS_BY_YEAR_AND_NUMBER_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards by Year and Number";
     /**
-     * 
+     * Title shown in the BBCT window when {@link FindCardsByPlayerNamePanel} is visible.
      */
     public static final String FIND_CARDS_BY_PLAYER_NAME_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards by Player Name";
     /**
-     * 
+     * Title shown in the BBCT window when {@link EditCardsPanel} is visible.
      */
     public static final String EDIT_CARD_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Edit Card";
     /**
-     * 
+     * Title shown in the BBCT window when {@link AboutPanel} is visible.
      */
     public static final String ABOUT_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - About";
 

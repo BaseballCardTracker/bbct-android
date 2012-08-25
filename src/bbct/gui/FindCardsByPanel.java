@@ -22,6 +22,8 @@ import bbct.data.BaseballCard;
 import bbct.exceptions.IOException;
 import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 /**
  * TODO: JavaDoc
@@ -29,6 +31,27 @@ import javax.swing.JPanel;
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public abstract class FindCardsByPanel extends JPanel {
+    
+    /**
+     * 
+     */
+    public FindCardsByPanel() {
+        this.addAncestorListener(new AncestorListener() {
+
+            @Override
+            public void ancestorAdded(AncestorEvent ae) {
+                FindCardsByPanel.this.setFocus();
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent ae) {
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent ae) {
+            }
+        });
+    }
 
     /**
      * 
@@ -36,4 +59,9 @@ public abstract class FindCardsByPanel extends JPanel {
      * @throws IOException
      */
     protected abstract List<BaseballCard> getBaseballCards() throws IOException;
+    
+    /**
+     * 
+     */
+    protected abstract void setFocus();
 }

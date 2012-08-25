@@ -37,23 +37,26 @@ import javax.swing.JOptionPane;
  * TODO: Integer input must be non-negative
  *
  * TODO: When error occurs, request focus on appropriate text field
- * 
+ *
  * TODO: Update instructions as user interacts with interface
- * 
+ *
+ * TODO: Set default button.
+ *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class AddCardsPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new AddCardsPanel
+     * Creates new {@link AddCardsPanel}.
      */
     public AddCardsPanel() {
         initComponents();
     }
 
     /**
-     * Creates a new AddCardsPanel.
-     * @param bcio 
+     * Creates a new {@link AddCardsPanel}.
+     *
+     * @param bcio
      */
     public AddCardsPanel(BaseballCardIO bcio) {
         this.bcio = bcio;
@@ -118,10 +121,9 @@ public class AddCardsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        BBCTFrame frame = (BBCTFrame)this.getTopLevelAncestor();
-        
+        BBCTFrame frame = (BBCTFrame) this.getTopLevelAncestor();
+
         frame.setTitle(GUIResources.ADD_CARDS_PANEL_TITLE);
-        frame.setInstructions("Enter data for a baseball card.");
     }//GEN-LAST:event_formComponentShown
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed

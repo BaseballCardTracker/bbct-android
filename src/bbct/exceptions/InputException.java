@@ -19,15 +19,17 @@
 package bbct.exceptions;
 
 /**
- * TODO: JavaDoc
+ * This exception signals an error during user input operations and is used by
+ * the BBCT GUI classes.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class InputException extends Exception {
 
     /**
+     * Creates a new {@link InputException} with the given error message.
      * 
-     * @param string
+     * @param string An error message explaining the reason for the exception.
      */
     public InputException(String string) {
         super(string);

@@ -31,6 +31,8 @@ import javax.swing.JPanel;
 /**
  * TODO: JavaDoc
  *
+ * TODO: Set default button.
+ *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FindCardsPanel extends javax.swing.JPanel {
@@ -104,8 +106,6 @@ public class FindCardsPanel extends javax.swing.JPanel {
         try {
             List<BaseballCard> cards = this.inputPanel.getBaseballCards();
             JPanel editCardsPanel = new EditCardsPanel(cards, this.bcio);
-
-            // TODO: Fix this...
             Container parent = this.getParent();
             CardLayout cl = (CardLayout) parent.getLayout();
 

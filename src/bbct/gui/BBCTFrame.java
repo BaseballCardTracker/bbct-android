@@ -27,50 +27,50 @@ import javax.swing.JOptionPane;
 
 /**
  * TODO: JavaDoc
- *
+ * 
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BBCTFrame extends javax.swing.JFrame {
 
     /**
-     * Name used for card with {@link MainPanel}.
+     * Name used for {@link MainPanel} card.
      */
     public static final String MENU_CARD_NAME = "menu";
     /**
-     * Name used for card with {@link AddCardsPanel}.
+     * Name used for {@link AddCardsPanel} card.
      */
     public static final String ADD_CARDS_CARD_NAME = "addCards";
     /**
-     * Name used for card with {@link FindCardsMenuPanel}.
+     * Name used for {@link FindCardsMenuPanel} card.
      */
     public static final String FIND_CARDS_MENU_CARD_NAME = "findCardsMenu";
     /**
-     * Name used for card with {@link EditCardPanel}.
+     * Name used for {@link EditCardPanel} card.
      */
     public static final String EDIT_CARDS_PANEL_NAME = "editCards";
     /**
-     * 
+     * Name used for {@link FindCardsByYearPanel} card.
      */
     public static final String FIND_CARDS_BY_YEAR_CARD_NAME = "findCardsByYear";
     /**
-     * 
+     * Name used for {@link FindCardsByNumberPanel} card.
      */
     public static final String FIND_CARDS_BY_NUMBER_CARD_NAME = "findCardsByNumber";
     /**
-     * 
+     * Name used for {@link FindCardsByYearAndNumberPanel} card.
      */
     public static final String FIND_CARDS_BY_YEAR_AND_NUMBER_CARD_NAME = "findCardsByYearAndNumber";
     /**
-     * 
+     * Name used for {@link FindCardsByPlayerNamePanel} card.
      */
     public static final String FIND_CARDS_BY_PLAYER_NAME_CARD_NAME = "findCardsByPlayerName";
     /**
-     * Name used for card with {@link AboutPanel}.
+     * Name used for {@link AboutPanel} card.
      */
-    public static final String ABOUT_CARD_NAME = "aboutPanel";
+    public static final String ABOUT_CARD_NAME = "about";
 
     /**
-     * Creates new form BBCTFrame
+     * Creates {@link BBCTFrame}.
      */
     public BBCTFrame() {
         this.initComponents();
@@ -78,7 +78,7 @@ public class BBCTFrame extends javax.swing.JFrame {
     }
 
     /**
-     * Creates new form BBCTFrame
+     * Creates {@link BBCTFrame}.
      *
      * @param bcio
      */
@@ -89,20 +89,12 @@ public class BBCTFrame extends javax.swing.JFrame {
     }
 
     /**
+     * Set instructions for the user shown at the top of the window.
      *
      * @param instructions
      */
     public void setInstructions(String instructions) {
-        this.instructionPanel.setInstructions(instructions);
-    }
-
-    /**
-     * 
-     * @param cmpnt
-     * @param cardName
-     */
-    public void addToMainPanel(Component cmpnt, String cardName) {
-        this.mainPanel.add(cmpnt, cardName);
+        this.instructionLabel.setText(instructions);
     }
 
     private void centerFrame() {
@@ -123,7 +115,8 @@ public class BBCTFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         mainPanel = new MainPanel(this.bcio);
-        instructionPanel = new bbct.gui.InstructionPanel();
+        javax.swing.JPanel instructionPanel = new javax.swing.JPanel();
+        instructionLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Baseball Card Tracker");
@@ -135,6 +128,11 @@ public class BBCTFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(mainPanel, java.awt.BorderLayout.CENTER);
+
+        instructionLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        instructionLabel.setText("Just Starting!");
+        instructionPanel.add(instructionLabel);
+
         getContentPane().add(instructionPanel, java.awt.BorderLayout.PAGE_START);
 
         pack();
@@ -148,7 +146,7 @@ public class BBCTFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private bbct.gui.InstructionPanel instructionPanel;
+    private javax.swing.JLabel instructionLabel;
     private bbct.gui.MainPanel mainPanel;
     // End of variables declaration//GEN-END:variables
     private BaseballCardIO bcio = null;

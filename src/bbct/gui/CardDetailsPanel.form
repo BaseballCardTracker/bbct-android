@@ -9,6 +9,9 @@
       <Dimension value="[375, 350]"/>
     </Property>
   </Properties>
+  <Events>
+    <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="formAncestorAdded"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -219,6 +222,9 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="formattedTextFieldFocustLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="cardValueTextField">
           <Properties>

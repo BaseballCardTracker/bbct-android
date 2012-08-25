@@ -21,8 +21,12 @@ package bbct.gui;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.IOException;
+import bbct.gui.event.UpdateInstructionsFocusListener;
+import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,15 +37,14 @@ import javax.swing.JTextField;
  *
  * TODO: Tweak component placement and size
  *
- * TODO: Update instructions as user interacts with interface
- *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
 
     /**
      * Creates new {@link FindCardsByPlayerNamePanel}.
-     * @param bcio 
+     *
+     * @param bcio
      */
     public FindCardsByPlayerNamePanel(BaseballCardIO bcio) {
         this.bcio = bcio;
@@ -51,28 +54,37 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
     @Override
     protected List<BaseballCard> getBaseballCards() throws IOException {
         String playerName = this.playerNameTextField.getText();
-        
+
         return this.bcio.getBaseballCardsByPlayerName(playerName);
     }
-    
+
+    @Override
+    protected void setFocus() {
+        // TODO: Is this the correct place to clear the text field?
+        this.playerNameTextField.setText("");
+        this.playerNameTextField.requestFocusInWindow();
+    }
+
     private void initComponents() {
         this.setLayout(new FlowLayout());
-        
+
         JLabel playerNameLabel = new JLabel("Player Name:");
         playerNameLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.add(playerNameLabel);
-        
+
         this.playerNameTextField = new JTextField();
         this.playerNameTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.playerNameTextField.setColumns(10);
+        this.playerNameTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player name."));
         this.add(this.playerNameTextField);
+
+        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_BY_PLAYER_NAME_PANEL_TITLE));
     }
-    
     private JTextField playerNameTextField;
     private BaseballCardIO bcio = null;
-    
+
     /**
-     * 
+     *
      * @param args
      */
     public static void main(String[] args) {

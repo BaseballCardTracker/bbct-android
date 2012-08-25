@@ -120,7 +120,7 @@ public class FindCardsMenuPanel extends javax.swing.JPanel {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         BBCTFrame frame = (BBCTFrame)this.getTopLevelAncestor();
         
-        frame.setTitle(GUIResources.MAIN_PANEL_TITLE);
+        frame.setTitle(GUIResources.FIND_CARDS_MENU_PANEL_TITLE);
         frame.setInstructions("Chose an option:");
     }//GEN-LAST:event_formComponentShown
 

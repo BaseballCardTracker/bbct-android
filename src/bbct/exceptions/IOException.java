@@ -19,15 +19,16 @@
 package bbct.exceptions;
 
 /**
- * TODO: JavaDoc
+ * This exception signals any I/O errors in {@link bbct.data.BaseballCardIO} implementations.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class IOException extends Exception {
     
     /**
+     * Creates a new {@link IOException} with the given source.
      * 
-     * @param source
+     * @param source The source of this {@link IOException}.
      */
     public IOException(Exception source) {
         super(source);
