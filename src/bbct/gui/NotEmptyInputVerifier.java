@@ -39,4 +39,16 @@ public class NotEmptyInputVerifier extends InputVerifier {
     public boolean verify(JComponent jc) {
         return !((JTextField) jc).getText().equals("");
     }
+
+    /**
+     * This InputVerifier always yields focus. Input verification should be done
+     * at a more convenient time as to minimally disrupt the user experience.
+     *
+     * @param The JComponent to verify
+     * @return true
+     */
+    @Override
+    public boolean shouldYieldFocus(JComponent jc) {
+        return true;
+    }
 }

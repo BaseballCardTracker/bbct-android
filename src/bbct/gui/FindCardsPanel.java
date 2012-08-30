@@ -31,8 +31,6 @@ import javax.swing.JPanel;
 /**
  * TODO: JavaDoc
  *
- * TODO: Set default button.
- *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FindCardsPanel extends javax.swing.JPanel {
@@ -48,14 +46,14 @@ public class FindCardsPanel extends javax.swing.JPanel {
      * Creates new {@link FindCardsPanel}.
      *
      * @param bcio
-     * @param inputPanel  
+     * @param inputPanel
      */
     public FindCardsPanel(BaseballCardIO bcio, FindCardsByPanel inputPanel) {
         this.bcio = bcio;
         this.inputPanel = inputPanel;
 
         initComponents();
-        
+
         this.add(this.inputPanel, BorderLayout.CENTER);
     }
 
@@ -68,10 +66,19 @@ public class FindCardsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonsPanel = new javax.swing.JPanel();
+        javax.swing.JPanel buttonsPanel = new javax.swing.JPanel();
         findButton = new javax.swing.JButton();
-        backButton = new javax.swing.JButton();
+        javax.swing.JButton backButton = new javax.swing.JButton();
 
+        addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                formAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         setLayout(new java.awt.BorderLayout());
 
         findButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -115,9 +122,16 @@ public class FindCardsPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_findButtonActionPerformed
+
+    private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
+        Container topLevelAncestor = this.getTopLevelAncestor();
+
+        if (topLevelAncestor instanceof BBCTFrame) {
+            BBCTFrame frame = (BBCTFrame) topLevelAncestor;
+            frame.setDefaultButton(this.findButton);
+        }
+    }//GEN-LAST:event_formAncestorAdded
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton backButton;
-    private javax.swing.JPanel buttonsPanel;
     private javax.swing.JButton findButton;
     // End of variables declaration//GEN-END:variables
     private BaseballCardIO bcio = null;

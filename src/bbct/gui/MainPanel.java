@@ -19,7 +19,6 @@
 package bbct.gui;
 
 import bbct.data.BaseballCardIO;
-import java.awt.Container;
 
 /**
  *

@@ -127,12 +127,15 @@ public class MenuPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
-        BBCTFrame frame = (BBCTFrame) this.getParent().getParent().getParent().getParent().getParent();
+        Container topLevelAncestor = this.getTopLevelAncestor();
 
-        frame.setTitle(GUIResources.MAIN_PANEL_TITLE);
-        frame.setInstructions("Chose an option:");
+        if (topLevelAncestor instanceof BBCTFrame) {
+            BBCTFrame frame = (BBCTFrame) topLevelAncestor;
+            frame.setTitle(GUIResources.MAIN_PANEL_TITLE);
+            frame.setInstructions("Chose an option:");
+            frame.setDefaultButton(null);
+        }
     }//GEN-LAST:event_formAncestorAdded
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

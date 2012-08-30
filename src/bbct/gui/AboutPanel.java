@@ -20,11 +20,10 @@ package bbct.gui;
 
 import java.awt.CardLayout;
 import java.awt.Container;
+import javax.swing.JRootPane;
 
 /**
  * A panel that displays the name of this application and copyright information.
- *
- * TODO: Set default button.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -47,7 +46,7 @@ public class AboutPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         javax.swing.JLabel TitleLabel = new javax.swing.JLabel();
-        javax.swing.JButton okButton = new javax.swing.JButton();
+        okButton = new javax.swing.JButton();
         javax.swing.JLabel copyrightLabel = new javax.swing.JLabel();
         javax.swing.JLabel versionLabel = new javax.swing.JLabel();
         javax.swing.JLabel websiteLabel = new javax.swing.JLabel();
@@ -136,12 +135,16 @@ public class AboutPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_okButtonActionPerformed
 
     private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
-        BBCTFrame frame = (BBCTFrame) this.getTopLevelAncestor();
+        Container topLevelAncestor = this.getTopLevelAncestor();
 
-        frame.setTitle(GUIResources.ABOUT_PANEL_TITLE);
-        frame.setInstructions("Click OK when ready.");
+        if (topLevelAncestor instanceof BBCTFrame) {
+            BBCTFrame frame = (BBCTFrame) topLevelAncestor;
+            frame.setTitle(GUIResources.ABOUT_PANEL_TITLE);
+            frame.setInstructions("Click OK when ready.");
+            frame.setDefaultButton(this.okButton);
+        }
     }//GEN-LAST:event_formAncestorAdded
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton okButton;
     // End of variables declaration//GEN-END:variables
 }

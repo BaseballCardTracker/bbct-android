@@ -42,6 +42,8 @@ import javax.swing.text.NumberFormatter;
  *
  * TODO: Tweak component placement and size
  *
+ * TODO: Error handling.
+ *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FindCardsByYearPanel extends FindCardsByPanel {

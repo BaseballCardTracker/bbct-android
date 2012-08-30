@@ -38,11 +38,12 @@ public class FindCardsMenuPanel extends javax.swing.JPanel {
 
     /**
      * Creates {@link FindCardsMenuPanel}.
-     * @param bcio 
+     *
+     * @param bcio
      */
     public FindCardsMenuPanel(BaseballCardIO bcio) {
         this.bcio = bcio;
-        
+
         initComponents();
     }
 
@@ -64,9 +65,13 @@ public class FindCardsMenuPanel extends javax.swing.JPanel {
         setBorder(javax.swing.BorderFactory.createEmptyBorder(40, 70, 40, 70));
         setMinimumSize(new java.awt.Dimension(370, 360));
         setPreferredSize(new java.awt.Dimension(370, 360));
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
+        addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                formAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         setLayout(new java.awt.GridLayout(5, 1, 0, 30));
@@ -117,13 +122,6 @@ public class FindCardsMenuPanel extends javax.swing.JPanel {
         add(backButton);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        BBCTFrame frame = (BBCTFrame)this.getTopLevelAncestor();
-        
-        frame.setTitle(GUIResources.FIND_CARDS_MENU_PANEL_TITLE);
-        frame.setInstructions("Chose an option:");
-    }//GEN-LAST:event_formComponentShown
-
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         Container parent = this.getParent();
         CardLayout cl = (CardLayout) parent.getLayout();
@@ -134,7 +132,7 @@ public class FindCardsMenuPanel extends javax.swing.JPanel {
     private void findCardsByYearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findCardsByYearButtonActionPerformed
         Container parent = this.getParent();
         CardLayout cl = (CardLayout) parent.getLayout();
-        
+
         cl.show(parent, BBCTFrame.FIND_CARDS_BY_YEAR_CARD_NAME);
     }//GEN-LAST:event_findCardsByYearButtonActionPerformed
 
@@ -158,6 +156,17 @@ public class FindCardsMenuPanel extends javax.swing.JPanel {
 
         cl.show(parent, BBCTFrame.FIND_CARDS_BY_PLAYER_NAME_CARD_NAME);
     }//GEN-LAST:event_findCardsByPlayerNameButtonActionPerformed
+
+    private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
+        Container topLevelAncestor = this.getTopLevelAncestor();
+
+        if (topLevelAncestor instanceof BBCTFrame) {
+            BBCTFrame frame = (BBCTFrame) topLevelAncestor;
+            frame.setTitle(GUIResources.FIND_CARDS_MENU_PANEL_TITLE);
+            frame.setInstructions("Chose an option:");
+            frame.setDefaultButton(null);
+        }
+    }//GEN-LAST:event_formAncestorAdded
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JButton findCardsByNumberButton;
@@ -165,6 +174,5 @@ public class FindCardsMenuPanel extends javax.swing.JPanel {
     private javax.swing.JButton findCardsByYearAndNumberButton;
     private javax.swing.JButton findCardsByYearButton;
     // End of variables declaration//GEN-END:variables
-
     private BaseballCardIO bcio = null;
 }

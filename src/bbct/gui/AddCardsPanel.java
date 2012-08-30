@@ -38,8 +38,6 @@ import javax.swing.JOptionPane;
  *
  * TODO: When error occurs, request focus on appropriate text field
  *
- * TODO: Set default button.
- *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class AddCardsPanel extends javax.swing.JPanel {
@@ -72,14 +70,18 @@ public class AddCardsPanel extends javax.swing.JPanel {
 
         cardDetailsPanel = new CardDetailsPanel(true);
         javax.swing.JPanel buttonsPanel = new javax.swing.JPanel();
-        javax.swing.JButton addButton = new javax.swing.JButton();
+        addCardButton = new javax.swing.JButton();
         javax.swing.JButton backButton = new javax.swing.JButton();
 
         setMinimumSize(new java.awt.Dimension(375, 400));
         setPreferredSize(new java.awt.Dimension(375, 400));
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
+        addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                formAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         setLayout(new java.awt.BorderLayout());
@@ -88,14 +90,14 @@ public class AddCardsPanel extends javax.swing.JPanel {
         cardDetailsPanel.setPreferredSize(new java.awt.Dimension(375, 500));
         add(cardDetailsPanel, java.awt.BorderLayout.CENTER);
 
-        addButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        addButton.setText("Add Card");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        addCardButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        addCardButton.setText("Add Card");
+        addCardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                addCardButtonActionPerformed(evt);
             }
         });
-        buttonsPanel.add(addButton);
+        buttonsPanel.add(addCardButton);
 
         backButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         backButton.setText("Back");
@@ -118,13 +120,7 @@ public class AddCardsPanel extends javax.swing.JPanel {
         cl.show(parent, BBCTFrame.MENU_CARD_NAME);
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        BBCTFrame frame = (BBCTFrame) this.getTopLevelAncestor();
-
-        frame.setTitle(GUIResources.ADD_CARDS_PANEL_TITLE);
-    }//GEN-LAST:event_formComponentShown
-
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+    private void addCardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCardButtonActionPerformed
         try {
             BaseballCard card = this.cardDetailsPanel.getBaseballCard();
             this.bcio.insertBaseballCard(card);
@@ -140,9 +136,19 @@ public class AddCardsPanel extends javax.swing.JPanel {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex, "Exception", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_addButtonActionPerformed
+    }//GEN-LAST:event_addCardButtonActionPerformed
 
+    private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
+        Container topLevelAncestor = this.getTopLevelAncestor();
+
+        if (topLevelAncestor instanceof BBCTFrame) {
+            BBCTFrame frame = (BBCTFrame) topLevelAncestor;
+            frame.setTitle(GUIResources.ADD_CARDS_PANEL_TITLE);
+            frame.setDefaultButton(this.addCardButton);
+        }
+    }//GEN-LAST:event_formAncestorAdded
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addCardButton;
     private bbct.gui.CardDetailsPanel cardDetailsPanel;
     // End of variables declaration//GEN-END:variables
     private BaseballCardIO bcio = null;

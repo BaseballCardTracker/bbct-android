@@ -22,11 +22,12 @@ import bbct.data.BaseballCardIO;
 import bbct.exceptions.IOException;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 /**
  * The main window for the BBCT application.
- * 
+ *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BBCTFrame extends javax.swing.JFrame {
@@ -79,7 +80,8 @@ public class BBCTFrame extends javax.swing.JFrame {
     /**
      * Creates {@link BBCTFrame}.
      *
-     * @param bcio The connection to the underlying persistent storage mechanism.
+     * @param bcio The connection to the underlying persistent storage
+     * mechanism.
      */
     public BBCTFrame(BaseballCardIO bcio) {
         this.bcio = bcio;
@@ -94,6 +96,16 @@ public class BBCTFrame extends javax.swing.JFrame {
      */
     public void setInstructions(String instructions) {
         this.instructionLabel.setText(instructions);
+    }
+
+    /**
+     * Set the default button which will be activated when the Enter key is
+     * pressed.
+     *
+     * @param button The button to set as the default.
+     */
+    public void setDefaultButton(JButton button) {
+        this.getRootPane().setDefaultButton(button);
     }
 
     private void centerFrame() {

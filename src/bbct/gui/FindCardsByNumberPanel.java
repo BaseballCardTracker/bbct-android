@@ -37,6 +37,8 @@ import javax.swing.text.NumberFormatter;
  * TODO: JavaDoc
  *
  * TODO: Tweak component placement and size
+ * 
+ * TODO: Error handling.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */

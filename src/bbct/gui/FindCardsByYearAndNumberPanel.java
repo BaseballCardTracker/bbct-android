@@ -45,6 +45,8 @@ import javax.swing.text.NumberFormatter;
  *
  * TODO: yearTextFiled needs to be limited to 4 digits
  *
+ * TODO: Error handling.
+ *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {

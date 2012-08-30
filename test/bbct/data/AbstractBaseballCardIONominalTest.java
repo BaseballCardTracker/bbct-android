@@ -28,27 +28,45 @@ import org.junit.*;
  */
 public class AbstractBaseballCardIONominalTest {
     
+    /**
+     * 
+     */
     public AbstractBaseballCardIONominalTest() {
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
 
+    /**
+     * 
+     * @throws Exception
+     */
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
     
+    /**
+     * 
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     * 
+     */
     @After
     public void tearDown() {
     }
 
     /**
-     * Test of updateCards method, of class AbstractBaseballCardIO.
+     * Test for {@link AbstractBaseballCardIO#updateCards}.
+     * @throws Exception 
      */
     @Test
     public void testUpdateCards() throws Exception {
@@ -60,6 +78,9 @@ public class AbstractBaseballCardIONominalTest {
         Assert.fail("The test case is a prototype.");
     }
 
+    /**
+     * 
+     */
     public class AbstractBaseballCardIOImpl extends AbstractBaseballCardIO {
 
         @Override

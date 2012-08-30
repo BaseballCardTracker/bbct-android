@@ -21,6 +21,7 @@ package bbct.gui;
 import bbct.data.BaseballCard;
 import bbct.exceptions.InputException;
 import java.awt.Container;
+import javax.swing.InputVerifier;
 import javax.swing.JFrame;
 
 /**
@@ -96,11 +97,12 @@ public class CardDetailsPanel extends javax.swing.JPanel {
      */
     public BaseballCard getBaseballCard() throws InputException {
         // TODO: Thoroughly test all error handling code.
-        
+
         // Validate card brand
+        InputVerifier notEmpty = new NotEmptyInputVerifier();
         this.cardBrandTextField.selectAll();
         this.cardBrandTextField.requestFocusInWindow();
-        if (this.cardBrandTextField.getText().equals("")) {
+        if (!notEmpty.verify(this.cardBrandTextField)) {
             throw new InputException("Please enter a card brand.");
         }
         String cardBrand = this.cardBrandTextField.getText();
@@ -108,7 +110,8 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // Validate card year
         this.cardYearTextField.selectAll();
         this.cardYearTextField.requestFocusInWindow();
-        if (this.cardYearTextField.getText().equals("")) {
+        // TODO: Is this redundant for a JFormattedTextField?
+        if (!notEmpty.verify(this.cardYearTextField)) {
             throw new InputException("Please enter a card year.");
         }
         if (!this.cardYearTextField.isEditValid()) {
@@ -122,7 +125,8 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // Validate card number
         this.cardNumberTextField.selectAll();
         this.cardNumberTextField.requestFocusInWindow();
-        if (this.cardNumberTextField.getText().equals("")) {
+        // TODO: Is this redundant for a JFormattedTextField?
+        if (!notEmpty.verify(this.cardNumberTextField)) {
             throw new InputException("Please enter a card number.");
         }
         if (!this.cardNumberTextField.isEditValid()) {
@@ -136,7 +140,8 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // Validate card value
         this.cardValueTextField.selectAll();
         this.cardValueTextField.requestFocusInWindow();
-        if (this.cardValueTextField.getText().equals("")) {
+        // TODO: Is this redundant for a JFormattedTextField?
+        if (!notEmpty.verify(this.cardValueTextField)) {
             throw new InputException("Please enter a card value.");
         }
         // FIXME
@@ -152,7 +157,8 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // Validate card count
         this.cardCountTextField.selectAll();
         this.cardCountTextField.requestFocusInWindow();
-        if (this.cardCountTextField.getText().equals("")) {
+        // TODO: Is this redundant for a JFormattedTextField?
+        if (!notEmpty.verify(this.cardCountTextField)) {
             throw new InputException("Please enter a card count.");
         }
         if (!this.cardCountTextField.isEditValid()) {
@@ -166,7 +172,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // Validate player name
         this.playerNameTextField.selectAll();
         this.playerNameTextField.requestFocusInWindow();
-        if (this.playerNameTextField.getText().equals("")) {
+        if (!notEmpty.verify(this.playerNameTextField)) {
             throw new InputException("Please enter a player name.");
         }
         String playerName = this.playerNameTextField.getText();
@@ -174,7 +180,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // Validate player position
         this.playerPositionTextField.selectAll();
         this.playerPositionTextField.requestFocusInWindow();
-        if (this.playerPositionTextField.getText().equals("")) {
+        if (!notEmpty.verify(this.playerPositionTextField)) {
             throw new InputException("Please enter a player position.");
         }
         String playerPosition = this.playerPositionTextField.getText();
@@ -183,7 +189,8 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     }
 
     /**
-     * Reset all text fields to blank strings and set focus to the card brand text field.
+     * Reset all text fields to blank strings and set focus to the card brand
+     * text field.
      */
     public void reset() {
         this.cardBrandTextField.setText("");
@@ -352,7 +359,6 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         playerNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         playerPositionTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        playerPositionTextField.setInputVerifier(new NotEmptyInputVerifier());
 
         javax.swing.GroupLayout playerDetailsPanelLayout = new javax.swing.GroupLayout(playerDetailsPanel);
         playerDetailsPanel.setLayout(playerDetailsPanelLayout);
@@ -443,7 +449,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
      */
     public static void main(String[] args) {
         // TODO: Add a way to test getBaseballCard()
-        
+
         JFrame frame = new JFrame("CardDetailsPanel Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(new CardDetailsPanel());

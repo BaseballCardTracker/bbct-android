@@ -201,6 +201,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByYear(int)}.
+     * @throws Exception 
      */
     @Test
     public void testGetBaseballCardsByYear() throws Exception {
@@ -215,6 +216,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByNumber(int)}.
+     * @throws Exception 
      */
     @Test
     public void testGetBaseballCardsByNumber() throws Exception {
@@ -229,6 +231,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
+     * @throws Exception 
      */
     @Test
     public void testGetBaseballCardsByYearAndNumber() throws Exception {
@@ -244,6 +247,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByPlayerName(String)}.
+     * @throws Exception 
      */
     @Test
     public void testGetBaseballCardsByPlayerName() throws Exception {
@@ -258,6 +262,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      * Test for {@link baseball.data.BaseballCardJDBCIO#updateCard(Card)}.
+     * @throws Exception 
      */
     @Test
     public void testUpdateCard() throws Exception {

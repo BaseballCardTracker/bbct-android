@@ -25,8 +25,6 @@ import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,6 +34,8 @@ import javax.swing.JTextField;
  * TODO: JavaDoc
  *
  * TODO: Tweak component placement and size
+ *
+ * TODO: Error handling.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
