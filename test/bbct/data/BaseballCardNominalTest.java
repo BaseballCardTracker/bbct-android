@@ -141,7 +141,7 @@ public class BaseballCardNominalTest {
     }
 
     /**
-     * Test of equals method, of class BaseballCard.
+     * Test for {@link BaseballCard#equals}.
      */
     @Test
     public void testEquals() {
@@ -155,7 +155,7 @@ public class BaseballCardNominalTest {
     }
 
     /**
-     * Test of hashCode method, of class BaseballCard.
+     * Test for {@link BaseballCard#hashCode}.
      */
     @Test
     public void testHashCode() {
@@ -168,7 +168,7 @@ public class BaseballCardNominalTest {
     }
 
     /**
-     * Test of toString method, of class BaseballCard.
+     * Test for {@link BaseballCard#toString}.
      */
     @Test
     public void testToString() {

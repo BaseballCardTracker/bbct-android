@@ -53,9 +53,13 @@ public class MenuPanel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(370, 370));
         setName("mainPanel");
         setPreferredSize(new java.awt.Dimension(370, 370));
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
+        addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                formAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         setLayout(new java.awt.GridLayout(4, 1, 0, 30));
@@ -118,16 +122,17 @@ public class MenuPanel extends javax.swing.JPanel {
         cl.show(parent, BBCTFrame.ABOUT_CARD_NAME);
     }//GEN-LAST:event_aboutButtonActionPerformed
 
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
         BBCTFrame frame = (BBCTFrame) this.getParent().getParent().getParent().getParent().getParent();
 
         frame.setTitle(GUIResources.MAIN_PANEL_TITLE);
         frame.setInstructions("Chose an option:");
-    }//GEN-LAST:event_formComponentShown
+    }//GEN-LAST:event_formAncestorAdded
 
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

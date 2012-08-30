@@ -25,15 +25,11 @@ import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 

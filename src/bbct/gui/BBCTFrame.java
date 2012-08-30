@@ -20,13 +20,12 @@ package bbct.gui;
 
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.IOException;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 /**
- * TODO: JavaDoc
+ * The main window for the BBCT application.
  * 
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -45,7 +44,7 @@ public class BBCTFrame extends javax.swing.JFrame {
      */
     public static final String FIND_CARDS_MENU_CARD_NAME = "findCardsMenu";
     /**
-     * Name used for {@link EditCardPanel} card.
+     * Name used for {@link EditCardsPanel} card.
      */
     public static final String EDIT_CARDS_PANEL_NAME = "editCards";
     /**
@@ -80,7 +79,7 @@ public class BBCTFrame extends javax.swing.JFrame {
     /**
      * Creates {@link BBCTFrame}.
      *
-     * @param bcio
+     * @param bcio The connection to the underlying persistent storage mechanism.
      */
     public BBCTFrame(BaseballCardIO bcio) {
         this.bcio = bcio;
@@ -91,7 +90,7 @@ public class BBCTFrame extends javax.swing.JFrame {
     /**
      * Set instructions for the user shown at the top of the window.
      *
-     * @param instructions
+     * @param instructions The instructions to display to the user.
      */
     public void setInstructions(String instructions) {
         this.instructionLabel.setText(instructions);

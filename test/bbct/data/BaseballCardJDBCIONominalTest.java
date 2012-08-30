@@ -198,4 +198,92 @@ public class BaseballCardJDBCIONominalTest {
 
         return card;
     }
+
+    /**
+     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByYear(int)}.
+     */
+    @Test
+    public void testGetBaseballCardsByYear() throws Exception {
+        System.out.println("getBaseballCardsByYear");
+        int year = 0;
+        List expResult = null;
+        List result = instance.getBaseballCardsByYear(year);
+        Assert.assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        Assert.fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByNumber(int)}.
+     */
+    @Test
+    public void testGetBaseballCardsByNumber() throws Exception {
+        System.out.println("getBaseballCardsByNumber");
+        int number = 0;
+        List expResult = null;
+        List result = instance.getBaseballCardsByNumber(number);
+        Assert.assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        Assert.fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
+     */
+    @Test
+    public void testGetBaseballCardsByYearAndNumber() throws Exception {
+        System.out.println("getBaseballCardsByYearAndNumber");
+        int year = 0;
+        int number = 0;
+        List expResult = null;
+        List result = instance.getBaseballCardsByYearAndNumber(year, number);
+        Assert.assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        Assert.fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByPlayerName(String)}.
+     */
+    @Test
+    public void testGetBaseballCardsByPlayerName() throws Exception {
+        System.out.println("getBaseballCardsByPlayerName");
+        String playerName = "";
+        List expResult = null;
+        List result = instance.getBaseballCardsByPlayerName(playerName);
+        Assert.assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        Assert.fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test for {@link baseball.data.BaseballCardJDBCIO#updateCard(Card)}.
+     */
+    @Test
+    public void testUpdateCard() throws Exception {
+        BaseballCard card = this.insertCard();
+        int newValue = 20000;
+        int newCount = 3;
+        card.setValue(newValue);
+        card.setCount(newCount);
+        instance.updateCard(card);
+        
+        String brand = card.getBrand();
+        int year = card.getYear();
+        int number = card.getNumber();
+        String query = "SELECT * "
+                + "  FROM " + BaseballCardJDBCIO.TABLE_NAME
+                + " WHERE " + BaseballCardJDBCIO.BRAND_COL_NAME + " = ? "
+                + "   AND " + BaseballCardJDBCIO.YEAR_COL_NAME + " = ? "
+                + "   AND " + BaseballCardJDBCIO.NUMBER_COL_NAME + " = ?";
+        
+        PreparedStatement ps  = this.conn.prepareStatement(query);
+        ps.setString(1, brand);
+        ps.setInt(2, year);
+        ps.setInt(3, number);
+        
+        ResultSet rs = ps.executeQuery(query);
+        
+        Assert.fail("The test case is a prototype.");
+    }
 }

@@ -38,8 +38,6 @@ import javax.swing.JOptionPane;
  *
  * TODO: When error occurs, request focus on appropriate text field
  *
- * TODO: Update instructions as user interacts with interface
- *
  * TODO: Set default button.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
@@ -131,6 +129,10 @@ public class AddCardsPanel extends javax.swing.JPanel {
             BaseballCard card = this.cardDetailsPanel.getBaseballCard();
             this.bcio.insertBaseballCard(card);
             this.cardDetailsPanel.reset();
+
+            BBCTFrame frame = (BBCTFrame) this.getTopLevelAncestor();
+            frame.setInstructions("Card added. Enter brand name for another card.");
+            this.cardDetailsPanel.setUpdateInstructions(false);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
         } catch (InputException ex) {
@@ -139,6 +141,7 @@ public class AddCardsPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, ex, "Exception", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_addButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private bbct.gui.CardDetailsPanel cardDetailsPanel;
     // End of variables declaration//GEN-END:variables

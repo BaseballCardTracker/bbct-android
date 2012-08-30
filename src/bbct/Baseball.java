@@ -27,6 +27,8 @@ import javax.swing.JOptionPane;
 
 /**
  * This is the driver class for the Baseball Card Tracker program.
+ * 
+ * TODO: Automatically copy user's manual and license to dist folder.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */

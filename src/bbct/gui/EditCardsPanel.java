@@ -31,30 +31,38 @@ import javax.swing.JPanel;
  *
  * TODO: Set default button.
  *
+ * TODO: Commit changes to storage.
+ *
+ * TODO: What if 1,000 cards match a search? Scrolling through one at a time
+ * will be painful!
+ *
+ * TODO: Update instructions label appropriately.
+ *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class EditCardsPanel extends javax.swing.JPanel {
+public class EditCardsPanel extends JPanel {
 
     /**
-     * Creates new {@link EditCardPanel}.
+     * Creates new {@link EditCardsPanel}.
      */
     public EditCardsPanel() {
         initComponents();
     }
 
     /**
-     * Creates new {@link EditCardPanel}.
+     * Creates new {@link EditCardsPanel}.
+     *
      * @param cards
-     * @param bcio  
+     * @param bcio
      */
     public EditCardsPanel(List<BaseballCard> cards, BaseballCardIO bcio) {
         this.bcio = bcio;
-        
+
         initComponents();
-        
+
         for (BaseballCard card : cards) {
             JPanel cardDetailsPanel = new CardDetailsPanel(card, false);
-            
+
             this.allCardDetailsPanel.add(cardDetailsPanel);
         }
     }
@@ -120,26 +128,24 @@ public class EditCardsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_formComponentShown
 
     private void prevButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prevButtonActionPerformed
-        CardLayout layout = (CardLayout)this.allCardDetailsPanel.getLayout();
+        CardLayout layout = (CardLayout) this.allCardDetailsPanel.getLayout();
         layout.previous(this.allCardDetailsPanel);
     }//GEN-LAST:event_prevButtonActionPerformed
 
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
-        CardLayout layout = (CardLayout)this.allCardDetailsPanel.getLayout();
+        CardLayout layout = (CardLayout) this.allCardDetailsPanel.getLayout();
         layout.next(this.allCardDetailsPanel);
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
         Container parent = this.getParent();
-        CardLayout layout = (CardLayout)parent.getLayout();
-        
+        CardLayout layout = (CardLayout) parent.getLayout();
+
         parent.remove(this);
         layout.show(parent, BBCTFrame.FIND_CARDS_MENU_CARD_NAME);
     }//GEN-LAST:event_doneButtonActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel allCardDetailsPanel;
     // End of variables declaration//GEN-END:variables
-
     BaseballCardIO bcio = null;
 }

@@ -16,41 +16,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.gui.event;
+package bbct.gui;
 
-import bbct.gui.BBCTFrame;
-import java.awt.Container;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
+import javax.swing.InputVerifier;
 import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 
 /**
- * TODO: JavaDoc
- *
+ * Validates input from a JFormattedTextField.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class UpdateInstructionsFocusListener extends FocusAdapter {
+public class ValidTextFormatInputVerifier extends InputVerifier {
 
     /**
      * 
-     * @param instr
-     */
-    public UpdateInstructionsFocusListener(String instr) {
-        this.instr = instr;
-    }
-
-    /**
-     * 
-     * @param fe
+     * @param jc
+     * @return
      */
     @Override
-    public void focusGained(FocusEvent fe) {
-        Container topLevelAncestor = ((JComponent) fe.getComponent()).getTopLevelAncestor();
-
-        if (topLevelAncestor instanceof BBCTFrame) {
-            ((BBCTFrame) topLevelAncestor).setInstructions(instr);
-        }
+    public boolean verify(JComponent jc) {
+        return ((JFormattedTextField)jc).isEditValid();
     }
-    private String instr = null;
+    
 }

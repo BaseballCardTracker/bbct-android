@@ -22,7 +22,7 @@ import java.awt.CardLayout;
 import java.awt.Container;
 
 /**
- * TODO: JavaDoc
+ * A panel that displays the name of this application and copyright information.
  *
  * TODO: Set default button.
  *
@@ -31,7 +31,7 @@ import java.awt.Container;
 public class AboutPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form AboutPanel
+     * Creates {@link AboutPanel}.
      */
     public AboutPanel() {
         initComponents();
@@ -55,9 +55,13 @@ public class AboutPanel extends javax.swing.JPanel {
 
         setMinimumSize(new java.awt.Dimension(370, 360));
         setPreferredSize(new java.awt.Dimension(370, 360));
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                formComponentShown(evt);
+        addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                formAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
 
@@ -131,12 +135,12 @@ public class AboutPanel extends javax.swing.JPanel {
         cl.show(parent, BBCTFrame.MENU_CARD_NAME);
     }//GEN-LAST:event_okButtonActionPerformed
 
-    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+    private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
         BBCTFrame frame = (BBCTFrame) this.getTopLevelAncestor();
 
         frame.setTitle(GUIResources.ABOUT_PANEL_TITLE);
         frame.setInstructions("Click OK when ready.");
-    }//GEN-LAST:event_formComponentShown
+    }//GEN-LAST:event_formAncestorAdded
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

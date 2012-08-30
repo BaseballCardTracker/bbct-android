@@ -20,8 +20,8 @@ package bbct.gui;
 
 import bbct.data.BaseballCard;
 import bbct.exceptions.InputException;
-import javax.swing.JFormattedTextField;
-import javax.swing.JOptionPane;
+import java.awt.Container;
+import javax.swing.JFrame;
 
 /**
  * TODO: cardValueTextField needs to be formatted as currency
@@ -44,7 +44,9 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     /**
      * Creates new {@link CardDetailsPanel}.
      *
-     * @param allEditable
+     * @param allEditable Whether or not all text fields are editable. The count
+     * and value text fields will always be editable regardless of the value of
+     * this flag.
      */
     public CardDetailsPanel(boolean allEditable) {
         this.allEditable = allEditable;
@@ -54,8 +56,11 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     /**
      * Creates new {@link CardDetailsPanel}.
      *
-     * @param card
-     * @param allEditable
+     * @param card The {@link bbct.data.BaseballCard} object used to initialize
+     * the values of the text fields in this panel.
+     * @param allEditable Whether or not all text fields are editable. The count
+     * and value text fields will always be editable regardless of the value of
+     * this flag.
      */
     public CardDetailsPanel(BaseballCard card, boolean allEditable) {
         this.card = card;
@@ -64,52 +69,111 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         initComponents();
 
         this.cardBrandTextField.setText(this.card.getBrand());
-        this.cardYearTextField.setText(Integer.toString(this.card.getYear()));
-        this.cardNumberTextField.setText(Integer.toString(this.card.getNumber()));
+        this.cardYearTextField.setValue(this.card.getYear());
+        this.cardNumberTextField.setValue(this.card.getNumber());
 
-        // TODO: Fix formatting
-        this.cardValueTextField.setText(Integer.toString(this.card.getValue()));
-        this.cardCountTextField.setText(Integer.toString(this.card.getCount()));
+        // TODO: This works, but the logic should be part of the JFormattedTextField, not the panel
+        int value = this.card.getValue();
+        int dollars = value / 100;
+        int cents = value % 100;
+        String centsStr = cents < 10 ? "0" + cents : "" + cents;
+        String valueStr = "$" + dollars + "." + centsStr;
+
+        this.cardValueTextField.setText(valueStr);
+        this.cardCountTextField.setValue(this.card.getCount());
         this.playerNameTextField.setText(this.card.getPlayerName());
         this.playerPositionTextField.setText(this.card.getPlayerPosition());
     }
 
     /**
+     * Creates a {@link bbct.data.BaseballCard} from the data in the text fields
+     * in this panel.
      *
-     * @return @throws InputException
-     * @throws InputException
+     * @return A {@link bbct.data.BaseballCard} initialized with data from the
+     * text fields in this panel.
+     * @throws InputException If any text field is blank or contains text with
+     * invalid formatting.
      */
     public BaseballCard getBaseballCard() throws InputException {
+        // TODO: Thoroughly test all error handling code.
+        
+        // Validate card brand
+        this.cardBrandTextField.selectAll();
+        this.cardBrandTextField.requestFocusInWindow();
         if (this.cardBrandTextField.getText().equals("")) {
             throw new InputException("Please enter a card brand.");
         }
         String cardBrand = this.cardBrandTextField.getText();
 
+        // Validate card year
+        this.cardYearTextField.selectAll();
+        this.cardYearTextField.requestFocusInWindow();
         if (this.cardYearTextField.getText().equals("")) {
             throw new InputException("Please enter a card year.");
         }
+        if (!this.cardYearTextField.isEditValid()) {
+            throw new InputException("Please enter a numerical year.");
+        }
         int cardYear = Integer.parseInt(this.cardYearTextField.getText());
+        if (cardYear < 1000 || cardYear > 9999) {
+            throw new InputException("Please enter a four-digit year.");
+        }
 
+        // Validate card number
+        this.cardNumberTextField.selectAll();
+        this.cardNumberTextField.requestFocusInWindow();
         if (this.cardNumberTextField.getText().equals("")) {
             throw new InputException("Please enter a card number.");
         }
+        if (!this.cardNumberTextField.isEditValid()) {
+            throw new InputException("Please enter a number.");
+        }
         int cardNumber = Integer.parseInt(this.cardNumberTextField.getText());
+        if (cardNumber < 0) {
+            throw new InputException("Please enter a positive value for the card number.");
+        }
 
+        // Validate card value
+        this.cardValueTextField.selectAll();
+        this.cardValueTextField.requestFocusInWindow();
         if (this.cardValueTextField.getText().equals("")) {
             throw new InputException("Please enter a card value.");
         }
+        // FIXME
+//        if (!this.cardValueTextField.isEditValid()) {
+//            throw new InputException("Please enter a valid monetary value.");
+//        }
+//        double cardValueDbl = (Double) this.cardValueTextField.getValue();
+//        if (cardValueDbl < 0.0) {
+//            throw new InputException("Please enter a positive card value.'");
+//        }
         int cardValue = Integer.parseInt(this.cardValueTextField.getText());
 
+        // Validate card count
+        this.cardCountTextField.selectAll();
+        this.cardCountTextField.requestFocusInWindow();
         if (this.cardCountTextField.getText().equals("")) {
             throw new InputException("Please enter a card count.");
         }
+        if (!this.cardCountTextField.isEditValid()) {
+            throw new InputException("Please enter a numeric value for the card count.");
+        }
         int cardCount = Integer.parseInt(this.cardCountTextField.getText());
+        if (cardCount < 0) {
+            throw new InputException("Please enter a positive value for the card count");
+        }
 
+        // Validate player name
+        this.playerNameTextField.selectAll();
+        this.playerNameTextField.requestFocusInWindow();
         if (this.playerNameTextField.getText().equals("")) {
             throw new InputException("Please enter a player name.");
         }
         String playerName = this.playerNameTextField.getText();
 
+        // Validate player position
+        this.playerPositionTextField.selectAll();
+        this.playerPositionTextField.requestFocusInWindow();
         if (this.playerPositionTextField.getText().equals("")) {
             throw new InputException("Please enter a player position.");
         }
@@ -119,7 +183,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     }
 
     /**
-     * Reset all text fields to blank strings and set focus to {@link cardBrandTextField}.
+     * Reset all text fields to blank strings and set focus to the card brand text field.
      */
     public void reset() {
         this.cardBrandTextField.setText("");
@@ -130,6 +194,14 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         this.playerNameTextField.setText("");
         this.playerPositionTextField.setText("");
         this.cardBrandTextField.requestFocusInWindow();
+    }
+
+    /**
+     *
+     * @param updateInstructions
+     */
+    public void setUpdateInstructions(boolean updateInstructions) {
+        this.updateInstructions = updateInstructions;
     }
 
     /**
@@ -199,20 +271,19 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         });
 
         cardNumberTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        cardNumberTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
         cardNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         cardYearTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        cardYearTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
         cardYearTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cardYearTextField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                formattedTextFieldFocustLost(evt);
-            }
-        });
 
-        cardValueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        cardValueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        cardValueTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
         cardValueTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         cardCountTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        cardCountTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
         cardCountTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout cardDetailsPanelLayout = new javax.swing.GroupLayout(cardDetailsPanel);
@@ -281,6 +352,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         playerNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         playerPositionTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        playerPositionTextField.setInputVerifier(new NotEmptyInputVerifier());
 
         javax.swing.GroupLayout playerDetailsPanelLayout = new javax.swing.GroupLayout(playerDetailsPanel);
         playerDetailsPanel.setLayout(playerDetailsPanelLayout);
@@ -333,19 +405,16 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cardBrandTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cardBrandTextFieldFocusGained
-        BBCTFrame frame = (BBCTFrame) this.getTopLevelAncestor();
-        frame.setInstructions("Enter card brand name.");
-    }//GEN-LAST:event_cardBrandTextFieldFocusGained
+        if (this.updateInstructions) {
+            Container topLevelAncestor = this.getTopLevelAncestor();
 
-    private void formattedTextFieldFocustLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formattedTextFieldFocustLost
-        JFormattedTextField source = (JFormattedTextField) evt.getComponent();
-
-        if (!source.isEditValid()) {
-            // TODO: Need a better error message.
-            JOptionPane.showMessageDialog(this, "Invalid input.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            source.requestFocusInWindow();
+            if (topLevelAncestor instanceof BBCTFrame) {
+                ((BBCTFrame) topLevelAncestor).setInstructions("Enter card brand name.");
+            }
+        } else {
+            this.updateInstructions = true;
         }
-    }//GEN-LAST:event_formattedTextFieldFocustLost
+    }//GEN-LAST:event_cardBrandTextFieldFocusGained
 
     private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
         if (this.allEditable) {
@@ -364,5 +433,21 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField playerPositionTextField;
     // End of variables declaration//GEN-END:variables
     private boolean allEditable = true;
+    private boolean updateInstructions = true;
     private BaseballCard card = null;
+
+    /**
+     * Tests for {@link CardDetailsPanel}.
+     *
+     * @param args The command-line arguments (ignored).
+     */
+    public static void main(String[] args) {
+        // TODO: Add a way to test getBaseballCard()
+        
+        JFrame frame = new JFrame("CardDetailsPanel Test");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new CardDetailsPanel());
+        frame.pack();
+        frame.setVisible(true);
+    }
 }

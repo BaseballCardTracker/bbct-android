@@ -22,55 +22,91 @@ import bbct.exceptions.IOException;
 import java.util.List;
 
 /**
- * TODO: JavaDoc
+ * The {@link BaseballCardIO} interface provides the contract for all I/O
+ * operations for the BBCT application. These provide persistence for {@link BaseballCard}
+ * objects.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public interface BaseballCardIO {
-    
+
     /**
-     * 
-     * @throws IOException
+     * Close the connection to the underlying persistent storage. This method
+     * should dispose of all resources used for any I/O operations.
+     *
+     * @throws IOException If an error occurs while closing the underlying
+     * storage mechanism.
      */
     public void close() throws IOException;
-    
+
     /**
-     * 
-     * @param card
-     * @throws IOException
+     * Insert a {@link BaseballCard} to the underlying persistent storage.
+     *
+     * @param card The {@link BaseballCard} to insert.
+     * @throws IOException If any I/O errors occur while inserting.
      */
     public void insertBaseballCard(BaseballCard card) throws IOException;
-    
+
     /**
-     * 
-     * @param year
-     * @return
-     * @throws IOException
+     * Search for {@link BaseballCard}s matching the specified year.
+     *
+     * @param year The year of {@link BaseballCard}s to look for.
+     * @return A list of {@link BaseballCard}s which match the specified year.
+     * @throws IOException If any I/O errors occur while reading the underlying
+     * storage mechanism.
      */
     public List<BaseballCard> getBaseballCardsByYear(int year) throws IOException;
-    
+
     /**
-     * 
-     * @param number
-     * @return
-     * @throws IOException
+     * Search for {@link BaseballCard}s matching the specified number.
+     *
+     * @param number The number of {@link BaseballCard}s to look for.
+     * @return A list of {@link BaseballCard}s which match the specified number.
+     * @throws IOException If any I/O errors occur while reading the underlying
+     * storage mechanism.
      */
     public List<BaseballCard> getBaseballCardsByNumber(int number) throws IOException;
-    
+
     /**
-     * 
-     * @param year
-     * @param number
-     * @return
-     * @throws IOException
+     * Search for {@link BaseballCard}s matching the specified number.
+     *
+     * @param year The year of {@link BaseballCard}s to look for.
+     * @param number The number of {@link BaseballCard}s to look for.
+     * @return A list of {@link BaseballCard}s which match the specified year
+     * and number.
+     * @throws IOException If any I/O errors occur while reading the underlying
+     * storage mechanism.
      */
     public List<BaseballCard> getBaseballCardsByYearAndNumber(int year, int number) throws IOException;
 
     /**
-     * 
-     * @param playerName
-     * @return
-     * @throws IOException
+     * Search for {@link BaseballCard}s matching the specified player's name.
+     *
+     * @param playerName The name of the player of on {@link BaseballCard}s to
+     * look for.
+     * @return A list of {@link BaseballCard}s which match the specified
+     * player's name.
+     * @throws IOException If any I/O errors occur while reading the underlying
+     * storage mechanism.
      */
     public List<BaseballCard> getBaseballCardsByPlayerName(String playerName) throws IOException;
+
+    /**
+     * Updates data in the underlying persistent storage for the given card.
+     *
+     * @param card The card to update.
+     * @throws IOException If any I/O errors occur while writing to the
+     * underlying storage mechanism.
+     */
+    public void updateCard(BaseballCard card) throws IOException;
+
+    /**
+     * Updates data in the underlying persistent storage for all the cards in the
+     * given List.
+     *
+     * @param cards The list of cards to update.
+     * @throws IOException If any I/O errors occur while writing to the
+     * underlying storage mechanism.
+     */
+    public void updateCards(List<BaseballCard> cards) throws IOException;
 }
