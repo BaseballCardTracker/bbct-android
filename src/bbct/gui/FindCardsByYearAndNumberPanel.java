@@ -23,15 +23,14 @@ import bbct.data.BaseballCardIO;
 import bbct.exceptions.IOException;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
@@ -82,30 +81,65 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
     }
 
     private void initComponents() {
-        // TODO: GridLayout?
-        this.setLayout(new FlowLayout());
+        this.setLayout(new BorderLayout());
+
+        JPanel inputPanel = new JPanel(new GridBagLayout());
 
         JLabel cardYearLabel = new JLabel("Card Year:");
         cardYearLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
-        this.add(cardYearLabel);
+
+        GridBagConstraints yearLabelConstraints = new GridBagConstraints();
+        yearLabelConstraints.gridx = 0;
+        yearLabelConstraints.gridy = 0;
+        yearLabelConstraints.weightx = 1;
+        yearLabelConstraints.weighty = 1;
+        yearLabelConstraints.anchor = GridBagConstraints.WEST;
+        yearLabelConstraints.insets = new Insets(20, 25, 10, 10);
+        inputPanel.add(cardYearLabel, yearLabelConstraints);
 
         this.yearTextField = new JFormattedTextField();
         this.yearTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
         this.yearTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.yearTextField.setColumns(10);
         this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card year."));
-        this.add(this.yearTextField);
+
+        GridBagConstraints yearTextFieldConstraints = new GridBagConstraints();
+        yearTextFieldConstraints.gridx = 1;
+        yearTextFieldConstraints.gridy = 0;
+        yearTextFieldConstraints.weightx = 2;
+        yearTextFieldConstraints.weighty = 1;
+        yearTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+        yearTextFieldConstraints.insets = new Insets(20, 10, 10, 25);
+        inputPanel.add(this.yearTextField, yearTextFieldConstraints);
 
         JLabel cardNumberLabel = new JLabel("Card Number:");
         cardNumberLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
-        this.add(cardNumberLabel);
+
+        GridBagConstraints numberLabelConstraints = new GridBagConstraints();
+        numberLabelConstraints.gridx = 0;
+        numberLabelConstraints.gridy = 1;
+        numberLabelConstraints.weightx = 1;
+        numberLabelConstraints.weighty = 1;
+        numberLabelConstraints.anchor = GridBagConstraints.WEST;
+        numberLabelConstraints.insets = new Insets(10, 25, 0, 10);
+        inputPanel.add(cardNumberLabel, numberLabelConstraints);
 
         this.numberTextField = new JFormattedTextField();
         this.numberTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
         this.numberTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.numberTextField.setColumns(10);
         this.numberTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card number."));
-        this.add(this.numberTextField);
+
+        GridBagConstraints numberTextFieldConstraints = new GridBagConstraints();
+        numberTextFieldConstraints.gridx = 1;
+        numberTextFieldConstraints.gridy = 1;
+        numberTextFieldConstraints.weightx = 2;
+        numberTextFieldConstraints.weighty = 1;
+        numberTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+        numberTextFieldConstraints.insets = new Insets(10, 10, 0, 25);
+        inputPanel.add(this.numberTextField, numberTextFieldConstraints);
+
+        this.add(inputPanel, BorderLayout.PAGE_START);
 
         this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_BY_YEAR_AND_NUMBER_PANEL_TITLE));
     }
@@ -124,7 +158,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         JFrame frame = new JFrame("FindCardsByNumberPanel Test");
         frame.add(new FindCardsByYearAndNumberPanel(null));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
+        frame.setSize(400, 425);
         frame.setVisible(true);
     }
 }

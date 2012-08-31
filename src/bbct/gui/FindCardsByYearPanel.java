@@ -23,10 +23,7 @@ import bbct.data.BaseballCardIO;
 import bbct.exceptions.IOException;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
-import java.awt.Container;
 import java.awt.FlowLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.JFormattedTextField;
@@ -51,7 +48,8 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
     /**
      * Creates new {@link FindCardsByYearPanel}.
      *
-     * @param bcio
+     * @param bcio The {@link BaseballCardIO} object which is used to search for
+     * baseball cards with the year input by the user.
      */
     public FindCardsByYearPanel(BaseballCardIO bcio) {
         this.bcio = bcio;
@@ -78,6 +76,7 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
     }
 
     private void initComponents() {
+        // TODO: GridBagLayout?
         this.setLayout(new FlowLayout());
 
         JLabel yearLabel = new JLabel("Card Year:");

@@ -27,16 +27,11 @@ import java.awt.Container;
 import javax.swing.JOptionPane;
 
 /**
- * TODO: JavaDoc
- *
- * TODO: yearTextBox should be limited to only 4 digits
- *
- * TODO: All text boxes which take integer input need to display an error
- * message when input is incorrect.
- *
- * TODO: Integer input must be non-negative
- *
- * TODO: When error occurs, request focus on appropriate text field
+ * This panel contains controls which allow the user to add data for baseball
+ * cards to the underlying storage. The labels and text fields are delegated to
+ * a [@link CardDetailsPanel}. This panel also contains buttons to add the
+ * baseball card data to storage and to go back to the main menu of the BBCT
+ * application.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -52,7 +47,8 @@ public class AddCardsPanel extends javax.swing.JPanel {
     /**
      * Creates a new {@link AddCardsPanel}.
      *
-     * @param bcio
+     * @param bcio The {@link BaseballCardIO} object which is used to add
+     * baseball card data to the underlying persistent storage mechanism.
      */
     public AddCardsPanel(BaseballCardIO bcio) {
         this.bcio = bcio;

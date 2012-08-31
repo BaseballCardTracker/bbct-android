@@ -39,7 +39,8 @@ public class FindCardsMenuPanel extends javax.swing.JPanel {
     /**
      * Creates {@link FindCardsMenuPanel}.
      *
-     * @param bcio
+     * @param bcio The {@link BaseballCardIO} object which is used to search for
+     * baseball cards using the criteria input by the user.
      */
     public FindCardsMenuPanel(BaseballCardIO bcio) {
         this.bcio = bcio;

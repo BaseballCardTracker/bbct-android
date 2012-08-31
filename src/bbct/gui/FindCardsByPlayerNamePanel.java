@@ -44,7 +44,8 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
     /**
      * Creates new {@link FindCardsByPlayerNamePanel}.
      *
-     * @param bcio
+     * @param bcio The {@link BaseballCardIO} object which is used to search for
+     * baseball cards with player name input by the user.
      */
     public FindCardsByPlayerNamePanel(BaseballCardIO bcio) {
         this.bcio = bcio;
@@ -66,6 +67,7 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
     }
 
     private void initComponents() {
+        // TODO: GridBagLayout?
         this.setLayout(new FlowLayout());
 
         JLabel playerNameLabel = new JLabel("Player Name:");

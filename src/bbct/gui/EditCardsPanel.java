@@ -50,7 +50,8 @@ public class EditCardsPanel extends JPanel {
      * Creates new {@link EditCardsPanel}.
      *
      * @param cards
-     * @param bcio
+     * @param bcio The {@link BaseballCardIO} object which is used to update
+     * data in the underlying persistent storage mechanism.
      */
     public EditCardsPanel(List<BaseballCard> cards, BaseballCardIO bcio) {
         this.bcio = bcio;

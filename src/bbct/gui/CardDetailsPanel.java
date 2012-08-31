@@ -118,6 +118,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
             throw new InputException("Please enter a numerical year.");
         }
         int cardYear = Integer.parseInt(this.cardYearTextField.getText());
+        // TODO: Delegate this to an InputVerifier?
         if (cardYear < 1000 || cardYear > 9999) {
             throw new InputException("Please enter a four-digit year.");
         }
@@ -133,6 +134,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
             throw new InputException("Please enter a number.");
         }
         int cardNumber = Integer.parseInt(this.cardNumberTextField.getText());
+        // TODO: Delegate this to an InputVerifier?
         if (cardNumber < 0) {
             throw new InputException("Please enter a positive value for the card number.");
         }
@@ -149,6 +151,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
 //            throw new InputException("Please enter a valid monetary value.");
 //        }
 //        double cardValueDbl = (Double) this.cardValueTextField.getValue();
+        // TODO: Delegate this to an InputVerifier?
 //        if (cardValueDbl < 0.0) {
 //            throw new InputException("Please enter a positive card value.'");
 //        }

@@ -45,8 +45,10 @@ public class FindCardsPanel extends javax.swing.JPanel {
     /**
      * Creates new {@link FindCardsPanel}.
      *
-     * @param bcio
-     * @param inputPanel
+     * @param bcio The {@link BaseballCardIO} object which is used to search for
+     * baseball cards using the criteria input by the user.
+     * @param inputPanel The panel containing input controls which vary
+     * depending on the exact criteria used to search for cards.
      */
     public FindCardsPanel(BaseballCardIO bcio, FindCardsByPanel inputPanel) {
         this.bcio = bcio;
