@@ -30,17 +30,13 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
 /**
- * {@link FindCardsByYearAndNumberPanel} contains two JLabels and two
- * JFormattedTextFields which take integer input. These values are used as the
- * baseball card number and year when searching the underlying storage mechanism
- * for cards which match the user's input.
- *
- * TODO: Tweak component placement and size
+ * {@link FindCardsByYearAndNumberPanel} allows the user to input a card number
+ * and year. These values are used as the parameters when searching the
+ * underlying storage mechanism for cards with the given year and number.
  *
  * TODO: yearTextFiled needs to be limited to 4 digits
  *
@@ -85,8 +81,8 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
 
         JPanel inputPanel = new JPanel(new GridBagLayout());
 
-        JLabel cardYearLabel = new JLabel("Card Year:");
-        cardYearLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        JLabel yearLabel = new JLabel("Card Year:");
+        yearLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
 
         GridBagConstraints yearLabelConstraints = new GridBagConstraints();
         yearLabelConstraints.gridx = 0;
@@ -95,7 +91,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         yearLabelConstraints.weighty = 1;
         yearLabelConstraints.anchor = GridBagConstraints.WEST;
         yearLabelConstraints.insets = new Insets(20, 25, 10, 10);
-        inputPanel.add(cardYearLabel, yearLabelConstraints);
+        inputPanel.add(yearLabel, yearLabelConstraints);
 
         this.yearTextField = new JFormattedTextField();
         this.yearTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
@@ -140,7 +136,6 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         inputPanel.add(this.numberTextField, numberTextFieldConstraints);
 
         this.add(inputPanel, BorderLayout.PAGE_START);
-
         this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_BY_YEAR_AND_NUMBER_PANEL_TITLE));
     }
     private JFormattedTextField numberTextField;
@@ -152,7 +147,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
      * simply creates a {@link javax.swing.JFrame} in which to display the
      * panel.
      *
-     * @param args Command-line arguments.
+     * @param args Command-line arguments. (ignored)
      */
     public static void main(String[] args) {
         JFrame frame = new JFrame("FindCardsByNumberPanel Test");

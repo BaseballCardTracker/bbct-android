@@ -23,21 +23,21 @@ import bbct.data.BaseballCardIO;
 import bbct.exceptions.IOException;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
 /**
- * TODO: JavaDoc
+ * {@link FindCardsByNumberPanel} allows the user to input a card number. This
+ * value is used as the parameters when searching the underlying storage
+ * mechanism for cards with the given number.
  *
- * TODO: Tweak component placement and size
- * 
  * TODO: Error handling.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
@@ -46,6 +46,7 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
 
     /**
      * Creates new {@link FindCardsByNumberPanel}.
+     *
      * @param bcio The {@link BaseballCardIO} object which is used to search for
      * baseball cards with number input by the user.
      */
@@ -54,16 +55,14 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
         initComponents();
     }
 
-
     /**
-     * 
-     * @return
-     * @throws IOException
+     *
+     * @return @throws IOException
      */
     @Override
     protected List<BaseballCard> getBaseballCards() throws IOException {
         int number = Integer.parseInt(this.numberTextField.getText());
-        
+
         return this.bcio.getBaseballCardsByNumber(number);
     }
 
@@ -75,35 +74,54 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
     }
 
     private void initComponents() {
-        // TODO: GridBagLayout?
-        this.setLayout(new FlowLayout());
+        this.setLayout(new BorderLayout());
 
-        JLabel cardNumberLabel = new JLabel("Card Number:");
-        cardNumberLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
-        this.add(cardNumberLabel);
+        JPanel inputPanel = new JPanel(new GridBagLayout());
+
+        JLabel numberLabel = new JLabel("Card Number:");
+        numberLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+
+        GridBagConstraints numberLabelConstraints = new GridBagConstraints();
+        numberLabelConstraints.gridx = 0;
+        numberLabelConstraints.gridy = 0;
+        numberLabelConstraints.weightx = 1;
+        numberLabelConstraints.weighty = 1;
+        numberLabelConstraints.anchor = GridBagConstraints.WEST;
+        numberLabelConstraints.insets = new Insets(20, 25, 0, 10);
+        inputPanel.add(numberLabel, numberLabelConstraints);
 
         this.numberTextField = new JFormattedTextField();
         this.numberTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
         this.numberTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.numberTextField.setColumns(10);
         this.numberTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card number."));
-        this.add(this.numberTextField);
-        
+
+        GridBagConstraints numberTextFieldConstraints = new GridBagConstraints();
+        numberTextFieldConstraints.gridx = 1;
+        numberTextFieldConstraints.gridy = 0;
+        numberTextFieldConstraints.weightx = 2;
+        numberTextFieldConstraints.weighty = 1;
+        numberTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+        numberTextFieldConstraints.insets = new Insets(20, 10, 0, 25);
+        inputPanel.add(this.numberTextField, numberTextFieldConstraints);
+
+        this.add(inputPanel, BorderLayout.PAGE_START);
         this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_BY_NUMBER_PANEL_TITLE));
     }
-
     private JFormattedTextField numberTextField;
     private BaseballCardIO bcio = null;
-    
+
     /**
-     * 
-     * @param args
+     * This is a test function for {@link FindCardsByNumberPanel}. It simply
+     * creates a {@link javax.swing.JFrame} in which to display the panel.
+     *
+     * @param args Command-line arguments. (ignored)
      */
     public static void main(String[] args) {
         JFrame frame = new JFrame("FindCardsByNumberPanel Test");
         frame.add(new FindCardsByNumberPanel(null));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
+        frame.setSize(400, 425);
         frame.setVisible(true);
     }
 }

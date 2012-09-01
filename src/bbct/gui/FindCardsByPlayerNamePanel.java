@@ -23,17 +23,17 @@ import bbct.data.BaseballCardIO;
 import bbct.exceptions.IOException;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * TODO: JavaDoc
- *
- * TODO: Tweak component placement and size
+ * {@link FindCardsByPlayerNamePanel} allows the user to input the player's name. This
+ * value is used as the parameters when searching the underlying storage
+ * mechanism for cards for the player.
  *
  * TODO: Error handling.
  *
@@ -67,33 +67,54 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
     }
 
     private void initComponents() {
-        // TODO: GridBagLayout?
-        this.setLayout(new FlowLayout());
+        this.setLayout(new BorderLayout());
+
+        JPanel inputPanel = new JPanel(new GridBagLayout());
 
         JLabel playerNameLabel = new JLabel("Player Name:");
         playerNameLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
-        this.add(playerNameLabel);
+
+        GridBagConstraints playerNameLabelConstraints = new GridBagConstraints();
+        playerNameLabelConstraints.gridx = 0;
+        playerNameLabelConstraints.gridy = 0;
+        playerNameLabelConstraints.weightx = 1;
+        playerNameLabelConstraints.weighty = 1;
+        playerNameLabelConstraints.anchor = GridBagConstraints.WEST;
+        playerNameLabelConstraints.insets = new Insets(20, 25, 0, 10);
+        inputPanel.add(playerNameLabel, playerNameLabelConstraints);
 
         this.playerNameTextField = new JTextField();
         this.playerNameTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.playerNameTextField.setColumns(10);
         this.playerNameTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player name."));
-        this.add(this.playerNameTextField);
 
+        GridBagConstraints playerNameTextFieldConstraints = new GridBagConstraints();
+        playerNameTextFieldConstraints.gridx = 1;
+        playerNameTextFieldConstraints.gridy = 0;
+        playerNameTextFieldConstraints.weightx = 2;
+        playerNameTextFieldConstraints.weighty = 1;
+        playerNameTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
+        playerNameTextFieldConstraints.insets = new Insets(20, 10, 0, 25);
+        inputPanel.add(this.playerNameTextField, playerNameTextFieldConstraints);
+
+        this.add(inputPanel, BorderLayout.PAGE_START);
         this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_BY_PLAYER_NAME_PANEL_TITLE));
     }
     private JTextField playerNameTextField;
     private BaseballCardIO bcio = null;
 
     /**
+     * This is a test function for {@link FindCardsByPlayerNamePanel}. It
+     * simply creates a {@link javax.swing.JFrame} in which to display the
+     * panel.
      *
-     * @param args
+     * @param args Command-line arguments. (ignored)
      */
     public static void main(String[] args) {
-        JFrame frame = new JFrame("FindCardsByNumberPanel Test");
+        JFrame frame = new JFrame("FindCardsByPlayerNamePanel Test");
         frame.add(new FindCardsByPlayerNamePanel(null));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
+        frame.setSize(400, 425);
         frame.setVisible(true);
     }
 }

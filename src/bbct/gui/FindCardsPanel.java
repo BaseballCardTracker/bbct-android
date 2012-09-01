@@ -114,6 +114,8 @@ public class FindCardsPanel extends javax.swing.JPanel {
     private void findButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findButtonActionPerformed
         try {
             List<BaseballCard> cards = this.inputPanel.getBaseballCards();
+            // TODO: Need a message if cards list is empty.
+            
             JPanel editCardsPanel = new EditCardsPanel(cards, this.bcio);
             Container parent = this.getParent();
             CardLayout cl = (CardLayout) parent.getLayout();

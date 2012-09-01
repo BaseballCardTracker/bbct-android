@@ -21,15 +21,25 @@ package bbct.gui;
 import bbct.data.BaseballCard;
 import bbct.exceptions.InputException;
 import java.awt.Container;
+import java.text.ParseException;
 import javax.swing.InputVerifier;
 import javax.swing.JFrame;
 
 /**
- * TODO: cardValueTextField needs to be formatted as currency
- *
- * TODO: JavaDoc
+ * {@link CardDetailsPanel} contains labels and text fields for the data stored
+ * in a {@link bbct.data.BaseballCard} model object. This panel can be used in
+ * two modes. The first mode, which is set by using the default constructor {@link #CardDetailsPanel()}
+ * or {@link #CardDetailsPanel(boolean)} with a value of
+ * <code>true</code>, allows editing of all of the text fields. The second mode,
+ * set with {@link #CardDetailsPanel(boolean)} or {@link #CardDetailsPanel(bbct.data.BaseballCard, boolean)}
+ * with a value of
+ * <code>false</code> for the
+ * <code>boolean </code> parameter, only allows editing of the value and count
+ * text fields.
  *
  * TODO: Instructions should change depending on value of allEditable field.
+ *
+ * TODO: Add $ at the beginning of valueTextField's text if it is not present?
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -146,16 +156,20 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         if (!notEmpty.verify(this.cardValueTextField)) {
             throw new InputException("Please enter a card value.");
         }
-        // FIXME
-//        if (!this.cardValueTextField.isEditValid()) {
-//            throw new InputException("Please enter a valid monetary value.");
-//        }
-//        double cardValueDbl = (Double) this.cardValueTextField.getValue();
+        if (!this.cardValueTextField.isEditValid()) {
+            throw new InputException("Please enter a valid monetary value.");
+        }
+        try {
+            this.cardValueTextField.commitEdit();
+        } catch (ParseException ex) {
+            throw new InputException(ex);
+        }
+        double cardValueDbl = ((Number) this.cardValueTextField.getValue()).doubleValue();
         // TODO: Delegate this to an InputVerifier?
-//        if (cardValueDbl < 0.0) {
-//            throw new InputException("Please enter a positive card value.'");
-//        }
-        int cardValue = Integer.parseInt(this.cardValueTextField.getText());
+        if (cardValueDbl < 0.0) {
+            throw new InputException("Please enter a positive card value.'");
+        }
+        int cardValue = (int) (cardValueDbl * 100);
 
         // Validate card count
         this.cardCountTextField.selectAll();
@@ -207,8 +221,11 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     }
 
     /**
+     * Set whether or not the instruction label in {@link BBCTFrame} should be
+     * updated when focus changes between text fields.
      *
-     * @param updateInstructions
+     * @param updateInstructions The flag indicating whether or not the
+     * instruction label should be updated.
      */
     public void setUpdateInstructions(boolean updateInstructions) {
         this.updateInstructions = updateInstructions;
@@ -446,7 +463,9 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     private BaseballCard card = null;
 
     /**
-     * Tests for {@link CardDetailsPanel}.
+     * This is a test function for {@link CardDetailsPanel}. It
+     * simply creates a {@link javax.swing.JFrame} in which to display the
+     * panel.
      *
      * @param args The command-line arguments (ignored).
      */

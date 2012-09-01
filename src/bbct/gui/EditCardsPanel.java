@@ -26,7 +26,8 @@ import java.util.List;
 import javax.swing.JPanel;
 
 /**
- * TODO: JavaDoc
+ * {@link EditCardsPanel} allows the user to edit the value and count of {@link bbct.data.BaseballCard}
+ * objects. It uses one {@link CardDetailsPanel} for each {@link bbct.data.BaseballCard}.
  *
  * TODO: Commit changes to storage.
  *
@@ -47,9 +48,10 @@ public class EditCardsPanel extends JPanel {
     }
 
     /**
-     * Creates new {@link EditCardsPanel}.
+     * Creates new {@link EditCardsPanel} with a {@link CardDetailsPanel} for
+     * each card in the given list.
      *
-     * @param cards
+     * @param cards The list of cards to be edited.
      * @param bcio The {@link BaseballCardIO} object which is used to update
      * data in the underlying persistent storage mechanism.
      */
