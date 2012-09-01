@@ -82,10 +82,8 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
 
         JPanel inputPanel = new JPanel(new GridBagLayout());
 
-        this.setLayout(new FlowLayout());
-
         JLabel yearLabel = new JLabel("Card Year:");
-        yearLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        yearLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
 
         GridBagConstraints yearLabelConstraints = new GridBagConstraints();
         yearLabelConstraints.gridx = 0;
@@ -96,9 +94,9 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
         yearLabelConstraints.insets = new Insets(20, 25, 10, 10);
         inputPanel.add(yearLabel, yearLabelConstraints);
 
-        this.yearTextField = new javax.swing.JFormattedTextField();
+        this.yearTextField = new JFormattedTextField();
         this.yearTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
-        this.yearTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        this.yearTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.yearTextField.setColumns(10);
         this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card year."));
 
