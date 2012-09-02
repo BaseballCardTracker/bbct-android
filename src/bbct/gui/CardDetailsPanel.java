@@ -120,7 +120,6 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // Validate card year
         this.cardYearTextField.selectAll();
         this.cardYearTextField.requestFocusInWindow();
-        // TODO: Is this redundant for a JFormattedTextField?
         if (!notEmpty.verify(this.cardYearTextField)) {
             throw new InputException("Please enter a card year.");
         }
@@ -136,7 +135,6 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // Validate card number
         this.cardNumberTextField.selectAll();
         this.cardNumberTextField.requestFocusInWindow();
-        // TODO: Is this redundant for a JFormattedTextField?
         if (!notEmpty.verify(this.cardNumberTextField)) {
             throw new InputException("Please enter a card number.");
         }
@@ -152,7 +150,6 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // Validate card value
         this.cardValueTextField.selectAll();
         this.cardValueTextField.requestFocusInWindow();
-        // TODO: Is this redundant for a JFormattedTextField?
         if (!notEmpty.verify(this.cardValueTextField)) {
             throw new InputException("Please enter a card value.");
         }
@@ -174,7 +171,6 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // Validate card count
         this.cardCountTextField.selectAll();
         this.cardCountTextField.requestFocusInWindow();
-        // TODO: Is this redundant for a JFormattedTextField?
         if (!notEmpty.verify(this.cardCountTextField)) {
             throw new InputException("Please enter a card count.");
         }

@@ -71,4 +71,12 @@
     nbproject/build-impl.xml file. 
 
     -->
+    
+    <target name="-pre-jar">
+        <copy file="COPYING" todir="dist"/>
+        <copy todir="dist/usermanual">
+            <fileset dir="docs/usermanual"/>
+        </copy>
+    </target>
+    
 </project>

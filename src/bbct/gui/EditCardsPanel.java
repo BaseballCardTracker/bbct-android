@@ -20,9 +20,14 @@ package bbct.gui;
 
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
+import bbct.exceptions.IOException;
+import bbct.exceptions.InputException;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Container;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -136,11 +141,31 @@ public class EditCardsPanel extends JPanel {
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
-        Container parent = this.getParent();
-        CardLayout layout = (CardLayout) parent.getLayout();
+        try {
+            List<BaseballCard> cards = new ArrayList<>();
 
-        parent.remove(this);
-        layout.show(parent, BBCTFrame.FIND_CARDS_MENU_CARD_NAME);
+            synchronized (this.getTreeLock()) {
+                Component[] panels = this.getComponents();
+
+                for (Component panel : panels) {
+                    cards.add(((CardDetailsPanel) panel).getBaseballCard());
+                }
+            }
+
+            try {
+                this.bcio.updateCards(cards);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Unable to update baseball card data.", "I/O Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            Container parent = this.getParent();
+            CardLayout layout = (CardLayout) parent.getLayout();
+
+            parent.remove(this);
+            layout.show(parent, BBCTFrame.FIND_CARDS_MENU_CARD_NAME);
+        } catch (InputException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_doneButtonActionPerformed
 
     private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
