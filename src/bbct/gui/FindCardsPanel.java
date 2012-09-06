@@ -114,14 +114,17 @@ public class FindCardsPanel extends javax.swing.JPanel {
     private void findButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findButtonActionPerformed
         try {
             List<BaseballCard> cards = this.inputPanel.getBaseballCards();
-            // TODO: Need a message if cards list is empty.
-            
-            JPanel editCardsPanel = new EditCardsPanel(cards, this.bcio);
-            Container parent = this.getParent();
-            CardLayout cl = (CardLayout) parent.getLayout();
 
-            parent.add(editCardsPanel, BBCTFrame.EDIT_CARDS_PANEL_NAME);
-            cl.show(parent, BBCTFrame.EDIT_CARDS_PANEL_NAME);
+            if (cards.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No cards found.", "No cards found.", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JPanel editCardsPanel = new EditCardsPanel(cards, this.bcio);
+                Container parent = this.getParent();
+                CardLayout cl = (CardLayout) parent.getLayout();
+
+                parent.add(editCardsPanel, BBCTFrame.EDIT_CARDS_PANEL_NAME);
+                cl.show(parent, BBCTFrame.EDIT_CARDS_PANEL_NAME);
+            }
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
         }

@@ -26,14 +26,21 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 /**
- * TODO: JavaDoc
+ * {@link FindCardsByPanel} provides the contract for a {@link javax.swing.JPanel}
+ * which allows user input that is used while searching the underlying storage
+ * mechanism for baseball card data. Typically this panel provides GUI controls
+ * for the user to enter parameter values for the search, such as the year of a
+ * card or the name of the player on the card. Subclasses of {@link FindCardsByPanel}
+ * are required to override the {@link #getBaseballCards()} method to implement
+ * the specific search depending on the subclasses exact criteria.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public abstract class FindCardsByPanel extends JPanel {
-    
+
     /**
-     * 
+     * Create a new {@link FindCardsByPanel}. This constructor ensures that the
+     * correct GUI control will have focus when the panel is displayed.
      */
     public FindCardsByPanel() {
         this.addAncestorListener(new AncestorListener() {
@@ -54,14 +61,19 @@ public abstract class FindCardsByPanel extends JPanel {
     }
 
     /**
-     * 
-     * @return
-     * @throws IOException
+     * Returns a list of {@link BaseballCard}s which match the search criteria
+     * determined by a subclass of {@link FindCardsByPanel}.
+     *
+     * @return A list of {@link BaseballCard}s which match the search criteria
+     * determined by a subclass of {@link FindCardsByPanel}.
+     * @throws IOException If an error occurs in the underlying storage
+     * mechanism while searching for baseball card data.
      */
     protected abstract List<BaseballCard> getBaseballCards() throws IOException;
-    
+
     /**
-     * 
+     * Subclasses override this method to ensure that the correct control has
+     * focus when the panel is first displayed.
      */
     protected abstract void setFocus();
 }

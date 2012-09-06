@@ -38,7 +38,7 @@ import javax.swing.text.NumberFormatter;
  * and year. These values are used as the parameters when searching the
  * underlying storage mechanism for cards with the given year and number.
  *
- * TODO: yearTextFiled needs to be limited to 4 digits
+ * TODO: yearTextField needs to be limited to 4 digits
  *
  * TODO: Error handling.
  *

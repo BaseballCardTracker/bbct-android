@@ -20,10 +20,16 @@ package bbct.gui;
 
 import bbct.data.BaseballCard;
 import bbct.exceptions.InputException;
-import java.awt.Container;
+import bbct.gui.event.UpdateInstructionsFocusListener;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import javax.swing.InputVerifier;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * {@link CardDetailsPanel} contains labels and text fields for the data stored
@@ -49,7 +55,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
      * Creates new {@link CardDetailsPanel}.
      */
     public CardDetailsPanel() {
-        initComponents();
+        this.initComponents();
     }
 
     /**
@@ -61,7 +67,8 @@ public class CardDetailsPanel extends javax.swing.JPanel {
      */
     public CardDetailsPanel(boolean allEditable) {
         this.allEditable = allEditable;
-        initComponents();
+        this.initComponents();
+        this.addFocusListeners();
     }
 
     /**
@@ -77,7 +84,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         this.card = card;
         this.allEditable = allEditable;
 
-        initComponents();
+        this.initComponents();
 
         this.cardBrandTextField.setText(this.card.getBrand());
         this.cardYearTextField.setValue(this.card.getYear());
@@ -227,6 +234,16 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         this.updateInstructions = updateInstructions;
     }
 
+    private void addFocusListeners() {
+        this.cardBrandTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card brand name."));
+        this.cardYearTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card year."));
+        this.cardNumberTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card number."));
+        this.cardValueTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card value."));
+        this.cardCountTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card count."));
+        this.playerNameTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player name."));
+        this.playerPositionTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player position."));
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -266,10 +283,6 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         });
 
         cardDetailsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Card Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
-        // card postinit
-        cardBrandTextField.setEnabled(this.allEditable);
-        cardNumberTextField.setEnabled(this.allEditable);
-        cardYearTextField.setEnabled(this.allEditable);
 
         cardNumberLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cardNumberLabel.setText("Card Number:");
@@ -286,17 +299,15 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         cardCountLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cardCountLabel.setText("Card Count:");
 
+        cardBrandTextField.setEditable(this.allEditable);
         cardBrandTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cardBrandTextField.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                cardBrandTextFieldFocusGained(evt);
-            }
-        });
 
+        cardNumberTextField.setEditable(this.allEditable);
         cardNumberTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         cardNumberTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
         cardNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        cardYearTextField.setEditable(this.allEditable);
         cardYearTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         cardYearTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
         cardYearTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -362,9 +373,6 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         );
 
         playerDetailsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Player Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 18))); // NOI18N
-        // player post init
-        playerNameTextField.setEnabled(this.allEditable);
-        playerPositionTextField.setEditable(this.allEditable);
 
         playerNameLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         playerNameLabel.setText("Player Name:");
@@ -372,8 +380,10 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         playerPositionLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         playerPositionLabel.setText("Player Position:");
 
+        playerNameTextField.setEditable(this.allEditable);
         playerNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        playerPositionTextField.setEditable(this.allEditable);
         playerPositionTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout playerDetailsPanelLayout = new javax.swing.GroupLayout(playerDetailsPanel);
@@ -426,18 +436,6 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cardBrandTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cardBrandTextFieldFocusGained
-        if (this.updateInstructions) {
-            Container topLevelAncestor = this.getTopLevelAncestor();
-
-            if (topLevelAncestor instanceof BBCTFrame) {
-                ((BBCTFrame) topLevelAncestor).setInstructions("Enter card brand name.");
-            }
-        } else {
-            this.updateInstructions = true;
-        }
-    }//GEN-LAST:event_cardBrandTextFieldFocusGained
-
     private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
         if (this.allEditable) {
             this.cardBrandTextField.requestFocusInWindow();
@@ -459,9 +457,8 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     private BaseballCard card = null;
 
     /**
-     * This is a test function for {@link CardDetailsPanel}. It
-     * simply creates a {@link javax.swing.JFrame} in which to display the
-     * panel.
+     * This is a test function for {@link CardDetailsPanel}. It simply creates a {@link javax.swing.JFrame}
+     * in which to display the panel.
      *
      * @param args The command-line arguments (ignored).
      */
@@ -470,7 +467,29 @@ public class CardDetailsPanel extends javax.swing.JPanel {
 
         JFrame frame = new JFrame("CardDetailsPanel Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new CardDetailsPanel());
+
+        final JPanel cardPanel = new JPanel();
+        final CardLayout cl = new CardLayout();
+        cardPanel.setLayout(cl);
+        cardPanel.add(new CardDetailsPanel(), "editablePanel");
+        cardPanel.add(new CardDetailsPanel(false), "uneditablePanel");
+
+        JPanel buttonPanel = new JPanel();
+        JButton nextButton = new JButton("Next");
+
+        nextButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                cl.next(cardPanel);
+            }
+        });
+
+        buttonPanel.add(nextButton);
+
+        frame.setLayout(new BorderLayout());
+        frame.add(cardPanel, BorderLayout.CENTER);
+        frame.add(buttonPanel, BorderLayout.SOUTH);
         frame.pack();
         frame.setVisible(true);
     }

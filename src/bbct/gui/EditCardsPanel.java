@@ -39,8 +39,6 @@ import javax.swing.JPanel;
  * TODO: What if 1,000 cards match a search? Scrolling through one at a time
  * will be painful!
  *
- * TODO: Update instructions label appropriately.
- *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class EditCardsPanel extends JPanel {
@@ -141,6 +139,8 @@ public class EditCardsPanel extends JPanel {
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
+        // FIXME
+        
         try {
             List<BaseballCard> cards = new ArrayList<>();
 

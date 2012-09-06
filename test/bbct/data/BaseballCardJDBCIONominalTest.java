@@ -20,11 +20,15 @@ package bbct.data;
 
 import bbct.exceptions.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+import junit.framework.Assert;
 import org.junit.*;
 
 /**
  * TODO: JavaDoc
+ * 
+ * TODO: testGetBaseballCardByX() methods should be extended to find multiple cards
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -34,15 +38,16 @@ public class BaseballCardJDBCIONominalTest {
     private BaseballCardJDBCIO instance = null;
     private Connection conn = null;
     private Statement stmt = null;
+    private BaseballCard card = null;
 
     /**
-     * 
+     *
      */
     public BaseballCardJDBCIONominalTest() {
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @BeforeClass
@@ -50,7 +55,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @AfterClass
@@ -58,7 +63,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * 
+     *
      * @throws IOException
      * @throws SQLException
      */
@@ -70,6 +75,8 @@ public class BaseballCardJDBCIONominalTest {
             // TODO: Do I need to pass in a user name and password for HSQLDB?
             this.conn = DriverManager.getConnection(this.url);
             this.stmt = this.conn.createStatement();
+
+            this.card = createCard();
         } catch (IOException ex) {
             System.out.println("IOException caught in setUp()");
             ex.printStackTrace();
@@ -77,7 +84,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * 
+     *
      * @throws IOException
      * @throws SQLException
      */
@@ -91,8 +98,9 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#BaseballCardJDBCIO}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#BaseballCardJDBCIO}.
+     *
+     * @throws Exception
      */
     @Test
     public void testConstructor() throws Exception {
@@ -110,8 +118,9 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#close()}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#close()}.
+     *
+     * @throws Exception
      */
     @Test
     public void testClose() throws Exception {
@@ -119,12 +128,13 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#insertBaseballCard(baseball.data.BaseballCard)}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#insertBaseballCard(BaseballCard)}.
+     *
+     * @throws Exception
      */
     @Test
     public void testInsertBaseballCard() throws Exception {
-        BaseballCard card = this.insertCard();
+        this.instance.insertBaseballCard(this.card);
 
         String select = "SELECT * FROM " + BaseballCardJDBCIO.TABLE_NAME;
         ResultSet rs = this.stmt.executeQuery(select);
@@ -141,50 +151,54 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardByYear(int)}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#getBaseballCardByYear(int)}.
+     *
+     * @throws Exception
      */
     @Test
     public void testGetBaseballCardByYear() throws Exception {
-        BaseballCard card = this.insertCard();
+        this.instance.insertBaseballCard(this.card);
         List result = this.instance.getBaseballCardsByYear(card.getYear());
         Assert.assertEquals(card, result.get(0));
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardByNumber(int)}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#getBaseballCardByNumber(int)}.
+     *
+     * @throws Exception
      */
     @Test
     public void testGetBaseballCardByNumber() throws Exception {
-        BaseballCard card = this.insertCard();
+        this.instance.insertBaseballCard(this.card);
         List result = this.instance.getBaseballCardsByNumber(card.getNumber());
         Assert.assertEquals(card, result.get(0));
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
+     *
+     * @throws Exception
      */
     @Test
     public void testGetBaseballCardByYearAndNumber() throws Exception {
-        BaseballCard card = this.insertCard();
+        this.instance.insertBaseballCard(this.card);
         List result = this.instance.getBaseballCardsByYearAndNumber(card.getYear(), card.getNumber());
         Assert.assertEquals(card, result.get(0));
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByPlayerName(String)}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByPlayerName(String)}.
+     *
+     * @throws Exception
      */
     @Test
     public void testGetBaseballCardByPlayerName() throws Exception {
-        BaseballCard card = this.insertCard();
+        this.instance.insertBaseballCard(this.card);
         List result = this.instance.getBaseballCardsByPlayerName(card.getPlayerName());
         Assert.assertEquals(card, result.get(0));
     }
 
-    private BaseballCard insertCard() throws IOException {
+    private BaseballCard createCard() {
         String brand = "Topps";
         int year = 1991;
         int num = 278;
@@ -193,86 +207,87 @@ public class BaseballCardJDBCIONominalTest {
         String name = "Alex Fernandez";
         String pos = "Pitcher";
 
-        BaseballCard card = new BaseballCard(brand, year, num, val, count, name, pos);
-        this.instance.insertBaseballCard(card);
-
-        return card;
+        return new BaseballCard(brand, year, num, val, count, name, pos);
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByYear(int)}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByYear(int)}.
+     *
+     * @throws Exception
      */
     @Test
     public void testGetBaseballCardsByYear() throws Exception {
-        System.out.println("getBaseballCardsByYear");
-        int year = 0;
-        List expResult = null;
-        List result = instance.getBaseballCardsByYear(year);
+        this.instance.insertBaseballCard(this.card);
+        
+        List<BaseballCard> expResult = new ArrayList<>();
+        expResult.add(this.card);
+
+        List result = instance.getBaseballCardsByYear(this.card.getYear());
         Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByNumber(int)}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByNumber(int)}.
+     *
+     * @throws Exception
      */
     @Test
     public void testGetBaseballCardsByNumber() throws Exception {
-        System.out.println("getBaseballCardsByNumber");
-        int number = 0;
-        List expResult = null;
-        List result = instance.getBaseballCardsByNumber(number);
+        this.instance.insertBaseballCard(this.card);
+        
+        List<BaseballCard> expResult = new ArrayList<>();
+        expResult.add(this.card);
+
+        List result = instance.getBaseballCardsByNumber(this.card.getNumber());
         Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
+     *
+     * @throws Exception
      */
     @Test
     public void testGetBaseballCardsByYearAndNumber() throws Exception {
-        System.out.println("getBaseballCardsByYearAndNumber");
-        int year = 0;
-        int number = 0;
-        List expResult = null;
-        List result = instance.getBaseballCardsByYearAndNumber(year, number);
+        this.instance.insertBaseballCard(this.card);
+        
+        List<BaseballCard> expResult = new ArrayList<>();
+        expResult.add(this.card);
+
+        List result = instance.getBaseballCardsByYearAndNumber(this.card.getYear(), this.card.getNumber());
         Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#getBaseballCardsByPlayerName(String)}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByPlayerName(String)}.
+     *
+     * @throws Exception
      */
     @Test
     public void testGetBaseballCardsByPlayerName() throws Exception {
-        System.out.println("getBaseballCardsByPlayerName");
-        String playerName = "";
-        List expResult = null;
-        List result = instance.getBaseballCardsByPlayerName(playerName);
+        this.instance.insertBaseballCard(this.card);
+        
+        List<BaseballCard> expResult = new ArrayList<>();
+        expResult.add(this.card);
+
+        List result = instance.getBaseballCardsByPlayerName(this.card.getPlayerName());
         Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
     }
 
     /**
-     * Test for {@link baseball.data.BaseballCardJDBCIO#updateCard(Card)}.
-     * @throws Exception 
+     * Test for {@link BaseballCardJDBCIO#updateCard(BaseballCard)}.
+     *
+     * @throws Exception
      */
     @Test
     public void testUpdateCard() throws Exception {
-        BaseballCard card = this.insertCard();
+        this.instance.insertBaseballCard(this.card);
         int newValue = 20000;
         int newCount = 3;
         card.setValue(newValue);
         card.setCount(newCount);
         instance.updateCard(card);
-        
+
         String brand = card.getBrand();
         int year = card.getYear();
         int number = card.getNumber();
@@ -281,14 +296,14 @@ public class BaseballCardJDBCIONominalTest {
                 + " WHERE " + BaseballCardJDBCIO.BRAND_COL_NAME + " = ? "
                 + "   AND " + BaseballCardJDBCIO.YEAR_COL_NAME + " = ? "
                 + "   AND " + BaseballCardJDBCIO.NUMBER_COL_NAME + " = ?";
-        
-        PreparedStatement ps  = this.conn.prepareStatement(query);
+
+        PreparedStatement ps = this.conn.prepareStatement(query);
         ps.setString(1, brand);
         ps.setInt(2, year);
         ps.setInt(3, number);
-        
+
         ResultSet rs = ps.executeQuery(query);
-        
+
         Assert.fail("The test case is a prototype.");
     }
 }

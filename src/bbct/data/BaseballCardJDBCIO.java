@@ -285,7 +285,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
                 + VALUE_COL_NAME + " INTEGER, "
                 + COUNT_COL_NAME + " INTEGER, "
                 + NAME_COL_NAME + " VARCHAR(50), "
-                + POSITION_COL_NAME + " VARCHAR(20))";
+                + POSITION_COL_NAME + " VARCHAR(20),"
+                + "PRIMARY KEY (" + BRAND_COL_NAME + ", " + YEAR_COL_NAME + ", " + NUMBER_COL_NAME + "))";
 
         Statement stmt = this.conn.createStatement();
         stmt.execute(sqlCreate);
