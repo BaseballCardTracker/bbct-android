@@ -145,7 +145,7 @@ public class EditCardsPanel extends JPanel {
             List<BaseballCard> cards = new ArrayList<>();
 
             synchronized (this.getTreeLock()) {
-                Component[] panels = this.getComponents();
+                Component[] panels = this.allCardDetailsPanel.getComponents();
 
                 for (Component panel : panels) {
                     cards.add(((CardDetailsPanel) panel).getBaseballCard());
