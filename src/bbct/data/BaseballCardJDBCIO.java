@@ -78,6 +78,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             this.conn = DriverManager.getConnection(url);
             this.createTable();
         } catch (SQLException ex) {
+            // TODO: Need a more user-friendly error message.
             throw new IOException(ex);
         }
     }
@@ -92,6 +93,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
         try {
             this.conn.close();
         } catch (SQLException ex) {
+            // TODO: Need a more user-friendly error message.
             throw new IOException(ex);
         }
     }
@@ -118,6 +120,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             stmtInsert.setString(7, card.getPlayerPosition());
             stmtInsert.executeUpdate();
         } catch (SQLException ex) {
+            // TODO: Need a user-friendly error message when the user tries to add a card which already exists in storage.
             throw new IOException(ex);
         }
     }
@@ -143,6 +146,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
 
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
+            // TODO: Need a more user-friendly error message.
             throw new IOException(ex);
         }
     }
@@ -167,6 +171,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             ResultSet rs = stmt.executeQuery();
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
+            // TODO: Need a more user-friendly error message.
             throw new IOException(ex);
         }
     }
@@ -196,6 +201,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             ResultSet rs = stmt.executeQuery();
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
+            // TODO: Need a more user-friendly error message.
             throw new IOException(ex);
         }
     }
@@ -220,6 +226,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             ResultSet rs = stmt.executeQuery();
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
+            // TODO: Need a more user-friendly error message.
             throw new IOException(ex);
         }
     }
@@ -255,6 +262,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
 
             stmt.executeUpdate();
         } catch (SQLException ex) {
+            // TODO: Need a more user-friendly error message.
             throw new IOException(ex);
         }
     }

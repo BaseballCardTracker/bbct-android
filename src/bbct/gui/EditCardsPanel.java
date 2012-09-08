@@ -38,6 +38,9 @@ import javax.swing.JPanel;
  * TODO: What if 1,000 cards match a search? Scrolling through one at a time
  * will be painful!
  *
+ * TODO: Enable/disable the "Previous" and "Next" buttons depending on whether
+ * or not card details are available for display in the given direction.
+ *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class EditCardsPanel extends JPanel {

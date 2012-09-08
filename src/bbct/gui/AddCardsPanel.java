@@ -37,7 +37,6 @@ import javax.swing.JOptionPane;
  *
  * TODO: Instructions not correct after clicking Add Card button
  *
- * TODO: What if the user tries to add a card which already exists in storage?
  */
 public class AddCardsPanel extends javax.swing.JPanel {
 
