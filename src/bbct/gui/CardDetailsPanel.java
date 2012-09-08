@@ -26,9 +26,12 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -457,6 +460,18 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     private boolean updateInstructions = true;
     private BaseballCard card = null;
 
+    private static BaseballCard createBaseballCard() {
+        String brand = "Topps";
+        int year = 1991;
+        int num = 278;
+        int val = 10000;
+        int count = 1;
+        String name = "Alex Fernandez";
+        String pos = "Pitcher";
+
+        return new BaseballCard(brand, year, num, val, count, name, pos);
+    }
+
     /**
      * This is a test function for {@link CardDetailsPanel}. It simply creates a
      * {@link javax.swing.JFrame} in which to display the panel.
@@ -466,7 +481,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     public static void main(String[] args) {
         // TODO: Add a way to test getBaseballCard()
 
-        JFrame frame = new JFrame("CardDetailsPanel Test");
+        final JFrame frame = new JFrame("CardDetailsPanel Test");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         final JPanel cardPanel = new JPanel();
@@ -474,6 +489,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         cardPanel.setLayout(cl);
         cardPanel.add(new CardDetailsPanel(), "editablePanel");
         cardPanel.add(new CardDetailsPanel(false), "uneditablePanel");
+        cardPanel.add(new CardDetailsPanel(createBaseballCard(), false));
 
         JPanel buttonPanel = new JPanel();
         JButton nextButton = new JButton("Next");
@@ -492,7 +508,16 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         getCardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                throw new UnsupportedOperationException("Not supported yet.");
+//                try {
+//                    // TODO: How do I get the currently visible CardDetailsPanel?
+//                    CardDetailsPanel panel = (CardDetailsPanel)cl.
+//                    BaseballCard card = editablePanel.getBaseballCard();
+//
+//                    JOptionPane.showMessageDialog(frame, card, "Baseball Card", JOptionPane.INFORMATION_MESSAGE);
+//                } catch (InputException ex) {
+//                    Logger.getLogger(CardDetailsPanel.class.getName()).log(Level.SEVERE, null, ex);
+//                    JOptionPane.showMessageDialog(frame, ex, "Input Error", JOptionPane.ERROR_MESSAGE);
+//                }
             }
         });
 

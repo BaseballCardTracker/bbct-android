@@ -77,7 +77,7 @@ public class BaseballCardJDBCIONominalTest {
             this.conn = DriverManager.getConnection(this.url);
             this.stmt = this.conn.createStatement();
 
-            this.card = createCard();
+            this.card = createBaseballCard();
         } catch (IOException ex) {
             System.out.println("IOException caught in setUp()");
             ex.printStackTrace();
@@ -200,7 +200,7 @@ public class BaseballCardJDBCIONominalTest {
         Assert.assertEquals(card, result.get(0));
     }
 
-    private BaseballCard createCard() {
+    private BaseballCard createBaseballCard() {
         String brand = "Topps";
         int year = 1991;
         int num = 278;

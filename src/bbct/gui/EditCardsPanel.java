@@ -35,8 +35,6 @@ import javax.swing.JPanel;
  * {@link bbct.data.BaseballCard} objects. It uses one {@link CardDetailsPanel}
  * for each {@link bbct.data.BaseballCard}.
  *
- * TODO: Commit changes to storage.
- *
  * TODO: What if 1,000 cards match a search? Scrolling through one at a time
  * will be painful!
  *
@@ -140,8 +138,6 @@ public class EditCardsPanel extends JPanel {
     }//GEN-LAST:event_nextButtonActionPerformed
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
-        // FIXME
-
         try {
             List<BaseballCard> cards = new ArrayList<>();
 

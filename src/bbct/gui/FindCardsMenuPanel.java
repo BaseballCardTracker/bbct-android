@@ -23,7 +23,10 @@ import java.awt.CardLayout;
 import java.awt.Container;
 
 /**
- * TODO: JavaDoc
+ * {@link FindCardsMenuPanel} has four buttons which allow the user to choose
+ * which criteria to use when searching for baseball card data. The four options
+ * are "Find Cards by Year", "Find Cards by Number", "Find Cards by Year and
+ * Number", and "Find Cards by Player Name".
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
