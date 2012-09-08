@@ -45,7 +45,7 @@ import javax.swing.text.NumberFormatter;
 public class FindCardsByNumberPanel extends FindCardsByPanel {
 
     /**
-     * Creates new {@link FindCardsByNumberPanel}.
+     * Creates a new {@link FindCardsByNumberPanel}.
      *
      * @param bcio The {@link BaseballCardIO} object which is used to search for
      * baseball cards with number input by the user.

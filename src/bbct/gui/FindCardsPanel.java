@@ -29,21 +29,27 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * TODO: JavaDoc
+ * {@link FindCardPanel} contains a {@link FindCardsByPanel} and two buttons,
+ * "Find" and "Back". The {@link FindCardsByPanel} defines the criteria and
+ * parameters used to find baseball card data in the underlying storage
+ * mechanism. The "Find" button executes
+ * {@link FindCardsByPanel#getBaseballCards()} and displays the returned data in
+ * a {@link EditCardsPanel}. The "Back" button returns to the
+ * {@link FindCardsMenuPanel}.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FindCardsPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new {@link FindCardsPanel}.
+     * Creates a new {@link FindCardsPanel}.
      */
     public FindCardsPanel() {
         initComponents();
     }
 
     /**
-     * Creates new {@link FindCardsPanel}.
+     * Creates a new {@link FindCardsPanel}.
      *
      * @param bcio The {@link BaseballCardIO} object which is used to search for
      * baseball cards using the criteria input by the user.

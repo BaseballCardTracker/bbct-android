@@ -70,7 +70,7 @@ public class BBCTFrame extends javax.swing.JFrame {
     public static final String ABOUT_CARD_NAME = "about";
 
     /**
-     * Creates {@link BBCTFrame}.
+     * Creates a new {@link BBCTFrame}.
      */
     public BBCTFrame() {
         this.initComponents();
@@ -78,7 +78,7 @@ public class BBCTFrame extends javax.swing.JFrame {
     }
 
     /**
-     * Creates {@link BBCTFrame}.
+     * Creates a new {@link BBCTFrame}.
      *
      * @param bcio The connection to the underlying persistent storage
      * mechanism.

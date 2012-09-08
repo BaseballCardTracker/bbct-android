@@ -24,23 +24,36 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 /**
- * TODO: JavaDoc
+ * {@link UpdateTitleAncestorListener} changes the title of
+ * {@link bbct.gui.BBCTFrame} when a component is added to the component tree.
+ * This is typically used for the {@link javax.swing.JPanel} subclasses in the
+ * {@link bbct.gui} package.
+ *
+ * @see bbct.gui.FindCardsByYearPanel
+ * @see bbct.gui.FindCardsByNumberPanel
+ * @see bbct.gui.FindCardsByYearAndNumberPanel
+ * @see bbct.gui.FindCardsByPlayerNamePanel
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class UpdateTitleAncestorListener implements AncestorListener {
 
     /**
+     * Creates a new {@link UpdateTitleAncestorListener} which will change the
+     * title of {@link bbct.gui.BBCTFrame} to the given text.
      *
-     * @param title
+     * @param title The text to set in the title of {@link bbct.gui.BBCTFrame}.
      */
     public UpdateTitleAncestorListener(String title) {
         this.title = title;
     }
 
     /**
+     * Changes the title of {@link bbct.gui.BBCTFrame} when a component is added
+     * tot he component tree.
      *
-     * @param ae
+     * @param ae The {@link javax.swing.event.AncestorEvent} which triggered
+     * this method call.
      */
     @Override
     public void ancestorAdded(AncestorEvent ae) {
@@ -49,16 +62,20 @@ public class UpdateTitleAncestorListener implements AncestorListener {
     }
 
     /**
+     * Empty method.
      *
-     * @param ae
+     * @param ae The {@link javax.swing.event.AncestorEvent} which triggered
+     * this method call.
      */
     @Override
     public void ancestorMoved(AncestorEvent ae) {
     }
 
     /**
+     * Empty method.
      *
-     * @param ae
+     * @param ae The {@link javax.swing.event.AncestorEvent} which triggered
+     * this method call.
      */
     @Override
     public void ancestorRemoved(AncestorEvent ae) {

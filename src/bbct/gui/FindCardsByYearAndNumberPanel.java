@@ -47,7 +47,7 @@ import javax.swing.text.NumberFormatter;
 public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
 
     /**
-     * Creates new {@link FindCardsByYearAndNumberPanel} with two JLabels and
+     * Creates a new {@link FindCardsByYearAndNumberPanel} with two JLabels and
      * two JFormattedTextFields. The text fields validate input for integer
      * values which are used as the baseball card year and number when searching
      * for cards in the underlying storage.

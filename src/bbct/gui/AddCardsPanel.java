@@ -42,7 +42,7 @@ import javax.swing.JOptionPane;
 public class AddCardsPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new {@link AddCardsPanel}.
+     * Creates a new {@link AddCardsPanel}.
      */
     public AddCardsPanel() {
         initComponents();

@@ -28,7 +28,7 @@ import org.junit.*;
 public class BaseballCardNominalTest {
 
     /**
-     *
+     * Creates a new {@link BaseballCardNominalTest}.
      */
     public BaseballCardNominalTest() {
     }

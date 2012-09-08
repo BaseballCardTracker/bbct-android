@@ -56,14 +56,14 @@ import javax.swing.JPanel;
 public class CardDetailsPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new {@link CardDetailsPanel}.
+     * Creates a new {@link CardDetailsPanel}.
      */
     public CardDetailsPanel() {
         this.initComponents();
     }
 
     /**
-     * Creates new {@link CardDetailsPanel}.
+     * Creates a new {@link CardDetailsPanel}.
      *
      * @param allEditable Whether or not all text fields are editable. The count
      * and value text fields will always be editable regardless of the value of
@@ -76,7 +76,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     }
 
     /**
-     * Creates new {@link CardDetailsPanel}.
+     * Creates a new {@link CardDetailsPanel}.
      *
      * @param card The {@link bbct.data.BaseballCard} object used to initialize
      * the values of the text fields in this panel.

@@ -23,26 +23,34 @@ import java.awt.Container;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JComponent;
+import javax.swing.JTextField;
 
 /**
- * TODO: JavaDoc
+ * {@link UpdateInstructionsFocusListener} changes the text of the instruction
+ * label in {@link bbct.gui.BBCTFrame} when a Swing component gains focus. This
+ * is typically used for {@link javax.swing.JTextField}s.
  *
+ * @see bbct.gui.BBCTFrame#setInstructions(java.lang.String)
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class UpdateInstructionsFocusListener extends FocusAdapter {
 
     /**
+     * Creates a new {@link UpdateInstructionsFocusListener} that will update
+     * the instruction label in {@link bbct.gui.BBCTFrame} to the given text.
      *
-     * @param instr
+     * @param instr The instruction text to use.
      */
     public UpdateInstructionsFocusListener(String instr) {
         this.instr = instr;
     }
 
     /**
+     * Updates the instruction label in {@link bbct.gui.BBCTFrame} when a
+     * focusGained event occurs.
      *
-     * @param fe
+     * @param fe The {@link java.awt.event.FocusEvent} which triggered this method call.
      */
     @Override
     public void focusGained(FocusEvent fe) {

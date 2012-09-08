@@ -28,19 +28,24 @@ import java.awt.Container;
  * are "Find Cards by Year", "Find Cards by Number", "Find Cards by Year and
  * Number", and "Find Cards by Player Name".
  *
+ * @see FindCardsByYearPanel
+ * @see FindCardsByNumberPanel
+ * @see FindCardsByYearAndNumberPanel
+ * @see FindCardsByPlayerNamePanel
+ * 
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FindCardsMenuPanel extends javax.swing.JPanel {
 
     /**
-     * Creates {@link FindCardsMenuPanel}.
+     * Creates a new {@link FindCardsMenuPanel}.
      */
     public FindCardsMenuPanel() {
         initComponents();
     }
 
     /**
-     * Creates {@link FindCardsMenuPanel}.
+     * Creates a new {@link FindCardsMenuPanel}.
      *
      * @param bcio The {@link BaseballCardIO} object which is used to search for
      * baseball cards using the criteria input by the user.

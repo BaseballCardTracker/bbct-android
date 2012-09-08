@@ -42,7 +42,7 @@ import javax.swing.JTextField;
 public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
 
     /**
-     * Creates new {@link FindCardsByPlayerNamePanel}.
+     * Creates a new {@link FindCardsByPlayerNamePanel}.
      *
      * @param bcio The {@link BaseballCardIO} object which is used to search for
      * baseball cards with player name input by the user.

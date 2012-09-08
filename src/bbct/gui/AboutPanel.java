@@ -29,7 +29,7 @@ import java.awt.Container;
 public class AboutPanel extends javax.swing.JPanel {
 
     /**
-     * Creates {@link AboutPanel}.
+     * Creates a new {@link AboutPanel}.
      */
     public AboutPanel() {
         initComponents();
@@ -78,7 +78,7 @@ public class AboutPanel extends javax.swing.JPanel {
         copyrightLabel.setText("<html>&copy 2012 codeguru</html>");
 
         versionLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        versionLabel.setText("Version 0.1 (beta)");
+        versionLabel.setText("Version 0.5 (beta)");
 
         websiteLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         websiteLabel.setText("Project website: http://www.sourceforge.net/p/bbct");

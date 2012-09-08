@@ -43,14 +43,14 @@ import javax.swing.JPanel;
 public class EditCardsPanel extends JPanel {
 
     /**
-     * Creates new {@link EditCardsPanel}.
+     * Creates a new {@link EditCardsPanel}.
      */
     public EditCardsPanel() {
         initComponents();
     }
 
     /**
-     * Creates new {@link EditCardsPanel} with a {@link CardDetailsPanel} for
+     * Creates a new {@link EditCardsPanel} with a {@link CardDetailsPanel} for
      * each card in the given list.
      *
      * @param cards The list of cards to be edited.

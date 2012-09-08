@@ -22,14 +22,20 @@ import java.awt.CardLayout;
 import java.awt.Container;
 
 /**
- * TODO: JavaDoc
+ * {@link MenuPanel} contains buttons that specify the primary actions a user
+ * can take in the BBCT application. These are Add Cards, Find Cards, About
+ * BBCT, and Exit.
+ * 
+ * @see AddCardsPanel
+ * @see FindCardsMenuPanel
+ * @see AboutPanel
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class MenuPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form MainPanel
+     * Creates a new {@link MenuPanel}.
      */
     public MenuPanel() {
         initComponents();

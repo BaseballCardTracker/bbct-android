@@ -47,7 +47,7 @@ import javax.swing.text.NumberFormatter;
 public class FindCardsByYearPanel extends FindCardsByPanel {
 
     /**
-     * Creates new {@link FindCardsByYearPanel}.
+     * Creates a new {@link FindCardsByYearPanel}.
      *
      * @param bcio The {@link BaseballCardIO} object which is used to search for
      * baseball cards with the year input by the user.
