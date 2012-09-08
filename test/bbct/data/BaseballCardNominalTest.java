@@ -28,13 +28,13 @@ import org.junit.*;
 public class BaseballCardNominalTest {
 
     /**
-     * 
+     *
      */
     public BaseballCardNominalTest() {
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @BeforeClass
@@ -42,7 +42,7 @@ public class BaseballCardNominalTest {
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @AfterClass
@@ -50,7 +50,7 @@ public class BaseballCardNominalTest {
     }
 
     /**
-     * 
+     *
      */
     @Before
     public void setUp() {
@@ -58,7 +58,7 @@ public class BaseballCardNominalTest {
     }
 
     /**
-     * 
+     *
      */
     @After
     public void tearDown() {

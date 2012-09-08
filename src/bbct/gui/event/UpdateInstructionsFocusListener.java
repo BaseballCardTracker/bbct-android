@@ -33,7 +33,7 @@ import javax.swing.JComponent;
 public class UpdateInstructionsFocusListener extends FocusAdapter {
 
     /**
-     * 
+     *
      * @param instr
      */
     public UpdateInstructionsFocusListener(String instr) {
@@ -41,7 +41,7 @@ public class UpdateInstructionsFocusListener extends FocusAdapter {
     }
 
     /**
-     * 
+     *
      * @param fe
      */
     @Override

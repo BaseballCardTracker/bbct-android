@@ -31,8 +31,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * {@link EditCardsPanel} allows the user to edit the value and count of {@link bbct.data.BaseballCard}
- * objects. It uses one {@link CardDetailsPanel} for each {@link bbct.data.BaseballCard}.
+ * {@link EditCardsPanel} allows the user to edit the value and count of
+ * {@link bbct.data.BaseballCard} objects. It uses one {@link CardDetailsPanel}
+ * for each {@link bbct.data.BaseballCard}.
  *
  * TODO: Commit changes to storage.
  *
@@ -140,7 +141,7 @@ public class EditCardsPanel extends JPanel {
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
         // FIXME
-        
+
         try {
             List<BaseballCard> cards = new ArrayList<>();
 

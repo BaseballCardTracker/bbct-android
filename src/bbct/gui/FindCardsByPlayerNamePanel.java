@@ -31,9 +31,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * {@link FindCardsByPlayerNamePanel} allows the user to input the player's name. This
- * value is used as the parameters when searching the underlying storage
- * mechanism for cards for the player.
+ * {@link FindCardsByPlayerNamePanel} allows the user to input the player's
+ * name. This value is used as the parameters when searching the underlying
+ * storage mechanism for cards for the player.
  *
  * TODO: Error handling.
  *
@@ -104,9 +104,8 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
     private BaseballCardIO bcio = null;
 
     /**
-     * This is a test function for {@link FindCardsByPlayerNamePanel}. It
-     * simply creates a {@link javax.swing.JFrame} in which to display the
-     * panel.
+     * This is a test function for {@link FindCardsByPlayerNamePanel}. It simply
+     * creates a {@link javax.swing.JFrame} in which to display the panel.
      *
      * @param args Command-line arguments. (ignored)
      */

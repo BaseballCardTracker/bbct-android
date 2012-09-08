@@ -27,15 +27,15 @@ import org.junit.*;
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class AbstractBaseballCardIONominalTest {
-    
+
     /**
-     * 
+     *
      */
     public AbstractBaseballCardIONominalTest() {
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @BeforeClass
@@ -43,22 +43,22 @@ public class AbstractBaseballCardIONominalTest {
     }
 
     /**
-     * 
+     *
      * @throws Exception
      */
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-    
+
     /**
-     * 
+     *
      */
     @Before
     public void setUp() {
     }
-    
+
     /**
-     * 
+     *
      */
     @After
     public void tearDown() {
@@ -66,7 +66,8 @@ public class AbstractBaseballCardIONominalTest {
 
     /**
      * Test for {@link AbstractBaseballCardIO#updateCards}.
-     * @throws Exception 
+     *
+     * @throws Exception
      */
     @Test
     public void testUpdateCards() throws Exception {
@@ -79,7 +80,7 @@ public class AbstractBaseballCardIONominalTest {
     }
 
     /**
-     * 
+     *
      */
     public class AbstractBaseballCardIOImpl extends AbstractBaseballCardIO {
 

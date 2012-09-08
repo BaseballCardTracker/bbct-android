@@ -226,7 +226,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
 
     /**
      * Executes an UPDATE query to update the count and value of the record
-     * containing the brand, year, and number from the given {@link BaseballCard}.
+     * containing the brand, year, and number from the given
+     * {@link BaseballCard}.
      *
      * @param card The card to update.
      * @throws IOException If any I/O errors occur while writing to the

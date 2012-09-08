@@ -34,11 +34,12 @@ import javax.swing.JPanel;
 /**
  * {@link CardDetailsPanel} contains labels and text fields for the data stored
  * in a {@link bbct.data.BaseballCard} model object. This panel can be used in
- * two modes. The first mode, which is set by using the default constructor {@link #CardDetailsPanel()}
- * or {@link #CardDetailsPanel(boolean)} with a value of
+ * two modes. The first mode, which is set by using the default constructor
+ * {@link #CardDetailsPanel()} or {@link #CardDetailsPanel(boolean)} with a
+ * value of
  * <code>true</code>, allows editing of all of the text fields. The second mode,
- * set with {@link #CardDetailsPanel(boolean)} or {@link #CardDetailsPanel(bbct.data.BaseballCard, boolean)}
- * with a value of
+ * set with {@link #CardDetailsPanel(boolean)} or
+ * {@link #CardDetailsPanel(bbct.data.BaseballCard, boolean)} with a value of
  * <code>false</code> for the
  * <code>boolean </code> parameter, only allows editing of the value and count
  * text fields.
@@ -457,8 +458,8 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     private BaseballCard card = null;
 
     /**
-     * This is a test function for {@link CardDetailsPanel}. It simply creates a {@link javax.swing.JFrame}
-     * in which to display the panel.
+     * This is a test function for {@link CardDetailsPanel}. It simply creates a
+     * {@link javax.swing.JFrame} in which to display the panel.
      *
      * @param args The command-line arguments (ignored).
      */
@@ -478,7 +479,6 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         JButton nextButton = new JButton("Next");
 
         nextButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent ae) {
                 cl.next(cardPanel);
@@ -486,6 +486,17 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         });
 
         buttonPanel.add(nextButton);
+
+        JButton getCardButton = new JButton("Get Card");
+
+        getCardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+
+        buttonPanel.add(getCardButton);
 
         frame.setLayout(new BorderLayout());
         frame.add(cardPanel, BorderLayout.CENTER);

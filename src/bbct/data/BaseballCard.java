@@ -85,7 +85,7 @@ public class BaseballCard {
     public int getValue() {
         return value;
     }
-    
+
     /**
      * Set the monetary value of this {@link BaseballCard}.
      *
@@ -106,6 +106,7 @@ public class BaseballCard {
 
     /**
      * Set the count of copies of this {@link BaseballCard}s owned.
+     *
      * @param count The count of copies of this {@link BaseballCard}s owned.
      */
     public void setCount(int count) {
@@ -134,10 +135,10 @@ public class BaseballCard {
      * Compare this {@link BaseballCard} with any other {@link java.lang.Object}
      * for equality.
      *
-     * @param o The {@link java.lang.Object} to compare with this {@link BaseballCard}.
-     * @return True if
-     * <code>o</code> is a {@link BaseballCard} with identical values. False,
-     * otherwise.
+     * @param o The {@link java.lang.Object} to compare with this
+     * {@link BaseballCard}.
+     * @return True if <code>o</code> is a {@link BaseballCard} with identical
+     * values. False, otherwise.
      */
     @Override
     public boolean equals(Object o) {

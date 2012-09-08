@@ -27,8 +27,9 @@ import org.junit.*;
 
 /**
  * TODO: JavaDoc
- * 
- * TODO: testGetBaseballCardByX() methods should be extended to find multiple cards
+ *
+ * TODO: testGetBaseballCardByX() methods should be extended to find multiple
+ * cards
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -175,7 +176,8 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
+     * Test for
+     * {@link BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
      *
      * @throws Exception
      */
@@ -218,7 +220,7 @@ public class BaseballCardJDBCIONominalTest {
     @Test
     public void testGetBaseballCardsByYear() throws Exception {
         this.instance.insertBaseballCard(this.card);
-        
+
         List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 
@@ -234,7 +236,7 @@ public class BaseballCardJDBCIONominalTest {
     @Test
     public void testGetBaseballCardsByNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
-        
+
         List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 
@@ -243,14 +245,15 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
+     * Test for
+     * {@link BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
      *
      * @throws Exception
      */
     @Test
     public void testGetBaseballCardsByYearAndNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
-        
+
         List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 
@@ -266,7 +269,7 @@ public class BaseballCardJDBCIONominalTest {
     @Test
     public void testGetBaseballCardsByPlayerName() throws Exception {
         this.instance.insertBaseballCard(this.card);
-        
+
         List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 

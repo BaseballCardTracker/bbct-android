@@ -20,7 +20,6 @@ package bbct.gui;
 
 import java.awt.CardLayout;
 import java.awt.Container;
-import javax.swing.JRootPane;
 
 /**
  * A panel that displays the name of this application and copyright information.

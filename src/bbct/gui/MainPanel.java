@@ -34,16 +34,17 @@ public class MainPanel extends javax.swing.JPanel {
     public MainPanel() {
         initComponents();
     }
-    
+
     /**
      * Creates {@link MainPanel}.
-     * @param bcio 
+     *
+     * @param bcio
      */
     public MainPanel(BaseballCardIO bcio) {
         this.bcio = bcio;
-        
+
         initComponents();
-        
+
         FindCardsByPanel yearInputPanel = new FindCardsByYearPanel(this.bcio);
         FindCardsPanel findCardsByYearPanel = new FindCardsPanel(bcio, yearInputPanel);
         this.add(findCardsByYearPanel, BBCTFrame.FIND_CARDS_BY_YEAR_CARD_NAME);
@@ -60,7 +61,7 @@ public class MainPanel extends javax.swing.JPanel {
         FindCardsPanel findCardsByPlayerNamePanel = new FindCardsPanel(bcio, playerNameInputPanel);
         this.add(findCardsByPlayerNamePanel, BBCTFrame.FIND_CARDS_BY_PLAYER_NAME_CARD_NAME);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

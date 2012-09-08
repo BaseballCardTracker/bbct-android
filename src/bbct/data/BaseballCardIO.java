@@ -23,8 +23,8 @@ import java.util.List;
 
 /**
  * The {@link BaseballCardIO} interface provides the contract for all I/O
- * operations for the BBCT application. These provide persistence for {@link BaseballCard}
- * objects.
+ * operations for the BBCT application. These provide persistence for
+ * {@link BaseballCard} objects.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -101,8 +101,8 @@ public interface BaseballCardIO {
     public void updateCard(BaseballCard card) throws IOException;
 
     /**
-     * Updates data in the underlying persistent storage for all the cards in the
-     * given List.
+     * Updates data in the underlying persistent storage for all the cards in
+     * the given List.
      *
      * @param cards The list of cards to update.
      * @throws IOException If any I/O errors occur while writing to the

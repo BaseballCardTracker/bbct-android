@@ -31,25 +31,25 @@ import javax.swing.event.AncestorListener;
 public class UpdateTitleAncestorListener implements AncestorListener {
 
     /**
-     * 
+     *
      * @param title
      */
     public UpdateTitleAncestorListener(String title) {
         this.title = title;
     }
-    
+
     /**
-     * 
+     *
      * @param ae
      */
     @Override
     public void ancestorAdded(AncestorEvent ae) {
-        JFrame frame = (JFrame) ((JComponent)ae.getComponent()).getTopLevelAncestor();
+        JFrame frame = (JFrame) ((JComponent) ae.getComponent()).getTopLevelAncestor();
         frame.setTitle(title);
     }
 
     /**
-     * 
+     *
      * @param ae
      */
     @Override
@@ -57,12 +57,11 @@ public class UpdateTitleAncestorListener implements AncestorListener {
     }
 
     /**
-     * 
+     *
      * @param ae
      */
     @Override
     public void ancestorRemoved(AncestorEvent ae) {
     }
-    
     private String title = null;
 }

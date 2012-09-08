@@ -34,9 +34,9 @@ import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
 /**
- * {@link FindCardsByYearPanel} allows the user to input a card year. This
- * value is used as the parameters when searching the underlying storage
- * mechanism for cards with the given year.
+ * {@link FindCardsByYearPanel} allows the user to input a card year. This value
+ * is used as the parameters when searching the underlying storage mechanism for
+ * cards with the given year.
  *
  * TODO: yearTextField needs to be limited to 4 digits
  *

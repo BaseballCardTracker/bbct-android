@@ -26,13 +26,14 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 /**
- * {@link FindCardsByPanel} provides the contract for a {@link javax.swing.JPanel}
- * which allows user input that is used while searching the underlying storage
- * mechanism for baseball card data. Typically this panel provides GUI controls
- * for the user to enter parameter values for the search, such as the year of a
- * card or the name of the player on the card. Subclasses of {@link FindCardsByPanel}
- * are required to override the {@link #getBaseballCards()} method to implement
- * the specific search depending on the subclasses exact criteria.
+ * {@link FindCardsByPanel} provides the contract for a
+ * {@link javax.swing.JPanel} which allows user input that is used while
+ * searching the underlying storage mechanism for baseball card data. Typically
+ * this panel provides GUI controls for the user to enter parameter values for
+ * the search, such as the year of a card or the name of the player on the card.
+ * Subclasses of {@link FindCardsByPanel} are required to override the
+ * {@link #getBaseballCards()} method to implement the specific search depending
+ * on the subclasses exact criteria.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -44,7 +45,6 @@ public abstract class FindCardsByPanel extends JPanel {
      */
     public FindCardsByPanel() {
         this.addAncestorListener(new AncestorListener() {
-
             @Override
             public void ancestorAdded(AncestorEvent ae) {
                 FindCardsByPanel.this.setFocus();

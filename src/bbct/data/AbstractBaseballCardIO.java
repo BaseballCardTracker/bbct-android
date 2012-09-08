@@ -24,8 +24,8 @@ import java.util.List;
 /**
  * This is an abstract class which implements the {@link BaseballCardIO}
  * interface. It provides a default implementation of {@link #updateCards(List)}
- * which iterates through the list of cards and calls {@link #updateCard(BaseballCard)}
- * on each one.
+ * which iterates through the list of cards and calls
+ * {@link #updateCard(BaseballCard)} on each one.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
