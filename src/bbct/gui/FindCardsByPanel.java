@@ -19,7 +19,7 @@
 package bbct.gui;
 
 import bbct.data.BaseballCard;
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.AncestorEvent;
@@ -69,7 +69,7 @@ public abstract class FindCardsByPanel extends JPanel {
      * @throws IOException If an error occurs in the underlying storage
      * mechanism while searching for baseball card data.
      */
-    protected abstract List<BaseballCard> getBaseballCards() throws IOException;
+    protected abstract List<BaseballCard> getBaseballCards() throws BBCTIOException;
 
     /**
      * Subclasses override this method to ensure that the correct control has

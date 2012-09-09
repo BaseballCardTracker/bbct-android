@@ -20,13 +20,15 @@ package bbct.gui;
 
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import bbct.exceptions.InputException;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -154,7 +156,8 @@ public class EditCardsPanel extends JPanel {
 
             try {
                 this.bcio.updateCards(cards);
-            } catch (IOException ex) {
+            } catch (BBCTIOException ex) {
+                Logger.getLogger(EditCardsPanel.class.getName()).log(Level.SEVERE, "Unable to update baseball card data.", ex);
                 JOptionPane.showMessageDialog(this, "Unable to update baseball card data.", "I/O Error", JOptionPane.ERROR_MESSAGE);
             }
 
@@ -164,6 +167,7 @@ public class EditCardsPanel extends JPanel {
             parent.remove(this);
             layout.show(parent, BBCTFrame.FIND_CARDS_MENU_CARD_NAME);
         } catch (InputException ex) {
+            Logger.getLogger(EditCardsPanel.class.getName()).log(Level.INFO, "Invalid input.", ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_doneButtonActionPerformed

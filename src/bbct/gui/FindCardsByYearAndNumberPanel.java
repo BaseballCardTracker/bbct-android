@@ -20,7 +20,7 @@ package bbct.gui;
 
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.*;
@@ -61,7 +61,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
     }
 
     @Override
-    protected List<BaseballCard> getBaseballCards() throws IOException {
+    protected List<BaseballCard> getBaseballCards() throws BBCTIOException {
         int year = Integer.parseInt(this.yearTextField.getText());
         int number = Integer.parseInt(this.numberTextField.getText());
 

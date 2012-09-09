@@ -24,14 +24,14 @@ package bbct.exceptions;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class IOException extends Exception {
+public class BBCTIOException extends Exception {
 
     /**
      * Creates a new {@link IOException} with the given source.
      *
      * @param source The source of this {@link IOException}.
      */
-    public IOException(Exception source) {
+    public BBCTIOException(Exception source) {
         super(source);
     }
 }

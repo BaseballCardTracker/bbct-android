@@ -20,16 +20,18 @@ package bbct.gui;
 
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
- * {@link FindCardPanel} contains a {@link FindCardsByPanel} and two buttons,
+ * {@link FindCardsPanel} contains a {@link FindCardsByPanel} and two buttons,
  * "Find" and "Back". The {@link FindCardsByPanel} defines the criteria and
  * parameters used to find baseball card data in the underlying storage
  * mechanism. The "Find" button executes
@@ -131,7 +133,8 @@ public class FindCardsPanel extends javax.swing.JPanel {
                 parent.add(editCardsPanel, BBCTFrame.EDIT_CARDS_PANEL_NAME);
                 cl.show(parent, BBCTFrame.EDIT_CARDS_PANEL_NAME);
             }
-        } catch (IOException ex) {
+        } catch (BBCTIOException ex) {
+            Logger.getLogger(FindCardsPanel.class.getName()).log(Level.SEVERE, "Storage I/O error", ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_findButtonActionPerformed

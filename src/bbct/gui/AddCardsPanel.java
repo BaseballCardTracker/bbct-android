@@ -20,10 +20,12 @@ package bbct.gui;
 
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import bbct.exceptions.InputException;
 import java.awt.CardLayout;
 import java.awt.Container;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -128,12 +130,15 @@ public class AddCardsPanel extends javax.swing.JPanel {
             BBCTFrame frame = (BBCTFrame) this.getTopLevelAncestor();
             frame.setInstructions("Card added. Enter brand name for another card.");
             this.cardDetailsPanel.setUpdateInstructions(false);
-        } catch (IOException ex) {
+        } catch (BBCTIOException ex) {
+            Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Storage I/O error.", ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
         } catch (InputException ex) {
+            Logger.getLogger(AddCardsPanel.class.getName()).log(Level.INFO, "Invalid input", ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex, "Exception", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Unexpected Exception", ex);
+            JOptionPane.showMessageDialog(this, ex, "Unexpected Exception", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_addCardButtonActionPerformed
 

@@ -20,7 +20,7 @@ package bbct.gui;
 
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.*;
@@ -60,7 +60,7 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
      * @return @throws IOException
      */
     @Override
-    protected List<BaseballCard> getBaseballCards() throws IOException {
+    protected List<BaseballCard> getBaseballCards() throws BBCTIOException {
         int number = Integer.parseInt(this.numberTextField.getText());
 
         return this.bcio.getBaseballCardsByNumber(number);

@@ -18,7 +18,7 @@
  */
 package bbct.data;
 
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,13 +73,13 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * @throws IOException If an error occurs while opening a JDBC connection or
      * creating the table.
      */
-    public BaseballCardJDBCIO(String url) throws IOException {
+    public BaseballCardJDBCIO(String url) throws BBCTIOException {
         try {
             this.conn = DriverManager.getConnection(url);
             this.createTable();
         } catch (SQLException ex) {
             // TODO: Need a more user-friendly error message.
-            throw new IOException(ex);
+            throw new BBCTIOException(ex);
         }
     }
 
@@ -89,12 +89,12 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * @throws IOException
      */
     @Override
-    public void close() throws IOException {
+    public void close() throws BBCTIOException {
         try {
             this.conn.close();
         } catch (SQLException ex) {
             // TODO: Need a more user-friendly error message.
-            throw new IOException(ex);
+            throw new BBCTIOException(ex);
         }
     }
 
@@ -107,7 +107,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * database.
      */
     @Override
-    public void insertBaseballCard(BaseballCard card) throws IOException {
+    public void insertBaseballCard(BaseballCard card) throws BBCTIOException {
         String sqlInsert = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmtInsert = this.conn.prepareStatement(sqlInsert)) {
@@ -121,7 +121,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             stmtInsert.executeUpdate();
         } catch (SQLException ex) {
             // TODO: Need a user-friendly error message when the user tries to add a card which already exists in storage.
-            throw new IOException(ex);
+            throw new BBCTIOException(ex);
         }
     }
 
@@ -134,7 +134,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * @throws IOException If an error occurs while executing the SELECT query.
      */
     @Override
-    public List<BaseballCard> getBaseballCardsByYear(int year) throws IOException {
+    public List<BaseballCard> getBaseballCardsByYear(int year) throws BBCTIOException {
         try {
             String sqlQuery = "SELECT * "
                     + "  FROM " + TABLE_NAME
@@ -147,7 +147,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
             // TODO: Need a more user-friendly error message.
-            throw new IOException(ex);
+            throw new BBCTIOException(ex);
         }
     }
 
@@ -160,7 +160,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * @throws IOException If an error occurs while executing the SELECT query.
      */
     @Override
-    public List<BaseballCard> getBaseballCardsByNumber(int number) throws IOException {
+    public List<BaseballCard> getBaseballCardsByNumber(int number) throws BBCTIOException {
         try {
             String sqlQuery = "SELECT * "
                     + "  FROM " + TABLE_NAME
@@ -172,7 +172,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
             // TODO: Need a more user-friendly error message.
-            throw new IOException(ex);
+            throw new BBCTIOException(ex);
         }
     }
 
@@ -188,7 +188,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * @throws IOException If an error occurs while executing the SELECT query.
      */
     @Override
-    public List<BaseballCard> getBaseballCardsByYearAndNumber(int year, int number) throws IOException {
+    public List<BaseballCard> getBaseballCardsByYearAndNumber(int year, int number) throws BBCTIOException {
         try {
             String sqlQuery = "SELECT * "
                     + "  FROM " + TABLE_NAME
@@ -202,7 +202,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
             // TODO: Need a more user-friendly error message.
-            throw new IOException(ex);
+            throw new BBCTIOException(ex);
         }
     }
 
@@ -215,7 +215,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * @throws IOException If an error occurs while executing the SELECT query.
      */
     @Override
-    public List<BaseballCard> getBaseballCardsByPlayerName(String playerName) throws IOException {
+    public List<BaseballCard> getBaseballCardsByPlayerName(String playerName) throws BBCTIOException {
         try {
             String sqlQuery = "SELECT * "
                     + "  FROM " + TABLE_NAME
@@ -227,7 +227,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
             // TODO: Need a more user-friendly error message.
-            throw new IOException(ex);
+            throw new BBCTIOException(ex);
         }
     }
 
@@ -241,7 +241,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * underlying storage mechanism.
      */
     @Override
-    public void updateCard(BaseballCard card) throws IOException {
+    public void updateCard(BaseballCard card) throws BBCTIOException {
         try {
             String brand = card.getBrand();
             int year = card.getYear();
@@ -263,7 +263,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             stmt.executeUpdate();
         } catch (SQLException ex) {
             // TODO: Need a more user-friendly error message.
-            throw new IOException(ex);
+            throw new BBCTIOException(ex);
         }
     }
 

@@ -18,7 +18,7 @@
  */
 package bbct.data;
 
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +69,7 @@ public class BaseballCardJDBCIONominalTest {
      * @throws SQLException
      */
     @Before
-    public void setUp() throws IOException, SQLException {
+    public void setUp() throws BBCTIOException, SQLException {
         try {
             this.instance = new BaseballCardJDBCIO(this.url);
 
@@ -78,9 +78,10 @@ public class BaseballCardJDBCIONominalTest {
             this.stmt = this.conn.createStatement();
 
             this.card = createBaseballCard();
-        } catch (IOException ex) {
+        } catch (BBCTIOException ex) {
             System.out.println("IOException caught in setUp()");
             ex.printStackTrace();
+            throw ex;
         }
     }
 
@@ -90,7 +91,7 @@ public class BaseballCardJDBCIONominalTest {
      * @throws SQLException
      */
     @After
-    public void tearDown() throws IOException, SQLException {
+    public void tearDown() throws BBCTIOException, SQLException {
         // Drop the table. The tests in this class are for a single insert only.
         String drop = "DROP TABLE " + BaseballCardJDBCIO.TABLE_NAME;
         this.stmt.execute(drop);

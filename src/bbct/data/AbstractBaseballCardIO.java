@@ -18,7 +18,7 @@
  */
 package bbct.data;
 
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import java.util.List;
 
 /**
@@ -41,7 +41,7 @@ public abstract class AbstractBaseballCardIO implements BaseballCardIO {
      * underlying storage mechanism.
      */
     @Override
-    public void updateCards(List<BaseballCard> cards) throws IOException {
+    public void updateCards(List<BaseballCard> cards) throws BBCTIOException {
         for (BaseballCard card : cards) {
             this.updateCard(card);
         }

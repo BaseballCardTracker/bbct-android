@@ -20,9 +20,13 @@ package bbct;
 
 import bbct.data.BaseballCardIO;
 import bbct.data.BaseballCardJDBCIO;
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import bbct.gui.BBCTFrame;
 import bbct.gui.GUIResources;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,11 +44,28 @@ public class Baseball {
      */
     public static void main(String[] args) {
         try {
+            Baseball.initLogger();
             BaseballCardIO bcio = new BaseballCardJDBCIO(GUIResources.DB_URL);
 
             new BBCTFrame(bcio).setVisible(true);
-        } catch (IOException ex) {
+        } catch (BBCTIOException | IOException ex) {
+            Logger.getLogger(Baseball.class.getName()).log(Level.SEVERE, "Unable to initialize storage.", ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Initialization Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private static void initLogger() throws IOException {
+        FileHandler handler = null;
+        
+        try {
+            boolean append = true;
+            handler = new FileHandler("log/bbct.log", append);
+            
+            Logger logger = Logger.getLogger("");
+            logger.setLevel(Level.ALL);
+            logger.addHandler(handler);
+        } finally {
+            handler.close();
         }
     }
 }

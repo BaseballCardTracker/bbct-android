@@ -19,9 +19,11 @@
 package bbct.gui;
 
 import bbct.data.BaseballCardIO;
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -152,7 +154,8 @@ public class BBCTFrame extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         try {
             this.bcio.close();
-        } catch (IOException ex) {
+        } catch (BBCTIOException ex) {
+            Logger.getLogger(BBCTFrame.class.getName()).log(Level.SEVERE, "Unable to properly clean up storage resources.", ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Clean Up Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_formWindowClosed

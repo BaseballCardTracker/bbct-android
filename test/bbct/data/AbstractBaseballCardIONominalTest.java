@@ -18,7 +18,7 @@
  */
 package bbct.data;
 
-import bbct.exceptions.IOException;
+import bbct.exceptions.BBCTIOException;
 import java.util.List;
 import org.junit.*;
 
@@ -85,37 +85,37 @@ public class AbstractBaseballCardIONominalTest {
     public class AbstractBaseballCardIOImpl extends AbstractBaseballCardIO {
 
         @Override
-        public void close() throws IOException {
+        public void close() throws BBCTIOException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public void insertBaseballCard(BaseballCard card) throws IOException {
+        public void insertBaseballCard(BaseballCard card) throws BBCTIOException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public List<BaseballCard> getBaseballCardsByYear(int year) throws IOException {
+        public List<BaseballCard> getBaseballCardsByYear(int year) throws BBCTIOException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public List<BaseballCard> getBaseballCardsByNumber(int number) throws IOException {
+        public List<BaseballCard> getBaseballCardsByNumber(int number) throws BBCTIOException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public List<BaseballCard> getBaseballCardsByYearAndNumber(int year, int number) throws IOException {
+        public List<BaseballCard> getBaseballCardsByYearAndNumber(int year, int number) throws BBCTIOException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public List<BaseballCard> getBaseballCardsByPlayerName(String playerName) throws IOException {
+        public List<BaseballCard> getBaseballCardsByPlayerName(String playerName) throws BBCTIOException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public void updateCard(BaseballCard card) throws IOException {
+        public void updateCard(BaseballCard card) throws BBCTIOException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }

@@ -457,6 +457,8 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField playerPositionTextField;
     // End of variables declaration//GEN-END:variables
     private boolean allEditable = true;
+    
+    // TODO: Is this field necessary?
     private boolean updateInstructions = true;
     private BaseballCard card = null;
 
@@ -487,7 +489,9 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         final JPanel cardPanel = new JPanel();
         final CardLayout cl = new CardLayout();
         cardPanel.setLayout(cl);
-        cardPanel.add(new CardDetailsPanel(), "editablePanel");
+        
+        final CardDetailsPanel editablePanel = new CardDetailsPanel();
+        cardPanel.add(editablePanel, "editablePanel");
         cardPanel.add(new CardDetailsPanel(false), "uneditablePanel");
         cardPanel.add(new CardDetailsPanel(createBaseballCard(), false));
 
@@ -508,16 +512,15 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         getCardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-//                try {
-//                    // TODO: How do I get the currently visible CardDetailsPanel?
+                try {
+                    // TODO: How do I get the currently visible CardDetailsPanel?
 //                    CardDetailsPanel panel = (CardDetailsPanel)cl.
-//                    BaseballCard card = editablePanel.getBaseballCard();
-//
-//                    JOptionPane.showMessageDialog(frame, card, "Baseball Card", JOptionPane.INFORMATION_MESSAGE);
-//                } catch (InputException ex) {
-//                    Logger.getLogger(CardDetailsPanel.class.getName()).log(Level.SEVERE, null, ex);
-//                    JOptionPane.showMessageDialog(frame, ex, "Input Error", JOptionPane.ERROR_MESSAGE);
-//                }
+                    BaseballCard card = editablePanel.getBaseballCard();
+
+                    JOptionPane.showMessageDialog(frame, card, "Baseball Card", JOptionPane.INFORMATION_MESSAGE);
+                } catch (InputException ex) {
+                    JOptionPane.showMessageDialog(frame, ex, "Input Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
