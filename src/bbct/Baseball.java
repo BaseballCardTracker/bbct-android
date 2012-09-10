@@ -25,8 +25,10 @@ import bbct.gui.BBCTFrame;
 import bbct.gui.GUIResources;
 import java.io.IOException;
 import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javax.swing.JOptionPane;
 
 /**
@@ -45,27 +47,29 @@ public class Baseball {
     public static void main(String[] args) {
         try {
             Baseball.initLogger();
+            Logger logger = Logger.getLogger(Baseball.class.getName());
+            logger.log(Level.INFO, "Fixing to create a BaseballCardIO object.");
             BaseballCardIO bcio = new BaseballCardJDBCIO(GUIResources.DB_URL);
 
+            logger.log(Level.INFO, "Fixing to show a new frame.");
             new BBCTFrame(bcio).setVisible(true);
         } catch (BBCTIOException | IOException ex) {
             Logger.getLogger(Baseball.class.getName()).log(Level.SEVERE, "Unable to initialize storage.", ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Initialization Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private static void initLogger() throws IOException {
-        FileHandler handler = null;
+        boolean append = true;
+        Handler handler = new FileHandler(Baseball.LOG_FILE_NAME, append);
+        handler.setFormatter(new SimpleFormatter());
+
+        Logger logger = Logger.getLogger("");
+        logger.setLevel(Level.INFO);
+        logger.addHandler(handler);
         
-        try {
-            boolean append = true;
-            handler = new FileHandler("log/bbct.log", append);
-            
-            Logger logger = Logger.getLogger("");
-            logger.setLevel(Level.ALL);
-            logger.addHandler(handler);
-        } finally {
-            handler.close();
-        }
+        // TODO: Should I set this in a property file?
+        System.setProperty("hsqldb.reconfig_logging", "false");
     }
+    private static final String LOG_FILE_NAME = "log/bbct.log";
 }

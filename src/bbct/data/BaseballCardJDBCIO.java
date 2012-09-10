@@ -22,6 +22,8 @@ import bbct.exceptions.BBCTIOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * An implementation of {@link BaseballCardIO} which uses a database table as
@@ -75,7 +77,12 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      */
     public BaseballCardJDBCIO(String url) throws BBCTIOException {
         try {
+            Logger logger = Logger.getLogger(BaseballCardJDBCIO.class.getName());
+            logger.log(Level.INFO, "Creating BaseballCardJDBCIO object");
+            logger.log(Level.INFO, "Getting database connection.");
             this.conn = DriverManager.getConnection(url);
+            
+            logger.log(Level.INFO, "Creating table");
             this.createTable();
         } catch (SQLException ex) {
             // TODO: Need a more user-friendly error message.

@@ -30,7 +30,7 @@ public class GUIResources {
      * URL for the database which stores baseball card data. This is used by
      * JDBC to load the correct driver and open a connection to the database.
      */
-    public static String DB_URL = "jdbc:hsqldb:file:db/baseball_cards.db";
+    public static final String DB_URL = "jdbc:hsqldb:file:db/baseball_cards.db";
     /**
      * Base title shown in the BBCT window.
      */
