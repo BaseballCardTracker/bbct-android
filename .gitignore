@@ -1,6 +1,10 @@
-/build/
-/db/
-/dist/
-/commit.txt
-/log/
-/*.zip
+/swing/build/
+/swing/db/
+/swing/dist/
+/swing/commit.txt
+/swing/log/
+/swing/*.zip
+/android/local.properties
+/android/bin
+/android/gen
+/android/libs
