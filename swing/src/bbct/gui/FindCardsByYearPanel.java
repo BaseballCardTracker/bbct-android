@@ -21,11 +21,14 @@ package bbct.gui;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
+import bbct.exceptions.InputException;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.List;
+import javax.swing.InputVerifier;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,10 +40,6 @@ import javax.swing.text.NumberFormatter;
  * {@link FindCardsByYearPanel} allows the user to input a card year. This value
  * is used as the parameters when searching the underlying storage mechanism for
  * cards with the given year.
- *
- * TODO: yearTextField needs to be limited to 4 digits
- *
- * TODO: Error handling.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -69,7 +68,17 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
      * @throws InputException If the input is invalid.
      */
     @Override
-    protected List<BaseballCard> getBaseballCards() throws BBCTIOException {
+    protected List<BaseballCard> getBaseballCards() throws BBCTIOException, InputException {
+        this.yearTextField.selectAll();
+        this.yearTextField.requestFocusInWindow();
+        try {
+            this.yearTextField.commitEdit();
+        } catch (ParseException ex) {
+            throw new InputException("Please enter a valid four-digit year.", ex);
+        }
+        if (!this.yearVerifier.verify(this.yearTextField)) {
+            throw new InputException("Please enter a valid four-digit year.");
+        }
         int year = Integer.parseInt(this.yearTextField.getText());
 
         return this.bcio.getBaseballCardsByYear(year);
@@ -119,6 +128,7 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
     }
     private JFormattedTextField yearTextField;
     private BaseballCardIO bcio = null;
+    private InputVerifier yearVerifier = new YearInputVerifier();
 
     /**
      * This is a test function for {@link FindCardsByYearPanel}. It simply

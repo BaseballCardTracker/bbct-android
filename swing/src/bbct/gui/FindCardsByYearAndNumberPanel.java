@@ -21,11 +21,16 @@ package bbct.gui;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
+import bbct.exceptions.InputException;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.InputVerifier;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,10 +42,6 @@ import javax.swing.text.NumberFormatter;
  * {@link FindCardsByYearAndNumberPanel} allows the user to input a card number
  * and year. These values are used as the parameters when searching the
  * underlying storage mechanism for cards with the given year and number.
- *
- * TODO: yearTextField needs to be limited to 4 digits
- *
- * TODO: Error handling.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -73,8 +74,30 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
      * @throws InputException If the input is invalid.
      */
     @Override
-    protected List<BaseballCard> getBaseballCards() throws BBCTIOException {
+    protected List<BaseballCard> getBaseballCards() throws BBCTIOException, InputException {
+        this.yearTextField.selectAll();
+        this.yearTextField.requestFocusInWindow();
+        try {
+            this.yearTextField.commitEdit();
+        } catch (ParseException ex) {
+            throw new InputException("Please enter a valid four-digit year.", ex);
+        }
+        if (!this.yearVerifier.verify(this.yearTextField)) {
+            throw new InputException("Please enter a valid four-digit year.");
+        }
         int year = Integer.parseInt(this.yearTextField.getText());
+
+        // Validate card number
+        this.numberTextField.selectAll();
+        this.numberTextField.requestFocusInWindow();
+        try {
+            this.numberTextField.commitEdit();
+        } catch (ParseException ex) {
+            throw new InputException("Please enter a valid card number. (The number must be positive).", ex);
+        }
+        if (!this.numberVerifier.verify(this.numberTextField)) {
+            throw new InputException("Please enter a valid card number. (The number must be positive).");
+        }
         int number = Integer.parseInt(this.numberTextField.getText());
 
         return this.bcio.getBaseballCardsByYearAndNumber(year, number);
@@ -153,6 +176,9 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
     private JFormattedTextField numberTextField;
     private JFormattedTextField yearTextField;
     private BaseballCardIO bcio = null;
+    private InputVerifier yearVerifier = new YearInputVerifier();
+    private InputVerifier numberVerifier = new NumberInputVerifier();
+
 
     /**
      * This is a test function for {@link FindCardsByYearAndNumberPanel}. It

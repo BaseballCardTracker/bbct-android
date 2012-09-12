@@ -28,8 +28,6 @@ import java.awt.*;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.InputVerifier;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -42,8 +40,6 @@ import javax.swing.text.NumberFormatter;
  * {@link FindCardsByNumberPanel} allows the user to input a card number. This
  * value is used as the parameters when searching the underlying storage
  * mechanism for cards with the given number.
- *
- * TODO: Error handling.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -73,21 +69,20 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
      */
     @Override
     protected List<BaseballCard> getBaseballCards() throws BBCTIOException, InputException {
+        // Validate card number
+        this.numberTextField.selectAll();
+        this.numberTextField.requestFocusInWindow();
         try {
-            // Validate card number
-            this.numberTextField.selectAll();
-            this.numberTextField.requestFocusInWindow();
             this.numberTextField.commitEdit();
-            if (!this.numberVerifier.verify(this.numberTextField)) {
-                throw new InputException("Please enter a valid card number. (The number must be positive).");
-            }
-            int number = Integer.parseInt(this.numberTextField.getText());
-
-            return this.bcio.getBaseballCardsByNumber(number);
         } catch (ParseException ex) {
-            Logger.getLogger(FindCardsByNumberPanel.class.getName()).log(Level.INFO, null, ex);
             throw new InputException("Please enter a valid card number. (The number must be positive).", ex);
         }
+        if (!this.numberVerifier.verify(this.numberTextField)) {
+            throw new InputException("Please enter a valid card number. (The number must be positive).");
+        }
+        int number = Integer.parseInt(this.numberTextField.getText());
+
+        return this.bcio.getBaseballCardsByNumber(number);
     }
 
     @Override
