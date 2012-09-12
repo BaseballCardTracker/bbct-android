@@ -1,13 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Hello World, BBCT"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:stretchColumns="1"
+>
+    <TableRow>
+        <TextView android:text="Brand:" />
+        <EditText android:id="@+id/brand" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="Year:" />
+        <EditText android:id="@+id/year" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="Number:" />
+        <EditText android:id="@+id/number" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="Value:" />
+        <EditText android:id="@+id/value" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="Count:" />
+        <EditText android:id="@+id/count" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="Player Name:" />
+        <EditText android:id="@+id/player_name" />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="Player Position:" />
+        <EditText android:id="@+id/player_position" />
+    </TableRow>
+    <Button android:id="@+id/add_card"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Save"
     />
-</LinearLayout>
-
+</TableLayout>
