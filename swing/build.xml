@@ -79,4 +79,9 @@
         </copy>
     </target>
     
+    <target name="-post-clean">
+        <delete dir="log"/>
+        <delete dir="db"/>
+    </target>
+    
 </project>

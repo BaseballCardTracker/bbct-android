@@ -21,6 +21,7 @@ package bbct.gui;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
+import bbct.exceptions.InputException;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
@@ -133,6 +134,9 @@ public class FindCardsPanel extends javax.swing.JPanel {
                 parent.add(editCardsPanel, BBCTFrame.EDIT_CARDS_PANEL_NAME);
                 cl.show(parent, BBCTFrame.EDIT_CARDS_PANEL_NAME);
             }
+        } catch (InputException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(FindCardsPanel.class.getName()).log(Level.INFO, null, ex);
         } catch (BBCTIOException ex) {
             Logger.getLogger(FindCardsPanel.class.getName()).log(Level.SEVERE, "Storage I/O error", ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);

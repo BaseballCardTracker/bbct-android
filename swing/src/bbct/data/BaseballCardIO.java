@@ -34,7 +34,7 @@ public interface BaseballCardIO {
      * Close the connection to the underlying persistent storage. This method
      * should dispose of all resources used for any I/O operations.
      *
-     * @throws IOException If an error occurs while closing the underlying
+     * @throws BBCTIOException If an error occurs while closing the underlying
      * storage mechanism.
      */
     public void close() throws BBCTIOException;
@@ -43,7 +43,7 @@ public interface BaseballCardIO {
      * Insert a {@link BaseballCard} to the underlying persistent storage.
      *
      * @param card The {@link BaseballCard} to insert.
-     * @throws IOException If any I/O errors occur while inserting.
+     * @throws BBCTIOException If any I/O errors occur while inserting.
      */
     public void insertBaseballCard(BaseballCard card) throws BBCTIOException;
 
@@ -52,7 +52,7 @@ public interface BaseballCardIO {
      *
      * @param year The year of {@link BaseballCard}s to look for.
      * @return A list of {@link BaseballCard}s which match the specified year.
-     * @throws IOException If any I/O errors occur while reading the underlying
+     * @throws BBCTIOException If any I/O errors occur while reading the underlying
      * storage mechanism.
      */
     public List<BaseballCard> getBaseballCardsByYear(int year) throws BBCTIOException;
@@ -62,7 +62,7 @@ public interface BaseballCardIO {
      *
      * @param number The number of {@link BaseballCard}s to look for.
      * @return A list of {@link BaseballCard}s which match the specified number.
-     * @throws IOException If any I/O errors occur while reading the underlying
+     * @throws BBCTIOException If any I/O errors occur while reading the underlying
      * storage mechanism.
      */
     public List<BaseballCard> getBaseballCardsByNumber(int number) throws BBCTIOException;
@@ -74,7 +74,7 @@ public interface BaseballCardIO {
      * @param number The number of {@link BaseballCard}s to look for.
      * @return A list of {@link BaseballCard}s which match the specified year
      * and number.
-     * @throws IOException If any I/O errors occur while reading the underlying
+     * @throws BBCTIOException If any I/O errors occur while reading the underlying
      * storage mechanism.
      */
     public List<BaseballCard> getBaseballCardsByYearAndNumber(int year, int number) throws BBCTIOException;
@@ -86,7 +86,7 @@ public interface BaseballCardIO {
      * look for.
      * @return A list of {@link BaseballCard}s which match the specified
      * player's name.
-     * @throws IOException If any I/O errors occur while reading the underlying
+     * @throws BBCTIOException If any I/O errors occur while reading the underlying
      * storage mechanism.
      */
     public List<BaseballCard> getBaseballCardsByPlayerName(String playerName) throws BBCTIOException;
@@ -95,7 +95,7 @@ public interface BaseballCardIO {
      * Updates data in the underlying persistent storage for the given card.
      *
      * @param card The card to update.
-     * @throws IOException If any I/O errors occur while writing to the
+     * @throws BBCTIOException If any I/O errors occur while writing to the
      * underlying storage mechanism.
      */
     public void updateCard(BaseballCard card) throws BBCTIOException;
@@ -105,7 +105,7 @@ public interface BaseballCardIO {
      * the given List.
      *
      * @param cards The list of cards to update.
-     * @throws IOException If any I/O errors occur while writing to the
+     * @throws BBCTIOException If any I/O errors occur while writing to the
      * underlying storage mechanism.
      */
     public void updateCards(List<BaseballCard> cards) throws BBCTIOException;

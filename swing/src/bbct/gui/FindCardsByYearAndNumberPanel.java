@@ -60,6 +60,18 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         initComponents();
     }
 
+    /**
+     * Searches the underlying storage mechanism for baseball card records from
+     * the year and with the card number given in the text fields. The method
+     * also checks that the input is valid: i.e. that the year is a positive,
+     * four-digit integer and that the number is a is a positive integer.
+     *
+     * @return A list of {@link BaseballCard}s which have the number given by
+     * the user.
+     * @throws BBCTIOException If there is an error reading the underlying
+     * storage mechanism.
+     * @throws InputException If the input is invalid.
+     */
     @Override
     protected List<BaseballCard> getBaseballCards() throws BBCTIOException {
         int year = Integer.parseInt(this.yearTextField.getText());

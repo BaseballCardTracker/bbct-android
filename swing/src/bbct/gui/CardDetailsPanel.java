@@ -85,26 +85,25 @@ public class CardDetailsPanel extends javax.swing.JPanel {
      * this flag.
      */
     public CardDetailsPanel(BaseballCard card, boolean allEditable) {
-        this.card = card;
         this.allEditable = allEditable;
 
         this.initComponents();
 
-        this.cardBrandTextField.setText(this.card.getBrand());
-        this.cardYearTextField.setValue(this.card.getYear());
-        this.cardNumberTextField.setValue(this.card.getNumber());
+        this.brandTextField.setText(card.getBrand());
+        this.yearTextField.setValue(card.getYear());
+        this.numberTextField.setValue(card.getNumber());
 
         // TODO: This works, but the logic should be part of the JFormattedTextField, not the panel
-        int value = this.card.getValue();
+        int value = card.getValue();
         int dollars = value / 100;
         int cents = value % 100;
         String centsStr = cents < 10 ? "0" + cents : "" + cents;
         String valueStr = "$" + dollars + "." + centsStr;
 
-        this.cardValueTextField.setText(valueStr);
-        this.cardCountTextField.setValue(this.card.getCount());
-        this.playerNameTextField.setText(this.card.getPlayerName());
-        this.playerPositionTextField.setText(this.card.getPlayerPosition());
+        this.valueTextField.setText(valueStr);
+        this.countTextField.setValue(card.getCount());
+        this.playerNameTextField.setText(card.getPlayerName());
+        this.playerPositionTextField.setText(card.getPlayerPosition());
     }
 
     /**
@@ -120,83 +119,71 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // TODO: Thoroughly test all error handling code.
 
         // Validate card brand
-        InputVerifier notEmpty = new NotEmptyInputVerifier();
-        this.cardBrandTextField.selectAll();
-        this.cardBrandTextField.requestFocusInWindow();
-        if (!notEmpty.verify(this.cardBrandTextField)) {
+        this.brandTextField.selectAll();
+        this.brandTextField.requestFocusInWindow();
+        if (!this.notEmptyVerifier.verify(this.brandTextField)) {
             throw new InputException("Please enter a card brand.");
         }
-        String cardBrand = this.cardBrandTextField.getText();
+        String brand = this.brandTextField.getText();
 
         // Validate card year
-        this.cardYearTextField.selectAll();
-        this.cardYearTextField.requestFocusInWindow();
-        if (!notEmpty.verify(this.cardYearTextField)) {
-            throw new InputException("Please enter a card year.");
+        this.yearTextField.selectAll();
+        this.yearTextField.requestFocusInWindow();
+        try {
+            this.yearTextField.commitEdit();
+        } catch (ParseException ex) {
+            throw new InputException("Please enter a valid four-digit year.", ex);
         }
-        if (!this.cardYearTextField.isEditValid()) {
-            throw new InputException("Please enter a numerical year.");
+        if (!this.yearVerifier.verify(this.yearTextField)) {
+            throw new InputException("Please enter a valid four-digit year.");
         }
-        int cardYear = Integer.parseInt(this.cardYearTextField.getText());
-        // TODO: Delegate this to an InputVerifier?
-        if (cardYear < 1000 || cardYear > 9999) {
-            throw new InputException("Please enter a four-digit year.");
-        }
+        int year = Integer.parseInt(this.yearTextField.getText());
 
         // Validate card number
-        this.cardNumberTextField.selectAll();
-        this.cardNumberTextField.requestFocusInWindow();
-        if (!notEmpty.verify(this.cardNumberTextField)) {
-            throw new InputException("Please enter a card number.");
+        this.numberTextField.selectAll();
+        this.numberTextField.requestFocusInWindow();
+        try {
+            this.numberTextField.commitEdit();
+        } catch (ParseException ex) {
+            throw new InputException("Please enter a valid card number. (The number must be positive).", ex);
         }
-        if (!this.cardNumberTextField.isEditValid()) {
-            throw new InputException("Please enter a number.");
+        if (!numVerifier.verify(this.numberTextField)) {
+            throw new InputException("Please enter a valid card number. (The number must be positive).");
         }
-        int cardNumber = Integer.parseInt(this.cardNumberTextField.getText());
-        // TODO: Delegate this to an InputVerifier?
-        if (cardNumber < 0) {
-            throw new InputException("Please enter a positive value for the card number.");
-        }
+        int number = Integer.parseInt(this.numberTextField.getText());
 
         // Validate card value
-        this.cardValueTextField.selectAll();
-        this.cardValueTextField.requestFocusInWindow();
-        if (!notEmpty.verify(this.cardValueTextField)) {
-            throw new InputException("Please enter a card value.");
-        }
-        if (!this.cardValueTextField.isEditValid()) {
-            throw new InputException("Please enter a valid monetary value.");
-        }
+        this.valueTextField.selectAll();
+        this.valueTextField.requestFocusInWindow();
         try {
-            this.cardValueTextField.commitEdit();
+            this.valueTextField.commitEdit();
         } catch (ParseException ex) {
-            throw new InputException(ex);
+            throw new InputException("Please enter a valid dollar amount.", ex);
         }
-        double cardValueDbl = ((Number) this.cardValueTextField.getValue()).doubleValue();
-        // TODO: Delegate this to an InputVerifier?
-        if (cardValueDbl < 0.0) {
-            throw new InputException("Please enter a positive card value.'");
+        if (!this.currencyVerifier.verify(this.valueTextField)) {
+            throw new InputException("Please enter a valid dollar amount.");
         }
-        int cardValue = (int) (cardValueDbl * 100);
+        double valueDbl = ((Number) this.valueTextField.getValue()).doubleValue();
+        int value = (int) (valueDbl * 100);
 
         // Validate card count
-        this.cardCountTextField.selectAll();
-        this.cardCountTextField.requestFocusInWindow();
-        if (!notEmpty.verify(this.cardCountTextField)) {
+        this.countTextField.selectAll();
+        this.countTextField.requestFocusInWindow();
+        if (!this.notEmptyVerifier.verify(this.countTextField)) {
             throw new InputException("Please enter a card count.");
         }
-        if (!this.cardCountTextField.isEditValid()) {
+        if (!this.countTextField.isEditValid()) {
             throw new InputException("Please enter a numeric value for the card count.");
         }
-        int cardCount = Integer.parseInt(this.cardCountTextField.getText());
-        if (cardCount < 0) {
+        int count = Integer.parseInt(this.countTextField.getText());
+        if (count < 0) {
             throw new InputException("Please enter a positive value for the card count");
         }
 
         // Validate player name
         this.playerNameTextField.selectAll();
         this.playerNameTextField.requestFocusInWindow();
-        if (!notEmpty.verify(this.playerNameTextField)) {
+        if (!this.notEmptyVerifier.verify(this.playerNameTextField)) {
             throw new InputException("Please enter a player name.");
         }
         String playerName = this.playerNameTextField.getText();
@@ -204,12 +191,12 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         // Validate player position
         this.playerPositionTextField.selectAll();
         this.playerPositionTextField.requestFocusInWindow();
-        if (!notEmpty.verify(this.playerPositionTextField)) {
+        if (!this.notEmptyVerifier.verify(this.playerPositionTextField)) {
             throw new InputException("Please enter a player position.");
         }
         String playerPosition = this.playerPositionTextField.getText();
 
-        return new BaseballCard(cardBrand, cardYear, cardNumber, cardValue, cardCount, playerName, playerPosition);
+        return new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
     }
 
     /**
@@ -217,33 +204,22 @@ public class CardDetailsPanel extends javax.swing.JPanel {
      * text field.
      */
     public void reset() {
-        this.cardBrandTextField.setText("");
-        this.cardCountTextField.setText("");
-        this.cardNumberTextField.setText("");
-        this.cardValueTextField.setText("");
-        this.cardYearTextField.setText("");
+        this.brandTextField.setText("");
+        this.countTextField.setText("");
+        this.numberTextField.setText("");
+        this.valueTextField.setText("");
+        this.yearTextField.setText("");
         this.playerNameTextField.setText("");
         this.playerPositionTextField.setText("");
-        this.cardBrandTextField.requestFocusInWindow();
-    }
-
-    /**
-     * Set whether or not the instruction label in {@link BBCTFrame} should be
-     * updated when focus changes between text fields.
-     *
-     * @param updateInstructions The flag indicating whether or not the
-     * instruction label should be updated.
-     */
-    public void setUpdateInstructions(boolean updateInstructions) {
-        this.updateInstructions = updateInstructions;
+        this.brandTextField.requestFocusInWindow();
     }
 
     private void addFocusListeners() {
-        this.cardBrandTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card brand name."));
-        this.cardYearTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card year."));
-        this.cardNumberTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card number."));
-        this.cardValueTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card value."));
-        this.cardCountTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card count."));
+        this.brandTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card brand name."));
+        this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card year."));
+        this.numberTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card number."));
+        this.valueTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card value."));
+        this.countTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card count."));
         this.playerNameTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player name."));
         this.playerPositionTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player position."));
     }
@@ -263,11 +239,11 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         javax.swing.JLabel cardYearLabel = new javax.swing.JLabel();
         javax.swing.JLabel cardValueLabel = new javax.swing.JLabel();
         javax.swing.JLabel cardCountLabel = new javax.swing.JLabel();
-        cardBrandTextField = new javax.swing.JTextField();
-        cardNumberTextField = new javax.swing.JFormattedTextField();
-        cardYearTextField = new javax.swing.JFormattedTextField();
-        cardValueTextField = new javax.swing.JFormattedTextField();
-        cardCountTextField = new javax.swing.JFormattedTextField();
+        brandTextField = new javax.swing.JTextField();
+        numberTextField = new javax.swing.JFormattedTextField();
+        yearTextField = new javax.swing.JFormattedTextField();
+        valueTextField = new javax.swing.JFormattedTextField();
+        countTextField = new javax.swing.JFormattedTextField();
         javax.swing.JPanel playerDetailsPanel = new javax.swing.JPanel();
         javax.swing.JLabel playerNameLabel = new javax.swing.JLabel();
         javax.swing.JLabel playerPositionLabel = new javax.swing.JLabel();
@@ -303,26 +279,26 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         cardCountLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cardCountLabel.setText("Card Count:");
 
-        cardBrandTextField.setEditable(this.allEditable);
-        cardBrandTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        brandTextField.setEditable(this.allEditable);
+        brandTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        cardNumberTextField.setEditable(this.allEditable);
-        cardNumberTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        cardNumberTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        cardNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        numberTextField.setEditable(this.allEditable);
+        numberTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        numberTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
+        numberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        cardYearTextField.setEditable(this.allEditable);
-        cardYearTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        cardYearTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        cardYearTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        yearTextField.setEditable(this.allEditable);
+        yearTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        yearTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
+        yearTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        cardValueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
-        cardValueTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        cardValueTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        valueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        valueTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
+        valueTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        cardCountTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
-        cardCountTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
-        cardCountTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        countTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+        countTextField.setFocusLostBehavior(javax.swing.JFormattedTextField.PERSIST);
+        countTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout cardDetailsPanelLayout = new javax.swing.GroupLayout(cardDetailsPanel);
         cardDetailsPanel.setLayout(cardDetailsPanelLayout);
@@ -337,8 +313,8 @@ public class CardDetailsPanel extends javax.swing.JPanel {
                             .addComponent(cardValueLabel))
                         .addGap(36, 36, 36)
                         .addGroup(cardDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cardValueTextField)
-                            .addComponent(cardCountTextField)))
+                            .addComponent(valueTextField)
+                            .addComponent(countTextField)))
                     .addGroup(cardDetailsPanelLayout.createSequentialGroup()
                         .addGroup(cardDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cardYearLabel)
@@ -346,9 +322,9 @@ public class CardDetailsPanel extends javax.swing.JPanel {
                             .addComponent(cardNumberLabel))
                         .addGap(0, 25, 25)
                         .addGroup(cardDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cardNumberTextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cardYearTextField, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cardBrandTextField, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(numberTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(yearTextField, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(brandTextField, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         cardDetailsPanelLayout.setVerticalGroup(
@@ -356,23 +332,23 @@ public class CardDetailsPanel extends javax.swing.JPanel {
             .addGroup(cardDetailsPanelLayout.createSequentialGroup()
                 .addGroup(cardDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cardBrandLabel)
-                    .addComponent(cardBrandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(brandTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(cardDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cardYearLabel)
-                    .addComponent(cardYearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(yearTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(cardDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cardNumberLabel)
-                    .addComponent(cardNumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(numberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(cardDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cardValueLabel)
-                    .addComponent(cardValueTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(valueTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(cardDetailsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cardCountLabel)
-                    .addComponent(cardCountTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(countTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -442,25 +418,25 @@ public class CardDetailsPanel extends javax.swing.JPanel {
 
     private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
         if (this.allEditable) {
-            this.cardBrandTextField.requestFocusInWindow();
+            this.brandTextField.requestFocusInWindow();
         } else {
-            this.cardValueTextField.requestFocusInWindow();
+            this.valueTextField.requestFocusInWindow();
         }
     }//GEN-LAST:event_formAncestorAdded
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cardBrandTextField;
-    private javax.swing.JFormattedTextField cardCountTextField;
-    private javax.swing.JFormattedTextField cardNumberTextField;
-    private javax.swing.JFormattedTextField cardValueTextField;
-    private javax.swing.JFormattedTextField cardYearTextField;
+    private javax.swing.JTextField brandTextField;
+    private javax.swing.JFormattedTextField countTextField;
+    private javax.swing.JFormattedTextField numberTextField;
     private javax.swing.JTextField playerNameTextField;
     private javax.swing.JTextField playerPositionTextField;
+    private javax.swing.JFormattedTextField valueTextField;
+    private javax.swing.JFormattedTextField yearTextField;
     // End of variables declaration//GEN-END:variables
     private boolean allEditable = true;
-    
-    // TODO: Is this field necessary?
-    private boolean updateInstructions = true;
-    private BaseballCard card = null;
+    private InputVerifier notEmptyVerifier = new NotEmptyInputVerifier();
+    private InputVerifier numVerifier = new NumberInputVerifier();
+    private InputVerifier yearVerifier = new YearInputVerifier();
+    private InputVerifier currencyVerifier = new CurrencyInputVerifier();
 
     private static BaseballCard createBaseballCard() {
         String brand = "Topps";
@@ -489,7 +465,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         final JPanel cardPanel = new JPanel();
         final CardLayout cl = new CardLayout();
         cardPanel.setLayout(cl);
-        
+
         final CardDetailsPanel editablePanel = new CardDetailsPanel();
         cardPanel.add(editablePanel, "editablePanel");
         cardPanel.add(new CardDetailsPanel(false), "uneditablePanel");

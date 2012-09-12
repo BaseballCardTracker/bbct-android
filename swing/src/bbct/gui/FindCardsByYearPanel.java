@@ -58,8 +58,15 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
     }
 
     /**
+     * Searches the underlying storage mechanism for baseball card records from
+     * the year given in the text field. The method also checks that the input
+     * is valid: i.e. that the year is a positive, four-digit integer.
      *
-     * @return @throws IOException
+     * @return A list of {@link BaseballCard}s which have the number given by
+     * the user.
+     * @throws BBCTIOException If there is an error reading the underlying
+     * storage mechanism.
+     * @throws InputException If the input is invalid.
      */
     @Override
     protected List<BaseballCard> getBaseballCards() throws BBCTIOException {

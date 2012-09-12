@@ -31,7 +31,18 @@ public class BBCTIOException extends Exception {
      *
      * @param source The source of this {@link IOException}.
      */
-    public BBCTIOException(Exception source) {
+    public BBCTIOException(Throwable source) {
         super(source);
+    }
+
+    /**
+     * Creates a new {@link IOException} with the given message and source.
+     *
+     * @param msg A human-readable message describing the reason for this
+     * exception.
+     * @param source The source of this exception.
+     */
+    public BBCTIOException(String msg, Throwable source) {
+        super(msg, source);
     }
 }

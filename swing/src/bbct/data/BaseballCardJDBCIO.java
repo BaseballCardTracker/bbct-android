@@ -72,8 +72,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * table is created if it does not already exist.
      *
      * @param url The JDBC URL that gives the location of the database.
-     * @throws IOException If an error occurs while opening a JDBC connection or
-     * creating the table.
+     * @throws BBCTIOException If an error occurs while opening a JDBC
+     * connection or creating the table.
      */
     public BaseballCardJDBCIO(String url) throws BBCTIOException {
         try {
@@ -81,7 +81,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             logger.log(Level.INFO, "Creating BaseballCardJDBCIO object");
             logger.log(Level.INFO, "Getting database connection.");
             this.conn = DriverManager.getConnection(url);
-            
+
             logger.log(Level.INFO, "Creating table");
             this.createTable();
         } catch (SQLException ex) {
@@ -93,7 +93,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
     /**
      * Closes the JDBC database connection.
      *
-     * @throws IOException
+     * @throws BBCTIOException If an error occurs when closing the JDBC
+     * connection.
      */
     @Override
     public void close() throws BBCTIOException {
@@ -110,7 +111,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * database.
      *
      * @param card The {@link BaseballCard} containing the data to be inserted.
-     * @throws IOException If an error occurs while inserting data into the
+     * @throws BBCTIOException If an error occurs while inserting data into the
      * database.
      */
     @Override
@@ -127,8 +128,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             stmtInsert.setString(7, card.getPlayerPosition());
             stmtInsert.executeUpdate();
         } catch (SQLException ex) {
-            // TODO: Need a user-friendly error message when the user tries to add a card which already exists in storage.
-            throw new BBCTIOException(ex);
+            String msg = "A " + card.getYear() + " card from " + card.getBrand() + " with number " + card.getNumber() + " already exists.";
+            throw new BBCTIOException(msg, ex);
         }
     }
 
@@ -138,7 +139,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      *
      * @param year The year of cards to search for.
      * @return A List of {@link BaseballCard}s from the given year.
-     * @throws IOException If an error occurs while executing the SELECT query.
+     * @throws BBCTIOException If an error occurs while executing the SELECT
+     * query.
      */
     @Override
     public List<BaseballCard> getBaseballCardsByYear(int year) throws BBCTIOException {
@@ -164,7 +166,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      *
      * @param number The number on the cards.
      * @return A List of {@link BaseballCard}s with the given number.
-     * @throws IOException If an error occurs while executing the SELECT query.
+     * @throws BBCTIOException If an error occurs while executing the SELECT
+     * query.
      */
     @Override
     public List<BaseballCard> getBaseballCardsByNumber(int number) throws BBCTIOException {
@@ -192,7 +195,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * @param number The number on the cards.
      * @return A List of {@link BaseballCard}s from the given year with the
      * given number.
-     * @throws IOException If an error occurs while executing the SELECT query.
+     * @throws BBCTIOException If an error occurs while executing the SELECT
+     * query.
      */
     @Override
     public List<BaseballCard> getBaseballCardsByYearAndNumber(int year, int number) throws BBCTIOException {
@@ -219,7 +223,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      *
      * @param playerName The name of the player on the cards.
      * @return A List of {@link BaseballCard}s for the given player.
-     * @throws IOException If an error occurs while executing the SELECT query.
+     * @throws BBCTIOException If an error occurs while executing the SELECT
+     * query.
      */
     @Override
     public List<BaseballCard> getBaseballCardsByPlayerName(String playerName) throws BBCTIOException {
@@ -244,7 +249,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * {@link BaseballCard}.
      *
      * @param card The card to update.
-     * @throws IOException If any I/O errors occur while writing to the
+     * @throws BBCTIOException If any I/O errors occur while writing to the
      * underlying storage mechanism.
      */
     @Override

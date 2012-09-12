@@ -65,7 +65,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      *
-     * @throws IOException
+     * @throws BBCTIOException 
      * @throws SQLException
      */
     @Before
@@ -87,7 +87,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      *
-     * @throws IOException
+     * @throws BBCTIOException 
      * @throws SQLException
      */
     @After

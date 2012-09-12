@@ -44,4 +44,15 @@ public class InputException extends Exception {
     public InputException(Throwable cause) {
         super(cause);
     }
+
+    /**
+     * Creates a new {@link InputException} with the given error message.
+     *
+     * @param msg An error message explaining the reason for the exception.
+     * @param cause The {@link java.lang.Throwable} object which caused this
+     * {@link InputException}.
+     */
+    public InputException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
 }

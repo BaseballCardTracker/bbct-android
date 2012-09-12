@@ -37,7 +37,7 @@ public abstract class AbstractBaseballCardIO implements BaseballCardIO {
      * each one.
      *
      * @param cards The list of cards to update.
-     * @throws IOException If any I/O errors occur while writing to the
+     * @throws BBCTIOException If any I/O errors occur while writing to the
      * underlying storage mechanism.
      */
     @Override

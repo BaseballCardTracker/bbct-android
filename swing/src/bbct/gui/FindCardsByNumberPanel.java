@@ -21,11 +21,16 @@ package bbct.gui;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
+import bbct.exceptions.InputException;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.*;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.InputVerifier;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -56,14 +61,33 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
     }
 
     /**
+     * Searches the underlying storage mechanism for baseball card records which
+     * have the number given in the text field. The method also checks that the
+     * input is valid: i.e. that it is a positive integer.
      *
-     * @return @throws IOException
+     * @return A list of {@link BaseballCard}s which have the number given by
+     * the user.
+     * @throws BBCTIOException If there is an error reading the underlying
+     * storage mechanism.
+     * @throws InputException If the input is invalid.
      */
     @Override
-    protected List<BaseballCard> getBaseballCards() throws BBCTIOException {
-        int number = Integer.parseInt(this.numberTextField.getText());
+    protected List<BaseballCard> getBaseballCards() throws BBCTIOException, InputException {
+        try {
+            // Validate card number
+            this.numberTextField.selectAll();
+            this.numberTextField.requestFocusInWindow();
+            this.numberTextField.commitEdit();
+            if (!this.numberVerifier.verify(this.numberTextField)) {
+                throw new InputException("Please enter a valid card number. (The number must be positive).");
+            }
+            int number = Integer.parseInt(this.numberTextField.getText());
 
-        return this.bcio.getBaseballCardsByNumber(number);
+            return this.bcio.getBaseballCardsByNumber(number);
+        } catch (ParseException ex) {
+            Logger.getLogger(FindCardsByNumberPanel.class.getName()).log(Level.INFO, null, ex);
+            throw new InputException("Please enter a valid card number. (The number must be positive).", ex);
+        }
     }
 
     @Override
@@ -110,6 +134,7 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
     }
     private JFormattedTextField numberTextField;
     private BaseballCardIO bcio = null;
+    private InputVerifier numberVerifier = new NumberInputVerifier();
 
     /**
      * This is a test function for {@link FindCardsByNumberPanel}. It simply

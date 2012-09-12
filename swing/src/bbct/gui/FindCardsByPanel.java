@@ -20,6 +20,7 @@ package bbct.gui;
 
 import bbct.data.BaseballCard;
 import bbct.exceptions.BBCTIOException;
+import bbct.exceptions.InputException;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.AncestorEvent;
@@ -66,10 +67,11 @@ public abstract class FindCardsByPanel extends JPanel {
      *
      * @return A list of {@link BaseballCard}s which match the search criteria
      * determined by a subclass of {@link FindCardsByPanel}.
-     * @throws IOException If an error occurs in the underlying storage
+     * @throws BBCTIOException If an error occurs in the underlying storage
      * mechanism while searching for baseball card data.
+     * @throws InputException If user input is invalid. 
      */
-    protected abstract List<BaseballCard> getBaseballCards() throws BBCTIOException;
+    protected abstract List<BaseballCard> getBaseballCards() throws BBCTIOException, InputException;
 
     /**
      * Subclasses override this method to ensure that the correct control has
