@@ -16,28 +16,39 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.gui;
+package bbct.gui.inputverifiers;
 
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 
 /**
- * Validates that a {@link javax.swing.JFormattedTextField} is not empty.
+ * {@link YearInputVerifier} verifies that a
+ * {@link javax.swing.JFormattedTextField} contains a positive four-digit
+ * integer that can represent a year.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class NotEmptyInputVerifier extends InputVerifier {
+public class YearInputVerifier extends InputVerifier {
 
     /**
-     * Validates that a JTextField is not empty.
+     * Verify that a {@link javax.swing.JFormattedTextField} contains a positive
+     * four-digit integer.
      *
-     * @param jc The {@link javax.swing.JTextField} to validate.
-     * @return <code>true</code> if the {@link javax.swing.JTextField} is not
-     * empty, <code>false</code> otherwise.
+     * @param jc The {@link javax.swing.JFormattedTextField} with input to
+     * verify.
+     * @return <code>true</code> if the {@link javax.swing.JFormattedTextField}
+     * contains valid four-digit year, <code>false</code> otherwise.
      */
     @Override
     public boolean verify(JComponent jc) {
-        return !((JTextField) jc).getText().equals("");
+        if (this.isNumber.verify(jc)) {
+            JTextField yearTextField = (JTextField) jc;
+            int cardYear = Integer.parseInt(yearTextField.getText());
+            return cardYear >= 1000 && cardYear <= 9999;
+        }
+
+        return false;
     }
+    private InputVerifier isNumber = new PositiveIntegerInputVerifier();
 }

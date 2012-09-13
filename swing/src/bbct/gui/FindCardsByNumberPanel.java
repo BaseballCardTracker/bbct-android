@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.gui.inputverifiers.PositiveIntegerInputVerifier;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;

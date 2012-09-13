@@ -33,38 +33,38 @@ import java.util.logging.SimpleFormatter;
 import javax.swing.JOptionPane;
 
 /**
- * This is the driver class for the Baseball Card Tracker program.
+ * This is the driver class for the BBCTMain Card Tracker program.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class Baseball {
+public class BBCTMain {
 
     /**
-     * Starts the Baseball Card Tracker by creating and showing the initial
+     * Starts the BBCTMain Card Tracker by creating and showing the initial
      * window.
      *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         try {
-            Baseball.initLogger();
-            Logger logger = Logger.getLogger(Baseball.class.getName());
+            BBCTMain.initLogger();
+            Logger logger = Logger.getLogger(BBCTMain.class.getName());
             logger.log(Level.INFO, "Fixing to create a BaseballCardIO object.");
             BaseballCardIO bcio = new BaseballCardJDBCIO(GUIResources.DB_URL);
 
             logger.log(Level.INFO, "Fixing to show a new frame.");
             new BBCTFrame(bcio).setVisible(true);
         } catch (IOException ex) {
-            Logger.getLogger(Baseball.class.getName()).log(Level.SEVERE, "Unable to initialize logger.", ex);
+            Logger.getLogger(BBCTMain.class.getName()).log(Level.SEVERE, "Unable to initialize logger.", ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), ex.getMessage(), JOptionPane.ERROR_MESSAGE);
         } catch (BBCTIOException ex) {
-            Logger.getLogger(Baseball.class.getName()).log(Level.SEVERE, "Unable to initialize storage.", ex);
+            Logger.getLogger(BBCTMain.class.getName()).log(Level.SEVERE, "Unable to initialize storage.", ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Initialization Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private static void initLogger() throws IOException {
-        File logFolder = new File(Baseball.LOG_FOLDER_NAME);
+        File logFolder = new File(BBCTMain.LOG_FOLDER_NAME);
         
         if (!logFolder.exists()) {
             logFolder.mkdir();
@@ -72,7 +72,7 @@ public class Baseball {
         
         // TODO: Configure logger using a property file.
         boolean append = true;
-        Handler handler = new FileHandler(Baseball.LOG_FILE_NAME, append);
+        Handler handler = new FileHandler(BBCTMain.LOG_FILE_NAME, append);
         handler.setFormatter(new SimpleFormatter());
 
         Logger logger = Logger.getLogger("");

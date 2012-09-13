@@ -51,8 +51,6 @@ public class AboutPanel extends javax.swing.JPanel {
         javax.swing.JLabel websiteLabel = new javax.swing.JLabel();
         javax.swing.JLabel gplLabel = new javax.swing.JLabel();
 
-        setMinimumSize(new java.awt.Dimension(370, 360));
-        setPreferredSize(new java.awt.Dimension(370, 360));
         addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
