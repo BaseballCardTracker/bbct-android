@@ -23,13 +23,13 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 
 /**
- * {@link NumberInputVerifier} verifies that a
+ * {@link PositiveIntegerInputVerifier} verifies that a
  * {@link javax.swing.JFormattedTextField} contains a positive integer. This is
  * typically used for text fields that hold a baseball card number.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class NumberInputVerifier extends InputVerifier {
+public class PositiveIntegerInputVerifier extends InputVerifier {
 
     /**
      * Verify that a {@link javax.swing.JFormattedTextField} contains a positive

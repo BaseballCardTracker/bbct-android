@@ -129,7 +129,7 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
     }
     private JFormattedTextField numberTextField;
     private BaseballCardIO bcio = null;
-    private InputVerifier numberVerifier = new NumberInputVerifier();
+    private InputVerifier numberVerifier = new PositiveIntegerInputVerifier();
 
     /**
      * This is a test function for {@link FindCardsByNumberPanel}. It simply

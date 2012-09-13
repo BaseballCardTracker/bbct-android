@@ -434,7 +434,7 @@ public class CardDetailsPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     private boolean allEditable = true;
     private InputVerifier notEmptyVerifier = new NotEmptyInputVerifier();
-    private InputVerifier numVerifier = new NumberInputVerifier();
+    private InputVerifier numVerifier = new PositiveIntegerInputVerifier();
     private InputVerifier yearVerifier = new YearInputVerifier();
     private InputVerifier currencyVerifier = new CurrencyInputVerifier();
 

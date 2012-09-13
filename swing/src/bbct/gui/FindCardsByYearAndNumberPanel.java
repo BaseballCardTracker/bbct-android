@@ -177,7 +177,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
     private JFormattedTextField yearTextField;
     private BaseballCardIO bcio = null;
     private InputVerifier yearVerifier = new YearInputVerifier();
-    private InputVerifier numberVerifier = new NumberInputVerifier();
+    private InputVerifier numberVerifier = new PositiveIntegerInputVerifier();
 
 
     /**

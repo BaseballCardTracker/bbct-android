@@ -50,5 +50,5 @@ public class YearInputVerifier extends InputVerifier {
 
         return false;
     }
-    private InputVerifier isNumber = new NumberInputVerifier();
+    private InputVerifier isNumber = new PositiveIntegerInputVerifier();
 }
