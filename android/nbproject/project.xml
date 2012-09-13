@@ -11,6 +11,11 @@
             <properties/>
             <folders>
                 <source-folder>
+                    <label>BBCT-Android</label>
+                    <location>.</location>
+                    <encoding>windows-1252</encoding>
+                </source-folder>
+                <source-folder>
                     <label>gen</label>
                     <type>java</type>
                     <location>gen</location>
@@ -26,11 +31,6 @@
                     <label>res</label>
                     <type>java</type>
                     <location>res</location>
-                    <encoding>windows-1252</encoding>
-                </source-folder>
-                <source-folder>
-                    <label>BBCT-Android</label>
-                    <location>.</location>
                     <encoding>windows-1252</encoding>
                 </source-folder>
             </folders>
@@ -54,6 +54,11 @@
                     <target>release</target>
                 </action>
             </ide-actions>
+            <export>
+                <type>folder</type>
+                <location>bin/classes</location>
+                <build-target>release</build-target>
+            </export>
             <view>
                 <items>
                     <source-folder style="packages">
@@ -88,6 +93,7 @@
                 <package-root>src</package-root>
                 <package-root>res</package-root>
                 <classpath mode="compile">E:\programs\java\android-sdk\platforms\android-16\android.jar</classpath>
+                <built-to>bin/classes</built-to>
                 <source-level>1.5</source-level>
             </compilation-unit>
         </java-data>
