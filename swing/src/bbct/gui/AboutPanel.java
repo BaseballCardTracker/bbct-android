@@ -44,12 +44,14 @@ public class AboutPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        javax.swing.JPanel infoPanel = new javax.swing.JPanel();
         javax.swing.JLabel TitleLabel = new javax.swing.JLabel();
-        okButton = new javax.swing.JButton();
         javax.swing.JLabel copyrightLabel = new javax.swing.JLabel();
         javax.swing.JLabel versionLabel = new javax.swing.JLabel();
         javax.swing.JLabel websiteLabel = new javax.swing.JLabel();
         javax.swing.JLabel gplLabel = new javax.swing.JLabel();
+        javax.swing.JPanel buttonPanel = new javax.swing.JPanel();
+        okButton = new javax.swing.JButton();
 
         addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
@@ -60,9 +62,58 @@ public class AboutPanel extends javax.swing.JPanel {
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
+        setLayout(new java.awt.BorderLayout());
 
         TitleLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         TitleLabel.setText("Baseball Card Tracker");
+
+        copyrightLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        copyrightLabel.setText("<html>&copy 2012 codeguru</html>");
+
+        versionLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        versionLabel.setText("Version 0.5.2 (beta)");
+
+        websiteLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        websiteLabel.setText("Project website: http://www.sourceforge.net/p/bbct");
+
+        gplLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        gplLabel.setText("<html>This software is licensed under the GPL. Visit<br> http://www.gnu.org/licenses/ for a copy of the license.</html>");
+
+        javax.swing.GroupLayout infoPanelLayout = new javax.swing.GroupLayout(infoPanel);
+        infoPanel.setLayout(infoPanelLayout);
+        infoPanelLayout.setHorizontalGroup(
+            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 434, Short.MAX_VALUE)
+            .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(infoPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(copyrightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(versionLabel)
+                        .addComponent(websiteLabel)
+                        .addComponent(gplLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                        .addComponent(TitleLabel))
+                    .addContainerGap()))
+        );
+        infoPanelLayout.setVerticalGroup(
+            infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 521, Short.MAX_VALUE)
+            .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(infoPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(TitleLabel)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(versionLabel)
+                    .addGap(18, 18, 18)
+                    .addComponent(copyrightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(websiteLabel)
+                    .addGap(330, 330, 330)
+                    .addComponent(gplLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+
+        add(infoPanel, java.awt.BorderLayout.CENTER);
 
         okButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         okButton.setText("OK");
@@ -71,57 +122,9 @@ public class AboutPanel extends javax.swing.JPanel {
                 okButtonActionPerformed(evt);
             }
         });
+        buttonPanel.add(okButton);
 
-        copyrightLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        copyrightLabel.setText("<html>&copy 2012 codeguru</html>");
-
-        versionLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        versionLabel.setText("Version 0.5 (beta)");
-
-        websiteLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        websiteLabel.setText("Project website: http://www.sourceforge.net/p/bbct");
-
-        gplLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        gplLabel.setText("<html>This software is licensed under the GPL. Visit<br> http://www.gnu.org/licenses/ for a copy of the license.</html>");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(TitleLabel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(copyrightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(versionLabel)
-                            .addComponent(websiteLabel)
-                            .addComponent(gplLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE))))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addComponent(okButton)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(TitleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(versionLabel)
-                .addGap(18, 18, 18)
-                .addComponent(copyrightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(websiteLabel)
-                .addGap(18, 18, 18)
-                .addComponent(gplLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-                .addComponent(okButton)
-                .addContainerGap())
-        );
+        add(buttonPanel, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
