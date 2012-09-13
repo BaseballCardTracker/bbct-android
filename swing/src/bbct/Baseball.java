@@ -56,7 +56,7 @@ public class Baseball {
             new BBCTFrame(bcio).setVisible(true);
         } catch (IOException ex) {
             Logger.getLogger(Baseball.class.getName()).log(Level.SEVERE, "Unable to initialize logger.", ex);
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Initialization Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), ex.getMessage(), JOptionPane.ERROR_MESSAGE);
         } catch (BBCTIOException ex) {
             Logger.getLogger(Baseball.class.getName()).log(Level.SEVERE, "Unable to initialize storage.", ex);
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Initialization Error", JOptionPane.ERROR_MESSAGE);

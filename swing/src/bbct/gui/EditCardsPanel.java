@@ -158,7 +158,7 @@ public class EditCardsPanel extends JPanel {
                 this.bcio.updateCards(cards);
             } catch (BBCTIOException ex) {
                 Logger.getLogger(EditCardsPanel.class.getName()).log(Level.SEVERE, "Unable to update baseball card data.", ex);
-                JOptionPane.showMessageDialog(this, "Unable to update baseball card data.", "I/O Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
             }
 
             Container parent = this.getParent();

@@ -155,7 +155,7 @@ public class BBCTFrame extends javax.swing.JFrame {
         try {
             this.bcio.close();
         } catch (BBCTIOException ex) {
-            Logger.getLogger(BBCTFrame.class.getName()).log(Level.SEVERE, "Unable to properly clean up storage resources.", ex);
+            Logger.getLogger(BBCTFrame.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Clean Up Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_formWindowClosed

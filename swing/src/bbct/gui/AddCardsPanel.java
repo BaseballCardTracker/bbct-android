@@ -131,7 +131,7 @@ public class AddCardsPanel extends javax.swing.JPanel {
             frame.setInstructions("Card added. Enter brand name for another card.");
         } catch (BBCTIOException ex) {
             Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Storage I/O error.", ex);
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), ex.getMessage(), JOptionPane.ERROR_MESSAGE);
         } catch (InputException ex) {
             Logger.getLogger(AddCardsPanel.class.getName()).log(Level.INFO, "Invalid input", ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);

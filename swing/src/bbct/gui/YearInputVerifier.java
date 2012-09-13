@@ -45,7 +45,6 @@ public class YearInputVerifier extends InputVerifier {
         if (this.isNumber.verify(jc)) {
             JTextField yearTextField = (JTextField) jc;
             int cardYear = Integer.parseInt(yearTextField.getText());
-            // TODO: Delegate this to an InputVerifier?
             return cardYear >= 1000 && cardYear <= 9999;
         }
 

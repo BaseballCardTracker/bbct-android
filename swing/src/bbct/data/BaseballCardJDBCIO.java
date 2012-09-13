@@ -85,8 +85,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             logger.log(Level.INFO, "Creating table");
             this.createTable();
         } catch (SQLException ex) {
-            // TODO: Need a more user-friendly error message.
-            throw new BBCTIOException(ex);
+            throw new BBCTIOException("Initialization Error", ex);
         }
     }
 
@@ -101,8 +100,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
         try {
             this.conn.close();
         } catch (SQLException ex) {
-            // TODO: Need a more user-friendly error message.
-            throw new BBCTIOException(ex);
+            throw new BBCTIOException("Unable to properly cleanup database resources", ex);
         }
     }
 
@@ -128,6 +126,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             stmtInsert.setString(7, card.getPlayerPosition());
             stmtInsert.executeUpdate();
         } catch (SQLException ex) {
+            // TODO: This is not the only reason for a SQLException.
             String msg = "A " + card.getYear() + " card from " + card.getBrand() + " with number " + card.getNumber() + " already exists.";
             throw new BBCTIOException(msg, ex);
         }
@@ -155,8 +154,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
 
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
-            // TODO: Need a more user-friendly error message.
-            throw new BBCTIOException(ex);
+            String msg = "Unable to retrieve cards from database. (year: " + year + ")";
+            throw new BBCTIOException(msg, ex);
         }
     }
 
@@ -181,8 +180,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             ResultSet rs = stmt.executeQuery();
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
-            // TODO: Need a more user-friendly error message.
-            throw new BBCTIOException(ex);
+            String msg = "Unable to retrieve cards from database. (number: " + number + ")";
+            throw new BBCTIOException(msg, ex);
         }
     }
 
@@ -212,8 +211,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             ResultSet rs = stmt.executeQuery();
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
-            // TODO: Need a more user-friendly error message.
-            throw new BBCTIOException(ex);
+            String msg = "Unable to retrieve cards from database. (year: " + year + ", number: " + number + ")";
+            throw new BBCTIOException(msg, ex);
         }
     }
 
@@ -238,8 +237,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             ResultSet rs = stmt.executeQuery();
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
-            // TODO: Need a more user-friendly error message.
-            throw new BBCTIOException(ex);
+            String msg = "Unable to retrieve cards from database. (player name: " + playerName + ")";
+            throw new BBCTIOException(msg, ex);
         }
     }
 
@@ -274,8 +273,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
 
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            // TODO: Need a more user-friendly error message.
-            throw new BBCTIOException(ex);
+            throw new BBCTIOException("Unable to update baseball card data.", ex);
         }
     }
 

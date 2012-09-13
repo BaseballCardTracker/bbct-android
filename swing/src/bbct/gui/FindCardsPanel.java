@@ -138,7 +138,7 @@ public class FindCardsPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Invalid Input", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(FindCardsPanel.class.getName()).log(Level.INFO, null, ex);
         } catch (BBCTIOException ex) {
-            Logger.getLogger(FindCardsPanel.class.getName()).log(Level.SEVERE, "Storage I/O error", ex);
+            Logger.getLogger(FindCardsPanel.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_findButtonActionPerformed
