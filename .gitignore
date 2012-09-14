@@ -2,6 +2,7 @@
 /swing/db/
 /swing/dist/
 /swing/commit.txt
+/swing/nbproject/private
 /swing/log/
 /swing/*.zip
 /android/local.properties
