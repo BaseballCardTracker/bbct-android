@@ -72,8 +72,6 @@ public class FindCardsMenuPanel extends javax.swing.JPanel {
         backButton = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(40, 70, 40, 70));
-        setMinimumSize(new java.awt.Dimension(370, 360));
-        setPreferredSize(new java.awt.Dimension(370, 360));
         addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }

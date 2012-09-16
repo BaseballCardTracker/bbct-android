@@ -252,8 +252,6 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         playerNameTextField = new javax.swing.JTextField();
         playerPositionTextField = new javax.swing.JTextField();
 
-        setMinimumSize(new java.awt.Dimension(375, 350));
-        setPreferredSize(new java.awt.Dimension(375, 350));
         addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }

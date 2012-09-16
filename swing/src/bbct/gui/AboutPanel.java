@@ -83,7 +83,7 @@ public class AboutPanel extends javax.swing.JPanel {
         infoPanel.setLayout(infoPanelLayout);
         infoPanelLayout.setHorizontalGroup(
             infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 434, Short.MAX_VALUE)
+            .addGap(0, 366, Short.MAX_VALUE)
             .addGroup(infoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(infoPanelLayout.createSequentialGroup()
                     .addContainerGap()
@@ -91,7 +91,7 @@ public class AboutPanel extends javax.swing.JPanel {
                         .addComponent(copyrightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(versionLabel)
                         .addComponent(websiteLabel)
-                        .addComponent(gplLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                        .addComponent(gplLabel)
                         .addComponent(TitleLabel))
                     .addContainerGap()))
         );

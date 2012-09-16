@@ -89,8 +89,6 @@ public class EditCardsPanel extends JPanel {
         doneButton = new javax.swing.JButton();
         allCardDetailsPanel = new javax.swing.JPanel();
 
-        setMinimumSize(new java.awt.Dimension(370, 350));
-        setPreferredSize(new java.awt.Dimension(370, 350));
         addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }

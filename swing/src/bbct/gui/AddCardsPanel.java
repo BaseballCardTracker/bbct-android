@@ -74,8 +74,6 @@ public class AddCardsPanel extends javax.swing.JPanel {
         addCardButton = new javax.swing.JButton();
         javax.swing.JButton backButton = new javax.swing.JButton();
 
-        setMinimumSize(new java.awt.Dimension(375, 400));
-        setPreferredSize(new java.awt.Dimension(375, 400));
         addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }

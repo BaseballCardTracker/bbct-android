@@ -56,9 +56,7 @@ public class MenuPanel extends javax.swing.JPanel {
         javax.swing.JButton exitButton = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createEmptyBorder(75, 110, 75, 110));
-        setMinimumSize(new java.awt.Dimension(370, 370));
-        setName("mainPanel");
-        setPreferredSize(new java.awt.Dimension(370, 370));
+        setName("mainPanel"); // NOI18N
         addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
