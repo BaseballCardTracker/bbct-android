@@ -63,39 +63,17 @@ public class AddCardsPanel extends JPanel {
     }
 
     private void initComponents() {
-        cardDetailsPanel = new CardDetailsPanel(true);
+        this.setLayout(new BorderLayout());
+
+        this.cardDetailsPanel = new CardDetailsPanel(true);
+        this.cardDetailsPanel.setMinimumSize(new Dimension(375, 500));
+        this.cardDetailsPanel.setPreferredSize(new Dimension(375, 500));
+        this.add(cardDetailsPanel, BorderLayout.CENTER);
+
         JPanel buttonsPanel = new JPanel();
-        addCardButton = new JButton();
-        JButton backButton = new JButton();
-
-        addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorMoved(AncestorEvent evt) {
-            }
-
-            @Override
-            public void ancestorAdded(AncestorEvent evt) {
-                Container topLevelAncestor = AddCardsPanel.this.getTopLevelAncestor();
-
-                if (topLevelAncestor instanceof BBCTFrame) {
-                    BBCTFrame frame = (BBCTFrame) topLevelAncestor;
-                    frame.setTitle(GUIResources.ADD_CARDS_PANEL_TITLE);
-                    frame.setDefaultButton(AddCardsPanel.this.addCardButton);
-                }
-            }
-
-            @Override
-            public void ancestorRemoved(AncestorEvent evt) {
-            }
-        });
-        setLayout(new BorderLayout());
-
-        cardDetailsPanel.setMinimumSize(new Dimension(375, 500));
-        cardDetailsPanel.setPreferredSize(new Dimension(375, 500));
-        add(cardDetailsPanel, BorderLayout.CENTER);
-
+        
+        final JButton addCardButton = new JButton("Add Card");
         addCardButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
-        addCardButton.setText("Add Card");
         addCardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -120,8 +98,8 @@ public class AddCardsPanel extends JPanel {
         });
         buttonsPanel.add(addCardButton);
 
+        JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
-        backButton.setText("Back");
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -135,9 +113,29 @@ public class AddCardsPanel extends JPanel {
         });
         buttonsPanel.add(backButton);
 
-        add(buttonsPanel, BorderLayout.PAGE_END);
+        this.add(buttonsPanel, BorderLayout.SOUTH);
+        
+        this.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorMoved(AncestorEvent evt) {
+            }
+
+            @Override
+            public void ancestorAdded(AncestorEvent evt) {
+                Container topLevelAncestor = AddCardsPanel.this.getTopLevelAncestor();
+
+                if (topLevelAncestor instanceof BBCTFrame) {
+                    BBCTFrame frame = (BBCTFrame) topLevelAncestor;
+                    frame.setTitle(GUIResources.ADD_CARDS_PANEL_TITLE);
+                    frame.setDefaultButton(addCardButton);
+                }
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent evt) {
+            }
+        });
     }
-    private JButton addCardButton;
     private CardDetailsPanel cardDetailsPanel;
     private BaseballCardIO bcio = null;
 }
