@@ -30,8 +30,10 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.util.Currency;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -128,59 +130,14 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         }
         String brand = this.brandTextField.getText();
 
-        // Validate card year
-        this.yearTextField.selectAll();
-        this.yearTextField.requestFocusInWindow();
-        try {
-            this.yearTextField.commitEdit();
-        } catch (ParseException ex) {
-            throw new InputException("Please enter a valid four-digit year.", ex);
-        }
-        if (!this.yearVerifier.verify(this.yearTextField)) {
-            throw new InputException("Please enter a valid four-digit year.");
-        }
-        int year = Integer.parseInt(this.yearTextField.getText());
-
-        // Validate card number
-        this.numberTextField.selectAll();
-        this.numberTextField.requestFocusInWindow();
-        try {
-            this.numberTextField.commitEdit();
-        } catch (ParseException ex) {
-            throw new InputException("Please enter a valid card number. (The number must be positive).", ex);
-        }
-        if (!numVerifier.verify(this.numberTextField)) {
-            throw new InputException("Please enter a valid card number. (The number must be positive).");
-        }
-        int number = Integer.parseInt(this.numberTextField.getText());
-
-        // Validate card value
-        this.valueTextField.selectAll();
-        this.valueTextField.requestFocusInWindow();
-        try {
-            this.valueTextField.commitEdit();
-        } catch (ParseException ex) {
-            throw new InputException("Please enter a valid dollar amount.", ex);
-        }
-        if (!this.currencyVerifier.verify(this.valueTextField)) {
-            throw new InputException("Please enter a valid dollar amount.");
-        }
-        double valueDbl = ((Number) this.valueTextField.getValue()).doubleValue();
+        // Validate year, number, value, and count
+        int year = ((Number)this.verifyTextField(this.yearTextField, this.yearVerifier, "Please enter a valid four-digit year.")).intValue();
+        int number = ((Number)this.verifyTextField(this.numberTextField, this.numVerifier, "Please enter a positive integer for the  card number.")).intValue();
+        
+        // TODO: Fix verification of dollar value.
+        double valueDbl = ((Number)this.verifyTextField(this.valueTextField, this.currencyVerifier, "Please enter a valid dollar amount.")).doubleValue();
         int value = (int) (valueDbl * 100);
-
-        // Validate card count
-        this.countTextField.selectAll();
-        this.countTextField.requestFocusInWindow();
-        if (!this.notEmptyVerifier.verify(this.countTextField)) {
-            throw new InputException("Please enter a card count.");
-        }
-        if (!this.countTextField.isEditValid()) {
-            throw new InputException("Please enter a numeric value for the card count.");
-        }
-        int count = Integer.parseInt(this.countTextField.getText());
-        if (count < 0) {
-            throw new InputException("Please enter a positive value for the card count");
-        }
+        int count = ((Number)this.verifyTextField(this.countTextField, this.numVerifier, "Please enter a positive integer for the card count.")).intValue();
 
         // Validate player name
         this.playerNameTextField.selectAll();
@@ -224,6 +181,21 @@ public class CardDetailsPanel extends javax.swing.JPanel {
         this.countTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card count."));
         this.playerNameTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player name."));
         this.playerPositionTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player position."));
+    }
+    
+    private Object verifyTextField(JFormattedTextField tf, InputVerifier v, String errorMessage) throws InputException {
+        tf.selectAll();
+        tf.requestFocusInWindow();
+        try {
+            tf.commitEdit();
+        } catch (ParseException ex) {
+            throw new InputException(errorMessage, ex);
+        }
+        if (!v.verify(tf)) {
+            throw new InputException(errorMessage);
+        }
+        
+        return tf.getValue();
     }
 
     /**

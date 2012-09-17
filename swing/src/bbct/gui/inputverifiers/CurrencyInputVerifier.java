@@ -18,7 +18,6 @@
  */
 package bbct.gui.inputverifiers;
 
-import bbct.gui.inputverifiers.NotEmptyInputVerifier;
 import javax.swing.InputVerifier;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
@@ -42,7 +41,7 @@ public class CurrencyInputVerifier extends InputVerifier {
      */
     @Override
     public boolean verify(JComponent jc) {
-        if (jc instanceof JFormattedTextField && !this.notEmptyVerifier.verify(jc)) {
+        if (jc instanceof JFormattedTextField && this.notEmptyVerifier.verify(jc)) {
             JFormattedTextField currencyTextField = (JFormattedTextField) jc;
             if (currencyTextField.isEditValid()) {
                 double valueDbl = ((Number) currencyTextField.getValue()).doubleValue();
