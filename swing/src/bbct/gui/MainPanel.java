@@ -56,7 +56,7 @@ public class MainPanel extends javax.swing.JPanel {
     private void initComponents() {
         MenuPanel menuPanel = new MenuPanel();
         AddCardsPanel addCardsPanel = new AddCardsPanel(this.bcio);
-        FindCardsMenuPanel findCardsMenuPanel = new FindCardsMenuPanel(this.bcio);
+        FindCardsMenuPanel findCardsMenuPanel = new FindCardsMenuPanel();
         AboutPanel aboutPanel = new AboutPanel();
         FindCardsByPanel yearInputPanel = new FindCardsByYearPanel(this.bcio);
         FindCardsPanel findCardsByYearPanel = new FindCardsPanel(bcio, yearInputPanel);
