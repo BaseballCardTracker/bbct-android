@@ -18,13 +18,13 @@
  */
 package bbct.gui;
 
-import bbct.gui.inputverifiers.PositiveIntegerInputVerifier;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
 import bbct.exceptions.InputException;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
+import bbct.gui.inputverifiers.PositiveIntegerInputVerifier;
 import java.awt.*;
 import java.text.DecimalFormat;
 import java.text.ParseException;
