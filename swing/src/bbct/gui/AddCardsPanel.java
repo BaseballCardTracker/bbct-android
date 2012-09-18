@@ -59,7 +59,7 @@ public class AddCardsPanel extends JPanel {
      */
     public AddCardsPanel(BaseballCardIO bcio) {
         this.bcio = bcio;
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {

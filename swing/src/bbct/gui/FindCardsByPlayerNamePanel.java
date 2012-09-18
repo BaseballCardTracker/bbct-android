@@ -49,7 +49,7 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
      */
     public FindCardsByPlayerNamePanel(BaseballCardIO bcio) {
         this.bcio = bcio;
-        initComponents();
+        this.initComponents();
     }
 
     @Override

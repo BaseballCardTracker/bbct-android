@@ -63,7 +63,6 @@ public class EditCardsPanel extends JPanel {
      */
     public EditCardsPanel(List<BaseballCard> cards, BaseballCardIO bcio) {
         this.bcio = bcio;
-
         this.initComponents();
 
         for (BaseballCard card : cards) {
@@ -74,10 +73,9 @@ public class EditCardsPanel extends JPanel {
     }
 
     private void initComponents() {
+        this.setLayout(new BorderLayout());
 
         JPanel buttonsPanel = new JPanel();
-
-        this.setLayout(new BorderLayout());
 
         JButton prevButton = new JButton("<-- Previous");
         prevButton.addActionListener(new ActionListener() {

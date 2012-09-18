@@ -47,7 +47,7 @@ public class MenuPanel extends JPanel {
      * Creates a new {@link MenuPanel}.
      */
     public MenuPanel() {
-        initComponents();
+        this.initComponents();
     }
 
     private void initComponents() {

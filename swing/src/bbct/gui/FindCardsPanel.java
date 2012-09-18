@@ -58,7 +58,6 @@ public class FindCardsPanel extends JPanel {
     public FindCardsPanel(BaseballCardIO bcio, FindCardsByPanel inputPanel) {
         this.bcio = bcio;
         this.inputPanel = inputPanel;
-
         this.initComponents();
     }
 

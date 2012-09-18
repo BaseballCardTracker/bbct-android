@@ -58,7 +58,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
      */
     public FindCardsByYearAndNumberPanel(BaseballCardIO bcio) {
         this.bcio = bcio;
-        initComponents();
+        this.initComponents();
     }
 
     /**

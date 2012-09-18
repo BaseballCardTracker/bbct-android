@@ -48,8 +48,7 @@ public class MainPanel extends javax.swing.JPanel {
      */
     public MainPanel(BaseballCardIO bcio) {
         this.bcio = bcio;
-
-        initComponents();
+        this.initComponents();
 
     }
 
