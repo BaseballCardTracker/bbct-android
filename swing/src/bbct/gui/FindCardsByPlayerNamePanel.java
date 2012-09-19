@@ -21,10 +21,13 @@ package bbct.gui;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
+import bbct.exceptions.InputException;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
+import bbct.gui.inputverifiers.NotEmptyInputVerifier;
 import java.awt.*;
 import java.util.List;
+import javax.swing.InputVerifier;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -34,8 +37,6 @@ import javax.swing.JTextField;
  * {@link FindCardsByPlayerNamePanel} allows the user to input the player's
  * name. This value is used as the parameters when searching the underlying
  * storage mechanism for cards for the player.
- *
- * TODO: Error handling.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -53,7 +54,12 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
     }
 
     @Override
-    protected List<BaseballCard> getBaseballCards() throws BBCTIOException {
+    protected List<BaseballCard> getBaseballCards() throws BBCTIOException, InputException {
+        this.playerNameTextField.selectAll();
+        this.playerNameTextField.requestFocusInWindow();
+        if (!this.notEmptyVerifier.verify(this.playerNameTextField)) {
+            throw new InputException("Please enter a player name.");
+        }
         String playerName = this.playerNameTextField.getText();
 
         return this.bcio.getBaseballCardsByPlayerName(playerName);
@@ -102,6 +108,7 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
     }
     private JTextField playerNameTextField;
     private BaseballCardIO bcio = null;
+    private InputVerifier notEmptyVerifier = new NotEmptyInputVerifier();
 
     /**
      * This is a test function for {@link FindCardsByPlayerNamePanel}. It simply

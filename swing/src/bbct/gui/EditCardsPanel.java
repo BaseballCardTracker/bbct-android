@@ -46,8 +46,7 @@ import javax.swing.event.AncestorListener;
  * TODO: What if 1,000 cards match a search? Scrolling through one at a time
  * will be painful!
  *
- * TODO: Enable/disable the "Previous" and "Next" buttons depending on whether
- * or not card details are available for display in the given direction.
+ * TODO: Enable/disable the "Previous" and "Next" buttons if there is only one card?
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */

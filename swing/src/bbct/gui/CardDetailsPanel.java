@@ -131,13 +131,12 @@ public class CardDetailsPanel extends JPanel {
         String brand = this.brandTextField.getText();
 
         // Validate year, number, value, and count
-        int year = ((Number)this.verifyTextField(this.yearTextField, this.yearVerifier, "Please enter a valid four-digit year.")).intValue();
-        int number = ((Number)this.verifyTextField(this.numberTextField, this.numVerifier, "Please enter a positive integer for the  card number.")).intValue();
-        
-        // TODO: Fix verification of dollar value.
-        double valueDbl = ((Number)this.verifyTextField(this.valueTextField, this.currencyVerifier, "Please enter a valid dollar amount.")).doubleValue();
+        int year = ((Number) this.verifyTextField(this.yearTextField, this.yearVerifier, "Please enter a valid four-digit year.")).intValue();
+        int number = ((Number) this.verifyTextField(this.numberTextField, this.numVerifier, "Please enter a positive integer for the  card number.")).intValue();
+
+        double valueDbl = ((Number) this.verifyTextField(this.valueTextField, this.currencyVerifier, "Please enter a valid dollar amount.")).doubleValue();
         int value = (int) (valueDbl * 100);
-        int count = ((Number)this.verifyTextField(this.countTextField, this.numVerifier, "Please enter a positive integer for the card count.")).intValue();
+        int count = ((Number) this.verifyTextField(this.countTextField, this.numVerifier, "Please enter a positive integer for the card count.")).intValue();
 
         // Validate player name
         this.playerNameTextField.selectAll();
@@ -182,7 +181,7 @@ public class CardDetailsPanel extends JPanel {
         Insets rightInsets = new Insets(inside, inside, inside, outside);
         Insets bottomLeftInsets = new Insets(inside, outside, outside, inside);
         Insets bottomRightInsets = new Insets(inside, inside, outside, outside);
-        
+
         JPanel cardDetailsPanel = new JPanel();
         cardDetailsPanel.setBorder(BorderFactory.createTitledBorder(null, "Card Details", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Tahoma", 0, 18))); // NOI18N
         cardDetailsPanel.setLayout(new GridBagLayout());
@@ -195,7 +194,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.insets = topLeftInsets;
         gbc.anchor = GridBagConstraints.WEST;
         cardDetailsPanel.add(cardBrandLabel, gbc);
-        
+
         this.brandTextField = new JTextField();
         this.brandTextField.setEditable(this.allEditable);
         this.brandTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
@@ -212,7 +211,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.gridy = 1;
         gbc.insets = leftInsets;
         cardDetailsPanel.add(cardYearLabel, gbc);
-        
+
         this.yearTextField = new JFormattedTextField();
         this.yearTextField.setEditable(this.allEditable);
         this.yearTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
@@ -250,7 +249,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.gridy = 3;
         gbc.insets = leftInsets;
         cardDetailsPanel.add(cardValueLabel, gbc);
-        
+
         this.valueTextField = new JFormattedTextField();
         this.valueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
         this.valueTextField.setFocusLostBehavior(JFormattedTextField.PERSIST);
@@ -268,7 +267,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.gridy = 4;
         gbc.insets = leftInsets;
         cardDetailsPanel.add(cardCountLabel, gbc);
-        
+
         this.countTextField = new JFormattedTextField();
         this.countTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         this.countTextField.setFocusLostBehavior(JFormattedTextField.PERSIST);
@@ -290,7 +289,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.gridy = 0;
         gbc.insets = topLeftInsets;
         playerDetailsPanel.add(playerNameLabel, gbc);
-        
+
         this.playerNameTextField = new JTextField();
         this.playerNameTextField.setEditable(this.allEditable);
         this.playerNameTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
@@ -307,7 +306,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.gridy = 1;
         gbc.insets = bottomLeftInsets;
         playerDetailsPanel.add(playerPositionLabel, gbc);
-        
+
         this.playerPositionTextField = new JTextField();
         this.playerPositionTextField.setEditable(this.allEditable);
         this.playerPositionTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
@@ -317,7 +316,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.gridy = 1;
         gbc.insets = bottomRightInsets;
         playerDetailsPanel.add(this.playerPositionTextField, gbc);
-        
+
         this.setLayout(new GridLayout(2, 1));
         this.add(cardDetailsPanel);
         this.add(playerDetailsPanel);
@@ -341,7 +340,7 @@ public class CardDetailsPanel extends JPanel {
             }
         });
     }
-    
+
     private Object verifyTextField(JFormattedTextField tf, InputVerifier v, String errorMessage) throws InputException {
         tf.selectAll();
         tf.requestFocusInWindow();
@@ -353,10 +352,9 @@ public class CardDetailsPanel extends JPanel {
         if (!v.verify(tf)) {
             throw new InputException(errorMessage);
         }
-        
+
         return tf.getValue();
     }
-
     private JTextField brandTextField;
     private JFormattedTextField countTextField;
     private JFormattedTextField numberTextField;
@@ -369,7 +367,6 @@ public class CardDetailsPanel extends JPanel {
     private InputVerifier numVerifier = new PositiveIntegerInputVerifier();
     private InputVerifier yearVerifier = new YearInputVerifier();
     private InputVerifier currencyVerifier = new CurrencyInputVerifier();
-    
     private static final int TEXT_FIELD_COLUMNS = 15;
 
     private static BaseballCard createBaseballCard() {
