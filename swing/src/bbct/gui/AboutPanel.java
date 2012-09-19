@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.gui.event.ShowCardActionListener;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
@@ -105,15 +106,7 @@ public class AboutPanel extends JPanel {
         final JButton okButton = new JButton();
         okButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
         okButton.setText("OK");
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                Container parent = AboutPanel.this.getParent();
-                CardLayout cl = (CardLayout) parent.getLayout();
-
-                cl.show(parent, BBCTFrame.MENU_CARD_NAME);
-            }
-        });
+        okButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
         buttonPanel.add(okButton);
 
         this.add(buttonPanel, BorderLayout.SOUTH);

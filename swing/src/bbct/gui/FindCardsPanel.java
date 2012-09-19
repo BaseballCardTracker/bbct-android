@@ -22,6 +22,7 @@ import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
 import bbct.exceptions.InputException;
+import bbct.gui.event.ShowCardActionListener;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
@@ -100,16 +101,7 @@ public class FindCardsPanel extends JPanel {
 
         JButton backButton = new JButton("Back");
         backButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        // TODO: This code appears in almost every JPanel subclass.
-        backButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Container parent = FindCardsPanel.this.getParent();
-                CardLayout cl = (CardLayout) parent.getLayout();
-
-                cl.show(parent, BBCTFrame.FIND_CARDS_MENU_CARD_NAME);
-            }
-        });
+        backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_MENU_CARD_NAME));
         buttonsPanel.add(backButton);
 
         this.add(buttonsPanel, java.awt.BorderLayout.SOUTH);

@@ -22,6 +22,7 @@ import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
 import bbct.exceptions.InputException;
+import bbct.gui.event.ShowCardActionListener;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Container;
@@ -100,17 +101,7 @@ public class AddCardsPanel extends JPanel {
 
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                AddCardsPanel.this.cardDetailsPanel.reset();
-
-                Container parent = AddCardsPanel.this.getParent();
-                CardLayout cl = (CardLayout) parent.getLayout();
-
-                cl.show(parent, BBCTFrame.MENU_CARD_NAME);
-            }
-        });
+        backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
         buttonsPanel.add(backButton);
 
         this.add(buttonsPanel, BorderLayout.SOUTH);

@@ -18,7 +18,7 @@
  */
 package bbct.gui;
 
-import java.awt.CardLayout;
+import bbct.gui.event.ShowCardActionListener;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -78,32 +78,17 @@ public class MenuPanel extends JPanel {
 
         JButton addCardsButton = new JButton("Add Cards");
         addCardsButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
-        addCardsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                MenuPanel.this.showPanel(BBCTFrame.ADD_CARDS_CARD_NAME);
-            }
-        });
+        addCardsButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.ADD_CARDS_CARD_NAME));
         this.add(addCardsButton);
 
         JButton findCardsButton = new JButton("Find Cards");
         findCardsButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
-        findCardsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                MenuPanel.this.showPanel(BBCTFrame.FIND_CARDS_MENU_CARD_NAME);
-            }
-        });
+        findCardsButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_MENU_CARD_NAME));
         this.add(findCardsButton);
 
         JButton aboutButton = new JButton("About");
         aboutButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
-        aboutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                MenuPanel.this.showPanel(BBCTFrame.ABOUT_CARD_NAME);
-            }
-        });
+        aboutButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.ABOUT_CARD_NAME));
         this.add(aboutButton);
 
         JButton exitButton = new JButton("Exit");
@@ -115,12 +100,5 @@ public class MenuPanel extends JPanel {
             }
         });
         this.add(exitButton);
-    }
-
-    private void showPanel(String cardName) {
-        Container parent = this.getParent();
-        CardLayout cl = (CardLayout) parent.getLayout();
-
-        cl.show(parent, cardName);
     }
 }

@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.gui.event.ShowCardActionListener;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Font;
@@ -60,52 +61,27 @@ public class FindCardsMenuPanel extends JPanel {
         
         JButton findCardsByYearButton = new JButton("Find Cards By Year");
         findCardsByYearButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
-        findCardsByYearButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                FindCardsMenuPanel.this.showCard(BBCTFrame.FIND_CARDS_BY_YEAR_CARD_NAME);
-            }
-        });
+        findCardsByYearButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_BY_YEAR_CARD_NAME));
         this.add(findCardsByYearButton);
 
         JButton findCardsByNumberButton = new JButton("Find Cards By Number");
         findCardsByNumberButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
-        findCardsByNumberButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                FindCardsMenuPanel.this.showCard(BBCTFrame.FIND_CARDS_BY_NUMBER_CARD_NAME);
-            }
-        });
+        findCardsByNumberButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_BY_NUMBER_CARD_NAME));
         this.add(findCardsByNumberButton);
 
         JButton findCardsByYearAndNumberButton = new JButton("Find Cards By Year and Number");
         findCardsByYearAndNumberButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
-        findCardsByYearAndNumberButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                FindCardsMenuPanel.this.showCard(BBCTFrame.FIND_CARDS_BY_YEAR_AND_NUMBER_CARD_NAME);
-            }
-        });
+        findCardsByYearAndNumberButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_BY_YEAR_AND_NUMBER_CARD_NAME));
         this.add(findCardsByYearAndNumberButton);
 
         JButton findCardsByPlayerNameButton = new JButton("Find Cards By Player Name");
         findCardsByPlayerNameButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
-        findCardsByPlayerNameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                FindCardsMenuPanel.this.showCard(BBCTFrame.FIND_CARDS_BY_PLAYER_NAME_CARD_NAME);
-            }
-        });
+        findCardsByPlayerNameButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_BY_PLAYER_NAME_CARD_NAME));
         this.add(findCardsByPlayerNameButton);
 
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                FindCardsMenuPanel.this.showCard(BBCTFrame.MENU_CARD_NAME);
-            }
-        });
+        backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
         this.add(backButton);
         
         this.addAncestorListener(new AncestorListener() {
@@ -129,18 +105,6 @@ public class FindCardsMenuPanel extends JPanel {
             public void ancestorRemoved(AncestorEvent evt) {
             }
         });
-    }
-
-    // TODO: Use this as a template for an AncestorListener subclass.
-    private void showCard(String cardName) {
-        Container parent = this.getParent();
-        LayoutManager lm = parent.getLayout();
-
-        if (lm instanceof CardLayout) {
-            CardLayout cl = (CardLayout) lm;
-            cl.show(parent, cardName);
-        }
-
     }
 
     /**
