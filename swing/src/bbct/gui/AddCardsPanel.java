@@ -104,6 +104,7 @@ public class AddCardsPanel extends JPanel {
         this.add(buttonsPanel, BorderLayout.SOUTH);
         
         this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.ADD_CARDS_PANEL_TITLE));
+        this.addAncestorListener(new UpdateInstructionsAncestorListener("Choose an option:"));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(addCardButton));
     }
     private CardDetailsPanel cardDetailsPanel;

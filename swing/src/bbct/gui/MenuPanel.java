@@ -86,8 +86,8 @@ public class MenuPanel extends JPanel {
     }
 
     /**
-     * Tests for {@link MenuPanel}. Simply creates a
-     * {@link javax.swing.JFrame} in which to display it.
+     * Tests for {@link MenuPanel}. Simply creates a {@link javax.swing.JFrame}
+     * in which to display it.
      *
      * @param args Command-line arguments. (ignored)
      */
