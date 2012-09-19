@@ -45,6 +45,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 /**
  * {@link CardDetailsPanel} contains labels and text fields for the data stored
@@ -321,13 +323,13 @@ public class CardDetailsPanel extends JPanel {
         this.add(cardDetailsPanel);
         this.add(playerDetailsPanel);
 
-        addAncestorListener(new javax.swing.event.AncestorListener() {
+        addAncestorListener(new AncestorListener() {
             @Override
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            public void ancestorMoved(AncestorEvent evt) {
             }
 
             @Override
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            public void ancestorAdded(AncestorEvent evt) {
                 if (CardDetailsPanel.this.allEditable) {
                     CardDetailsPanel.this.brandTextField.requestFocusInWindow();
                 } else {
@@ -336,7 +338,7 @@ public class CardDetailsPanel extends JPanel {
             }
 
             @Override
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            public void ancestorRemoved(AncestorEvent evt) {
             }
         });
     }

@@ -22,9 +22,9 @@ import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
 import bbct.exceptions.InputException;
+import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -118,7 +118,6 @@ public class AddCardsPanel extends JPanel {
                 if (topLevelAncestor instanceof BBCTFrame) {
                     BBCTFrame frame = (BBCTFrame) topLevelAncestor;
                     frame.setTitle(GUIResources.ADD_CARDS_PANEL_TITLE);
-                    frame.setDefaultButton(addCardButton);
                 }
             }
 
@@ -126,6 +125,8 @@ public class AddCardsPanel extends JPanel {
             public void ancestorRemoved(AncestorEvent evt) {
             }
         });
+        
+        this.addAncestorListener(new SetDefaultButtonAncestorListener(addCardButton));
     }
     private CardDetailsPanel cardDetailsPanel;
     private BaseballCardIO bcio = null;

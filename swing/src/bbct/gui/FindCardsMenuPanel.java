@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
 import java.awt.CardLayout;
 import java.awt.Container;
@@ -97,7 +98,6 @@ public class FindCardsMenuPanel extends JPanel {
                     BBCTFrame frame = (BBCTFrame) topLevelAncestor;
                     frame.setTitle(GUIResources.FIND_CARDS_MENU_PANEL_TITLE);
                     frame.setInstructions("Chose an option:");
-                    frame.setDefaultButton(null);
                 }
             }
 
@@ -105,6 +105,8 @@ public class FindCardsMenuPanel extends JPanel {
             public void ancestorRemoved(AncestorEvent evt) {
             }
         });
+        
+        this.addAncestorListener(new SetDefaultButtonAncestorListener(null));
     }
 
     /**

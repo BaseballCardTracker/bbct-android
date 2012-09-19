@@ -22,6 +22,7 @@ import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
 import bbct.exceptions.InputException;
+import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -32,8 +33,6 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 
 /**
  * {@link FindCardsPanel} contains a {@link FindCardsByPanel} and two buttons,
@@ -106,25 +105,7 @@ public class FindCardsPanel extends JPanel {
 
         this.add(buttonsPanel, java.awt.BorderLayout.SOUTH);
         // TODO: This code appears in nearly every JPanel subclass.
-        this.addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorMoved(AncestorEvent evt) {
-            }
-
-            @Override
-            public void ancestorAdded(AncestorEvent evt) {
-                Container topLevelAncestor = FindCardsPanel.this.getTopLevelAncestor();
-
-                if (topLevelAncestor instanceof BBCTFrame) {
-                    BBCTFrame frame = (BBCTFrame) topLevelAncestor;
-                    frame.setDefaultButton(findButton);
-                }
-            }
-
-            @Override
-            public void ancestorRemoved(AncestorEvent evt) {
-            }
-        });
+        this.addAncestorListener(new SetDefaultButtonAncestorListener(findButton));
     }
     private BaseballCardIO bcio = null;
     private FindCardsByPanel inputPanel = null;

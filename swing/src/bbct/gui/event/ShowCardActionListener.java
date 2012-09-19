@@ -23,7 +23,6 @@ import java.awt.Container;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JComponent;
 
 /**
  * {@link ShowCardActionListener} is used for buttons which change the currently
@@ -62,6 +61,7 @@ public class ShowCardActionListener implements ActionListener {
             CardLayout cl = (CardLayout) lm;
             cl.show(parent, this.cardName);
         }
+        // Should I throw an exception if lm isn't a CardLayout?
     }
     private Container c = null;
     private String cardName = null;

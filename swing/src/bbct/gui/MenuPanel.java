@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
 import java.awt.Container;
 import java.awt.Font;
@@ -51,30 +52,8 @@ public class MenuPanel extends JPanel {
     }
 
     private void initComponents() {
-        this.setBorder(BorderFactory.createEmptyBorder(75, 110, 75, 110));
-
-        this.addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorMoved(AncestorEvent evt) {
-            }
-
-            @Override
-            public void ancestorAdded(AncestorEvent evt) {
-                Container topLevelAncestor = MenuPanel.this.getTopLevelAncestor();
-
-                if (topLevelAncestor instanceof BBCTFrame) {
-                    BBCTFrame frame = (BBCTFrame) topLevelAncestor;
-                    frame.setTitle(GUIResources.MAIN_PANEL_TITLE);
-                    frame.setInstructions("Chose an option:");
-                    frame.setDefaultButton(null);
-                }
-            }
-
-            @Override
-            public void ancestorRemoved(AncestorEvent evt) {
-            }
-        });
         this.setLayout(new GridLayout(4, 1, 0, 30));
+        this.setBorder(BorderFactory.createEmptyBorder(75, 110, 75, 110));
 
         JButton addCardsButton = new JButton("Add Cards");
         addCardsButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
@@ -100,5 +79,28 @@ public class MenuPanel extends JPanel {
             }
         });
         this.add(exitButton);
+
+        this.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorMoved(AncestorEvent evt) {
+            }
+
+            @Override
+            public void ancestorAdded(AncestorEvent evt) {
+                Container topLevelAncestor = MenuPanel.this.getTopLevelAncestor();
+
+                if (topLevelAncestor instanceof BBCTFrame) {
+                    BBCTFrame frame = (BBCTFrame) topLevelAncestor;
+                    frame.setTitle(GUIResources.MAIN_PANEL_TITLE);
+                    frame.setInstructions("Chose an option:");
+                }
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent evt) {
+            }
+        });
+
+        this.addAncestorListener(new SetDefaultButtonAncestorListener(null));
     }
 }

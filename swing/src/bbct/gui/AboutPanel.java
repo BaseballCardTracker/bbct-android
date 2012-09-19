@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -123,7 +124,6 @@ public class AboutPanel extends JPanel {
                     BBCTFrame frame = (BBCTFrame) topLevelAncestor;
                     frame.setTitle(GUIResources.ABOUT_PANEL_TITLE);
                     frame.setInstructions("Click OK when ready.");
-                    frame.setDefaultButton(okButton);
                 }
             }
 
@@ -131,6 +131,8 @@ public class AboutPanel extends JPanel {
             public void ancestorRemoved(AncestorEvent evt) {
             }
         });
+        
+        this.addAncestorListener(new SetDefaultButtonAncestorListener(okButton));
     }
 
     /**

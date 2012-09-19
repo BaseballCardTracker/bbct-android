@@ -98,16 +98,6 @@ public class BBCTFrame extends JFrame {
         this.instructionLabel.setText(instructions);
     }
 
-    /**
-     * Set the default button which will be activated when the Enter key is
-     * pressed.
-     *
-     * @param button The button to set as the default.
-     */
-    public void setDefaultButton(JButton button) {
-        this.getRootPane().setDefaultButton(button);
-    }
-
     private void initComponents() {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setTitle("Baseball Card Tracker");
