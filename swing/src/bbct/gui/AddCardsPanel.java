@@ -24,15 +24,16 @@ import bbct.exceptions.BBCTIOException;
 import bbct.exceptions.InputException;
 import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
+import bbct.gui.event.UpdateInstructionsAncestorListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -65,8 +66,6 @@ public class AddCardsPanel extends JPanel {
         this.setLayout(new BorderLayout());
 
         this.cardDetailsPanel = new CardDetailsPanel(true);
-        this.cardDetailsPanel.setMinimumSize(new Dimension(375, 500));
-        this.cardDetailsPanel.setPreferredSize(new Dimension(375, 500));
         this.add(cardDetailsPanel, BorderLayout.CENTER);
 
         JPanel buttonsPanel = new JPanel();
@@ -109,4 +108,18 @@ public class AddCardsPanel extends JPanel {
     }
     private CardDetailsPanel cardDetailsPanel;
     private BaseballCardIO bcio = null;
+
+    /**
+     * Tests for {@link AddCardsPanel}. Simply creates a
+     * {@link javax.swing.JFrame} in which to display it.
+     *
+     * @param args Command-line arguments. (ignored)
+     */
+    public static void main(String[] args) {
+        JFrame f = new JFrame("AddCardsPanel Test");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.add(new AddCardsPanel(null));
+        f.pack();
+        f.setVisible(true);
+    }
 }

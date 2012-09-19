@@ -84,7 +84,6 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
         playerNameLabelConstraints.gridx = 0;
         playerNameLabelConstraints.gridy = 0;
         playerNameLabelConstraints.weightx = 1;
-        playerNameLabelConstraints.weighty = 1;
         playerNameLabelConstraints.anchor = GridBagConstraints.WEST;
         playerNameLabelConstraints.insets = new Insets(20, 25, 0, 10);
         inputPanel.add(playerNameLabel, playerNameLabelConstraints);
@@ -97,8 +96,7 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
         GridBagConstraints playerNameTextFieldConstraints = new GridBagConstraints();
         playerNameTextFieldConstraints.gridx = 1;
         playerNameTextFieldConstraints.gridy = 0;
-        playerNameTextFieldConstraints.weightx = 2;
-        playerNameTextFieldConstraints.weighty = 1;
+        playerNameTextFieldConstraints.weightx = 4;
         playerNameTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
         playerNameTextFieldConstraints.insets = new Insets(20, 10, 0, 25);
         inputPanel.add(this.playerNameTextField, playerNameTextFieldConstraints);

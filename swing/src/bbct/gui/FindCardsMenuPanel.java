@@ -22,19 +22,12 @@ import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
 import bbct.gui.event.UpdateInstructionsAncestorListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
-import java.awt.CardLayout;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.LayoutManager;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 
 /**
  * {@link FindCardsMenuPanel} has four buttons which allow the user to choose
@@ -88,6 +81,7 @@ public class FindCardsMenuPanel extends JPanel {
         this.add(backButton);
         
         this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_MENU_PANEL_TITLE));
+        // TODO: Fix instructions
         this.addAncestorListener(new UpdateInstructionsAncestorListener("Choose an option:"));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(null));
     }

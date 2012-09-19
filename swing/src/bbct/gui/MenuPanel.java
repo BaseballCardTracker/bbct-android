@@ -22,16 +22,14 @@ import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
 import bbct.gui.event.UpdateInstructionsAncestorListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
-import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 
 /**
  * {@link MenuPanel} contains buttons that specify the primary actions a user
@@ -55,7 +53,7 @@ public class MenuPanel extends JPanel {
 
     private void initComponents() {
         this.setLayout(new GridLayout(4, 1, 0, 30));
-        this.setBorder(BorderFactory.createEmptyBorder(75, 110, 75, 110));
+        this.setBorder(BorderFactory.createEmptyBorder(50, 110, 50, 110));
 
         JButton addCardsButton = new JButton("Add Cards");
         addCardsButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
@@ -85,5 +83,19 @@ public class MenuPanel extends JPanel {
         this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.MAIN_PANEL_TITLE));
         this.addAncestorListener(new UpdateInstructionsAncestorListener("Choose an option:"));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(null));
+    }
+
+    /**
+     * Tests for {@link MenuPanel}. Simply creates a
+     * {@link javax.swing.JFrame} in which to display it.
+     *
+     * @param args Command-line arguments. (ignored)
+     */
+    public static void main(String[] args) {
+        JFrame f = new JFrame("MenuPanel Test");
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.add(new MenuPanel());
+        f.pack();
+        f.setVisible(true);
     }
 }

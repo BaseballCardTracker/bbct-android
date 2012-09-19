@@ -18,9 +18,7 @@
  */
 package bbct.gui.event;
 
-import bbct.gui.AboutPanel;
 import bbct.gui.BBCTFrame;
-import bbct.gui.GUIResources;
 import java.awt.Container;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -52,8 +50,7 @@ public class UpdateInstructionsAncestorListener implements AncestorListener {
 
         if (topLevelAncestor instanceof BBCTFrame) {
             BBCTFrame frame = (BBCTFrame) topLevelAncestor;
-            frame.setTitle(GUIResources.ABOUT_PANEL_TITLE);
-            frame.setInstructions("Click OK when ready.");
+            frame.setInstructions(this.instr);
         }
     }
 

@@ -36,6 +36,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -175,27 +176,35 @@ public class CardDetailsPanel extends JPanel {
     }
 
     private void initComponents() {
-        int outside = 25;
-        int inside = 5;
-        Insets topLeftInsets = new Insets(outside, outside, inside, inside);
-        Insets topRightInsets = new Insets(outside, inside, inside, outside);
-        Insets leftInsets = new Insets(inside, outside, inside, inside);
-        Insets rightInsets = new Insets(inside, inside, inside, outside);
-        Insets bottomLeftInsets = new Insets(inside, outside, outside, inside);
-        Insets bottomRightInsets = new Insets(inside, inside, outside, outside);
+        final int topOutside = 5;
+        final int bottomOutside = 5;
+        final int rightOutside = 10;
+        final int leftOutside = 10;
+        final int inside = 10;
+        Insets topLeftInsets = new Insets(topOutside, leftOutside, inside, inside);
+        Insets topRightInsets = new Insets(topOutside, inside, inside, rightOutside);
+        Insets leftInsets = new Insets(inside, leftOutside, inside, inside);
+        Insets rightInsets = new Insets(inside, inside, inside, rightOutside);
+        Insets bottomLeftInsets = new Insets(inside, leftOutside, bottomOutside, inside);
+        Insets bottomRightInsets = new Insets(inside, inside, bottomOutside, rightOutside);
 
-        JPanel cardDetailsPanel = new JPanel();
-        cardDetailsPanel.setBorder(BorderFactory.createTitledBorder(null, "Card Details", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Tahoma", 0, 18))); // NOI18N
-        cardDetailsPanel.setLayout(new GridBagLayout());
+        JPanel cardDetailsPanel = new JPanel(new BorderLayout());
+        TitledBorder cardDetailsBorder = BorderFactory.createTitledBorder("Card Details");
+        cardDetailsBorder.setTitleFont(new Font("Tahoma", 0, 18));
+        cardDetailsPanel.setBorder(cardDetailsBorder);
 
+        JPanel cardDetailsInputPanel = new JPanel(new GridBagLayout());
+        
         JLabel cardBrandLabel = new JLabel("Card Brand:");
         cardBrandLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.weightx = 1;
         gbc.insets = topLeftInsets;
         gbc.anchor = GridBagConstraints.WEST;
-        cardDetailsPanel.add(cardBrandLabel, gbc);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        cardDetailsInputPanel.add(cardBrandLabel, gbc);
 
         this.brandTextField = new JTextField();
         this.brandTextField.setEditable(this.allEditable);
@@ -204,15 +213,17 @@ public class CardDetailsPanel extends JPanel {
         this.brandTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card brand name."));
         gbc.gridx = 1;
         gbc.gridy = 0;
+        gbc.weightx = 2;
         gbc.insets = topRightInsets;
-        cardDetailsPanel.add(this.brandTextField, gbc);
+        cardDetailsInputPanel.add(this.brandTextField, gbc);
 
         JLabel cardYearLabel = new JLabel("Card Year:");
         cardYearLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 1;
+        gbc.weightx = 1;
         gbc.insets = leftInsets;
-        cardDetailsPanel.add(cardYearLabel, gbc);
+        cardDetailsInputPanel.add(cardYearLabel, gbc);
 
         this.yearTextField = new JFormattedTextField();
         this.yearTextField.setEditable(this.allEditable);
@@ -223,15 +234,17 @@ public class CardDetailsPanel extends JPanel {
         this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card year."));
         gbc.gridx = 1;
         gbc.gridy = 1;
+        gbc.weightx = 2;
         gbc.insets = rightInsets;
-        cardDetailsPanel.add(this.yearTextField, gbc);
+        cardDetailsInputPanel.add(this.yearTextField, gbc);
 
         JLabel cardNumberLabel = new JLabel("Card Number:");
         cardNumberLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 2;
+        gbc.weightx = 1;
         gbc.insets = leftInsets;
-        cardDetailsPanel.add(cardNumberLabel, gbc);
+        cardDetailsInputPanel.add(cardNumberLabel, gbc);
 
         this.numberTextField = new JFormattedTextField();
         this.numberTextField.setEditable(this.allEditable);
@@ -242,15 +255,17 @@ public class CardDetailsPanel extends JPanel {
         this.numberTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card number."));
         gbc.gridx = 1;
         gbc.gridy = 2;
+        gbc.weightx = 2;
         gbc.insets = rightInsets;
-        cardDetailsPanel.add(this.numberTextField, gbc);
+        cardDetailsInputPanel.add(this.numberTextField, gbc);
 
         JLabel cardValueLabel = new JLabel("Card Value:");
         cardValueLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 3;
+        gbc.weightx = 1;
         gbc.insets = leftInsets;
-        cardDetailsPanel.add(cardValueLabel, gbc);
+        cardDetailsInputPanel.add(cardValueLabel, gbc);
 
         this.valueTextField = new JFormattedTextField();
         this.valueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
@@ -260,15 +275,17 @@ public class CardDetailsPanel extends JPanel {
         this.valueTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card value."));
         gbc.gridx = 1;
         gbc.gridy = 3;
+        gbc.weightx = 2;
         gbc.insets = rightInsets;
-        cardDetailsPanel.add(this.valueTextField, gbc);
+        cardDetailsInputPanel.add(this.valueTextField, gbc);
 
         JLabel cardCountLabel = new JLabel("Card Count:");
         cardCountLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 4;
+        gbc.weightx = 1;
         gbc.insets = leftInsets;
-        cardDetailsPanel.add(cardCountLabel, gbc);
+        cardDetailsInputPanel.add(cardCountLabel, gbc);
 
         this.countTextField = new JFormattedTextField();
         this.countTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
@@ -278,19 +295,26 @@ public class CardDetailsPanel extends JPanel {
         this.countTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card count."));
         gbc.gridx = 1;
         gbc.gridy = 4;
+        gbc.weightx = 2;
         gbc.insets = rightInsets;
-        cardDetailsPanel.add(this.countTextField, gbc);
+        cardDetailsInputPanel.add(this.countTextField, gbc);
+        
+        cardDetailsPanel.add(cardDetailsInputPanel, BorderLayout.PAGE_START);
 
-        JPanel playerDetailsPanel = new JPanel();
-        playerDetailsPanel.setBorder(BorderFactory.createTitledBorder(null, "Player Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new Font("Tahoma", 0, 18))); // NOI18N
-        playerDetailsPanel.setLayout(new GridBagLayout());
+        JPanel playerDetailsPanel = new JPanel(new BorderLayout());
+        TitledBorder playerDetailsBorder = BorderFactory.createTitledBorder("Player Details");
+        playerDetailsBorder.setTitleFont(new Font("Tahoma", 0, 18));
+        playerDetailsPanel.setBorder(playerDetailsBorder);
 
+        JPanel playerDetailsInputPanel = new JPanel(new GridBagLayout());
+        
         JLabel playerNameLabel = new JLabel("Player Name:");
         playerNameLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.weightx = 1;
         gbc.insets = topLeftInsets;
-        playerDetailsPanel.add(playerNameLabel, gbc);
+        playerDetailsInputPanel.add(playerNameLabel, gbc);
 
         this.playerNameTextField = new JTextField();
         this.playerNameTextField.setEditable(this.allEditable);
@@ -299,15 +323,17 @@ public class CardDetailsPanel extends JPanel {
         this.playerNameTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player name."));
         gbc.gridx = 1;
         gbc.gridy = 0;
+        gbc.weightx = 2;
         gbc.insets = topRightInsets;
-        playerDetailsPanel.add(this.playerNameTextField, gbc);
+        playerDetailsInputPanel.add(this.playerNameTextField, gbc);
 
         JLabel playerPositionLabel = new JLabel("Player Position:");
         playerPositionLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 1;
+        gbc.weightx = 1;
         gbc.insets = bottomLeftInsets;
-        playerDetailsPanel.add(playerPositionLabel, gbc);
+        playerDetailsInputPanel.add(playerPositionLabel, gbc);
 
         this.playerPositionTextField = new JTextField();
         this.playerPositionTextField.setEditable(this.allEditable);
@@ -316,10 +342,13 @@ public class CardDetailsPanel extends JPanel {
         this.playerPositionTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player position."));
         gbc.gridx = 1;
         gbc.gridy = 1;
+        gbc.weightx = 2;
         gbc.insets = bottomRightInsets;
-        playerDetailsPanel.add(this.playerPositionTextField, gbc);
+        playerDetailsInputPanel.add(this.playerPositionTextField, gbc);
+        
+        playerDetailsPanel.add(playerDetailsInputPanel, BorderLayout.PAGE_START);
 
-        this.setLayout(new GridLayout(2, 1));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(cardDetailsPanel);
         this.add(playerDetailsPanel);
 

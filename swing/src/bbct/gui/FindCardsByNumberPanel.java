@@ -105,7 +105,6 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
         numberLabelConstraints.gridx = 0;
         numberLabelConstraints.gridy = 0;
         numberLabelConstraints.weightx = 1;
-        numberLabelConstraints.weighty = 1;
         numberLabelConstraints.anchor = GridBagConstraints.WEST;
         numberLabelConstraints.insets = new Insets(20, 25, 0, 10);
         inputPanel.add(numberLabel, numberLabelConstraints);
@@ -119,8 +118,7 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
         GridBagConstraints numberTextFieldConstraints = new GridBagConstraints();
         numberTextFieldConstraints.gridx = 1;
         numberTextFieldConstraints.gridy = 0;
-        numberTextFieldConstraints.weightx = 2;
-        numberTextFieldConstraints.weighty = 1;
+        numberTextFieldConstraints.weightx = 4;
         numberTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
         numberTextFieldConstraints.insets = new Insets(20, 10, 0, 25);
         inputPanel.add(this.numberTextField, numberTextFieldConstraints);

@@ -104,8 +104,6 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
         yearLabelConstraints.gridx = 0;
         yearLabelConstraints.gridy = 0;
         yearLabelConstraints.weightx = 1;
-        yearLabelConstraints.weighty = 1;
-        yearLabelConstraints.anchor = GridBagConstraints.WEST;
         yearLabelConstraints.insets = new Insets(20, 25, 10, 10);
         inputPanel.add(yearLabel, yearLabelConstraints);
 
@@ -118,8 +116,7 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
         GridBagConstraints yearTextFieldConstraints = new GridBagConstraints();
         yearTextFieldConstraints.gridx = 1;
         yearTextFieldConstraints.gridy = 0;
-        yearTextFieldConstraints.weightx = 2;
-        yearTextFieldConstraints.weighty = 1;
+        yearTextFieldConstraints.weightx = 4;
         yearTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
         yearTextFieldConstraints.insets = new Insets(20, 10, 10, 25);
         inputPanel.add(this.yearTextField, yearTextFieldConstraints);

@@ -24,12 +24,12 @@ import bbct.gui.event.UpdateInstructionsAncestorListener;
 import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.BorderLayout;
 import java.awt.Font;
-import javax.swing.GroupLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.LayoutStyle;
 
 /**
  * A panel that displays the name of this application and copyright information.
@@ -49,55 +49,45 @@ public class AboutPanel extends JPanel {
         this.setLayout(new BorderLayout());
 
         JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new GridBagLayout());
+        
+        GridBagConstraints gbc = new GridBagConstraints();
 
         JLabel titleLabel = new JLabel("Baseball Card Tracker");
         titleLabel.setFont(new Font("Tahoma", 0, 36)); // NOI18N
-
-        JLabel copyrightLabel = new JLabel("<html>&copy 2012 codeguru</html>");
-        copyrightLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
+        infoPanel.add(titleLabel, gbc);
 
         JLabel versionLabel = new JLabel("Version 0.5.2 (beta)");
         versionLabel.setFont(new Font("Tahoma", 0, 18)); // NOI18N
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        infoPanel.add(versionLabel, gbc);
 
-        JLabel websiteLabel = new JLabel("Project website: http://www.sourceforge.net/p/bbct");
+        JLabel copyrightLabel = new JLabel("<html>&copy 2012 codeguru</html>");
+        copyrightLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.ipady = 10;
+        gbc.anchor = GridBagConstraints.WEST;
+        infoPanel.add(copyrightLabel, gbc);
+
+        JLabel websiteLabel = new JLabel("Project website: http://sf.net/p/bbct");
         websiteLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        infoPanel.add(websiteLabel, gbc);
 
         JLabel gplLabel = new JLabel("<html>This software is licensed under the GPL. Visit<br> http://www.gnu.org/licenses/ for a copy of the license.</html>");
         gplLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        infoPanel.add(gplLabel, gbc);
 
-        GroupLayout infoPanelLayout = new GroupLayout(infoPanel);
-        infoPanel.setLayout(infoPanelLayout);
-        infoPanelLayout.setHorizontalGroup(
-                infoPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGap(0, 366, Short.MAX_VALUE)
-                .addGroup(infoPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(infoPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(infoPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(copyrightLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addComponent(versionLabel)
-                .addComponent(websiteLabel)
-                .addComponent(gplLabel)
-                .addComponent(titleLabel))
-                .addContainerGap())));
-        infoPanelLayout.setVerticalGroup(
-                infoPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGap(0, 521, Short.MAX_VALUE)
-                .addGroup(infoPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addGroup(infoPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(titleLabel)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(versionLabel)
-                .addGap(18, 18, 18)
-                .addComponent(copyrightLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(websiteLabel)
-                .addGap(330, 330, 330)
-                .addComponent(gplLabel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))));
-
-        this.add(infoPanel, BorderLayout.CENTER);
+        this.add(infoPanel, BorderLayout.PAGE_START);
 
         JPanel buttonPanel = new JPanel();
         final JButton okButton = new JButton();
@@ -123,7 +113,7 @@ public class AboutPanel extends JPanel {
         JFrame f = new JFrame("AboutPanel Test");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.add(new AboutPanel());
-        f.pack();
+        f.setSize(400, 400);
         f.setVisible(true);
     }
 }

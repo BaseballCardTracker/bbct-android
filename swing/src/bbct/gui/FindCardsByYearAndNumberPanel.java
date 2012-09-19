@@ -123,7 +123,6 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         yearLabelConstraints.gridx = 0;
         yearLabelConstraints.gridy = 0;
         yearLabelConstraints.weightx = 1;
-        yearLabelConstraints.weighty = 1;
         yearLabelConstraints.anchor = GridBagConstraints.WEST;
         yearLabelConstraints.insets = new Insets(20, 25, 10, 10);
         inputPanel.add(yearLabel, yearLabelConstraints);
@@ -137,8 +136,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         GridBagConstraints yearTextFieldConstraints = new GridBagConstraints();
         yearTextFieldConstraints.gridx = 1;
         yearTextFieldConstraints.gridy = 0;
-        yearTextFieldConstraints.weightx = 2;
-        yearTextFieldConstraints.weighty = 1;
+        yearTextFieldConstraints.weightx = 4;
         yearTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
         yearTextFieldConstraints.insets = new Insets(20, 10, 10, 25);
         inputPanel.add(this.yearTextField, yearTextFieldConstraints);
@@ -150,7 +148,6 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         numberLabelConstraints.gridx = 0;
         numberLabelConstraints.gridy = 1;
         numberLabelConstraints.weightx = 1;
-        numberLabelConstraints.weighty = 1;
         numberLabelConstraints.anchor = GridBagConstraints.WEST;
         numberLabelConstraints.insets = new Insets(10, 25, 0, 10);
         inputPanel.add(cardNumberLabel, numberLabelConstraints);
@@ -164,8 +161,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         GridBagConstraints numberTextFieldConstraints = new GridBagConstraints();
         numberTextFieldConstraints.gridx = 1;
         numberTextFieldConstraints.gridy = 1;
-        numberTextFieldConstraints.weightx = 2;
-        numberTextFieldConstraints.weighty = 1;
+        numberTextFieldConstraints.weightx = 4;
         numberTextFieldConstraints.fill = GridBagConstraints.HORIZONTAL;
         numberTextFieldConstraints.insets = new Insets(10, 10, 0, 25);
         inputPanel.add(this.numberTextField, numberTextFieldConstraints);
