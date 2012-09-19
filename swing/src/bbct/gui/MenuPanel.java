@@ -20,6 +20,8 @@ package bbct.gui;
 
 import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
+import bbct.gui.event.UpdateInstructionsAncestorListener;
+import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -80,27 +82,8 @@ public class MenuPanel extends JPanel {
         });
         this.add(exitButton);
 
-        this.addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorMoved(AncestorEvent evt) {
-            }
-
-            @Override
-            public void ancestorAdded(AncestorEvent evt) {
-                Container topLevelAncestor = MenuPanel.this.getTopLevelAncestor();
-
-                if (topLevelAncestor instanceof BBCTFrame) {
-                    BBCTFrame frame = (BBCTFrame) topLevelAncestor;
-                    frame.setTitle(GUIResources.MAIN_PANEL_TITLE);
-                    frame.setInstructions("Chose an option:");
-                }
-            }
-
-            @Override
-            public void ancestorRemoved(AncestorEvent evt) {
-            }
-        });
-
+        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.MAIN_PANEL_TITLE));
+        this.addAncestorListener(new UpdateInstructionsAncestorListener("Choose an option:"));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(null));
     }
 }

@@ -104,7 +104,6 @@ public class FindCardsPanel extends JPanel {
         buttonsPanel.add(backButton);
 
         this.add(buttonsPanel, java.awt.BorderLayout.SOUTH);
-        // TODO: This code appears in nearly every JPanel subclass.
         this.addAncestorListener(new SetDefaultButtonAncestorListener(findButton));
     }
     private BaseballCardIO bcio = null;

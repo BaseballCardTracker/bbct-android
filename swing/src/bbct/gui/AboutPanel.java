@@ -20,20 +20,16 @@ package bbct.gui;
 
 import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
+import bbct.gui.event.UpdateInstructionsAncestorListener;
+import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Container;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 
 /**
  * A panel that displays the name of this application and copyright information.
@@ -111,27 +107,9 @@ public class AboutPanel extends JPanel {
         buttonPanel.add(okButton);
 
         this.add(buttonPanel, BorderLayout.SOUTH);
-        this.addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorMoved(AncestorEvent evt) {
-            }
 
-            @Override
-            public void ancestorAdded(AncestorEvent evt) {
-                Container topLevelAncestor = AboutPanel.this.getTopLevelAncestor();
-
-                if (topLevelAncestor instanceof BBCTFrame) {
-                    BBCTFrame frame = (BBCTFrame) topLevelAncestor;
-                    frame.setTitle(GUIResources.ABOUT_PANEL_TITLE);
-                    frame.setInstructions("Click OK when ready.");
-                }
-            }
-
-            @Override
-            public void ancestorRemoved(AncestorEvent evt) {
-            }
-        });
-        
+        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.ABOUT_PANEL_TITLE));
+        this.addAncestorListener(new UpdateInstructionsAncestorListener("Click OK when ready."));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(okButton));
     }
 

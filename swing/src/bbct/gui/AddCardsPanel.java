@@ -24,8 +24,8 @@ import bbct.exceptions.BBCTIOException;
 import bbct.exceptions.InputException;
 import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
+import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -35,8 +35,6 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 
 /**
  * This panel contains controls which allow the user to add data for baseball
@@ -106,26 +104,7 @@ public class AddCardsPanel extends JPanel {
 
         this.add(buttonsPanel, BorderLayout.SOUTH);
         
-        this.addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorMoved(AncestorEvent evt) {
-            }
-
-            @Override
-            public void ancestorAdded(AncestorEvent evt) {
-                Container topLevelAncestor = AddCardsPanel.this.getTopLevelAncestor();
-
-                if (topLevelAncestor instanceof BBCTFrame) {
-                    BBCTFrame frame = (BBCTFrame) topLevelAncestor;
-                    frame.setTitle(GUIResources.ADD_CARDS_PANEL_TITLE);
-                }
-            }
-
-            @Override
-            public void ancestorRemoved(AncestorEvent evt) {
-            }
-        });
-        
+        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.ADD_CARDS_PANEL_TITLE));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(addCardButton));
     }
     private CardDetailsPanel cardDetailsPanel;

@@ -23,6 +23,7 @@ import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
 import bbct.exceptions.InputException;
 import bbct.gui.event.SetDefaultButtonAncestorListener;
+import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -36,8 +37,6 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 
 /**
  * {@link EditCardsPanel} allows the user to edit the value and count of
@@ -138,26 +137,7 @@ public class EditCardsPanel extends JPanel {
         this.allCardDetailsPanel.setLayout(new CardLayout());
         this.add(allCardDetailsPanel, BorderLayout.CENTER);
 
-        this.addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorMoved(AncestorEvent evt) {
-            }
-
-            @Override
-            public void ancestorAdded(AncestorEvent evt) {
-                Container topLevelAncestor = EditCardsPanel.this.getTopLevelAncestor();
-
-                if (topLevelAncestor instanceof BBCTFrame) {
-                    BBCTFrame frame = (BBCTFrame) topLevelAncestor;
-                    frame.setTitle(GUIResources.EDIT_CARD_PANEL_TITLE);
-                }
-            }
-
-            @Override
-            public void ancestorRemoved(AncestorEvent evt) {
-            }
-        });
-        
+        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.ABOUT_PANEL_TITLE));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(doneButton));
     }
 

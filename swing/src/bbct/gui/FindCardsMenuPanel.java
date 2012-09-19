@@ -20,6 +20,8 @@ package bbct.gui;
 
 import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
+import bbct.gui.event.UpdateInstructionsAncestorListener;
+import bbct.gui.event.UpdateTitleAncestorListener;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Font;
@@ -85,27 +87,8 @@ public class FindCardsMenuPanel extends JPanel {
         backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
         this.add(backButton);
         
-        this.addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorMoved(AncestorEvent evt) {
-            }
-
-            @Override
-            public void ancestorAdded(AncestorEvent evt) {
-                Container topLevelAncestor = FindCardsMenuPanel.this.getTopLevelAncestor();
-
-                if (topLevelAncestor instanceof BBCTFrame) {
-                    BBCTFrame frame = (BBCTFrame) topLevelAncestor;
-                    frame.setTitle(GUIResources.FIND_CARDS_MENU_PANEL_TITLE);
-                    frame.setInstructions("Chose an option:");
-                }
-            }
-
-            @Override
-            public void ancestorRemoved(AncestorEvent evt) {
-            }
-        });
-        
+        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_MENU_PANEL_TITLE));
+        this.addAncestorListener(new UpdateInstructionsAncestorListener("Choose an option:"));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(null));
     }
 
