@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.BBCTStringResources;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
@@ -75,10 +76,10 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
         try {
             this.yearTextField.commitEdit();
         } catch (ParseException ex) {
-            throw new InputException("Please enter a valid four-digit year.", ex);
+            throw new InputException(BBCTStringResources.ErrorResources.CARD_YEAR_ERROR, ex);
         }
         if (!this.yearVerifier.verify(this.yearTextField)) {
-            throw new InputException("Please enter a valid four-digit year.");
+            throw new InputException(BBCTStringResources.ErrorResources.CARD_YEAR_ERROR);
         }
         int year = Integer.parseInt(this.yearTextField.getText());
 
@@ -111,7 +112,7 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
         this.yearTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
         this.yearTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.yearTextField.setColumns(10);
-        this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card year."));
+        this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_YEAR_INSTRUCTIONS));
 
         GridBagConstraints yearTextFieldConstraints = new GridBagConstraints();
         yearTextFieldConstraints.gridx = 1;
@@ -122,7 +123,7 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
         inputPanel.add(this.yearTextField, yearTextFieldConstraints);
 
         this.add(inputPanel, BorderLayout.PAGE_START);
-        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_BY_YEAR_PANEL_TITLE));
+        this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_BY_YEAR_PANEL_TITLE));
     }
     private JFormattedTextField yearTextField;
     private BaseballCardIO bcio = null;

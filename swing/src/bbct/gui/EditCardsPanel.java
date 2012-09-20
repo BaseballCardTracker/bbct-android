@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.BBCTStringResources;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
@@ -47,6 +48,8 @@ import javax.swing.JPanel;
  * will be painful!
  *
  * TODO: Enable/disable the "Previous" and "Next" buttons if there is only one card?
+ * 
+ * TODO: Uneditable text fields should not be in the focus order when tabbing.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -76,7 +79,7 @@ public class EditCardsPanel extends JPanel {
 
         JPanel buttonsPanel = new JPanel();
 
-        JButton prevButton = new JButton("<-- Previous");
+        JButton prevButton = new JButton(BBCTStringResources.ButtonResources.PREVIOUS_BUTTON);
         prevButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -86,7 +89,7 @@ public class EditCardsPanel extends JPanel {
         });
         buttonsPanel.add(prevButton);
 
-        JButton nextButton = new JButton("Next -->");
+        JButton nextButton = new JButton(BBCTStringResources.ButtonResources.NEXT_BUTTON);
         nextButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -96,7 +99,7 @@ public class EditCardsPanel extends JPanel {
         });
         buttonsPanel.add(nextButton);
 
-        final JButton doneButton = new JButton("Done");
+        final JButton doneButton = new JButton(BBCTStringResources.ButtonResources.DONE_BUTTON);
         doneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -115,7 +118,7 @@ public class EditCardsPanel extends JPanel {
                         EditCardsPanel.this.bcio.updateCards(cards);
                     } catch (BBCTIOException ex) {
                         Logger.getLogger(EditCardsPanel.class.getName()).log(Level.SEVERE, "Unable to update baseball card data.", ex);
-                        JOptionPane.showMessageDialog(EditCardsPanel.this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(EditCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.IO_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                     }
 
                     Container parent = EditCardsPanel.this.getParent();
@@ -125,7 +128,7 @@ public class EditCardsPanel extends JPanel {
                     layout.show(parent, BBCTFrame.FIND_CARDS_MENU_CARD_NAME);
                 } catch (InputException ex) {
                     Logger.getLogger(EditCardsPanel.class.getName()).log(Level.INFO, "Invalid input.", ex);
-                    JOptionPane.showMessageDialog(EditCardsPanel.this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(EditCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.INPUT_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -137,7 +140,7 @@ public class EditCardsPanel extends JPanel {
         this.allCardDetailsPanel.setLayout(new CardLayout());
         this.add(allCardDetailsPanel, BorderLayout.CENTER);
 
-        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.ABOUT_PANEL_TITLE));
+        this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.EDIT_CARD_PANEL_TITLE));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(doneButton));
     }
 

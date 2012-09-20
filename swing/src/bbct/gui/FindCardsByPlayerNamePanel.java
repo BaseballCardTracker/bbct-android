@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.BBCTStringResources;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
@@ -58,7 +59,7 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
         this.playerNameTextField.selectAll();
         this.playerNameTextField.requestFocusInWindow();
         if (!this.notEmptyVerifier.verify(this.playerNameTextField)) {
-            throw new InputException("Please enter a player name.");
+            throw new InputException(BBCTStringResources.ErrorResources.PLAYER_NAME_ERROR);
         }
         String playerName = this.playerNameTextField.getText();
 
@@ -77,7 +78,7 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
 
         JPanel inputPanel = new JPanel(new GridBagLayout());
 
-        JLabel playerNameLabel = new JLabel("Player Name:");
+        JLabel playerNameLabel = new JLabel(BBCTStringResources.LabelResources.PLAYER_NAME_LABEL);
         playerNameLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
 
         GridBagConstraints playerNameLabelConstraints = new GridBagConstraints();
@@ -91,7 +92,7 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
         this.playerNameTextField = new JTextField();
         this.playerNameTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.playerNameTextField.setColumns(10);
-        this.playerNameTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player name."));
+        this.playerNameTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.PLAYER_NAME_INSTRUCTIONS));
 
         GridBagConstraints playerNameTextFieldConstraints = new GridBagConstraints();
         playerNameTextFieldConstraints.gridx = 1;
@@ -102,7 +103,7 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
         inputPanel.add(this.playerNameTextField, playerNameTextFieldConstraints);
 
         this.add(inputPanel, BorderLayout.PAGE_START);
-        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_BY_PLAYER_NAME_PANEL_TITLE));
+        this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_BY_PLAYER_NAME_PANEL_TITLE));
     }
     private JTextField playerNameTextField;
     private BaseballCardIO bcio = null;

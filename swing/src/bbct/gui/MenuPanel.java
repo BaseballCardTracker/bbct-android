@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.BBCTStringResources;
 import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
 import bbct.gui.event.UpdateInstructionsAncestorListener;
@@ -55,22 +56,22 @@ public class MenuPanel extends JPanel {
         this.setLayout(new GridLayout(4, 1, 0, 30));
         this.setBorder(BorderFactory.createEmptyBorder(50, 110, 50, 110));
 
-        JButton addCardsButton = new JButton("Add Cards");
+        JButton addCardsButton = new JButton(BBCTStringResources.ButtonResources.ADD_CARDS_BUTTON);
         addCardsButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
         addCardsButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.ADD_CARDS_CARD_NAME));
         this.add(addCardsButton);
 
-        JButton findCardsButton = new JButton("Find Cards");
+        JButton findCardsButton = new JButton(BBCTStringResources.ButtonResources.FIND_CARDS_BUTTON);
         findCardsButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
         findCardsButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_MENU_CARD_NAME));
         this.add(findCardsButton);
 
-        JButton aboutButton = new JButton("About");
+        JButton aboutButton = new JButton(BBCTStringResources.ButtonResources.ABOUT_BUTTON);
         aboutButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
         aboutButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.ABOUT_CARD_NAME));
         this.add(aboutButton);
 
-        JButton exitButton = new JButton("Exit");
+        JButton exitButton = new JButton(BBCTStringResources.ButtonResources.EXIT_BUTTON);
         exitButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
         exitButton.addActionListener(new ActionListener() {
             @Override
@@ -80,8 +81,8 @@ public class MenuPanel extends JPanel {
         });
         this.add(exitButton);
 
-        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.MAIN_PANEL_TITLE));
-        this.addAncestorListener(new UpdateInstructionsAncestorListener("Choose an option:"));
+        this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.MAIN_PANEL_TITLE));
+        this.addAncestorListener(new UpdateInstructionsAncestorListener(BBCTStringResources.InstructionResources.MENU_INSTRUCTIONS));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(null));
     }
 

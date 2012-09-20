@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.BBCTStringResources;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
@@ -103,7 +104,7 @@ public class AddCardsPanel extends JPanel {
 
         this.add(buttonsPanel, BorderLayout.SOUTH);
         
-        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.ADD_CARDS_PANEL_TITLE));
+        this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.ADD_CARDS_PANEL_TITLE));
         this.addAncestorListener(new UpdateInstructionsAncestorListener("Choose an option:"));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(addCardButton));
     }

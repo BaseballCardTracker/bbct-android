@@ -19,6 +19,7 @@
 package bbct.data;
 
 import bbct.exceptions.BBCTIOException;
+import bbct.BBCTStringResources;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             logger.log(Level.INFO, "Creating table");
             this.createTable();
         } catch (SQLException ex) {
-            throw new BBCTIOException("Initialization Error", ex);
+            throw new BBCTIOException(BBCTStringResources.ErrorResources.DATABASE_INITIALIZATION_ERROR, ex);
         }
     }
 
@@ -100,7 +101,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
         try {
             this.conn.close();
         } catch (SQLException ex) {
-            throw new BBCTIOException("Unable to properly cleanup database resources", ex);
+            throw new BBCTIOException(BBCTStringResources.ErrorResources.DATABASE_CLEANUP_ERROR, ex);
         }
     }
 
@@ -127,6 +128,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             stmtInsert.executeUpdate();
         } catch (SQLException ex) {
             // TODO: This is not the only reason for a SQLException.
+            // TODO: String literals need to be in bbct.gui.BBCTStringResources
             String msg = "A " + card.getYear() + " card from " + card.getBrand() + " with number " + card.getNumber() + " already exists.";
             throw new BBCTIOException(msg, ex);
         }
@@ -154,7 +156,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
 
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
-            String msg = "Unable to retrieve cards from database. (year: " + year + ")";
+            // TODO: How do I remove this String literal?
+            String msg = BBCTStringResources.ErrorResources.DATABASE_SELECT_ERROR + " (year: " + year + ")";
             throw new BBCTIOException(msg, ex);
         }
     }
@@ -180,7 +183,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             ResultSet rs = stmt.executeQuery();
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
-            String msg = "Unable to retrieve cards from database. (number: " + number + ")";
+            // TODO: How do I remove this String literal?
+            String msg = BBCTStringResources.ErrorResources.DATABASE_SELECT_ERROR + " (number: " + number + ")";
             throw new BBCTIOException(msg, ex);
         }
     }
@@ -211,7 +215,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             ResultSet rs = stmt.executeQuery();
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
-            String msg = "Unable to retrieve cards from database. (year: " + year + ", number: " + number + ")";
+            // TODO: How do I remove this String literal?
+            String msg = BBCTStringResources.ErrorResources.DATABASE_SELECT_ERROR + " (year: " + year + ", number: " + number + ")";
             throw new BBCTIOException(msg, ex);
         }
     }
@@ -237,7 +242,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
             ResultSet rs = stmt.executeQuery();
             return this.getBaseballCards(rs);
         } catch (SQLException ex) {
-            String msg = "Unable to retrieve cards from database. (player name: " + playerName + ")";
+            // TODO: How do I remove this String literal?
+            String msg = BBCTStringResources.ErrorResources.DATABASE_SELECT_ERROR + " (player name: " + playerName + ")";
             throw new BBCTIOException(msg, ex);
         }
     }
@@ -273,7 +279,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
 
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            throw new BBCTIOException("Unable to update baseball card data.", ex);
+            throw new BBCTIOException(BBCTStringResources.ErrorResources.DATABASE_UPDATE_ERROR, ex);
         }
     }
 

@@ -18,8 +18,10 @@
  */
 package bbct.gui;
 
+import bbct.BBCTStringResources;
 import bbct.data.BaseballCard;
 import bbct.exceptions.InputException;
+import bbct.BBCTStringResources.TitleResources;
 import bbct.gui.event.UpdateInstructionsFocusListener;
 import bbct.gui.inputverifiers.CurrencyInputVerifier;
 import bbct.gui.inputverifiers.NotEmptyInputVerifier;
@@ -30,7 +32,6 @@ import java.awt.CardLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -129,23 +130,23 @@ public class CardDetailsPanel extends JPanel {
         this.brandTextField.selectAll();
         this.brandTextField.requestFocusInWindow();
         if (!this.notEmptyVerifier.verify(this.brandTextField)) {
-            throw new InputException("Please enter a card brand.");
+            throw new InputException(BBCTStringResources.ErrorResources.CARD_BRAND_ERROR);
         }
         String brand = this.brandTextField.getText();
 
         // Validate year, number, value, and count
-        int year = ((Number) this.verifyTextField(this.yearTextField, this.yearVerifier, "Please enter a valid four-digit year.")).intValue();
-        int number = ((Number) this.verifyTextField(this.numberTextField, this.numVerifier, "Please enter a positive integer for the  card number.")).intValue();
+        int year = ((Number) this.verifyTextField(this.yearTextField, this.yearVerifier, BBCTStringResources.ErrorResources.CARD_YEAR_ERROR)).intValue();
+        int number = ((Number) this.verifyTextField(this.numberTextField, this.numVerifier, BBCTStringResources.ErrorResources.CARD_NUMBER_ERROR)).intValue();
 
-        double valueDbl = ((Number) this.verifyTextField(this.valueTextField, this.currencyVerifier, "Please enter a valid dollar amount.")).doubleValue();
+        double valueDbl = ((Number) this.verifyTextField(this.valueTextField, this.currencyVerifier, BBCTStringResources.ErrorResources.CARD_VALUE_ERROR)).doubleValue();
         int value = (int) (valueDbl * 100);
-        int count = ((Number) this.verifyTextField(this.countTextField, this.numVerifier, "Please enter a positive integer for the card count.")).intValue();
+        int count = ((Number) this.verifyTextField(this.countTextField, this.numVerifier, BBCTStringResources.ErrorResources.CARD_COUNT_ERROR)).intValue();
 
         // Validate player name
         this.playerNameTextField.selectAll();
         this.playerNameTextField.requestFocusInWindow();
         if (!this.notEmptyVerifier.verify(this.playerNameTextField)) {
-            throw new InputException("Please enter a player name.");
+            throw new InputException(BBCTStringResources.ErrorResources.PLAYER_NAME_ERROR);
         }
         String playerName = this.playerNameTextField.getText();
 
@@ -153,7 +154,7 @@ public class CardDetailsPanel extends JPanel {
         this.playerPositionTextField.selectAll();
         this.playerPositionTextField.requestFocusInWindow();
         if (!this.notEmptyVerifier.verify(this.playerPositionTextField)) {
-            throw new InputException("Please enter a player position.");
+            throw new InputException(BBCTStringResources.ErrorResources.PLAYER_POSITION_ERROR);
         }
         String playerPosition = this.playerPositionTextField.getText();
 
@@ -189,14 +190,14 @@ public class CardDetailsPanel extends JPanel {
         Insets bottomRightInsets = new Insets(inside, inside, bottomOutside, rightOutside);
 
         JPanel cardDetailsPanel = new JPanel(new BorderLayout());
-        TitledBorder cardDetailsBorder = BorderFactory.createTitledBorder("Card Details");
+        TitledBorder cardDetailsBorder = BorderFactory.createTitledBorder(TitleResources.CARD_DETAILS_BORDER_TITLE);
         cardDetailsBorder.setTitleFont(new Font("Tahoma", 0, 18));
         cardDetailsPanel.setBorder(cardDetailsBorder);
 
         JPanel cardDetailsInputPanel = new JPanel(new GridBagLayout());
         
-        JLabel cardBrandLabel = new JLabel("Card Brand:");
-        cardBrandLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        JLabel brandLabel = new JLabel(BBCTStringResources.LabelResources.CARD_BRAND_LABEL);
+        brandLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -204,26 +205,26 @@ public class CardDetailsPanel extends JPanel {
         gbc.insets = topLeftInsets;
         gbc.anchor = GridBagConstraints.WEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        cardDetailsInputPanel.add(cardBrandLabel, gbc);
+        cardDetailsInputPanel.add(brandLabel, gbc);
 
         this.brandTextField = new JTextField();
         this.brandTextField.setEditable(this.allEditable);
         this.brandTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.brandTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
-        this.brandTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card brand name."));
+        this.brandTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_BRAND_INSTRUCTIONS));
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 2;
         gbc.insets = topRightInsets;
         cardDetailsInputPanel.add(this.brandTextField, gbc);
 
-        JLabel cardYearLabel = new JLabel("Card Year:");
-        cardYearLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        JLabel yearLabel = new JLabel(BBCTStringResources.LabelResources.CARD_YEAR_LABEL);
+        yearLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weightx = 1;
         gbc.insets = leftInsets;
-        cardDetailsInputPanel.add(cardYearLabel, gbc);
+        cardDetailsInputPanel.add(yearLabel, gbc);
 
         this.yearTextField = new JFormattedTextField();
         this.yearTextField.setEditable(this.allEditable);
@@ -231,20 +232,20 @@ public class CardDetailsPanel extends JPanel {
         this.yearTextField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         this.yearTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.yearTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
-        this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card year."));
+        this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_YEAR_INSTRUCTIONS));
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.weightx = 2;
         gbc.insets = rightInsets;
         cardDetailsInputPanel.add(this.yearTextField, gbc);
 
-        JLabel cardNumberLabel = new JLabel("Card Number:");
-        cardNumberLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        JLabel numberLabel = new JLabel(BBCTStringResources.LabelResources.CARD_NUMBER_LABEL);
+        numberLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.weightx = 1;
         gbc.insets = leftInsets;
-        cardDetailsInputPanel.add(cardNumberLabel, gbc);
+        cardDetailsInputPanel.add(numberLabel, gbc);
 
         this.numberTextField = new JFormattedTextField();
         this.numberTextField.setEditable(this.allEditable);
@@ -252,47 +253,47 @@ public class CardDetailsPanel extends JPanel {
         this.numberTextField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         this.numberTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.numberTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
-        this.numberTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card number."));
+        this.numberTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_NUMBER_INSTRUCTIONS));
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.weightx = 2;
         gbc.insets = rightInsets;
         cardDetailsInputPanel.add(this.numberTextField, gbc);
 
-        JLabel cardValueLabel = new JLabel("Card Value:");
-        cardValueLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        JLabel valueLabel = new JLabel(BBCTStringResources.LabelResources.CARD_VALUE_LABEL);
+        valueLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.weightx = 1;
         gbc.insets = leftInsets;
-        cardDetailsInputPanel.add(cardValueLabel, gbc);
+        cardDetailsInputPanel.add(valueLabel, gbc);
 
         this.valueTextField = new JFormattedTextField();
         this.valueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
         this.valueTextField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         this.valueTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.valueTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
-        this.valueTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card value."));
+        this.valueTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_VALUE_INSTRUCTIONS));
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.weightx = 2;
         gbc.insets = rightInsets;
         cardDetailsInputPanel.add(this.valueTextField, gbc);
 
-        JLabel cardCountLabel = new JLabel("Card Count:");
-        cardCountLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        JLabel countLabel = new JLabel(BBCTStringResources.LabelResources.CARD_COUNT_LABEL);
+        countLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.weightx = 1;
         gbc.insets = leftInsets;
-        cardDetailsInputPanel.add(cardCountLabel, gbc);
+        cardDetailsInputPanel.add(countLabel, gbc);
 
         this.countTextField = new JFormattedTextField();
         this.countTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         this.countTextField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         this.countTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.countTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
-        this.countTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card count."));
+        this.countTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_COUNT_INSTRUCTIONS));
         gbc.gridx = 1;
         gbc.gridy = 4;
         gbc.weightx = 2;
@@ -302,13 +303,13 @@ public class CardDetailsPanel extends JPanel {
         cardDetailsPanel.add(cardDetailsInputPanel, BorderLayout.PAGE_START);
 
         JPanel playerDetailsPanel = new JPanel(new BorderLayout());
-        TitledBorder playerDetailsBorder = BorderFactory.createTitledBorder("Player Details");
+        TitledBorder playerDetailsBorder = BorderFactory.createTitledBorder(TitleResources.PLAYER_DETAILS_BORDER_TITLE);
         playerDetailsBorder.setTitleFont(new Font("Tahoma", 0, 18));
         playerDetailsPanel.setBorder(playerDetailsBorder);
 
         JPanel playerDetailsInputPanel = new JPanel(new GridBagLayout());
         
-        JLabel playerNameLabel = new JLabel("Player Name:");
+        JLabel playerNameLabel = new JLabel(BBCTStringResources.LabelResources.PLAYER_NAME_LABEL);
         playerNameLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -320,14 +321,14 @@ public class CardDetailsPanel extends JPanel {
         this.playerNameTextField.setEditable(this.allEditable);
         this.playerNameTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
         this.playerNameTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
-        this.playerNameTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player name."));
+        this.playerNameTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.PLAYER_NAME_INSTRUCTIONS));
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 2;
         gbc.insets = topRightInsets;
         playerDetailsInputPanel.add(this.playerNameTextField, gbc);
 
-        JLabel playerPositionLabel = new JLabel("Player Position:");
+        JLabel playerPositionLabel = new JLabel(BBCTStringResources.LabelResources.PLAYER_POSITION_LABEL);
         playerPositionLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -339,7 +340,7 @@ public class CardDetailsPanel extends JPanel {
         this.playerPositionTextField.setEditable(this.allEditable);
         this.playerPositionTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
         this.playerPositionTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
-        this.playerPositionTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter player position."));
+        this.playerPositionTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.PLAYER_POSITION_INSTRUCTIONS));
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.weightx = 2;

@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.BBCTStringResources;
 import bbct.gui.event.SetDefaultButtonAncestorListener;
 import bbct.gui.event.ShowCardActionListener;
 import bbct.gui.event.UpdateInstructionsAncestorListener;
@@ -53,21 +54,21 @@ public class AboutPanel extends JPanel {
         
         GridBagConstraints gbc = new GridBagConstraints();
 
-        JLabel titleLabel = new JLabel("Baseball Card Tracker");
+        JLabel titleLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_TITLE);
         titleLabel.setFont(new Font("Tahoma", 0, 36)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.CENTER;
         infoPanel.add(titleLabel, gbc);
 
-        JLabel versionLabel = new JLabel("Version 0.5.2 (beta)");
+        JLabel versionLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_VERSION);
         versionLabel.setFont(new Font("Tahoma", 0, 18)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         infoPanel.add(versionLabel, gbc);
 
-        JLabel copyrightLabel = new JLabel("<html>&copy 2012 codeguru</html>");
+        JLabel copyrightLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_COPYRIGHT);
         copyrightLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -75,13 +76,13 @@ public class AboutPanel extends JPanel {
         gbc.anchor = GridBagConstraints.WEST;
         infoPanel.add(copyrightLabel, gbc);
 
-        JLabel websiteLabel = new JLabel("Project website: http://sf.net/p/bbct");
+        JLabel websiteLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_WEBSITE);
         websiteLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 4;
         infoPanel.add(websiteLabel, gbc);
 
-        JLabel gplLabel = new JLabel("<html>This software is licensed under the GPL. Visit<br> http://www.gnu.org/licenses/ for a copy of the license.</html>");
+        JLabel gplLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_LICENSE);
         gplLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -92,13 +93,13 @@ public class AboutPanel extends JPanel {
         JPanel buttonPanel = new JPanel();
         final JButton okButton = new JButton();
         okButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
-        okButton.setText("OK");
+        okButton.setText(BBCTStringResources.ButtonResources.OK_BUTTON);
         okButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
         buttonPanel.add(okButton);
 
         this.add(buttonPanel, BorderLayout.SOUTH);
 
-        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.ABOUT_PANEL_TITLE));
+        this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.ABOUT_PANEL_TITLE));
         this.addAncestorListener(new UpdateInstructionsAncestorListener("Click OK when ready."));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(okButton));
     }

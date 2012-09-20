@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.BBCTStringResources;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
@@ -68,7 +69,7 @@ public class FindCardsPanel extends JPanel {
 
         JPanel buttonsPanel = new JPanel();
         
-        final JButton findButton = new JButton("Find");
+        final JButton findButton = new JButton(BBCTStringResources.ButtonResources.FIND_BUTTON);
         // TODO: Don't create Font objects.
         findButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         findButton.addActionListener(new java.awt.event.ActionListener() {
@@ -78,7 +79,7 @@ public class FindCardsPanel extends JPanel {
                     List<BaseballCard> cards = FindCardsPanel.this.inputPanel.getBaseballCards();
 
                     if (cards.isEmpty()) {
-                        JOptionPane.showMessageDialog(FindCardsPanel.this, "No cards found.", "No cards found.", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(FindCardsPanel.this, BBCTStringResources.ErrorResources.NO_CARDS_FOUND_ERROR, BBCTStringResources.ErrorResources.NO_CARDS_FOUND_ERROR_TITLE, JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JPanel editCardsPanel = new EditCardsPanel(cards, FindCardsPanel.this.bcio);
                         Container parent = FindCardsPanel.this.getParent();
@@ -88,17 +89,17 @@ public class FindCardsPanel extends JPanel {
                         cl.show(parent, BBCTFrame.EDIT_CARDS_PANEL_NAME);
                     }
                 } catch (InputException ex) {
-                    JOptionPane.showMessageDialog(FindCardsPanel.this, ex.getMessage(), "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(FindCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.INPUT_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                     Logger.getLogger(FindCardsPanel.class.getName()).log(Level.INFO, null, ex);
                 } catch (BBCTIOException ex) {
                     Logger.getLogger(FindCardsPanel.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                    JOptionPane.showMessageDialog(FindCardsPanel.this, ex.getMessage(), "I/O Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(FindCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.IO_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
         buttonsPanel.add(findButton);
 
-        JButton backButton = new JButton("Back");
+        JButton backButton = new JButton(BBCTStringResources.ButtonResources.BACK_BUTTON);
         backButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_MENU_CARD_NAME));
         buttonsPanel.add(backButton);

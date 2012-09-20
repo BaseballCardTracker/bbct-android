@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.BBCTStringResources;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
 import java.awt.BorderLayout;
@@ -99,7 +100,7 @@ public class BBCTFrame extends JFrame {
 
     private void initComponents() {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setTitle("Baseball Card Tracker");
+        this.setTitle(BBCTStringResources.TitleResources.BASEBALL_FRAME_TITLE);
         this.setResizable(false);
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -108,7 +109,7 @@ public class BBCTFrame extends JFrame {
                     BBCTFrame.this.bcio.close();
                 } catch (BBCTIOException ex) {
                     Logger.getLogger(BBCTFrame.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                    JOptionPane.showMessageDialog(BBCTFrame.this, ex.getMessage(), "Clean Up Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(BBCTFrame.this, ex.getMessage(), BBCTStringResources.ErrorResources.CLOSE_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -117,7 +118,7 @@ public class BBCTFrame extends JFrame {
         this.getContentPane().add(mainPanel, BorderLayout.CENTER);
 
         JPanel instructionPanel = new JPanel();
-        this.instructionLabel = new JLabel("Just Starting!");
+        this.instructionLabel = new JLabel(BBCTStringResources.InstructionResources.DUMMY_INSTRUCTIONS);
         this.instructionLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         instructionPanel.add(this.instructionLabel);
 

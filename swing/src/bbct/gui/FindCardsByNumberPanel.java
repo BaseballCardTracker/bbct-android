@@ -18,6 +18,7 @@
  */
 package bbct.gui;
 
+import bbct.BBCTStringResources;
 import bbct.data.BaseballCard;
 import bbct.data.BaseballCardIO;
 import bbct.exceptions.BBCTIOException;
@@ -76,10 +77,10 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
         try {
             this.numberTextField.commitEdit();
         } catch (ParseException ex) {
-            throw new InputException("Please enter a valid card number. (The number must be positive).", ex);
+            throw new InputException(BBCTStringResources.ErrorResources.CARD_NUMBER_ERROR, ex);
         }
         if (!this.numberVerifier.verify(this.numberTextField)) {
-            throw new InputException("Please enter a valid card number. (The number must be positive).");
+            throw new InputException(BBCTStringResources.ErrorResources.CARD_NUMBER_ERROR);
         }
         int number = Integer.parseInt(this.numberTextField.getText());
 
@@ -98,7 +99,7 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
 
         JPanel inputPanel = new JPanel(new GridBagLayout());
 
-        JLabel numberLabel = new JLabel("Card Number:");
+        JLabel numberLabel = new JLabel(BBCTStringResources.LabelResources.CARD_NUMBER_LABEL);
         numberLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
 
         GridBagConstraints numberLabelConstraints = new GridBagConstraints();
@@ -113,7 +114,7 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
         this.numberTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
         this.numberTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.numberTextField.setColumns(10);
-        this.numberTextField.addFocusListener(new UpdateInstructionsFocusListener("Enter card number."));
+        this.numberTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_NUMBER_INSTRUCTIONS));
 
         GridBagConstraints numberTextFieldConstraints = new GridBagConstraints();
         numberTextFieldConstraints.gridx = 1;
@@ -124,7 +125,7 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
         inputPanel.add(this.numberTextField, numberTextFieldConstraints);
 
         this.add(inputPanel, BorderLayout.PAGE_START);
-        this.addAncestorListener(new UpdateTitleAncestorListener(GUIResources.FIND_CARDS_BY_NUMBER_PANEL_TITLE));
+        this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_BY_NUMBER_PANEL_TITLE));
     }
     private JFormattedTextField numberTextField;
     private BaseballCardIO bcio = null;
