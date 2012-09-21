@@ -82,7 +82,6 @@ public class FindCardsMenuPanel extends JPanel {
         this.add(backButton);
         
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_MENU_PANEL_TITLE));
-        // TODO: Fix instructions
         this.addAncestorListener(new UpdateInstructionsAncestorListener(BBCTStringResources.InstructionResources.FIND_CARDS_MENU_INSTRUCTIONS));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(null));
     }
