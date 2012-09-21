@@ -18,8 +18,8 @@
  */
 package bbct.common.data;
 
+import bbct.common.BBCTStringResources;
 import bbct.common.exceptions.BBCTIOException;
-import bbct.swing.BBCTStringResources;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

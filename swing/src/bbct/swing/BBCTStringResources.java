@@ -172,10 +172,6 @@ public class BBCTStringResources {
         public static final String PLAYER_NAME_ERROR = "Please enter a player name.";
         public static final String PLAYER_POSITION_ERROR = "Please enter a player position.";
         public static final String NO_CARDS_FOUND_ERROR = "No cards found.";
-        public static final String DATABASE_INITIALIZATION_ERROR = "Unable to properly initialize database resources.";
-        public static final String DATABASE_CLEANUP_ERROR = "Unable to properly cleanup database resources.";
-        public static final String DATABASE_SELECT_ERROR = "Unable to retrieve cards from database.";
-        public static final String DATABASE_UPDATE_ERROR = "Unable to update baseball card data.";
         public static final String CLOSE_ERROR_TITLE = "Clean Up Error";
         public static final String IO_ERROR_TITLE = "I/O Error";
         public static final String INPUT_ERROR_TITLE = "Invalid Input";
