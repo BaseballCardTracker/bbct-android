@@ -22,7 +22,8 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- *
+ * TODO: Add android:hint attribute to each EditText. Use strings from values/strings.xml.
+ * 
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardDetails extends Activity {

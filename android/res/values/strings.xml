@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">BBCT for Android</string>
+    <string name="card_details_title">Card Details</string>
+    <string name="player_details_title">Player Details</string>
+    <string name="brand_label">Card Brand:</string>
+    <string name="year_label">Card Year:</string>
+    <string name="number_label">Card Number:</string>
+    <string name="value_label">Card Value:</string>
+    <string name="count_label">Card Count:</string>
+    <string name="player_name_label">Player Name:</string>
+    <string name="player_position_label">Player Position:</string>
+    <string name="add_card_button">Add Card</string>
 </resources>

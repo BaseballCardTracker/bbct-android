@@ -5,37 +5,57 @@
              android:stretchColumns="1"
 >
     <TableRow>
-        <TextView android:text="Brand:" />
-        <EditText android:id="@+id/brand" />
-    </TableRow>
-    <TableRow>
-        <TextView android:text="Year:" />
-        <EditText android:id="@+id/year" />
-    </TableRow>
-    <TableRow>
-        <TextView android:text="Number:" />
-        <EditText android:id="@+id/number" />
-    </TableRow>
-    <TableRow>
-        <TextView android:text="Value:" />
-        <EditText android:id="@+id/value" />
-    </TableRow>
-    <TableRow>
-        <TextView android:text="Count:" />
-        <EditText android:id="@+id/count" />
-    </TableRow>
-    <TableRow>
-        <TextView android:text="Player Name:" />
-        <EditText android:id="@+id/player_name"
+        <TextView android:text="@string/brand_label" />
+        <EditText android:id="@+id/brand"
+                  android:singleLine="true"
+                  android:capitalize="words"
         />
     </TableRow>
     <TableRow>
-        <TextView android:text="Player Position:" />
-        <EditText android:id="@+id/player_position" />
+        <TextView android:text="@string/year_label" />
+        <EditText android:id="@+id/year"
+                  android:singleLine="true"
+                  android:numeric="integer"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/number_label" />
+        <EditText android:id="@+id/number"
+                  android:singleLine="true"
+                  android:numeric="integer"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/value_label" />
+        <EditText android:id="@+id/value"
+                  android:singleLine="true"
+                  android:numeric="decimal"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/count_label" />
+        <EditText android:id="@+id/count"
+                  android:singleLine="true"
+                  android:numeric="integer"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/player_name_label" />
+        <EditText android:id="@+id/player_name"
+                  android:singleLine="true"
+                  android:capitalize="words"
+        />
+    </TableRow>
+    <TableRow>
+        <TextView android:text="@string/player_position_label" />
+        <EditText android:id="@+id/player_position"
+                  android:singleLine="true"
+                  android:capitalize="words"
+        />
     </TableRow>
     <Button android:id="@+id/add_card"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="@string/add_card_button"
     />
 </TableLayout>
