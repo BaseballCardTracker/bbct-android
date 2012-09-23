@@ -38,6 +38,8 @@ import javax.swing.JTextField;
  * {@link FindCardsByPlayerNamePanel} allows the user to input the player's
  * name. This value is used as the parameters when searching the underlying
  * storage mechanism for cards for the player.
+ * 
+ * TODO: Add support for wild cards.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */

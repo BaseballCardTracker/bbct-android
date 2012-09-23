@@ -46,6 +46,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -66,6 +67,8 @@ import javax.swing.event.AncestorListener;
  * TODO: Instructions should change depending on value of allEditable field.
  *
  * TODO: Add $ at the beginning of valueTextField's text if it is not present?
+ * 
+ * TODO: Change player position text field to a combobox.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -190,8 +193,10 @@ public class CardDetailsPanel extends JPanel {
         Insets bottomRightInsets = new Insets(inside, inside, bottomOutside, rightOutside);
 
         JPanel cardDetailsPanel = new JPanel(new BorderLayout());
-        TitledBorder cardDetailsBorder = BorderFactory.createTitledBorder(TitleResources.CARD_DETAILS_BORDER_TITLE);
-        cardDetailsBorder.setTitleFont(new Font("Tahoma", 0, 18));
+        Border emptyBorder = BorderFactory.createEmptyBorder(5, 10, 5, 10);
+        TitledBorder titledCardDetailsBorder = BorderFactory.createTitledBorder(TitleResources.CARD_DETAILS_BORDER_TITLE);
+        titledCardDetailsBorder.setTitleFont(new Font("Tahoma", 0, 18));
+        Border cardDetailsBorder = BorderFactory.createCompoundBorder(emptyBorder, titledCardDetailsBorder);
         cardDetailsPanel.setBorder(cardDetailsBorder);
 
         JPanel cardDetailsInputPanel = new JPanel(new GridBagLayout());
@@ -303,8 +308,9 @@ public class CardDetailsPanel extends JPanel {
         cardDetailsPanel.add(cardDetailsInputPanel, BorderLayout.PAGE_START);
 
         JPanel playerDetailsPanel = new JPanel(new BorderLayout());
-        TitledBorder playerDetailsBorder = BorderFactory.createTitledBorder(TitleResources.PLAYER_DETAILS_BORDER_TITLE);
-        playerDetailsBorder.setTitleFont(new Font("Tahoma", 0, 18));
+        TitledBorder titledPlayerDetailsBorder = BorderFactory.createTitledBorder(TitleResources.PLAYER_DETAILS_BORDER_TITLE);
+        titledPlayerDetailsBorder.setTitleFont(new Font("Tahoma", 0, 18));
+        Border playerDetailsBorder = BorderFactory.createCompoundBorder(emptyBorder, titledPlayerDetailsBorder);
         playerDetailsPanel.setBorder(playerDetailsBorder);
 
         JPanel playerDetailsInputPanel = new JPanel(new GridBagLayout());
