@@ -25,7 +25,6 @@ import bbct.common.exceptions.InputException;
 import bbct.swing.BBCTStringResources;
 import bbct.swing.gui.event.SetDefaultButtonAncestorListener;
 import bbct.swing.gui.event.ShowCardActionListener;
-import bbct.swing.gui.event.UpdateInstructionsAncestorListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -71,7 +70,7 @@ public class AddCardsPanel extends JPanel {
 
         JPanel buttonsPanel = new JPanel();
         
-        final JButton addCardButton = new JButton("Add Card");
+        final JButton addCardButton = new JButton(BBCTStringResources.ButtonResources.ADD_CARD_BUTTON);
         addCardButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
         addCardButton.addActionListener(new ActionListener() {
             @Override
@@ -82,7 +81,7 @@ public class AddCardsPanel extends JPanel {
                     AddCardsPanel.this.cardDetailsPanel.reset();
 
                     BBCTFrame frame = (BBCTFrame) AddCardsPanel.this.getTopLevelAncestor();
-                    frame.setInstructions("Card added. Enter brand name for another card.");
+                    frame.setInstructions(BBCTStringResources.InstructionResources.CARD_ADDED_INSTRUCTIONS);
                 } catch (BBCTIOException ex) {
                     Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Storage I/O error.", ex);
                     JOptionPane.showMessageDialog(AddCardsPanel.this, ex.getMessage(), ex.getMessage(), JOptionPane.ERROR_MESSAGE);
@@ -97,7 +96,7 @@ public class AddCardsPanel extends JPanel {
         });
         buttonsPanel.add(addCardButton);
 
-        JButton backButton = new JButton("Back");
+        JButton backButton = new JButton(BBCTStringResources.ButtonResources.BACK_BUTTON);
         backButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
         backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
         buttonsPanel.add(backButton);
@@ -105,7 +104,6 @@ public class AddCardsPanel extends JPanel {
         this.add(buttonsPanel, BorderLayout.SOUTH);
         
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.ADD_CARDS_PANEL_TITLE));
-        this.addAncestorListener(new UpdateInstructionsAncestorListener("Choose an option:"));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(addCardButton));
     }
     private CardDetailsPanel cardDetailsPanel;

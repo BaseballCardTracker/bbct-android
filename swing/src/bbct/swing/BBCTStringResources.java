@@ -127,6 +127,7 @@ public class BBCTStringResources {
     public static class ButtonResources {
 
         public static final String OK_BUTTON = "OK";
+        public static final String ADD_CARD_BUTTON = "Add Card";
         public static final String PREVIOUS_BUTTON = "<-- Previous";
         public static final String NEXT_BUTTON = "Next -->";
         public static final String DONE_BUTTON = "Done";
@@ -148,6 +149,7 @@ public class BBCTStringResources {
     public static class InstructionResources {
 
         public static final String DUMMY_INSTRUCTIONS = "Just Starting!";
+        public static final String CARD_ADDED_INSTRUCTIONS = "Card added. Enter brand name for another card.";
         public static final String CARD_BRAND_INSTRUCTIONS = "Enter card brand name.";
         public static final String CARD_YEAR_INSTRUCTIONS = "Enter card year.";
         public static final String CARD_NUMBER_INSTRUCTIONS = "Enter card number.";
