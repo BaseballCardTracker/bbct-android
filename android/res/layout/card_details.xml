@@ -26,7 +26,8 @@
     </TableRow>
     <TableRow>
         <TextView android:text="Player Name:" />
-        <EditText android:id="@+id/player_name" />
+        <EditText android:id="@+id/player_name"
+        />
     </TableRow>
     <TableRow>
         <TextView android:text="Player Position:" />
