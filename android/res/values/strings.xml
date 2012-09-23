@@ -11,4 +11,11 @@
     <string name="player_name_label">Player Name:</string>
     <string name="player_position_label">Player Position:</string>
     <string name="add_card_button">Add Card</string>
+    <string name="brand_hint">Enter card brand name.</string>
+    <string name="year_hint">Enter card year.</string>
+    <string name="number_hint">Enter card number.</string>
+    <string name="value_hint">Enter card value.</string>
+    <string name="count_hint">Enter card count.</string>
+    <string name="player_name_hint">Enter player name.</string>
+    <string name="player_position_hint">Enter player position.</string>
 </resources>

@@ -9,6 +9,7 @@
         <EditText android:id="@+id/brand"
                   android:singleLine="true"
                   android:capitalize="words"
+                  android:hint="@string/brand_hint"
         />
     </TableRow>
     <TableRow>
@@ -16,6 +17,7 @@
         <EditText android:id="@+id/year"
                   android:singleLine="true"
                   android:numeric="integer"
+                  android:hint="@string/year_hint"
         />
     </TableRow>
     <TableRow>
@@ -23,6 +25,7 @@
         <EditText android:id="@+id/number"
                   android:singleLine="true"
                   android:numeric="integer"
+                  android:hint="@string/number_hint"
         />
     </TableRow>
     <TableRow>
@@ -30,6 +33,7 @@
         <EditText android:id="@+id/value"
                   android:singleLine="true"
                   android:numeric="decimal"
+                  android:hint="@string/value_hint"
         />
     </TableRow>
     <TableRow>
@@ -37,6 +41,7 @@
         <EditText android:id="@+id/count"
                   android:singleLine="true"
                   android:numeric="integer"
+                  android:hint="@string/count_hint"
         />
     </TableRow>
     <TableRow>
@@ -44,6 +49,7 @@
         <EditText android:id="@+id/player_name"
                   android:singleLine="true"
                   android:capitalize="words"
+                  android:hint="@string/player_name_hint"
         />
     </TableRow>
     <TableRow>
@@ -51,6 +57,7 @@
         <EditText android:id="@+id/player_position"
                   android:singleLine="true"
                   android:capitalize="words"
+                  android:hint="@string/player_position_hint"
         />
     </TableRow>
     <Button android:id="@+id/add_card"
