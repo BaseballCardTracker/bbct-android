@@ -50,8 +50,12 @@ public class BaseballCardList extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.add:
+            case R.id.add_menu:
                 this.startActivity(new Intent(this, BaseballCardDetails.class));
+                return true;
+                
+            case R.id.filter_menu:
+                this.startActivity(new Intent(this, FilterBaseballCards.class));
                 return true;
         }
 

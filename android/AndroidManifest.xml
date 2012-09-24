@@ -12,5 +12,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".BaseballCardDetails" />
+        <activity android:name=".FilterBaseballCards" />
     </application>
 </manifest>
