@@ -25,7 +25,7 @@ import android.os.Bundle;
  * 
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class BaseballCardDetails extends Activity {
+public class About extends Activity {
 
     /**
      * Called when the activity is first created.
@@ -33,6 +33,6 @@ public class BaseballCardDetails extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.card_details);
+        setContentView(R.layout.about);
     }
 }

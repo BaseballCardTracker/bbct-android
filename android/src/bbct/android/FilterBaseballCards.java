@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * TODO: Set title.
  * 
  * @author codeguru <codeguru@users.sourceforge.net>
  */

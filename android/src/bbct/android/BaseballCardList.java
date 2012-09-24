@@ -53,9 +53,13 @@ public class BaseballCardList extends Activity {
             case R.id.add_menu:
                 this.startActivity(new Intent(this, BaseballCardDetails.class));
                 return true;
-                
+
             case R.id.filter_menu:
                 this.startActivity(new Intent(this, FilterBaseballCards.class));
+                return true;
+
+            case R.id.about_menu:
+                this.startActivity(new Intent(this, About.class));
                 return true;
         }
 

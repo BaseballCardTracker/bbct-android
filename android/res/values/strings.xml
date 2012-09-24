@@ -5,6 +5,7 @@
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
     <string name="filter_cards_title">Filter Cards By...</string>
+    <string name="about_title">About BBCT for Android</string>
     
     <string name="brand_label">Card Brand:</string>
     <string name="year_label">Card Year:</string>
@@ -15,7 +16,7 @@
     <string name="player_position_label">Player Position:</string>
     <string name="filter_by_label">Filter By...</string>
     
-    <string name="add_card_button">Add Card</string>
+    <string name="save_button">Save</string>
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancel</string>
     
@@ -34,4 +35,10 @@
     
     <string name="add_menu">Add Cards</string>
     <string name="filter_menu">Filter Cards</string>
+    <string name="about_menu">About BBCT</string>
+    
+    <string name="version">Version 0.1 (alpha)</string>
+    <string name="copyright">Copyright 2012 codeguru</string>
+    <string name="website">Website: http://sf.net/p/bbct</string>
+    <string name="license">This software is licensed under the GPL. Visit http://www.gnu.org/licenses/ for a copy of the license.</string>
 </resources>

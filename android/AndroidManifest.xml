@@ -17,5 +17,8 @@
         <activity android:name=".FilterBaseballCards"
                   android:label="@string/filter_cards_title"
         />
+        <activity android:name=".About"
+                  android:label="@string/about_title"
+        />
     </application>
 </manifest>

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/add_menu"
-          android:title="Add Cards"
+          android:title="@string/add_menu"
           android:icon="@drawable/ic_menu_add"
     />
     <item android:id="@+id/filter_menu"
-          android:title="Filter Cards"
+          android:title="@string/filter_menu"
           android:icon="@drawable/ic_menu_find"
+    />
+    <item android:id="@+id/about_menu"
+          android:title="@string/about_menu"
     />
 </menu>

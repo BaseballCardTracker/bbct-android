@@ -60,9 +60,9 @@
                   android:hint="@string/player_position_hint"
         />
     </TableRow>
-    <Button android:id="@+id/add_card_button"
+    <Button android:id="@+id/save_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/add_card_button"
+            android:text="@string/save_button"
     />
 </TableLayout>
