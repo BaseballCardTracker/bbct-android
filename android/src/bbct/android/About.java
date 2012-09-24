@@ -33,6 +33,9 @@ public class About extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.about);
+        this.setContentView(R.layout.about);
+        
+        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.about_title);
+        this.setTitle(title);
     }
 }

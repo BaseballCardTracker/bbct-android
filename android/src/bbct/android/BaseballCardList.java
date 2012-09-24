@@ -37,7 +37,7 @@ public class BaseballCardList extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.card_list);
+        this.setContentView(R.layout.card_list);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class BaseballCardList extends Activity {
                 return true;
 
             case R.id.filter_menu:
-                this.startActivity(new Intent(this, FilterBaseballCards.class));
+                this.startActivity(new Intent(this, FilterOptions.class));
                 return true;
 
             case R.id.about_menu:

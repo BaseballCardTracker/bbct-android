@@ -22,10 +22,10 @@ import android.app.Activity;
 import android.os.Bundle;
 
 /**
- * 
+ *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class FilterBaseballCards extends Activity{
+public class FilterByYear extends Activity {
 
     /**
      * Called when the activity is first created.
@@ -33,6 +33,9 @@ public class FilterBaseballCards extends Activity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.filter_cards);
+        this.setContentView(R.layout.filter_by_year);
+        
+        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.filter_by_year_title);
+        this.setTitle(title);
     }
 }

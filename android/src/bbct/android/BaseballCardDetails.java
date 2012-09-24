@@ -33,6 +33,9 @@ public class BaseballCardDetails extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.card_details);
+        this.setContentView(R.layout.card_details);
+        
+        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.card_details_title);
+        this.setTitle(title);
     }
 }
