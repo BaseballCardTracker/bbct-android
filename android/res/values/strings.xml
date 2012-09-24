@@ -23,7 +23,10 @@
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
     <string name="filter_options_title">Filter Options</string>
-    <string name="filter_by_year_title">Filter By Year</string>
+    <string name="year_filter_title">Filter By Year</string>
+    <string name="number_filter_title">Filter By Number</string>
+    <string name="year_and_number_filter_title">Filter By Year and Number</string>
+    <string name="player_name_filter_title">Filter By Player Name</string>
     <string name="about_title">About BBCT for Android</string>
     
     <string name="brand_label">Card Brand:</string>

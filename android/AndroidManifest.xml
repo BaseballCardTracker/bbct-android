@@ -13,7 +13,10 @@
         </activity>
         <activity android:name=".BaseballCardDetails" />
         <activity android:name=".FilterOptions"/>
-        <activity android:name=".FilterByYear"/>
+        <activity android:name=".YearFilter"/>
+        <activity android:name=".NumberFilter"/>
+        <activity android:name=".YearAndNumberFilter"/>
+        <activity android:name=".PlayerNameFilter"/>
         <activity android:name=".About" />
     </application>
 </manifest>

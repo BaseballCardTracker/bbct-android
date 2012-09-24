@@ -45,6 +45,9 @@ public class FilterOptions extends Activity {
 
         Button okButton = (Button) this.findViewById(R.id.filter_ok_button);
         okButton.setOnClickListener(this.onOkClick);
+        
+        Button cancelButton = (Button) this.findViewById(R.id.filter_cancel_button);
+        cancelButton.setOnClickListener(this.onCancelClick);
     }
     private View.OnClickListener onOkClick = new View.OnClickListener() {
         public void onClick(View view) {
@@ -60,21 +63,29 @@ public class FilterOptions extends Activity {
                 
                 case R.id.year_radio_button:
                     Log.d(TAG, "Year radio button selected.");
-                    FilterOptions.this.startActivity(new Intent(FilterOptions.this, FilterByYear.class));
+                    FilterOptions.this.startActivity(new Intent(FilterOptions.this, YearFilter.class));
                     break;
 
                 case R.id.number_radio_button:
+                    FilterOptions.this.startActivity(new Intent(FilterOptions.this, NumberFilter.class));
                     break;
 
                 case R.id.year_and_number_radio_button:
+                    FilterOptions.this.startActivity(new Intent(FilterOptions.this, YearAndNumberFilter.class));
                     break;
 
                 case R.id.player_name_radio_button:
+                    FilterOptions.this.startActivity(new Intent(FilterOptions.this, PlayerNameFilter.class));
                     break;
 
                 default:
                     Log.e(TAG, "Invalid radio button ID.");
             }
+        }
+    };
+    private View.OnClickListener onCancelClick = new View.OnClickListener() {
+        public void onClick(View view) {
+            FilterOptions.this.finish();
         }
     };
     private static final String TAG = FilterOptions.class.getName();

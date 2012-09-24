@@ -25,7 +25,7 @@ import android.os.Bundle;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class FilterByYear extends Activity {
+public class NumberFilter extends Activity {
 
     /**
      * Called when the activity is first created.
@@ -33,9 +33,9 @@ public class FilterByYear extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.filter_by_year);
+        this.setContentView(R.layout.number_filter);
         
-        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.filter_by_year_title);
+        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.number_filter_title);
         this.setTitle(title);
     }
 }
