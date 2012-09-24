@@ -6,7 +6,7 @@
 >
     <TableRow>
         <TextView android:text="@string/brand_label" />
-        <EditText android:id="@+id/brand"
+        <EditText android:id="@+id/brand_text"
                   android:singleLine="true"
                   android:capitalize="words"
                   android:hint="@string/brand_hint"
@@ -14,7 +14,7 @@
     </TableRow>
     <TableRow>
         <TextView android:text="@string/year_label" />
-        <EditText android:id="@+id/year"
+        <EditText android:id="@+id/year_text"
                   android:singleLine="true"
                   android:numeric="integer"
                   android:hint="@string/year_hint"
@@ -22,7 +22,7 @@
     </TableRow>
     <TableRow>
         <TextView android:text="@string/number_label" />
-        <EditText android:id="@+id/number"
+        <EditText android:id="@+id/number_text"
                   android:singleLine="true"
                   android:numeric="integer"
                   android:hint="@string/number_hint"
@@ -30,7 +30,7 @@
     </TableRow>
     <TableRow>
         <TextView android:text="@string/value_label" />
-        <EditText android:id="@+id/value"
+        <EditText android:id="@+id/value_text"
                   android:singleLine="true"
                   android:numeric="decimal"
                   android:hint="@string/value_hint"
@@ -38,7 +38,7 @@
     </TableRow>
     <TableRow>
         <TextView android:text="@string/count_label" />
-        <EditText android:id="@+id/count"
+        <EditText android:id="@+id/count_text"
                   android:singleLine="true"
                   android:numeric="integer"
                   android:hint="@string/count_hint"
@@ -46,7 +46,7 @@
     </TableRow>
     <TableRow>
         <TextView android:text="@string/player_name_label" />
-        <EditText android:id="@+id/player_name"
+        <EditText android:id="@+id/player_name_text"
                   android:singleLine="true"
                   android:capitalize="words"
                   android:hint="@string/player_name_hint"
@@ -54,13 +54,13 @@
     </TableRow>
     <TableRow>
         <TextView android:text="@string/player_position_label" />
-        <EditText android:id="@+id/player_position"
+        <EditText android:id="@+id/player_position_text"
                   android:singleLine="true"
                   android:capitalize="words"
                   android:hint="@string/player_position_hint"
         />
     </TableRow>
-    <Button android:id="@+id/add_card"
+    <Button android:id="@+id/add_card_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/add_card_button"

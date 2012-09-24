@@ -4,6 +4,7 @@
     
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
+    <string name="filter_cards_title">Filter Cards By...</string>
     
     <string name="brand_label">Card Brand:</string>
     <string name="year_label">Card Year:</string>
