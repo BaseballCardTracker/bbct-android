@@ -19,6 +19,9 @@
 package bbct.android;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -58,7 +61,11 @@ public class FilterOptions extends Activity {
 
             switch (findBy.getCheckedRadioButtonId()) {
                 case NONE:
-                    // TODO: Show an error message in a dialog.
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FilterOptions.this);
+                    dialogBuilder.setTitle(R.string.input_error_title);
+                    dialogBuilder.setMessage(R.string.no_radio_button_error);
+                    dialogBuilder.setPositiveButton(R.string.ok_button, FilterOptions.this.onDialogOkClick);
+                    dialogBuilder.show();
                     break;
                 
                 case R.id.year_radio_button:
@@ -86,6 +93,11 @@ public class FilterOptions extends Activity {
     private View.OnClickListener onCancelClick = new View.OnClickListener() {
         public void onClick(View view) {
             FilterOptions.this.finish();
+        }
+    };
+    private DialogInterface.OnClickListener onDialogOkClick = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
         }
     };
     private static final String TAG = FilterOptions.class.getName();

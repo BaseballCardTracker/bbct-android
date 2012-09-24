@@ -28,6 +28,7 @@
     <string name="year_and_number_filter_title">Filter By Year and Number</string>
     <string name="player_name_filter_title">Filter By Player Name</string>
     <string name="about_title">About BBCT for Android</string>
+    <string name="input_error_title">Input Error</string>
     
     <string name="brand_label">Card Brand:</string>
     <string name="year_label">Card Year:</string>
@@ -63,4 +64,6 @@
     <string name="copyright">Copyright 2012 codeguru</string>
     <string name="website">Website: http://sf.net/p/bbct</string>
     <string name="license">This software is licensed under the GPL. Visit http://www.gnu.org/licenses/ for a copy of the license.</string>
+    
+    <string name="no_radio_button_error">Please select an option.</string>
 </resources>
