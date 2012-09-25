@@ -20,7 +20,6 @@ package bbct.android;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +29,16 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 /**
+ * {@link FilterOptions} gives the user the choice to filter the baseball card
+ * list by year, number, year and number, or player name. A new activity is
+ * loaded when the user clicks the OK button. This activity contains the correct
+ * widgets to get input from the user for the parameters of the chosen filter
+ * criteria.
+ * 
+ * @see YearFilter
+ * @see NumberFilter
+ * @see YearAndNumberFilter
+ * @see PlayerNameFilter
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -37,6 +46,7 @@ public class FilterOptions extends Activity {
 
     /**
      * Called when the activity is first created.
+     * @param savedInstanceState ignored
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +58,7 @@ public class FilterOptions extends Activity {
 
         Button okButton = (Button) this.findViewById(R.id.filter_ok_button);
         okButton.setOnClickListener(this.onOkClick);
-        
+
         Button cancelButton = (Button) this.findViewById(R.id.filter_cancel_button);
         cancelButton.setOnClickListener(this.onCancelClick);
     }
@@ -56,7 +66,7 @@ public class FilterOptions extends Activity {
         public void onClick(View view) {
             Log.d(TAG, "OK button clicked.");
             RadioGroup findBy = (RadioGroup) FilterOptions.this.findViewById(R.id.filter_by_radio_group);
-            
+
             Log.d(TAG, "findBy:" + findBy);
 
             switch (findBy.getCheckedRadioButtonId()) {
@@ -67,7 +77,7 @@ public class FilterOptions extends Activity {
                     dialogBuilder.setPositiveButton(R.string.ok_button, FilterOptions.this.onDialogOkClick);
                     dialogBuilder.show();
                     break;
-                
+
                 case R.id.year_radio_button:
                     Log.d(TAG, "Year radio button selected.");
                     FilterOptions.this.startActivity(new Intent(FilterOptions.this, YearFilter.class));

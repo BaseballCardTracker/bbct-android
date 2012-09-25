@@ -25,21 +25,27 @@
     <TextView android:text="@string/app_name"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:textSize="26sp"
     />
     <TextView android:text="@string/version"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
     />
     <TextView android:text="@string/copyright"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              android:autoLink="email"
     />
     <TextView android:text="@string/website"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              android:autoLink="web"
     />
     <TextView android:text="@string/license"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              android:autoLink="web"
     />
 </LinearLayout>
