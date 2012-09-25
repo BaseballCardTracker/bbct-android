@@ -33,10 +33,10 @@ import org.junit.*;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class BaseballCardJDBCIONominalTest {
+public class JDBCBaseballCardIONominalTest {
 
     private String url = "jdbc:hsqldb:mem:baseball_cards.db";
-    private BaseballCardJDBCIO instance = null;
+    private JDBCBaseballCardIO instance = null;
     private Connection conn = null;
     private Statement stmt = null;
     private BaseballCard card = null;
@@ -44,7 +44,7 @@ public class BaseballCardJDBCIONominalTest {
     /**
      *
      */
-    public BaseballCardJDBCIONominalTest() {
+    public JDBCBaseballCardIONominalTest() {
     }
 
     /**
@@ -71,7 +71,7 @@ public class BaseballCardJDBCIONominalTest {
     @Before
     public void setUp() throws BBCTIOException, SQLException {
         try {
-            this.instance = new BaseballCardJDBCIO(this.url);
+            this.instance = new JDBCBaseballCardIO(this.url);
 
             // TODO: Do I need to pass in a user name and password for HSQLDB?
             this.conn = DriverManager.getConnection(this.url);
@@ -93,14 +93,14 @@ public class BaseballCardJDBCIONominalTest {
     @After
     public void tearDown() throws BBCTIOException, SQLException {
         // Drop the table. The tests in this class are for a single insert only.
-        String drop = "DROP TABLE " + BaseballCardJDBCIO.TABLE_NAME;
+        String drop = "DROP TABLE " + JDBCBaseballCardIO.TABLE_NAME;
         this.stmt.execute(drop);
 
         this.instance.close();
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#BaseballCardJDBCIO}.
+     * Test for {@link JDBCBaseballCardIO#JDBCBaseballCardIO}.
      *
      * @throws Exception
      */
@@ -112,7 +112,7 @@ public class BaseballCardJDBCIONominalTest {
         // FIXME
         String query = "SELECT count(*)"
                 + "  FROM information_schema.system_tables"
-                + " WHERE table_name = '" + BaseballCardJDBCIO.TABLE_NAME + "'";
+                + " WHERE table_name = '" + JDBCBaseballCardIO.TABLE_NAME + "'";
         ResultSet rs = this.stmt.executeQuery(query);
         Assert.assertTrue(rs.next());
         Assert.assertEquals(1, rs.getInt(1));
@@ -120,7 +120,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#close()}.
+     * Test for {@link JDBCBaseballCardIO#close()}.
      *
      * @throws Exception
      */
@@ -130,7 +130,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#insertBaseballCard(BaseballCard)}.
+     * Test for {@link JDBCBaseballCardIO#insertBaseballCard(BaseballCard)}.
      *
      * @throws Exception
      */
@@ -138,7 +138,7 @@ public class BaseballCardJDBCIONominalTest {
     public void testInsertBaseballCard() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
-        String select = "SELECT * FROM " + BaseballCardJDBCIO.TABLE_NAME;
+        String select = "SELECT * FROM " + JDBCBaseballCardIO.TABLE_NAME;
         ResultSet rs = this.stmt.executeQuery(select);
 
         Assert.assertTrue(rs.next());
@@ -153,7 +153,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#getBaseballCardByYear(int)}.
+     * Test for {@link JDBCBaseballCardIO#getBaseballCardByYear(int)}.
      *
      * @throws Exception
      */
@@ -165,7 +165,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#getBaseballCardByNumber(int)}.
+     * Test for {@link JDBCBaseballCardIO#getBaseballCardByNumber(int)}.
      *
      * @throws Exception
      */
@@ -178,7 +178,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      * Test for
-     * {@link BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
+     * {@link JDBCBaseballCardIO#getBaseballCardsByYearAndNumber(int, int)}.
      *
      * @throws Exception
      */
@@ -190,7 +190,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByPlayerName(String)}.
+     * Test for {@link JDBCBaseballCardIO#getBaseballCardsByPlayerName(String)}.
      *
      * @throws Exception
      */
@@ -214,7 +214,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByYear(int)}.
+     * Test for {@link JDBCBaseballCardIO#getBaseballCardsByYear(int)}.
      *
      * @throws Exception
      */
@@ -230,7 +230,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByNumber(int)}.
+     * Test for {@link JDBCBaseballCardIO#getBaseballCardsByNumber(int)}.
      *
      * @throws Exception
      */
@@ -247,7 +247,7 @@ public class BaseballCardJDBCIONominalTest {
 
     /**
      * Test for
-     * {@link BaseballCardJDBCIO#getBaseballCardsByYearAndNumber(int, int)}.
+     * {@link JDBCBaseballCardIO#getBaseballCardsByYearAndNumber(int, int)}.
      *
      * @throws Exception
      */
@@ -263,7 +263,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#getBaseballCardsByPlayerName(String)}.
+     * Test for {@link JDBCBaseballCardIO#getBaseballCardsByPlayerName(String)}.
      *
      * @throws Exception
      */
@@ -279,7 +279,7 @@ public class BaseballCardJDBCIONominalTest {
     }
 
     /**
-     * Test for {@link BaseballCardJDBCIO#updateCard(BaseballCard)}.
+     * Test for {@link JDBCBaseballCardIO#updateCard(BaseballCard)}.
      *
      * @throws Exception
      */
@@ -296,10 +296,10 @@ public class BaseballCardJDBCIONominalTest {
         int year = card.getYear();
         int number = card.getNumber();
         String query = "SELECT * "
-                + "  FROM " + BaseballCardJDBCIO.TABLE_NAME
-                + " WHERE " + BaseballCardJDBCIO.BRAND_COL_NAME + " = ? "
-                + "   AND " + BaseballCardJDBCIO.YEAR_COL_NAME + " = ? "
-                + "   AND " + BaseballCardJDBCIO.NUMBER_COL_NAME + " = ?";
+                + "  FROM " + JDBCBaseballCardIO.TABLE_NAME
+                + " WHERE " + JDBCBaseballCardIO.BRAND_COL_NAME + " = ? "
+                + "   AND " + JDBCBaseballCardIO.YEAR_COL_NAME + " = ? "
+                + "   AND " + JDBCBaseballCardIO.NUMBER_COL_NAME + " = ?";
 
         PreparedStatement ps = this.conn.prepareStatement(query);
         ps.setString(1, brand);

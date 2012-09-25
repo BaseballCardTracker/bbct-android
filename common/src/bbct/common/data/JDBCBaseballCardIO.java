@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
+public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
 
     /**
      * The table name to use in the underlying database.
@@ -68,7 +68,7 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
     public static final String POSITION_COL_NAME = "player_position";
 
     /**
-     * Creates a new {@link BaseballCardJDBCIO} which connects to a database at
+     * Creates a new {@link JDBCBaseballCardIO} which connects to a database at
      * the given JDBC URL. A connection to the database is opened and a new
      * table is created if it does not already exist.
      *
@@ -76,9 +76,9 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
      * @throws BBCTIOException If an error occurs while opening a JDBC
      * connection or creating the table.
      */
-    public BaseballCardJDBCIO(String url) throws BBCTIOException {
+    public JDBCBaseballCardIO(String url) throws BBCTIOException {
         try {
-            Logger logger = Logger.getLogger(BaseballCardJDBCIO.class.getName());
+            Logger logger = Logger.getLogger(JDBCBaseballCardIO.class.getName());
             logger.log(Level.INFO, "Creating BaseballCardJDBCIO object");
             logger.log(Level.INFO, "Getting database connection.");
             this.conn = DriverManager.getConnection(url);
@@ -303,8 +303,8 @@ public class BaseballCardJDBCIO extends AbstractBaseballCardIO {
     }
 
     private void createTable() throws SQLException {
-        String sqlCreate = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME
-                + "(" + BRAND_COL_NAME + " VARCHAR(10), "
+        String sqlCreate = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
+                + BRAND_COL_NAME + " VARCHAR(10), "
                 + YEAR_COL_NAME + " INTEGER, "
                 + NUMBER_COL_NAME + " INTEGER, "
                 + VALUE_COL_NAME + " INTEGER, "
