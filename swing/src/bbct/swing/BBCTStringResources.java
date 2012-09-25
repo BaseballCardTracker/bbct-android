@@ -34,7 +34,7 @@ public class BBCTStringResources {
          * JDBC to load the correct driver and open a connection to the
          * database.
          */
-        public static final String DB_URL = "jdbc:hsqldb:file:db/baseball_cards.db";
+        public static final String DB_URL = "jdbc:hsqldb:file:db/bbct.db";
 
         private DatabaseResources() {
         }
@@ -156,7 +156,7 @@ public class BBCTStringResources {
         public static final String CARD_VALUE_INSTRUCTIONS = "Enter card value.";
         public static final String CARD_COUNT_INSTRUCTIONS = "Enter card count.";
         public static final String PLAYER_NAME_INSTRUCTIONS = "Enter player name.";
-        public static final String PLAYER_POSITION_INSTRUCTIONS = "Enter player position.";
+        public static final String PLAYER_POSITION_INSTRUCTIONS = "Select player position.";
         public static final String FIND_CARDS_MENU_INSTRUCTIONS = "Choose an option:";
         public static final String MENU_INSTRUCTIONS = "Choose an option:";
 
@@ -172,7 +172,7 @@ public class BBCTStringResources {
         public static final String CARD_VALUE_ERROR = "Please enter a valid dollar amount.";
         public static final String CARD_COUNT_ERROR = "Please enter a positive integer for the card count.";
         public static final String PLAYER_NAME_ERROR = "Please enter a player name.";
-        public static final String PLAYER_POSITION_ERROR = "Please enter a player position.";
+        public static final String PLAYER_POSITION_ERROR = "Please select a player position.";
         public static final String NO_CARDS_FOUND_ERROR = "No cards found.";
         public static final String CLOSE_ERROR_TITLE = "Clean Up Error";
         public static final String IO_ERROR_TITLE = "I/O Error";
@@ -180,6 +180,24 @@ public class BBCTStringResources {
         public static final String NO_CARDS_FOUND_ERROR_TITLE = "No cards found.";
 
         private ErrorResources() {
+        }
+    }
+
+    public static class ComboBoxResources {
+
+        public static final String[] POSITIONS = {
+            "Pitcher",
+            "Catcher",
+            "First Base",
+            "Second Base",
+            "Third Base",
+            "Shortstop",
+            "Left Field",
+            "Center Field",
+            "Right Field"
+        };
+
+        private ComboBoxResources() {
         }
     }
 

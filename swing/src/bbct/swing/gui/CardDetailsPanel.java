@@ -40,6 +40,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -114,7 +115,7 @@ public class CardDetailsPanel extends JPanel {
         this.valueTextField.setText(valueStr);
         this.countTextField.setValue(card.getCount());
         this.playerNameTextField.setText(card.getPlayerName());
-        this.playerPositionTextField.setText(card.getPlayerPosition());
+        this.playerPositionComboBox.setSelectedItem(card.getPlayerPosition());
     }
 
     /**
@@ -154,12 +155,11 @@ public class CardDetailsPanel extends JPanel {
         String playerName = this.playerNameTextField.getText();
 
         // Validate player position
-        this.playerPositionTextField.selectAll();
-        this.playerPositionTextField.requestFocusInWindow();
-        if (!this.notEmptyVerifier.verify(this.playerPositionTextField)) {
+        this.playerPositionComboBox.requestFocusInWindow();
+        if (this.playerPositionComboBox.getSelectedIndex() == -1) {
             throw new InputException(BBCTStringResources.ErrorResources.PLAYER_POSITION_ERROR);
         }
-        String playerPosition = this.playerPositionTextField.getText();
+        String playerPosition = (String) this.playerPositionComboBox.getSelectedItem();
 
         return new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
     }
@@ -175,7 +175,7 @@ public class CardDetailsPanel extends JPanel {
         this.valueTextField.setText("");
         this.yearTextField.setText("");
         this.playerNameTextField.setText("");
-        this.playerPositionTextField.setText("");
+        this.playerPositionComboBox.setSelectedIndex(-1);
         this.brandTextField.requestFocusInWindow();
     }
 
@@ -342,16 +342,15 @@ public class CardDetailsPanel extends JPanel {
         gbc.insets = bottomLeftInsets;
         playerDetailsInputPanel.add(playerPositionLabel, gbc);
 
-        this.playerPositionTextField = new JTextField();
-        this.playerPositionTextField.setEditable(this.allEditable);
-        this.playerPositionTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
-        this.playerPositionTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
-        this.playerPositionTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.PLAYER_POSITION_INSTRUCTIONS));
+        this.playerPositionComboBox = new JComboBox(BBCTStringResources.ComboBoxResources.POSITIONS);
+        this.playerPositionComboBox.setEditable(this.allEditable);
+        this.playerPositionComboBox.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        this.playerPositionComboBox.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.PLAYER_POSITION_INSTRUCTIONS));
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.weightx = 2;
         gbc.insets = bottomRightInsets;
-        playerDetailsInputPanel.add(this.playerPositionTextField, gbc);
+        playerDetailsInputPanel.add(this.playerPositionComboBox, gbc);
         
         playerDetailsPanel.add(playerDetailsInputPanel, BorderLayout.PAGE_START);
 
@@ -397,7 +396,7 @@ public class CardDetailsPanel extends JPanel {
     private JFormattedTextField countTextField;
     private JFormattedTextField numberTextField;
     private JTextField playerNameTextField;
-    private JTextField playerPositionTextField;
+    private JComboBox<String> playerPositionComboBox;
     private JFormattedTextField valueTextField;
     private JFormattedTextField yearTextField;
     private boolean allEditable = true;
