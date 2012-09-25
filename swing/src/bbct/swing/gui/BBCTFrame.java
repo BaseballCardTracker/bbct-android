@@ -18,7 +18,9 @@
  */
 package bbct.swing.gui;
 
+import bbct.common.data.BaseballCard;
 import bbct.common.data.BaseballCardIO;
+import bbct.common.data.JDBCBaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.swing.BBCTStringResources;
 import java.awt.BorderLayout;
@@ -26,6 +28,12 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -113,7 +121,7 @@ public class BBCTFrame extends JFrame {
                 }
             }
         });
-        
+
         this.mainPanel = new MainPanel(this.bcio);
         this.getContentPane().add(mainPanel, BorderLayout.CENTER);
 
@@ -136,4 +144,55 @@ public class BBCTFrame extends JFrame {
     private JLabel instructionLabel;
     private MainPanel mainPanel;
     private BaseballCardIO bcio = null;
+
+    /**
+     * Tests for {@link BBCTFrame}. Creates a
+     * {@link bbct.common.data.JDBCBaseballCardIO} and populates it with data
+     * before displaying the {@link BBCTFrame}.
+     *
+     * @param args Command-line arguments. (ignored)
+     */
+    public static void main(String[] args) throws BBCTIOException, FileNotFoundException, IOException {
+        String db_url = "jdbc:hsqldb:mem:db/bbct.db";
+        BaseballCardIO bbcio = new JDBCBaseballCardIO(db_url);
+        BBCTFrame.insertCards(bbcio);
+
+        // TODO: Figure out how to give some indication that this is a test, possibly in the title.
+        JFrame f = new BBCTFrame(bbcio);
+        f.setVisible(true);
+    }
+
+    private static void insertCards(BaseballCardIO bbcio) throws BBCTIOException, FileNotFoundException, IOException {
+        String fileName = "util/cards.csv";
+        List<BaseballCard> cards = BBCTFrame.readCards(fileName);
+
+        // TODO: Replace with bbcio.insertCards() when implemented.
+        for (BaseballCard card : cards) {
+            bbcio.insertBaseballCard(card);
+        }
+    }
+
+    private static List<BaseballCard> readCards(String fileName) throws FileNotFoundException, IOException {
+        List<BaseballCard> cards = new ArrayList<>();
+        BufferedReader in = new BufferedReader(new FileReader(fileName));
+
+        // Throw away first line with headings
+        String line = in.readLine();
+        while (in.ready()) {
+            line = in.readLine();
+            String[] data = line.split(",");
+            String brand = data[0];
+            int year = Integer.parseInt(data[1]);
+            int number = Integer.parseInt(data[2]);
+            int value = number * 10;
+            int count = 1;
+            String playerName = data[3];
+            String playerPosition = data[4];
+            BaseballCard card = new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
+            
+            cards.add(card);
+        }
+
+        return cards;
+    }
 }
