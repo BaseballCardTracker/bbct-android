@@ -19,7 +19,7 @@
 package bbct.swing;
 
 import bbct.common.data.BaseballCardIO;
-import bbct.common.data.BaseballCardJDBCIO;
+import bbct.common.data.JDBCBaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.swing.BBCTStringResources.DatabaseResources;
 import bbct.swing.gui.BBCTFrame;
@@ -50,7 +50,7 @@ public class BBCTMain {
             BBCTMain.initLogger();
             Logger logger = Logger.getLogger(BBCTMain.class.getName());
             logger.log(Level.INFO, "Fixing to create a BaseballCardIO object.");
-            BaseballCardIO bcio = new BaseballCardJDBCIO(DatabaseResources.DB_URL);
+            BaseballCardIO bcio = new JDBCBaseballCardIO(DatabaseResources.DB_URL);
 
             logger.log(Level.INFO, "Fixing to show a new frame.");
             new BBCTFrame(bcio).setVisible(true);
