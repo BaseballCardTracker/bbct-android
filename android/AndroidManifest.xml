@@ -11,14 +11,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BaseballCardDetails" 
-                  android:label="@string/card_details_title"
-        />
-        <activity android:name=".FilterBaseballCards"
-                  android:label="@string/filter_cards_title"
-        />
-        <activity android:name=".About"
-                  android:label="@string/about_title"
-        />
+        <activity android:name=".BaseballCardDetails" />
+        <activity android:name=".FilterOptions"/>
+        <activity android:name=".YearFilter"/>
+        <activity android:name=".NumberFilter"/>
+        <activity android:name=".YearAndNumberFilter"/>
+        <activity android:name=".PlayerNameFilter"/>
+        <activity android:name=".About" />
     </application>
 </manifest>

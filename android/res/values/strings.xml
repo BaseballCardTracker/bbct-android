@@ -1,11 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of BBCT for Android.
+
+ Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+
+ BBCT for Android is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ BBCT for Android is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <resources>
     <string name="app_name">BBCT for Android</string>
     
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
-    <string name="filter_cards_title">Filter Cards By...</string>
-    <string name="about_title">About BBCT for Android</string>
+    <string name="filter_options_title">Filter Options</string>
+    <string name="year_filter_title">Filter By Year</string>
+    <string name="number_filter_title">Filter By Number</string>
+    <string name="year_and_number_filter_title">Filter By Year and Number</string>
+    <string name="player_name_filter_title">Filter By Player Name</string>
+    <string name="about_title">About</string>
+    <string name="input_error_title">Input Error</string>
     
     <string name="brand_label">Card Brand:</string>
     <string name="year_label">Card Year:</string>
@@ -35,10 +58,24 @@
     
     <string name="add_menu">Add Cards</string>
     <string name="filter_menu">Filter Cards</string>
-    <string name="about_menu">About BBCT</string>
+    <string name="about_menu">About</string>
     
     <string name="version">Version 0.1 (alpha)</string>
-    <string name="copyright">Copyright 2012 codeguru</string>
+    <string name="copyright">Copyright 2012 codeguru &lt;codeguru@users.sf.net&gt;</string>
     <string name="website">Website: http://sf.net/p/bbct</string>
     <string name="license">This software is licensed under the GPL. Visit http://www.gnu.org/licenses/ for a copy of the license.</string>
+    
+    <string name="no_radio_button_error">Please select an option.</string>
+    
+    <string-array name="positions">
+        <item>Pitcher</item>
+        <item>Catcher</item>
+        <item>First Baseman</item>
+        <item>Second Baseman</item>
+        <item>Third baseman</item>
+        <item>Shortstop</item>
+        <item>Left fielder</item>
+        <item>Center Fielder</item>
+        <item>Right Fielder</item>
+    </string-array>
 </resources>

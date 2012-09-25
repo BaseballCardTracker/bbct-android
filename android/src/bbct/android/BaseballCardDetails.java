@@ -20,9 +20,11 @@ package bbct.android;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 /**
- * 
+ *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardDetails extends Activity {
@@ -33,6 +35,14 @@ public class BaseballCardDetails extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.card_details);
+        this.setContentView(R.layout.card_details);
+
+        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.card_details_title);
+        this.setTitle(title);
+
+        Spinner positions = (Spinner) this.findViewById(R.id.player_position_text);
+        ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter.createFromResource(this, R.array.positions, android.R.layout.simple_spinner_item);
+        positionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        positions.setAdapter(positionsAdapter);
     }
 }

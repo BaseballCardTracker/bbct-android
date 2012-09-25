@@ -17,16 +17,22 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/add_menu"
-          android:title="@string/add_menu"
-          android:icon="@drawable/ic_menu_add"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:stretchColumns="1"
+>
+    <TableRow>
+        <TextView android:text="@string/player_name_label" />
+        <EditText android:id="@+id/player_name_filter_text"
+                  android:singleLine="true"
+                  android:capitalize="words"
+                  android:hint="@string/player_name_hint"
+        />
+    </TableRow>
+    <Button android:id="@+id/player_name_filter_ok_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ok_button"
     />
-    <item android:id="@+id/filter_menu"
-          android:title="@string/filter_menu"
-          android:icon="@drawable/ic_menu_find"
-    />
-    <item android:id="@+id/about_menu"
-          android:title="@string/about_menu"
-    />
-</menu>
+</TableLayout>

@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of BBCT for Android.
+
+ Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+
+ BBCT for Android is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ BBCT for Android is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
@@ -7,21 +25,27 @@
     <TextView android:text="@string/app_name"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:textSize="26sp"
     />
     <TextView android:text="@string/version"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
     />
     <TextView android:text="@string/copyright"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              android:autoLink="email"
     />
     <TextView android:text="@string/website"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              android:autoLink="web"
     />
     <TextView android:text="@string/license"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
+              android:autoLink="web"
     />
 </LinearLayout>
