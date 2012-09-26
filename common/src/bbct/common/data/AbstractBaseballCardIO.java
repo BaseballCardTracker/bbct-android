@@ -23,17 +23,37 @@ import java.util.List;
 
 /**
  * This is an abstract class which implements the {@link BaseballCardIO}
- * interface. It provides a default implementation of {@link #updateCards(List)}
- * which iterates through the list of cards and calls
- * {@link #updateCard(BaseballCard)} on each one.
+ * interface. It provides a default implementation of
+ * {@link BaseballCardIO#updateBaseballCards(java.util.List)} and
+ * {@link BaseballCardIO#insertBaseballCards(java.util.List)} which iterate
+ * through the list of cards and calls {@link #updateCard(BaseballCard)} or
+ * {@link #insertBaseballCard(BaseballCard)} respectively on each card.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public abstract class AbstractBaseballCardIO implements BaseballCardIO {
 
     /**
-     * Default implementation of {@link #updateCards(List)} which iterates
-     * through the list of cards and calls {@link #updateCard(BaseballCard)} on
+     * Default implementation of
+     * {@link BaseballCardIO#insertBaseballCards(List)} which iterates through
+     * the list of cards and calls {@link #insertBaseballCard(BaseballCard)} on
+     * each one.
+     *
+     * @param cards The list of cards to insert.
+     * @throws BBCTIOException If any I/O errors occur while writing to the
+     * underlying storage mechanism.
+     */
+    @Override
+    public void insertBaseballCards(List<BaseballCard> cards) throws BBCTIOException {
+        for (BaseballCard card : cards) {
+            this.insertBaseballCard(card);
+        }
+    }
+
+    /**
+     * Default implementation of
+     * {@link BaseballCardIO#updateBaseballCards(List)} which iterates through
+     * the list of cards and calls {@link #updateBaseballCard(BaseballCard)} on
      * each one.
      *
      * @param cards The list of cards to update.
@@ -41,9 +61,9 @@ public abstract class AbstractBaseballCardIO implements BaseballCardIO {
      * underlying storage mechanism.
      */
     @Override
-    public void updateCards(List<BaseballCard> cards) throws BBCTIOException {
+    public void updateBaseballCards(List<BaseballCard> cards) throws BBCTIOException {
         for (BaseballCard card : cards) {
-            this.updateCard(card);
+            this.updateBaseballCard(card);
         }
     }
 }

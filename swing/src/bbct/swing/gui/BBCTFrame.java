@@ -153,23 +153,14 @@ public class BBCTFrame extends JFrame {
      * @param args Command-line arguments. (ignored)
      */
     public static void main(String[] args) throws BBCTIOException, FileNotFoundException, IOException {
-        String db_url = "jdbc:hsqldb:mem:db/bbct.db";
+        final String db_url = "jdbc:hsqldb:mem:db/bbct.db";
+        final String fileName = "util/cards.csv";
         BaseballCardIO bbcio = new JDBCBaseballCardIO(db_url);
-        BBCTFrame.insertCards(bbcio);
+        bbcio.insertBaseballCards(BBCTFrame.readCards(fileName));
 
         // TODO: Figure out how to give some indication that this is a test, possibly in the title.
         JFrame f = new BBCTFrame(bbcio);
         f.setVisible(true);
-    }
-
-    private static void insertCards(BaseballCardIO bbcio) throws BBCTIOException, FileNotFoundException, IOException {
-        String fileName = "util/cards.csv";
-        List<BaseballCard> cards = BBCTFrame.readCards(fileName);
-
-        // TODO: Replace with bbcio.insertCards() when implemented.
-        for (BaseballCard card : cards) {
-            bbcio.insertBaseballCard(card);
-        }
     }
 
     private static List<BaseballCard> readCards(String fileName) throws FileNotFoundException, IOException {

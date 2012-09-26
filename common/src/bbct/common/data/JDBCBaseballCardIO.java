@@ -258,7 +258,7 @@ public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
      * underlying storage mechanism.
      */
     @Override
-    public void updateCard(BaseballCard card) throws BBCTIOException {
+    public void updateBaseballCard(BaseballCard card) throws BBCTIOException {
         try {
             String brand = card.getBrand();
             int year = card.getYear();

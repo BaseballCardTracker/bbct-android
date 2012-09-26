@@ -25,7 +25,7 @@ import java.util.List;
  * The {@link BaseballCardIO} interface provides the contract for all I/O
  * operations for the BBCT application. These provide persistence for
  * {@link BaseballCard} objects.
- *
+ * 
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public interface BaseballCardIO {
@@ -46,6 +46,14 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If any I/O errors occur while inserting.
      */
     public void insertBaseballCard(BaseballCard card) throws BBCTIOException;
+    
+    /**
+     * Insert a batch of {@link BaseballCard}s to the underlying persistent storage.
+     *
+     * @param cards The {@link BaseballCard}s to insert.
+     * @throws BBCTIOException If any I/O errors occur while inserting.
+     */
+    public void insertBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
 
     /**
      * Search for {@link BaseballCard}s matching the specified year.
@@ -98,7 +106,7 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If any I/O errors occur while writing to the
      * underlying storage mechanism.
      */
-    public void updateCard(BaseballCard card) throws BBCTIOException;
+    public void updateBaseballCard(BaseballCard card) throws BBCTIOException;
 
     /**
      * Updates data in the underlying persistent storage for all the cards in
@@ -108,5 +116,5 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If any I/O errors occur while writing to the
      * underlying storage mechanism.
      */
-    public void updateCards(List<BaseballCard> cards) throws BBCTIOException;
+    public void updateBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
 }
