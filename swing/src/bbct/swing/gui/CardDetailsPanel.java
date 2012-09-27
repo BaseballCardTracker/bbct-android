@@ -342,7 +342,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.insets = bottomLeftInsets;
         playerDetailsInputPanel.add(playerPositionLabel, gbc);
 
-        this.playerPositionComboBox = new JComboBox(BBCTStringResources.ComboBoxResources.POSITIONS);
+        this.playerPositionComboBox = new JComboBox<>(BBCTStringResources.ComboBoxResources.POSITIONS);
         this.playerPositionComboBox.setEditable(this.allEditable);
         this.playerPositionComboBox.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.playerPositionComboBox.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.PLAYER_POSITION_INSTRUCTIONS));

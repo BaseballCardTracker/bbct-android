@@ -18,8 +18,6 @@
  */
 package bbct.common.data;
 
-import java.util.Objects;
-
 /**
  * {@link BaseballCard} is the model underlying the BBCT application. It
  * contains properties for the brand, year, number, value, count, player name,
@@ -160,14 +158,15 @@ public class BaseballCard {
      */
     @Override
     public int hashCode() {
+        // Might throw NPE if any of this.brand, this.playerName, or this.playerPosition is null.
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.brand);
+        hash = 67 * hash + this.brand.hashCode();
         hash = 67 * hash + this.year;
         hash = 67 * hash + this.number;
         hash = 67 * hash + this.value;
         hash = 67 * hash + this.count;
-        hash = 67 * hash + Objects.hashCode(this.playerName);
-        hash = 67 * hash + Objects.hashCode(this.playerPosition);
+        hash = 67 * hash + this.playerName.hashCode();
+        hash = 67 * hash + this.playerPosition.hashCode();
         return hash;
     }
 

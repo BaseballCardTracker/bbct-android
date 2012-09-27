@@ -279,7 +279,7 @@ public class JDBCBaseballCardIONominalTest {
     }
 
     /**
-     * Test for {@link JDBCBaseballCardIO#updateCard(BaseballCard)}.
+     * Test for {@link JDBCBaseballCardIO#updateBaseballCard(BaseballCard)}.
      *
      * @throws Exception
      */
@@ -290,7 +290,7 @@ public class JDBCBaseballCardIONominalTest {
         int newCount = 3;
         card.setValue(newValue);
         card.setCount(newCount);
-        instance.updateCard(card);
+        instance.updateBaseballCard(card);
 
         String brand = card.getBrand();
         int year = card.getYear();

@@ -65,7 +65,7 @@ public class AbstractBaseballCardIONominalTest {
     }
 
     /**
-     * Test for {@link AbstractBaseballCardIO#updateCards}.
+     * Test for {@link AbstractBaseballCardIO#updateBaseballCards}.
      *
      * @throws Exception
      */
@@ -74,7 +74,7 @@ public class AbstractBaseballCardIONominalTest {
         System.out.println("updateCards");
         List<BaseballCard> cards = null;
         AbstractBaseballCardIO instance = new AbstractBaseballCardIOImpl();
-        instance.updateCards(cards);
+        instance.updateBaseballCards(cards);
         // TODO review the generated test code and remove the default call to fail.
         Assert.fail("The test case is a prototype.");
     }
@@ -115,7 +115,7 @@ public class AbstractBaseballCardIONominalTest {
         }
 
         @Override
-        public void updateCard(BaseballCard card) throws BBCTIOException {
+        public void updateBaseballCard(BaseballCard card) throws BBCTIOException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }
