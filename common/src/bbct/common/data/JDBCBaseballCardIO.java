@@ -117,7 +117,8 @@ public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
     public void insertBaseballCard(BaseballCard card) throws BBCTIOException {
         String sqlInsert = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement stmtInsert = this.conn.prepareStatement(sqlInsert)) {
+        try {
+            PreparedStatement stmtInsert = this.conn.prepareStatement(sqlInsert);
             stmtInsert.setString(1, card.getBrand());
             stmtInsert.setInt(2, card.getYear());
             stmtInsert.setInt(3, card.getNumber());
@@ -284,7 +285,7 @@ public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
     }
 
     private List<BaseballCard> getBaseballCards(ResultSet rs) throws SQLException {
-        List<BaseballCard> cards = new ArrayList<>();
+        List<BaseballCard> cards = new ArrayList<BaseballCard>();
 
         while (rs.next()) {
             String brand = rs.getString(BRAND_COL_NAME);
