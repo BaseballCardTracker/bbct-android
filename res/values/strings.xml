@@ -70,12 +70,12 @@
     <string-array name="positions">
         <item>Pitcher</item>
         <item>Catcher</item>
-        <item>First Baseman</item>
-        <item>Second Baseman</item>
-        <item>Third baseman</item>
+        <item>First Base</item>
+        <item>Second Base</item>
+        <item>Third Base</item>
         <item>Shortstop</item>
-        <item>Left fielder</item>
-        <item>Center Fielder</item>
-        <item>Right Fielder</item>
+        <item>Left Field</item>
+        <item>Center Field</item>
+        <item>Right Field</item>
     </string-array>
 </resources>

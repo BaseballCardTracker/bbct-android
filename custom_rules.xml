@@ -79,4 +79,13 @@
 
         </do-only-if-manifest-hasCode>
     </target>
+
+    <property name="vizant.jar" location="E:\downloads\vizant-0.1.2.jar" />
+    <taskdef name="vizant"
+             classname="net.sourceforge.vizant.Vizant"
+             classpath="${vizant.jar}" />
+
+    <target name="vizant">
+        <vizant antfile="${sdk.dir}/tools/ant/build.xml" outfile="build.dot" uniqueref="true" />
+    </target>
 </project>

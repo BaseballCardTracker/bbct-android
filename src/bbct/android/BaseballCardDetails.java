@@ -20,8 +20,13 @@ package bbct.android;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+import bbct.common.data.BaseballCard;
 
 /**
  *
@@ -40,9 +45,49 @@ public class BaseballCardDetails extends Activity {
         String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.card_details_title);
         this.setTitle(title);
 
-        Spinner positions = (Spinner) this.findViewById(R.id.player_position_text);
+        this.brandText = (EditText) this.findViewById(R.id.brand_text);
+        this.yearText = (EditText) this.findViewById(R.id.year_text);
+        this.numberText = (EditText) this.findViewById(R.id.number_text);
+        this.valueText = (EditText) this.findViewById(R.id.number_text);
+        this.countText = (EditText) this.findViewById(R.id.count_text);
+        this.playerNameText = (EditText) this.findViewById(R.id.player_name_text);
+
+        this.playerPositionSpinner = (Spinner) this.findViewById(R.id.player_position_text);
         ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter.createFromResource(this, R.array.positions, android.R.layout.simple_spinner_item);
         positionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        positions.setAdapter(positionsAdapter);
+        this.playerPositionSpinner.setAdapter(positionsAdapter);
+        
+        Button saveButton = (Button) this.findViewById(R.id.save_button);
+        saveButton.setOnClickListener(this.onSave);
     }
+
+    public BaseballCard getBaseballCard() {
+        String brand = this.brandText.getText().toString();
+        int year = Integer.parseInt(this.yearText.getText().toString());
+        int number = Integer.parseInt(this.numberText.getText().toString());
+        double value = Double.parseDouble(this.valueText.getText().toString());
+        int count = Integer.parseInt(this.countText.getText().toString());
+        String playerName = this.playerNameText.getText().toString();
+        String playerPosition = (String) this.playerPositionSpinner.getSelectedItem();
+
+        return new BaseballCard(brand, year, number, (int)(value * 100), count, playerName, playerPosition);
+    }
+    
+    private View.OnClickListener onSave = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(BaseballCardDetails.this, BaseballCardDetails.this.getBaseballCard().toString(), Toast.LENGTH_LONG).show();
+        }
+    };
+    
+    private EditText brandText = null;
+    private EditText yearText = null;
+    private EditText numberText = null;
+    private EditText valueText = null;
+    private EditText countText = null;
+    private EditText playerNameText = null;
+    private Spinner playerPositionSpinner = null;
+    
+    private static final String TAG = BaseballCardDetails.class.getName();
 }
