@@ -18,6 +18,8 @@
  */
 package bbct.common.data;
 
+import java.io.Serializable;
+
 /**
  * {@link BaseballCard} is the model underlying the BBCT application. It
  * contains properties for the brand, year, number, value, count, player name,
@@ -25,7 +27,7 @@ package bbct.common.data;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class BaseballCard {
+public class BaseballCard implements Serializable {
 
     /**
      * Create a {@link BaseballCard} with the given values.
@@ -140,15 +142,19 @@ public class BaseballCard {
      */
     @Override
     public boolean equals(Object o) {
-        BaseballCard c = (BaseballCard) o;
+        if (o instanceof BaseballCard) {
+            BaseballCard c = (BaseballCard) o;
 
-        return this.brand.equals(c.getBrand())
-                && this.year == c.getYear()
-                && this.number == c.getNumber()
-                && this.value == c.getValue()
-                && this.count == c.getCount()
-                && this.playerName.equals(c.getPlayerName())
-                && this.playerPosition.equals(c.getPlayerPosition());
+            return this.brand.equals(c.getBrand())
+                    && this.year == c.getYear()
+                    && this.number == c.getNumber()
+                    && this.value == c.getValue()
+                    && this.count == c.getCount()
+                    && this.playerName.equals(c.getPlayerName())
+                    && this.playerPosition.equals(c.getPlayerPosition());
+        }
+
+        return false;
     }
 
     /**
