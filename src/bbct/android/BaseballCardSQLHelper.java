@@ -18,11 +18,15 @@
  */
 package bbct.android;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import bbct.common.data.BaseballCard;
 
 /**
+ * TODO: Write JUnit tests.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -30,7 +34,6 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "bbct.db";
     private static final int SCHEMA_VERSION = 1;
-
     /**
      * The table name to use in the underlying database.
      */
@@ -70,7 +73,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqld) {
-        String sqlCreate = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "(" 
+        String sqlCreate = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                 + BRAND_COL_NAME + " VARCHAR(10), "
                 + YEAR_COL_NAME + " INTEGER, "
                 + NUMBER_COL_NAME + " INTEGER, "
@@ -87,5 +90,52 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqld, int oldVersion, int newVersion) {
         // no-op
     }
-    
+
+    public void insertBaseballCard(BaseballCard card) {
+        this.getWritableDatabase().insert(TABLE_NAME, null, this.getContentValues(card));
+    }
+
+    public void updateBaseballCard(BaseballCard card) {
+        String[] args = {card.getBrand(), Integer.toString(card.getYear()), Integer.toString(card.getNumber())};
+        String where = BRAND_COL_NAME + "=?, " + YEAR_COL_NAME + "=?, " + NUMBER_COL_NAME + "=?";
+
+        this.getWritableDatabase().update(TABLE_NAME, this.getContentValues(card), where, args);
+    }
+
+    public Cursor getCursor() {
+        return this.getWritableDatabase().query(TABLE_NAME, null, null, null, null, null, null);
+    }
+
+    public Cursor getCursorFilteredByYear(int year) {
+        String filter = YEAR_COL_NAME + "=" + year;
+        return this.getWritableDatabase().query(TABLE_NAME, null, filter, null, null, null, null);
+    }
+
+    public Cursor getCursorFilterdByNumber(int number) {
+        String filter = NUMBER_COL_NAME + "=" + number;
+        return this.getWritableDatabase().query(TABLE_NAME, null, filter, null, null, null, null);
+    }
+
+    public Cursor getCursorFilteredByYearAndNumber(int year, int number) {
+        String filter = YEAR_COL_NAME + "=" + year + "AND" + NUMBER_COL_NAME + "=" + number;
+        return this.getWritableDatabase().query(TABLE_NAME, null, filter, null, null, null, null);
+    }
+
+    public Cursor getCursorFilterdByPlayerName(String playerName) {
+        String filter = NAME_COL_NAME + "=" + playerName;
+        return this.getWritableDatabase().query(TABLE_NAME, null, filter, null, null, null, null);
+    }
+
+    private ContentValues getContentValues(BaseballCard card) {
+        ContentValues cv = new ContentValues(7);
+        cv.put(BRAND_COL_NAME, card.getBrand());
+        cv.put(YEAR_COL_NAME, card.getYear());
+        cv.put(NUMBER_COL_NAME, card.getNumber());
+        cv.put(VALUE_COL_NAME, card.getValue());
+        cv.put(COUNT_COL_NAME, card.getCount());
+        cv.put(NAME_COL_NAME, card.getPlayerName());
+        cv.put(POSITION_COL_NAME, card.getPlayerPosition());
+
+        return cv;
+    }
 }

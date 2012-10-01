@@ -42,6 +42,7 @@
     <string name="save_button">Save</string>
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancel</string>
+    <string name="done_button">Done</string>
     
     <string name="brand_hint">Enter card brand name.</string>
     <string name="year_hint">Enter card year.</string>

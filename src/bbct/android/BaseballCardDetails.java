@@ -25,7 +25,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 import bbct.common.data.BaseballCard;
 
 /**
@@ -42,6 +41,7 @@ public class BaseballCardDetails extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.card_details);
 
+        // TODO: Use resource formatting
         String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.card_details_title);
         this.setTitle(title);
 
@@ -56,12 +56,30 @@ public class BaseballCardDetails extends Activity {
         ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter.createFromResource(this, R.array.positions, android.R.layout.simple_spinner_item);
         positionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.playerPositionSpinner.setAdapter(positionsAdapter);
-        
-        Button saveButton = (Button) this.findViewById(R.id.save_button);
+
+        Button saveButton = (Button) this.findViewById(R.id.details_save_button);
         saveButton.setOnClickListener(this.onSave);
+
+        Button doneButton = (Button) this.findViewById(R.id.details_done_button);
+        doneButton.setOnClickListener(this.onDone);
+
+        BaseballCard card = (BaseballCard) getIntent().getSerializableExtra(AndroidConstants.BASEBALL_CARD_EXTRA);
+
+        if (card != null) {
+            this.brandText.setText(card.getBrand());
+            this.yearText.setText(Integer.toString(card.getYear()));
+            this.numberText.setText(Integer.toString(card.getNumber()));
+            this.valueText.setText(Integer.toString(card.getNumber()));
+            this.countText.setText(Integer.toString(card.getNumber()));
+            this.playerNameText.setText(card.getPlayerName());
+
+            int selectedPosition = positionsAdapter.getPosition(card.getPlayerPosition());
+            this.playerPositionSpinner.setSelection(selectedPosition);
+        }
     }
 
     public BaseballCard getBaseballCard() {
+        // TODO: Add error checking.
         String brand = this.brandText.getText().toString();
         int year = Integer.parseInt(this.yearText.getText().toString());
         int number = Integer.parseInt(this.numberText.getText().toString());
@@ -70,17 +88,20 @@ public class BaseballCardDetails extends Activity {
         String playerName = this.playerNameText.getText().toString();
         String playerPosition = (String) this.playerPositionSpinner.getSelectedItem();
 
-        return new BaseballCard(brand, year, number, (int)(value * 100), count, playerName, playerPosition);
+        return new BaseballCard(brand, year, number, (int) (value * 100), count, playerName, playerPosition);
     }
-    
     private View.OnClickListener onSave = new View.OnClickListener() {
-
         @Override
         public void onClick(View view) {
-            Toast.makeText(BaseballCardDetails.this, BaseballCardDetails.this.getBaseballCard().toString(), Toast.LENGTH_LONG).show();
+            BaseballCard card = BaseballCardDetails.this.getBaseballCard();
         }
     };
-    
+    private View.OnClickListener onDone = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            BaseballCardDetails.this.finish();
+        }
+    };
     private EditText brandText = null;
     private EditText yearText = null;
     private EditText numberText = null;
@@ -88,6 +109,5 @@ public class BaseballCardDetails extends Activity {
     private EditText countText = null;
     private EditText playerNameText = null;
     private Spinner playerPositionSpinner = null;
-    
     private static final String TAG = BaseballCardDetails.class.getName();
 }

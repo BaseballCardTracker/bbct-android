@@ -35,6 +35,7 @@ public class YearAndNumberFilter extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.year_and_number_filter);
         
+        // TODO: Use resource formatting
         String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.year_and_number_filter_title);
         this.setTitle(title);
     }

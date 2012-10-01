@@ -35,6 +35,7 @@ public class NumberFilter extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.number_filter);
         
+        // TODO: Use resource formatting
         String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.number_filter_title);
         this.setTitle(title);
     }

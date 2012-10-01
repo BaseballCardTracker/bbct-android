@@ -53,6 +53,7 @@ public class FilterOptions extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.filter_options);
 
+        // TODO: Use resource formatting
         String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.filter_options_title);
         this.setTitle(title);
 
