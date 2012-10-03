@@ -35,8 +35,9 @@ public class About extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.about);
         
-        // TODO: Use resource formatting
-        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.about_title);
+        String format = this.getString(R.string.bbct_title);
+        String aboutTitle = this.getString(R.string.about_title);
+        String title = String.format(format, aboutTitle);
         this.setTitle(title);
     }
 }

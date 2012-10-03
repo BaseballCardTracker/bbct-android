@@ -35,8 +35,9 @@ public class PlayerNameFilter extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.player_name_filter);
         
-        // TODO: Use resource formatting
-        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.player_name_filter_title);
+        String format = this.getString(R.string.bbct_title);
+        String playerNameFilterTitle = this.getString(R.string.player_name_filter_title);
+        String title = String.format(format, playerNameFilterTitle);
         this.setTitle(title);
     }
 }

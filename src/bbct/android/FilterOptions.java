@@ -53,8 +53,9 @@ public class FilterOptions extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.filter_options);
 
-        // TODO: Use resource formatting
-        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.filter_options_title);
+        String format = this.getString(R.string.bbct_title);
+        String filterOptionsTitle = this.getString(R.string.filter_options_title);
+        String title = String.format(format, filterOptionsTitle);
         this.setTitle(title);
 
         Button okButton = (Button) this.findViewById(R.id.filter_ok_button);
@@ -64,6 +65,7 @@ public class FilterOptions extends Activity {
         cancelButton.setOnClickListener(this.onCancelClick);
     }
     private View.OnClickListener onOkClick = new View.OnClickListener() {
+        @Override
         public void onClick(View view) {
             Log.d(TAG, "OK button clicked.");
             RadioGroup findBy = (RadioGroup) FilterOptions.this.findViewById(R.id.filter_by_radio_group);
@@ -102,13 +104,14 @@ public class FilterOptions extends Activity {
         }
     };
     private View.OnClickListener onCancelClick = new View.OnClickListener() {
+        @Override
         public void onClick(View view) {
             FilterOptions.this.finish();
         }
     };
     private DialogInterface.OnClickListener onDialogOkClick = new DialogInterface.OnClickListener() {
+        @Override
         public void onClick(DialogInterface dialog, int which) {
-            dialog.dismiss();
         }
     };
     private static final String TAG = FilterOptions.class.getName();

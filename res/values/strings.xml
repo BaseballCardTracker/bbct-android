@@ -20,6 +20,7 @@
 <resources>
     <string name="app_name">BBCT for Android</string>
     
+    <string name="bbct_title">BBCT for Android - %1$s</string>
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
     <string name="filter_options_title">Filter Options</string>

@@ -41,8 +41,9 @@ public class BaseballCardDetails extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.card_details);
 
-        // TODO: Use resource formatting
-        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.card_details_title);
+        String format = this.getString(R.string.bbct_title);
+        String cardDetailsTitle = this.getString(R.string.card_details_title);
+        String title = String.format(format, cardDetailsTitle);
         this.setTitle(title);
 
         this.brandText = (EditText) this.findViewById(R.id.brand_text);
@@ -63,19 +64,19 @@ public class BaseballCardDetails extends Activity {
         Button doneButton = (Button) this.findViewById(R.id.details_done_button);
         doneButton.setOnClickListener(this.onDone);
 
-        BaseballCard card = (BaseballCard) getIntent().getSerializableExtra(AndroidConstants.BASEBALL_CARD_EXTRA);
+//        BaseballCard card = (BaseballCard) getIntent().getSerializableExtra(AndroidConstants.BASEBALL_CARD_EXTRA);
 
-        if (card != null) {
-            this.brandText.setText(card.getBrand());
-            this.yearText.setText(Integer.toString(card.getYear()));
-            this.numberText.setText(Integer.toString(card.getNumber()));
-            this.valueText.setText(Integer.toString(card.getNumber()));
-            this.countText.setText(Integer.toString(card.getNumber()));
-            this.playerNameText.setText(card.getPlayerName());
-
-            int selectedPosition = positionsAdapter.getPosition(card.getPlayerPosition());
-            this.playerPositionSpinner.setSelection(selectedPosition);
-        }
+//        if (card != null) {
+//            this.brandText.setText(card.getBrand());
+//            this.yearText.setText(Integer.toString(card.getYear()));
+//            this.numberText.setText(Integer.toString(card.getNumber()));
+//            this.valueText.setText(Integer.toString(card.getNumber()));
+//            this.countText.setText(Integer.toString(card.getNumber()));
+//            this.playerNameText.setText(card.getPlayerName());
+//
+//            int selectedPosition = positionsAdapter.getPosition(card.getPlayerPosition());
+//            this.playerPositionSpinner.setSelection(selectedPosition);
+//        }
     }
 
     public BaseballCard getBaseballCard() {
