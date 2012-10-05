@@ -69,6 +69,8 @@
     
     <string name="no_radio_button_error">Please select an option.</string>
     
+    <string name="card_added_message">Card added successfully.</string>
+    
     <string-array name="positions">
         <item>Pitcher</item>
         <item>Catcher</item>

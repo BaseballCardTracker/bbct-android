@@ -32,6 +32,9 @@ import android.widget.SimpleCursorAdapter;
 import bbct.common.data.BaseballCard;
 
 /**
+ * TODO: Add column headers
+ * 
+ * TODO: Make list fancier
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
