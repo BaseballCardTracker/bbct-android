@@ -64,19 +64,36 @@ public class BaseballCardDetails extends Activity {
         Button doneButton = (Button) this.findViewById(R.id.details_done_button);
         doneButton.setOnClickListener(this.onDone);
 
-//        BaseballCard card = (BaseballCard) getIntent().getSerializableExtra(AndroidConstants.BASEBALL_CARD_EXTRA);
+        BaseballCard card = (BaseballCard) getIntent().getSerializableExtra(AndroidConstants.BASEBALL_CARD_EXTRA);
 
-//        if (card != null) {
-//            this.brandText.setText(card.getBrand());
-//            this.yearText.setText(Integer.toString(card.getYear()));
-//            this.numberText.setText(Integer.toString(card.getNumber()));
-//            this.valueText.setText(Integer.toString(card.getNumber()));
-//            this.countText.setText(Integer.toString(card.getNumber()));
-//            this.playerNameText.setText(card.getPlayerName());
-//
-//            int selectedPosition = positionsAdapter.getPosition(card.getPlayerPosition());
-//            this.playerPositionSpinner.setSelection(selectedPosition);
-//        }
+        if (card != null) {
+            this.updateCard = true;
+            this.brandText.setText(card.getBrand());
+            this.yearText.setText(Integer.toString(card.getYear()));
+            this.numberText.setText(Integer.toString(card.getNumber()));
+            // TODO: valueText is not set correctly
+            this.valueText.setText(Integer.toString(card.getValue()));
+            this.countText.setText(Integer.toString(card.getCount()));
+            this.playerNameText.setText(card.getPlayerName());
+
+            int selectedPosition = positionsAdapter.getPosition(card.getPlayerPosition());
+            this.playerPositionSpinner.setSelection(selectedPosition);
+
+            this.brandText.setEnabled(false);
+            this.yearText.setEnabled(false);
+            this.numberText.setEnabled(false);
+            this.playerNameText.setEnabled(false);
+            this.playerPositionSpinner.setEnabled(false);
+        }
+
+        this.sqlHelper = new BaseballCardSQLHelper(this);
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        
+        this.sqlHelper.close();
     }
 
     public BaseballCard getBaseballCard() {
@@ -95,6 +112,16 @@ public class BaseballCardDetails extends Activity {
         @Override
         public void onClick(View view) {
             BaseballCard card = BaseballCardDetails.this.getBaseballCard();
+
+            if (BaseballCardDetails.this.updateCard) {
+                BaseballCardDetails.this.sqlHelper.updateBaseballCard(card);
+                BaseballCardDetails.this.finish();
+            } else {
+                BaseballCardDetails.this.sqlHelper.insertBaseballCard(card);
+            }
+            
+            // TODO: Need to show a Toast that field has been added, clear all fields, and return focus to brand TextEdit
+            // TOOD: Catch exceptions and show appropriate error messages.
         }
     };
     private View.OnClickListener onDone = new View.OnClickListener() {
@@ -110,5 +137,7 @@ public class BaseballCardDetails extends Activity {
     private EditText countText = null;
     private EditText playerNameText = null;
     private Spinner playerPositionSpinner = null;
+    private BaseballCardSQLHelper sqlHelper = null;
+    private boolean updateCard = false;
     private static final String TAG = BaseballCardDetails.class.getName();
 }
