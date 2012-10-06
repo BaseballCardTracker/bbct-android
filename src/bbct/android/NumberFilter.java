@@ -19,7 +19,11 @@
 package bbct.android;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
  *
@@ -39,5 +43,33 @@ public class NumberFilter extends Activity {
         String numberFilterTitle = this.getString(R.string.number_filter_title);
         String title = String.format(format, numberFilterTitle);
         this.setTitle(title);
+
+        this.numberText = (EditText) this.findViewById(R.id.number_filter_number_text);
+
+        Button okButton = (Button) this.findViewById(R.id.number_filter_ok_button);
+        okButton.setOnClickListener(this.onOk);
+
+        Button cancelButton = (Button) this.findViewById(R.id.number_filter_cancel_button);
+        cancelButton.setOnClickListener(this.onCancel);
     }
+    private View.OnClickListener onOk = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            BaseballCardSQLHelper sqlHelper = new BaseballCardSQLHelper(NumberFilter.this);
+            // TODO: Error checking
+            int number = Integer.parseInt(NumberFilter.this.numberText.getText().toString());
+
+            sqlHelper.filterCursorByNumber(number);
+            Cursor cursor = sqlHelper.getCursor();
+            // TODO: Return Cursor to FilterOptions
+        }
+    };
+    private View.OnClickListener onCancel = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            // TODO: Return RESULT_CANCELED
+            NumberFilter.this.finish();
+        }
+    };
+    private EditText numberText = null;
 }

@@ -24,4 +24,9 @@ package bbct.android;
  */
 public interface AndroidConstants {
     public static final String BASEBALL_CARD_EXTRA = "baseball_card";
+    public static final int FILTER_OPTIONS_REQUEST = 42;
+    public static final int YEAR_FILTER_REQUEST = 43;
+    public static final int NUMBER_FILTER_REQUEST = 44;
+    public static final int YEAR_AND_NUMBER_FILTER_REQUEST = 45;
+    public static final int PLAYER_NAME_FILTER_REQUEST = 46;
 }

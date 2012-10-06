@@ -26,13 +26,26 @@
         <TextView android:text="@string/number_label" />
         <EditText android:id="@+id/number_filter_number_text"
                   android:singleLine="true"
-                  android:capitalize="words"
+                  android:numeric="integer"
                   android:hint="@string/number_hint"
         />
     </TableRow>
-    <Button android:id="@+id/number_filter_ok_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ok_button"
-    />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+    >
+        <Button android:id="@+id/number_filter_ok_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/ok_button"
+        />
+        <Button android:id="@+id/number_filter_cancel_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cancel_button"
+        />
+    </LinearLayout>
 </TableLayout>

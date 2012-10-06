@@ -53,8 +53,8 @@ public class BaseballCardList extends ListActivity {
 
         Cursor cursor = this.sqlHelper.getCursor();
         this.startManagingCursor(cursor);
-        CursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, ROW_PROJECTION, ROW_TEXT_VIEWS);
-        this.setListAdapter(adapter);
+        this.adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, ROW_PROJECTION, ROW_TEXT_VIEWS);
+        this.setListAdapter(this.adapter);
 
     }
 
@@ -89,7 +89,7 @@ public class BaseballCardList extends ListActivity {
                 return true;
 
             case R.id.filter_menu:
-                this.startActivity(new Intent(this, FilterOptions.class));
+                this.startActivityForResult(new Intent(this, FilterOptions.class), AndroidConstants.FILTER_OPTIONS_REQUEST);
                 return true;
 
             case R.id.about_menu:
@@ -99,6 +99,20 @@ public class BaseballCardList extends ListActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case AndroidConstants.FILTER_OPTIONS_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    // TODO: Get returned cursor. (This only works if Cursor implements Parcable or Serializable.)
+                    Cursor cursor = null;
+                    BaseballCardList.this.adapter.swapCursor(cursor);
+                }
+                break;
+        }
+    }
+    
     private static final String[] ROW_PROJECTION = {
         BaseballCardSQLHelper.BRAND_COL_NAME, BaseballCardSQLHelper.YEAR_COL_NAME,
         BaseballCardSQLHelper.NUMBER_COL_NAME, BaseballCardSQLHelper.PLAYER_NAME_COL_NAME
@@ -107,4 +121,5 @@ public class BaseballCardList extends ListActivity {
         R.id.brand_row, R.id.year_row, R.id.number_row, R.id.player_name_row
     };
     private BaseballCardSQLHelper sqlHelper = null;
+    private CursorAdapter adapter = null;
 }

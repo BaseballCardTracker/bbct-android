@@ -19,7 +19,11 @@
 package bbct.android;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
  *
@@ -39,5 +43,33 @@ public class PlayerNameFilter extends Activity {
         String playerNameFilterTitle = this.getString(R.string.player_name_filter_title);
         String title = String.format(format, playerNameFilterTitle);
         this.setTitle(title);
+
+        this.playerNameText = (EditText) this.findViewById(R.id.player_name_filter_player_name_text);
+
+        Button okButton = (Button) this.findViewById(R.id.player_name_filter_ok_button);
+        okButton.setOnClickListener(this.onOk);
+
+        Button cancelButton = (Button) this.findViewById(R.id.player_name_filter_cancel_button);
+        cancelButton.setOnClickListener(this.onCancel);
     }
+    private View.OnClickListener onOk = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            BaseballCardSQLHelper sqlHelper = new BaseballCardSQLHelper(PlayerNameFilter.this);
+            // TODO: Error checking
+            String playerName = PlayerNameFilter.this.playerNameText.getText().toString();
+
+            sqlHelper.filterCursorByPlayerName(playerName);
+            Cursor cursor = sqlHelper.getCursor();
+            // TODO: Return Cursor to FilterOptions
+        }
+    };
+    private View.OnClickListener onCancel = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            // TODO: Return RESULT_CANCELED
+            PlayerNameFilter.this.finish();
+        }
+    };
+    private EditText playerNameText = null;
 }
