@@ -34,6 +34,8 @@ import android.widget.RadioGroup;
  * loaded when the user clicks the OK button. This activity contains the correct
  * widgets to get input from the user for the parameters of the chosen filter
  * criteria.
+ * 
+ * TODO: Remove OK and Cancel buttons. Jump directly to the appropriate XxxFilter activity when user clicks a radio button.
  *
  * @see YearFilter
  * @see NumberFilter
@@ -74,7 +76,8 @@ public class FilterOptions extends Activity {
             case AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST:
             case AndroidConstants.PLAYER_NAME_FILTER_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    // TODO: Return RESULT_OK and Cursor from XxxFilter activity to BaseballCardList.
+                    this.setResult(RESULT_OK, data);
+                    this.finish();
                 }
                 break;
 
@@ -126,7 +129,7 @@ public class FilterOptions extends Activity {
     private View.OnClickListener onCancelClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            // TODO: Return RESULT_CANCELED
+            FilterOptions.this.setResult(RESULT_CANCELED);
             FilterOptions.this.finish();
         }
     };

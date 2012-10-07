@@ -19,7 +19,7 @@
 package bbct.android;
 
 import android.app.Activity;
-import android.database.Cursor;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -55,19 +55,19 @@ public class NumberFilter extends Activity {
     private View.OnClickListener onOk = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            BaseballCardSQLHelper sqlHelper = new BaseballCardSQLHelper(NumberFilter.this);
             // TODO: Error checking
             int number = Integer.parseInt(NumberFilter.this.numberText.getText().toString());
-
-            sqlHelper.filterCursorByNumber(number);
-            Cursor cursor = sqlHelper.getCursor();
-            // TODO: Return Cursor to FilterOptions
+            Intent data = new Intent();
+            data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.NUMBER_FILTER_REQUEST);
+            data.putExtra(AndroidConstants.NUMBER_EXTRA, number);
+            NumberFilter.this.setResult(RESULT_OK, data);
+            NumberFilter.this.finish();
         }
     };
     private View.OnClickListener onCancel = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            // TODO: Return RESULT_CANCELED
+            NumberFilter.this.setResult(RESULT_CANCELED);
             NumberFilter.this.finish();
         }
     };

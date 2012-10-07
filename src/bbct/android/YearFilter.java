@@ -19,7 +19,7 @@
 package bbct.android;
 
 import android.app.Activity;
-import android.database.Cursor;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -55,19 +55,19 @@ public class YearFilter extends Activity {
     private View.OnClickListener onOk = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            BaseballCardSQLHelper sqlHelper = new BaseballCardSQLHelper(YearFilter.this);
             // TODO: Error checking
             int year = Integer.parseInt(YearFilter.this.yearText.getText().toString());
-            
-            sqlHelper.filterCursorByYear(year);
-            Cursor cursor = sqlHelper.getCursor();
-            // TODO: Return Cursor to FilterOptions
+            Intent data = new Intent();
+            data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.YEAR_FILTER_REQUEST);
+            data.putExtra(AndroidConstants.YEAR_EXTRA, year);
+            YearFilter.this.setResult(RESULT_OK, data);
+            YearFilter.this.finish();
         }
     };
     private View.OnClickListener onCancel = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            // TODO: Return RESULT_CANCELED
+            YearFilter.this.setResult(RESULT_CANCELED);
             YearFilter.this.finish();
         }
     };

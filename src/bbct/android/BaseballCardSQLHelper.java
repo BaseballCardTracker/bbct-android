@@ -120,23 +120,27 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     public void filterCursorByYear(int year) {
-        String filter = YEAR_COL_NAME + "=" + year;
-        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, null, null, null, null);
+        String filter = YEAR_COL_NAME + " = ?";
+        String[] args = {Integer.toString(year)};
+        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, args, null, null, null);
     }
 
     public void filterCursorByNumber(int number) {
-        String filter = NUMBER_COL_NAME + "=" + number;
-        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, null, null, null, null);
+        String filter = NUMBER_COL_NAME + " = ?";
+        String[] args = {Integer.toString(number)};
+        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, args, null, null, null);
     }
 
     public void filterCursorByYearAndNumber(int year, int number) {
-        String filter = YEAR_COL_NAME + "=" + year + "AND" + NUMBER_COL_NAME + "=" + number;
-        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, null, null, null, null);
+        String filter = YEAR_COL_NAME + " = ?  AND " + NUMBER_COL_NAME + " = ?";
+        String[] args = {Integer.toString(year), Integer.toString(number)};
+        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, args, null, null, null);
     }
 
     public void filterCursorByPlayerName(String playerName) {
-        String filter = PLAYER_NAME_COL_NAME + "=" + playerName;
-        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, null, null, null, null);
+        String filter = PLAYER_NAME_COL_NAME + " = ?";
+        String[] args = {playerName};
+        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, args, null, null, null);
     }
     
     public BaseballCard getBaseballCardFromCursor() {
