@@ -222,7 +222,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByYear() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<>();
+        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
         List result = instance.getBaseballCardsByYear(this.card.getYear());
@@ -238,7 +238,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<>();
+        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
         List result = instance.getBaseballCardsByNumber(this.card.getNumber());
@@ -255,7 +255,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByYearAndNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<>();
+        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
         List result = instance.getBaseballCardsByYearAndNumber(this.card.getYear(), this.card.getNumber());
@@ -271,7 +271,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByPlayerName() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<>();
+        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
         List result = instance.getBaseballCardsByPlayerName(this.card.getPlayerName());
