@@ -20,6 +20,7 @@
 <resources>
     <string name="app_name">BBCT for Android</string>
     
+    <string name="bbct_title">BBCT for Android - %1$s</string>
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
     <string name="filter_options_title">Filter Options</string>
@@ -42,6 +43,7 @@
     <string name="save_button">Save</string>
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancel</string>
+    <string name="done_button">Done</string>
     
     <string name="brand_hint">Enter card brand name.</string>
     <string name="year_hint">Enter card year.</string>
@@ -67,6 +69,9 @@
     
     <string name="no_radio_button_error">Please select an option.</string>
     
+    <string name="card_added_message">Card added successfully.</string>
+    <string name="no_cards_message">No cards found.</string>
+    
     <string-array name="positions">
         <item>Pitcher</item>
         <item>Catcher</item>
@@ -78,4 +83,12 @@
         <item>Center Field</item>
         <item>Right Field</item>
     </string-array>
+
+    <string name="brand_input_error">Please enter a brand name.</string>
+    <string name="year_input_error">Please enter a year.</string>
+    <string name="number_input_error">Please enter a card number.</string>
+    <string name="value_input_error">Please enter the card\'s value.</string>
+    <string name="count_input_error">Please enter the number of cards you own.</string>
+    <string name="player_name_input_error">Please enter the player\'s name.</string>
+    <string name="player_position_input_error">Please enter the player\'s position.</string>
 </resources>

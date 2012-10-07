@@ -80,7 +80,7 @@
         </do-only-if-manifest-hasCode>
     </target>
 
-    <property name="vizant.jar" location="E:\downloads\vizant-0.1.2.jar" />
+    <property name="vizant.jar" location="${lib.home}/vizant-0.1.2.jar" />
     <taskdef name="vizant"
              classname="net.sourceforge.vizant.Vizant"
              classpath="${vizant.jar}" />

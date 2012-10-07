@@ -19,7 +19,12 @@
 package bbct.android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  *
@@ -34,8 +39,43 @@ public class YearFilter extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.year_filter);
-        
-        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.year_filter_title);
+
+        String format = this.getString(R.string.bbct_title);
+        String yearFilterTitle = this.getString(R.string.year_filter_title);
+        String title = String.format(format, yearFilterTitle);
         this.setTitle(title);
+
+        this.yearText = (EditText) this.findViewById(R.id.year_filter_year_text);
+
+        Button okButton = (Button) this.findViewById(R.id.year_filter_ok_button);
+        okButton.setOnClickListener(this.onOk);
+
+        Button cancelButton = (Button) this.findViewById(R.id.year_filter_cancel_button);
+        cancelButton.setOnClickListener(this.onCancel);
     }
+    private View.OnClickListener onOk = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String yearStr = YearFilter.this.yearText.getText().toString();
+            if (yearStr.equals("")) {
+                YearFilter.this.yearText.requestFocus();
+                Toast.makeText(YearFilter.this, R.string.year_input_error, Toast.LENGTH_LONG).show();
+            } else {
+                int year = Integer.parseInt(yearStr);
+                Intent data = new Intent();
+                data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.YEAR_FILTER_REQUEST);
+                data.putExtra(AndroidConstants.YEAR_EXTRA, year);
+                YearFilter.this.setResult(RESULT_OK, data);
+                YearFilter.this.finish();
+            }
+        }
+    };
+    private View.OnClickListener onCancel = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            YearFilter.this.setResult(RESULT_CANCELED);
+            YearFilter.this.finish();
+        }
+    };
+    private EditText yearText = null;
 }

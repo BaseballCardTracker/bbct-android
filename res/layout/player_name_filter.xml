@@ -24,15 +24,28 @@
 >
     <TableRow>
         <TextView android:text="@string/player_name_label" />
-        <EditText android:id="@+id/player_name_filter_text"
+        <EditText android:id="@+id/player_name_filter_player_name_text"
                   android:singleLine="true"
                   android:capitalize="words"
                   android:hint="@string/player_name_hint"
         />
     </TableRow>
-    <Button android:id="@+id/player_name_filter_ok_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ok_button"
-    />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+    >
+        <Button android:id="@+id/player_name_filter_ok_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/ok_button"
+        />
+        <Button android:id="@+id/player_name_filter_cancel_button"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/cancel_button"
+        />
+    </LinearLayout>
 </TableLayout>

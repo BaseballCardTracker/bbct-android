@@ -19,7 +19,13 @@
 package bbct.android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import bbct.common.exceptions.InputException;
 
 /**
  *
@@ -34,8 +40,42 @@ public class PlayerNameFilter extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.player_name_filter);
-        
-        String title = this.getString(R.string.app_name) + " - " + this.getString(R.string.player_name_filter_title);
+
+        String format = this.getString(R.string.bbct_title);
+        String playerNameFilterTitle = this.getString(R.string.player_name_filter_title);
+        String title = String.format(format, playerNameFilterTitle);
         this.setTitle(title);
+
+        this.playerNameText = (EditText) this.findViewById(R.id.player_name_filter_player_name_text);
+
+        Button okButton = (Button) this.findViewById(R.id.player_name_filter_ok_button);
+        okButton.setOnClickListener(this.onOk);
+
+        Button cancelButton = (Button) this.findViewById(R.id.player_name_filter_cancel_button);
+        cancelButton.setOnClickListener(this.onCancel);
     }
+    private View.OnClickListener onOk = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            String playerName = PlayerNameFilter.this.playerNameText.getText().toString();
+            if (playerName.equals("")) {
+                PlayerNameFilter.this.playerNameText.requestFocus();
+                Toast.makeText(PlayerNameFilter.this, R.string.player_name_input_error, Toast.LENGTH_LONG).show();
+            } else {
+                Intent data = new Intent();
+                data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.PLAYER_NAME_FILTER_REQUEST);
+                data.putExtra(AndroidConstants.PLAYER_NAME_EXTRA, playerName);
+                PlayerNameFilter.this.setResult(RESULT_OK, data);
+                PlayerNameFilter.this.finish();
+            }
+        }
+    };
+    private View.OnClickListener onCancel = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            PlayerNameFilter.this.setResult(RESULT_CANCELED);
+            PlayerNameFilter.this.finish();
+        }
+    };
+    private EditText playerNameText = null;
 }
