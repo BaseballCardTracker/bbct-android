@@ -69,8 +69,6 @@ import javax.swing.event.AncestorListener;
  *
  * TODO: Add $ at the beginning of valueTextField's text if it is not present?
  * 
- * TODO: Change player position text field to a combobox.
- *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class CardDetailsPanel extends JPanel {
@@ -342,7 +340,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.insets = bottomLeftInsets;
         playerDetailsInputPanel.add(playerPositionLabel, gbc);
 
-        this.playerPositionComboBox = new JComboBox<>(BBCTStringResources.ComboBoxResources.POSITIONS);
+        this.playerPositionComboBox = new JComboBox(BBCTStringResources.ComboBoxResources.POSITIONS);
         this.playerPositionComboBox.setEditable(this.allEditable);
         this.playerPositionComboBox.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         this.playerPositionComboBox.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.PLAYER_POSITION_INSTRUCTIONS));
@@ -396,7 +394,7 @@ public class CardDetailsPanel extends JPanel {
     private JFormattedTextField countTextField;
     private JFormattedTextField numberTextField;
     private JTextField playerNameTextField;
-    private JComboBox<String> playerPositionComboBox;
+    private JComboBox playerPositionComboBox;
     private JFormattedTextField valueTextField;
     private JFormattedTextField yearTextField;
     private boolean allEditable = true;

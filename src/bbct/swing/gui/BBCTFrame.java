@@ -164,7 +164,7 @@ public class BBCTFrame extends JFrame {
     }
 
     private static List<BaseballCard> readCards(String fileName) throws FileNotFoundException, IOException {
-        List<BaseballCard> cards = new ArrayList<>();
+        List<BaseballCard> cards = new ArrayList<BaseballCard>();
         BufferedReader in = new BufferedReader(new FileReader(fileName));
 
         // Throw away first line with headings
