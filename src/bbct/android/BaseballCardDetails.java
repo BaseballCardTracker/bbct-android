@@ -20,6 +20,7 @@ package bbct.android;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,6 +28,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import bbct.common.data.BaseballCard;
+import bbct.common.exceptions.InputException;
 
 /**
  *
@@ -96,15 +98,52 @@ public class BaseballCardDetails extends Activity {
         this.sqlHelper.close();
     }
 
-    public BaseballCard getBaseballCard() {
-        // TODO: Add error checking.
+    public BaseballCard getBaseballCard() throws InputException {
         String brand = this.brandText.getText().toString();
-        int year = Integer.parseInt(this.yearText.getText().toString());
-        int number = Integer.parseInt(this.numberText.getText().toString());
-        double value = Double.parseDouble(this.valueText.getText().toString());
-        int count = Integer.parseInt(this.countText.getText().toString());
+        if (brand.equals("")) {
+            this.brandText.requestFocus();
+            throw new InputException(this.getString(R.string.brand_input_error));
+        }
+
+        String yearStr = this.yearText.getText().toString();
+        if (yearStr.equals("")) {
+            this.yearText.requestFocus();
+            throw new InputException(this.getString(R.string.year_input_error));
+        }
+        int year = Integer.parseInt(yearStr);
+
+        String numberStr = this.numberText.getText().toString();
+        if (numberStr.equals("")) {
+            this.numberText.requestFocus();
+            throw new InputException(this.getString(R.string.number_input_error));
+        }
+        int number = Integer.parseInt(numberStr);
+
+        String valueStr = this.valueText.getText().toString();
+        if (valueStr.equals("")) {
+            this.valueText.requestFocus();
+            throw new InputException(this.getString(R.string.value_input_error));
+        }
+        double value = Double.parseDouble(valueStr);
+
+        String countStr = this.countText.getText().toString();
+        if (valueStr.equals("")) {
+            this.countText.requestFocus();
+            throw new InputException(this.getString(R.string.count_input_error));
+        }
+        int count = Integer.parseInt(countStr);
+
         String playerName = this.playerNameText.getText().toString();
+        if (playerName.equals("")) {
+            this.playerNameText.requestFocus();
+            throw new InputException(this.getString(R.string.player_name_input_error));
+        }
+
         String playerPosition = (String) this.playerPositionSpinner.getSelectedItem();
+        if (playerPosition.equals("")) {
+            this.playerPositionSpinner.requestFocus();
+            throw new InputException(this.getString(R.string.player_position_input_error));
+        }
 
         return new BaseballCard(brand, year, number, (int) (value * 100), count, playerName, playerPosition);
     }
@@ -121,19 +160,24 @@ public class BaseballCardDetails extends Activity {
     private View.OnClickListener onSave = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            BaseballCard card = BaseballCardDetails.this.getBaseballCard();
+            try {
+                BaseballCard card = BaseballCardDetails.this.getBaseballCard();
 
-            if (BaseballCardDetails.this.isUpdating) {
-                BaseballCardDetails.this.sqlHelper.updateBaseballCard(card);
-                BaseballCardDetails.this.finish();
-            } else {
-                BaseballCardDetails.this.sqlHelper.insertBaseballCard(card);
-                BaseballCardDetails.this.resetInput();
-                BaseballCardDetails.this.brandText.requestFocus();
-                Toast.makeText(BaseballCardDetails.this, R.string.card_added_message, Toast.LENGTH_LONG).show();
+                if (BaseballCardDetails.this.isUpdating) {
+                    BaseballCardDetails.this.sqlHelper.updateBaseballCard(card);
+                    BaseballCardDetails.this.finish();
+                } else {
+                    BaseballCardDetails.this.sqlHelper.insertBaseballCard(card);
+                    BaseballCardDetails.this.resetInput();
+                    BaseballCardDetails.this.brandText.requestFocus();
+                    Toast.makeText(BaseballCardDetails.this, R.string.card_added_message, Toast.LENGTH_LONG).show();
+                }
+
+                // TODO: Catch exceptions and show appropriate error messages.
+            } catch (InputException ex) {
+                Toast.makeText(BaseballCardDetails.this, ex.getMessage(), Toast.LENGTH_LONG).show();
+                Log.i(TAG, ex.getMessage(), ex);
             }
-            
-            // TOOD: Catch exceptions and show appropriate error messages.
         }
     };
     private View.OnClickListener onDone = new View.OnClickListener() {

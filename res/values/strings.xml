@@ -83,4 +83,12 @@
         <item>Center Field</item>
         <item>Right Field</item>
     </string-array>
+
+    <string name="brand_input_error">Please enter a brand name.</string>
+    <string name="year_input_error">Please enter a year.</string>
+    <string name="number_input_error">Please enter a card number.</string>
+    <string name="value_input_error">Please enter the card\'s value.</string>
+    <string name="count_input_error">Please enter the number of cards you own.</string>
+    <string name="player_name_input_error">Please enter the player\'s name.</string>
+    <string name="player_position_input_error">Please enter the player\'s position.</string>
 </resources>

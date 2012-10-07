@@ -146,7 +146,7 @@ public class BaseballCardList extends ListActivity {
                     } else {
                         BaseballCardList.this.adapter.swapCursor(cursor);
                     }
-                    // TODO: Toggle Filter Cards menu button to "Disable Filter" or something like that
+                    // TODO: Toggle Filter Cards menu button to "Turn Off Filter" or something like that
                 }
                 break;
         }
