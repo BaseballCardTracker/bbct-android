@@ -70,7 +70,7 @@ public class EditCardsPanel extends JPanel {
         for (BaseballCard card : cards) {
             JPanel cardDetailsPanel = new CardDetailsPanel(card, false);
 
-            this.allCardDetailsPanel.add(cardDetailsPanel);
+            this.allCardDetailsPanel.add(cardDetailsPanel, "");
         }
     }
 
@@ -104,7 +104,7 @@ public class EditCardsPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 try {
-                    List<BaseballCard> cards = new ArrayList<>();
+                    List<BaseballCard> cards = new ArrayList<BaseballCard>();
 
                     synchronized (EditCardsPanel.this.getTreeLock()) {
                         Component[] panels = EditCardsPanel.this.allCardDetailsPanel.getComponents();
