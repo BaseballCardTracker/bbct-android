@@ -24,6 +24,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+import bbct.common.exceptions.InputException;
 
 /**
  *
@@ -56,15 +58,24 @@ public class YearAndNumberFilter extends Activity {
     private View.OnClickListener onOk = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            // TODO: Error checking
-            int year = Integer.parseInt(YearAndNumberFilter.this.yearText.getText().toString());
-            int number = Integer.parseInt(YearAndNumberFilter.this.numberText.getText().toString());
-            Intent data = new Intent();
-            data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST);
-            data.putExtra(AndroidConstants.YEAR_EXTRA, year);
-            data.putExtra(AndroidConstants.NUMBER_EXTRA, number);
-            YearAndNumberFilter.this.setResult(RESULT_OK, data);
-            YearAndNumberFilter.this.finish();
+            String yearStr = YearAndNumberFilter.this.yearText.getText().toString();
+            String numberStr = YearAndNumberFilter.this.numberText.getText().toString();
+            if (yearStr.equals("")) {
+                YearAndNumberFilter.this.yearText.requestFocus();
+                Toast.makeText(YearAndNumberFilter.this, R.string.year_input_error, Toast.LENGTH_LONG).show();
+            } else if (numberStr.equals("")) {
+                YearAndNumberFilter.this.numberText.requestFocus();
+                Toast.makeText(YearAndNumberFilter.this, R.string.number_input_error, Toast.LENGTH_LONG).show();
+            } else {
+                int year = Integer.parseInt(yearStr);
+                int number = Integer.parseInt(numberStr);
+                Intent data = new Intent();
+                data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST);
+                data.putExtra(AndroidConstants.YEAR_EXTRA, year);
+                data.putExtra(AndroidConstants.NUMBER_EXTRA, number);
+                YearAndNumberFilter.this.setResult(RESULT_OK, data);
+                YearAndNumberFilter.this.finish();
+            }
         }
     };
     private View.OnClickListener onCancel = new View.OnClickListener() {

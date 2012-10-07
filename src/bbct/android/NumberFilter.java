@@ -24,6 +24,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+import bbct.common.exceptions.InputException;
 
 /**
  *
@@ -38,7 +40,7 @@ public class NumberFilter extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.number_filter);
-        
+
         String format = this.getString(R.string.bbct_title);
         String numberFilterTitle = this.getString(R.string.number_filter_title);
         String title = String.format(format, numberFilterTitle);
@@ -55,13 +57,18 @@ public class NumberFilter extends Activity {
     private View.OnClickListener onOk = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            // TODO: Error checking
-            int number = Integer.parseInt(NumberFilter.this.numberText.getText().toString());
-            Intent data = new Intent();
-            data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.NUMBER_FILTER_REQUEST);
-            data.putExtra(AndroidConstants.NUMBER_EXTRA, number);
-            NumberFilter.this.setResult(RESULT_OK, data);
-            NumberFilter.this.finish();
+            String numberStr = NumberFilter.this.numberText.getText().toString();
+            if (numberStr.equals("")) {
+                NumberFilter.this.numberText.requestFocus();
+                Toast.makeText(NumberFilter.this, R.string.number_input_error, Toast.LENGTH_LONG).show();
+            } else {
+                int number = Integer.parseInt(numberStr);
+                Intent data = new Intent();
+                data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.NUMBER_FILTER_REQUEST);
+                data.putExtra(AndroidConstants.NUMBER_EXTRA, number);
+                NumberFilter.this.setResult(RESULT_OK, data);
+                NumberFilter.this.finish();
+            }
         }
     };
     private View.OnClickListener onCancel = new View.OnClickListener() {

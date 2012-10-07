@@ -24,6 +24,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+import bbct.common.exceptions.InputException;
 
 /**
  *
@@ -38,7 +40,7 @@ public class PlayerNameFilter extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.player_name_filter);
-        
+
         String format = this.getString(R.string.bbct_title);
         String playerNameFilterTitle = this.getString(R.string.player_name_filter_title);
         String title = String.format(format, playerNameFilterTitle);
@@ -55,13 +57,17 @@ public class PlayerNameFilter extends Activity {
     private View.OnClickListener onOk = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            // TODO: Error checking
             String playerName = PlayerNameFilter.this.playerNameText.getText().toString();
-            Intent data = new Intent();
-            data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.PLAYER_NAME_FILTER_REQUEST);
-            data.putExtra(AndroidConstants.PLAYER_NAME_EXTRA, playerName);
-            PlayerNameFilter.this.setResult(RESULT_OK, data);
-            PlayerNameFilter.this.finish();
+            if (playerName.equals("")) {
+                PlayerNameFilter.this.playerNameText.requestFocus();
+                Toast.makeText(PlayerNameFilter.this, R.string.player_name_input_error, Toast.LENGTH_LONG).show();
+            } else {
+                Intent data = new Intent();
+                data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.PLAYER_NAME_FILTER_REQUEST);
+                data.putExtra(AndroidConstants.PLAYER_NAME_EXTRA, playerName);
+                PlayerNameFilter.this.setResult(RESULT_OK, data);
+                PlayerNameFilter.this.finish();
+            }
         }
     };
     private View.OnClickListener onCancel = new View.OnClickListener() {
