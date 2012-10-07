@@ -129,8 +129,8 @@ public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
             stmtInsert.executeUpdate();
         } catch (SQLException ex) {
             // TODO: This is not the only reason for a SQLException.
-            // TODO: String literals need to be in bbct.gui.BBCTStringResources
-            String msg = "A " + card.getYear() + " card from " + card.getBrand() + " with number " + card.getNumber() + " already exists.";
+            String msg = String.format(BBCTStringResources.ErrorResources.CARD_ALREADY_EXISTS_ERROR,
+                    card.getYear(), card.getBrand(), card.getNumber());
             throw new BBCTIOException(msg, ex);
         }
     }
