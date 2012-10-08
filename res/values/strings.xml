@@ -61,6 +61,7 @@
     <string name="add_menu">Add Cards</string>
     <string name="filter_menu">Filter Cards</string>
     <string name="about_menu">About</string>
+    <string name="clear_filter_menu">Clear Filter</string>
     
     <string name="version">Version 0.1 (alpha)</string>
     <string name="copyright">Copyright 2012 codeguru &lt;codeguru@users.sf.net&gt;</string>

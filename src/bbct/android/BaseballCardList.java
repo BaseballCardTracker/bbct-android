@@ -53,7 +53,6 @@ public class BaseballCardList extends ListActivity {
         this.setContentView(R.layout.card_list);
 
         this.sqlHelper = new BaseballCardSQLHelper(this);
-        this.sqlHelper.unfilterCursor();
 
         Cursor cursor = this.sqlHelper.getCursor();
         this.startManagingCursor(cursor);
@@ -86,6 +85,17 @@ public class BaseballCardList extends ListActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (this.filtered) {
+            MenuItem filterMenuItem = menu.findItem(R.id.filter_menu);
+            filterMenuItem.setTitle(R.string.clear_filter_menu);
+            filterMenuItem.setIcon(R.drawable.ic_menu_block);
+        }
+        
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_menu:
@@ -93,7 +103,14 @@ public class BaseballCardList extends ListActivity {
                 return true;
 
             case R.id.filter_menu:
-                this.startActivityForResult(new Intent(this, FilterOptions.class), AndroidConstants.FILTER_OPTIONS_REQUEST);
+                if (this.filtered) {
+                    this.sqlHelper.clearFilter();
+                    this.adapter.swapCursor(this.sqlHelper.getCursor());
+                    this.filtered = false;
+                    this.invalidateOptionsMenu();
+                } else {
+                    this.startActivityForResult(new Intent(this, FilterOptions.class), AndroidConstants.FILTER_OPTIONS_REQUEST);
+                }
                 return true;
 
             case R.id.about_menu:
@@ -148,7 +165,8 @@ public class BaseballCardList extends ListActivity {
                     } else {
                         BaseballCardList.this.adapter.swapCursor(cursor);
                     }
-                    // TODO: Toggle Filter Cards menu button to "Turn Off Filter" or something like that
+                    
+                    this.filtered = true;
                 }
                 break;
         }
@@ -163,4 +181,5 @@ public class BaseballCardList extends ListActivity {
     private static final String TAG = BaseballCardList.class.getName();
     private BaseballCardSQLHelper sqlHelper = null;
     private CursorAdapter adapter = null;
+    private boolean filtered = false;
 }
