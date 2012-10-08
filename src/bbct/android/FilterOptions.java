@@ -121,7 +121,7 @@ public class FilterOptions extends Activity {
 
                 default:
                     Log.e(TAG, "Invalid radio button ID.");
-                    // TODO: Throw an execption?
+                    // TODO: Throw an exception?
                     break;
             }
         }

@@ -37,8 +37,6 @@ import bbct.common.data.BaseballCard;
  * TODO: Add column headers
  *
  * TODO: Make list fancier
- * 
- * TODO: Maintain previous filter when Activity is restarted
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -53,12 +51,42 @@ public class BaseballCardList extends ListActivity {
         this.setContentView(R.layout.card_list);
 
         this.sqlHelper = new BaseballCardSQLHelper(this);
+        this.filtered = savedInstanceState.getBoolean(AndroidConstants.FILTERED_EXTRA);
+        this.filterRequest = savedInstanceState.getInt(AndroidConstants.FILTER_REQUEST_EXTRA);
+        this.filterParams = savedInstanceState.getBundle(AndroidConstants.FILTER_PARAMS_EXTRA);
+
+        switch (this.filterRequest) {
+            case AndroidConstants.YEAR_FILTER_REQUEST:
+                int year = this.filterParams.getInt(AndroidConstants.YEAR_EXTRA);
+                this.sqlHelper.filterCursorByYear(year);
+                break;
+
+            case AndroidConstants.NUMBER_FILTER_REQUEST:
+                int number = this.filterParams.getInt(AndroidConstants.NUMBER_EXTRA);
+                this.sqlHelper.filterCursorByNumber(number);
+                break;
+
+            case AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST:
+                year = this.filterParams.getInt(AndroidConstants.YEAR_EXTRA);
+                number = this.filterParams.getInt(AndroidConstants.NUMBER_EXTRA);
+                this.sqlHelper.filterCursorByYearAndNumber(year, number);
+                break;
+
+            case AndroidConstants.PLAYER_NAME_FILTER_REQUEST:
+                String playerName = this.filterParams.getString(AndroidConstants.PLAYER_NAME_EXTRA);
+                this.sqlHelper.filterCursorByPlayerName(playerName);
+                break;
+
+            default:
+                Log.e(TAG, "onCreate(): Invalid filter request code.");
+                // TODO: Throw an exception?
+                break;
+        }
 
         Cursor cursor = this.sqlHelper.getCursor();
         this.startManagingCursor(cursor);
         this.adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, ROW_PROJECTION, ROW_TEXT_VIEWS);
         this.setListAdapter(this.adapter);
-
     }
 
     @Override
@@ -66,15 +94,6 @@ public class BaseballCardList extends ListActivity {
         super.onDestroy();
 
         this.sqlHelper.close();
-    }
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        Intent i = new Intent(BaseballCardList.this, BaseballCardDetails.class);
-        BaseballCard card = BaseballCardList.this.sqlHelper.getBaseballCardFromCursor();
-
-        i.putExtra(AndroidConstants.BASEBALL_CARD_EXTRA, card);
-        BaseballCardList.this.startActivity(i);
     }
 
     @Override
@@ -91,7 +110,7 @@ public class BaseballCardList extends ListActivity {
             filterMenuItem.setTitle(R.string.clear_filter_menu);
             filterMenuItem.setIcon(R.drawable.ic_menu_block);
         }
-        
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -122,38 +141,60 @@ public class BaseballCardList extends ListActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(AndroidConstants.FILTERED_EXTRA, this.filtered);
+        outState.putInt(AndroidConstants.FILTER_REQUEST_EXTRA, this.filterRequest);
+        outState.putBundle(AndroidConstants.FILTER_PARAMS_EXTRA, this.filterParams);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        Intent i = new Intent(BaseballCardList.this, BaseballCardDetails.class);
+        BaseballCard card = BaseballCardList.this.sqlHelper.getBaseballCardFromCursor();
+
+        i.putExtra(AndroidConstants.BASEBALL_CARD_EXTRA, card);
+        BaseballCardList.this.startActivity(i);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case AndroidConstants.FILTER_OPTIONS_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    int filterRequest = data.getIntExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
+                    this.filterRequest = data.getIntExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
+                    this.filterParams = new Bundle();
 
-                    switch (filterRequest) {
+                    switch (this.filterRequest) {
                         case AndroidConstants.YEAR_FILTER_REQUEST:
                             int year = data.getIntExtra(AndroidConstants.YEAR_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
+                            this.filterParams.putInt(AndroidConstants.YEAR_EXTRA, year);
                             this.sqlHelper.filterCursorByYear(year);
                             break;
 
                         case AndroidConstants.NUMBER_FILTER_REQUEST:
                             int number = data.getIntExtra(AndroidConstants.NUMBER_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
+                            this.filterParams.putInt(AndroidConstants.NUMBER_EXTRA, number);
                             this.sqlHelper.filterCursorByNumber(number);
                             break;
 
                         case AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST:
                             year = data.getIntExtra(AndroidConstants.YEAR_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
                             number = data.getIntExtra(AndroidConstants.NUMBER_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
+                            this.filterParams.putInt(AndroidConstants.YEAR_EXTRA, year);
+                            this.filterParams.putInt(AndroidConstants.NUMBER_EXTRA, number);
                             this.sqlHelper.filterCursorByYearAndNumber(year, number);
                             break;
 
                         case AndroidConstants.PLAYER_NAME_FILTER_REQUEST:
-                            Log.d(TAG, "Filtering by player name.");
                             String playerName = data.getStringExtra(AndroidConstants.PLAYER_NAME_EXTRA);
-                            Log.d(TAG, "playerName=" + playerName);
+                            this.filterParams.putString(AndroidConstants.PLAYER_NAME_EXTRA, playerName);
                             this.sqlHelper.filterCursorByPlayerName(playerName);
                             break;
 
                         default:
-                            Log.e(TAG, "Invalid filter request code.");
+                            Log.e(TAG, "onActivityResult(): Invalid filter request code.");
                             // TODO: Throw an exception?
                             break;
                     }
@@ -165,7 +206,7 @@ public class BaseballCardList extends ListActivity {
                     } else {
                         BaseballCardList.this.adapter.swapCursor(cursor);
                     }
-                    
+
                     this.filtered = true;
                 }
                 break;
@@ -182,4 +223,6 @@ public class BaseballCardList extends ListActivity {
     private BaseballCardSQLHelper sqlHelper = null;
     private CursorAdapter adapter = null;
     private boolean filtered = false;
+    private int filterRequest = AndroidConstants.NO_FILTER;
+    private Bundle filterParams = null;
 }
