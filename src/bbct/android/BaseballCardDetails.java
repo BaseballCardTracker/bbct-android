@@ -127,7 +127,7 @@ public class BaseballCardDetails extends Activity {
         double value = Double.parseDouble(valueStr);
 
         String countStr = this.countText.getText().toString();
-        if (valueStr.equals("")) {
+        if (countStr.equals("")) {
             this.countText.requestFocus();
             throw new InputException(this.getString(R.string.count_input_error));
         }

@@ -129,7 +129,9 @@ public class BaseballCardList extends ListActivity {
                             break;
 
                         case AndroidConstants.PLAYER_NAME_FILTER_REQUEST:
+                            Log.d(TAG, "Filtering by player name.");
                             String playerName = data.getStringExtra(AndroidConstants.PLAYER_NAME_EXTRA);
+                            Log.d(TAG, "playerName=" + playerName);
                             this.sqlHelper.filterCursorByPlayerName(playerName);
                             break;
 

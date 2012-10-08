@@ -138,7 +138,8 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     public void filterCursorByPlayerName(String playerName) {
-        String filter = PLAYER_NAME_COL_NAME + " = ?";
+        // TODO: Document wild cards in user manual?
+        String filter = PLAYER_NAME_COL_NAME + " LIKE ?";
         String[] args = {playerName};
         this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, args, null, null, null);
     }
