@@ -63,10 +63,11 @@
     <string name="about_menu">About</string>
     <string name="clear_filter_menu">Clear Filter</string>
     
-    <string name="version">Version 0.1 (alpha)</string>
-    <string name="copyright">Copyright 2012 codeguru &lt;codeguru@users.sf.net&gt;</string>
+    <string name="version">Version 0.5 (beta)</string>
+    <string name="copyright">Copyright 2012 codeguru</string>
+    <string name="email">Email: &lt;codeguru@users.sf.net&gt;</string>
     <string name="website">Website: http://sf.net/p/bbct</string>
-    <string name="license">This software is licensed under the GPL. Visit http://www.gnu.org/licenses/ for a copy of the license.</string>
+    <string name="license">This software is licensed under the GPL. Visit\nhttp://www.gnu.org/licenses/ for a copy of the license.</string>
     
     <string name="no_radio_button_error">Please select an option.</string>
     
