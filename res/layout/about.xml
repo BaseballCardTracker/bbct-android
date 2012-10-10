@@ -58,6 +58,11 @@
               android:autoLink="email"
               android:paddingTop="20dp"
     />
+    <TextView android:text="@string/about"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="20dp"
+    />
     <TextView android:text="@string/email"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"

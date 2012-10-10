@@ -31,6 +31,8 @@
     <string name="about_title">About</string>
     <string name="input_error_title">Input Error</string>
     
+    <string name="start">To get started press the menu button.</string>
+    
     <string name="brand_label">Card Brand:</string>
     <string name="year_label">Card Year:</string>
     <string name="number_label">Card Number:</string>
@@ -72,10 +74,18 @@
     <string name="clear_filter_menu">Clear Filter</string>
     
     <string name="version">Version 0.5 (beta)</string>
-    <string name="copyright">Copyright 2012 codeguru</string>
+    <string name="copyright">Copyright 2012 by codeguru</string>
     <string name="email">Email: &lt;codeguru@users.sf.net&gt;</string>
     <string name="website">Website: http://sf.net/p/bbct</string>
     <string name="license">This software is licensed under the GPL. Visit\nhttp://www.gnu.org/licenses/ for a copy of the license.</string>
+    <string name="about">
+        BBCT is a simple database app for your baseball card collection.
+        You can add information about the cards in your collection, view
+        details about individual cards, and filter the list of cards according
+        to a limited set of criteria. BBCT helps you organize your collection
+        and quickly look up which cards you own. Feel free to email your 
+        feedback and comments or visit the project website.
+    </string>
     
     <string name="no_radio_button_error">Please select an option.</string>
     

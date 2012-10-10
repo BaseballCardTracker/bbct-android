@@ -34,8 +34,6 @@ import android.widget.Toast;
 import bbct.common.data.BaseballCard;
 
 /**
- * TODO: Add column headers
- *
  * TODO: Make list fancier
  *
  * @author codeguru <codeguru@users.sourceforge.net>
@@ -48,10 +46,13 @@ public class BaseballCardList extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.card_list);
-
         this.sqlHelper = new BaseballCardSQLHelper(this);
+        Cursor cursor = this.sqlHelper.getCursor();
+        this.startManagingCursor(cursor);
+        this.adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, ROW_PROJECTION, ROW_TEXT_VIEWS);
+        this.setListAdapter(this.adapter);
 
+        this.setContentView(R.layout.card_list);
         if (savedInstanceState != null) {
             this.filterRequest = savedInstanceState.getInt(AndroidConstants.FILTER_REQUEST_EXTRA);
             this.filterParams = savedInstanceState.getBundle(AndroidConstants.FILTER_PARAMS_EXTRA);
@@ -84,11 +85,10 @@ public class BaseballCardList extends ListActivity {
                 // TODO: Throw an exception?
                 break;
         }
-
-        Cursor cursor = this.sqlHelper.getCursor();
-        this.startManagingCursor(cursor);
-        this.adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, ROW_PROJECTION, ROW_TEXT_VIEWS);
-        this.setListAdapter(this.adapter);
+        
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, R.string.start, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -218,7 +218,8 @@ public class BaseballCardList extends ListActivity {
     private static final int[] ROW_TEXT_VIEWS = {
         R.id.brand_row, R.id.year_row, R.id.number_row, R.id.player_name_row
     };
-    private static final String TAG = BaseballCardList.class.getName();
+    private static final String TAG = BaseballCardList.class
+            .getName();
     private BaseballCardSQLHelper sqlHelper = null;
     private CursorAdapter adapter = null;
     private int filterRequest = AndroidConstants.NO_FILTER;
