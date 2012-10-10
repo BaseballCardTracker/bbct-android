@@ -40,6 +40,14 @@
     <string name="player_position_label">Player Position:</string>
     <string name="filter_by_label">Filter By...</string>
     
+    <string name="brand_col">Brand</string>
+    <string name="year_col">Year</string>
+    <string name="number_col">Number</string>
+    <string name="value_col">Value</string>
+    <string name="count_col">Count</string>
+    <string name="player_name_col">Player Name</string>
+    <string name="player_position_col">Player Position</string>
+    
     <string name="save_button">Save</string>
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancel</string>
@@ -93,4 +101,9 @@
     <string name="count_input_error">Please enter the number of cards you own.</string>
     <string name="player_name_input_error">Please enter the player\'s name.</string>
     <string name="player_position_input_error">Please enter the player\'s position.</string>
+    
+    <dimen name="brand_col_width">40dp</dimen>
+    <dimen name="year_col_width">25dp</dimen>
+    <dimen name="number_col_width">40dp</dimen>
+    <dimen name="player_name_col_width">60dp</dimen>
 </resources>

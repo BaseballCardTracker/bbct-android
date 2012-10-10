@@ -24,7 +24,7 @@
               android:padding="4px"
 >
     <TextView android:id="@+id/brand_row"
-              android:layout_width="50dp"
+              android:layout_width="@dimen/brand_col_width"
               android:layout_height="wrap_content"
               android:layout_weight="2"
               android:gravity="center_vertical"
@@ -32,7 +32,7 @@
               android:ellipsize="end"
     />
     <TextView android:id="@+id/year_row"
-              android:layout_width="25dp"
+              android:layout_width="@dimen/year_col_width"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:gravity="center_vertical"
@@ -40,7 +40,7 @@
               android:ellipsize="end"
     />
     <TextView android:id="@+id/number_row"
-              android:layout_width="25dp"
+              android:layout_width="@dimen/number_col_width"
               android:layout_height="wrap_content"
               android:layout_weight="1"
               android:gravity="center_vertical"
@@ -48,7 +48,7 @@
               android:ellipsize="end"
     />
     <TextView android:id="@+id/player_name_row"
-              android:layout_width="60dp"
+              android:layout_width="@dimen/player_name_col_width"
               android:layout_height="wrap_content"
               android:layout_weight="3"
               android:gravity="center_vertical"

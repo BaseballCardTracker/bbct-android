@@ -17,8 +17,56 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@android:id/list"
-          android:layout_width="fill_parent"
-          android:layout_height="fill_parent"
-/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+    >
+        <TextView android:text="@string/brand_col"
+                  android:layout_width="@dimen/brand_col_width"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="2"
+                  android:gravity="center_vertical"
+                  android:singleLine="true"
+                  android:ellipsize="end"
+                  android:textStyle="bold"
+        />
+        <TextView android:text="@string/year_col"
+                  android:layout_width="@dimen/year_col_width"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:gravity="center_vertical"
+                  android:singleLine="true"
+                  android:ellipsize="end"
+                  android:textStyle="bold"
+        />
+        <TextView android:text="@string/number_col"
+                  android:layout_width="@dimen/number_col_width"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="1"
+                  android:gravity="center_vertical"
+                  android:singleLine="true"
+                  android:ellipsize="end"
+                  android:textStyle="bold"
+        />
+        <TextView android:text="@string/player_name_col"
+                  android:layout_width="@dimen/player_name_col_width"
+                  android:layout_height="wrap_content"
+                  android:layout_weight="3"
+                  android:gravity="center_vertical"
+                  android:singleLine="true"
+                  android:ellipsize="end"
+                  android:textStyle="bold"
+        />
+    </LinearLayout>
+    <ListView 
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+    />
+</LinearLayout>
