@@ -41,7 +41,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     /**
      * The column name for the primary key.
      */
-    public static final String ID_COL_NAME="_id";
+    public static final String ID_COL_NAME = "_id";
     /**
      * The column name for the card brand.
      */
@@ -70,13 +70,14 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      * The column name for the player's position.
      */
     public static final String PLAYER_POSITION_COL_NAME = "player_position";
-    
     public static final String[] PROJECTION = {
         BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME, PLAYER_NAME_COL_NAME, PLAYER_POSITION_COL_NAME
     };
 
     public BaseballCardSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
+
+        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, null, null, null, null, null);
     }
 
     @Override
@@ -115,7 +116,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         return this.cursor;
     }
 
-    public void unfilterCursor() {
+    public void clearFilter() {
         this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, null, null, null, null, null);
     }
 
@@ -138,11 +139,12 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     public void filterCursorByPlayerName(String playerName) {
-        String filter = PLAYER_NAME_COL_NAME + " = ?";
+        // TODO: Document wild cards in user manual?
+        String filter = PLAYER_NAME_COL_NAME + " LIKE ?";
         String[] args = {playerName};
         this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, args, null, null, null);
     }
-    
+
     public BaseballCard getBaseballCardFromCursor() {
         String brand = this.cursor.getString(this.cursor.getColumnIndex(BRAND_COL_NAME));
         int year = this.cursor.getInt(this.cursor.getColumnIndex(YEAR_COL_NAME));
@@ -151,7 +153,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         int count = this.cursor.getInt(this.cursor.getColumnIndex(COUNT_COL_NAME));
         String name = this.cursor.getString(this.cursor.getColumnIndex(PLAYER_NAME_COL_NAME));
         String position = this.cursor.getString(this.cursor.getColumnIndex(PLAYER_POSITION_COL_NAME));
-        
+
         return new BaseballCard(brand, year, number, value, count, name, position);
     }
 

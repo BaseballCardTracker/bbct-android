@@ -29,10 +29,13 @@ public interface AndroidConstants {
     public static final String YEAR_EXTRA = "year";
     public static final String NUMBER_EXTRA = "number";
     public static final String PLAYER_NAME_EXTRA = "player_name";
+    public static final String FILTERED_EXTRA = "filtered";
+    public static final String FILTER_PARAMS_EXTRA = "filter_params";
     public static final int FILTER_OPTIONS_REQUEST = 42;
     public static final int YEAR_FILTER_REQUEST = 43;
     public static final int NUMBER_FILTER_REQUEST = 44;
     public static final int YEAR_AND_NUMBER_FILTER_REQUEST = 45;
     public static final int PLAYER_NAME_FILTER_REQUEST = 46;
+    public static final int NO_FILTER = 47;
     public static final int DEFAULT_INT_EXTRA = -1;
 }

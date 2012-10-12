@@ -23,7 +23,9 @@
              android:stretchColumns="1"
 >
     <TableRow>
-        <TextView android:text="@string/brand_label" />
+        <TextView android:text="@string/brand_label"
+                  android:textStyle="bold"
+        />
         <EditText android:id="@+id/details_brand_text"
                   android:singleLine="true"
                   android:capitalize="words"
@@ -31,7 +33,9 @@
         />
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/year_label" />
+        <TextView android:text="@string/year_label"
+                  android:textStyle="bold"
+        />
         <EditText android:id="@+id/details_year_text"
                   android:singleLine="true"
                   android:numeric="integer"
@@ -39,7 +43,9 @@
         />
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/number_label" />
+        <TextView android:text="@string/number_label"
+                  android:textStyle="bold"
+        />
         <EditText android:id="@+id/details_number_text"
                   android:singleLine="true"
                   android:numeric="integer"
@@ -47,7 +53,9 @@
         />
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/value_label" />
+        <TextView android:text="@string/value_label"
+                  android:textStyle="bold"
+        />
         <EditText android:id="@+id/details_value_text"
                   android:singleLine="true"
                   android:numeric="decimal"
@@ -55,7 +63,9 @@
         />
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/count_label" />
+        <TextView android:text="@string/count_label"
+                  android:textStyle="bold"
+        />
         <EditText android:id="@+id/details_count_text"
                   android:singleLine="true"
                   android:numeric="integer"
@@ -63,7 +73,9 @@
         />
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/player_name_label" />
+        <TextView android:text="@string/player_name_label"
+                  android:textStyle="bold"
+        />
         <EditText android:id="@+id/details_player_name_text"
                   android:singleLine="true"
                   android:capitalize="words"
@@ -71,7 +83,9 @@
         />
     </TableRow>
     <TableRow>
-        <TextView android:text="@string/player_position_label" />
+        <TextView android:text="@string/player_position_label"
+                  android:textStyle="bold"
+        />
         <Spinner android:id="@+id/details_player_position_text"
                  android:singleLine="true"
                  android:hint="@string/player_position_hint"

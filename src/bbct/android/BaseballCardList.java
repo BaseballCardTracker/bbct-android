@@ -34,11 +34,7 @@ import android.widget.Toast;
 import bbct.common.data.BaseballCard;
 
 /**
- * TODO: Add column headers
- *
  * TODO: Make list fancier
- * 
- * TODO: Maintain previous filter when Activity is restarted
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -50,16 +46,49 @@ public class BaseballCardList extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.card_list);
-
         this.sqlHelper = new BaseballCardSQLHelper(this);
-        this.sqlHelper.unfilterCursor();
-
         Cursor cursor = this.sqlHelper.getCursor();
         this.startManagingCursor(cursor);
         this.adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, ROW_PROJECTION, ROW_TEXT_VIEWS);
         this.setListAdapter(this.adapter);
 
+        this.setContentView(R.layout.card_list);
+        if (savedInstanceState != null) {
+            this.filterRequest = savedInstanceState.getInt(AndroidConstants.FILTER_REQUEST_EXTRA);
+            this.filterParams = savedInstanceState.getBundle(AndroidConstants.FILTER_PARAMS_EXTRA);
+        }
+
+        switch (this.filterRequest) {
+            case AndroidConstants.YEAR_FILTER_REQUEST:
+                int year = this.filterParams.getInt(AndroidConstants.YEAR_EXTRA);
+                this.sqlHelper.filterCursorByYear(year);
+                break;
+
+            case AndroidConstants.NUMBER_FILTER_REQUEST:
+                int number = this.filterParams.getInt(AndroidConstants.NUMBER_EXTRA);
+                this.sqlHelper.filterCursorByNumber(number);
+                break;
+
+            case AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST:
+                year = this.filterParams.getInt(AndroidConstants.YEAR_EXTRA);
+                number = this.filterParams.getInt(AndroidConstants.NUMBER_EXTRA);
+                this.sqlHelper.filterCursorByYearAndNumber(year, number);
+                break;
+
+            case AndroidConstants.PLAYER_NAME_FILTER_REQUEST:
+                String playerName = this.filterParams.getString(AndroidConstants.PLAYER_NAME_EXTRA);
+                this.sqlHelper.filterCursorByPlayerName(playerName);
+                break;
+
+            default:
+                Log.e(TAG, "onCreate(): Invalid filter request code.");
+                // TODO: Throw an exception?
+                break;
+        }
+        
+        if (cursor.getCount() == 0) {
+            Toast.makeText(this, R.string.start, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -67,6 +96,58 @@ public class BaseballCardList extends ListActivity {
         super.onDestroy();
 
         this.sqlHelper.close();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        new MenuInflater(this).inflate(R.menu.option, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (this.filterRequest != AndroidConstants.NO_FILTER) {
+            MenuItem filterMenuItem = menu.findItem(R.id.filter_menu);
+            filterMenuItem.setTitle(R.string.clear_filter_menu);
+            filterMenuItem.setIcon(R.drawable.ic_menu_block);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_menu:
+                this.startActivity(new Intent(this, BaseballCardDetails.class));
+                return true;
+
+            case R.id.filter_menu:
+                if (this.filterRequest != AndroidConstants.NO_FILTER) {
+                    this.filterRequest = AndroidConstants.NO_FILTER;
+                    this.sqlHelper.clearFilter();
+                    this.adapter.swapCursor(this.sqlHelper.getCursor());
+                    this.invalidateOptionsMenu();
+                } else {
+                    this.startActivityForResult(new Intent(this, FilterOptions.class), AndroidConstants.FILTER_OPTIONS_REQUEST);
+                }
+                return true;
+
+            case R.id.about_menu:
+                this.startActivity(new Intent(this, About.class));
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(AndroidConstants.FILTER_REQUEST_EXTRA, this.filterRequest);
+        outState.putBundle(AndroidConstants.FILTER_PARAMS_EXTRA, this.filterParams);
     }
 
     @Override
@@ -79,62 +160,42 @@ public class BaseballCardList extends ListActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(this).inflate(R.menu.option, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_menu:
-                this.startActivity(new Intent(this, BaseballCardDetails.class));
-                return true;
-
-            case R.id.filter_menu:
-                this.startActivityForResult(new Intent(this, FilterOptions.class), AndroidConstants.FILTER_OPTIONS_REQUEST);
-                return true;
-
-            case R.id.about_menu:
-                this.startActivity(new Intent(this, About.class));
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case AndroidConstants.FILTER_OPTIONS_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    int filterRequest = data.getIntExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
+                    this.filterRequest = data.getIntExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
+                    this.filterParams = new Bundle();
 
-                    switch (filterRequest) {
+                    switch (this.filterRequest) {
                         case AndroidConstants.YEAR_FILTER_REQUEST:
                             int year = data.getIntExtra(AndroidConstants.YEAR_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
+                            this.filterParams.putInt(AndroidConstants.YEAR_EXTRA, year);
                             this.sqlHelper.filterCursorByYear(year);
                             break;
 
                         case AndroidConstants.NUMBER_FILTER_REQUEST:
                             int number = data.getIntExtra(AndroidConstants.NUMBER_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
+                            this.filterParams.putInt(AndroidConstants.NUMBER_EXTRA, number);
                             this.sqlHelper.filterCursorByNumber(number);
                             break;
 
                         case AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST:
                             year = data.getIntExtra(AndroidConstants.YEAR_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
                             number = data.getIntExtra(AndroidConstants.NUMBER_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
+                            this.filterParams.putInt(AndroidConstants.YEAR_EXTRA, year);
+                            this.filterParams.putInt(AndroidConstants.NUMBER_EXTRA, number);
                             this.sqlHelper.filterCursorByYearAndNumber(year, number);
                             break;
 
                         case AndroidConstants.PLAYER_NAME_FILTER_REQUEST:
                             String playerName = data.getStringExtra(AndroidConstants.PLAYER_NAME_EXTRA);
+                            this.filterParams.putString(AndroidConstants.PLAYER_NAME_EXTRA, playerName);
                             this.sqlHelper.filterCursorByPlayerName(playerName);
                             break;
 
                         default:
-                            Log.e(TAG, "Invalid filter request code.");
+                            Log.e(TAG, "onActivityResult(): Invalid filter request code.");
                             // TODO: Throw an exception?
                             break;
                     }
@@ -146,7 +207,6 @@ public class BaseballCardList extends ListActivity {
                     } else {
                         BaseballCardList.this.adapter.swapCursor(cursor);
                     }
-                    // TODO: Toggle Filter Cards menu button to "Turn Off Filter" or something like that
                 }
                 break;
         }
@@ -158,7 +218,10 @@ public class BaseballCardList extends ListActivity {
     private static final int[] ROW_TEXT_VIEWS = {
         R.id.brand_row, R.id.year_row, R.id.number_row, R.id.player_name_row
     };
-    private static final String TAG = BaseballCardList.class.getName();
+    private static final String TAG = BaseballCardList.class
+            .getName();
     private BaseballCardSQLHelper sqlHelper = null;
     private CursorAdapter adapter = null;
+    private int filterRequest = AndroidConstants.NO_FILTER;
+    private Bundle filterParams = null;
 }

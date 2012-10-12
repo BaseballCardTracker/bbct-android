@@ -22,30 +22,63 @@
               android:layout_height="fill_parent"
               android:orientation="vertical"
 >
-    <TextView android:text="@string/app_name"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center_horizontal"
-              android:textSize="26sp"
-    />
-    <TextView android:text="@string/version"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center_horizontal"
-    />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+    >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:src="@drawable/baseball"
+        />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+        >
+            <TextView android:text="@string/app_name"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:gravity="center_horizontal"
+                      android:textSize="26dp"
+        />
+            <TextView android:text="@string/version"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:gravity="center_horizontal"
+        />
+        </LinearLayout>
+    </LinearLayout>
     <TextView android:text="@string/copyright"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:autoLink="email"
+              android:paddingTop="20dp"
+    />
+    <TextView android:text="@string/about"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:paddingTop="20dp"
+    />
+    <TextView android:text="@string/email"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:autoLink="email"
+              android:paddingTop="10dp"
     />
     <TextView android:text="@string/website"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:autoLink="web"
+              android:paddingTop="10dp"
     />
     <TextView android:text="@string/license"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:autoLink="web"
+              android:paddingTop="10dp"
     />
 </LinearLayout>
