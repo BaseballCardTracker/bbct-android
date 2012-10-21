@@ -54,29 +54,29 @@ public class BaseballCardList extends ListActivity {
 
         this.setContentView(R.layout.card_list);
         if (savedInstanceState != null) {
-            this.filterRequest = savedInstanceState.getInt(AndroidConstants.FILTER_REQUEST_EXTRA);
-            this.filterParams = savedInstanceState.getBundle(AndroidConstants.FILTER_PARAMS_EXTRA);
+            this.filterRequest = savedInstanceState.getInt(this.getString(R.string.filter_request_extra));
+            this.filterParams = savedInstanceState.getBundle(this.getString(R.string.filter_params_extra));
         }
 
         switch (this.filterRequest) {
-            case AndroidConstants.YEAR_FILTER_REQUEST:
-                int year = this.filterParams.getInt(AndroidConstants.YEAR_EXTRA);
+            case R.id.year_filter_request:
+                int year = this.filterParams.getInt(this.getString(R.string.year_extra));
                 this.sqlHelper.filterCursorByYear(year);
                 break;
 
-            case AndroidConstants.NUMBER_FILTER_REQUEST:
-                int number = this.filterParams.getInt(AndroidConstants.NUMBER_EXTRA);
+            case R.id.number_filter_request:
+                int number = this.filterParams.getInt(this.getString(R.string.number_extra));
                 this.sqlHelper.filterCursorByNumber(number);
                 break;
 
-            case AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST:
-                year = this.filterParams.getInt(AndroidConstants.YEAR_EXTRA);
-                number = this.filterParams.getInt(AndroidConstants.NUMBER_EXTRA);
+            case R.id.year_and_number_filter_request:
+                year = this.filterParams.getInt(this.getString(R.string.year_extra));
+                number = this.filterParams.getInt(this.getString(R.string.number_extra));
                 this.sqlHelper.filterCursorByYearAndNumber(year, number);
                 break;
 
-            case AndroidConstants.PLAYER_NAME_FILTER_REQUEST:
-                String playerName = this.filterParams.getString(AndroidConstants.PLAYER_NAME_EXTRA);
+            case R.id.player_name_filter_request:
+                String playerName = this.filterParams.getString(this.getString(R.string.player_name_extra));
                 this.sqlHelper.filterCursorByPlayerName(playerName);
                 break;
 
@@ -107,7 +107,7 @@ public class BaseballCardList extends ListActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (this.filterRequest != AndroidConstants.NO_FILTER) {
+        if (this.filterRequest != R.id.no_filter) {
             MenuItem filterMenuItem = menu.findItem(R.id.filter_menu);
             filterMenuItem.setTitle(R.string.clear_filter_menu);
             filterMenuItem.setIcon(R.drawable.ic_menu_block);
@@ -124,13 +124,13 @@ public class BaseballCardList extends ListActivity {
                 return true;
 
             case R.id.filter_menu:
-                if (this.filterRequest != AndroidConstants.NO_FILTER) {
-                    this.filterRequest = AndroidConstants.NO_FILTER;
+                if (this.filterRequest != R.id.no_filter) {
+                    this.filterRequest = R.id.no_filter;
                     this.sqlHelper.clearFilter();
                     this.adapter.swapCursor(this.sqlHelper.getCursor());
                     this.invalidateOptionsMenu();
                 } else {
-                    this.startActivityForResult(new Intent(this, FilterOptions.class), AndroidConstants.FILTER_OPTIONS_REQUEST);
+                    this.startActivityForResult(new Intent(this, FilterOptions.class), R.id.filter_options_request);
                 }
                 return true;
 
@@ -146,8 +146,8 @@ public class BaseballCardList extends ListActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(AndroidConstants.FILTER_REQUEST_EXTRA, this.filterRequest);
-        outState.putBundle(AndroidConstants.FILTER_PARAMS_EXTRA, this.filterParams);
+        outState.putInt(this.getString(R.string.filter_request_extra), this.filterRequest);
+        outState.putBundle(this.getString(R.string.filter_params_extra), this.filterParams);
     }
 
     @Override
@@ -155,42 +155,42 @@ public class BaseballCardList extends ListActivity {
         Intent i = new Intent(BaseballCardList.this, BaseballCardDetails.class);
         BaseballCard card = BaseballCardList.this.sqlHelper.getBaseballCardFromCursor();
 
-        i.putExtra(AndroidConstants.BASEBALL_CARD_EXTRA, card);
+        i.putExtra(this.getString(R.string.baseball_card_extra), card);
         BaseballCardList.this.startActivity(i);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case AndroidConstants.FILTER_OPTIONS_REQUEST:
+            case R.id.filter_options_request:
                 if (resultCode == RESULT_OK) {
-                    this.filterRequest = data.getIntExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
+                    this.filterRequest = data.getIntExtra(this.getString(R.string.filter_request_extra), DEFAULT_INT_EXTRA);
                     this.filterParams = new Bundle();
 
                     switch (this.filterRequest) {
-                        case AndroidConstants.YEAR_FILTER_REQUEST:
-                            int year = data.getIntExtra(AndroidConstants.YEAR_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
-                            this.filterParams.putInt(AndroidConstants.YEAR_EXTRA, year);
+                        case R.id.year_filter_request:
+                            int year = data.getIntExtra(this.getString(R.string.year_extra), DEFAULT_INT_EXTRA);
+                            this.filterParams.putInt(this.getString(R.string.year_extra), year);
                             this.sqlHelper.filterCursorByYear(year);
                             break;
 
-                        case AndroidConstants.NUMBER_FILTER_REQUEST:
-                            int number = data.getIntExtra(AndroidConstants.NUMBER_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
-                            this.filterParams.putInt(AndroidConstants.NUMBER_EXTRA, number);
+                        case R.id.number_filter_request:
+                            int number = data.getIntExtra(this.getString(R.string.number_extra), DEFAULT_INT_EXTRA);
+                            this.filterParams.putInt(this.getString(R.string.number_extra), number);
                             this.sqlHelper.filterCursorByNumber(number);
                             break;
 
-                        case AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST:
-                            year = data.getIntExtra(AndroidConstants.YEAR_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
-                            number = data.getIntExtra(AndroidConstants.NUMBER_EXTRA, AndroidConstants.DEFAULT_INT_EXTRA);
-                            this.filterParams.putInt(AndroidConstants.YEAR_EXTRA, year);
-                            this.filterParams.putInt(AndroidConstants.NUMBER_EXTRA, number);
+                        case R.id.year_and_number_filter_request:
+                            year = data.getIntExtra(this.getString(R.string.year_extra), DEFAULT_INT_EXTRA);
+                            number = data.getIntExtra(this.getString(R.string.number_extra), DEFAULT_INT_EXTRA);
+                            this.filterParams.putInt(this.getString(R.string.year_extra), year);
+                            this.filterParams.putInt(this.getString(R.string.number_extra), number);
                             this.sqlHelper.filterCursorByYearAndNumber(year, number);
                             break;
 
-                        case AndroidConstants.PLAYER_NAME_FILTER_REQUEST:
-                            String playerName = data.getStringExtra(AndroidConstants.PLAYER_NAME_EXTRA);
-                            this.filterParams.putString(AndroidConstants.PLAYER_NAME_EXTRA, playerName);
+                        case R.id.player_name_filter_request:
+                            String playerName = data.getStringExtra(this.getString(R.string.player_name_extra));
+                            this.filterParams.putString(this.getString(R.string.player_name_extra), playerName);
                             this.sqlHelper.filterCursorByPlayerName(playerName);
                             break;
 
@@ -216,12 +216,12 @@ public class BaseballCardList extends ListActivity {
         BaseballCardSQLHelper.NUMBER_COL_NAME, BaseballCardSQLHelper.PLAYER_NAME_COL_NAME
     };
     private static final int[] ROW_TEXT_VIEWS = {
-        R.id.brand_row, R.id.year_row, R.id.number_row, R.id.player_name_row
+        R.id.brand_text_view, R.id.year_text_view, R.id.number_text_view, R.id.player_name_text_view
     };
-    private static final String TAG = BaseballCardList.class
-            .getName();
+    private static final String TAG = BaseballCardList.class.getName();
+    private static final int DEFAULT_INT_EXTRA = -1;
     private BaseballCardSQLHelper sqlHelper = null;
     private CursorAdapter adapter = null;
-    private int filterRequest = AndroidConstants.NO_FILTER;
+    private int filterRequest = R.id.no_filter;
     private Bundle filterParams = null;
 }

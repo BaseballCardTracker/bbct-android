@@ -45,12 +45,12 @@ public class PlayerNameFilter extends Activity {
         String title = String.format(format, playerNameFilterTitle);
         this.setTitle(title);
 
-        this.playerNameText = (EditText) this.findViewById(R.id.player_name_filter_player_name_text);
+        this.playerNameText = (EditText) this.findViewById(R.id.player_name_text);
 
-        Button okButton = (Button) this.findViewById(R.id.player_name_filter_ok_button);
+        Button okButton = (Button) this.findViewById(R.id.ok_button);
         okButton.setOnClickListener(this.onOk);
 
-        Button cancelButton = (Button) this.findViewById(R.id.player_name_filter_cancel_button);
+        Button cancelButton = (Button) this.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(this.onCancel);
     }
     private View.OnClickListener onOk = new View.OnClickListener() {
@@ -62,8 +62,8 @@ public class PlayerNameFilter extends Activity {
                 Toast.makeText(PlayerNameFilter.this, R.string.player_name_input_error, Toast.LENGTH_LONG).show();
             } else {
                 Intent data = new Intent();
-                data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.PLAYER_NAME_FILTER_REQUEST);
-                data.putExtra(AndroidConstants.PLAYER_NAME_EXTRA, playerName);
+                data.putExtra(PlayerNameFilter.this.getString(R.string.filter_request_extra), R.id.player_name_filter_request);
+                data.putExtra(PlayerNameFilter.this.getString(R.string.player_name_extra), playerName);
                 PlayerNameFilter.this.setResult(RESULT_OK, data);
                 PlayerNameFilter.this.finish();
             }

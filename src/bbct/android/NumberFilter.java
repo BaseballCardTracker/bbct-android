@@ -45,12 +45,12 @@ public class NumberFilter extends Activity {
         String title = String.format(format, numberFilterTitle);
         this.setTitle(title);
 
-        this.numberText = (EditText) this.findViewById(R.id.number_filter_number_text);
+        this.numberText = (EditText) this.findViewById(R.id.number_text);
 
-        Button okButton = (Button) this.findViewById(R.id.number_filter_ok_button);
+        Button okButton = (Button) this.findViewById(R.id.ok_button);
         okButton.setOnClickListener(this.onOk);
 
-        Button cancelButton = (Button) this.findViewById(R.id.number_filter_cancel_button);
+        Button cancelButton = (Button) this.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(this.onCancel);
     }
     private View.OnClickListener onOk = new View.OnClickListener() {
@@ -63,8 +63,8 @@ public class NumberFilter extends Activity {
             } else {
                 int number = Integer.parseInt(numberStr);
                 Intent data = new Intent();
-                data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.NUMBER_FILTER_REQUEST);
-                data.putExtra(AndroidConstants.NUMBER_EXTRA, number);
+                data.putExtra(NumberFilter.this.getString(R.string.filter_request_extra), R.id.number_filter_request);
+                data.putExtra(NumberFilter.this.getString(R.string.number_extra), number);
                 NumberFilter.this.setResult(RESULT_OK, data);
                 NumberFilter.this.finish();
             }

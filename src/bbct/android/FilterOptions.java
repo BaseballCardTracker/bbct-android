@@ -61,20 +61,20 @@ public class FilterOptions extends Activity {
         String title = String.format(format, filterOptionsTitle);
         this.setTitle(title);
 
-        Button okButton = (Button) this.findViewById(R.id.filter_ok_button);
+        Button okButton = (Button) this.findViewById(R.id.ok_button);
         okButton.setOnClickListener(this.onOkClick);
 
-        Button cancelButton = (Button) this.findViewById(R.id.filter_cancel_button);
+        Button cancelButton = (Button) this.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(this.onCancelClick);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case AndroidConstants.YEAR_FILTER_REQUEST:
-            case AndroidConstants.NUMBER_FILTER_REQUEST:
-            case AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST:
-            case AndroidConstants.PLAYER_NAME_FILTER_REQUEST:
+            case R.id.year_filter_request:
+            case R.id.number_filter_request:
+            case R.id.year_and_number_filter_request:
+            case R.id.player_name_filter_request:
                 if (resultCode == RESULT_OK) {
                     this.setResult(RESULT_OK, data);
                     this.finish();
@@ -91,7 +91,7 @@ public class FilterOptions extends Activity {
         @Override
         public void onClick(View view) {
             Log.d(TAG, "OK button clicked.");
-            RadioGroup filterByRadioGroup = (RadioGroup) FilterOptions.this.findViewById(R.id.filter_by_radio_group);
+            RadioGroup filterByRadioGroup = (RadioGroup) FilterOptions.this.findViewById(R.id.filter_options_radio_group);
 
             switch (filterByRadioGroup.getCheckedRadioButtonId()) {
                 case NONE:
@@ -102,21 +102,21 @@ public class FilterOptions extends Activity {
                     dialogBuilder.show();
                     break;
 
-                case R.id.year_radio_button:
+                case R.id.year_filter_radio_button:
                     Log.d(TAG, "Year radio button selected.");
-                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearFilter.class), AndroidConstants.YEAR_FILTER_REQUEST);
+                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearFilter.class), R.id.year_filter_request);
                     break;
 
-                case R.id.number_radio_button:
-                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, NumberFilter.class), AndroidConstants.NUMBER_FILTER_REQUEST);
+                case R.id.number_filter_radio_button:
+                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, NumberFilter.class), R.id.number_filter_request);
                     break;
 
-                case R.id.year_and_number_radio_button:
-                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearAndNumberFilter.class), AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST);
+                case R.id.year_and_number_filter_radio_button:
+                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearAndNumberFilter.class), R.id.year_and_number_filter_request);
                     break;
 
-                case R.id.player_name_radio_button:
-                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, PlayerNameFilter.class), AndroidConstants.PLAYER_NAME_FILTER_REQUEST);
+                case R.id.player_name_filter_radio_button:
+                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, PlayerNameFilter.class), R.id.player_name_filter_request);
                     break;
 
                 default:

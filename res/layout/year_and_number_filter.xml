@@ -24,7 +24,7 @@
 >
     <TableRow>
         <TextView android:text="@string/year_label" />
-        <EditText android:id="@+id/year_and_number_filter_year_text"
+        <EditText android:id="@id/year_text"
                   android:singleLine="true"
                   android:numeric="integer"
                   android:hint="@string/year_hint"
@@ -32,7 +32,7 @@
     </TableRow>
     <TableRow>
         <TextView android:text="@string/number_label" />
-        <EditText android:id="@+id/year_and_number_filter_number_text"
+        <EditText android:id="@id/number_text"
                   android:singleLine="true"
                   android:numeric="integer"
                   android:hint="@string/number_hint"
@@ -43,13 +43,13 @@
         android:layout_height="fill_parent"
         android:orientation="horizontal"
     >
-        <Button android:id="@+id/year_and_number_filter_ok_button"
+        <Button android:id="@id/ok_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/ok_button"
         />
-        <Button android:id="@+id/year_and_number_filter_cancel_button"
+        <Button android:id="@id/cancel_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

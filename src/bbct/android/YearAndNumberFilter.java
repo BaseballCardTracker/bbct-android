@@ -45,13 +45,13 @@ public class YearAndNumberFilter extends Activity {
         String title = String.format(format, yearAndNumberFilterTitle);
         this.setTitle(title);
 
-        this.yearText = (EditText) this.findViewById(R.id.year_and_number_filter_year_text);
-        this.numberText = (EditText) this.findViewById(R.id.year_and_number_filter_number_text);
+        this.yearText = (EditText) this.findViewById(R.id.year_text);
+        this.numberText = (EditText) this.findViewById(R.id.number_text);
 
-        Button okButton = (Button) this.findViewById(R.id.year_and_number_filter_ok_button);
+        Button okButton = (Button) this.findViewById(R.id.ok_button);
         okButton.setOnClickListener(this.onOk);
 
-        Button cancelButton = (Button) this.findViewById(R.id.year_and_number_filter_cancel_button);
+        Button cancelButton = (Button) this.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(this.onCancel);
     }
     private View.OnClickListener onOk = new View.OnClickListener() {
@@ -69,9 +69,9 @@ public class YearAndNumberFilter extends Activity {
                 int year = Integer.parseInt(yearStr);
                 int number = Integer.parseInt(numberStr);
                 Intent data = new Intent();
-                data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST);
-                data.putExtra(AndroidConstants.YEAR_EXTRA, year);
-                data.putExtra(AndroidConstants.NUMBER_EXTRA, number);
+                data.putExtra(YearAndNumberFilter.this.getString(R.string.filter_request_extra), R.id.year_and_number_filter_request);
+                data.putExtra(YearAndNumberFilter.this.getString(R.string.year_extra), year);
+                data.putExtra(YearAndNumberFilter.this.getString(R.string.number_extra), number);
                 YearAndNumberFilter.this.setResult(RESULT_OK, data);
                 YearAndNumberFilter.this.finish();
             }

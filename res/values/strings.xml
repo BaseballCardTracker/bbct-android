@@ -20,6 +20,7 @@
 <resources>
     <string name="app_name">BBCT for Android</string>
     
+    <!-- Activity titles -->
     <string name="bbct_title">BBCT for Android - %1$s</string>
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
@@ -33,6 +34,7 @@
     
     <string name="start">To get started press the menu button.</string>
     
+    <!-- Labels for card details -->
     <string name="brand_label">Card Brand:</string>
     <string name="year_label">Card Year:</string>
     <string name="number_label">Card Number:</string>
@@ -42,6 +44,7 @@
     <string name="player_position_label">Player Position:</string>
     <string name="filter_by_label">Filter By...</string>
     
+    <!-- Column headings for card list -->
     <string name="brand_col">Brand</string>
     <string name="year_col">Year</string>
     <string name="number_col">Number</string>
@@ -50,11 +53,13 @@
     <string name="player_name_col">Player Name</string>
     <string name="player_position_col">Player Position</string>
     
+    <!-- Button text -->
     <string name="save_button">Save</string>
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancel</string>
     <string name="done_button">Done</string>
     
+    <!-- Hints for TextEdit widgets -->
     <string name="brand_hint">Enter card brand name.</string>
     <string name="year_hint">Enter card year.</string>
     <string name="number_hint">Enter card number.</string>
@@ -63,16 +68,19 @@
     <string name="player_name_hint">Enter player name.</string>
     <string name="player_position_hint">Enter player position.</string>
     
+    <!-- Radio button labels -->
     <string name="year_radio_button">Year</string>
     <string name="number_radio_button">Number</string>
     <string name="year_and_number_radio_button">Year and Number</string>
     <string name="player_name_radio_button">Player Name</string>
     
+    <!-- Menu text -->
     <string name="add_menu">Add Cards</string>
     <string name="filter_menu">Filter Cards</string>
     <string name="about_menu">About</string>
     <string name="clear_filter_menu">Clear Filter</string>
     
+    <!-- Text in About activity -->
     <string name="version">Version 0.5 (beta)</string>
     <string name="copyright">Copyright 2012 by codeguru</string>
     <string name="email">Email: &lt;codeguru@users.sf.net&gt;</string>
@@ -87,11 +95,11 @@
         feedback and comments or visit the project website.
     </string>
     
-    <string name="no_radio_button_error">Please select an option.</string>
-    
+    <!-- Card details toasts -->
     <string name="card_added_message">Card added successfully.</string>
     <string name="no_cards_message">No cards found.</string>
     
+    <!-- Strings for position spinner in card details activity -->
     <string-array name="positions">
         <item>Pitcher</item>
         <item>Catcher</item>
@@ -104,6 +112,8 @@
         <item>Right Field</item>
     </string-array>
 
+    <!-- Error messages-->
+    <string name="no_radio_button_error">Please select an option.</string>
     <string name="brand_input_error">Please enter a brand name.</string>
     <string name="year_input_error">Please enter a year.</string>
     <string name="number_input_error">Please enter a card number.</string>
@@ -112,8 +122,39 @@
     <string name="player_name_input_error">Please enter the player\'s name.</string>
     <string name="player_position_input_error">Please enter the player\'s position.</string>
     
+    <!-- Dimensions used in card list rows -->
     <dimen name="brand_col_width">40dp</dimen>
     <dimen name="year_col_width">25dp</dimen>
     <dimen name="number_col_width">40dp</dimen>
     <dimen name="player_name_col_width">60dp</dimen>
+    
+    <!-- IDs for views -->
+    <item type="id" name="brand_text"/>
+    <item type="id" name="year_text"/>
+    <item type="id" name="number_text"/>
+    <item type="id" name="value_text"/>
+    <item type="id" name="count_text"/>
+    <item type="id" name="player_name_text"/>
+    <item type="id" name="player_position_text"/>
+    <item type="id" name="save_button"/>
+    <item type="id" name="done_button"/>
+    <item type="id" name="ok_button"/>
+    <item type="id" name="cancel_button"/>
+    
+    <!-- IDs for request and result codes -->
+    <item type="id" name="filter_options_request"/>
+    <item type="id" name="year_filter_request"/>
+    <item type="id" name="number_filter_request"/>
+    <item type="id" name="year_and_number_filter_request"/>
+    <item type="id" name="player_name_filter_request"/>
+    <item type="id" name="no_filter"/>
+    
+    <!-- Keys for extras stored in Bundle and Intent objects -->
+    <string name="baseball_card_extra">baseball_card</string>
+    <string name="filter_request_extra">filter_request</string>
+    <string name="year_extra">year</string>
+    <string name="number_extra">number</string>
+    <string name="player_name_extra">player_name</string>
+    <string name="is_filtered_extra">is_filtered</string>
+    <string name="filter_params_extra">filter_params</string>
 </resources>
