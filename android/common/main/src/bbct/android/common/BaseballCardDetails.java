@@ -19,12 +19,15 @@
 package bbct.android.common;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -56,12 +59,22 @@ public class BaseballCardDetails extends Activity {
         String title = String.format(format, cardDetailsTitle);
         this.setTitle(title);
 
-        this.brandText = (EditText) this.findViewById(R.id.brand_text);
+        this.sqlHelper = new BaseballCardSQLHelper(this);
+        Cursor cursor = this.sqlHelper.getCursor();
+        this.startManagingCursor(cursor);
+        
+        this.brandText = (AutoCompleteTextView) this.findViewById(R.id.brand_text);
+        CursorAdapter brandAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.BRAND_COL_NAME);
+        this.brandText.setAdapter(brandAdapter);
+
         this.yearText = (EditText) this.findViewById(R.id.year_text);
         this.numberText = (EditText) this.findViewById(R.id.number_text);
         this.valueText = (EditText) this.findViewById(R.id.value_text);
         this.countText = (EditText) this.findViewById(R.id.count_text);
-        this.playerNameText = (EditText) this.findViewById(R.id.player_name_text);
+
+        this.playerNameText = (AutoCompleteTextView) this.findViewById(R.id.player_name_text);
+        CursorAdapter playerNameAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.PLAYER_NAME_COL_NAME);
+        this.playerNameText.setAdapter(playerNameAdapter);
 
         this.playerPositionSpinner = (Spinner) this.findViewById(R.id.player_position_text);
         ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter.createFromResource(this, R.array.positions, android.R.layout.simple_spinner_item);
@@ -94,8 +107,6 @@ public class BaseballCardDetails extends Activity {
             this.playerNameText.setEnabled(false);
             this.playerPositionSpinner.setEnabled(false);
         }
-
-        this.sqlHelper = new BaseballCardSQLHelper(this);
     }
 
     @Override
@@ -193,12 +204,12 @@ public class BaseballCardDetails extends Activity {
             BaseballCardDetails.this.finish();
         }
     };
-    private EditText brandText = null;
+    private AutoCompleteTextView brandText = null;
     private EditText yearText = null;
     private EditText numberText = null;
     private EditText valueText = null;
     private EditText countText = null;
-    private EditText playerNameText = null;
+    private AutoCompleteTextView playerNameText = null;
     private Spinner playerPositionSpinner = null;
     private BaseballCardSQLHelper sqlHelper = null;
     private boolean isUpdating = false;

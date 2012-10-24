@@ -26,7 +26,7 @@
         <TextView android:text="@string/brand_label"
                   android:textStyle="bold"
         />
-        <EditText android:id="@id/brand_text"
+        <AutoCompleteTextView android:id="@id/brand_text"
                   android:singleLine="true"
                   android:inputType="textCapWords"
                   android:hint="@string/brand_hint"
@@ -76,7 +76,7 @@
         <TextView android:text="@string/player_name_label"
                   android:textStyle="bold"
         />
-        <EditText android:id="@id/player_name_text"
+        <AutoCompleteTextView android:id="@id/player_name_text"
                   android:singleLine="true"
                   android:inputType="textCapWords"
                   android:hint="@string/player_name_hint"

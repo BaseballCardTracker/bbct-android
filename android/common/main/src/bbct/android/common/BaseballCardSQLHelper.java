@@ -118,6 +118,14 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         return new BaseballCard(brand, year, number, value, count, name, position);
     }
 
+    public Cursor getDistinctValues(String colName, String constraint) {
+        String[] cols = {BaseballCardContract.ID_COL_NAME, colName};
+        String filter = (constraint == null) ? null : colName + " LIKE ?";
+        String[] args = {constraint.trim() + '%'};
+        
+        return this.getWritableDatabase().query(true, BaseballCardContract.TABLE_NAME, cols, filter, args, null, null, null, null);
+    }
+    
     private ContentValues getContentValues(BaseballCard card) {
         ContentValues cv = new ContentValues(7);
         cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
