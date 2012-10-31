@@ -18,7 +18,7 @@
  */
 package bbct.android;
 
-import android.os.Bundle;
+import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import junit.framework.Assert;
 
@@ -35,22 +35,26 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        this.activity = this.getActivity();
     }
 
     @Override
     public void tearDown() throws Exception {
+        this.activity.finish();
+
         super.tearDown();
     }
 
-    /**
-     * Test of onCreate method, of class About.
-     */
-    public void testOnCreate() {
-        System.out.println("onCreate");
-        Bundle savedInstanceState = null;
-        About instance = new About();
-        instance.onCreate(savedInstanceState);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    public void testPreConditions() {
+        Assert.assertNotNull(this.activity);
     }
+
+    public void testTitle() {
+        String title = this.activity.getTitle().toString();
+        String aboutTitle = this.activity.getString(R.string.about_title);
+
+        Assert.assertTrue(title.contains(aboutTitle));
+    }
+    private Activity activity = null;
 }
