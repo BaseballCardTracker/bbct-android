@@ -18,15 +18,16 @@
  */
 package bbct.android;
 
-import android.os.Bundle;
-import android.test.ActivityInstrumentationTestCase2;
+import android.view.KeyEvent;
+import android.widget.EditText;
 import junit.framework.Assert;
 
 /**
+ * TODO: Add tests for input year but no number and for input number but no year
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class YearAndNumberFilterTest extends ActivityInstrumentationTestCase2<YearAndNumberFilter> {
+public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFilter> {
 
     public YearAndNumberFilterTest() {
         super(YearAndNumberFilter.class);
@@ -35,6 +36,12 @@ public class YearAndNumberFilterTest extends ActivityInstrumentationTestCase2<Ye
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
+        this.numberText = (EditText) this.activity.findViewById(R.id.number_text);
+
+        this.testYear = 1976;
+        this.testNumber = 123;
     }
 
     @Override
@@ -42,15 +49,42 @@ public class YearAndNumberFilterTest extends ActivityInstrumentationTestCase2<Ye
         super.tearDown();
     }
 
-    /**
-     * Test of onCreate method, of class YearAndNumberFilter.
-     */
-    public void testOnCreate() {
-        System.out.println("onCreate");
-        Bundle savedInstanceState = null;
-        YearAndNumberFilter instance = new YearAndNumberFilter();
-        instance.onCreate(savedInstanceState);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    @Override
+    public void testPreConditions() {
+        super.testPreConditions();
+
+        Assert.assertNotNull(this.yearText);
+        Assert.assertNotNull(this.numberText);
+
+        Assert.assertEquals("", this.yearText.getText().toString());
+        Assert.assertEquals("", this.numberText.getText().toString());
+        Assert.assertTrue(this.yearText.hasFocus());
     }
+
+    @Override
+    protected String getTitleSubString() {
+        return this.activity.getString(R.string.year_and_number_filter_title);
+    }
+
+    @Override
+    protected void checkErrorMessage() {
+        Assert.fail("Need to test that error message is displayed");
+    }
+
+    @Override
+    protected void setInputText() {
+        this.yearText.setText(Integer.toString(this.testYear));
+        this.numberText.setText(Integer.toString(this.testNumber));
+    }
+
+    @Override
+    protected void sendInputKeys() {
+        AndroidTestUtil.sendKeysFromInt(this, this.testYear);
+        this.sendKeys(KeyEvent.KEYCODE_ENTER);
+        AndroidTestUtil.sendKeysFromInt(this, this.testNumber);
+    }
+    private EditText yearText = null;
+    private EditText numberText = null;
+    private int testYear = -1;
+    private int testNumber = -1;
 }
