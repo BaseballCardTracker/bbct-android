@@ -159,6 +159,7 @@ public class BBCTStringResources {
         public static final String PLAYER_POSITION_INSTRUCTIONS = "Select player position.";
         public static final String FIND_CARDS_MENU_INSTRUCTIONS = "Choose an option:";
         public static final String MENU_INSTRUCTIONS = "Choose an option:";
+        public static final String ABOUT_INSTRUCTIONS = "Click OK when ready.";
 
         private InstructionResources() {
         }
