@@ -62,10 +62,10 @@ public class FilterOptions extends Activity {
         this.setTitle(title);
 
         Button okButton = (Button) this.findViewById(R.id.ok_button);
-        okButton.setOnClickListener(this.onOkClick);
+        okButton.setOnClickListener(this.onOk);
 
         Button cancelButton = (Button) this.findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(this.onCancelClick);
+        cancelButton.setOnClickListener(this.onCancel);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class FilterOptions extends Activity {
                 break;
         }
     }
-    private View.OnClickListener onOkClick = new View.OnClickListener() {
+    private View.OnClickListener onOk = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Log.d(TAG, "OK button clicked.");
@@ -126,7 +126,7 @@ public class FilterOptions extends Activity {
             }
         }
     };
-    private View.OnClickListener onCancelClick = new View.OnClickListener() {
+    private View.OnClickListener onCancel = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             FilterOptions.this.setResult(RESULT_CANCELED);
