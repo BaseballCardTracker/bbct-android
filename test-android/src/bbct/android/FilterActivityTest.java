@@ -21,6 +21,7 @@ package bbct.android;
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
+import android.util.Log;
 import android.widget.Button;
 import junit.framework.Assert;
 
@@ -86,17 +87,23 @@ public abstract class FilterActivityTest<T extends Activity> extends ActivityIns
     protected abstract void sendInputKeys();
 
     public void testOkButtonOnClickWithSendInputKeys() throws Throwable {
+        Log.d(TAG, "testOkButtonOnClickWithSendInputKeys()");
+        
         this.sendInputKeys();
 
         this.runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Log.d(TAG, "Can I click the OK button?");
                 Assert.assertTrue(FilterActivityTest.this.okButton.performClick());
+                Log.d(TAG, "YES!");
             }
         });
 
+        Log.d(TAG, "Did the XxxFilterActivity finish?");
         this.getInstrumentation().waitForIdleSync();
         Assert.assertTrue(FilterActivityTest.this.activity.isFinishing());
+        Log.d(TAG, "YES!");
     }
 
     @UiThreadTest
@@ -107,4 +114,5 @@ public abstract class FilterActivityTest<T extends Activity> extends ActivityIns
     protected Activity activity = null;
     private Button okButton = null;
     private Button cancelButton = null;
+    private static final String TAG = "FilterActivityTest";
 }
