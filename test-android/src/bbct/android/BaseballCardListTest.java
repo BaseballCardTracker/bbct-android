@@ -18,13 +18,16 @@
  */
 package bbct.android;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.app.Activity;
+import android.app.Instrumentation;
+import android.database.sqlite.SQLiteDatabase;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ListView;
+import bbct.common.data.BaseballCard;
+import java.io.InputStream;
+import java.util.List;
 import junit.framework.Assert;
 
 /**
@@ -40,92 +43,76 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        this.inst = this.getInstrumentation();
+
+        this.activity = this.getActivity();
+        this.list = (ListView) this.activity.findViewById(android.R.id.list);
+
+        InputStream dataInput = this.inst.getContext().getAssets().open(DATA_ASSET);
+        this.dbUtil = new DatabaseUtil();
     }
 
     @Override
     public void tearDown() throws Exception {
+        this.activity.finish();
+        this.dbUtil.deleteDatabase();
+
         super.tearDown();
     }
 
-    /**
-     * Test of onCreate method, of class BaseballCardList.
-     */
-    public void testOnCreate() {
-        System.out.println("onCreate");
-        Bundle savedInstanceState = null;
-        BaseballCardList instance = new BaseballCardList();
-        instance.onCreate(savedInstanceState);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    public void testPreConditions() {
+        Assert.assertNotNull(this.activity);
+        Assert.assertNotNull(this.list);
+
+        // Check that database was created with the correct version and table
+        SQLiteDatabase db = this.dbUtil.getDatabase();
+        Assert.assertNotNull(db);
+        Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION, db.getVersion());
+        Assert.assertEquals(BaseballCardSQLHelper.TABLE_NAME, SQLiteDatabase.findEditTable(BaseballCardSQLHelper.TABLE_NAME));
+    }
+
+    public void testTitle() {
+        String expectedTitle = this.activity.getString(R.string.app_name);
+
+        Assert.assertEquals(expectedTitle, this.activity.getTitle());
+    }
+    
+    public void testStartActivityWithEmptyDatabase() {
+        Assert.fail("Check that instructions are raised as a Toast.");
+    }
+
+    public void testStateDestroy() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testStatePause() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testMenuLayoutNoFilter() {
+        this.sendKeys(KeyEvent.KEYCODE_MENU);
+        Assert.fail("Now how do I check the contents of the menu?");
+    }
+
+    public void testMenuLayoutWithFilter() {
+        Assert.fail("Implement me!");
+    }
+    
+    public void testAddCardsMenuItem() {
+        this.testMenuItem(R.id.add_menu, BaseballCardDetails.class);
+    }
+    
+    public void testFilterCardsMenuItem() {
+        this.testMenuItem(R.id.filter_menu, FilterOptions.class);
+    }
+
+    public void testAboutMenuItem() {
+        this.testMenuItem(R.id.about_menu, About.class);
     }
 
     /**
-     * Test of onDestroy method, of class BaseballCardList.
-     */
-    public void testOnDestroy() {
-        System.out.println("onDestroy");
-        BaseballCardList instance = new BaseballCardList();
-        instance.onDestroy();
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of onCreateOptionsMenu method, of class BaseballCardList.
-     */
-    public void testOnCreateOptionsMenu() {
-        System.out.println("onCreateOptionsMenu");
-        Menu menu = null;
-        BaseballCardList instance = new BaseballCardList();
-        boolean expResult = false;
-        boolean result = instance.onCreateOptionsMenu(menu);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of onPrepareOptionsMenu method, of class BaseballCardList.
-     */
-    public void testOnPrepareOptionsMenu() {
-        System.out.println("onPrepareOptionsMenu");
-        Menu menu = null;
-        BaseballCardList instance = new BaseballCardList();
-        boolean expResult = false;
-        boolean result = instance.onPrepareOptionsMenu(menu);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of onOptionsItemSelected method, of class BaseballCardList.
-     */
-    public void testOnOptionsItemSelected() {
-        System.out.println("onOptionsItemSelected");
-        MenuItem item = null;
-        BaseballCardList instance = new BaseballCardList();
-        boolean expResult = false;
-        boolean result = instance.onOptionsItemSelected(item);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of onSaveInstanceState method, of class BaseballCardList.
-     */
-    public void testOnSaveInstanceState() {
-        System.out.println("onSaveInstanceState");
-        Bundle outState = null;
-        BaseballCardList instance = new BaseballCardList();
-        instance.onSaveInstanceState(outState);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of onListItemClick method, of class BaseballCardList.
+     * Test of {@link BaseballCardList#onListItemClick}.
      */
     public void testOnListItemClick() {
         System.out.println("onListItemClick");
@@ -138,18 +125,70 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
         // TODO review the generated test code and remove the default call to Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
-
-    /**
-     * Test of onActivityResult method, of class BaseballCardList.
-     */
-    public void testOnActivityResult() {
-        System.out.println("onActivityResult");
-        int requestCode = 0;
-        int resultCode = 0;
-        Intent data = null;
-        BaseballCardList instance = new BaseballCardList();
-        instance.onActivityResult(requestCode, resultCode, data);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    
+    public void testAddCardToEmptyDatabase() {
+        Assert.fail("Implement me!");
     }
+    
+    public void testAddCardToPopulatedDatabase() {
+        Assert.fail("Implement me!");
+    }
+    
+    public void testAddMultipleCardsAtOnce() {
+        Assert.fail("Implement me!");
+    }
+    
+    public void testAddCardMatchingCurrentFilter() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testAddCardMatchingNotCurrentFilter() {
+        Assert.fail("Implement me!");
+    }
+    
+    public void testAddCardAfterClearFilter() {
+        Assert.fail("Implement me!");
+    }
+    
+    public void testYearFilter() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testNumberFilter() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testYearAndNumberFilter() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testPlayerNameFilter() {
+        Assert.fail("Implement me!");
+    }
+
+    private boolean assertListViewContainsItems(List<BaseballCard> expectedItems) {
+        return false;
+    }
+    
+    private void testMenuItem(int id, Class childActivityClass) {
+        Instrumentation.ActivityMonitor monitor = new Instrumentation.ActivityMonitor(childActivityClass.getName(), null, false);
+        this.inst.addMonitor(monitor);
+        
+        Assert.assertTrue(this.inst.invokeMenuActionSync(this.activity, id, MENU_FLAGS));
+        
+        Activity childActivity = this.inst.waitForMonitorWithTimeout(monitor, TIME_OUT);
+        
+        Assert.assertNotNull(childActivity);
+        Assert.assertEquals(childActivityClass, childActivity.getClass());
+        
+        childActivity.finish();
+        Assert.assertTrue(childActivity.isFinishing());
+    }
+    private Instrumentation inst = null;
+    private Activity activity = null;
+    private ListView list = null;
+    private DatabaseUtil dbUtil = null;
+    private static final String DATA_ASSET = "cards.csv";
+    private static final int MENU_FLAGS = 0;
+    private static final int TIME_OUT = 5 * 1000; // 5 seconds
 }
