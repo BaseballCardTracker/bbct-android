@@ -19,6 +19,7 @@
 package bbct.android;
 
 import android.test.InstrumentationTestCase;
+import android.view.KeyEvent;
 
 /**
  * Utility class with convenience methods for testing Android apps.
@@ -50,9 +51,28 @@ public class AndroidTestUtil {
      * @param input The {@link java.lang.String} to send
      */
     public static void sendKeysFromString(InstrumentationTestCase test, String input) {
-        input = input.toUpperCase();
         for (int i = 0; i < input.length(); ++i) {
-            test.sendKeys(input.substring(i, i + 1));
+            String key = input.substring(i, i + 1);
+            char keyChar = key.charAt(0);
+            
+            if (Character.isLetter(keyChar)) {
+                if (Character.isUpperCase(keyChar)) {
+                    test.sendKeys(KeyEvent.KEYCODE_SHIFT_LEFT);
+                    test.sendKeys(key);
+                } else {
+                    test.sendKeys(key.toUpperCase());
+                }
+            } else if (Character.isDigit(keyChar)) {
+                test.sendKeys(key);
+            } else {
+                switch (keyChar) {
+                    case ' ':
+                        test.sendKeys(KeyEvent.KEYCODE_SPACE);
+                        break;
+                        
+                    // TODO Add cases for other printable characters
+                }
+            }
         }
     }
 
