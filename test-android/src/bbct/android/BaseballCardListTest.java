@@ -24,9 +24,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import bbct.common.data.BaseballCard;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
 
@@ -49,7 +55,8 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
         this.activity = this.getActivity();
         this.list = (ListView) this.activity.findViewById(android.R.id.list);
 
-        InputStream dataInput = this.inst.getContext().getAssets().open(DATA_ASSET);
+        InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
+        this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
         this.dbUtil = new DatabaseUtil();
     }
 
@@ -57,6 +64,7 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
     public void tearDown() throws Exception {
         this.activity.finish();
         this.dbUtil.deleteDatabase();
+        this.cardInput.close();
 
         super.tearDown();
     }
@@ -77,7 +85,7 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
 
         Assert.assertEquals(expectedTitle, this.activity.getTitle());
     }
-    
+
     public void testStartActivityWithEmptyDatabase() {
         Assert.fail("Check that instructions are raised as a Toast.");
     }
@@ -98,17 +106,26 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
     public void testMenuLayoutWithFilter() {
         Assert.fail("Implement me!");
     }
-    
+
     public void testAddCardsMenuItem() {
-        this.testMenuItem(R.id.add_menu, BaseballCardDetails.class);
+        Activity cardDetails = this.testMenuItem(R.id.add_menu, BaseballCardDetails.class);
+
+        cardDetails.finish();
+        Assert.assertTrue(cardDetails.isFinishing());
     }
-    
+
     public void testFilterCardsMenuItem() {
-        this.testMenuItem(R.id.filter_menu, FilterOptions.class);
+        Activity filterOptions = this.testMenuItem(R.id.filter_menu, FilterOptions.class);
+
+        filterOptions.finish();
+        Assert.assertTrue(filterOptions.isFinishing());
     }
 
     public void testAboutMenuItem() {
-        this.testMenuItem(R.id.about_menu, About.class);
+        Activity about = this.testMenuItem(R.id.about_menu, About.class);
+
+        about.finish();
+        Assert.assertTrue(about.isFinishing());
     }
 
     /**
@@ -125,19 +142,26 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
         // TODO review the generated test code and remove the default call to Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
-    
-    public void testAddCardToEmptyDatabase() {
-        Assert.fail("Implement me!");
+
+    public void testAddCardToEmptyDatabase() throws IOException {
+        Activity cardDetails = this.testMenuItem(R.id.add_menu, BaseballCardDetails.class);
+        BaseballCard card = this.cardInput.getNextBaseballCard();
+
+        this.addCard(cardDetails, card);
+
+        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+        cards.add(card);
+        this.assertListViewContainsItems(cards);
     }
-    
+
     public void testAddCardToPopulatedDatabase() {
         Assert.fail("Implement me!");
     }
-    
+
     public void testAddMultipleCardsAtOnce() {
         Assert.fail("Implement me!");
     }
-    
+
     public void testAddCardMatchingCurrentFilter() {
         Assert.fail("Implement me!");
     }
@@ -145,11 +169,11 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
     public void testAddCardMatchingNotCurrentFilter() {
         Assert.fail("Implement me!");
     }
-    
+
     public void testAddCardAfterClearFilter() {
         Assert.fail("Implement me!");
     }
-    
+
     public void testYearFilter() {
         Assert.fail("Implement me!");
     }
@@ -166,28 +190,101 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
         Assert.fail("Implement me!");
     }
 
-    private boolean assertListViewContainsItems(List<BaseballCard> expectedItems) {
-        return false;
+    private void assertListViewContainsItems(List<BaseballCard> expectedItems) {
+        Assert.assertEquals(expectedItems.size(), this.list.getCount());
+
+        for (int i = 0; i < expectedItems.size(); ++i) {
+            View row = this.list.getChildAt(i);
+            TextView brandTextView = (TextView) row.findViewById(R.id.brand_text_view);
+            TextView yearTextView = (TextView) row.findViewById(R.id.year_text_view);
+            TextView numberTextView = (TextView) row.findViewById(R.id.number_text_view);
+            TextView playerNameTextView = (TextView) row.findViewById(R.id.player_name_text_view);
+
+            BaseballCard expectedCard = expectedItems.get(i);
+            Assert.assertEquals(expectedCard.getBrand(), brandTextView.getText().toString());
+            Assert.assertEquals(expectedCard.getYear(), yearTextView.getText().toString());
+            Assert.assertEquals(expectedCard.getNumber(), numberTextView.getText().toString());
+            Assert.assertEquals(expectedCard.getPlayerName(), playerNameTextView.getText().toString());
+        }
     }
-    
-    private void testMenuItem(int id, Class childActivityClass) {
+
+    private Activity testMenuItem(int id, Class childActivityClass) {
         Instrumentation.ActivityMonitor monitor = new Instrumentation.ActivityMonitor(childActivityClass.getName(), null, false);
         this.inst.addMonitor(monitor);
-        
+
         Assert.assertTrue(this.inst.invokeMenuActionSync(this.activity, id, MENU_FLAGS));
-        
+
         Activity childActivity = this.inst.waitForMonitorWithTimeout(monitor, TIME_OUT);
-        
+
         Assert.assertNotNull(childActivity);
         Assert.assertEquals(childActivityClass, childActivity.getClass());
-        
-        childActivity.finish();
-        Assert.assertTrue(childActivity.isFinishing());
+
+        return childActivity;
+    }
+
+    // TODO Should this method be in AndroidTestUtil or some other utility class?
+    private void sendKeysToCardDetails(Activity cardDetails, BaseballCard card) {
+        AndroidTestUtil.sendKeysFromString(this, card.getBrand());
+        this.sendKeys(KeyEvent.KEYCODE_ENTER);
+
+        AndroidTestUtil.sendKeysFromInt(this, card.getYear());
+        this.sendKeys(KeyEvent.KEYCODE_ENTER);
+
+        AndroidTestUtil.sendKeysFromInt(this, card.getNumber());
+        this.sendKeys(KeyEvent.KEYCODE_ENTER);
+
+        int value = card.getValue();
+        AndroidTestUtil.sendKeysFromInt(this, value / 100);
+        this.sendKeys(KeyEvent.KEYCODE_PERIOD);
+        if (value % 100 < 10) {
+            this.sendKeys(KeyEvent.KEYCODE_0);
+        }
+        AndroidTestUtil.sendKeysFromInt(this, value % 100);
+        this.sendKeys(KeyEvent.KEYCODE_ENTER);
+
+        AndroidTestUtil.sendKeysFromInt(this, card.getCount());
+        this.sendKeys(KeyEvent.KEYCODE_ENTER);
+
+        AndroidTestUtil.sendKeysFromString(this, card.getPlayerName());
+        this.sendKeys(KeyEvent.KEYCODE_ENTER);
+
+        Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
+        ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner.getAdapter();
+        int newPos = playerPositionAdapter.getPosition(card.getPlayerPosition());
+        int oldPos = playerPositionSpinner.getSelectedItemPosition();
+        int move = oldPos - newPos;
+
+        this.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
+        if (move > 0) {
+            this.sendRepeatedKeys(move - 1, KeyEvent.KEYCODE_DPAD_DOWN);
+        } else {
+            this.sendRepeatedKeys(-move + 1, KeyEvent.KEYCODE_DPAD_UP);
+        }
+        this.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
+    }
+    
+    private void addCard(Activity cardDetails, BaseballCard card) {
+        this.sendKeysToCardDetails(cardDetails, card);
+
+        final Button saveButton = (Button) cardDetails.findViewById(R.id.save_button);
+        final Button doneButton = (Button) cardDetails.findViewById(R.id.done_button);
+
+        this.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                saveButton.performClick();
+                doneButton.performClick();
+            }
+        });
+
+        this.inst.waitForIdleSync();
+        Assert.assertTrue(cardDetails.isFinishing());
     }
     private Instrumentation inst = null;
     private Activity activity = null;
     private ListView list = null;
     private DatabaseUtil dbUtil = null;
+    private BaseballCardCsvFileReader cardInput = null;
     private static final String DATA_ASSET = "cards.csv";
     private static final int MENU_FLAGS = 0;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
