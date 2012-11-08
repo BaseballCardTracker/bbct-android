@@ -19,6 +19,7 @@
 package bbct.android;
 
 import android.test.InstrumentationTestCase;
+import android.util.Log;
 import android.view.KeyEvent;
 
 /**
@@ -51,12 +52,17 @@ public class AndroidTestUtil {
      * @param input The {@link java.lang.String} to send
      */
     public static void sendKeysFromString(InstrumentationTestCase test, String input) {
+        Log.d(TAG, "sendKeysFromString()");
+        Log.d(TAG, "input=" + input);
+        
         for (int i = 0; i < input.length(); ++i) {
             String key = input.substring(i, i + 1);
             char keyChar = key.charAt(0);
-            
+            Log.d(TAG, "key=" + key);
+
             if (Character.isLetter(keyChar)) {
                 if (Character.isUpperCase(keyChar)) {
+                    Log.d(TAG, "is upper case");
                     test.sendKeys(KeyEvent.KEYCODE_SHIFT_LEFT);
                     test.sendKeys(key);
                 } else {
@@ -69,7 +75,7 @@ public class AndroidTestUtil {
                     case ' ':
                         test.sendKeys(KeyEvent.KEYCODE_SPACE);
                         break;
-                        
+
                     // TODO Add cases for other printable characters
                 }
             }
@@ -78,4 +84,6 @@ public class AndroidTestUtil {
 
     private AndroidTestUtil() {
     }
+    
+    private static final String TAG = "AndroidTestUtil";
 }
