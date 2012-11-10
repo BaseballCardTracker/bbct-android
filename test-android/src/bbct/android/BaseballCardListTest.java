@@ -148,6 +148,7 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
         this.addCard(cardDetails, card);
+        this.clickCardDetailsDone(cardDetails);
 
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
         cards.add(card);
@@ -158,8 +159,16 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
         Assert.fail("Implement me!");
     }
 
-    public void testAddMultipleCardsAtOnce() {
-        Assert.fail("Implement me!");
+    public void testAddMultipleCards() throws IOException {
+        Activity cardDetails = this.testMenuItem(R.id.add_menu, BaseballCardDetails.class);
+        List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
+
+        for (BaseballCard card : cards) {
+            this.addCard(cardDetails, card);
+        }
+
+        this.clickCardDetailsDone(cardDetails);
+        this.assertListViewContainsItems(cards);
     }
 
     public void testAddCardMatchingCurrentFilter() {
@@ -252,28 +261,39 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
         ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner.getAdapter();
         int newPos = playerPositionAdapter.getPosition(card.getPlayerPosition());
         int oldPos = playerPositionSpinner.getSelectedItemPosition();
-        int move = oldPos - newPos;
-
+        int move = newPos - oldPos;
+        
         this.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
         if (move > 0) {
-            this.sendRepeatedKeys(move - 1, KeyEvent.KEYCODE_DPAD_DOWN);
+            this.sendRepeatedKeys(move, KeyEvent.KEYCODE_DPAD_DOWN);
         } else {
-            this.sendRepeatedKeys(-move + 1, KeyEvent.KEYCODE_DPAD_UP);
+            this.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
         }
         this.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
     }
-    
+
     private void addCard(Activity cardDetails, BaseballCard card) {
         this.sendKeysToCardDetails(cardDetails, card);
 
         final Button saveButton = (Button) cardDetails.findViewById(R.id.save_button);
-        final Button doneButton = (Button) cardDetails.findViewById(R.id.done_button);
 
         this.activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                saveButton.performClick();
-                doneButton.performClick();
+                Assert.assertTrue(saveButton.performClick());
+                
+                // TODO Check that Toast appears with correct message.
+            }
+        });
+    }
+
+    private void clickCardDetailsDone(Activity cardDetails) {
+        final Button doneButton = (Button) cardDetails.findViewById(R.id.done_button);
+        
+        this.activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Assert.assertTrue(doneButton.performClick());
             }
         });
 
@@ -288,4 +308,5 @@ public class BaseballCardListTest extends ActivityInstrumentationTestCase2<Baseb
     private static final String DATA_ASSET = "cards.csv";
     private static final int MENU_FLAGS = 0;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
+    private static final String TAG = "BaseballCardListTest";
 }
