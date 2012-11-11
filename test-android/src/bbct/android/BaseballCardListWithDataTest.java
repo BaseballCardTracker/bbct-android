@@ -26,9 +26,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RadioGroup;
+import android.widget.RadioButton;
 import bbct.common.data.BaseballCard;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -135,51 +134,24 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Assert.fail("Implement me!");
     }
 
-    public void testYearFilter() throws IOException {
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.list);
-
-        Instrumentation.ActivityMonitor yearFilterMonitor = new Instrumentation.ActivityMonitor(YearFilter.class.getName(), null, false);
-        this.inst.addMonitor(yearFilterMonitor);
-
-        Activity filterOptions = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.filter_menu, FilterOptions.class);
-        RadioGroup filterOptionsRadioGroup = (RadioGroup) filterOptions.findViewById(R.id.filter_options_radio_group);
-        final Button optionsOkButton = (Button) filterOptions.findViewById(R.id.ok_button);
-        this.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
-        Assert.assertEquals(R.id.year_filter_radio_button, filterOptionsRadioGroup.getCheckedRadioButtonId());
-
-        filterOptions.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(optionsOkButton.performClick());
-            }
-        });
-
-        Activity yearFilter = this.inst.waitForMonitorWithTimeout(yearFilterMonitor, TIME_OUT);
-        Assert.assertNotNull(yearFilter);
-        final Button filterOkButton = (Button) yearFilter.findViewById(R.id.ok_button);
-
+    public void testYearFilter() {
         final int year = 1993;
-        AndroidTestUtil.sendKeysFromInt(this, year);
+        FilterInput yearInput = new FilterInput() {
 
-        yearFilter.runOnUiThread(new Runnable() {
             @Override
-            public void run() {
-                Assert.assertTrue(filterOkButton.performClick());
+            public void doInput() {
+                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, year);
             }
-        });
-
-        this.inst.waitForIdleSync();
-        Assert.assertTrue(yearFilter.isFinishing());
-        Assert.assertTrue(filterOptions.isFinishing());
-
-        List<BaseballCard> matches = this.filterList(this.allCards, new Predicate<BaseballCard>() {
+        };
+        
+        Predicate<BaseballCard> yearPred = new Predicate<BaseballCard>() {
             @Override
             public boolean doTest(BaseballCard obj) {
                 return obj.getYear() == year;
             }
-        });
-
-        BBCTTestUtil.assertListViewContainsItems(matches, this.list);
+        };
+        
+        this.testFilter(YearFilter.class, R.id.year_filter_radio_button, yearInput, yearPred);
     }
 
     public void testNumberFilter() {
@@ -194,6 +166,45 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Assert.fail("Implement me!");
     }
 
+    private void testFilter(Class<?> filterClass, int radioButtonId, FilterInput filterInput, Predicate<BaseballCard> filterPred) {
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.list);
+
+        Instrumentation.ActivityMonitor filterMonitor = new Instrumentation.ActivityMonitor(filterClass.getName(), null, false);
+        this.inst.addMonitor(filterMonitor);
+
+        Activity filterOptions = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.filter_menu, FilterOptions.class);
+        final Button optionsOkButton = (Button) filterOptions.findViewById(R.id.ok_button);
+        final RadioButton filterRadioButton = (RadioButton) filterOptions.findViewById(radioButtonId);
+
+        filterOptions.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Assert.assertFalse(filterRadioButton.performClick());
+                Assert.assertTrue(optionsOkButton.performClick());
+            }
+        });
+
+        Activity filter = this.inst.waitForMonitorWithTimeout(filterMonitor, TIME_OUT);
+        Assert.assertNotNull(filter);
+        final Button filterOkButton = (Button) filter.findViewById(R.id.ok_button);
+
+        filterInput.doInput();
+
+        filter.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Assert.assertTrue(filterOkButton.performClick());
+            }
+        });
+
+        this.inst.waitForIdleSync();
+        Assert.assertTrue(filter.isFinishing());
+        Assert.assertTrue(filterOptions.isFinishing());
+
+        List<BaseballCard> matches = this.filterList(this.allCards, filterPred);
+        BBCTTestUtil.assertListViewContainsItems(matches, this.list);
+    }
+
     private List<BaseballCard> filterList(List<BaseballCard> list, Predicate<BaseballCard> pred) {
         List<BaseballCard> filteredList = new ArrayList<BaseballCard>();
 
@@ -204,6 +215,11 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         }
 
         return filteredList;
+    }
+
+    private interface FilterInput {
+
+        public void doInput();
     }
     private List<BaseballCard> allCards;
     private Instrumentation inst = null;
