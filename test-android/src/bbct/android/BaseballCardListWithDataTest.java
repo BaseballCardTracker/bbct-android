@@ -137,33 +137,80 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     public void testYearFilter() {
         final int year = 1993;
         FilterInput yearInput = new FilterInput() {
-
             @Override
             public void doInput() {
                 AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, year);
             }
         };
-        
+
         Predicate<BaseballCard> yearPred = new Predicate<BaseballCard>() {
             @Override
-            public boolean doTest(BaseballCard obj) {
-                return obj.getYear() == year;
+            public boolean doTest(BaseballCard card) {
+                return card.getYear() == year;
             }
         };
-        
+
         this.testFilter(YearFilter.class, R.id.year_filter_radio_button, yearInput, yearPred);
     }
 
     public void testNumberFilter() {
-        Assert.fail("Implement me!");
+        final int number = 278;
+        FilterInput numberInput = new FilterInput() {
+            @Override
+            public void doInput() {
+                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, number);
+            }
+        };
+
+        Predicate<BaseballCard> numberPred = new Predicate<BaseballCard>() {
+            @Override
+            public boolean doTest(BaseballCard card) {
+                return card.getNumber() == number;
+            }
+        };
+
+        this.testFilter(NumberFilter.class, R.id.number_filter_radio_button, numberInput, numberPred);
     }
 
     public void testYearAndNumberFilter() {
-        Assert.fail("Implement me!");
+        final int year = 1993;
+        final int number = 18;
+        FilterInput yearAndNumberInput = new FilterInput() {
+            @Override
+            public void doInput() {
+                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, year);
+                BaseballCardListWithDataTest.this.sendKeys(KeyEvent.KEYCODE_ENTER);
+                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, number);
+            }
+        };
+
+        Predicate<BaseballCard> yearAndNumberPred = new Predicate<BaseballCard>() {
+            @Override
+            public boolean doTest(BaseballCard card) {
+                return card.getYear() == year && card.getNumber() == number;
+            }
+        };
+
+        this.testFilter(YearAndNumberFilter.class, R.id.year_and_number_filter_radio_button, yearAndNumberInput, yearAndNumberPred);
     }
 
     public void testPlayerNameFilter() {
-        Assert.fail("Implement me!");
+        final String playerName = "Ken Griffey Jr.";
+        FilterInput playerNameInput = new FilterInput() {
+            @Override
+            public void doInput() {
+                AndroidTestUtil.sendKeysFromString(BaseballCardListWithDataTest.this, playerName);
+            }
+        };
+
+        Predicate<BaseballCard> playerNamePred = new Predicate<BaseballCard>() {
+            @Override
+            public boolean doTest(BaseballCard card) {
+                return playerName.equals(card.getPlayerName());
+            }
+        };
+
+        this.testFilter(PlayerNameFilter.class, R.id.player_name_filter_radio_button, playerNameInput, playerNamePred);
     }
 
     private void testFilter(Class<?> filterClass, int radioButtonId, FilterInput filterInput, Predicate<BaseballCard> filterPred) {
