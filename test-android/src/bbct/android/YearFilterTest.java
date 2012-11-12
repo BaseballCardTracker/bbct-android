@@ -18,15 +18,14 @@
  */
 package bbct.android;
 
-import android.os.Bundle;
-import android.test.ActivityInstrumentationTestCase2;
+import android.widget.EditText;
 import junit.framework.Assert;
 
 /**
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class YearFilterTest extends ActivityInstrumentationTestCase2<YearFilter> {
+public class YearFilterTest extends FilterActivityTest<YearFilter> {
 
     public YearFilterTest() {
         super(YearFilter.class);
@@ -35,6 +34,10 @@ public class YearFilterTest extends ActivityInstrumentationTestCase2<YearFilter>
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
+
+        this.testYear = 1976;
     }
 
     @Override
@@ -42,15 +45,35 @@ public class YearFilterTest extends ActivityInstrumentationTestCase2<YearFilter>
         super.tearDown();
     }
 
-    /**
-     * Test of onCreate method, of class YearFilter.
-     */
-    public void testOnCreate() {
-        System.out.println("onCreate");
-        Bundle savedInstanceState = null;
-        YearFilter instance = new YearFilter();
-        instance.onCreate(savedInstanceState);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    @Override
+    public void testPreConditions() {
+        super.testPreConditions();
+
+        Assert.assertNotNull(this.yearText);
+
+        Assert.assertEquals("", this.yearText.getText().toString());
+        Assert.assertTrue(this.yearText.hasFocus());
     }
+
+    @Override
+    protected String getTitleSubString() {
+        return this.activity.getString(R.string.year_filter_title);
+    }
+
+    @Override
+    protected void checkErrorMessage() {
+        Assert.fail("Need to test that error message is displayed");
+    }
+
+    @Override
+    protected void setInputText() {
+        this.yearText.setText(Integer.toString(this.testYear));
+    }
+
+    @Override
+    protected void sendInputKeys() {
+        AndroidTestUtil.sendKeysFromInt(this, this.testYear);
+    }
+    private EditText yearText = null;
+    private int testYear = -1;
 }

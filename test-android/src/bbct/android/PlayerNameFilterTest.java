@@ -18,15 +18,15 @@
  */
 package bbct.android;
 
-import android.os.Bundle;
-import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
+import android.widget.EditText;
 import junit.framework.Assert;
 
 /**
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class PlayerNameFilterTest extends ActivityInstrumentationTestCase2<PlayerNameFilter> {
+public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
 
     public PlayerNameFilterTest() {
         super(PlayerNameFilter.class);
@@ -35,6 +35,10 @@ public class PlayerNameFilterTest extends ActivityInstrumentationTestCase2<Playe
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        this.playerNameText = (EditText) this.activity.findViewById(R.id.player_name_text);
+
+        this.testPlayerName = "codeguru";
     }
 
     @Override
@@ -42,15 +46,37 @@ public class PlayerNameFilterTest extends ActivityInstrumentationTestCase2<Playe
         super.tearDown();
     }
 
-    /**
-     * Test of onCreate method, of class PlayerNameFilter.
-     */
-    public void testOnCreate() {
-        System.out.println("onCreate");
-        Bundle savedInstanceState = null;
-        PlayerNameFilter instance = new PlayerNameFilter();
-        instance.onCreate(savedInstanceState);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    @Override
+    public void testPreConditions() {
+        super.testPreConditions();
+
+        Assert.assertNotNull(this.playerNameText);
+
+        Assert.assertEquals("", this.playerNameText.getText().toString());
+        Assert.assertTrue(this.playerNameText.hasFocus());
     }
+
+    @Override
+    protected String getTitleSubString() {
+        return this.activity.getString(R.string.player_name_filter_title);
+    }
+
+    @Override
+    protected void checkErrorMessage() {
+        Assert.fail("Need to test that error message is displayed");
+    }
+
+    @Override
+    protected void setInputText() {
+        this.playerNameText.setText(this.testPlayerName);
+    }
+
+    @Override
+    protected void sendInputKeys() {
+        Log.d(TAG, "sendInputKeys()");
+        AndroidTestUtil.sendKeysFromString(this, this.testPlayerName);
+    }
+    private EditText playerNameText = null;
+    private String testPlayerName = null;
+    private static final String TAG = "PlayerNameFilterTest";
 }

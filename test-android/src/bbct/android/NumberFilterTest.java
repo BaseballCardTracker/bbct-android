@@ -18,15 +18,14 @@
  */
 package bbct.android;
 
-import android.os.Bundle;
-import android.test.ActivityInstrumentationTestCase2;
+import android.widget.EditText;
 import junit.framework.Assert;
 
 /**
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class NumberFilterTest extends ActivityInstrumentationTestCase2<NumberFilter> {
+public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
 
     public NumberFilterTest() {
         super(NumberFilter.class);
@@ -35,6 +34,10 @@ public class NumberFilterTest extends ActivityInstrumentationTestCase2<NumberFil
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        this.numberText = (EditText) this.activity.findViewById(R.id.number_text);
+
+        this.testNumber = 123;
     }
 
     @Override
@@ -42,15 +45,35 @@ public class NumberFilterTest extends ActivityInstrumentationTestCase2<NumberFil
         super.tearDown();
     }
 
-    /**
-     * Test of onCreate method, of class NumberFilter.
-     */
-    public void testOnCreate() {
-        System.out.println("onCreate");
-        Bundle savedInstanceState = null;
-        NumberFilter instance = new NumberFilter();
-        instance.onCreate(savedInstanceState);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    @Override
+    public void testPreConditions() {
+        super.testPreConditions();
+
+        Assert.assertNotNull(this.numberText);
+
+        Assert.assertEquals("", this.numberText.getText().toString());
+        Assert.assertTrue(this.numberText.hasFocus());
     }
+
+    @Override
+    protected String getTitleSubString() {
+        return this.activity.getString(R.string.number_filter_title);
+    }
+
+    @Override
+    protected void checkErrorMessage() {
+        Assert.fail("Need to test that error message is displayed");
+    }
+
+    @Override
+    protected void setInputText() {
+        this.numberText.setText(Integer.toString(this.testNumber));
+    }
+
+    @Override
+    protected void sendInputKeys() {
+        AndroidTestUtil.sendKeysFromInt(this, this.testNumber);
+    }
+    private EditText numberText = null;
+    private int testNumber = -1;
 }
