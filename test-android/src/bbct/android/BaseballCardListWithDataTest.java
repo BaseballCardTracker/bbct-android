@@ -51,15 +51,15 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
         InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
-        this.allCards = this.cardInput.getAllBaseballCards();
+        this.expectedCards = this.cardInput.getAllBaseballCards();
 
         // Create the database and populate table with test data
         BaseballCardSQLHelper sqlHelper = new BaseballCardSQLHelper(this.inst.getTargetContext());
         this.dbUtil = new DatabaseUtil();
-        this.dbUtil.populateTable(allCards);
+        this.dbUtil.populateTable(expectedCards);
 
         this.activity = this.getActivity();
-        this.list = (ListView) this.activity.findViewById(android.R.id.list);
+        this.listView = (ListView) this.activity.findViewById(android.R.id.list);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        Assert.assertNotNull(this.list);
+        Assert.assertNotNull(this.listView);
 
         // Check that database was created with the correct version and table
         SQLiteDatabase db = this.dbUtil.getDatabase();
@@ -123,7 +123,15 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     }
 
     public void testAddCardMatchingCurrentFilter() {
-        Assert.fail("Implement me!");
+        this.testYearFilter();
+        
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
+        BaseballCard card = new BaseballCard("codeguru apps", 1993, 1, 50000, 1, "codeguru", "Catcher");
+        BBCTTestUtil.addCard(this, cardDetails, card);
+        BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
+        
+        this.expectedCards.add(card);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
     }
 
     public void testAddCardNotMatchingCurrentFilter() {
@@ -214,7 +222,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     }
 
     private void testFilter(Class<?> filterClass, int radioButtonId, FilterInput filterInput, Predicate<BaseballCard> filterPred) {
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.list);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
 
         Instrumentation.ActivityMonitor filterMonitor = new Instrumentation.ActivityMonitor(filterClass.getName(), null, false);
         this.inst.addMonitor(filterMonitor);
@@ -248,8 +256,8 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Assert.assertTrue(filter.isFinishing());
         Assert.assertTrue(filterOptions.isFinishing());
 
-        List<BaseballCard> matches = this.filterList(this.allCards, filterPred);
-        BBCTTestUtil.assertListViewContainsItems(matches, this.list);
+        this.expectedCards = this.filterList(this.expectedCards, filterPred);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
     }
 
     private List<BaseballCard> filterList(List<BaseballCard> list, Predicate<BaseballCard> pred) {
@@ -268,12 +276,12 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
         public void doInput();
     }
-    private List<BaseballCard> allCards;
+    private List<BaseballCard> expectedCards;
     private Instrumentation inst = null;
     private Activity activity = null;
     private BaseballCardCsvFileReader cardInput = null;
     private DatabaseUtil dbUtil = null;
-    private ListView list = null;
+    private ListView listView = null;
     private static final String DATA_ASSET = "cards.csv";
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
 }
