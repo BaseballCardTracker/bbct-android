@@ -26,6 +26,7 @@ import android.widget.Button;
 import junit.framework.Assert;
 
 /**
+ * TODO Add tests for configuration changes
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -91,7 +92,9 @@ public abstract class FilterActivityTest<T extends Activity> extends ActivityIns
         
         this.sendInputKeys();
 
-        this.runTestOnUiThread(new Runnable() {
+        Log.d(TAG, "Run something on the UI thread");
+
+        this.activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Log.d(TAG, "Can I click the OK button?");

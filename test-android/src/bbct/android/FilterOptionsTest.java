@@ -18,12 +18,18 @@
  */
 package bbct.android;
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import junit.framework.Assert;
 
 /**
+ * TODO Add tests for configuration changes
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -36,36 +42,97 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        this.inst = this.getInstrumentation();
+        this.setActivityInitialTouchMode(false);
+        this.activity = this.getActivity();
+        this.filterOptionsRadioGroup = (RadioGroup) this.activity.findViewById(R.id.filter_options_radio_group);
+        this.okButton = (Button) this.activity.findViewById(R.id.ok_button);
+        this.cancelButton = (Button) this.activity.findViewById(R.id.cancel_button);
     }
 
     @Override
     public void tearDown() throws Exception {
+        this.activity.finish();
+
         super.tearDown();
     }
 
-    /**
-     * Test of onCreate method, of class FilterOptions.
-     */
-    public void testOnCreate() {
-        System.out.println("onCreate");
-        Bundle savedInstanceState = null;
-        FilterOptions instance = new FilterOptions();
-        instance.onCreate(savedInstanceState);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    public void testPreConditions() {
+        Assert.assertNotNull(this.activity);
+        Assert.assertNotNull(this.filterOptionsRadioGroup);
+        Assert.assertNotNull(this.okButton);
+        Assert.assertNotNull(this.cancelButton);
+
+        Assert.assertEquals(RADIO_BUTTON_COUNT, this.filterOptionsRadioGroup.getChildCount());
+        Assert.assertEquals(NO_RADIO_BUTTON_CHECKED, this.filterOptionsRadioGroup.getCheckedRadioButtonId());
     }
 
-    /**
-     * Test of onActivityResult method, of class FilterOptions.
-     */
-    public void testOnActivityResult() {
-        System.out.println("onActivityResult");
-        int requestCode = 0;
-        int resultCode = 0;
-        Intent data = null;
-        FilterOptions instance = new FilterOptions();
-        instance.onActivityResult(requestCode, resultCode, data);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    public void testTitle() {
+        String title = this.activity.getTitle().toString();
+        String filterOptionsTitle = this.activity.getString(R.string.filter_options_title);
+
+        Assert.assertTrue(title.contains(filterOptionsTitle));
     }
+
+    @UiThreadTest
+    public void testOkButtonOnClickWithNoRadioButtonChecked() {
+        Assert.assertTrue(this.okButton.performClick());
+        Assert.fail("How do I check that the error Toast is raised?");
+        Assert.assertFalse(this.activity.isFinishing());
+    }
+
+    public void testOkButtonOnClick(Class filterActivityClass, final int radioButtonId) throws Throwable {
+        Instrumentation.ActivityMonitor filterActivityMonitor = new Instrumentation.ActivityMonitor(filterActivityClass.getName(), null, false);
+        this.inst.addMonitor(filterActivityMonitor);
+        
+        final RadioButton filterRadioButton = (RadioButton) this.activity.findViewById(radioButtonId);
+
+        this.runTestOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "Running on UI Thread");
+                Assert.assertFalse(filterRadioButton.performClick());
+                Assert.assertTrue(FilterOptionsTest.this.okButton.performClick());
+            }
+        });
+
+        Activity filterActivity = this.inst.waitForMonitorWithTimeout(filterActivityMonitor, TIME_OUT);
+        Assert.assertNotNull(filterActivity);
+        Assert.assertEquals(filterActivityClass, filterActivity.getClass());
+        filterActivity.finish();
+        Assert.assertTrue(filterActivity.isFinishing());
+    }
+
+    public void testOkButtonOnClickWithYearRadioButtonChecked() throws Throwable {
+        Log.d(TAG, "testOkButtonOnClickWithYearRadioButtonChecked()");
+        this.testOkButtonOnClick(YearFilter.class, R.id.year_filter_radio_button);
+    }
+
+    public void testOkButtonOnClickWithNumberRadioButtonChecked() throws Throwable {
+        this.testOkButtonOnClick(NumberFilter.class, R.id.number_filter_radio_button);
+    }
+
+    public void testOkButtonOnClickWithYearAndNumberRadioButtonChecked() throws Throwable {
+        this.testOkButtonOnClick(YearAndNumberFilter.class, R.id.year_and_number_filter_radio_button);
+    }
+
+    public void testOkButtonOnClickWithPlayerRadioButtonChecked() throws Throwable {
+        this.testOkButtonOnClick(PlayerNameFilter.class, R.id.player_name_filter_radio_button);
+    }
+
+    @UiThreadTest
+    public void testCancelButtonOnClick() {
+        Assert.assertTrue(this.cancelButton.performClick());
+        Assert.assertTrue(this.activity.isFinishing());
+    }
+    private Instrumentation inst = null;
+    private Activity activity = null;
+    private RadioGroup filterOptionsRadioGroup = null;
+    private Button okButton = null;
+    private Button cancelButton = null;
+    private static final int RADIO_BUTTON_COUNT = 4;
+    private static final int NO_RADIO_BUTTON_CHECKED = -1;
+    private static final int TIME_OUT = 5 * 1000; // 5 seconds
+    private static final String TAG = "FilterOptionsTest";
 }
