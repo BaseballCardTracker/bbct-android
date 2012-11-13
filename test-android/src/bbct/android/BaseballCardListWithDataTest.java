@@ -51,12 +51,12 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
         InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
-        this.expectedCards = this.cardInput.getAllBaseballCards();
+        this.allCards = this.cardInput.getAllBaseballCards();
 
         // Create the database and populate table with test data
         BaseballCardSQLHelper sqlHelper = new BaseballCardSQLHelper(this.inst.getTargetContext());
         this.dbUtil = new DatabaseUtil();
-        this.dbUtil.populateTable(expectedCards);
+        this.dbUtil.populateTable(allCards);
 
         this.activity = this.getActivity();
         this.listView = (ListView) this.activity.findViewById(android.R.id.list);
@@ -220,9 +220,16 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
         this.testFilter(PlayerNameFilter.class, R.id.player_name_filter_radio_button, playerNameInput, playerNamePred);
     }
+    
+    public void testClearFilter() {
+        this.testYearFilter();
+        Assert.assertTrue(this.inst.invokeMenuActionSync(this.activity, R.id.filter_menu, 0));
+        this.inst.waitForIdleSync();
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
+    }
 
     private void testFilter(Class<?> filterClass, int radioButtonId, FilterInput filterInput, Predicate<BaseballCard> filterPred) {
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
 
         Instrumentation.ActivityMonitor filterMonitor = new Instrumentation.ActivityMonitor(filterClass.getName(), null, false);
         this.inst.addMonitor(filterMonitor);
@@ -256,7 +263,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Assert.assertTrue(filter.isFinishing());
         Assert.assertTrue(filterOptions.isFinishing());
 
-        this.expectedCards = this.filterList(this.expectedCards, filterPred);
+        this.expectedCards = this.filterList(this.allCards, filterPred);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
     }
 
@@ -276,6 +283,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
         public void doInput();
     }
+    private List<BaseballCard> allCards;
     private List<BaseballCard> expectedCards;
     private Instrumentation inst = null;
     private Activity activity = null;
