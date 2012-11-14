@@ -1,14 +1,14 @@
 /*
- * This file is part of bbct.
+ * This file is part of BBCT for Android.
  *
  * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
  *
- * bbct is free software: you can redistribute it and/or modify
+ * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * bbct is distributed in the hope that it will be useful,
+ * BBCT for Android is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -19,6 +19,8 @@
 package bbct.android;
 
 import android.test.InstrumentationTestCase;
+import android.util.Log;
+import android.view.KeyEvent;
 
 /**
  * Utility class with convenience methods for testing Android apps.
@@ -50,12 +52,38 @@ public class AndroidTestUtil {
      * @param input The {@link java.lang.String} to send
      */
     public static void sendKeysFromString(InstrumentationTestCase test, String input) {
-        input = input.toUpperCase();
+        Log.d(TAG, "sendKeysFromString()");
+        Log.d(TAG, "input=" + input);
+        
         for (int i = 0; i < input.length(); ++i) {
-            test.sendKeys(input.substring(i, i + 1));
+            String key = input.substring(i, i + 1);
+            char keyChar = key.charAt(0);
+            Log.d(TAG, "key=" + key);
+
+            if (Character.isLetter(keyChar)) {
+                if (Character.isUpperCase(keyChar)) {
+                    Log.d(TAG, "is upper case");
+                    test.sendKeys(KeyEvent.KEYCODE_SHIFT_LEFT);
+                    test.sendKeys(key);
+                } else {
+                    test.sendKeys(key.toUpperCase());
+                }
+            } else if (Character.isDigit(keyChar)) {
+                test.sendKeys(key);
+            } else {
+                switch (keyChar) {
+                    case ' ':
+                        test.sendKeys(KeyEvent.KEYCODE_SPACE);
+                        break;
+
+                    // TODO Add cases for other printable characters
+                }
+            }
         }
     }
 
     private AndroidTestUtil() {
     }
+    
+    private static final String TAG = "AndroidTestUtil";
 }

@@ -21,11 +21,8 @@ package bbct.android;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import bbct.common.data.BaseballCard;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.List;
 
 /**
  *
@@ -33,13 +30,8 @@ import java.io.InputStreamReader;
  */
 public class DatabaseUtil {
 
-    public DatabaseUtil(InputStream csvInput, boolean hasColHeaders) throws IOException {
-        this.in = new BufferedReader(new InputStreamReader(csvInput));
+    public DatabaseUtil()  {
         this.db = SQLiteDatabase.openDatabase(DB_LOC, null, SQLiteDatabase.OPEN_READWRITE);
-
-        if (hasColHeaders) {
-            this.in.readLine(); // Skip headers
-        }
     }
     
     public SQLiteDatabase getDatabase() {
@@ -51,7 +43,7 @@ public class DatabaseUtil {
         SQLiteDatabase.deleteDatabase(new File(DB_LOC));
     }
 
-    public long insertBaseballCard(BaseballCard card) throws IOException {
+    public long insertBaseballCard(BaseballCard card) {
         ContentValues cv = new ContentValues(7);
         cv.put(BaseballCardSQLHelper.BRAND_COL_NAME, card.getBrand());
         cv.put(BaseballCardSQLHelper.YEAR_COL_NAME, card.getYear());
@@ -64,27 +56,11 @@ public class DatabaseUtil {
         return this.db.insert(TABLE_NAME, null, cv);
     }
 
-    public BaseballCard getNextBaseballCardFromFile() throws IOException {
-        String line = this.in.readLine();
-        String[] data = line.split(",");
-        String brand = data[0];
-        int year = Integer.parseInt(data[1]);
-        int number = Integer.parseInt(data[2]);
-        int value = 10000;
-        int count = 1;
-        String playerName = data[3];
-        String playerPosition = data[4];
-
-        return new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
-    }
-
-    public void populateTable() throws IOException {
-        while (this.in.ready()) {
-            BaseballCard card = this.getNextBaseballCardFromFile();
+    public void populateTable(List<BaseballCard> cards) {
+        for (BaseballCard card : cards) {
             this.insertBaseballCard(card);
         }
     }
-    private BufferedReader in = null;
     private SQLiteDatabase db = null;
     private static final String DB_PATH = "/data/data/bbct.android/databases/";
     private static final String DB_NAME = BaseballCardSQLHelper.DATABASE_NAME;
