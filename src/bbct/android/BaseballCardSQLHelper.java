@@ -32,8 +32,8 @@ import bbct.common.data.BaseballCard;
  */
 public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "bbct.db";
-    private static final int SCHEMA_VERSION = 1;
+    public static final String DATABASE_NAME = "bbct.db";
+    public static final int SCHEMA_VERSION = 1;
     /**
      * The table name to use in the underlying database.
      */

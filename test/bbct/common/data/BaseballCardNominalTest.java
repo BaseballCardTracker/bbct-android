@@ -67,40 +67,35 @@ public class BaseballCardNominalTest {
     /**
      * Test for {@link BaseballCard#getBrand}.
      */
-    @Test
-    public void testGetBrand() {
+        public void testGetBrand() {
         Assert.assertEquals(this.brand, this.instance.getBrand());
     }
 
     /**
      * Test for {@link BaseballCard#getYear}.
      */
-    @Test
-    public void testGetYear() {
+        public void testGetYear() {
         Assert.assertEquals(this.year, this.instance.getYear());
     }
 
     /**
      * Test for {@link BaseballCard#getNumber}.
      */
-    @Test
-    public void testGetNumber() {
+        public void testGetNumber() {
         Assert.assertEquals(this.num, this.instance.getNumber());
     }
 
     /**
      * Test for {@link BaseballCard#getValue}.
      */
-    @Test
-    public void testGetValue() {
+        public void testGetValue() {
         Assert.assertEquals(this.value, this.instance.getValue());
     }
 
     /**
      * Test of setValue method, of class BaseballCard.
      */
-    @Test
-    public void testSetValue() {
+        public void testSetValue() {
         int newValue = 20000;
         this.instance.setValue(newValue);
         Assert.assertEquals(newValue, this.instance.getValue());
@@ -109,16 +104,14 @@ public class BaseballCardNominalTest {
     /**
      * Test for {@link BaseballCard#getCount}.
      */
-    @Test
-    public void testGetCount() {
+        public void testGetCount() {
         Assert.assertEquals(this.count, this.instance.getCount());
     }
 
     /**
      * Test of setCount method, of class BaseballCard.
      */
-    @Test
-    public void testSetCount() {
+        public void testSetCount() {
         int newCount = 2;
         instance.setCount(newCount);
         Assert.assertEquals(newCount, this.instance.getCount());
@@ -127,24 +120,21 @@ public class BaseballCardNominalTest {
     /**
      * Test for {@link BaseballCard#getPlayerName}.
      */
-    @Test
-    public void testGetPlayerName() {
+        public void testGetPlayerName() {
         Assert.assertEquals(this.playerName, this.instance.getPlayerName());
     }
 
     /**
      * Test for {@link BaseballCard#getPlayerPosition}.
      */
-    @Test
-    public void testGetPlayerPosition() {
+        public void testGetPlayerPosition() {
         Assert.assertEquals(this.playerPosition, this.instance.getPlayerPosition());
     }
 
     /**
      * Test for {@link BaseballCard#equals}.
      */
-    @Test
-    public void testEquals() {
+        public void testEquals() {
         System.out.println("equals");
         Object o = null;
         boolean expResult = false;
@@ -157,8 +147,7 @@ public class BaseballCardNominalTest {
     /**
      * Test for {@link BaseballCard#hashCode}.
      */
-    @Test
-    public void testHashCode() {
+        public void testHashCode() {
         System.out.println("hashCode");
         int expResult = 0;
         int result = this.instance.hashCode();
@@ -170,8 +159,7 @@ public class BaseballCardNominalTest {
     /**
      * Test for {@link BaseballCard#toString}.
      */
-    @Test
-    public void testToString() {
+        public void testToString() {
         String expResult = "BaseballCard{" + "cardBrand=" + this.brand
                 + ", cardYear=" + this.year + ", cardNumber=" + this.num
                 + ", cardValue=" + this.value + ", cardCount=" + this.count
