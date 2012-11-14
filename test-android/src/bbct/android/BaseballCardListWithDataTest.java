@@ -23,11 +23,13 @@ import android.app.Instrumentation;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import bbct.common.data.BaseballCard;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,8 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
         this.activity = this.getActivity();
         this.listView = (ListView) this.activity.findViewById(android.R.id.list);
+
+        this.newCard = new BaseballCard("codeguru apps", 1993, 1, 50000, 1, "codeguru", "Catcher");
     }
 
     @Override
@@ -127,56 +131,101 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
     }
 
-    public void testMenuLayoutNoFilter() {
+    public void testMenuLayoutWithoutFilter() {
         this.sendKeys(KeyEvent.KEYCODE_MENU);
         Assert.fail("Now how do I check the contents of the menu?");
     }
 
     public void testMenuLayoutWithFilter() {
-        Assert.fail("Implement me!");
+        this.testYearFilter();
+        this.sendKeys(KeyEvent.KEYCODE_MENU);
+        Assert.fail("Now how do I check the contents of the menu?");
     }
 
     /**
      * Test of {@link BaseballCardList#onListItemClick}.
      */
     public void testOnListItemClick() {
-        System.out.println("onListItemClick");
-        ListView l = null;
-        View v = null;
-        int position = 0;
-        long id = 0L;
-        BaseballCardList instance = new BaseballCardList();
-        instance.onListItemClick(l, v, position, id);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+        Instrumentation.ActivityMonitor detailsMonitor = new Instrumentation.ActivityMonitor(BaseballCardDetails.class.getName(), null, false);
+        this.inst.addMonitor(detailsMonitor);
+
+        int cardIndex = (int) (Math.random() * this.allCards.size());
+        this.sendRepeatedKeys(cardIndex, KeyEvent.KEYCODE_DPAD_DOWN, 1, KeyEvent.KEYCODE_DPAD_CENTER);
+
+        Activity cardDetails = this.inst.waitForMonitorWithTimeout(detailsMonitor, TIME_OUT);
+        Assert.assertNotNull(cardDetails);
+
+        EditText brandText = (EditText) cardDetails.findViewById(R.id.brand_text);
+        EditText yearText = (EditText) cardDetails.findViewById(R.id.year_text);
+        EditText numberText = (EditText) cardDetails.findViewById(R.id.number_text);
+        EditText valueText = (EditText) cardDetails.findViewById(R.id.value_text);
+        EditText countText = (EditText) cardDetails.findViewById(R.id.count_text);
+        EditText playerNameText = (EditText) cardDetails.findViewById(R.id.player_name_text);
+        Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
+
+        BaseballCard expectedCard = this.allCards.get(cardIndex);
+        Assert.assertEquals(expectedCard.getBrand(), brandText.getText().toString());
+        Assert.assertEquals(expectedCard.getYear(), Integer.parseInt(yearText.getText().toString()));
+        Assert.assertEquals(expectedCard.getNumber(), Integer.parseInt(numberText.getText().toString()));
+        Assert.assertEquals(expectedCard.getCount(), Integer.parseInt(countText.getText().toString()));
+        Assert.assertEquals(expectedCard.getValue(), (int) (Double.parseDouble(valueText.getText().toString()) * 100));
+        Assert.assertEquals(expectedCard.getPlayerName(), playerNameText.getText().toString());
+        Assert.assertEquals(expectedCard.getPlayerPosition(), playerPositionSpinner.getSelectedItem().toString());
+
+        BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
     }
 
-    public void testAddDuplicateCard() {
-        Assert.fail("Implement me!");
+    public void testAddDuplicateCard() throws IOException {
+        this.cardInput.close();
+        InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
+        this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
+        BaseballCard card = this.cardInput.getNextBaseballCard();
+
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.addCard(this, cardDetails, card);
+        //Assert.fail("Check that error message is displayed.");
+        BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
+        Assert.fail("Check that error message is displayed.");
     }
 
     public void testAddCardToPopulatedDatabase() {
-        Assert.fail("Implement me!");
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.addCard(this, cardDetails, this.newCard);
+        BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
+
+        this.allCards.add(this.newCard);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
     }
 
     public void testAddCardMatchingCurrentFilter() {
         this.testYearFilter();
 
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
-        BaseballCard card = new BaseballCard("codeguru apps", 1993, 1, 50000, 1, "codeguru", "Catcher");
-        BBCTTestUtil.addCard(this, cardDetails, card);
+        BBCTTestUtil.addCard(this, cardDetails, this.newCard);
         BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
 
-        this.expectedCards.add(card);
+        this.expectedCards.add(this.newCard);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
     }
 
     public void testAddCardNotMatchingCurrentFilter() {
-        Assert.fail("Implement me!");
+        this.testYearFilter();
+
+        this.newCard = new BaseballCard("codeguru apps", 1976, 1, 50000, 1, "codeguru", "Catcher");
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.addCard(this, cardDetails, this.newCard);
+        BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
     }
 
     public void testAddCardAfterClearFilter() {
-        Assert.fail("Implement me!");
+        this.testClearFilter();
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.addCard(this, cardDetails, this.newCard);
+        BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
+
+        this.allCards.add(this.newCard);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
     }
 
     public void testYearFilter() {
@@ -325,6 +374,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     private BaseballCardCsvFileReader cardInput = null;
     private DatabaseUtil dbUtil = null;
     private ListView listView = null;
+    private BaseballCard newCard = null;
     private static final String DATA_ASSET = "cards.csv";
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
 }
