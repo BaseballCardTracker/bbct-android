@@ -14,4 +14,4 @@ libs
 /mem/
 /icons/
 /screenshots/
-/test-android/test-results.out
+*.out

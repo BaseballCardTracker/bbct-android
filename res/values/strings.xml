@@ -42,7 +42,7 @@
     <string name="count_label">Card Count:</string>
     <string name="player_name_label">Player Name:</string>
     <string name="player_position_label">Player Position:</string>
-    <string name="filter_by_label">Filter By...</string>
+    <string name="filter_by_label">Filter By&#8230;</string>
     
     <!-- Column headings for card list -->
     <string name="brand_col">Brand</string>
@@ -155,6 +155,5 @@
     <string name="year_extra">year</string>
     <string name="number_extra">number</string>
     <string name="player_name_extra">player_name</string>
-    <string name="is_filtered_extra">is_filtered</string>
     <string name="filter_params_extra">filter_params</string>
 </resources>

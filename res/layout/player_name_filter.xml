@@ -26,7 +26,7 @@
         <TextView android:text="@string/player_name_label" />
         <EditText android:id="@id/player_name_text"
                   android:singleLine="true"
-                  android:capitalize="words"
+                  android:inputType="textCapWords"
                   android:hint="@string/player_name_hint"
         />
     </TableRow>
