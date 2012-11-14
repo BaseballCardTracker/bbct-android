@@ -77,8 +77,8 @@
     <!-- Menu text -->
     <string name="add_menu">Add Cards</string>
     <string name="filter_menu">Filter Cards</string>
-    <string name="about_menu">About</string>
     <string name="clear_filter_menu">Clear Filter</string>
+    <string name="about_menu">About</string>
     
     <!-- Text in About activity -->
     <string name="version">Version 0.5 (beta)</string>

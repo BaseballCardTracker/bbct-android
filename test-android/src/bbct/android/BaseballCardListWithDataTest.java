@@ -309,7 +309,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
     public void testClearFilter() {
         this.testYearFilter();
-        Assert.assertTrue(this.inst.invokeMenuActionSync(this.activity, R.id.filter_menu, 0));
+        Assert.assertTrue(this.inst.invokeMenuActionSync(this.activity, R.id.clear_filter_menu, 0));
         this.inst.waitForIdleSync();
         BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
     }

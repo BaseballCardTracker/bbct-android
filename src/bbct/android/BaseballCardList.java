@@ -85,7 +85,7 @@ public class BaseballCardList extends ListActivity {
                 // TODO: Throw an exception?
                 break;
         }
-        
+
         if (cursor.getCount() == 0) {
             Toast.makeText(this, R.string.start, Toast.LENGTH_LONG).show();
         }
@@ -107,10 +107,12 @@ public class BaseballCardList extends ListActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (this.filterRequest != R.id.no_filter) {
-            MenuItem filterMenuItem = menu.findItem(R.id.filter_menu);
-            filterMenuItem.setTitle(R.string.clear_filter_menu);
-            filterMenuItem.setIcon(R.drawable.ic_menu_block);
+        if (this.filterRequest == R.id.no_filter) {
+            menu.findItem(R.id.filter_menu).setVisible(true);
+            menu.findItem(R.id.clear_filter_menu).setVisible(false);
+        } else {
+            menu.findItem(R.id.filter_menu).setVisible(false);
+            menu.findItem(R.id.clear_filter_menu).setVisible(true);
         }
 
         return super.onPrepareOptionsMenu(menu);
@@ -124,14 +126,13 @@ public class BaseballCardList extends ListActivity {
                 return true;
 
             case R.id.filter_menu:
-                if (this.filterRequest != R.id.no_filter) {
-                    this.filterRequest = R.id.no_filter;
-                    this.sqlHelper.clearFilter();
-                    this.adapter.swapCursor(this.sqlHelper.getCursor());
-                    this.invalidateOptionsMenu();
-                } else {
-                    this.startActivityForResult(new Intent(this, FilterOptions.class), R.id.filter_options_request);
-                }
+                this.startActivityForResult(new Intent(this, FilterOptions.class), R.id.filter_options_request);
+                return true;
+
+            case R.id.clear_filter_menu:
+                this.sqlHelper.clearFilter();
+                this.adapter.swapCursor(this.sqlHelper.getCursor());
+                this.invalidateOptionsMenu();
                 return true;
 
             case R.id.about_menu:
