@@ -131,7 +131,9 @@ public class BaseballCardList extends ListActivity {
 
             case R.id.clear_filter_menu:
                 this.sqlHelper.clearFilter();
-                this.adapter.swapCursor(this.sqlHelper.getCursor());
+                Cursor cursor = this.sqlHelper.getCursor();
+                this.adapter.swapCursor(cursor);
+                this.startManagingCursor(cursor);
                 this.invalidateOptionsMenu();
                 return true;
 
@@ -206,7 +208,8 @@ public class BaseballCardList extends ListActivity {
                         String msg = this.getString(R.string.no_cards_message);
                         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
                     } else {
-                        BaseballCardList.this.adapter.swapCursor(cursor);
+                        this.adapter.swapCursor(cursor);
+                        this.startManagingCursor(cursor);
                     }
                 }
                 break;
