@@ -87,16 +87,31 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     public void testStateDestroy() {
+        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = this.getActivity();
 
-        Assert.fail("Check activity state.");
+        Assert.assertEquals(this.card.getBrand(), this.brandText.getText().toString());
+        Assert.assertEquals(this.card.getYear(), Integer.parseInt(this.yearText.getText().toString()));
+        Assert.assertEquals(this.card.getNumber(), Integer.parseInt(this.numberText.getText().toString()));
+        Assert.assertEquals(this.card.getValue(), (int) (Double.parseDouble(this.valueText.getText().toString()) * 100));
+        Assert.assertEquals(this.card.getCount(), Integer.parseInt(this.countText.getText().toString()));
+        Assert.assertEquals(this.card.getPlayerName(), this.playerNameText.getText().toString());
+        Assert.assertEquals(this.card.getPlayerPosition(), this.playerPositionSpinner.getSelectedItem());
     }
 
     public void testStatePause() {
+        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
         this.inst.callActivityOnRestart(this.activity);
-        Assert.fail("Check activity state.");
+
+        Assert.assertEquals(this.card.getBrand(), this.brandText.getText().toString());
+        Assert.assertEquals(this.card.getYear(), Integer.parseInt(this.yearText.getText().toString()));
+        Assert.assertEquals(this.card.getNumber(), Integer.parseInt(this.numberText.getText().toString()));
+        Assert.assertEquals(this.card.getValue(), (int) (Double.parseDouble(this.valueText.getText().toString()) * 100));
+        Assert.assertEquals(this.card.getCount(), Integer.parseInt(this.countText.getText().toString()));
+        Assert.assertEquals(this.card.getPlayerName(), this.playerNameText.getText().toString());
+        Assert.assertEquals(this.card.getPlayerPosition(), this.playerPositionSpinner.getSelectedItem());
     }
 
     public void testAddCard() {
