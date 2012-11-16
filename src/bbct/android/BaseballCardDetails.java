@@ -98,7 +98,7 @@ public class BaseballCardDetails extends Activity {
         this.sqlHelper.close();
     }
 
-    public BaseballCard getBaseballCard() throws InputException {
+    private BaseballCard getBaseballCard() throws InputException {
         String brand = this.brandText.getText().toString();
         if (brand.equals("")) {
             this.brandText.requestFocus();

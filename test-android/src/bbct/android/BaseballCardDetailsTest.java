@@ -18,9 +18,15 @@
  */
 package bbct.android;
 
-import android.os.Bundle;
+import android.app.Activity;
+import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import bbct.common.data.BaseballCard;
+import java.io.InputStream;
 import junit.framework.Assert;
 
 /**
@@ -36,46 +42,115 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     @Override
     public void setUp() throws Exception {
         super.setUp();
+
+        this.inst = this.getInstrumentation();
+
+        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
+        this.cardInput = new BaseballCardCsvFileReader(in, true);
+        this.card = this.cardInput.getNextBaseballCard();
+
+        // Must call getActivity() before creating a DatabaseUtil object to ensure that the database is created
+        this.activity = this.getActivity();
+        this.brandText = (EditText) this.activity.findViewById(R.id.brand_text);
+        this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
+        this.numberText = (EditText) this.activity.findViewById(R.id.number_text);
+        this.valueText = (EditText) this.activity.findViewById(R.id.value_text);
+        this.countText = (EditText) this.activity.findViewById(R.id.count_text);
+        this.playerNameText = (EditText) this.activity.findViewById(R.id.player_name_text);
+        this.playerPositionSpinner = (Spinner) this.activity.findViewById(R.id.player_position_text);
+        this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
+        this.doneButton = (Button) this.activity.findViewById(R.id.done_button);
+
+        this.dbUtil = new DatabaseUtil();
     }
 
     @Override
     public void tearDown() throws Exception {
+        this.activity.finish();
+        this.dbUtil.deleteDatabase();
+
         super.tearDown();
     }
 
-    /**
-     * Test of onCreate method, of class BaseballCardDetails.
-     */
-    public void testOnCreate() {
-        System.out.println("onCreate");
-        Bundle savedInstanceState = null;
-        BaseballCardDetails instance = new BaseballCardDetails();
-        instance.onCreate(savedInstanceState);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    public void testPreConditions() {
+        Assert.assertNotNull(this.activity);
+        Assert.assertNotNull(this.brandText);
+        Assert.assertNotNull(this.yearText);
+        Assert.assertNotNull(this.numberText);
+        Assert.assertNotNull(this.valueText);
+        Assert.assertNotNull(this.countText);
+        Assert.assertNotNull(this.playerNameText);
+        Assert.assertNotNull(this.playerPositionSpinner);
+        Assert.assertNotNull(this.saveButton);
+        Assert.assertNotNull(this.doneButton);
+        Assert.assertNotNull(this.dbUtil.getDatabase());
     }
 
-    /**
-     * Test of onDestroy method, of class BaseballCardDetails.
-     */
-    public void testOnDestroy() {
-        System.out.println("onDestroy");
-        BaseballCardDetails instance = new BaseballCardDetails();
-        instance.onDestroy();
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    public void testStateDestroy() {
+        this.activity.finish();
+        Assert.assertTrue(this.activity.isFinishing());
+        this.activity = this.getActivity();
+
+        Assert.fail("Check activity state.");
     }
 
-    /**
-     * Test of getBaseballCard method, of class BaseballCardDetails.
-     */
-    public void testGetBaseballCard() throws Exception {
-        System.out.println("getBaseballCard");
-        BaseballCardDetails instance = new BaseballCardDetails();
-        BaseballCard expResult = null;
-        BaseballCard result = instance.getBaseballCard();
-        Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+    public void testStatePause() {
+        this.inst.callActivityOnRestart(this.activity);
+        Assert.fail("Check activity state.");
     }
+
+    public void testAddCard() {
+        BBCTTestUtil.addCard(this, this.activity, this.card);
+        this.inst.waitForIdleSync();
+        Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
+    }
+
+    public void testEditCard() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testNoBrand() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testNoYear() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testNoNumber() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testNoValue() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testNoCount() {
+        Assert.fail("Implement me!");
+    }
+
+    public void testNoPlayerName() {
+        Assert.fail("Implement me!");
+    }
+
+    @UiThreadTest
+    public void testDoneButtonOnClick() {
+        Assert.assertTrue(this.doneButton.performClick());
+        Assert.assertTrue(this.activity.isFinishing());
+    }
+    private Activity activity = null;
+    private EditText brandText = null;
+    private EditText yearText = null;
+    private EditText numberText = null;
+    private EditText valueText = null;
+    private EditText countText = null;
+    private EditText playerNameText = null;
+    private Spinner playerPositionSpinner = null;
+    private Button saveButton = null;
+    private Button doneButton = null;
+    private Instrumentation inst = null;
+    private BaseballCardCsvFileReader cardInput = null;
+    private BaseballCard card = null;
+    private DatabaseUtil dbUtil = null;
+    private static final String CARD_DATA = "cards.csv";
 }

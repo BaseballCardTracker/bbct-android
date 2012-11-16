@@ -19,6 +19,7 @@
 package bbct.android;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import bbct.common.data.BaseballCard;
 import java.io.File;
@@ -30,14 +31,14 @@ import java.util.List;
  */
 public class DatabaseUtil {
 
-    public DatabaseUtil()  {
+    public DatabaseUtil() {
         this.db = SQLiteDatabase.openDatabase(DB_LOC, null, SQLiteDatabase.OPEN_READWRITE);
     }
-    
+
     public SQLiteDatabase getDatabase() {
         return this.db;
     }
-    
+
     public void deleteDatabase() {
         this.db.close();
         SQLiteDatabase.deleteDatabase(new File(DB_LOC));
@@ -60,6 +61,22 @@ public class DatabaseUtil {
         for (BaseballCard card : cards) {
             this.insertBaseballCard(card);
         }
+    }
+
+    public boolean containsBaseballCard(BaseballCard card) {
+        String[] columns = {BaseballCardSQLHelper.ID_COL_NAME};
+        String selection = BaseballCardSQLHelper.BRAND_COL_NAME + " = ?"
+                + "   AND " + BaseballCardSQLHelper.YEAR_COL_NAME + " = ?"
+                + "   AND " + BaseballCardSQLHelper.NUMBER_COL_NAME + " = ?"
+                + "   AND " + BaseballCardSQLHelper.VALUE_COL_NAME + " = ?"
+                + "   AND " + BaseballCardSQLHelper.COUNT_COL_NAME + " = ?"
+                + "   AND " + BaseballCardSQLHelper.PLAYER_NAME_COL_NAME + " = ?"
+                + "   AND " + BaseballCardSQLHelper.PLAYER_POSITION_COL_NAME + " = ?";
+        String[] selectionArgs = {card.getBrand(), Integer.toString(card.getYear()), Integer.toString(card.getNumber()),
+            Integer.toString(card.getValue()), Integer.toString(card.getCount()), card.getPlayerName(), card.getPlayerPosition()};
+        Cursor cursor = this.db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
+        
+        return cursor.getCount() == 1;
     }
     private SQLiteDatabase db = null;
     private static final String DB_PATH = "/data/data/bbct.android/databases/";
