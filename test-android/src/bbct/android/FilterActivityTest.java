@@ -19,6 +19,7 @@
 package bbct.android;
 
 import android.app.Activity;
+import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.util.Log;
@@ -39,6 +40,8 @@ public abstract class FilterActivityTest<T extends Activity> extends ActivityIns
     @Override
     public void setUp() throws Exception {
         super.setUp();
+        
+        this.inst = this.getInstrumentation();
 
         this.activity = this.getActivity();
         this.okButton = (Button) this.activity.findViewById(R.id.ok_button);
@@ -94,7 +97,7 @@ public abstract class FilterActivityTest<T extends Activity> extends ActivityIns
 
         Log.d(TAG, "Run something on the UI thread");
 
-        this.activity.runOnUiThread(new Runnable() {
+        this.inst.runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 Log.d(TAG, "Can I click the OK button?");
@@ -104,7 +107,6 @@ public abstract class FilterActivityTest<T extends Activity> extends ActivityIns
         });
 
         Log.d(TAG, "Did the XxxFilterActivity finish?");
-        this.getInstrumentation().waitForIdleSync();
         Assert.assertTrue(FilterActivityTest.this.activity.isFinishing());
         Log.d(TAG, "YES!");
     }
@@ -114,6 +116,7 @@ public abstract class FilterActivityTest<T extends Activity> extends ActivityIns
         Assert.assertTrue(this.cancelButton.performClick());
         Assert.assertTrue(this.activity.isFinishing());
     }
+    protected Instrumentation inst = null;
     protected Activity activity = null;
     private Button okButton = null;
     private Button cancelButton = null;

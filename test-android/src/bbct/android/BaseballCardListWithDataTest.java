@@ -322,7 +322,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         final Button optionsOkButton = (Button) filterOptions.findViewById(R.id.ok_button);
         final RadioButton filterRadioButton = (RadioButton) filterOptions.findViewById(radioButtonId);
 
-        filterOptions.runOnUiThread(new Runnable() {
+        this.inst.runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 Assert.assertFalse(filterRadioButton.performClick());
@@ -336,14 +336,13 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
         filterInput.doInput();
 
-        filter.runOnUiThread(new Runnable() {
+        this.inst.runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 Assert.assertTrue(filterOkButton.performClick());
             }
         });
 
-        this.inst.waitForIdleSync();
         Assert.assertTrue(filter.isFinishing());
         Assert.assertTrue(filterOptions.isFinishing());
 

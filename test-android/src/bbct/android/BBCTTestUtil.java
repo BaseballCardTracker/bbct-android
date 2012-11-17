@@ -75,7 +75,7 @@ abstract public class BBCTTestUtil {
 
         final Button saveButton = (Button) cardDetails.findViewById(R.id.save_button);
 
-        cardDetails.runOnUiThread(new Runnable() {
+        test.getInstrumentation().runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 Assert.assertTrue(saveButton.performClick());
@@ -88,14 +88,13 @@ abstract public class BBCTTestUtil {
     public static void clickCardDetailsDone(Instrumentation inst, Activity cardDetails) {
         final Button doneButton = (Button) cardDetails.findViewById(R.id.done_button);
 
-        cardDetails.runOnUiThread(new Runnable() {
+        inst.runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 Assert.assertTrue(doneButton.performClick());
             }
         });
 
-        inst.waitForIdleSync();
         Assert.assertTrue(cardDetails.isFinishing());
     }
 
