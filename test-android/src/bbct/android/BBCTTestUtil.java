@@ -100,24 +100,42 @@ abstract public class BBCTTestUtil {
     }
 
     public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) {
-        AndroidTestUtil.sendKeysFromString(test, card.getBrand());
-        test.sendKeys(KeyEvent.KEYCODE_ENTER);
+        BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card, ALL_FIELDS);
+    }
 
-        AndroidTestUtil.sendKeysFromInt(test, card.getYear());
-        test.sendKeys(KeyEvent.KEYCODE_ENTER);
+    public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, int skipFlags) {
+        Instrumentation inst = test.getInstrumentation();
+        
+        if ((skipFlags & NO_BRAND) == 0) {
+            inst.sendStringSync(card.getBrand());
+        }
+        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
 
-        AndroidTestUtil.sendKeysFromInt(test, card.getNumber());
-        test.sendKeys(KeyEvent.KEYCODE_ENTER);
+        if ((skipFlags & NO_YEAR) == 0) {
+            inst.sendStringSync(Integer.toString(card.getYear()));
+        }
+        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
 
-        String valueStr = Double.toString(card.getValue() / 100.0);
-        AndroidTestUtil.sendKeysFromString(test, valueStr);
-        test.sendKeys(KeyEvent.KEYCODE_ENTER);
+        if ((skipFlags & NO_NUMBER) == 0) {
+            inst.sendStringSync(Integer.toString(card.getNumber()));
+        }
+        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
 
-        AndroidTestUtil.sendKeysFromInt(test, card.getCount());
-        test.sendKeys(KeyEvent.KEYCODE_ENTER);
+        if ((skipFlags & NO_VALUE) == 0) {
+            String valueStr = Double.toString(card.getValue() / 100.0);
+            inst.sendStringSync(valueStr);
+        }
+        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
 
-        AndroidTestUtil.sendKeysFromString(test, card.getPlayerName());
-        test.sendKeys(KeyEvent.KEYCODE_ENTER);
+        if ((skipFlags & NO_COUNT) == 0) {
+            inst.sendStringSync(Integer.toString(card.getCount()));
+        }
+        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
+
+        if ((skipFlags & NO_PLAYER_NAME) == 0) {
+            inst.sendStringSync(card.getPlayerName());
+        }
+        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
 
         Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
         ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner.getAdapter();
@@ -125,17 +143,24 @@ abstract public class BBCTTestUtil {
         int oldPos = playerPositionSpinner.getSelectedItemPosition();
         int move = newPos - oldPos;
 
-        test.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
+        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
         if (move > 0) {
             test.sendRepeatedKeys(move, KeyEvent.KEYCODE_DPAD_DOWN);
         } else {
             test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
         }
-        test.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
+        inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_CENTER);
     }
 
     private BBCTTestUtil() {
     }
+    public static final int ALL_FIELDS = 0x00;
+    public static final int NO_BRAND = 0x01;
+    public static final int NO_YEAR = 0x02;
+    public static final int NO_NUMBER = 0x04;
+    public static final int NO_VALUE = 0x08;
+    public static final int NO_COUNT = 0x10;
+    public static final int NO_PLAYER_NAME = 0x20;
     private static final int MENU_FLAGS = 0;
     public static final int TIME_OUT = 5 * 1000; // 5 seconds
 }

@@ -233,7 +233,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         FilterInput yearInput = new FilterInput() {
             @Override
             public void doInput() {
-                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, year);
+                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer.toString(year));
             }
         };
 
@@ -252,7 +252,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         FilterInput numberInput = new FilterInput() {
             @Override
             public void doInput() {
-                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, number);
+                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer.toString(number));
             }
         };
 
@@ -272,9 +272,9 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         FilterInput yearAndNumberInput = new FilterInput() {
             @Override
             public void doInput() {
-                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, year);
+                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer.toString(year));
                 BaseballCardListWithDataTest.this.sendKeys(KeyEvent.KEYCODE_ENTER);
-                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, number);
+                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer.toString(number));
             }
         };
 
@@ -293,7 +293,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         FilterInput playerNameInput = new FilterInput() {
             @Override
             public void doInput() {
-                AndroidTestUtil.sendKeysFromString(BaseballCardListWithDataTest.this, playerName);
+                BaseballCardListWithDataTest.this.inst.sendStringSync(playerName);
             }
         };
 

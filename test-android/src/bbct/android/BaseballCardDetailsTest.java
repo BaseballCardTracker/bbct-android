@@ -20,6 +20,7 @@ package bbct.android;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.widget.Button;
@@ -91,27 +92,13 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = this.getActivity();
-
-        Assert.assertEquals(this.card.getBrand(), this.brandText.getText().toString());
-        Assert.assertEquals(this.card.getYear(), Integer.parseInt(this.yearText.getText().toString()));
-        Assert.assertEquals(this.card.getNumber(), Integer.parseInt(this.numberText.getText().toString()));
-        Assert.assertEquals(this.card.getValue(), (int) (Double.parseDouble(this.valueText.getText().toString()) * 100));
-        Assert.assertEquals(this.card.getCount(), Integer.parseInt(this.countText.getText().toString()));
-        Assert.assertEquals(this.card.getPlayerName(), this.playerNameText.getText().toString());
-        Assert.assertEquals(this.card.getPlayerPosition(), this.playerPositionSpinner.getSelectedItem());
+        this.assertAllEditTextContents(this.card);
     }
 
     public void testStatePause() {
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
         this.inst.callActivityOnRestart(this.activity);
-
-        Assert.assertEquals(this.card.getBrand(), this.brandText.getText().toString());
-        Assert.assertEquals(this.card.getYear(), Integer.parseInt(this.yearText.getText().toString()));
-        Assert.assertEquals(this.card.getNumber(), Integer.parseInt(this.numberText.getText().toString()));
-        Assert.assertEquals(this.card.getValue(), (int) (Double.parseDouble(this.valueText.getText().toString()) * 100));
-        Assert.assertEquals(this.card.getCount(), Integer.parseInt(this.countText.getText().toString()));
-        Assert.assertEquals(this.card.getPlayerName(), this.playerNameText.getText().toString());
-        Assert.assertEquals(this.card.getPlayerPosition(), this.playerPositionSpinner.getSelectedItem());
+        this.assertAllEditTextContents(this.card);
     }
 
     public void testAddCard() {
@@ -121,10 +108,23 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     public void testEditCard() {
-        Assert.fail("Implement me!");
+        Intent intent = new Intent(this.inst.getTargetContext(), BaseballCardDetails.class);
+        intent.putExtra(this.activity.getString(R.string.baseball_card_extra), card);
+        this.activity = this.inst.startActivitySync(intent);
+        this.assertAllEditTextContents(this.card);
+
+        this.inst.runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                BaseballCardDetailsTest.this.countText.requestFocus();
+            }
+        });
+
+        Assert.fail("Edit count and value");
     }
 
     public void testNoBrand() {
+        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, BBCTTestUtil.NO_BRAND);
         Assert.fail("Implement me!");
     }
 
@@ -152,6 +152,16 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     public void testDoneButtonOnClick() {
         Assert.assertTrue(this.doneButton.performClick());
         Assert.assertTrue(this.activity.isFinishing());
+    }
+
+    public void assertAllEditTextContents(BaseballCard expectedCard) {
+        Assert.assertEquals(expectedCard.getBrand(), this.brandText.getText().toString());
+        Assert.assertEquals(expectedCard.getYear(), Integer.parseInt(this.yearText.getText().toString()));
+        Assert.assertEquals(expectedCard.getNumber(), Integer.parseInt(this.numberText.getText().toString()));
+        Assert.assertEquals(expectedCard.getValue(), (int) (Double.parseDouble(this.valueText.getText().toString()) * 100));
+        Assert.assertEquals(expectedCard.getCount(), Integer.parseInt(this.countText.getText().toString()));
+        Assert.assertEquals(expectedCard.getPlayerName(), this.playerNameText.getText().toString());
+        Assert.assertEquals(expectedCard.getPlayerPosition(), this.playerPositionSpinner.getSelectedItem());
     }
     private Activity activity = null;
     private EditText brandText = null;
