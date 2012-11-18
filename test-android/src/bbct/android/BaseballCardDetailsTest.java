@@ -108,6 +108,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     public void testEditCard() {
+        Assert.fail("Create a new test class for this test because the fixture is different");
         Intent intent = new Intent(this.inst.getTargetContext(), BaseballCardDetails.class);
         intent.putExtra(this.activity.getString(R.string.baseball_card_extra), card);
         this.activity = this.inst.startActivitySync(intent);
@@ -124,28 +125,27 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     public void testNoBrand() {
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, BBCTTestUtil.NO_BRAND);
-        Assert.fail("Implement me!");
+        this.testMissingInput(BBCTTestUtil.NO_BRAND, R.string.brand_input_error);
     }
 
     public void testNoYear() {
-        Assert.fail("Implement me!");
+        this.testMissingInput(BBCTTestUtil.NO_YEAR, R.string.year_input_error);
     }
 
     public void testNoNumber() {
-        Assert.fail("Implement me!");
+        this.testMissingInput(BBCTTestUtil.NO_NUMBER, R.string.number_input_error);
     }
 
     public void testNoValue() {
-        Assert.fail("Implement me!");
+        this.testMissingInput(BBCTTestUtil.NO_VALUE, R.string.value_input_error);
     }
 
     public void testNoCount() {
-        Assert.fail("Implement me!");
+        this.testMissingInput(BBCTTestUtil.NO_COUNT, R.string.count_input_error);
     }
 
     public void testNoPlayerName() {
-        Assert.fail("Implement me!");
+        this.testMissingInput(BBCTTestUtil.NO_PLAYER_NAME, R.string.player_name_input_error);
     }
 
     @UiThreadTest
@@ -154,7 +154,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.assertTrue(this.activity.isFinishing());
     }
 
-    public void assertAllEditTextContents(BaseballCard expectedCard) {
+    private void assertAllEditTextContents(BaseballCard expectedCard) {
         Assert.assertEquals(expectedCard.getBrand(), this.brandText.getText().toString());
         Assert.assertEquals(expectedCard.getYear(), Integer.parseInt(this.yearText.getText().toString()));
         Assert.assertEquals(expectedCard.getNumber(), Integer.parseInt(this.numberText.getText().toString()));
@@ -162,6 +162,19 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.assertEquals(expectedCard.getCount(), Integer.parseInt(this.countText.getText().toString()));
         Assert.assertEquals(expectedCard.getPlayerName(), this.playerNameText.getText().toString());
         Assert.assertEquals(expectedCard.getPlayerPosition(), this.playerPositionSpinner.getSelectedItem());
+    }
+    
+    private void testMissingInput(int missingInputFlag, int expectedErrorMessageId) {
+        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, missingInputFlag);
+        this.inst.runOnMainSync(new Runnable() {
+            @Override
+            public void run() {
+                Assert.assertTrue(BaseballCardDetailsTest.this.saveButton.performClick());
+            }
+        });
+        
+        String expectedErrorMessage = this.activity.getString(expectedErrorMessageId);
+        Assert.fail("Check error message");
     }
     private Activity activity = null;
     private EditText brandText = null;

@@ -38,7 +38,8 @@ import junit.framework.Assert;
  */
 abstract public class BBCTTestUtil {
 
-    public static void assertListViewContainsItems(List<BaseballCard> expectedItems, ListView listView) {
+    public static void assertListViewContainsItems(Instrumentation inst, List<BaseballCard> expectedItems, ListView listView) {
+        inst.waitForIdleSync();
         Assert.assertEquals(expectedItems.size(), listView.getCount());
 
         for (int i = 0; i < expectedItems.size(); ++i) {
@@ -121,7 +122,7 @@ abstract public class BBCTTestUtil {
         inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
 
         if ((skipFlags & NO_VALUE) == 0) {
-            String valueStr = Double.toString(card.getValue() / 100.0);
+            String valueStr = String.format("%.2f", card.getValue() / 100.0);
             inst.sendStringSync(valueStr);
         }
         inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
