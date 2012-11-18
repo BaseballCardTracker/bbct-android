@@ -85,7 +85,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION, db.getVersion());
         Assert.assertEquals(BaseballCardSQLHelper.TABLE_NAME, SQLiteDatabase.findEditTable(BaseballCardSQLHelper.TABLE_NAME));
 
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
     public void testStateDestroyWithoutFilter() {
@@ -93,7 +93,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = this.getActivity();
         this.listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
     public void testStateDestroyWithFilter() {
@@ -102,7 +102,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = this.getActivity();
         this.listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, this.listView);
     }
 
     public void testStateDestroyClearFilter() {
@@ -111,24 +111,24 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = this.getActivity();
         this.listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
     public void testStatePauseWithoutFilter() {
         this.inst.callActivityOnRestart(this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
     public void testStatePauseWithFilter() {
         this.testYearFilter();
         this.inst.callActivityOnRestart(this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, this.listView);
     }
 
     public void testStatePauseClearFilter() {
         this.testClearFilter();
         this.inst.callActivityOnRestart(this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
     public void testMenuLayoutWithoutFilter() {
@@ -194,7 +194,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
 
         this.allCards.add(this.newCard);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
     public void testAddCardMatchingCurrentFilter() {
@@ -205,7 +205,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
 
         this.expectedCards.add(this.newCard);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, this.listView);
     }
 
     public void testAddCardNotMatchingCurrentFilter() {
@@ -215,7 +215,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
         BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, this.listView);
     }
 
     public void testAddCardAfterClearFilter() {
@@ -225,7 +225,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
 
         this.allCards.add(this.newCard);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
     public void testYearFilter() {
@@ -233,7 +233,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         FilterInput yearInput = new FilterInput() {
             @Override
             public void doInput() {
-                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, year);
+                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer.toString(year));
             }
         };
 
@@ -252,7 +252,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         FilterInput numberInput = new FilterInput() {
             @Override
             public void doInput() {
-                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, number);
+                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer.toString(number));
             }
         };
 
@@ -272,9 +272,9 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         FilterInput yearAndNumberInput = new FilterInput() {
             @Override
             public void doInput() {
-                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, year);
+                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer.toString(year));
                 BaseballCardListWithDataTest.this.sendKeys(KeyEvent.KEYCODE_ENTER);
-                AndroidTestUtil.sendKeysFromInt(BaseballCardListWithDataTest.this, number);
+                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer.toString(number));
             }
         };
 
@@ -293,7 +293,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         FilterInput playerNameInput = new FilterInput() {
             @Override
             public void doInput() {
-                AndroidTestUtil.sendKeysFromString(BaseballCardListWithDataTest.this, playerName);
+                BaseballCardListWithDataTest.this.inst.sendStringSync(playerName);
             }
         };
 
@@ -310,8 +310,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     public void testClearFilter() {
         this.testYearFilter();
         Assert.assertTrue(this.inst.invokeMenuActionSync(this.activity, R.id.clear_filter_menu, 0));
-        this.inst.waitForIdleSync();
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
     private void testFilter(Class<?> filterClass, int radioButtonId, FilterInput filterInput, Predicate<BaseballCard> filterPred) {
@@ -322,7 +321,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         final Button optionsOkButton = (Button) filterOptions.findViewById(R.id.ok_button);
         final RadioButton filterRadioButton = (RadioButton) filterOptions.findViewById(radioButtonId);
 
-        filterOptions.runOnUiThread(new Runnable() {
+        this.inst.runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 Assert.assertFalse(filterRadioButton.performClick());
@@ -336,19 +335,19 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
         filterInput.doInput();
 
-        filter.runOnUiThread(new Runnable() {
+        this.inst.runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 Assert.assertTrue(filterOkButton.performClick());
             }
         });
 
-        this.inst.waitForIdleSync();
         Assert.assertTrue(filter.isFinishing());
+        this.inst.waitForIdleSync();
         Assert.assertTrue(filterOptions.isFinishing());
 
         this.expectedCards = this.filterList(this.allCards, filterPred);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, this.listView);
     }
 
     private List<BaseballCard> filterList(List<BaseballCard> list, Predicate<BaseballCard> pred) {

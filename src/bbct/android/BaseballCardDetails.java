@@ -67,7 +67,7 @@ public class BaseballCardDetails extends Activity {
         Button doneButton = (Button) this.findViewById(R.id.done_button);
         doneButton.setOnClickListener(this.onDone);
 
-        BaseballCard card = (BaseballCard) getIntent().getSerializableExtra(this.getString(R.string.baseball_card_extra));
+        BaseballCard card = (BaseballCard) this.getIntent().getSerializableExtra(this.getString(R.string.baseball_card_extra));
 
         if (card != null) {
             this.isUpdating = true;
@@ -98,7 +98,7 @@ public class BaseballCardDetails extends Activity {
         this.sqlHelper.close();
     }
 
-    public BaseballCard getBaseballCard() throws InputException {
+    private BaseballCard getBaseballCard() throws InputException {
         String brand = this.brandText.getText().toString();
         if (brand.equals("")) {
             this.brandText.requestFocus();

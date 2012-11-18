@@ -74,7 +74,7 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
     @Override
     protected void sendInputKeys() {
         Log.d(TAG, "sendInputKeys()");
-        AndroidTestUtil.sendKeysFromString(this, this.testPlayerName);
+        this.getInstrumentation().sendStringSync(this.testPlayerName);
     }
     private EditText playerNameText = null;
     private String testPlayerName = null;

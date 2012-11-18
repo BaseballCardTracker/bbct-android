@@ -79,9 +79,9 @@ public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFil
 
     @Override
     protected void sendInputKeys() {
-        AndroidTestUtil.sendKeysFromInt(this, this.testYear);
+        this.getInstrumentation().sendStringSync(Integer.toString(this.testYear));
         this.sendKeys(KeyEvent.KEYCODE_ENTER);
-        AndroidTestUtil.sendKeysFromInt(this, this.testNumber);
+        this.getInstrumentation().sendStringSync(Integer.toString(this.testNumber));
     }
     private EditText yearText = null;
     private EditText numberText = null;

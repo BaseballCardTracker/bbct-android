@@ -59,7 +59,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         this.activity.finish();
         this.dbUtil.deleteDatabase();
         this.cardInput.close();
-        
+
         super.tearDown();
     }
 
@@ -114,7 +114,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
 
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
         cards.add(card);
-        BBCTTestUtil.assertListViewContainsItems(cards, this.list);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, cards, this.list);
     }
 
     public void testAddMultipleCards() throws IOException {
@@ -126,7 +126,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         }
 
         BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
-        BBCTTestUtil.assertListViewContainsItems(cards, this.list);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, cards, this.list);
     }
     private Instrumentation inst = null;
     private Activity activity = null;

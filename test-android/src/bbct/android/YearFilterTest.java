@@ -72,7 +72,7 @@ public class YearFilterTest extends FilterActivityTest<YearFilter> {
 
     @Override
     protected void sendInputKeys() {
-        AndroidTestUtil.sendKeysFromInt(this, this.testYear);
+        this.getInstrumentation().sendStringSync(Integer.toString(this.testYear));
     }
     private EditText yearText = null;
     private int testYear = -1;

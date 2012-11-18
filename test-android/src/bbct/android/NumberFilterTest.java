@@ -72,7 +72,7 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
 
     @Override
     protected void sendInputKeys() {
-        AndroidTestUtil.sendKeysFromInt(this, this.testNumber);
+        this.getInstrumentation().sendStringSync(Integer.toString(this.testNumber));
     }
     private EditText numberText = null;
     private int testNumber = -1;
