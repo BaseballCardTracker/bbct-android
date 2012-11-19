@@ -81,7 +81,7 @@
     <string name="about_menu">About</string>
     
     <!-- Text in About activity -->
-    <string name="version">Version 0.5 (beta)</string>
+    <string name="version">Version 0.5.1 (beta)</string>
     <string name="copyright">Copyright 2012 by codeguru</string>
     <string name="email">Email: &lt;codeguru@users.sf.net&gt;</string>
     <string name="website">Website: http://sf.net/p/bbct</string>
