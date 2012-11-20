@@ -18,72 +18,58 @@
  */
 package bbct.android;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class YearAndNumberFilter extends Activity {
+public class YearAndNumberFilter extends FilterActivity {
 
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.year_and_number_filter);
+        super.onCreate(savedInstanceState, R.layout.year_and_number_filter, R.string.year_and_number_filter_title);
 
-        String format = this.getString(R.string.bbct_title);
-        String yearAndNumberFilterTitle = this.getString(R.string.year_and_number_filter_title);
-        String title = String.format(format, yearAndNumberFilterTitle);
-        this.setTitle(title);
-
-        this.yearText = (EditText) this.findViewById(R.id.year_and_number_filter_year_text);
-        this.numberText = (EditText) this.findViewById(R.id.year_and_number_filter_number_text);
-
-        Button okButton = (Button) this.findViewById(R.id.year_and_number_filter_ok_button);
-        okButton.setOnClickListener(this.onOk);
-
-        Button cancelButton = (Button) this.findViewById(R.id.year_and_number_filter_cancel_button);
-        cancelButton.setOnClickListener(this.onCancel);
+        this.yearText = (EditText) this.findViewById(R.id.year_text);
+        this.numberText = (EditText) this.findViewById(R.id.number_text);
     }
-    private View.OnClickListener onOk = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String yearStr = YearAndNumberFilter.this.yearText.getText().toString();
-            String numberStr = YearAndNumberFilter.this.numberText.getText().toString();
-            if (yearStr.equals("")) {
-                YearAndNumberFilter.this.yearText.requestFocus();
-                Toast.makeText(YearAndNumberFilter.this, R.string.year_input_error, Toast.LENGTH_LONG).show();
-            } else if (numberStr.equals("")) {
-                YearAndNumberFilter.this.numberText.requestFocus();
-                Toast.makeText(YearAndNumberFilter.this, R.string.number_input_error, Toast.LENGTH_LONG).show();
-            } else {
-                int year = Integer.parseInt(yearStr);
-                int number = Integer.parseInt(numberStr);
-                Intent data = new Intent();
-                data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.YEAR_AND_NUMBER_FILTER_REQUEST);
-                data.putExtra(AndroidConstants.YEAR_EXTRA, year);
-                data.putExtra(AndroidConstants.NUMBER_EXTRA, number);
-                YearAndNumberFilter.this.setResult(RESULT_OK, data);
-                YearAndNumberFilter.this.finish();
-            }
+
+    @Override
+    public boolean isInputValid() {
+        String yearStr = this.yearText.getText().toString();
+        String numberStr = this.numberText.getText().toString();
+        return !yearStr.equals("") && !numberStr.equals("");
+    }
+
+    @Override
+    public int getErrorResourceId() {
+        String yearStr = this.yearText.getText().toString();
+
+        if (yearStr.equals("")) {
+            return R.string.year_input_error;
+        } else {
+            return R.string.number_input_error;
         }
-    };
-    private View.OnClickListener onCancel = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            YearAndNumberFilter.this.setResult(RESULT_CANCELED);
-            YearAndNumberFilter.this.finish();
-        }
-    };
+    }
+
+    @Override
+    public Intent getResult() {
+        String yearStr = this.yearText.getText().toString();
+        String numberStr = this.numberText.getText().toString();
+        int year = Integer.parseInt(yearStr);
+        int number = Integer.parseInt(numberStr);
+        Intent result = new Intent();
+        result.putExtra(this.getString(R.string.filter_request_extra), R.id.year_and_number_filter_request);
+        result.putExtra(this.getString(R.string.year_extra), year);
+        result.putExtra(this.getString(R.string.number_extra), number);
+
+        return result;
+    }
     private EditText yearText = null;
     private EditText numberText = null;
 }

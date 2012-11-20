@@ -26,6 +26,10 @@
           android:title="@string/filter_menu"
           android:icon="@drawable/ic_menu_find"
     />
+    <item android:id="@+id/clear_filter_menu"
+          android:title="@string/clear_filter_menu"
+          android:icon="@drawable/ic_menu_block"
+    />
     <item android:id="@+id/about_menu"
           android:title="@string/about_menu"
           android:icon="@drawable/ic_menu_about"

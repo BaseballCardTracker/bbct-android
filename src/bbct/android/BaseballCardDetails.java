@@ -49,25 +49,25 @@ public class BaseballCardDetails extends Activity {
         String title = String.format(format, cardDetailsTitle);
         this.setTitle(title);
 
-        this.brandText = (EditText) this.findViewById(R.id.details_brand_text);
-        this.yearText = (EditText) this.findViewById(R.id.details_year_text);
-        this.numberText = (EditText) this.findViewById(R.id.details_number_text);
-        this.valueText = (EditText) this.findViewById(R.id.details_value_text);
-        this.countText = (EditText) this.findViewById(R.id.details_count_text);
-        this.playerNameText = (EditText) this.findViewById(R.id.details_player_name_text);
+        this.brandText = (EditText) this.findViewById(R.id.brand_text);
+        this.yearText = (EditText) this.findViewById(R.id.year_text);
+        this.numberText = (EditText) this.findViewById(R.id.number_text);
+        this.valueText = (EditText) this.findViewById(R.id.value_text);
+        this.countText = (EditText) this.findViewById(R.id.count_text);
+        this.playerNameText = (EditText) this.findViewById(R.id.player_name_text);
 
-        this.playerPositionSpinner = (Spinner) this.findViewById(R.id.details_player_position_text);
+        this.playerPositionSpinner = (Spinner) this.findViewById(R.id.player_position_text);
         ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter.createFromResource(this, R.array.positions, android.R.layout.simple_spinner_item);
         positionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.playerPositionSpinner.setAdapter(positionsAdapter);
 
-        Button saveButton = (Button) this.findViewById(R.id.details_save_button);
+        Button saveButton = (Button) this.findViewById(R.id.save_button);
         saveButton.setOnClickListener(this.onSave);
 
-        Button doneButton = (Button) this.findViewById(R.id.details_done_button);
+        Button doneButton = (Button) this.findViewById(R.id.done_button);
         doneButton.setOnClickListener(this.onDone);
 
-        BaseballCard card = (BaseballCard) getIntent().getSerializableExtra(AndroidConstants.BASEBALL_CARD_EXTRA);
+        BaseballCard card = (BaseballCard) this.getIntent().getSerializableExtra(this.getString(R.string.baseball_card_extra));
 
         if (card != null) {
             this.isUpdating = true;
@@ -98,7 +98,7 @@ public class BaseballCardDetails extends Activity {
         this.sqlHelper.close();
     }
 
-    public BaseballCard getBaseballCard() throws InputException {
+    private BaseballCard getBaseballCard() throws InputException {
         String brand = this.brandText.getText().toString();
         if (brand.equals("")) {
             this.brandText.requestFocus();

@@ -104,8 +104,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testConstructor() throws Exception {
+        public void testConstructor() throws Exception {
         // Constructor is called from setUp(). This method simply asserts
         // that the table was created.
 
@@ -124,8 +123,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testClose() throws Exception {
+        public void testClose() throws Exception {
         instance.close();
     }
 
@@ -134,8 +132,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testInsertBaseballCard() throws Exception {
+        public void testInsertBaseballCard() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
         String select = "SELECT * FROM " + JDBCBaseballCardIO.TABLE_NAME;
@@ -157,8 +154,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testGetBaseballCardByYear() throws Exception {
+        public void testGetBaseballCardByYear() throws Exception {
         this.instance.insertBaseballCard(this.card);
         List result = this.instance.getBaseballCardsByYear(card.getYear());
         Assert.assertEquals(card, result.get(0));
@@ -169,8 +165,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testGetBaseballCardByNumber() throws Exception {
+        public void testGetBaseballCardByNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
         List result = this.instance.getBaseballCardsByNumber(card.getNumber());
         Assert.assertEquals(card, result.get(0));
@@ -182,8 +177,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testGetBaseballCardByYearAndNumber() throws Exception {
+        public void testGetBaseballCardByYearAndNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
         List result = this.instance.getBaseballCardsByYearAndNumber(card.getYear(), card.getNumber());
         Assert.assertEquals(card, result.get(0));
@@ -194,8 +188,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testGetBaseballCardByPlayerName() throws Exception {
+        public void testGetBaseballCardByPlayerName() throws Exception {
         this.instance.insertBaseballCard(this.card);
         List result = this.instance.getBaseballCardsByPlayerName(card.getPlayerName());
         Assert.assertEquals(card, result.get(0));
@@ -218,8 +211,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testGetBaseballCardsByYear() throws Exception {
+        public void testGetBaseballCardsByYear() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
@@ -234,8 +226,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testGetBaseballCardsByNumber() throws Exception {
+        public void testGetBaseballCardsByNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
@@ -251,8 +242,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testGetBaseballCardsByYearAndNumber() throws Exception {
+        public void testGetBaseballCardsByYearAndNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
@@ -267,8 +257,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testGetBaseballCardsByPlayerName() throws Exception {
+        public void testGetBaseballCardsByPlayerName() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
@@ -283,8 +272,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-    @Test
-    public void testUpdateCard() throws Exception {
+        public void testUpdateCard() throws Exception {
         this.instance.insertBaseballCard(this.card);
         int newValue = 20000;
         int newCount = 3;

@@ -18,64 +18,46 @@
  */
 package bbct.android;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class NumberFilter extends Activity {
+public class NumberFilter extends FilterActivity {
 
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.number_filter);
+        super.onCreate(savedInstanceState, R.layout.number_filter, R.string.number_filter_title);
 
-        String format = this.getString(R.string.bbct_title);
-        String numberFilterTitle = this.getString(R.string.number_filter_title);
-        String title = String.format(format, numberFilterTitle);
-        this.setTitle(title);
-
-        this.numberText = (EditText) this.findViewById(R.id.number_filter_number_text);
-
-        Button okButton = (Button) this.findViewById(R.id.number_filter_ok_button);
-        okButton.setOnClickListener(this.onOk);
-
-        Button cancelButton = (Button) this.findViewById(R.id.number_filter_cancel_button);
-        cancelButton.setOnClickListener(this.onCancel);
+        this.numberText = (EditText) this.findViewById(R.id.number_text);
     }
-    private View.OnClickListener onOk = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            String numberStr = NumberFilter.this.numberText.getText().toString();
-            if (numberStr.equals("")) {
-                NumberFilter.this.numberText.requestFocus();
-                Toast.makeText(NumberFilter.this, R.string.number_input_error, Toast.LENGTH_LONG).show();
-            } else {
-                int number = Integer.parseInt(numberStr);
-                Intent data = new Intent();
-                data.putExtra(AndroidConstants.FILTER_REQUEST_EXTRA, AndroidConstants.NUMBER_FILTER_REQUEST);
-                data.putExtra(AndroidConstants.NUMBER_EXTRA, number);
-                NumberFilter.this.setResult(RESULT_OK, data);
-                NumberFilter.this.finish();
-            }
-        }
-    };
-    private View.OnClickListener onCancel = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            NumberFilter.this.setResult(RESULT_CANCELED);
-            NumberFilter.this.finish();
-        }
-    };
+
+    @Override
+    public boolean isInputValid() {
+        String numberStr = this.numberText.getText().toString();
+        return !numberStr.equals("");
+    }
+    
+    @Override
+    public int getErrorResourceId() {
+        return R.string.number_input_error;
+    }
+
+    @Override
+    public Intent getResult() {
+        String numberStr = this.numberText.getText().toString();
+        int number = Integer.parseInt(numberStr);
+        Intent result = new Intent();
+        result.putExtra(this.getString(R.string.filter_request_extra), R.id.number_filter_request);
+        result.putExtra(this.getString(R.string.number_extra), number);
+
+        return result;
+    }
     private EditText numberText = null;
 }
