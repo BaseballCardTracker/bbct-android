@@ -78,6 +78,16 @@ public class DatabaseUtil {
         
         return cursor.getCount() == 1;
     }
+    
+    public boolean containsAllBaseballCards(List<BaseballCard> cards) {
+        for (BaseballCard card : cards) {
+            if (!this.containsBaseballCard(card)) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
     private SQLiteDatabase db = null;
     private static final String DB_PATH = "/data/data/bbct.android/databases/";
     private static final String DB_NAME = BaseballCardSQLHelper.DATABASE_NAME;

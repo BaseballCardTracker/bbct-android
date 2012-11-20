@@ -27,7 +27,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import bbct.common.data.BaseballCard;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import junit.framework.Assert;
 
 /**
@@ -47,8 +49,9 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         this.inst = this.getInstrumentation();
 
         InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
-        this.cardInput = new BaseballCardCsvFileReader(in, true);
-        this.card = this.cardInput.getNextBaseballCard();
+        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in, true);
+        this.allCards = cardInput.getAllBaseballCards();
+        this.card = this.allCards.get((int) (Math.random() * this.allCards.size()));
 
         // Must call getActivity() before creating a DatabaseUtil object to ensure that the database is created
         this.activity = this.getActivity();
@@ -104,7 +107,18 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     public void testAddCard() {
         BBCTTestUtil.addCard(this, this.activity, this.card);
         this.inst.waitForIdleSync();
-        Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
+        Assert.assertTrue("Missing card: " + this.card, this.dbUtil.containsBaseballCard(card));
+    }
+
+    public void testAddMultipleCards() throws IOException {
+        for (BaseballCard nextCard : this.allCards) {
+            BBCTTestUtil.addCard(this, this.activity, nextCard);
+        }
+        
+        this.inst.waitForIdleSync();
+        for (BaseballCard nextCard : this.allCards) {
+            Assert.assertTrue("Missing card: " + nextCard, this.dbUtil.containsBaseballCard(nextCard));
+        }
     }
 
     public void testEditCard() {
@@ -163,7 +177,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.assertEquals(expectedCard.getPlayerName(), this.playerNameText.getText().toString());
         Assert.assertEquals(expectedCard.getPlayerPosition(), this.playerPositionSpinner.getSelectedItem());
     }
-    
+
     private void testMissingInput(int missingInputFlag, int expectedErrorMessageId) {
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, missingInputFlag);
         this.inst.runOnMainSync(new Runnable() {
@@ -172,7 +186,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
                 Assert.assertTrue(BaseballCardDetailsTest.this.saveButton.performClick());
             }
         });
-        
+
         String expectedErrorMessage = this.activity.getString(expectedErrorMessageId);
         Assert.fail("Check error message");
     }
@@ -187,7 +201,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     private Button saveButton = null;
     private Button doneButton = null;
     private Instrumentation inst = null;
-    private BaseballCardCsvFileReader cardInput = null;
+    private List<BaseballCard> allCards = null;
     private BaseballCard card = null;
     private DatabaseUtil dbUtil = null;
     private static final String CARD_DATA = "cards.csv";
