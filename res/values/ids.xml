@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of BBCT for Android.
+
+ Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+
+ BBCT for Android is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ BBCT for Android is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <!-- IDs for views -->
+    <item type="id" name="brand_text"/>
+    <item type="id" name="year_text"/>
+    <item type="id" name="number_text"/>
+    <item type="id" name="value_text"/>
+    <item type="id" name="count_text"/>
+    <item type="id" name="player_name_text"/>
+    <item type="id" name="player_position_text"/>
+    <item type="id" name="save_button"/>
+    <item type="id" name="done_button"/>
+    <item type="id" name="ok_button"/>
+    <item type="id" name="cancel_button"/>
+    
+    <!-- IDs for request and result codes -->
+    <item type="id" name="filter_options_request"/>
+    <item type="id" name="year_filter_request"/>
+    <item type="id" name="number_filter_request"/>
+    <item type="id" name="year_and_number_filter_request"/>
+    <item type="id" name="player_name_filter_request"/>
+    <item type="id" name="no_filter"/>
+</resources>

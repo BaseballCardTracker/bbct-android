@@ -32,7 +32,7 @@
     <string name="about_title">About</string>
     <string name="input_error_title">Input Error</string>
     
-    <string name="start">To get started press the menu button.</string>
+    <string name="start">Press the menu button to get started.</string>
     
     <!-- Labels for card details -->
     <string name="brand_label">Card Brand:</string>
@@ -121,39 +121,4 @@
     <string name="count_input_error">Please enter the number of cards you own.</string>
     <string name="player_name_input_error">Please enter the player\'s name.</string>
     <string name="player_position_input_error">Please enter the player\'s position.</string>
-    
-    <!-- Dimensions used in card list rows -->
-    <dimen name="brand_col_width">40dp</dimen>
-    <dimen name="year_col_width">25dp</dimen>
-    <dimen name="number_col_width">40dp</dimen>
-    <dimen name="player_name_col_width">60dp</dimen>
-    
-    <!-- IDs for views -->
-    <item type="id" name="brand_text"/>
-    <item type="id" name="year_text"/>
-    <item type="id" name="number_text"/>
-    <item type="id" name="value_text"/>
-    <item type="id" name="count_text"/>
-    <item type="id" name="player_name_text"/>
-    <item type="id" name="player_position_text"/>
-    <item type="id" name="save_button"/>
-    <item type="id" name="done_button"/>
-    <item type="id" name="ok_button"/>
-    <item type="id" name="cancel_button"/>
-    
-    <!-- IDs for request and result codes -->
-    <item type="id" name="filter_options_request"/>
-    <item type="id" name="year_filter_request"/>
-    <item type="id" name="number_filter_request"/>
-    <item type="id" name="year_and_number_filter_request"/>
-    <item type="id" name="player_name_filter_request"/>
-    <item type="id" name="no_filter"/>
-    
-    <!-- Keys for extras stored in Bundle and Intent objects -->
-    <string name="baseball_card_extra">baseball_card</string>
-    <string name="filter_request_extra">filter_request</string>
-    <string name="year_extra">year</string>
-    <string name="number_extra">number</string>
-    <string name="player_name_extra">player_name</string>
-    <string name="filter_params_extra">filter_params</string>
 </resources>
