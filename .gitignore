@@ -1,10 +1,9 @@
-/build/
-/db/
-/dist/
-/commit.txt
-/nbproject/private
-/log/
-/*.zip
+/swing/build/
+/swing/db/
+/swing/dist/
+/swing/nbproject/private
+/swing/log/
+*.zip
 local.properties
 bin
 gen
