@@ -123,7 +123,8 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testClose() throws Exception {
+    @Test
+    public void testClose() throws Exception {
         instance.close();
     }
 
@@ -132,7 +133,8 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testInsertBaseballCard() throws Exception {
+    @Test
+    public void testInsertBaseballCard() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
         String select = "SELECT * FROM " + JDBCBaseballCardIO.TABLE_NAME;
@@ -154,9 +156,10 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testGetBaseballCardByYear() throws Exception {
+    @Test
+    public void testGetBaseballCardByYear() throws Exception {
         this.instance.insertBaseballCard(this.card);
-        List result = this.instance.getBaseballCardsByYear(card.getYear());
+        List<BaseballCard> result = this.instance.getBaseballCardsByYear(card.getYear());
         Assert.assertEquals(card, result.get(0));
     }
 
@@ -165,9 +168,10 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testGetBaseballCardByNumber() throws Exception {
+    @Test
+    public void testGetBaseballCardByNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
-        List result = this.instance.getBaseballCardsByNumber(card.getNumber());
+        List<BaseballCard> result = this.instance.getBaseballCardsByNumber(card.getNumber());
         Assert.assertEquals(card, result.get(0));
     }
 
@@ -177,9 +181,10 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testGetBaseballCardByYearAndNumber() throws Exception {
+    @Test
+    public void testGetBaseballCardByYearAndNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
-        List result = this.instance.getBaseballCardsByYearAndNumber(card.getYear(), card.getNumber());
+        List<BaseballCard> result = this.instance.getBaseballCardsByYearAndNumber(card.getYear(), card.getNumber());
         Assert.assertEquals(card, result.get(0));
     }
 
@@ -188,9 +193,10 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testGetBaseballCardByPlayerName() throws Exception {
+    @Test
+    public void testGetBaseballCardByPlayerName() throws Exception {
         this.instance.insertBaseballCard(this.card);
-        List result = this.instance.getBaseballCardsByPlayerName(card.getPlayerName());
+        List<BaseballCard> result = this.instance.getBaseballCardsByPlayerName(card.getPlayerName());
         Assert.assertEquals(card, result.get(0));
     }
 
@@ -217,7 +223,7 @@ public class JDBCBaseballCardIONominalTest {
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
-        List result = instance.getBaseballCardsByYear(this.card.getYear());
+        List<BaseballCard> result = instance.getBaseballCardsByYear(this.card.getYear());
         Assert.assertEquals(expResult, result);
     }
 
@@ -232,7 +238,7 @@ public class JDBCBaseballCardIONominalTest {
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
-        List result = instance.getBaseballCardsByNumber(this.card.getNumber());
+        List<BaseballCard> result = instance.getBaseballCardsByNumber(this.card.getNumber());
         Assert.assertEquals(expResult, result);
     }
 
@@ -248,7 +254,7 @@ public class JDBCBaseballCardIONominalTest {
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
-        List result = instance.getBaseballCardsByYearAndNumber(this.card.getYear(), this.card.getNumber());
+        List<BaseballCard> result = instance.getBaseballCardsByYearAndNumber(this.card.getYear(), this.card.getNumber());
         Assert.assertEquals(expResult, result);
     }
 
@@ -263,7 +269,7 @@ public class JDBCBaseballCardIONominalTest {
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
-        List result = instance.getBaseballCardsByPlayerName(this.card.getPlayerName());
+        List<BaseballCard> result = instance.getBaseballCardsByPlayerName(this.card.getPlayerName());
         Assert.assertEquals(expResult, result);
     }
 

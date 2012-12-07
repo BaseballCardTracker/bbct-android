@@ -69,7 +69,8 @@ public class AbstractBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testUpdateCards() throws Exception {
+    @Test
+    public void testUpdateCards() throws Exception {
         System.out.println("updateCards");
         List<BaseballCard> cards = null;
         AbstractBaseballCardIO instance = new AbstractBaseballCardIOImpl();

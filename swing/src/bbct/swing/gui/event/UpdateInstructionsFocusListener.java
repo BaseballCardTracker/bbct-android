@@ -23,7 +23,6 @@ import java.awt.Container;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JComponent;
-import javax.swing.JTextField;
 
 /**
  * {@link UpdateInstructionsFocusListener} changes the text of the instruction
