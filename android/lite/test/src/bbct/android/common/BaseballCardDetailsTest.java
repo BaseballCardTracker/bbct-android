@@ -51,7 +51,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in, true);
         this.allCards = cardInput.getAllBaseballCards();
-        this.card = this.allCards.get((int) (Math.random() * this.allCards.size()));
+        this.card = this.allCards.get(3); // Ken Griffey Jr.
 
         // Must call getActivity() before creating a DatabaseUtil object to ensure that the database is created
         this.activity = this.getActivity();
@@ -139,27 +139,27 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     public void testNoBrand() {
-        this.testMissingInput(BBCTTestUtil.NO_BRAND, R.string.brand_input_error);
+        this.testMissingInput(this.brandText, BBCTTestUtil.NO_BRAND, R.string.brand_input_error);
     }
 
     public void testNoYear() {
-        this.testMissingInput(BBCTTestUtil.NO_YEAR, R.string.year_input_error);
+        this.testMissingInput(this.yearText, BBCTTestUtil.NO_YEAR, R.string.year_input_error);
     }
 
     public void testNoNumber() {
-        this.testMissingInput(BBCTTestUtil.NO_NUMBER, R.string.number_input_error);
+        this.testMissingInput(this.numberText, BBCTTestUtil.NO_NUMBER, R.string.number_input_error);
     }
 
     public void testNoValue() {
-        this.testMissingInput(BBCTTestUtil.NO_VALUE, R.string.value_input_error);
+        this.testMissingInput(this.valueText, BBCTTestUtil.NO_VALUE, R.string.value_input_error);
     }
 
     public void testNoCount() {
-        this.testMissingInput(BBCTTestUtil.NO_COUNT, R.string.count_input_error);
+        this.testMissingInput(this.countText, BBCTTestUtil.NO_COUNT, R.string.count_input_error);
     }
 
     public void testNoPlayerName() {
-        this.testMissingInput(BBCTTestUtil.NO_PLAYER_NAME, R.string.player_name_input_error);
+        this.testMissingInput(this.playerNameText, BBCTTestUtil.NO_PLAYER_NAME, R.string.player_name_input_error);
     }
 
     @UiThreadTest
@@ -178,7 +178,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.assertEquals(expectedCard.getPlayerPosition(), this.playerPositionSpinner.getSelectedItem());
     }
 
-    private void testMissingInput(int missingInputFlag, int expectedErrorMessageId) {
+    private void testMissingInput(EditText editText, int missingInputFlag, int expectedErrorMessageId) {
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, missingInputFlag);
         this.inst.runOnMainSync(new Runnable() {
             @Override
@@ -187,6 +187,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
             }
         });
 
+        Assert.assertTrue(editText.hasFocus());
         String expectedErrorMessage = this.activity.getString(expectedErrorMessageId);
         Assert.fail("Check error message");
     }

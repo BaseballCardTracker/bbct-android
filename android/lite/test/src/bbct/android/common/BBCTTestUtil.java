@@ -105,37 +105,38 @@ abstract public class BBCTTestUtil {
 
     public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, int skipFlags) {
         Instrumentation inst = test.getInstrumentation();
-        
+
         if ((skipFlags & NO_BRAND) == 0) {
             inst.sendStringSync(card.getBrand());
+            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ESCAPE);
         }
-        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if ((skipFlags & NO_YEAR) == 0) {
             inst.sendStringSync(Integer.toString(card.getYear()));
         }
-        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if ((skipFlags & NO_NUMBER) == 0) {
             inst.sendStringSync(Integer.toString(card.getNumber()));
         }
-        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if ((skipFlags & NO_VALUE) == 0) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
             inst.sendStringSync(valueStr);
         }
-        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if ((skipFlags & NO_COUNT) == 0) {
             inst.sendStringSync(Integer.toString(card.getCount()));
         }
-        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if ((skipFlags & NO_PLAYER_NAME) == 0) {
             inst.sendStringSync(card.getPlayerName());
         }
-        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
         ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner.getAdapter();
@@ -143,13 +144,14 @@ abstract public class BBCTTestUtil {
         int oldPos = playerPositionSpinner.getSelectedItemPosition();
         int move = newPos - oldPos;
 
-        inst.sendCharacterSync(KeyEvent.KEYCODE_ENTER);
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
         if (move > 0) {
             test.sendRepeatedKeys(move, KeyEvent.KEYCODE_DPAD_DOWN);
         } else {
             test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
         }
-        inst.sendCharacterSync(KeyEvent.KEYCODE_DPAD_CENTER);
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
     }
 
     private BBCTTestUtil() {
