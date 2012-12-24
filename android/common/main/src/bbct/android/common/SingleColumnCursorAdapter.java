@@ -18,6 +18,7 @@
  */
 package bbct.android.common;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -32,11 +33,12 @@ import android.widget.TextView;
  */
 public class SingleColumnCursorAdapter extends CursorAdapter {
 
-    public SingleColumnCursorAdapter(Context context, String colName) {
-        super(context, null, true);
+    public SingleColumnCursorAdapter(Activity activity, String colName) {
+        super(activity, null, true);
 
+        this.activity = activity;
         this.colName = colName;
-        this.sqlHelper = new BaseballCardSQLHelper(context);
+        this.sqlHelper = new BaseballCardSQLHelper(activity);
     }
 
     @Override
@@ -57,8 +59,12 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
 
     @Override
     public Cursor runQueryOnBackgroundThread(CharSequence constraint) {
-        return this.sqlHelper.getDistinctValues(this.colName, constraint == null ? null : constraint.toString());
+        Cursor cursor = this.sqlHelper.getDistinctValues(this.colName, constraint == null ? null : constraint.toString());
+        this.activity.startManagingCursor(cursor);
+        
+        return cursor;
     }
     private String colName = null;
     private BaseballCardSQLHelper sqlHelper = null;
+    private Activity activity = null;
 }
