@@ -71,7 +71,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         SQLiteDatabase db = this.dbUtil.getDatabase();
         Assert.assertNotNull(db);
         Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION, db.getVersion());
-        Assert.assertEquals(BaseballCardSQLHelper.TABLE_NAME, SQLiteDatabase.findEditTable(BaseballCardSQLHelper.TABLE_NAME));
+        Assert.assertEquals(BaseballCardContract.TABLE_NAME, SQLiteDatabase.findEditTable(BaseballCardContract.TABLE_NAME));
     }
 
     public void testTitle() {

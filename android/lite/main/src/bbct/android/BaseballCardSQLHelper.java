@@ -34,64 +34,25 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "bbct.db";
     public static final int SCHEMA_VERSION = 1;
-    /**
-     * The table name to use in the underlying database.
-     */
-    public static final String TABLE_NAME = "baseball_cards";
-    /**
-     * The column name for the primary key.
-     */
-    public static final String ID_COL_NAME = "_id";
-    /**
-     * The column name for the card brand.
-     */
-    public static final String BRAND_COL_NAME = "brand";
-    /**
-     * The column name for the card year.
-     */
-    public static final String YEAR_COL_NAME = "year";
-    /**
-     * The column name for the card number.
-     */
-    public static final String NUMBER_COL_NAME = "number";
-    /**
-     * The column name for the card value.
-     */
-    public static final String VALUE_COL_NAME = "value";
-    /**
-     * The column name for the card count.
-     */
-    public static final String COUNT_COL_NAME = "card_count";
-    /**
-     * The column name for the player's name.
-     */
-    public static final String PLAYER_NAME_COL_NAME = "player_name";
-    /**
-     * The column name for the player's position.
-     */
-    public static final String PLAYER_POSITION_COL_NAME = "player_position";
-    public static final String[] PROJECTION = {
-        BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME, PLAYER_NAME_COL_NAME, PLAYER_POSITION_COL_NAME
-    };
 
     public BaseballCardSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
 
-        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, null, null, null, null, null);
+        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, null, null, null, null, null);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqld) {
-        String sqlCreate = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
-                + ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + BRAND_COL_NAME + " VARCHAR(10), "
-                + YEAR_COL_NAME + " INTEGER, "
-                + NUMBER_COL_NAME + " INTEGER, "
-                + VALUE_COL_NAME + " INTEGER, "
-                + COUNT_COL_NAME + " INTEGER, "
-                + PLAYER_NAME_COL_NAME + " VARCHAR(50), "
-                + PLAYER_POSITION_COL_NAME + " VARCHAR(20),"
-                + "UNIQUE (" + BRAND_COL_NAME + ", " + YEAR_COL_NAME + ", " + NUMBER_COL_NAME + "))";
+        String sqlCreate = "CREATE TABLE IF NOT EXISTS " + BaseballCardContract.TABLE_NAME + "("
+                + BaseballCardContract.ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BaseballCardContract.BRAND_COL_NAME + " VARCHAR(10), "
+                + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
+                + BaseballCardContract.NUMBER_COL_NAME + " INTEGER, "
+                + BaseballCardContract.VALUE_COL_NAME + " INTEGER, "
+                + BaseballCardContract.COUNT_COL_NAME + " INTEGER, "
+                + BaseballCardContract.PLAYER_NAME_COL_NAME + " VARCHAR(50), "
+                + BaseballCardContract.PLAYER_POSITION_COL_NAME + " VARCHAR(20),"
+                + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", " + BaseballCardContract.YEAR_COL_NAME + ", " + BaseballCardContract.NUMBER_COL_NAME + "))";
 
         sqld.execSQL(sqlCreate);
     }
@@ -102,14 +63,14 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     public void insertBaseballCard(BaseballCard card) {
-        this.getWritableDatabase().insert(TABLE_NAME, null, this.getContentValues(card));
+        this.getWritableDatabase().insert(BaseballCardContract.TABLE_NAME, null, this.getContentValues(card));
     }
 
     public void updateBaseballCard(BaseballCard card) {
         String[] args = {card.getBrand(), Integer.toString(card.getYear()), Integer.toString(card.getNumber())};
-        String where = BRAND_COL_NAME + "=? AND " + YEAR_COL_NAME + "=? AND " + NUMBER_COL_NAME + "=?";
+        String where = BaseballCardContract.BRAND_COL_NAME + "=? AND " + BaseballCardContract.YEAR_COL_NAME + "=? AND " + BaseballCardContract.NUMBER_COL_NAME + "=?";
 
-        this.getWritableDatabase().update(TABLE_NAME, this.getContentValues(card), where, args);
+        this.getWritableDatabase().update(BaseballCardContract.TABLE_NAME, this.getContentValues(card), where, args);
     }
 
     public Cursor getCursor() {
@@ -117,55 +78,55 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     public void clearFilter() {
-        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, null, null, null, null, null);
+        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, null, null, null, null, null);
     }
 
     public void filterCursorByYear(int year) {
-        String filter = YEAR_COL_NAME + " = ?";
+        String filter = BaseballCardContract.YEAR_COL_NAME + " = ?";
         String[] args = {Integer.toString(year)};
-        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, args, null, null, null);
+        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
     }
 
     public void filterCursorByNumber(int number) {
-        String filter = NUMBER_COL_NAME + " = ?";
+        String filter = BaseballCardContract.NUMBER_COL_NAME + " = ?";
         String[] args = {Integer.toString(number)};
-        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, args, null, null, null);
+        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
     }
 
     public void filterCursorByYearAndNumber(int year, int number) {
-        String filter = YEAR_COL_NAME + " = ?  AND " + NUMBER_COL_NAME + " = ?";
+        String filter = BaseballCardContract.YEAR_COL_NAME + " = ?  AND " + BaseballCardContract.NUMBER_COL_NAME + " = ?";
         String[] args = {Integer.toString(year), Integer.toString(number)};
-        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, args, null, null, null);
+        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
     }
 
     public void filterCursorByPlayerName(String playerName) {
         // TODO: Document wild cards in user manual?
-        String filter = PLAYER_NAME_COL_NAME + " LIKE ?";
+        String filter = BaseballCardContract.PLAYER_NAME_COL_NAME + " LIKE ?";
         String[] args = {playerName};
-        this.cursor = this.getWritableDatabase().query(TABLE_NAME, null, filter, args, null, null, null);
+        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
     }
 
     public BaseballCard getBaseballCardFromCursor() {
-        String brand = this.cursor.getString(this.cursor.getColumnIndex(BRAND_COL_NAME));
-        int year = this.cursor.getInt(this.cursor.getColumnIndex(YEAR_COL_NAME));
-        int number = this.cursor.getInt(this.cursor.getColumnIndex(NUMBER_COL_NAME));
-        int value = this.cursor.getInt(this.cursor.getColumnIndex(VALUE_COL_NAME));
-        int count = this.cursor.getInt(this.cursor.getColumnIndex(COUNT_COL_NAME));
-        String name = this.cursor.getString(this.cursor.getColumnIndex(PLAYER_NAME_COL_NAME));
-        String position = this.cursor.getString(this.cursor.getColumnIndex(PLAYER_POSITION_COL_NAME));
+        String brand = this.cursor.getString(this.cursor.getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
+        int year = this.cursor.getInt(this.cursor.getColumnIndex(BaseballCardContract.YEAR_COL_NAME));
+        int number = this.cursor.getInt(this.cursor.getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
+        int value = this.cursor.getInt(this.cursor.getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
+        int count = this.cursor.getInt(this.cursor.getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
+        String name = this.cursor.getString(this.cursor.getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
+        String position = this.cursor.getString(this.cursor.getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
 
         return new BaseballCard(brand, year, number, value, count, name, position);
     }
 
     private ContentValues getContentValues(BaseballCard card) {
         ContentValues cv = new ContentValues(7);
-        cv.put(BRAND_COL_NAME, card.getBrand());
-        cv.put(YEAR_COL_NAME, card.getYear());
-        cv.put(NUMBER_COL_NAME, card.getNumber());
-        cv.put(VALUE_COL_NAME, card.getValue());
-        cv.put(COUNT_COL_NAME, card.getCount());
-        cv.put(PLAYER_NAME_COL_NAME, card.getPlayerName());
-        cv.put(PLAYER_POSITION_COL_NAME, card.getPlayerPosition());
+        cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
+        cv.put(BaseballCardContract.YEAR_COL_NAME, card.getYear());
+        cv.put(BaseballCardContract.NUMBER_COL_NAME, card.getNumber());
+        cv.put(BaseballCardContract.VALUE_COL_NAME, card.getValue());
+        cv.put(BaseballCardContract.COUNT_COL_NAME, card.getCount());
+        cv.put(BaseballCardContract.PLAYER_NAME_COL_NAME, card.getPlayerName());
+        cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME, card.getPlayerPosition());
 
         return cv;
     }

@@ -216,8 +216,8 @@ public class BaseballCardList extends ListActivity {
         }
     }
     private static final String[] ROW_PROJECTION = {
-        BaseballCardSQLHelper.BRAND_COL_NAME, BaseballCardSQLHelper.YEAR_COL_NAME,
-        BaseballCardSQLHelper.NUMBER_COL_NAME, BaseballCardSQLHelper.PLAYER_NAME_COL_NAME
+        BaseballCardContract.BRAND_COL_NAME, BaseballCardContract.YEAR_COL_NAME,
+        BaseballCardContract.NUMBER_COL_NAME, BaseballCardContract.PLAYER_NAME_COL_NAME
     };
     private static final int[] ROW_TEXT_VIEWS = {
         R.id.brand_text_view, R.id.year_text_view, R.id.number_text_view, R.id.player_name_text_view

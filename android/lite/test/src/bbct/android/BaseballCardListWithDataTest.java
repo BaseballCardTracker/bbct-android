@@ -83,7 +83,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         SQLiteDatabase db = this.dbUtil.getDatabase();
         Assert.assertNotNull(db);
         Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION, db.getVersion());
-        Assert.assertEquals(BaseballCardSQLHelper.TABLE_NAME, SQLiteDatabase.findEditTable(BaseballCardSQLHelper.TABLE_NAME));
+        Assert.assertEquals(BaseballCardContract.TABLE_NAME, SQLiteDatabase.findEditTable(BaseballCardContract.TABLE_NAME));
 
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
