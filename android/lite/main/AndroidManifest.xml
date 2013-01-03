@@ -21,9 +21,9 @@
           package="bbct.android"
           android:versionCode="2"
           android:versionName="@string/version">
-        <uses-sdk android:minSdkVersion="7" 
-                  android:targetSdkVersion="16" />
-        <application android:label="@string/app_name" android:icon="@drawable/baseball">
+    <uses-sdk android:minSdkVersion="7" 
+              android:targetSdkVersion="16" />
+    <application android:label="@string/app_name" android:icon="@drawable/baseball">
         <activity android:name=".BaseballCardList"
                   android:label="@string/app_name">
             <intent-filter>
@@ -38,5 +38,9 @@
         <activity android:name=".YearAndNumberFilter"/>
         <activity android:name=".PlayerNameFilter"/>
         <activity android:name=".About" />
+        <provider android:name=".BaseballCardProvider"
+                  android:label="@string/provider_name"
+                  android:authorities="bbct.android.baseballcardprovider"
+                  android:readPermission="bbct.android.baseballcardprovider.permission.READ" />
     </application>
 </manifest>

@@ -16,3 +16,4 @@ libs
 *.out
 /.metadata
 .settings
+/android/lite/main/nbproject/private/

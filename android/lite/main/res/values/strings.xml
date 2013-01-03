@@ -19,6 +19,7 @@
 -->
 <resources>
     <string name="app_name">BBCT for Android</string>
+    <string name="provider_name">BBCT Data</string>
     
     <!-- Activity titles -->
     <string name="bbct_title">BBCT for Android - %1$s</string>
@@ -121,4 +122,5 @@
     <string name="count_input_error">Please enter the number of cards you own.</string>
     <string name="player_name_input_error">Please enter the player\'s name.</string>
     <string name="player_position_input_error">Please enter the player\'s position.</string>
+    <string name="invalid_uri_error">Invalid URI: %1$s</string>
 </resources>

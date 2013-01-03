@@ -18,7 +18,11 @@
  */
 package bbct.android;
 
+import android.net.Uri;
+
 /**
+ * This class contains constant values which are necessary to interact correctly
+ * with {@link bbct.android.BaseballCardContentProvider}.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -28,6 +32,24 @@ public final class BaseballCardContract {
      * The table name to use in the underlying database.
      */
     public static final String TABLE_NAME = "baseball_cards";
+    /**
+     * Authority used to access data with
+     * {@link bbct.android.BaseballCardContentProvider}.
+     */
+    public static final String AUTHORITY = "bbct.android.baseballcardprovider";
+    /**
+     * URI used to access data with
+     * {@link bbct.android.BaseballCardContentProvider}.
+     */
+    public static final Uri CONTENT_URI = new Uri.Builder().scheme("content").authority(AUTHORITY).path(TABLE_NAME).build();
+    /**
+     * MIME type for a list of baseball card data.
+     */
+    public static final String BASEBALL_CARD_LIST_MIME_TYPE = "vnd.android.cursor.dir/baseball_card";
+    /**
+     * MIME type for data about a single baseball card.
+     */
+    public static final String BASEBALL_CARD_ITEM_MIME_TYPE = "vnd.android.cursor.item/baseball_card";
     /**
      * The column name for the primary key.
      */
@@ -64,6 +86,7 @@ public final class BaseballCardContract {
      * Convenience variable that can be used when the ContentResolver wants
      * every column from the ContentProvider.
      */
-    public static final String[] PROJECTION = {BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME,
+    public static final String[] PROJECTION =
+        {BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME,
         COUNT_COL_NAME, PLAYER_NAME_COL_NAME, PLAYER_POSITION_COL_NAME};
 }
