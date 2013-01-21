@@ -18,17 +18,17 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="bbct.android"
-          android:versionCode="2"
+          package="bbct.android.premium"
+          android:versionCode="1"
           android:versionName="@string/version"
 >
-    <uses-sdk android:minSdkVersion="7" 
+    <uses-sdk android:minSdkVersion="7"
               android:targetSdkVersion="16"
     />
     <application android:label="@string/app_name"
                  android:icon="@drawable/baseball"
     >
-        <activity android:name=".BaseballCardList"
+        <activity android:name="bbct.android.BaseballCardList"
                   android:label="@string/app_name"
         >
             <intent-filter>
@@ -36,23 +36,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BaseballCardDetails">
-            <intent-filter>
-                <action android:name="android.intent.action.EDIT" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="vnd.android.cursor.item/baseball_card" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".FilterOptions"/>
-        <activity android:name=".YearFilter"/>
-        <activity android:name=".NumberFilter"/>
-        <activity android:name=".YearAndNumberFilter"/>
-        <activity android:name=".PlayerNameFilter"/>
-        <activity android:name=".About" />
-        <provider android:name=".BaseballCardProvider"
-                  android:label="@string/provider_name"
-                  android:authorities="bbct.android.baseballcardprovider"
-                  android:readPermission="bbct.android.baseballcardprovider.permission.READ"
-        />
+        <activity android:name="bbct.android.BaseballCardDetails" />
+        <activity android:name="bbct.android.FilterOptions"/>
+        <activity android:name="bbct.android.YearFilter"/>
+        <activity android:name="bbct.android.NumberFilter"/>
+        <activity android:name="bbct.android.YearAndNumberFilter"/>
+        <activity android:name="bbct.android.PlayerNameFilter"/>
+        <activity android:name="bbct.android.About" />
     </application>
 </manifest>
