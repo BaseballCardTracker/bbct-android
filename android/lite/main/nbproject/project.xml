@@ -18,7 +18,27 @@
                     <location>src</location>
                 </source-folder>
             </folders>
-            <ide-actions/>
+            <ide-actions>
+                <action name="build">
+                    <target>debug</target>
+                </action>
+                <action name="clean">
+                    <target>clean</target>
+                </action>
+                <action name="run">
+                    <target>debug</target>
+                    <target>install</target>
+                </action>
+                <action name="rebuild">
+                    <target>clean</target>
+                    <target>debug</target>
+                </action>
+            </ide-actions>
+            <export>
+                <type>folder</type>
+                <location>bin/classes</location>
+                <build-target>debug</build-target>
+            </export>
             <view>
                 <items>
                     <source-folder style="packages">
@@ -33,8 +53,14 @@
                         <location>build.xml</location>
                     </source-file>
                 </items>
-                <context-menu/>
+                <context-menu>
+                    <ide-action name="build"/>
+                    <ide-action name="rebuild"/>
+                    <ide-action name="clean"/>
+                    <ide-action name="run"/>
+                </context-menu>
             </view>
+            <subprojects/>
         </general-data>
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/3">
             <compilation-unit>

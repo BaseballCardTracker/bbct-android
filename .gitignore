@@ -1,8 +1,8 @@
 /swing/build/
 /swing/db/
 /swing/dist/
-/swing/nbproject/private
 /swing/log/
+private
 *.zip
 local.properties
 bin
@@ -16,4 +16,4 @@ libs
 *.out
 /.metadata
 .settings
-/android/lite/main/nbproject/private/
+private/
