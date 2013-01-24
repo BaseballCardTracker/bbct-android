@@ -16,8 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android;
+package bbct.android.common;
 
+import android.util.Log;
 import android.widget.EditText;
 import junit.framework.Assert;
 
@@ -25,19 +26,19 @@ import junit.framework.Assert;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
+public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
 
-    public NumberFilterTest() {
-        super(NumberFilter.class);
+    public PlayerNameFilterTest() {
+        super(PlayerNameFilter.class);
     }
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
 
-        this.numberText = (EditText) this.activity.findViewById(R.id.number_text);
+        this.playerNameText = (EditText) this.activity.findViewById(R.id.player_name_text);
 
-        this.testNumber = 123;
+        this.testPlayerName = "codeguru";
     }
 
     @Override
@@ -49,15 +50,15 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
     public void testPreConditions() {
         super.testPreConditions();
 
-        Assert.assertNotNull(this.numberText);
+        Assert.assertNotNull(this.playerNameText);
 
-        Assert.assertEquals("", this.numberText.getText().toString());
-        Assert.assertTrue(this.numberText.hasFocus());
+        Assert.assertEquals("", this.playerNameText.getText().toString());
+        Assert.assertTrue(this.playerNameText.hasFocus());
     }
 
     @Override
     protected String getTitleSubString() {
-        return this.activity.getString(R.string.number_filter_title);
+        return this.activity.getString(R.string.player_name_filter_title);
     }
 
     @Override
@@ -67,13 +68,15 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
 
     @Override
     protected void setInputText() {
-        this.numberText.setText(Integer.toString(this.testNumber));
+        this.playerNameText.setText(this.testPlayerName);
     }
 
     @Override
     protected void sendInputKeys() {
-        this.getInstrumentation().sendStringSync(Integer.toString(this.testNumber));
+        Log.d(TAG, "sendInputKeys()");
+        this.getInstrumentation().sendStringSync(this.testPlayerName);
     }
-    private EditText numberText = null;
-    private int testNumber = -1;
+    private EditText playerNameText = null;
+    private String testPlayerName = null;
+    private static final String TAG = "PlayerNameFilterTest";
 }

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android;
+package bbct.android.common;
 
 import android.widget.EditText;
 import junit.framework.Assert;
@@ -25,19 +25,19 @@ import junit.framework.Assert;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class YearFilterTest extends FilterActivityTest<YearFilter> {
+public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
 
-    public YearFilterTest() {
-        super(YearFilter.class);
+    public NumberFilterTest() {
+        super(NumberFilter.class);
     }
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
 
-        this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
+        this.numberText = (EditText) this.activity.findViewById(R.id.number_text);
 
-        this.testYear = 1976;
+        this.testNumber = 123;
     }
 
     @Override
@@ -49,15 +49,15 @@ public class YearFilterTest extends FilterActivityTest<YearFilter> {
     public void testPreConditions() {
         super.testPreConditions();
 
-        Assert.assertNotNull(this.yearText);
+        Assert.assertNotNull(this.numberText);
 
-        Assert.assertEquals("", this.yearText.getText().toString());
-        Assert.assertTrue(this.yearText.hasFocus());
+        Assert.assertEquals("", this.numberText.getText().toString());
+        Assert.assertTrue(this.numberText.hasFocus());
     }
 
     @Override
     protected String getTitleSubString() {
-        return this.activity.getString(R.string.year_filter_title);
+        return this.activity.getString(R.string.number_filter_title);
     }
 
     @Override
@@ -67,13 +67,13 @@ public class YearFilterTest extends FilterActivityTest<YearFilter> {
 
     @Override
     protected void setInputText() {
-        this.yearText.setText(Integer.toString(this.testYear));
+        this.numberText.setText(Integer.toString(this.testNumber));
     }
 
     @Override
     protected void sendInputKeys() {
-        this.getInstrumentation().sendStringSync(Integer.toString(this.testYear));
+        this.getInstrumentation().sendStringSync(Integer.toString(this.testNumber));
     }
-    private EditText yearText = null;
-    private int testYear = -1;
+    private EditText numberText = null;
+    private int testNumber = -1;
 }

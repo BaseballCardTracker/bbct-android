@@ -16,29 +16,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android;
+package bbct.android.common;
 
-import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.EditText;
 import junit.framework.Assert;
 
 /**
+ * TODO: Add tests for input year but no number and for input number but no year
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
+public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFilter> {
 
-    public PlayerNameFilterTest() {
-        super(PlayerNameFilter.class);
+    public YearAndNumberFilterTest() {
+        super(YearAndNumberFilter.class);
     }
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
 
-        this.playerNameText = (EditText) this.activity.findViewById(R.id.player_name_text);
+        this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
+        this.numberText = (EditText) this.activity.findViewById(R.id.number_text);
 
-        this.testPlayerName = "codeguru";
+        this.testYear = 1976;
+        this.testNumber = 123;
     }
 
     @Override
@@ -50,15 +53,17 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
     public void testPreConditions() {
         super.testPreConditions();
 
-        Assert.assertNotNull(this.playerNameText);
+        Assert.assertNotNull(this.yearText);
+        Assert.assertNotNull(this.numberText);
 
-        Assert.assertEquals("", this.playerNameText.getText().toString());
-        Assert.assertTrue(this.playerNameText.hasFocus());
+        Assert.assertEquals("", this.yearText.getText().toString());
+        Assert.assertEquals("", this.numberText.getText().toString());
+        Assert.assertTrue(this.yearText.hasFocus());
     }
 
     @Override
     protected String getTitleSubString() {
-        return this.activity.getString(R.string.player_name_filter_title);
+        return this.activity.getString(R.string.year_and_number_filter_title);
     }
 
     @Override
@@ -68,15 +73,18 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
 
     @Override
     protected void setInputText() {
-        this.playerNameText.setText(this.testPlayerName);
+        this.yearText.setText(Integer.toString(this.testYear));
+        this.numberText.setText(Integer.toString(this.testNumber));
     }
 
     @Override
     protected void sendInputKeys() {
-        Log.d(TAG, "sendInputKeys()");
-        this.getInstrumentation().sendStringSync(this.testPlayerName);
+        this.getInstrumentation().sendStringSync(Integer.toString(this.testYear));
+        this.sendKeys(KeyEvent.KEYCODE_ENTER);
+        this.getInstrumentation().sendStringSync(Integer.toString(this.testNumber));
     }
-    private EditText playerNameText = null;
-    private String testPlayerName = null;
-    private static final String TAG = "PlayerNameFilterTest";
+    private EditText yearText = null;
+    private EditText numberText = null;
+    private int testYear = -1;
+    private int testNumber = -1;
 }
