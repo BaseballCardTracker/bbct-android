@@ -34,8 +34,9 @@ import android.widget.RadioGroup;
  * loaded when the user clicks the OK button. This activity contains the correct
  * widgets to get input from the user for the parameters of the chosen filter
  * criteria.
- * 
- * TODO: Remove OK and Cancel buttons. Jump directly to the appropriate XxxFilter activity when user clicks a radio button.
+ *
+ * TODO: Remove OK and Cancel buttons. Jump directly to the appropriate
+ * XxxFilter activity when user clicks a radio button.
  *
  * @see YearFilter
  * @see NumberFilter
@@ -70,21 +71,17 @@ public class FilterOptions extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case R.id.year_filter_request:
-            case R.id.number_filter_request:
-            case R.id.year_and_number_filter_request:
-            case R.id.player_name_filter_request:
-                if (resultCode == RESULT_OK) {
-                    this.setResult(RESULT_OK, data);
-                    this.finish();
-                }
-                break;
-
-            default:
-                Log.e(TAG, "Invalid Activity request: " + requestCode);
-                // TODO: Throw an exception?
-                break;
+        if (requestCode == R.id.year_filter_request
+                || requestCode == R.id.number_filter_request
+                || requestCode == R.id.year_and_number_filter_request
+                || requestCode == R.id.player_name_filter_request) {
+            if (resultCode == RESULT_OK) {
+                this.setResult(RESULT_OK, data);
+                this.finish();
+            }
+        } else {
+            Log.e(TAG, "onActivityResult(): Invalid Activity request: " + requestCode);
+            // TODO: Throw an exception?
         }
     }
     private View.OnClickListener onOk = new View.OnClickListener() {
@@ -93,36 +90,25 @@ public class FilterOptions extends Activity {
             Log.d(TAG, "OK button clicked.");
             RadioGroup filterByRadioGroup = (RadioGroup) FilterOptions.this.findViewById(R.id.filter_options_radio_group);
 
-            switch (filterByRadioGroup.getCheckedRadioButtonId()) {
-                case NONE:
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FilterOptions.this);
-                    dialogBuilder.setTitle(R.string.input_error_title);
-                    dialogBuilder.setMessage(R.string.no_radio_button_error);
-                    dialogBuilder.setPositiveButton(R.string.ok_button, FilterOptions.this.onDialogOkClick);
-                    dialogBuilder.show();
-                    break;
-
-                case R.id.year_filter_radio_button:
-                    Log.d(TAG, "Year radio button selected.");
-                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearFilter.class), R.id.year_filter_request);
-                    break;
-
-                case R.id.number_filter_radio_button:
-                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, NumberFilter.class), R.id.number_filter_request);
-                    break;
-
-                case R.id.year_and_number_filter_radio_button:
-                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearAndNumberFilter.class), R.id.year_and_number_filter_request);
-                    break;
-
-                case R.id.player_name_filter_radio_button:
-                    FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, PlayerNameFilter.class), R.id.player_name_filter_request);
-                    break;
-
-                default:
-                    Log.e(TAG, "Invalid radio button ID.");
-                    // TODO: Throw an exception?
-                    break;
+            int radioButtonId = filterByRadioGroup.getCheckedRadioButtonId();
+            if (radioButtonId == NONE) {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FilterOptions.this);
+                dialogBuilder.setTitle(R.string.input_error_title);
+                dialogBuilder.setMessage(R.string.no_radio_button_error);
+                dialogBuilder.setPositiveButton(R.string.ok_button, FilterOptions.this.onDialogOkClick);
+                dialogBuilder.show();
+            } else if (radioButtonId == R.id.year_filter_radio_button) {
+                Log.d(TAG, "Year radio button selected.");
+                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearFilter.class), R.id.year_filter_request);
+            } else if (radioButtonId == R.id.number_filter_radio_button) {
+                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, NumberFilter.class), R.id.number_filter_request);
+            } else if (radioButtonId == R.id.year_and_number_filter_radio_button) {
+                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearAndNumberFilter.class), R.id.year_and_number_filter_request);
+            } else if (radioButtonId == R.id.player_name_filter_radio_button) {
+                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, PlayerNameFilter.class), R.id.player_name_filter_request);
+            } else {
+                Log.e(TAG, "Invalid radio button ID.");
+                // TODO: Throw an exception?
             }
         }
     };

@@ -58,35 +58,28 @@ public class BaseballCardList extends ListActivity {
             this.filterParams = savedInstanceState.getBundle(this.getString(R.string.filter_params_extra));
         }
 
-        switch (this.filterRequest) {
-            case R.id.year_filter_request:
-                int year = this.filterParams.getInt(this.getString(R.string.year_extra));
-                this.sqlHelper.filterCursorByYear(year);
-                break;
-
-            case R.id.number_filter_request:
-                int number = this.filterParams.getInt(this.getString(R.string.number_extra));
-                this.sqlHelper.filterCursorByNumber(number);
-                break;
-
-            case R.id.year_and_number_filter_request:
-                year = this.filterParams.getInt(this.getString(R.string.year_extra));
-                number = this.filterParams.getInt(this.getString(R.string.number_extra));
-                this.sqlHelper.filterCursorByYearAndNumber(year, number);
-                break;
-
-            case R.id.player_name_filter_request:
-                String playerName = this.filterParams.getString(this.getString(R.string.player_name_extra));
-                this.sqlHelper.filterCursorByPlayerName(playerName);
-                break;
-
-            default:
-                Log.e(TAG, "onCreate(): Invalid filter request code.");
-                // TODO: Throw an exception?
-                break;
+        int year = -1;
+        int number = -1;
+        if (this.filterRequest == R.id.year_filter_request) {
+            year = this.filterParams.getInt(this.getString(R.string.year_extra));
+            this.sqlHelper.filterCursorByYear(year);
+        } else if (this.filterRequest == R.id.number_filter_request) {
+            number = this.filterParams.getInt(this.getString(R.string.number_extra));
+            this.sqlHelper.filterCursorByNumber(number);
+        } else if (this.filterRequest == R.id.year_and_number_filter_request) {
+            year = this.filterParams.getInt(this.getString(R.string.year_extra));
+            number = this.filterParams.getInt(this.getString(R.string.number_extra));
+            this.sqlHelper.filterCursorByYearAndNumber(year, number);
+        } else if (this.filterRequest == R.id.player_name_filter_request) {
+            String playerName = this.filterParams.getString(this.getString(R.string.player_name_extra));
+            this.sqlHelper.filterCursorByPlayerName(playerName);
+        } else {
+            Log.e(TAG, "onCreate(): Invalid filter request code.");
+            // TODO: Throw an exception?
         }
 
-        if (cursor.getCount() == 0) {
+        if (cursor.getCount()
+                == 0) {
             Toast.makeText(this, R.string.start, Toast.LENGTH_LONG).show();
         }
     }
@@ -120,28 +113,29 @@ public class BaseballCardList extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_menu:
-                Intent intent = new Intent(Intent.ACTION_EDIT, BaseballCardDetails.DETAILS_URI);
-                intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
-                this.startActivity(intent);
-                return true;
+        int itemId = item.getItemId();
 
-            case R.id.filter_menu:
-                this.startActivityForResult(new Intent(this, FilterOptions.class), R.id.filter_options_request);
-                return true;
-
-            case R.id.clear_filter_menu:
-                this.sqlHelper.clearFilter();
-                Cursor cursor = this.sqlHelper.getCursor();
-                this.adapter.swapCursor(cursor);
-                this.startManagingCursor(cursor);
-                this.invalidateOptionsMenu();
-                return true;
-
-            case R.id.about_menu:
-                this.startActivity(new Intent(this, About.class));
-                return true;
+        if (itemId == R.id.add_menu) {
+            Intent intent = new Intent(Intent.ACTION_EDIT, BaseballCardDetails.DETAILS_URI);
+            intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
+            this.startActivity(intent);
+            return true;
+        } else if (itemId == R.id.filter_menu) {
+            this.startActivityForResult(new Intent(this, FilterOptions.class), R.id.filter_options_request);
+            return true;
+        } else if (itemId == R.id.clear_filter_menu) {
+            this.sqlHelper.clearFilter();
+            Cursor cursor = this.sqlHelper.getCursor();
+            this.adapter.swapCursor(cursor);
+            this.startManagingCursor(cursor);
+            this.invalidateOptionsMenu();
+            return true;
+        } else if (itemId == R.id.about_menu) {
+            this.startActivity(new Intent(this, About.class));
+            return true;
+        } else {
+            Log.e(TAG, "onOptionsItemSelected(): Invalid menu code");
+            // TODO Throw exceptoin?
         }
 
         return super.onOptionsItemSelected(item);
@@ -167,55 +161,48 @@ public class BaseballCardList extends ListActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case R.id.filter_options_request:
-                if (resultCode == RESULT_OK) {
-                    this.filterRequest = data.getIntExtra(this.getString(R.string.filter_request_extra), DEFAULT_INT_EXTRA);
-                    this.filterParams = new Bundle();
+        if (requestCode == R.id.filter_options_request) {
+            if (resultCode == RESULT_OK) {
+                this.filterRequest = data.getIntExtra(this.getString(R.string.filter_request_extra), DEFAULT_INT_EXTRA);
+                this.filterParams = new Bundle();
 
-                    switch (this.filterRequest) {
-                        case R.id.year_filter_request:
-                            int year = data.getIntExtra(this.getString(R.string.year_extra), DEFAULT_INT_EXTRA);
-                            this.filterParams.putInt(this.getString(R.string.year_extra), year);
-                            this.sqlHelper.filterCursorByYear(year);
-                            break;
-
-                        case R.id.number_filter_request:
-                            int number = data.getIntExtra(this.getString(R.string.number_extra), DEFAULT_INT_EXTRA);
-                            this.filterParams.putInt(this.getString(R.string.number_extra), number);
-                            this.sqlHelper.filterCursorByNumber(number);
-                            break;
-
-                        case R.id.year_and_number_filter_request:
-                            year = data.getIntExtra(this.getString(R.string.year_extra), DEFAULT_INT_EXTRA);
-                            number = data.getIntExtra(this.getString(R.string.number_extra), DEFAULT_INT_EXTRA);
-                            this.filterParams.putInt(this.getString(R.string.year_extra), year);
-                            this.filterParams.putInt(this.getString(R.string.number_extra), number);
-                            this.sqlHelper.filterCursorByYearAndNumber(year, number);
-                            break;
-
-                        case R.id.player_name_filter_request:
-                            String playerName = data.getStringExtra(this.getString(R.string.player_name_extra));
-                            this.filterParams.putString(this.getString(R.string.player_name_extra), playerName);
-                            this.sqlHelper.filterCursorByPlayerName(playerName);
-                            break;
-
-                        default:
-                            Log.e(TAG, "onActivityResult(): Invalid filter request code.");
-                            // TODO: Throw an exception?
-                            break;
-                    }
-
-                    Cursor cursor = this.sqlHelper.getCursor();
-                    if (cursor.getCount() == 0) {
-                        String msg = this.getString(R.string.no_cards_message);
-                        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-                    } else {
-                        this.adapter.swapCursor(cursor);
-                        this.startManagingCursor(cursor);
-                    }
+                int year = -1;
+                int number = -1;
+                if (this.filterRequest == R.id.year_filter_request) {
+                    year = data.getIntExtra(this.getString(R.string.year_extra), DEFAULT_INT_EXTRA);
+                    this.filterParams.putInt(this.getString(R.string.year_extra), year);
+                    this.sqlHelper.filterCursorByYear(year);
+                } else if (this.filterRequest == R.id.number_filter_request) {
+                    number = data.getIntExtra(this.getString(R.string.number_extra), DEFAULT_INT_EXTRA);
+                    this.filterParams.putInt(this.getString(R.string.number_extra), number);
+                    this.sqlHelper.filterCursorByNumber(number);
+                } else if (this.filterRequest == R.id.year_and_number_filter_request) {
+                    year = data.getIntExtra(this.getString(R.string.year_extra), DEFAULT_INT_EXTRA);
+                    number = data.getIntExtra(this.getString(R.string.number_extra), DEFAULT_INT_EXTRA);
+                    this.filterParams.putInt(this.getString(R.string.year_extra), year);
+                    this.filterParams.putInt(this.getString(R.string.number_extra), number);
+                    this.sqlHelper.filterCursorByYearAndNumber(year, number);
+                } else if (this.filterRequest == R.id.player_name_filter_request) {
+                    String playerName = data.getStringExtra(this.getString(R.string.player_name_extra));
+                    this.filterParams.putString(this.getString(R.string.player_name_extra), playerName);
+                    this.sqlHelper.filterCursorByPlayerName(playerName);
+                } else {
+                    Log.e(TAG, "onActivityResult(): Invalid filter request code.");
+                    // TODO: Throw an exception?
                 }
-                break;
+
+                Cursor cursor = this.sqlHelper.getCursor();
+                if (cursor.getCount() == 0) {
+                    String msg = this.getString(R.string.no_cards_message);
+                    Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+                } else {
+                    this.adapter.swapCursor(cursor);
+                    this.startManagingCursor(cursor);
+                }
+            }
+        } else {
+            Log.e(TAG, "onActivityResult(): Invalid result code.");
+            // TODO Throw exception?
         }
     }
     private static final String[] ROW_PROJECTION = {
