@@ -19,6 +19,8 @@
 package bbct.android;
 
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
@@ -36,5 +38,8 @@ public class BaseballCardList extends bbct.android.common.BaseballCardList {
         AdRequest adRequest = new AdRequest();
         adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
         adView.loadAd(adRequest);
+        
+        TextView premiumText = (TextView) this.findViewById(R.id.premium_text);
+        premiumText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }
