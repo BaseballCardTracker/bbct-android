@@ -48,6 +48,8 @@ public final class BaseballCardContract {
     public static final String BASEBALL_CARD_LIST_MIME_TYPE = "vnd.android.cursor.dir/baseball_card";
     /**
      * MIME type for data about a single baseball card.
+     * 
+     * TODO How can I centralize this so I don't repeat it in AndroidManifest.xml?
      */
     public static final String BASEBALL_CARD_ITEM_MIME_TYPE = "vnd.android.cursor.item/baseball_card";
     /**

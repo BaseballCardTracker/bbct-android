@@ -122,7 +122,9 @@ public class BaseballCardList extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_menu:
-                this.startActivity(new Intent(this, BaseballCardDetails.class));
+                Intent intent = new Intent(Intent.ACTION_EDIT, BaseballCardDetails.DETAILS_URI);
+                intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
+                this.startActivity(intent);
                 return true;
 
             case R.id.filter_menu:
@@ -155,11 +157,12 @@ public class BaseballCardList extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        Intent i = new Intent(BaseballCardList.this, BaseballCardDetails.class);
+        Intent intent = new Intent(Intent.ACTION_EDIT, BaseballCardDetails.DETAILS_URI);
         BaseballCard card = BaseballCardList.this.sqlHelper.getBaseballCardFromCursor();
 
-        i.putExtra(this.getString(R.string.baseball_card_extra), card);
-        BaseballCardList.this.startActivity(i);
+        intent.putExtra(this.getString(R.string.baseball_card_extra), card);
+        intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
+        BaseballCardList.this.startActivity(intent);
     }
 
     @Override

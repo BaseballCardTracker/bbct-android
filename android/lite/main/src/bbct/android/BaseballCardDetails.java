@@ -19,6 +19,7 @@
 package bbct.android;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,12 @@ import bbct.common.exceptions.InputException;
  */
 public class BaseballCardDetails extends Activity {
 
+    private static final String DETAILS_AUTHORITY = "bbct.android";
+    
+    private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
+    
+    public static final Uri DETAILS_URI = new Uri.Builder().scheme("content").authority(DETAILS_AUTHORITY).path(TABLE_NAME).build();
+    
     /**
      * Called when the activity is first created.
      */
