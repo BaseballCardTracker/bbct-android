@@ -18,11 +18,14 @@
  */
 package bbct.android;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+import java.util.Arrays;
+import java.util.HashSet;
 
 /**
  *
@@ -36,9 +39,16 @@ public class BaseballCardList extends bbct.android.common.BaseballCardList {
 
         AdView adView = (AdView) this.findViewById(R.id.ad_view);
         AdRequest adRequest = new AdRequest();
-        adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
-        adView.loadAd(adRequest);
+
+        if (Build.PRODUCT.contains("sdk")) {
+            adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
+        }
         
+        String[] keywords = this.getResources().getStringArray(R.array.keywords);
+        adRequest.addKeywords(new HashSet<String>(Arrays.asList(keywords)));
+
+        adView.loadAd(adRequest);
+
         TextView premiumText = (TextView) this.findViewById(R.id.premium_text);
         premiumText.setMovementMethod(LinkMovementMethod.getInstance());
     }
