@@ -18,11 +18,11 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="app_name">BBCT for Android</string>
+    <string name="app_name">BBCT Common</string>
     <string name="provider_name">BBCT Data</string>
     
     <!-- Activity titles -->
-    <string name="bbct_title">BBCT for Android - %1$s</string>
+    <string name="bbct_title">BBCT Common - %1$s</string>
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
     <string name="filter_options_title">Filter Options</string>
@@ -82,8 +82,8 @@
     <string name="about_menu">About</string>
     
     <!-- Text in About activity -->
-    <string name="version">Version 0.5.1 (beta)</string>
-    <string name="copyright">Copyright 2012 by codeguru</string>
+    <string name="version">Version 0.5</string>
+    <string name="copyright">Copyright 2012-13 by codeguru</string>
     <string name="email">Email: &lt;codeguru@users.sf.net&gt;</string>
     <string name="website">Website: http://sf.net/p/bbct</string>
     <string name="license">This software is licensed under the GPL. Visit\nhttp://www.gnu.org/licenses/ for a copy of the license.</string>

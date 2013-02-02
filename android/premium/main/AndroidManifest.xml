@@ -28,7 +28,7 @@
     <application android:label="@string/app_name"
                  android:icon="@drawable/baseball"
     >
-        <activity android:name="bbct.android.BaseballCardList"
+        <activity android:name="bbct.android.common.BaseballCardList"
                   android:label="@string/app_name"
         >
             <intent-filter>
@@ -36,12 +36,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="bbct.android.BaseballCardDetails" />
-        <activity android:name="bbct.android.FilterOptions"/>
-        <activity android:name="bbct.android.YearFilter"/>
-        <activity android:name="bbct.android.NumberFilter"/>
-        <activity android:name="bbct.android.YearAndNumberFilter"/>
-        <activity android:name="bbct.android.PlayerNameFilter"/>
-        <activity android:name="bbct.android.About" />
+        <activity android:name="bbct.android.common.BaseballCardDetails" />
+        <activity android:name="bbct.android.common.FilterOptions"/>
+        <activity android:name="bbct.android.common.YearFilter"/>
+        <activity android:name="bbct.android.common.NumberFilter"/>
+        <activity android:name="bbct.android.common.YearAndNumberFilter"/>
+        <activity android:name="bbct.android.common.PlayerNameFilter"/>
+        <activity android:name="bbct.android.common.About" />
     </application>
 </manifest>
