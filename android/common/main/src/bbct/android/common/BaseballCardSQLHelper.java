@@ -42,7 +42,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqld) {
+    public void onCreate(SQLiteDatabase db) {
         String sqlCreate = "CREATE TABLE IF NOT EXISTS " + BaseballCardContract.TABLE_NAME + "("
                 + BaseballCardContract.ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + BaseballCardContract.BRAND_COL_NAME + " VARCHAR(10), "
@@ -54,11 +54,11 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                 + BaseballCardContract.PLAYER_POSITION_COL_NAME + " VARCHAR(20),"
                 + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", " + BaseballCardContract.YEAR_COL_NAME + ", " + BaseballCardContract.NUMBER_COL_NAME + "))";
 
-        sqld.execSQL(sqlCreate);
+        db.execSQL(sqlCreate);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqld, int oldVersion, int newVersion) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // no-op
     }
 

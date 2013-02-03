@@ -71,7 +71,7 @@
             <compilation-unit>
                 <package-root>src</package-root>
                 <package-root>gen</package-root>
-                <classpath mode="compile">/usr/local/bin/android-sdk-linux/platforms/android-16/android.jar:../../lite/main/bin/classes</classpath>
+                <classpath mode="compile">/usr/local/bin/android-sdk-linux/platforms/android-16/android.jar;../../common/main/bin/classes.jar</classpath>
                 <source-level>1.5</source-level>
             </compilation-unit>
         </java-data>
