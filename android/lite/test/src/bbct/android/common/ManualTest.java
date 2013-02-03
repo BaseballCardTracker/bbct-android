@@ -28,10 +28,10 @@ import java.util.List;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class ManualTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
+public class ManualTest extends ActivityInstrumentationTestCase2<bbct.android.BaseballCardList> {
 
     public ManualTest() {
-        super(BaseballCardList.class);
+        super(bbct.android.BaseballCardList.class);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ManualTest extends ActivityInstrumentationTestCase2<BaseballCardLis
      * Adds data to the app's database.
      * @throws IOException If an error occurs while populating the database.
      */
-    public void testMannually() throws IOException {
+    public void testManually() throws IOException {
         this.getActivity();
         InputStream in = this.getInstrumentation().getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader input = new BaseballCardCsvFileReader(in, true);
