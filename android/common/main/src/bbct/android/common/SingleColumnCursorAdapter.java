@@ -21,11 +21,13 @@ package bbct.android.common;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  *
@@ -36,9 +38,15 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
     public SingleColumnCursorAdapter(Activity activity, String colName) {
         super(activity, null, true);
 
-        this.activity = activity;
-        this.colName = colName;
-        this.sqlHelper = new BaseballCardSQLHelper(activity);
+        try {
+            this.activity = activity;
+            this.colName = colName;
+            this.sqlHelper = SQLHelperFactory.getSQLHelper(activity);
+        } catch (SQLHelperCreationException ex) {
+            // TODO Show a dialog and exit app
+            Toast.makeText(activity, R.string.database_error, Toast.LENGTH_LONG).show();
+            Log.e(TAG, ex.getMessage());
+        }
     }
 
     @Override
@@ -61,10 +69,11 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
     public Cursor runQueryOnBackgroundThread(CharSequence constraint) {
         Cursor cursor = this.sqlHelper.getDistinctValues(this.colName, constraint == null ? null : constraint.toString());
         this.activity.startManagingCursor(cursor);
-        
+
         return cursor;
     }
     private String colName = null;
     private BaseballCardSQLHelper sqlHelper = null;
     private Activity activity = null;
+    private String TAG = SingleColumnCursorAdapter.class.getName();
 }

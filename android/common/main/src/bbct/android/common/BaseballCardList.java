@@ -45,42 +45,47 @@ public class BaseballCardList extends ListActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.sqlHelper = new BaseballCardSQLHelper(this);
-        Cursor cursor = this.sqlHelper.getCursor();
-        this.startManagingCursor(cursor);
-        this.adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, ROW_PROJECTION, ROW_TEXT_VIEWS);
-        this.setListAdapter(this.adapter);
+        try {
+            super.onCreate(savedInstanceState);
+            this.sqlHelper = SQLHelperFactory.getSQLHelper(this);
+            Cursor cursor = this.sqlHelper.getCursor();
+            this.startManagingCursor(cursor);
+            this.adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, ROW_PROJECTION, ROW_TEXT_VIEWS);
+            this.setListAdapter(this.adapter);
 
-        this.setContentView(R.layout.card_list);
-        if (savedInstanceState != null) {
-            this.filterRequest = savedInstanceState.getInt(this.getString(R.string.filter_request_extra));
-            this.filterParams = savedInstanceState.getBundle(this.getString(R.string.filter_params_extra));
-        }
+            this.setContentView(R.layout.card_list);
+            if (savedInstanceState != null) {
+                this.filterRequest = savedInstanceState.getInt(this.getString(R.string.filter_request_extra));
+                this.filterParams = savedInstanceState.getBundle(this.getString(R.string.filter_params_extra));
+            }
 
-        int year = -1;
-        int number = -1;
-        if (this.filterRequest == R.id.year_filter_request) {
-            year = this.filterParams.getInt(this.getString(R.string.year_extra));
-            this.sqlHelper.filterCursorByYear(year);
-        } else if (this.filterRequest == R.id.number_filter_request) {
-            number = this.filterParams.getInt(this.getString(R.string.number_extra));
-            this.sqlHelper.filterCursorByNumber(number);
-        } else if (this.filterRequest == R.id.year_and_number_filter_request) {
-            year = this.filterParams.getInt(this.getString(R.string.year_extra));
-            number = this.filterParams.getInt(this.getString(R.string.number_extra));
-            this.sqlHelper.filterCursorByYearAndNumber(year, number);
-        } else if (this.filterRequest == R.id.player_name_filter_request) {
-            String playerName = this.filterParams.getString(this.getString(R.string.player_name_extra));
-            this.sqlHelper.filterCursorByPlayerName(playerName);
-        } else {
-            Log.e(TAG, "onCreate(): Invalid filter request code.");
-            // TODO: Throw an exception?
-        }
+            int year = -1;
+            int number = -1;
+            if (this.filterRequest == R.id.year_filter_request) {
+                year = this.filterParams.getInt(this.getString(R.string.year_extra));
+                this.sqlHelper.filterCursorByYear(year);
+            } else if (this.filterRequest == R.id.number_filter_request) {
+                number = this.filterParams.getInt(this.getString(R.string.number_extra));
+                this.sqlHelper.filterCursorByNumber(number);
+            } else if (this.filterRequest == R.id.year_and_number_filter_request) {
+                year = this.filterParams.getInt(this.getString(R.string.year_extra));
+                number = this.filterParams.getInt(this.getString(R.string.number_extra));
+                this.sqlHelper.filterCursorByYearAndNumber(year, number);
+            } else if (this.filterRequest == R.id.player_name_filter_request) {
+                String playerName = this.filterParams.getString(this.getString(R.string.player_name_extra));
+                this.sqlHelper.filterCursorByPlayerName(playerName);
+            } else {
+                Log.e(TAG, "onCreate(): Invalid filter request code.");
+                // TODO: Throw an exception?
+            }
 
-        if (cursor.getCount()
-                == 0) {
-            Toast.makeText(this, R.string.start, Toast.LENGTH_LONG).show();
+            if (cursor.getCount() == 0) {
+                Toast.makeText(this, R.string.start, Toast.LENGTH_LONG).show();
+            }
+        } catch (SQLHelperCreationException ex) {
+            // TODO Show a dialog and exit app
+            Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG).show();
+            Log.e(TAG, ex.getMessage());
         }
     }
 

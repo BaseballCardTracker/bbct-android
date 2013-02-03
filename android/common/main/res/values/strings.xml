@@ -123,4 +123,5 @@
     <string name="player_name_input_error">Please enter the player\'s name.</string>
     <string name="player_position_input_error">Please enter the player\'s position.</string>
     <string name="invalid_uri_error">Invalid URI: %1$s</string>
+    <string name="database_error">Error occured while connecting to database.</string>
 </resources>

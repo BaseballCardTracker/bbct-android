@@ -41,71 +41,75 @@ import bbct.common.exceptions.InputException;
 public class BaseballCardDetails extends Activity {
 
     private static final String DETAILS_AUTHORITY = "bbct.android.details";
-    
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
-    
     public static final Uri DETAILS_URI = new Uri.Builder().scheme("content").authority(DETAILS_AUTHORITY).path(TABLE_NAME).build();
-    
+
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.card_details);
+        try {
+            super.onCreate(savedInstanceState);
+            this.setContentView(R.layout.card_details);
 
-        String format = this.getString(R.string.bbct_title);
-        String cardDetailsTitle = this.getString(R.string.card_details_title);
-        String title = String.format(format, cardDetailsTitle);
-        this.setTitle(title);
+            String format = this.getString(R.string.bbct_title);
+            String cardDetailsTitle = this.getString(R.string.card_details_title);
+            String title = String.format(format, cardDetailsTitle);
+            this.setTitle(title);
 
-        this.sqlHelper = new BaseballCardSQLHelper(this);
-        Cursor cursor = this.sqlHelper.getCursor();
-        this.startManagingCursor(cursor);
-        
-        this.brandText = (AutoCompleteTextView) this.findViewById(R.id.brand_text);
-        CursorAdapter brandAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.BRAND_COL_NAME);
-        this.brandText.setAdapter(brandAdapter);
+            this.sqlHelper = SQLHelperFactory.getSQLHelper(this);
+            Cursor cursor = this.sqlHelper.getCursor();
+            this.startManagingCursor(cursor);
 
-        this.yearText = (EditText) this.findViewById(R.id.year_text);
-        this.numberText = (EditText) this.findViewById(R.id.number_text);
-        this.valueText = (EditText) this.findViewById(R.id.value_text);
-        this.countText = (EditText) this.findViewById(R.id.count_text);
+            this.brandText = (AutoCompleteTextView) this.findViewById(R.id.brand_text);
+            CursorAdapter brandAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.BRAND_COL_NAME);
+            this.brandText.setAdapter(brandAdapter);
 
-        this.playerNameText = (AutoCompleteTextView) this.findViewById(R.id.player_name_text);
-        CursorAdapter playerNameAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.PLAYER_NAME_COL_NAME);
-        this.playerNameText.setAdapter(playerNameAdapter);
+            this.yearText = (EditText) this.findViewById(R.id.year_text);
+            this.numberText = (EditText) this.findViewById(R.id.number_text);
+            this.valueText = (EditText) this.findViewById(R.id.value_text);
+            this.countText = (EditText) this.findViewById(R.id.count_text);
 
-        this.playerPositionSpinner = (Spinner) this.findViewById(R.id.player_position_text);
-        ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter.createFromResource(this, R.array.positions, android.R.layout.simple_spinner_item);
-        positionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.playerPositionSpinner.setAdapter(positionsAdapter);
+            this.playerNameText = (AutoCompleteTextView) this.findViewById(R.id.player_name_text);
+            CursorAdapter playerNameAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.PLAYER_NAME_COL_NAME);
+            this.playerNameText.setAdapter(playerNameAdapter);
 
-        Button saveButton = (Button) this.findViewById(R.id.save_button);
-        saveButton.setOnClickListener(this.onSave);
+            this.playerPositionSpinner = (Spinner) this.findViewById(R.id.player_position_text);
+            ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter.createFromResource(this, R.array.positions, android.R.layout.simple_spinner_item);
+            positionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            this.playerPositionSpinner.setAdapter(positionsAdapter);
 
-        Button doneButton = (Button) this.findViewById(R.id.done_button);
-        doneButton.setOnClickListener(this.onDone);
+            Button saveButton = (Button) this.findViewById(R.id.save_button);
+            saveButton.setOnClickListener(this.onSave);
 
-        BaseballCard card = (BaseballCard) this.getIntent().getSerializableExtra(this.getString(R.string.baseball_card_extra));
+            Button doneButton = (Button) this.findViewById(R.id.done_button);
+            doneButton.setOnClickListener(this.onDone);
 
-        if (card != null) {
-            this.isUpdating = true;
-            this.brandText.setText(card.getBrand());
-            this.yearText.setText(Integer.toString(card.getYear()));
-            this.numberText.setText(Integer.toString(card.getNumber()));
-            this.valueText.setText(Double.toString(card.getValue() / 100.0));
-            this.countText.setText(Integer.toString(card.getCount()));
-            this.playerNameText.setText(card.getPlayerName());
+            BaseballCard card = (BaseballCard) this.getIntent().getSerializableExtra(this.getString(R.string.baseball_card_extra));
 
-            int selectedPosition = positionsAdapter.getPosition(card.getPlayerPosition());
-            this.playerPositionSpinner.setSelection(selectedPosition);
+            if (card != null) {
+                this.isUpdating = true;
+                this.brandText.setText(card.getBrand());
+                this.yearText.setText(Integer.toString(card.getYear()));
+                this.numberText.setText(Integer.toString(card.getNumber()));
+                this.valueText.setText(Double.toString(card.getValue() / 100.0));
+                this.countText.setText(Integer.toString(card.getCount()));
+                this.playerNameText.setText(card.getPlayerName());
 
-            this.brandText.setEnabled(false);
-            this.yearText.setEnabled(false);
-            this.numberText.setEnabled(false);
-            this.playerNameText.setEnabled(false);
-            this.playerPositionSpinner.setEnabled(false);
+                int selectedPosition = positionsAdapter.getPosition(card.getPlayerPosition());
+                this.playerPositionSpinner.setSelection(selectedPosition);
+
+                this.brandText.setEnabled(false);
+                this.yearText.setEnabled(false);
+                this.numberText.setEnabled(false);
+                this.playerNameText.setEnabled(false);
+                this.playerPositionSpinner.setEnabled(false);
+            }
+        } catch (SQLHelperCreationException ex) {
+            // TODO Show a dialog and exit app
+            Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG).show();
+            Log.e(TAG, ex.getMessage());
         }
     }
 

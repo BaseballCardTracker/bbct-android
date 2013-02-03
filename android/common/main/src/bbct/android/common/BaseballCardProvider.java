@@ -22,6 +22,8 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
  *
@@ -31,9 +33,16 @@ public class BaseballCardProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        this.sqlHelper = new BaseballCardSQLHelper(this.getContext());
+        try {
+            this.sqlHelper = SQLHelperFactory.getSQLHelper(this.getContext());
 
-        return true;
+            return true;
+        } catch (SQLHelperCreationException ex) {
+            // TODO Show a dialog and exit app
+            Toast.makeText(this.getContext(), R.string.database_error, Toast.LENGTH_LONG).show();
+            Log.e(TAG, ex.getMessage());
+            return false;
+        }
     }
 
     @Override
@@ -71,4 +80,5 @@ public class BaseballCardProvider extends ContentProvider {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     private BaseballCardSQLHelper sqlHelper = null;
+    private String TAG = BaseballCardProvider.class.getName();
 }
