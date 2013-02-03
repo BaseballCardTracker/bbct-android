@@ -18,22 +18,34 @@
  */
 package bbct.android.premium;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import bbct.android.common.BaseballCardContract;
+import bbct.common.data.BaseballCard;
+import java.util.List;
 
 /**
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardSQLHelper extends bbct.android.common.BaseballCardSQLHelper {
-    
+
     public BaseballCardSQLHelper(Context context) {
         super(context);
+
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         super.onCreate(db);
+
+        ContentResolver resolver = this.context.getContentResolver();
+        Cursor results = resolver.query(BaseballCardContract.CONTENT_URI, BaseballCardContract.PROJECTION, null, null, null);
+        List<BaseballCard> cards = this.getAllBaseballCardsFromCursor(results);
+        this.insertAllBaseballCards(cards);
     }
-    
+    private Context context = null;
 }

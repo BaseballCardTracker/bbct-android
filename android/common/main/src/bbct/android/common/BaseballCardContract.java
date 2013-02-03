@@ -18,6 +18,7 @@
  */
 package bbct.android.common;
 
+import android.content.ContentResolver;
 import android.net.Uri;
 
 /**
@@ -36,7 +37,7 @@ public final class BaseballCardContract {
      * Authority used to access data with
      * {@link bbct.android.BaseballCardContentProvider}.
      */
-    public static final String AUTHORITY = "bbct.android.baseballcardprovider";
+    public static final String AUTHORITY = "bbct.android.baseballcard";
     /**
      * URI used to access data with
      * {@link bbct.android.BaseballCardContentProvider}.
@@ -45,13 +46,13 @@ public final class BaseballCardContract {
     /**
      * MIME type for a list of baseball card data.
      */
-    public static final String BASEBALL_CARD_LIST_MIME_TYPE = "vnd.android.cursor.dir/baseball_card";
+    public static final String BASEBALL_CARD_LIST_MIME_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/baseball_card";
     /**
      * MIME type for data about a single baseball card.
      * 
      * TODO How can I centralize this so I don't repeat it in AndroidManifest.xml?
      */
-    public static final String BASEBALL_CARD_ITEM_MIME_TYPE = "vnd.android.cursor.item/baseball_card";
+    public static final String BASEBALL_CARD_ITEM_MIME_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/baseball_card";
     /**
      * The column name for the primary key.
      */

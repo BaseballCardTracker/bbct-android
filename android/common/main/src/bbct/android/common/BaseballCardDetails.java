@@ -40,7 +40,7 @@ import bbct.common.exceptions.InputException;
  */
 public class BaseballCardDetails extends Activity {
 
-    private static final String DETAILS_AUTHORITY = "bbct.android";
+    private static final String DETAILS_AUTHORITY = "bbct.android.details";
     
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
     

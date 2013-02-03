@@ -24,6 +24,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import bbct.common.data.BaseballCard;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO: Write JUnit tests.
@@ -64,6 +66,20 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     public void insertBaseballCard(BaseballCard card) {
         this.getWritableDatabase().insert(BaseballCardContract.TABLE_NAME, null, this.getContentValues(card));
+    }
+
+    public void insertAllBaseballCards(List<BaseballCard> cards) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.beginTransactionNonExclusive();
+        try {
+            for (BaseballCard card : cards) {
+                db.insert(BaseballCardContract.TABLE_NAME, null, this.getContentValues(card));
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
 
     public void updateBaseballCard(BaseballCard card) {
@@ -107,25 +123,40 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     public BaseballCard getBaseballCardFromCursor() {
-        String brand = this.cursor.getString(this.cursor.getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
-        int year = this.cursor.getInt(this.cursor.getColumnIndex(BaseballCardContract.YEAR_COL_NAME));
-        int number = this.cursor.getInt(this.cursor.getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
-        int value = this.cursor.getInt(this.cursor.getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
-        int count = this.cursor.getInt(this.cursor.getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
-        String name = this.cursor.getString(this.cursor.getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
-        String position = this.cursor.getString(this.cursor.getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
+        return this.getBaseballCardFromCursor(this.cursor);
+    }
+
+    public BaseballCard getBaseballCardFromCursor(Cursor cursor) {
+        String brand = cursor.getString(cursor.getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
+        int year = cursor.getInt(cursor.getColumnIndex(BaseballCardContract.YEAR_COL_NAME));
+        int number = cursor.getInt(cursor.getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
+        int value = cursor.getInt(cursor.getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
+        int count = cursor.getInt(cursor.getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
+        String name = cursor.getString(cursor.getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
+        String position = cursor.getString(cursor.getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
 
         return new BaseballCard(brand, year, number, value, count, name, position);
+    }
+
+    public List<BaseballCard> getAllBaseballCardsFromCursor(Cursor cursor) {
+        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+
+        while (cursor.moveToNext()) {
+            BaseballCard card = this.getBaseballCardFromCursor(cursor);
+            cards.add(card);
+        }
+
+        return cards;
     }
 
     public Cursor getDistinctValues(String colName, String constraint) {
         String[] cols = {BaseballCardContract.ID_COL_NAME, colName};
         String filter = (constraint == null) ? null : colName + " LIKE ?";
         String[] args = {constraint.trim() + '%'};
-        
+
         return this.getWritableDatabase().query(true, BaseballCardContract.TABLE_NAME, cols, filter, args, null, null, null, null);
     }
-    
+
     private ContentValues getContentValues(BaseballCard card) {
         ContentValues cv = new ContentValues(7);
         cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
