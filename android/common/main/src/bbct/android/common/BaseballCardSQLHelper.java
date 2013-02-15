@@ -23,6 +23,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import bbct.common.data.BaseballCard;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +40,14 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     public BaseballCardSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
+
+        Log.d(TAG, "ctor");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d(TAG, "onCreate()");
+
         String sqlCreate = "CREATE TABLE IF NOT EXISTS " + BaseballCardContract.TABLE_NAME + "("
                 + BaseballCardContract.ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + BaseballCardContract.BRAND_COL_NAME + " VARCHAR(10), "
@@ -88,6 +93,8 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getCursor() {
+        Log.d(TAG, "getCursor()");
+
         if (this.currCursor == null) {
             this.clearFilter();
         }
@@ -96,6 +103,8 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     public void clearFilter() {
+        Log.d(TAG, "clearFilter()");
+
         this.currCursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, null, null, null, null, null);
     }
 
@@ -141,6 +150,9 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     public List<BaseballCard> getAllBaseballCardsFromCursor(Cursor cursor) {
+        Log.d(TAG, "getAllBaseballCardsFromCursor()");
+        Log.d(TAG, "cursor=" + cursor);
+
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
 
         while (cursor.moveToNext()) {
@@ -171,5 +183,6 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
         return cv;
     }
+    private static final String TAG = BaseballCardSQLHelper.class.getName();
     private Cursor currCursor = null;
 }

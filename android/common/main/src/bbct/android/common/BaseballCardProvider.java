@@ -33,6 +33,8 @@ public class BaseballCardProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
+        Log.d(TAG, "onCreate()");
+
         try {
             this.sqlHelper = SQLHelperFactory.getSQLHelper(this.getContext());
 
