@@ -88,44 +88,44 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getCursor() {
-        if (this.cursor == null) {
+        if (this.currCursor == null) {
             this.clearFilter();
         }
 
-        return this.cursor;
+        return this.currCursor;
     }
 
     public void clearFilter() {
-        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, null, null, null, null, null);
+        this.currCursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, null, null, null, null, null);
     }
 
     public void filterCursorByYear(int year) {
         String filter = BaseballCardContract.YEAR_COL_NAME + " = ?";
         String[] args = {Integer.toString(year)};
-        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
+        this.currCursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
     }
 
     public void filterCursorByNumber(int number) {
         String filter = BaseballCardContract.NUMBER_COL_NAME + " = ?";
         String[] args = {Integer.toString(number)};
-        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
+        this.currCursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
     }
 
     public void filterCursorByYearAndNumber(int year, int number) {
         String filter = BaseballCardContract.YEAR_COL_NAME + " = ?  AND " + BaseballCardContract.NUMBER_COL_NAME + " = ?";
         String[] args = {Integer.toString(year), Integer.toString(number)};
-        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
+        this.currCursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
     }
 
     public void filterCursorByPlayerName(String playerName) {
         // TODO: Document wild cards in user manual?
         String filter = BaseballCardContract.PLAYER_NAME_COL_NAME + " LIKE ?";
         String[] args = {playerName};
-        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
+        this.currCursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
     }
 
     public BaseballCard getBaseballCardFromCursor() {
-        return this.getBaseballCardFromCursor(this.cursor);
+        return this.getBaseballCardFromCursor(this.currCursor);
     }
 
     public BaseballCard getBaseballCardFromCursor(Cursor cursor) {
@@ -171,5 +171,5 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
         return cv;
     }
-    private Cursor cursor = null;
+    private Cursor currCursor = null;
 }
