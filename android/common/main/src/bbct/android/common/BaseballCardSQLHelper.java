@@ -39,8 +39,6 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     public BaseballCardSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
-
-        this.cursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, null, null, null, null, null);
     }
 
     @Override
@@ -90,6 +88,10 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getCursor() {
+        if (this.cursor == null) {
+            this.clearFilter();
+        }
+
         return this.cursor;
     }
 

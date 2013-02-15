@@ -19,6 +19,7 @@
 package bbct.android.common;
 
 import android.content.Context;
+import android.util.Log;
 import java.lang.reflect.Constructor;
 
 /**
@@ -31,11 +32,17 @@ final public class SQLHelperFactory {
         try {
             String sqlHelperClassName = context.getString(R.string.sql_helper);
             Class<BaseballCardSQLHelper> sqlHelperClass = (Class<BaseballCardSQLHelper>) Class.forName(sqlHelperClassName);
+
+            Log.d(TAG, "sqlHelperClass=" + sqlHelperClass.toString());
+
             Constructor<BaseballCardSQLHelper> sqlHelperCtor = sqlHelperClass.getConstructor(Context.class);
+
+            Log.d(TAG, "sqlHelperCtor=" + sqlHelperCtor.toString());
 
             return sqlHelperCtor.newInstance(context);
         } catch (Exception ex) {
             throw new SQLHelperCreationException(ex);
         }
     }
+    private static final String TAG = SQLHelperFactory.class.getName();
 }

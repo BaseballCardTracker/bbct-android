@@ -45,7 +45,7 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
             Toast.makeText(activity, R.string.database_error, Toast.LENGTH_LONG).show();
-            Log.e(TAG, ex.getMessage());
+            Log.e(TAG, ex.getMessage(), ex);
         }
     }
 

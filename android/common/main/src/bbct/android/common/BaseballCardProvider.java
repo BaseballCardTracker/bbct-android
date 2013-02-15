@@ -40,7 +40,7 @@ public class BaseballCardProvider extends ContentProvider {
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
             Toast.makeText(this.getContext(), R.string.database_error, Toast.LENGTH_LONG).show();
-            Log.e(TAG, ex.getMessage());
+            Log.e(TAG, ex.getMessage(), ex);
             return false;
         }
     }
