@@ -37,7 +37,7 @@ public final class BaseballCardContract {
      * Authority used to access data with
      * {@link bbct.android.BaseballCardContentProvider}.
      */
-    public static final String AUTHORITY = "bbct.android.baseballcard";
+    public static final String AUTHORITY = "bbct.android.provider";
     /**
      * URI used to access data with
      * {@link bbct.android.BaseballCardContentProvider}.
