@@ -71,9 +71,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         this.getWritableDatabase().insert(BaseballCardContract.TABLE_NAME, null, this.getContentValues(card));
     }
 
-    public void insertAllBaseballCards(List<BaseballCard> cards) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
+    public void insertAllBaseballCards(SQLiteDatabase db, List<BaseballCard> cards) {
         db.beginTransactionNonExclusive();
         try {
             for (BaseballCard card : cards) {

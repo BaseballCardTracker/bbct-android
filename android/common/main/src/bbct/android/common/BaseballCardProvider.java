@@ -49,13 +49,13 @@ public class BaseballCardProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        if (!uri.equals(BaseballCardContract.CONTENT_URI)) {
+        if (uri.equals(BaseballCardContract.CONTENT_URI)) {
+            return this.sqlHelper.getReadableDatabase().query(BaseballCardContract.TABLE_NAME, projection, selection, selectionArgs, sortOrder, null, null);
+        } else {
             String errorFormat = this.getContext().getString(R.string.invalid_uri_error);
             String error = String.format(errorFormat, uri.toString());
             throw new IllegalArgumentException(error);
         }
-
-        return this.sqlHelper.getReadableDatabase().query(uri.getPath(), projection, selection, selectionArgs, sortOrder, null, null);
     }
 
     @Override
