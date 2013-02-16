@@ -35,9 +35,8 @@ public class About extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.about);
         
-        String format = this.getString(R.string.bbct_title);
         String aboutTitle = this.getString(R.string.about_title);
-        String title = String.format(format, aboutTitle);
+        String title = this.getString(R.string.bbct_title, aboutTitle);
         this.setTitle(title);
     }
 }

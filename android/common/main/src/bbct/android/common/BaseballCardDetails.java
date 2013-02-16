@@ -53,9 +53,8 @@ public class BaseballCardDetails extends Activity {
             super.onCreate(savedInstanceState);
             this.setContentView(R.layout.card_details);
 
-            String format = this.getString(R.string.bbct_title);
             String cardDetailsTitle = this.getString(R.string.card_details_title);
-            String title = String.format(format, cardDetailsTitle);
+            String title = this.getString(R.string.bbct_title, cardDetailsTitle);
             this.setTitle(title);
 
             this.sqlHelper = SQLHelperFactory.getSQLHelper(this);

@@ -38,9 +38,8 @@ public abstract class FilterActivity extends Activity {
         super.onCreate(savedInstanceState);
         this.setContentView(layout);
 
-        String format = this.getString(R.string.bbct_title);
         String filterTitle = this.getString(titleResId);
-        String title = String.format(format, filterTitle);
+        String title = this.getString(R.string.bbct_title, filterTitle);
         this.setTitle(title);
 
         Button okButton = (Button) this.findViewById(R.id.ok_button);
@@ -51,7 +50,7 @@ public abstract class FilterActivity extends Activity {
     }
 
     public abstract boolean isInputValid();
-    
+
     public abstract int getErrorResourceId();
 
     public abstract Intent getResult();
