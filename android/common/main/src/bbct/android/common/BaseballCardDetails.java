@@ -104,6 +104,8 @@ public class BaseballCardDetails extends Activity {
                 this.numberText.setEnabled(false);
                 this.playerNameText.setEnabled(false);
                 this.playerPositionSpinner.setEnabled(false);
+
+                this.valueText.requestFocus();
             }
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
