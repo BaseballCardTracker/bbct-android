@@ -166,7 +166,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         String filter = (constraint == null) ? null : colName + " LIKE ?";
         String[] args = {constraint.trim() + '%'};
 
-        return this.getWritableDatabase().query(true, BaseballCardContract.TABLE_NAME, cols, filter, args, null, null, null, null);
+        return this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, cols, filter, args, colName, null, null, null);
     }
 
     private ContentValues getContentValues(BaseballCard card) {
