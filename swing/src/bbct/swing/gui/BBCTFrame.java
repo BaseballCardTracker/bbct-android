@@ -25,6 +25,7 @@ import bbct.common.exceptions.BBCTIOException;
 import bbct.swing.BBCTStringResources;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -32,6 +33,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -107,6 +109,10 @@ public class BBCTFrame extends JFrame {
     }
 
     private void initComponents() {
+        URL iconUrl = this.getClass().getClassLoader().getResource(ICON_PATH);
+        Image icon = this.getToolkit().getImage(iconUrl);
+        this.setIconImage(icon);
+
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setTitle(BBCTStringResources.TitleResources.BASEBALL_FRAME_TITLE);
         this.setResizable(false);
@@ -141,6 +147,7 @@ public class BBCTFrame extends JFrame {
 
         this.setLocation(x, y);
     }
+    private static final String ICON_PATH = "/res/baseball.png";
     private JLabel instructionLabel;
     private MainPanel mainPanel;
     private BaseballCardIO bcio = null;
