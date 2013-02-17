@@ -49,7 +49,8 @@ public class UpdateInstructionsFocusListener extends FocusAdapter {
      * Updates the instruction label in {@link bbct.gui.BBCTFrame} when a
      * focusGained event occurs.
      *
-     * @param fe The {@link java.awt.event.FocusEvent} which triggered this method call.
+     * @param fe The {@link java.awt.event.FocusEvent} which triggered this
+     * method call.
      */
     @Override
     public void focusGained(FocusEvent fe) {

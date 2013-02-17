@@ -69,7 +69,7 @@ public class AddCardsPanel extends JPanel {
         this.add(cardDetailsPanel, BorderLayout.CENTER);
 
         JPanel buttonsPanel = new JPanel();
-        
+
         final JButton addCardButton = new JButton(BBCTStringResources.ButtonResources.ADD_CARD_BUTTON);
         addCardButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
         addCardButton.addActionListener(new ActionListener() {
@@ -102,7 +102,7 @@ public class AddCardsPanel extends JPanel {
         buttonsPanel.add(backButton);
 
         this.add(buttonsPanel, BorderLayout.SOUTH);
-        
+
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.ADD_CARDS_PANEL_TITLE));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(addCardButton));
     }

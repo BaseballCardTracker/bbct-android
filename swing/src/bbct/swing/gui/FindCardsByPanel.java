@@ -69,7 +69,7 @@ public abstract class FindCardsByPanel extends JPanel {
      * determined by a subclass of {@link FindCardsByPanel}.
      * @throws BBCTIOException If an error occurs in the underlying storage
      * mechanism while searching for baseball card data.
-     * @throws InputException If user input is invalid. 
+     * @throws InputException If user input is invalid.
      */
     protected abstract List<BaseballCard> getBaseballCards() throws BBCTIOException, InputException;
 

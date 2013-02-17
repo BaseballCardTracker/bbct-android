@@ -37,7 +37,7 @@ public class ShowCardActionListener implements ActionListener {
      * Create a new {@link ShowCardActionListener} that shows the card with the
      * given name.
      *
-     * @param c 
+     * @param c
      * @param cardName The name of the card to show when an action occurs.
      */
     public ShowCardActionListener(Container c, String cardName) {

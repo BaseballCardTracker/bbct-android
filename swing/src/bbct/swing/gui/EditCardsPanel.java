@@ -47,8 +47,9 @@ import javax.swing.JPanel;
  * TODO: What if 1,000 cards match a search? Scrolling through one at a time
  * will be painful!
  *
- * TODO: Enable/disable the "Previous" and "Next" buttons if there is only one card?
- * 
+ * TODO: Enable/disable the "Previous" and "Next" buttons if there is only one
+ * card?
+ *
  * TODO: Uneditable text fields should not be in the focus order when tabbing.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
@@ -143,7 +144,6 @@ public class EditCardsPanel extends JPanel {
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.EDIT_CARD_PANEL_TITLE));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(doneButton));
     }
-
     private JPanel allCardDetailsPanel;
-    BaseballCardIO bcio = null;
+    private BaseballCardIO bcio = null;
 }

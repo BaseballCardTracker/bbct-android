@@ -55,7 +55,7 @@ public class FindCardsMenuPanel extends JPanel {
     private void initComponents() {
         this.setLayout(new GridLayout(5, 1, 0, 30));
         this.setBorder(BorderFactory.createEmptyBorder(40, 70, 40, 70));
-        
+
         JButton findCardsByYearButton = new JButton(BBCTStringResources.ButtonResources.FIND_CARDS_BY_YEAR_BUTTON);
         findCardsByYearButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
         findCardsByYearButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_BY_YEAR_CARD_NAME));
@@ -80,7 +80,7 @@ public class FindCardsMenuPanel extends JPanel {
         backButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
         backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
         this.add(backButton);
-        
+
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_MENU_PANEL_TITLE));
         this.addAncestorListener(new UpdateInstructionsAncestorListener(BBCTStringResources.InstructionResources.FIND_CARDS_MENU_INSTRUCTIONS));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(null));

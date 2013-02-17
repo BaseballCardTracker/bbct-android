@@ -51,7 +51,7 @@ public class AboutPanel extends JPanel {
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new GridBagLayout());
-        
+
         GridBagConstraints gbc = new GridBagConstraints();
 
         JLabel titleLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_TITLE);

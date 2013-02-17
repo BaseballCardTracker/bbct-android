@@ -180,7 +180,7 @@ public class BBCTFrame extends JFrame {
             String playerName = data[3];
             String playerPosition = data[4];
             BaseballCard card = new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
-            
+
             cards.add(card);
         }
 

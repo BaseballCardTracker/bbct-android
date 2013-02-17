@@ -176,7 +176,6 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
     private InputVerifier yearVerifier = new YearInputVerifier();
     private InputVerifier numberVerifier = new PositiveIntegerInputVerifier();
 
-
     /**
      * This is a test function for {@link FindCardsByYearAndNumberPanel}. It
      * simply creates a {@link javax.swing.JFrame} in which to display the
