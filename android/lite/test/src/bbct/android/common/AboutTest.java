@@ -23,15 +23,27 @@ import android.test.ActivityInstrumentationTestCase2;
 import junit.framework.Assert;
 
 /**
+ * Tests for {@link bbct.android.common.About} activity class.
+ *
+ * TODO: Add tests for the layout of {@link bbct.android.common.About}
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class AboutTest extends ActivityInstrumentationTestCase2<About> {
 
+    /**
+     * Create instrumented test cases for {@link bbct.android.common.About}.
+     */
     public AboutTest() {
         super(About.class);
     }
 
+    /**
+     * Set up test fixture. This consists of an instance of the
+     * {@link bbct.android.common.About} activity.
+     *
+     * @throws Exception
+     */
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -39,6 +51,12 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
         this.activity = this.getActivity();
     }
 
+    /**
+     * Tear down the test fixture by calling
+     * {@link bbct.android.common.About#finish()}.
+     *
+     * @throws Exception
+     */
     @Override
     public void tearDown() throws Exception {
         this.activity.finish();
@@ -46,10 +64,16 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
         super.tearDown();
     }
 
+    /**
+     * Assert that the Activity to test is not <code>null</code>.
+     */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
     }
 
+    /**
+     * Test that the title of the Activity is correct.
+     */
     public void testTitle() {
         String title = this.activity.getTitle().toString();
         String aboutTitle = this.activity.getString(R.string.about_title);
