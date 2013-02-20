@@ -21,9 +21,11 @@ package bbct.android.common;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.InstrumentationTestCase;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -99,16 +101,35 @@ abstract public class BBCTTestUtil {
         Assert.assertTrue(cardDetails.isFinishing());
     }
 
+    /**
+     *
+     * @param test
+     * @param cardDetails
+     * @param card
+     */
     public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) {
         BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card, ALL_FIELDS);
     }
 
+    /**
+     *
+     * @param test
+     * @param cardDetails
+     * @param card
+     * @param skipFlags
+     */
     public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, int skipFlags) {
+        Log.d(TAG, "sendKeysToCardDetails()");
+
         Instrumentation inst = test.getInstrumentation();
 
         if ((skipFlags & NO_BRAND) == 0) {
             inst.sendStringSync(card.getBrand());
             inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ESCAPE);
+        }
+        AutoCompleteTextView brandText = (AutoCompleteTextView) cardDetails.findViewById(R.id.brand_text);
+        if (brandText.isPopupShowing()) {
+            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
@@ -136,6 +157,10 @@ abstract public class BBCTTestUtil {
         if ((skipFlags & NO_PLAYER_NAME) == 0) {
             inst.sendStringSync(card.getPlayerName());
         }
+        AutoCompleteTextView playerNameText = (AutoCompleteTextView) cardDetails.findViewById(R.id.player_name_text);
+        if (playerNameText.isPopupShowing()) {
+            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+        }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
@@ -143,6 +168,8 @@ abstract public class BBCTTestUtil {
         int newPos = playerPositionAdapter.getPosition(card.getPlayerPosition());
         int oldPos = playerPositionSpinner.getSelectedItemPosition();
         int move = newPos - oldPos;
+
+        Log.d(TAG, "newPos=" + newPos + ", oldPos=" + oldPos + ", move=" + move);
 
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
         if (move > 0) {
@@ -164,5 +191,6 @@ abstract public class BBCTTestUtil {
     public static final int NO_COUNT = 0x10;
     public static final int NO_PLAYER_NAME = 0x20;
     private static final int MENU_FLAGS = 0;
-    public static final int TIME_OUT = 5 * 1000; // 5 seconds
+    private static final int TIME_OUT = 5 * 1000; // 5 seconds
+    private static final String TAG = BBCTTestUtil.class.getName();
 }
