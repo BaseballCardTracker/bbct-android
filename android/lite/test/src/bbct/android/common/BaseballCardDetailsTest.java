@@ -48,10 +48,11 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
 
         this.inst = this.getInstrumentation();
 
-        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
+        InputStream in = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in, true);
         this.allCards = cardInput.getAllBaseballCards();
         this.card = this.allCards.get(3); // Ken Griffey Jr.
+        cardInput.close();
 
         // Must call getActivity() before creating a DatabaseUtil object to ensure that the database is created
         this.activity = this.getActivity();
@@ -114,7 +115,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         for (BaseballCard nextCard : this.allCards) {
             BBCTTestUtil.addCard(this, this.activity, nextCard);
         }
-        
+
         this.inst.waitForIdleSync();
         for (BaseballCard nextCard : this.allCards) {
             Assert.assertTrue("Missing card: " + nextCard, this.dbUtil.containsBaseballCard(nextCard));
@@ -138,30 +139,6 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.fail("Edit count and value");
     }
 
-    public void testNoBrand() {
-        this.testMissingInput(this.brandText, BBCTTestUtil.NO_BRAND, R.string.brand_input_error);
-    }
-
-    public void testNoYear() {
-        this.testMissingInput(this.yearText, BBCTTestUtil.NO_YEAR, R.string.year_input_error);
-    }
-
-    public void testNoNumber() {
-        this.testMissingInput(this.numberText, BBCTTestUtil.NO_NUMBER, R.string.number_input_error);
-    }
-
-    public void testNoValue() {
-        this.testMissingInput(this.valueText, BBCTTestUtil.NO_VALUE, R.string.value_input_error);
-    }
-
-    public void testNoCount() {
-        this.testMissingInput(this.countText, BBCTTestUtil.NO_COUNT, R.string.count_input_error);
-    }
-
-    public void testNoPlayerName() {
-        this.testMissingInput(this.playerNameText, BBCTTestUtil.NO_PLAYER_NAME, R.string.player_name_input_error);
-    }
-
     @UiThreadTest
     public void testDoneButtonOnClick() {
         Assert.assertTrue(this.doneButton.performClick());
@@ -178,19 +155,6 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.assertEquals(expectedCard.getPlayerPosition(), this.playerPositionSpinner.getSelectedItem());
     }
 
-    private void testMissingInput(EditText editText, int missingInputFlag, int expectedErrorMessageId) {
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, missingInputFlag);
-        this.inst.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(BaseballCardDetailsTest.this.saveButton.performClick());
-            }
-        });
-
-        Assert.assertTrue(editText.hasFocus());
-        String expectedErrorMessage = this.activity.getString(expectedErrorMessageId);
-        Assert.fail("Check error message");
-    }
     private Activity activity = null;
     private EditText brandText = null;
     private EditText yearText = null;
@@ -205,5 +169,4 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     private List<BaseballCard> allCards = null;
     private BaseballCard card = null;
     private DatabaseUtil dbUtil = null;
-    private static final String CARD_DATA = "cards.csv";
 }

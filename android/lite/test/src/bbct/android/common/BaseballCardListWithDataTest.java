@@ -56,7 +56,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         this.inst = this.getInstrumentation();
 
         // Create the database and populate table with test data
-        InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
+        InputStream cardInputStream = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
         this.allCards = this.cardInput.getAllBaseballCards();
         this.dbUtil = new DatabaseUtil();
@@ -182,7 +182,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
     public void testAddDuplicateCard() throws IOException {
         this.cardInput.close();
-        InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
+        InputStream cardInputStream = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
@@ -379,7 +379,6 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     private DatabaseUtil dbUtil = null;
     private ListView listView = null;
     private BaseballCard newCard = null;
-    private static final String DATA_ASSET = "cards.csv";
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = BaseballCardListWithDataTest.class.getName();
 }

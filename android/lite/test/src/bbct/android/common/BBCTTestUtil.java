@@ -179,7 +179,7 @@ abstract public class BBCTTestUtil {
 
         Instrumentation inst = test.getInstrumentation();
 
-        if ((skipFlags & NO_BRAND) == 0) {
+        if ((skipFlags & BRAND_FIELD) > 0) {
             inst.sendStringSync(card.getBrand());
             inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ESCAPE);
         }
@@ -189,28 +189,28 @@ abstract public class BBCTTestUtil {
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((skipFlags & NO_YEAR) == 0) {
+        if ((skipFlags & YEAR_FIELD) > 0) {
             inst.sendStringSync(Integer.toString(card.getYear()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((skipFlags & NO_NUMBER) == 0) {
+        if ((skipFlags & NUMBER_FIELD) > 0) {
             inst.sendStringSync(Integer.toString(card.getNumber()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((skipFlags & NO_VALUE) == 0) {
+        if ((skipFlags & VALUE_FIELD) > 0) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
             inst.sendStringSync(valueStr);
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((skipFlags & NO_COUNT) == 0) {
+        if ((skipFlags & COUNT_FIELD) > 0) {
             inst.sendStringSync(Integer.toString(card.getCount()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((skipFlags & NO_PLAYER_NAME) == 0) {
+        if ((skipFlags & PLAYER_NAME_FIELD) > 0) {
             inst.sendStringSync(card.getPlayerName());
         }
         AutoCompleteTextView playerNameText = (AutoCompleteTextView) cardDetails.findViewById(R.id.player_name_text);
@@ -245,49 +245,51 @@ abstract public class BBCTTestUtil {
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
-    public static final int ALL_FIELDS = 0x00;
+    public static final int NO_FIELDS = 0x00;
     /**
      * Skip the Card Brand field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
-    public static final int NO_BRAND = 0x01;
+    public static final int BRAND_FIELD = 0x01;
     /**
      * Skip the Card Year field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
-    public static final int NO_YEAR = 0x02;
+    public static final int YEAR_FIELD = 0x02;
     /**
      * Skip the Card Number field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
-    public static final int NO_NUMBER = 0x04;
+    public static final int NUMBER_FIELD = 0x04;
     /**
      * Skip the Card Value field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
-    public static final int NO_VALUE = 0x08;
+    public static final int VALUE_FIELD = 0x08;
     /**
      * Skip the Card Count field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
-    public static final int NO_COUNT = 0x10;
+    public static final int COUNT_FIELD = 0x10;
     /**
      * Skip the Player Name field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
-    public static final int NO_PLAYER_NAME = 0x20;
+    public static final int PLAYER_NAME_FIELD = 0x20;
+    public static final int ALL_FIELDS = BRAND_FIELD | YEAR_FIELD | NUMBER_FIELD | VALUE_FIELD | COUNT_FIELD | PLAYER_NAME_FIELD;
+    public static final String CARD_DATA = "cards.csv";
     private static final int MENU_FLAGS = 0;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = BBCTTestUtil.class.getName();
