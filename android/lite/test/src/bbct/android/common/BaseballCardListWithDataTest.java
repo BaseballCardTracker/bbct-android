@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,29 +40,27 @@ import junit.framework.Assert;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
+public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCase2<bbct.android.BaseballCardList> {
 
     public BaseballCardListWithDataTest() {
-        super(BaseballCardList.class);
+        super(bbct.android.BaseballCardList.class);
     }
 
     @Override
     public void setUp() throws Exception {
         super.setUp();
 
+        // Start Activity to insure that database is created before trying to insert data
+        this.activity = this.getActivity();
+        this.listView = (ListView) this.activity.findViewById(android.R.id.list);
         this.inst = this.getInstrumentation();
 
+        // Create the database and populate table with test data
         InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
         this.allCards = this.cardInput.getAllBaseballCards();
-
-        // Create the database and populate table with test data
-        BaseballCardSQLHelper sqlHelper = new BaseballCardSQLHelper(this.inst.getTargetContext());
         this.dbUtil = new DatabaseUtil();
         this.dbUtil.populateTable(allCards);
-
-        this.activity = this.getActivity();
-        this.listView = (ListView) this.activity.findViewById(android.R.id.list);
 
         this.newCard = new BaseballCard("codeguru apps", 1993, 1, 50000, 1, "codeguru", "Catcher");
     }
@@ -146,10 +145,16 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
      * Test of {@link BaseballCardList#onListItemClick}.
      */
     public void testOnListItemClick() {
+        Log.d(TAG, "testOnListItemClick()");
+
+        this.inst.waitForIdleSync();
         Instrumentation.ActivityMonitor detailsMonitor = new Instrumentation.ActivityMonitor(BaseballCardDetails.class.getName(), null, false);
         this.inst.addMonitor(detailsMonitor);
 
         int cardIndex = (int) (Math.random() * this.allCards.size());
+
+        Log.d(TAG, "cardIndex=" + cardIndex);
+
         this.sendRepeatedKeys(cardIndex, KeyEvent.KEYCODE_DPAD_DOWN, 1, KeyEvent.KEYCODE_DPAD_CENTER);
 
         Activity cardDetails = this.inst.waitForMonitorWithTimeout(detailsMonitor, TIME_OUT);
@@ -376,4 +381,5 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     private BaseballCard newCard = null;
     private static final String DATA_ASSET = "cards.csv";
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
+    private static final String TAG = BaseballCardListWithDataTest.class.getName();
 }
