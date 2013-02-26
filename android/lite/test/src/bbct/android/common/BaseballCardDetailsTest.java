@@ -89,6 +89,8 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.assertNotNull(this.saveButton);
         Assert.assertNotNull(this.doneButton);
         Assert.assertNotNull(this.dbUtil.getDatabase());
+
+        // TODO assert that database and ListView contain expected data
     }
 
     public void testStateDestroy() {

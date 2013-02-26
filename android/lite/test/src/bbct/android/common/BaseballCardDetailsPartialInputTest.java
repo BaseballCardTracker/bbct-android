@@ -21,6 +21,7 @@ package bbct.android.common;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 import android.widget.Button;
 import bbct.common.data.BaseballCard;
 import java.io.IOException;
@@ -65,6 +66,9 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     }
 
     public void testPartialInput() {
+        Log.d(TAG, "testPartialInput()");
+        Log.d(TAG, "inputFieldsMask=" + inputFieldsMask);
+
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, this.inputFieldsMask);
         this.inst.runOnMainSync(new Runnable() {
             @Override
@@ -82,4 +86,5 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     private Button saveButton = null;
     private BaseballCard card = null;
     private final int inputFieldsMask;
+    private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
 }
