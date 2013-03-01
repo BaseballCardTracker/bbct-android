@@ -49,6 +49,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     public BaseballCardDetailsPartialInputTest(int inputFieldsMask) {
         super(BaseballCardDetails.class);
 
+        this.setName(TEST_NAME);
         this.inputFieldsMask = inputFieldsMask;
     }
 
@@ -86,5 +87,6 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     private Button saveButton = null;
     private BaseballCard card = null;
     private final int inputFieldsMask;
+    private static final String TEST_NAME = "testPartialInput";
     private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
 }
