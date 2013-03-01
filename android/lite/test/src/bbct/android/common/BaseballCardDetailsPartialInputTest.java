@@ -23,6 +23,7 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
 import bbct.common.data.BaseballCard;
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,6 +64,12 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         cardInput.close();
 
         this.activity = this.getActivity();
+        this.brandEditText = (EditText) this.activity.findViewById(R.id.brand_text);
+        this.yearEditText = (EditText) this.activity.findViewById(R.id.year_text);
+        this.numberEditText = (EditText) this.activity.findViewById(R.id.number_text);
+        this.countEditText = (EditText) this.activity.findViewById(R.id.count_text);
+        this.valueEditText = (EditText) this.activity.findViewById(R.id.value_text);
+        this.playerNameEditText = (EditText) this.activity.findViewById(R.id.player_name_text);
         this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
     }
 
@@ -78,13 +85,35 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
             }
         });
 
-//        String expectedErrorMessage = this.activity.getString(expectedErrorMessageId);
-        Assert.fail("Check error message");
+        if ((this.inputFieldsMask & BBCTTestUtil.BRAND_FIELD) > 0) {
+            Assert.assertEquals(this.activity.getString(R.string.brand_input_error), this.brandEditText.getError());
+        }
+        if ((this.inputFieldsMask & BBCTTestUtil.YEAR_FIELD) > 0) {
+            Assert.assertEquals(this.activity.getString(R.string.year_input_error), this.yearEditText.getError());
+        }
+        if ((this.inputFieldsMask & BBCTTestUtil.NUMBER_FIELD) > 0) {
+            Assert.assertEquals(this.activity.getString(R.string.number_input_error), this.numberEditText.getError());
+        }
+        if ((this.inputFieldsMask & BBCTTestUtil.COUNT_FIELD) > 0) {
+            Assert.assertEquals(this.activity.getString(R.string.count_input_error), this.countEditText.getError());
+        }
+        if ((this.inputFieldsMask & BBCTTestUtil.VALUE_FIELD) > 0) {
+            Assert.assertEquals(this.activity.getString(R.string.value_input_error), this.valueEditText.getError());
+        }
+        if ((this.inputFieldsMask & BBCTTestUtil.PLAYER_NAME_FIELD) > 0) {
+            Assert.assertEquals(this.activity.getString(R.string.player_name_input_error), this.playerNameEditText.getError());
+        }
     }
 
     private Activity activity = null;
     private Instrumentation inst = null;
     private Button saveButton = null;
+    private EditText brandEditText = null;
+    private EditText yearEditText = null;
+    private EditText numberEditText = null;
+    private EditText countEditText = null;
+    private EditText valueEditText = null;
+    private EditText playerNameEditText = null;
     private BaseballCard card = null;
     private final int inputFieldsMask;
     private static final String TEST_NAME = "testPartialInput";
