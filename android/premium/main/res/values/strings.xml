@@ -20,6 +20,6 @@
 <resources>
     <string name="app_name">BBCT Premium</string>
     <string name="bbct_title">BBCT Premium - %1$s</string>
-    <string name="version">Version 0.5</string>
+    <string name="version_number">0.5.1</string>
     <string name="import_message">Importing data from Lite edition.</string>
 </resources>

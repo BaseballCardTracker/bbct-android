@@ -20,9 +20,11 @@ package bbct.android.common;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
 
 /**
- * 
+ *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class About extends Activity {
@@ -34,9 +36,20 @@ public class About extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.about);
-        
+
         String aboutTitle = this.getString(R.string.about_title);
         String title = this.getString(R.string.bbct_title, aboutTitle);
         this.setTitle(title);
+
+        TextView versionLabel = (TextView) this.findViewById(R.id.version_label);
+        String versionNumber = this.getString(R.string.version_number);
+        String versionString = this.getString(R.string.version_text, versionNumber);
+
+        Log.d(TAG, "versionLabel=" + versionLabel);
+        Log.d(TAG, "versionString=" + versionString);
+
+        versionLabel.setText(versionString);
     }
+
+    private static final String TAG = About.class.getName();
 }

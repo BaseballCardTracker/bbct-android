@@ -45,7 +45,8 @@
                       android:gravity="center_horizontal"
                       android:textSize="26dp"
         />
-            <TextView android:text="@string/version"
+            <TextView android:id="@+id/version_label"
+                      android:text="@string/version_text"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:gravity="center_horizontal"
