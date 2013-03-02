@@ -32,7 +32,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import bbct.common.data.BaseballCard;
-import bbct.common.exceptions.InputException;
 
 /**
  *
@@ -121,54 +120,62 @@ public class BaseballCardDetails extends Activity {
         this.sqlHelper.close();
     }
 
-    private BaseballCard getBaseballCard() throws InputException {
+    private BaseballCard getBaseballCard() {
+        boolean validInput = true;
+
         String brand = this.brandText.getText().toString();
         if (brand.equals("")) {
             this.brandText.requestFocus();
-            throw new InputException(this.getString(R.string.brand_input_error));
+            this.brandText.setError(this.getString(R.string.brand_input_error));
+            validInput = false;
         }
 
         String yearStr = this.yearText.getText().toString();
         if (yearStr.equals("")) {
             this.yearText.requestFocus();
-            throw new InputException(this.getString(R.string.year_input_error));
+            this.yearText.setError(this.getString(R.string.year_input_error));
+            validInput = false;
         }
-        int year = Integer.parseInt(yearStr);
 
         String numberStr = this.numberText.getText().toString();
         if (numberStr.equals("")) {
             this.numberText.requestFocus();
-            throw new InputException(this.getString(R.string.number_input_error));
+            this.numberText.setError(this.getString(R.string.number_input_error));
+            validInput = false;
         }
-        int number = Integer.parseInt(numberStr);
 
         String valueStr = this.valueText.getText().toString();
         if (valueStr.equals("")) {
             this.valueText.requestFocus();
-            throw new InputException(this.getString(R.string.value_input_error));
+            this.valueText.setError(this.getString(R.string.value_input_error));
+            validInput = false;
         }
-        double value = Double.parseDouble(valueStr);
 
         String countStr = this.countText.getText().toString();
         if (countStr.equals("")) {
             this.countText.requestFocus();
-            throw new InputException(this.getString(R.string.count_input_error));
+            this.countText.setError(this.getString(R.string.count_input_error));
+            validInput = false;
         }
-        int count = Integer.parseInt(countStr);
 
         String playerName = this.playerNameText.getText().toString();
         if (playerName.equals("")) {
             this.playerNameText.requestFocus();
-            throw new InputException(this.getString(R.string.player_name_input_error));
+            this.playerNameText.setError(this.getString(R.string.player_name_input_error));
+            validInput = false;
         }
 
         String playerPosition = (String) this.playerPositionSpinner.getSelectedItem();
-        if (playerPosition.equals("")) {
-            this.playerPositionSpinner.requestFocus();
-            throw new InputException(this.getString(R.string.player_position_input_error));
-        }
 
-        return new BaseballCard(brand, year, number, (int) (value * 100), count, playerName, playerPosition);
+        if (validInput) {
+            int year = Integer.parseInt(yearStr);
+            int number = Integer.parseInt(numberStr);
+            double value = Double.parseDouble(valueStr);
+            int count = Integer.parseInt(countStr);
+            return new BaseballCard(brand, year, number, (int) (value * 100), count, playerName, playerPosition);
+        } else {
+            return null;
+        }
     }
 
     private void resetInput() {
@@ -183,9 +190,9 @@ public class BaseballCardDetails extends Activity {
     private View.OnClickListener onSave = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            try {
-                BaseballCard card = BaseballCardDetails.this.getBaseballCard();
+            BaseballCard card = BaseballCardDetails.this.getBaseballCard();
 
+            if (card != null) {
                 if (BaseballCardDetails.this.isUpdating) {
                     BaseballCardDetails.this.sqlHelper.updateBaseballCard(card);
                     BaseballCardDetails.this.finish();
@@ -195,11 +202,7 @@ public class BaseballCardDetails extends Activity {
                     BaseballCardDetails.this.brandText.requestFocus();
                     Toast.makeText(BaseballCardDetails.this, R.string.card_added_message, Toast.LENGTH_LONG).show();
                 }
-
-                // TODO: Catch exceptions and show appropriate error messages.
-            } catch (InputException ex) {
-                Toast.makeText(BaseballCardDetails.this, ex.getMessage(), Toast.LENGTH_LONG).show();
-                Log.i(TAG, ex.getMessage(), ex);
+                // TODO: Catch SQL exceptions and show appropriate error messages.
             }
         }
     };
