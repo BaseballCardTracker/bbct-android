@@ -23,7 +23,7 @@
           android:versionCode="3"
           android:versionName="@string/version"
 >
-    <uses-sdk android:minSdkVersion="16" 
+    <uses-sdk android:minSdkVersion="16"
               android:targetSdkVersion="16"
     />
     <!-- We add an application tag here just so that we can indicate that
@@ -38,6 +38,10 @@
     "adb shell am instrument -w bbct.android.tests/android.test.InstrumentationTestRunner"
     -->
     <instrumentation android:name="android.test.InstrumentationTestRunner"
+                     android:targetPackage="bbct.android"
+                     android:label="@string/label"
+    />
+    <instrumentation android:name=".BBCTTestRunner"
                      android:targetPackage="bbct.android"
                      android:label="@string/label"
     />

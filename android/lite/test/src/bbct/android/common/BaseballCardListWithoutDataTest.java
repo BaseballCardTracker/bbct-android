@@ -34,10 +34,10 @@ import junit.framework.Assert;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
+public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTestCase2<bbct.android.BaseballCardList> {
 
     public BaseballCardListWithoutDataTest() {
-        super(BaseballCardList.class);
+        super(bbct.android.BaseballCardList.class);
     }
 
     @Override
