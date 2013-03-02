@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012 codeguru <codeguru@users.sourceforge.net==
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/==.
  */
 package bbct.android.common;
 
@@ -33,7 +33,7 @@ import junit.framework.TestSuite;
 
 /**
  *
- * @author codeguru <codeguru@users.sourceforge.net>
+ * @author codeguru <codeguru@users.sourceforge.net==
  */
 public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
@@ -85,24 +85,34 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
             }
         });
 
-        if ((this.inputFieldsMask & BBCTTestUtil.BRAND_FIELD) > 0) {
+        EditText focusEditText = null;
+
+        if ((this.inputFieldsMask & BBCTTestUtil.BRAND_FIELD) == 0) {
             Assert.assertEquals(this.activity.getString(R.string.brand_input_error), this.brandEditText.getError());
+            focusEditText = this.brandEditText;
         }
-        if ((this.inputFieldsMask & BBCTTestUtil.YEAR_FIELD) > 0) {
+        if ((this.inputFieldsMask & BBCTTestUtil.YEAR_FIELD) == 0) {
             Assert.assertEquals(this.activity.getString(R.string.year_input_error), this.yearEditText.getError());
+            focusEditText = this.yearEditText;
         }
-        if ((this.inputFieldsMask & BBCTTestUtil.NUMBER_FIELD) > 0) {
+        if ((this.inputFieldsMask & BBCTTestUtil.NUMBER_FIELD) == 0) {
             Assert.assertEquals(this.activity.getString(R.string.number_input_error), this.numberEditText.getError());
+            focusEditText = this.numberEditText;
         }
-        if ((this.inputFieldsMask & BBCTTestUtil.COUNT_FIELD) > 0) {
+        if ((this.inputFieldsMask & BBCTTestUtil.COUNT_FIELD) == 0) {
             Assert.assertEquals(this.activity.getString(R.string.count_input_error), this.countEditText.getError());
+            focusEditText = this.countEditText;
         }
-        if ((this.inputFieldsMask & BBCTTestUtil.VALUE_FIELD) > 0) {
+        if ((this.inputFieldsMask & BBCTTestUtil.VALUE_FIELD) == 0) {
             Assert.assertEquals(this.activity.getString(R.string.value_input_error), this.valueEditText.getError());
+            focusEditText = this.valueEditText;
         }
-        if ((this.inputFieldsMask & BBCTTestUtil.PLAYER_NAME_FIELD) > 0) {
+        if ((this.inputFieldsMask & BBCTTestUtil.PLAYER_NAME_FIELD) == 0) {
             Assert.assertEquals(this.activity.getString(R.string.player_name_input_error), this.playerNameEditText.getError());
+            focusEditText = this.playerNameEditText;
         }
+
+        Assert.assertTrue(focusEditText.hasFocus());
     }
 
     private Activity activity = null;
