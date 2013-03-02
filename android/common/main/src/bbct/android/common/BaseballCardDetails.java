@@ -121,57 +121,38 @@ public class BaseballCardDetails extends Activity {
     }
 
     private BaseballCard getBaseballCard() {
+        Log.d(TAG, "getBaseballCard()");
+
+        EditText[] allEditTexts = {this.brandText, this.yearText, this.numberText,
+            this.countText, this.valueText, this.playerNameText};
+        int[] errorIds = {R.string.brand_input_error, R.string.year_input_error, R.string.number_input_error,
+            R.string.count_input_error, R.string.value_input_error, R.string.player_name_input_error};
         boolean validInput = true;
-
-        String brand = this.brandText.getText().toString();
-        if (brand.equals("")) {
-            this.brandText.requestFocus();
-            this.brandText.setError(this.getString(R.string.brand_input_error));
-            validInput = false;
-        }
-
-        String yearStr = this.yearText.getText().toString();
-        if (yearStr.equals("")) {
-            this.yearText.requestFocus();
-            this.yearText.setError(this.getString(R.string.year_input_error));
-            validInput = false;
-        }
-
-        String numberStr = this.numberText.getText().toString();
-        if (numberStr.equals("")) {
-            this.numberText.requestFocus();
-            this.numberText.setError(this.getString(R.string.number_input_error));
-            validInput = false;
-        }
-
-        String valueStr = this.valueText.getText().toString();
-        if (valueStr.equals("")) {
-            this.valueText.requestFocus();
-            this.valueText.setError(this.getString(R.string.value_input_error));
-            validInput = false;
-        }
-
-        String countStr = this.countText.getText().toString();
-        if (countStr.equals("")) {
-            this.countText.requestFocus();
-            this.countText.setError(this.getString(R.string.count_input_error));
-            validInput = false;
-        }
-
-        String playerName = this.playerNameText.getText().toString();
-        if (playerName.equals("")) {
-            this.playerNameText.requestFocus();
-            this.playerNameText.setError(this.getString(R.string.player_name_input_error));
-            validInput = false;
-        }
 
         String playerPosition = (String) this.playerPositionSpinner.getSelectedItem();
 
+        for (int i = allEditTexts.length - 1; i >= 0; --i) {
+            Log.d(TAG, "i=" + i);
+
+            String input = allEditTexts[i].getText().toString();
+            if (input.equals("")) {
+                allEditTexts[i].requestFocus();
+                allEditTexts[i].setError(this.getString(errorIds[i]));
+                validInput = false;
+            }
+        }
+
         if (validInput) {
+            String brand = this.brandText.getText().toString();
+            String yearStr = this.yearText.getText().toString();
             int year = Integer.parseInt(yearStr);
+            String numberStr = this.numberText.getText().toString();
             int number = Integer.parseInt(numberStr);
+            String valueStr = this.valueText.getText().toString();
             double value = Double.parseDouble(valueStr);
+            String countStr = this.countText.getText().toString();
             int count = Integer.parseInt(countStr);
+            String playerName = this.playerNameText.getText().toString();
             return new BaseballCard(brand, year, number, (int) (value * 100), count, playerName, playerPosition);
         } else {
             return null;
