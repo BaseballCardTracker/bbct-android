@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">BBCTCommon</string>
+    <string name="app_name">BBCT Common</string>
+    <string name="provider_name">BBCT Common Data</string>
+    <string name="authorities">bbct.android.common.provider</string>
+    <string name="read_permission">bbct.android.common.permission.READ</string>
 </resources>
