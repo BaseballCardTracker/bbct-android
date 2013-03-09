@@ -3,11 +3,11 @@
     <type>org.netbeans.modules.ant.freeform</type>
     <configuration>
         <general-data xmlns="http://www.netbeans.org/ns/freeform-project/1">
-            <name>bbct-android-common</name>
+            <name>bbct-android-common-lib</name>
         </general-data>
         <general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
             <!-- Do not use Project Properties customizer when editing this file manually. -->
-            <name>bbct-android-common</name>
+            <name>bbct-android-common-lib</name>
             <properties/>
             <folders>
                 <source-folder>
