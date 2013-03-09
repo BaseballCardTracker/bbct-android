@@ -72,7 +72,7 @@
             <compilation-unit>
                 <package-root>gen</package-root>
                 <package-root>src</package-root>
-                <classpath mode="compile">/usr/local/bin/android-sdk-linux/platforms/android-16/android.jar;E:\programs\java\android-sdk\platforms\android-16\android.jar;../main/bin/classes;../../common/main/bin/classes</classpath>
+                <classpath mode="compile">/usr/local/bin/android-sdk-linux/platforms/android-16/android.jar:E:/programs/java/android-sdk/platforms/android-16/android.jar:../main/bin/classes:../lib/bin/classes.jar</classpath>
                 <built-to>bin/classes</built-to>
                 <source-level>1.6</source-level>
             </compilation-unit>

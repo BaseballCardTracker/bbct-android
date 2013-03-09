@@ -28,10 +28,10 @@ import java.util.List;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class ManualTest extends ActivityInstrumentationTestCase2<bbct.android.BaseballCardList> {
+public class ManualTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
 
     public ManualTest() {
-        super(bbct.android.BaseballCardList.class);
+        super(BaseballCardList.class);
     }
 
     @Override
@@ -56,6 +56,6 @@ public class ManualTest extends ActivityInstrumentationTestCase2<bbct.android.Ba
         DatabaseUtil dbUtil = new DatabaseUtil();
         dbUtil.populateTable(allCards);
     }
-    
+
     private final static String CARD_DATA = "cards.csv";
 }
