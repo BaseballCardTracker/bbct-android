@@ -18,11 +18,14 @@
  */
 package bbct.android.premium;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 import bbct.android.common.BaseballCardContract;
 import bbct.common.data.BaseballCard;
@@ -48,12 +51,24 @@ public class BaseballCardSQLHelper extends bbct.android.common.BaseballCardSQLHe
 
         Log.d(TAG, "onCreate()");
 
-        Toast.makeText(context, R.string.import_message, Toast.LENGTH_LONG).show();
-
         ContentResolver resolver = this.context.getContentResolver();
         Cursor results = resolver.query(BaseballCardContract.CONTENT_URI, BaseballCardContract.PROJECTION, null, null, null);
-        List<BaseballCard> cards = this.getAllBaseballCardsFromCursor(results);
-        this.insertAllBaseballCards(db, cards);
+
+        if (results == null) {
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.context);
+            dialogBuilder.setMessage(R.string.import_error);
+            dialogBuilder.setPositiveButton(R.string.ok_button, new AlertDialog.OnClickListener() {
+                public void onClick(DialogInterface dialog, int i) {
+                }
+            });
+
+            dialogBuilder.create().show();
+        } else {
+            Toast.makeText(context, R.string.import_message, Toast.LENGTH_LONG).show();
+
+            List<BaseballCard> cards = this.getAllBaseballCardsFromCursor(results);
+            this.insertAllBaseballCards(db, cards);
+        }
     }
     private static final String TAG = BaseballCardSQLHelper.class.getName();
     private Context context = null;
