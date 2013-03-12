@@ -23,11 +23,22 @@ import bbct.android.common.BaseballCardDetailsPartialInputTest;
 import junit.framework.TestSuite;
 
 /**
+ * This is a custom test runner which runs the parameterized tests created by
+ * {@link bbct.android.common.BaseballCardDetailsPartialInputTest#suite()}.
+ * These tests are not run by the standard
+ * <code>InstrumentationTestRunner</code>.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BBCTTestRunner extends InstrumentationTestRunner {
 
+    /**
+     * Create a {@link TestSuite} of parameterized tests. Currently, this is
+     * only the tests from
+     * {@link bbct.android.common.BaseballCardDetailsPartialInputTest#suite()}.
+     *
+     * @return A {@link TestSuite} of parameterized tests.
+     */
     @Override
     public TestSuite getAllTests() {
         TestSuite suite = new TestSuite();
@@ -35,7 +46,5 @@ public class BBCTTestRunner extends InstrumentationTestRunner {
 
         return suite;
     }
-
     private static final String TAG = BBCTTestRunner.class.getName();
-
 }
