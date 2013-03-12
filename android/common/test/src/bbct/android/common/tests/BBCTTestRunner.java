@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.tests;
+package bbct.android.common.tests;
 
 import android.test.InstrumentationTestRunner;
 import bbct.android.common.BaseballCardDetailsPartialInputTest;

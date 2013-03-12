@@ -19,7 +19,7 @@
 -->
 <!-- package name must be unique so suffix with "tests" so package loader doesn't ignore us -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="bbct.android.tests"
+          package="bbct.android.common.tests"
           android:versionCode="3"
           android:versionName="@string/version"
 >
@@ -38,11 +38,11 @@
     "adb shell am instrument -w bbct.android.tests/android.test.InstrumentationTestRunner"
     -->
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="bbct.android"
+                     android:targetPackage="bbct.android.common"
                      android:label="@string/label"
     />
     <instrumentation android:name=".BBCTTestRunner"
-                     android:targetPackage="bbct.android"
+                     android:targetPackage="bbct.android.common"
                      android:label="@string/label"
     />
 </manifest>
