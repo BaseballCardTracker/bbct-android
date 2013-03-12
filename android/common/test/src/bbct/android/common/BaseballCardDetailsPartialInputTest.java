@@ -32,11 +32,23 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
+ * A parameterized test which can test any combination of input in the
+ * {@link bbct.android.common.BaseballCardDetails} activity. This test can be
+ * run using {@link bbct.android.tests.BBCTTestRunner}.
  *
  * @author codeguru <codeguru@users.sourceforge.net==
  */
 public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
+    /**
+     * Creates a {@link TestSuite} containing every possible combination of
+     * blank TextEdits in the {@link bbct.android.common.bAseballCardDetails}
+     * activity.
+     *
+     * @return A {@link TestSuite} containing every possible combination of
+     * blank TextEdits in the {@link bbct.android.common.bAseballCardDetails}
+     * activity.
+     */
     public static Test suite() {
         TestSuite suite = new TestSuite(BaseballCardDetailsPartialInputTest.class.getName());
 
@@ -47,13 +59,36 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         return suite;
     }
 
-    public BaseballCardDetailsPartialInputTest(int inputFieldsMask) {
+    /**
+     * Creates a test which will input data to the TextEdits indicated by the
+     * given flags. The valid values for the flags are defined in
+     * {@link bbct.android.common.BBCTTestUtil} and may be combined with the
+     * logical OR operator |.
+     *
+     * @see bbct.android.common.BBCTTestUtil#NO_FIELDS
+     * @see bbct.android.common.BBCTTestUtil#BRAND_FIELD
+     * @see bbct.android.common.BBCTTestUtil#YEAR_FIELD
+     * @see bbct.android.common.BBCTTestUtil#NUMBER_FIELD
+     * @see bbct.android.common.BBCTTestUtil#COUNT_FIELD
+     * @see bbct.android.common.BBCTTestUtil#VALUE_FIELD
+     * @see bbct.android.common.BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see bbct.android.common.BBCTTestUtil#ALL_FIELDS
+     * @param inputFieldsFlags The TextEdits to receive input.
+     */
+    public BaseballCardDetailsPartialInputTest(int inputFieldsFlags) {
         super(BaseballCardDetails.class);
 
         this.setName(TEST_NAME);
-        this.inputFieldsMask = inputFieldsMask;
+        this.inputFieldsMask = inputFieldsFlags;
     }
 
+    /**
+     * Set up the test fixture for this test. Reads an input CSV file for
+     * baseball card data to use as input. Finds the EditText and Button objects
+     * which will be used during testing.
+     *
+     * @throws IOException If an error occurs while reading the CSV file.
+     */
     @Override
     public void setUp() throws IOException {
         this.inst = this.getInstrumentation();
@@ -73,6 +108,11 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
     }
 
+    /**
+     * Validates that {@link bbct.android.common.BaseballCardDetails} correctly
+     * handles missing input by setting the error messages of any blank EditText
+     * views.
+     */
     public void testPartialInput() {
         Log.d(TAG, "testPartialInput()");
         Log.d(TAG, "inputFieldsMask=" + inputFieldsMask);
