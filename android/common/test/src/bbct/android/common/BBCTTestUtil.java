@@ -240,55 +240,64 @@ abstract public class BBCTTestUtil {
     private BBCTTestUtil() {
     }
     /**
-     * Fill all fields.
+     * Leave all fields blank.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
     public static final int NO_FIELDS = 0x00;
     /**
-     * Skip the Card Brand field.
+     * Include the card brand field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
     public static final int BRAND_FIELD = 0x01;
     /**
-     * Skip the Card Year field.
+     * Include the card year field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
     public static final int YEAR_FIELD = 0x02;
     /**
-     * Skip the Card Number field.
+     * Include the card number field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
     public static final int NUMBER_FIELD = 0x04;
     /**
-     * Skip the Card Value field.
+     * Include the card value field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
     public static final int VALUE_FIELD = 0x08;
     /**
-     * Skip the Card Count field.
+     * Include the card count field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
     public static final int COUNT_FIELD = 0x10;
     /**
-     * Skip the Player Name field.
+     * Include the player name field.
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
     public static final int PLAYER_NAME_FIELD = 0x20;
+    /**
+     * Include all input fields.
+     *
+     * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * BaseballCard, int)
+     */
     public static final int ALL_FIELDS = BRAND_FIELD | YEAR_FIELD | NUMBER_FIELD | VALUE_FIELD | COUNT_FIELD | PLAYER_NAME_FIELD;
+    /**
+     * Asset file which contains card data as CSV values.
+     */
     public static final String CARD_DATA = "cards.csv";
     private static final int MENU_FLAGS = 0;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
