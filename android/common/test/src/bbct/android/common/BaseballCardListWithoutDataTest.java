@@ -51,7 +51,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
 
         InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
-        this.dbUtil = new DatabaseUtil();
+        this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
     }
 
     @Override

@@ -26,24 +26,46 @@ import java.io.File;
 import java.util.List;
 
 /**
+ * Utility class for accessing a SQLite database during tests.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class DatabaseUtil {
 
-    public DatabaseUtil() {
-        this.db = SQLiteDatabase.openDatabase(DB_LOC, null, SQLiteDatabase.OPEN_READWRITE);
+    /**
+     * Create a {@link DatabaseUtil} object for the given Android package.
+     *
+     * @param packageName Name of the Android package being tested.
+     */
+    public DatabaseUtil(String packageName) {
+        this.dbPath = String.format(DB_PATH, packageName, DB_NAME);
+        this.db = SQLiteDatabase.openDatabase(this.dbPath, null, SQLiteDatabase.OPEN_READWRITE);
     }
 
+    /**
+     * Get the database being tested.
+     *
+     * @return The database being tested.
+     */
     public SQLiteDatabase getDatabase() {
         return this.db;
     }
 
+    /**
+     * Delete the database being tested. Should return the app to its inital
+     * state after installation.
+     */
     public void deleteDatabase() {
         this.db.close();
-        SQLiteDatabase.deleteDatabase(new File(DB_LOC));
+        SQLiteDatabase.deleteDatabase(new File(this.dbPath));
     }
 
+    /**
+     * Insert baseball card data into the database.
+     *
+     * @param card The baseball card data to insert.
+     * @return The row ID of the newly inserted row, or -1 if an error occurred.
+     */
     public long insertBaseballCard(BaseballCard card) {
         ContentValues cv = new ContentValues(7);
         cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
@@ -57,12 +79,24 @@ public class DatabaseUtil {
         return this.db.insert(TABLE_NAME, null, cv);
     }
 
+    /**
+     * Insert all the baseball card data from the given List.
+     *
+     * @param cards The list of baseball card data to insert into the database.
+     */
     public void populateTable(List<BaseballCard> cards) {
         for (BaseballCard card : cards) {
             this.insertBaseballCard(card);
         }
     }
 
+    /**
+     * Check if the database contains the given baseball card.
+     *
+     * @param card The baseball card data to find.
+     * @return <code>true</code> if the baseball card data is
+     * found. <code>false</code> otherwise.
+     */
     public boolean containsBaseballCard(BaseballCard card) {
         String[] columns = {BaseballCardContract.ID_COL_NAME};
         String selection = BaseballCardContract.BRAND_COL_NAME + " = ?"
@@ -75,22 +109,29 @@ public class DatabaseUtil {
         String[] selectionArgs = {card.getBrand(), Integer.toString(card.getYear()), Integer.toString(card.getNumber()),
             Integer.toString(card.getValue()), Integer.toString(card.getCount()), card.getPlayerName(), card.getPlayerPosition()};
         Cursor cursor = this.db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
-        
+
         return cursor.getCount() == 1;
     }
-    
+
+    /**
+     * Check if the database contains all of the cards in the given list.
+     *
+     * @param cards The list of baseball cards to find.
+     * @return <code>true</code> if all the baseball card data is
+     * found. <code>false</code> otherwise.
+     */
     public boolean containsAllBaseballCards(List<BaseballCard> cards) {
         for (BaseballCard card : cards) {
             if (!this.containsBaseballCard(card)) {
                 return false;
             }
         }
-        
+
         return true;
     }
     private SQLiteDatabase db = null;
-    private static final String DB_PATH = "/data/data/bbct.android/databases/";
+    private String dbPath = null;
+    private static final String DB_PATH = "/data/data/%s/databases/%s";
     private static final String DB_NAME = BaseballCardSQLHelper.DATABASE_NAME;
-    private static final String DB_LOC = DB_PATH + DB_NAME;
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
 }

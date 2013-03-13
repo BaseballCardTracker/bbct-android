@@ -66,7 +66,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
         this.doneButton = (Button) this.activity.findViewById(R.id.done_button);
 
-        this.dbUtil = new DatabaseUtil();
+        this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
     }
 
     @Override

@@ -18,6 +18,7 @@
  */
 package bbct.android.common;
 
+import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import bbct.common.data.BaseballCard;
 import java.io.IOException;
@@ -49,11 +50,11 @@ public class ManualTest extends ActivityInstrumentationTestCase2<BaseballCardLis
      * @throws IOException If an error occurs while populating the database.
      */
     public void testManually() throws IOException {
-        this.getActivity();
+        Activity activity = this.getActivity();
         InputStream in = this.getInstrumentation().getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader input = new BaseballCardCsvFileReader(in, true);
         List<BaseballCard> allCards = input.getAllBaseballCards();
-        DatabaseUtil dbUtil = new DatabaseUtil();
+        DatabaseUtil dbUtil = new DatabaseUtil(activity.getPackageName());
         dbUtil.populateTable(allCards);
     }
 

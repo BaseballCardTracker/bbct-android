@@ -59,7 +59,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         InputStream cardInputStream = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
         this.allCards = this.cardInput.getAllBaseballCards();
-        this.dbUtil = new DatabaseUtil();
+        this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
         this.dbUtil.populateTable(allCards);
 
         this.newCard = new BaseballCard("codeguru apps", 1993, 1, 50000, 1, "codeguru", "Catcher");
