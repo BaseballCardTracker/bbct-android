@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -235,6 +236,34 @@ abstract public class BBCTTestUtil {
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+    }
+
+    /**
+     * Assert that the {@link EditText} views in the given
+     * {@link bbct.android.common.BaseballCardDetails} activity contain the
+     * baseball card data from the given {@link bbct.common.data.BaseballCard}.
+     *
+     * @param cardDetails The {@link bbct.android.common.BaseballCardDetails}
+     * containing the {@link EditText} views to check.
+     * @param expectedCard The {@link bbct.common.data.BaseballCard} containing
+     * the expected data.
+     */
+    public static void assertAllEditTextContents(Activity cardDetails, BaseballCard expectedCard) {
+        EditText brandText = (EditText) cardDetails.findViewById(R.id.brand_text);
+        EditText yearText = (EditText) cardDetails.findViewById(R.id.year_text);
+        EditText numberText = (EditText) cardDetails.findViewById(R.id.number_text);
+        EditText valueText = (EditText) cardDetails.findViewById(R.id.value_text);
+        EditText countText = (EditText) cardDetails.findViewById(R.id.count_text);
+        EditText playerNameText = (EditText) cardDetails.findViewById(R.id.player_name_text);
+        Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
+
+        Assert.assertEquals(expectedCard.getBrand(), brandText.getText().toString());
+        Assert.assertEquals(expectedCard.getYear(), Integer.parseInt(yearText.getText().toString()));
+        Assert.assertEquals(expectedCard.getNumber(), Integer.parseInt(numberText.getText().toString()));
+        Assert.assertEquals(expectedCard.getValue(), (int) (Double.parseDouble(valueText.getText().toString()) * 100));
+        Assert.assertEquals(expectedCard.getCount(), Integer.parseInt(countText.getText().toString()));
+        Assert.assertEquals(expectedCard.getPlayerName(), playerNameText.getText().toString());
+        Assert.assertEquals(expectedCard.getPlayerPosition(), playerPositionSpinner.getSelectedItem());
     }
 
     private BBCTTestUtil() {

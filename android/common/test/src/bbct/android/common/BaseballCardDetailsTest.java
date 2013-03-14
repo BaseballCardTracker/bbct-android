@@ -98,13 +98,13 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = this.getActivity();
-        this.assertAllEditTextContents(this.card);
+        BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
     }
 
     public void testStatePause() {
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
         this.inst.callActivityOnRestart(this.activity);
-        this.assertAllEditTextContents(this.card);
+        BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
     }
 
     public void testAddCard() {
@@ -145,16 +145,6 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     public void testDoneButtonOnClick() {
         Assert.assertTrue(this.doneButton.performClick());
         Assert.assertTrue(this.activity.isFinishing());
-    }
-
-    private void assertAllEditTextContents(BaseballCard expectedCard) {
-        Assert.assertEquals(expectedCard.getBrand(), this.brandText.getText().toString());
-        Assert.assertEquals(expectedCard.getYear(), Integer.parseInt(this.yearText.getText().toString()));
-        Assert.assertEquals(expectedCard.getNumber(), Integer.parseInt(this.numberText.getText().toString()));
-        Assert.assertEquals(expectedCard.getValue(), (int) (Double.parseDouble(this.valueText.getText().toString()) * 100));
-        Assert.assertEquals(expectedCard.getCount(), Integer.parseInt(this.countText.getText().toString()));
-        Assert.assertEquals(expectedCard.getPlayerName(), this.playerNameText.getText().toString());
-        Assert.assertEquals(expectedCard.getPlayerPosition(), this.playerPositionSpinner.getSelectedItem());
     }
 
     private Activity activity = null;
