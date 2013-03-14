@@ -20,7 +20,6 @@ package bbct.android.common;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.widget.Button;
@@ -122,23 +121,6 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         for (BaseballCard nextCard : this.allCards) {
             Assert.assertTrue("Missing card: " + nextCard, this.dbUtil.containsBaseballCard(nextCard));
         }
-    }
-
-    public void testEditCard() {
-        Assert.fail("Create a new test class for this test because the fixture is different");
-        Intent intent = new Intent(this.inst.getTargetContext(), BaseballCardDetails.class);
-        intent.putExtra(this.activity.getString(R.string.baseball_card_extra), card);
-        this.activity = this.inst.startActivitySync(intent);
-        this.assertAllEditTextContents(this.card);
-
-        this.inst.runOnMainSync(new Runnable() {
-            @Override
-            public void run() {
-                BaseballCardDetailsTest.this.countText.requestFocus();
-            }
-        });
-
-        Assert.fail("Edit count and value");
     }
 
     @UiThreadTest
