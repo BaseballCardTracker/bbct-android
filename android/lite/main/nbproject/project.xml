@@ -66,7 +66,7 @@
             <compilation-unit>
                 <package-root>gen</package-root>
                 <package-root>src</package-root>
-                <classpath mode="compile">/usr/local/bin/android-sdk-linux/platforms/android-16/android.jar;E:\programs\java\android-sdk\platforms\android-16\android.jar;libs/GoogleAdMobAdsSdk-6.2.1.jar;../../common/main/bin/classes.jar</classpath>
+                <classpath mode="compile">/usr/local/bin/android-sdk-linux/platforms/android-16/android.jar:E:/programs/java/android-sdk/platforms/android-16/android.jar:libs/GoogleAdMobAdsSdk-6.2.1.jar:../../common/lib/bin/classes</classpath>
                 <built-to>bin/classes</built-to>
                 <source-level>1.6</source-level>
             </compilation-unit>
