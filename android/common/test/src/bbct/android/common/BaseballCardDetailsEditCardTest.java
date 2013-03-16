@@ -30,15 +30,30 @@ import java.io.InputStream;
 import junit.framework.Assert;
 
 /**
+ * Tests editing card value and count in a
+ * {@link bbct.android.common.BaseballCardDetails} activity.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
+    /**
+     * Create instrumented test cases for
+     * {@link bbct.android.common.BaseballCardDetails}.
+     */
     public BaseballCardDetailsEditCardTest() {
         super(BaseballCardDetails.class);
     }
 
+    /**
+     * Set up test fixture. This consists of an instance of the
+     * {@link bbct.android.common.BaseballCardDetails} activity and two
+     * {@link bbct.common.data.BaseballCard} objects with the original data when
+     * first launching the activity and the new data when editing
+     *
+     * @throws Exception If an error occurs while chaining to the super class or
+     * while reading data from the baseball card data asset file.
+     */
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -70,6 +85,13 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
     }
 
+    /**
+     * Tear down the test fixture by calling
+     * {@link bbct.android.common.BaseballCardDetails#finish()} and deleting the
+     * app's database.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     */
     @Override
     public void tearDown() throws Exception {
         this.activity.finish();
@@ -78,6 +100,10 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         super.tearDown();
     }
 
+    /**
+     * Test that the value and count field can be edited in the
+     * {@link bbct.android.common.BaseballCardDetails} activity.
+     */
     public void testEditCard() {
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
         Assert.assertEquals(this.valueText, this.activity.getCurrentFocus());
