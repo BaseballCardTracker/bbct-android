@@ -31,7 +31,7 @@ import junit.framework.Assert;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public abstract class FilterActivityTest<T extends Activity> extends ActivityInstrumentationTestCase2<T> {
+public abstract class FilterActivityTest<T extends FilterActivity> extends ActivityInstrumentationTestCase2<T> {
 
     public FilterActivityTest(Class<T> activityClass) {
         super(activityClass);
@@ -40,7 +40,7 @@ public abstract class FilterActivityTest<T extends Activity> extends ActivityIns
     @Override
     public void setUp() throws Exception {
         super.setUp();
-        
+
         this.inst = this.getInstrumentation();
 
         this.activity = this.getActivity();
@@ -92,7 +92,7 @@ public abstract class FilterActivityTest<T extends Activity> extends ActivityIns
 
     public void testOkButtonOnClickWithSendInputKeys() throws Throwable {
         Log.d(TAG, "testOkButtonOnClickWithSendInputKeys()");
-        
+
         this.sendInputKeys();
 
         Log.d(TAG, "Run something on the UI thread");

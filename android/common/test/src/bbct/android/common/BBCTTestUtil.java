@@ -84,7 +84,7 @@ abstract public class BBCTTestUtil {
      * @return A reference to the child activity which is launched, if the test
      * succeeds.
      */
-    public static Activity testMenuItem(Instrumentation inst, Activity activity, int menuId, Class childActivityClass) {
+    public static Activity testMenuItem(Instrumentation inst, Activity activity, int menuId, Class<? extends Activity> childActivityClass) {
         Instrumentation.ActivityMonitor monitor = new Instrumentation.ActivityMonitor(childActivityClass.getName(), null, false);
         inst.addMonitor(monitor);
 

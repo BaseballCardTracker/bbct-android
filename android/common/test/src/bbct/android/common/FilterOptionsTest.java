@@ -82,10 +82,10 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
         Assert.assertFalse(this.activity.isFinishing());
     }
 
-    public void testOkButtonOnClick(Class filterActivityClass, final int radioButtonId) throws Throwable {
+    public void testOkButtonOnClick(Class<? extends FilterActivity> filterActivityClass, final int radioButtonId) throws Throwable {
         Instrumentation.ActivityMonitor filterActivityMonitor = new Instrumentation.ActivityMonitor(filterActivityClass.getName(), null, false);
         this.inst.addMonitor(filterActivityMonitor);
-        
+
         final RadioButton filterRadioButton = (RadioButton) this.activity.findViewById(radioButtonId);
 
         this.runTestOnUiThread(new Runnable() {

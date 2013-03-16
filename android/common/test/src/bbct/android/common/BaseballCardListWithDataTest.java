@@ -318,7 +318,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
-    private void testFilter(Class<?> filterClass, int radioButtonId, FilterInput filterInput, Predicate<BaseballCard> filterPred) {
+    private void testFilter(Class<? extends FilterActivity> filterClass, int radioButtonId, FilterInput filterInput, Predicate<BaseballCard> filterPred) {
         Instrumentation.ActivityMonitor filterMonitor = new Instrumentation.ActivityMonitor(filterClass.getName(), null, false);
         this.inst.addMonitor(filterMonitor);
 
