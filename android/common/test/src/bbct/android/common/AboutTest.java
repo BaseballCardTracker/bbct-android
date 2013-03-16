@@ -42,7 +42,7 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
      * Set up test fixture. This consists of an instance of the
      * {@link bbct.android.common.About} activity.
      *
-     * @throws Exception
+     * @throws Exception If an error occurs while chaining to the super class.
      */
     @Override
     public void setUp() throws Exception {
@@ -55,7 +55,7 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
      * Tear down the test fixture by calling
      * {@link bbct.android.common.About#finish()}.
      *
-     * @throws Exception
+     * @throws Exception If an error occurs while chaining to the super class.
      */
     @Override
     public void tearDown() throws Exception {
