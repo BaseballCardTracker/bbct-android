@@ -23,6 +23,7 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.KeyEvent;
 import android.widget.EditText;
 import bbct.common.data.BaseballCard;
 import java.io.InputStream;
@@ -42,11 +43,20 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
     public void setUp() throws Exception {
         super.setUp();
 
-        Instrumentation inst = this.getInstrumentation();
-        InputStream in = inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
+        this.inst = this.getInstrumentation();
+        InputStream in = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in, true);
         this.card = cardInput.getNextBaseballCard(); // Ken Griffey Jr.
         cardInput.close();
+
+        String brand = this.card.getBrand();
+        int year = this.card.getYear();
+        int number = this.card.getNumber();
+        int newValue = this.card.getValue() + 50;
+        int newCount = this.card.getCount() + 1;
+        String name = this.card.getPlayerName();
+        String position = this.card.getPlayerPosition();
+        this.newCard = new BaseballCard(brand, year, number, newValue, newCount, name, position);
 
         // Must call getActivity() before creating a DatabaseUtil object to ensure that the database is created
         Context target = inst.getTargetContext();
@@ -56,7 +66,6 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         this.activity = this.getActivity();
 
         this.valueText = (EditText) this.activity.findViewById(R.id.value_text);
-        this.countText = (EditText) this.activity.findViewById(R.id.count_text);
 
         this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
     }
@@ -72,11 +81,16 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
     public void testEditCard() {
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
         Assert.assertEquals(this.valueText, this.activity.getCurrentFocus());
-        Assert.fail("Edit count and value");
+        String valueStr = String.format("%.2f", this.newCard.getValue() / 100.0);
+        this.inst.sendStringSync(valueStr);
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+        this.inst.sendStringSync(Integer.toString(this.newCard.getCount()));
+        BBCTTestUtil.assertAllEditTextContents(this.activity, this.newCard);
     }
+    private Instrumentation inst = null;
     private Activity activity = null;
     private EditText valueText = null;
-    private EditText countText = null;
     private BaseballCard card = null;
+    private BaseballCard newCard = null;
     private DatabaseUtil dbUtil = null;
 }
