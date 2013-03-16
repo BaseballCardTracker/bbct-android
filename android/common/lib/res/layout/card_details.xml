@@ -31,6 +31,7 @@
                               android:inputType="textCapWords"
                               android:hint="@string/brand_hint"
                               android:completionThreshold="1"
+                              android:selectAllOnFocus="true"
         />
     </TableRow>
     <TableRow>
@@ -41,6 +42,7 @@
                   android:singleLine="true"
                   android:inputType="number"
                   android:hint="@string/year_hint"
+                  android:selectAllOnFocus="true"
         />
     </TableRow>
     <TableRow>
@@ -51,6 +53,7 @@
                   android:singleLine="true"
                   android:inputType="number"
                   android:hint="@string/number_hint"
+                  android:selectAllOnFocus="true"
         />
     </TableRow>
     <TableRow>
@@ -61,6 +64,7 @@
                   android:singleLine="true"
                   android:inputType="numberDecimal"
                   android:hint="@string/value_hint"
+                  android:selectAllOnFocus="true"
         />
     </TableRow>
     <TableRow>
@@ -71,6 +75,7 @@
                   android:singleLine="true"
                   android:inputType="number"
                   android:hint="@string/count_hint"
+                  android:selectAllOnFocus="true"
         />
     </TableRow>
     <TableRow>
@@ -82,6 +87,7 @@
                               android:inputType="textCapWords"
                               android:hint="@string/player_name_hint"
                               android:completionThreshold="1"
+                              android:selectAllOnFocus="true"
         />
     </TableRow>
     <TableRow>
