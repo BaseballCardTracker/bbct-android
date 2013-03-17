@@ -129,6 +129,19 @@ public class DatabaseUtil {
 
         return true;
     }
+
+    /**
+     * Check that the database is empty.
+     *
+     * @return <code>true</code> if the database is empty. <code>false</code>
+     * otherwise.
+     */
+    public boolean isEmpty() {
+        String[] columns = {BaseballCardContract.ID_COL_NAME};
+        Cursor cursor = this.db.query(TABLE_NAME, columns, null, null, null, null, null);
+
+        return cursor.getCount() == 0;
+    }
     private SQLiteDatabase db = null;
     private String dbPath = null;
     private static final String DB_PATH = "/data/data/%s/databases/%s";

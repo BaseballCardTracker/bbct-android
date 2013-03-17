@@ -20,7 +20,6 @@ package bbct.android.common;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.database.sqlite.SQLiteDatabase;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
 import bbct.common.data.BaseballCard;
@@ -47,7 +46,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         this.inst = this.getInstrumentation();
 
         this.activity = this.getActivity();
-        this.list = (ListView) this.activity.findViewById(android.R.id.list);
+        this.listView = (ListView) this.activity.findViewById(android.R.id.list);
 
         InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
@@ -65,13 +64,11 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
 
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        Assert.assertNotNull(this.list);
 
-        // Check that database was created with the correct version and table
-        SQLiteDatabase db = this.dbUtil.getDatabase();
-        Assert.assertNotNull(db);
-        Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION, db.getVersion());
-        Assert.assertEquals(BaseballCardContract.TABLE_NAME, SQLiteDatabase.findEditTable(BaseballCardContract.TABLE_NAME));
+        Assert.assertNotNull(this.listView);
+        Assert.assertEquals(0, this.listView.getCount());
+
+        BBCTTestUtil.assertDatabaseCreated(this.activity.getPackageName());
     }
 
     public void testTitle() {
@@ -114,7 +111,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
 
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
         cards.add(card);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, cards, this.list);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, cards, this.listView);
     }
 
     public void testAddMultipleCards() throws IOException {
@@ -126,12 +123,12 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         }
 
         BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, cards, this.list);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, cards, this.listView);
     }
     private Instrumentation inst = null;
     private Activity activity = null;
     private BaseballCardCsvFileReader cardInput = null;
     private DatabaseUtil dbUtil = null;
-    private ListView list = null;
+    private ListView listView = null;
     private static final String DATA_ASSET = "cards.csv";
 }

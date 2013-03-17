@@ -20,6 +20,7 @@ package bbct.android.common;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -268,6 +269,19 @@ abstract public class BBCTTestUtil {
         Assert.assertEquals(expectedCard.getCount(), Integer.parseInt(countText.getText().toString()));
         Assert.assertEquals(expectedCard.getPlayerName(), playerNameText.getText().toString());
         Assert.assertEquals(expectedCard.getPlayerPosition(), playerPositionSpinner.getSelectedItem());
+    }
+
+    /**
+     * Assert that database was created with the correct version and table and that it is empty.
+     *
+     * @param targetPackage The name of the Android package being tested.
+     */
+    public static void assertDatabaseCreated(String targetPackage) {
+        DatabaseUtil dbUtil = new DatabaseUtil(targetPackage);
+        SQLiteDatabase db = dbUtil.getDatabase();
+        Assert.assertNotNull(db);
+        Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION, db.getVersion());
+        Assert.assertEquals(BaseballCardContract.TABLE_NAME, SQLiteDatabase.findEditTable(BaseballCardContract.TABLE_NAME));
     }
 
     private BBCTTestUtil() {

@@ -76,15 +76,12 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
+
         Assert.assertNotNull(this.listView);
-
-        // Check that database was created with the correct version and table
-        SQLiteDatabase db = this.dbUtil.getDatabase();
-        Assert.assertNotNull(db);
-        Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION, db.getVersion());
-        Assert.assertEquals(BaseballCardContract.TABLE_NAME, SQLiteDatabase.findEditTable(BaseballCardContract.TABLE_NAME));
-
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
+
+        BBCTTestUtil.assertDatabaseCreated(this.activity.getPackageName());
+        Assert.assertTrue(this.dbUtil.containsAllBaseballCards(this.allCards));
     }
 
     public void testStateDestroyWithoutFilter() {
