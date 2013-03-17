@@ -18,21 +18,37 @@
  */
 package bbct.android.common;
 
+import android.app.Activity;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import junit.framework.Assert;
 
 /**
+ * Tests for {@link YearAndNumberFilter}.
+ *
  * TODO: Add tests for input year but no number and for input number but no year
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFilter> {
 
+    /**
+     * Create instrumented test cases for {@link YearAndNumberFilter}.
+     */
     public YearAndNumberFilterTest() {
         super(YearAndNumberFilter.class);
     }
 
+    /**
+     * Set up test fixture. Most of the test fixture is set up by
+     * {@link FilterActivityTest#setUp()}. This class adds {@link EditText}
+     * views which contain the year and card number values being edited and
+     * <code>int</code> values for the year and card number.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     *
+     * @see FilterActivityTest#setUp()
+     */
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -44,11 +60,29 @@ public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFil
         this.testNumber = 123;
     }
 
+    /**
+     * Tear down the test fixture by calling {@link Activity#finish()}.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     *
+     * @see FilterActivityTest#tearDown()
+     */
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }
 
+    /**
+     * Check preconditions which must hold to guarantee the validity of all
+     * other tests. Most preconditions are checked by
+     * {@link FilterActivityTest#testPreConditions()}. In addition, this class
+     * checks that the {@link EditText} views for the year and card number is
+     * not
+     * <code>null</code>, that they are empty, and that the {@link EditText}
+     * view for the year has focus.
+     *
+     * @see FilterActivityTest#testPreConditions()
+     */
     @Override
     public void testPreConditions() {
         super.testPreConditions();
@@ -61,11 +95,26 @@ public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFil
         Assert.assertTrue(this.yearText.hasFocus());
     }
 
+    /**
+     * Get the substring representing this {@link Activity} which should appear
+     * in the title bar.
+     *
+     * @return The substring representing this {@link Activity} which should
+     * appear in the title bar.
+     *
+     * @see FilterActivityTest#testTitle()
+     */
     @Override
     protected String getTitleSubString() {
         return this.activity.getString(R.string.year_and_number_filter_title);
     }
 
+    /**
+     * Assert that the correct error message is set in the {@link EditText}
+     * views when they are empty.
+     *
+     * @see FilterActivityTest#testOkButtonOnClickWithNoInput()}
+     */
     @Override
     protected void checkErrorMessage() {
         // TODO: Need two other tests where only one of the two fields are filled
@@ -76,12 +125,22 @@ public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFil
         Assert.assertEquals(expectedNumberError, this.numberText.getError());
     }
 
+    /**
+     * Set the text of the year and card number {@link EditText} views.
+     *
+     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
+     */
     @Override
     protected void setInputText() {
         this.yearText.setText(Integer.toString(this.testYear));
         this.numberText.setText(Integer.toString(this.testNumber));
     }
 
+    /**
+     * Inject instrumented key events for the year and card number text.
+     *
+     * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()
+     */
     @Override
     protected void sendInputKeys() {
         this.getInstrumentation().sendStringSync(Integer.toString(this.testYear));
