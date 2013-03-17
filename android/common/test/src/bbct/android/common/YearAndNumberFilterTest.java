@@ -96,11 +96,11 @@ public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFil
     }
 
     /**
-     * Get the substring representing this {@link Activity} which should appear
-     * in the title bar.
+     * Get the substring which should appear in the title bar of the
+     * {@link Activity} being tested.
      *
-     * @return The substring representing this {@link Activity} which should
-     * appear in the title bar.
+     * @return The substring which should appear in the title bar of the
+     * {@link Activity} being tested.
      *
      * @see FilterActivityTest#testTitle()
      */
