@@ -62,7 +62,8 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
 
     @Override
     protected void checkErrorMessage() {
-        Assert.fail("Need to test that error message is displayed");
+        String expectedNumberError = this.activity.getString(R.string.number_input_error);
+        Assert.assertEquals(expectedNumberError, this.numberText.getError());
     }
 
     @Override

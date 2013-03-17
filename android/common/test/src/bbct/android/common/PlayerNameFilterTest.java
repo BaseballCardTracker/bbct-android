@@ -63,7 +63,8 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
 
     @Override
     protected void checkErrorMessage() {
-        Assert.fail("Need to test that error message is displayed");
+        String expectedError = this.activity.getString(R.string.player_name_input_error);
+        Assert.assertEquals(expectedError, this.playerNameText.getError());
     }
 
     @Override
