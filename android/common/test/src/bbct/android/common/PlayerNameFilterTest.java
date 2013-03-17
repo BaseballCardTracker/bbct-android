@@ -18,20 +18,35 @@
  */
 package bbct.android.common;
 
+import android.app.Activity;
 import android.util.Log;
 import android.widget.EditText;
 import junit.framework.Assert;
 
 /**
+ * Tests for {@link PlayerNameFilter}.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
 
+    /**
+     * Create instrumented test cases for {@link PlayerNameFilter}.
+     */
     public PlayerNameFilterTest() {
         super(PlayerNameFilter.class);
     }
 
+    /**
+     * Set up test fixture. Most of the test fixture is set up by
+     * {@link FilterActivityTest#setUp()}. This class adds a {@link EditText}
+     * view which contain player name being edited and an {@link String} for the
+     * player name.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     *
+     * @see FilterActivityTest#setUp()
+     */
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -41,11 +56,27 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
         this.testPlayerName = "codeguru";
     }
 
+    /**
+     * Tear down the test fixture by calling {@link Activity#finish()}.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     *
+     * @see FilterActivityTest#tearDown()
+     */
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }
 
+    /**
+     * Check preconditions which must hold to guarantee the validity of all
+     * other tests. Most preconditions are checked by
+     * {@link FilterActivityTest#testPreConditions()}. In addition, this class
+     * checks that the {@link EditText} view for player name is not
+     * <code>null</code>, that it is empty, and that it has focus.
+     *
+     * @see FilterActivityTest#testPreConditions()
+     */
     @Override
     public void testPreConditions() {
         super.testPreConditions();
@@ -56,22 +87,45 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
         Assert.assertTrue(this.playerNameText.hasFocus());
     }
 
+    /**
+     * Get the substring representing this {@link Activity} which should appear
+     * in the title bar.
+     *
+     * @return The substring representing this {@link Activity} which should
+     * appear in the title bar.
+     *
+     * @see FilterActivityTest#testTitle()
+     */
     @Override
     protected String getTitleSubString() {
         return this.activity.getString(R.string.player_name_filter_title);
     }
 
+    /**
+     * Assert that the correct error message is set in the {@link EditText} view
+     * when it is empty.
+     *
+     * @see FilterActivityTest#testOkButtonOnClickWithNoInput()}
+     */
     @Override
     protected void checkErrorMessage() {
         String expectedError = this.activity.getString(R.string.player_name_input_error);
         Assert.assertEquals(expectedError, this.playerNameText.getError());
     }
 
+    /**
+     * Set the text of the player name {@link EditText} views.
+     */
     @Override
     protected void setInputText() {
         this.playerNameText.setText(this.testPlayerName);
     }
 
+    /**
+     * Inject instrumented key events for the player name text.
+     *
+     * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()
+     */
     @Override
     protected void sendInputKeys() {
         Log.d(TAG, "sendInputKeys()");
