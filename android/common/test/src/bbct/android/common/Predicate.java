@@ -24,16 +24,17 @@ package bbct.android.common;
  * {@link #doTest}, which tests if the given object agrees with the predicate
  * defined by the implementation.
  *
+ * @param <T> The class of objects to which this {@link Predicate} applies.
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public interface Predicate<T> {
 
     /**
-     * Tests if the given object agrees with the predicate defined by the
+     * Tests if the given object satisfies the predicate defined by the
      * implementation.
      *
      * @param obj The object to test.
-     * @return <code>true</code> if the given object agrees with the predicate
+     * @return <code>true</code> if the given object satisfies the predicate
      * defined by the implementation. <code>false</code>, otherwise.
      */
     public boolean doTest(T obj);
