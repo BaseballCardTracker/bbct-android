@@ -173,14 +173,23 @@ abstract public class BBCTTestUtil {
      * activity being tested.
      * @param card The {@link bbct.common.data.BaseballCard} object holding the
      * baseball card data to add to the database.
-     * @param skipFlags The EditText views to skip filling in.
+     * @param fieldFlags The EditText views to fill in.
+     *
+     * @see bbct.android.common.BBCTTestUtil#NO_FIELDS
+     * @see bbct.android.common.BBCTTestUtil#BRAND_FIELD
+     * @see bbct.android.common.BBCTTestUtil#YEAR_FIELD
+     * @see bbct.android.common.BBCTTestUtil#NUMBER_FIELD
+     * @see bbct.android.common.BBCTTestUtil#COUNT_FIELD
+     * @see bbct.android.common.BBCTTestUtil#VALUE_FIELD
+     * @see bbct.android.common.BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see bbct.android.common.BBCTTestUtil#ALL_FIELDS
      */
-    public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, int skipFlags) {
+    public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, int fieldFlags) {
         Log.d(TAG, "sendKeysToCardDetails()");
 
         Instrumentation inst = test.getInstrumentation();
 
-        if ((skipFlags & BRAND_FIELD) > 0) {
+        if ((fieldFlags & BRAND_FIELD) > 0) {
             inst.sendStringSync(card.getBrand());
             inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ESCAPE);
         }
@@ -190,28 +199,28 @@ abstract public class BBCTTestUtil {
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((skipFlags & YEAR_FIELD) > 0) {
+        if ((fieldFlags & YEAR_FIELD) > 0) {
             inst.sendStringSync(Integer.toString(card.getYear()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((skipFlags & NUMBER_FIELD) > 0) {
+        if ((fieldFlags & NUMBER_FIELD) > 0) {
             inst.sendStringSync(Integer.toString(card.getNumber()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((skipFlags & VALUE_FIELD) > 0) {
+        if ((fieldFlags & VALUE_FIELD) > 0) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
             inst.sendStringSync(valueStr);
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((skipFlags & COUNT_FIELD) > 0) {
+        if ((fieldFlags & COUNT_FIELD) > 0) {
             inst.sendStringSync(Integer.toString(card.getCount()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((skipFlags & PLAYER_NAME_FIELD) > 0) {
+        if ((fieldFlags & PLAYER_NAME_FIELD) > 0) {
             inst.sendStringSync(card.getPlayerName());
         }
         AutoCompleteTextView playerNameText = (AutoCompleteTextView) cardDetails.findViewById(R.id.player_name_text);

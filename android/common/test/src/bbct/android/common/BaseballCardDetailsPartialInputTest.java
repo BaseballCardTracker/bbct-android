@@ -65,6 +65,8 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
      * {@link bbct.android.common.BBCTTestUtil} and may be combined with the
      * logical OR operator |.
      *
+     * @param inputFieldsFlags The TextEdits to receive input.
+     * 
      * @see bbct.android.common.BBCTTestUtil#NO_FIELDS
      * @see bbct.android.common.BBCTTestUtil#BRAND_FIELD
      * @see bbct.android.common.BBCTTestUtil#YEAR_FIELD
@@ -73,7 +75,6 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
      * @see bbct.android.common.BBCTTestUtil#VALUE_FIELD
      * @see bbct.android.common.BBCTTestUtil#PLAYER_NAME_FIELD
      * @see bbct.android.common.BBCTTestUtil#ALL_FIELDS
-     * @param inputFieldsFlags The TextEdits to receive input.
      */
     public BaseballCardDetailsPartialInputTest(int inputFieldsFlags) {
         super(BaseballCardDetails.class);
