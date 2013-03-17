@@ -26,37 +26,31 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
+ * This test adds data to the app's database so that a tester can perform manual
+ * tests.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class ManualTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
 
+    /**
+     * Create instrumented test cases for {@link BaseballCardList}.
+     */
     public ManualTest() {
         super(BaseballCardList.class);
     }
 
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
-
     /**
      * Adds data to the app's database.
+     *
      * @throws IOException If an error occurs while populating the database.
      */
     public void testManually() throws IOException {
         Activity activity = this.getActivity();
-        InputStream in = this.getInstrumentation().getContext().getAssets().open(CARD_DATA);
+        InputStream in = this.getInstrumentation().getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader input = new BaseballCardCsvFileReader(in, true);
         List<BaseballCard> allCards = input.getAllBaseballCards();
         DatabaseUtil dbUtil = new DatabaseUtil(activity.getPackageName());
         dbUtil.populateTable(allCards);
     }
-
-    private final static String CARD_DATA = "cards.csv";
 }
