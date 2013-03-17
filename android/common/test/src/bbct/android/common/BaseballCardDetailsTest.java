@@ -26,21 +26,33 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import bbct.common.data.BaseballCard;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import junit.framework.Assert;
 
 /**
+ * Tests for {@link BaseballCardDetails}.
+ *
+ * TODO: Add tests for the layout of {@link BaseballCardDetails}
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
+    /**
+     * Create instrumented test cases for {@link BaseballCardDetails}.
+     */
     public BaseballCardDetailsTest() {
         super(BaseballCardDetails.class);
     }
 
+    /**
+     * Set up test fixture. This consists of an instance of the
+     * {@link BaseballCardDetails} activity and all of its {@link EditText} and
+     * {@link Button} views and a list of {@link BaseballCard} data.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     */
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -69,6 +81,12 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     @Override
+    /**
+     * Tear down the test fixture by calling
+     * {@link BaseballCardDetails#finish()} and deleting the app's database.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     */
     public void tearDown() throws Exception {
         this.activity.finish();
         this.dbUtil.deleteDatabase();
@@ -76,6 +94,12 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         super.tearDown();
     }
 
+    /**
+     * Assert that the Activity to test is not
+     * <code>null</code>, that none of its expected {@link EditText} or
+     * {@link Button} views are
+     * <code>null</code>, and that the SQLite database was created.
+     */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
         Assert.assertNotNull(this.brandText);
@@ -92,6 +116,11 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         // TODO assert that database and ListView contain expected data
     }
 
+    /**
+     * Test that all text in the {@link EditText} views of a
+     * {@link BaseballCardDetails} activity is preserved when the activity is
+     * destroyed and the text is restored when the activity is restarted.
+     */
     public void testStateDestroy() {
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
         this.activity.finish();
@@ -100,19 +129,34 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
     }
 
+    /**
+     * Test that all text in the {@link EditText} views of a
+     * {@link BaseballCardDetails} activity is preserved when the activity is
+     * paused and the text is restored when the activity is restarted.
+     */
     public void testStatePause() {
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
         this.inst.callActivityOnRestart(this.activity);
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
     }
 
+    /**
+     * Test that baseball card data is correctly added to the database when it
+     * is entered into the {@link BaseballCardDetails} activity.
+     */
     public void testAddCard() {
         BBCTTestUtil.addCard(this, this.activity, this.card);
         this.inst.waitForIdleSync();
         Assert.assertTrue("Missing card: " + this.card, this.dbUtil.containsBaseballCard(card));
     }
 
-    public void testAddMultipleCards() throws IOException {
+    /**
+     * Test that baseball card data for multiple cards is correctly added to the
+     * database when it is entered into the {@link BaseballCardDetails}
+     * activity. This test enteres all data using a single invocation of the
+     * {@link BaseballCardDetails} activity.
+     */
+    public void testAddMultipleCards() {
         for (BaseballCard nextCard : this.allCards) {
             BBCTTestUtil.addCard(this, this.activity, nextCard);
         }
@@ -123,12 +167,15 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         }
     }
 
+    /**
+     * Test that the {@link BaseballCardDetails} activity finishes when the user
+     * clicks the "Done" button.
+     */
     @UiThreadTest
     public void testDoneButtonOnClick() {
         Assert.assertTrue(this.doneButton.performClick());
         Assert.assertTrue(this.activity.isFinishing());
     }
-
     private Activity activity = null;
     private EditText brandText = null;
     private EditText yearText = null;
