@@ -23,24 +23,24 @@ import android.test.ActivityInstrumentationTestCase2;
 import junit.framework.Assert;
 
 /**
- * Tests for {@link bbct.android.common.About} activity class.
+ * Tests for {@link About} activity class.
  *
- * TODO: Add tests for the layout of {@link bbct.android.common.About}
+ * TODO: Add tests for the layout of {@link About}
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class AboutTest extends ActivityInstrumentationTestCase2<About> {
 
     /**
-     * Create instrumented test cases for {@link bbct.android.common.About}.
+     * Create instrumented test cases for {@link About}.
      */
     public AboutTest() {
         super(About.class);
     }
 
     /**
-     * Set up test fixture. This consists of an instance of the
-     * {@link bbct.android.common.About} activity.
+     * Set up test fixture. This consists of an instance of the {@link About}
+     * activity.
      *
      * @throws Exception If an error occurs while chaining to the super class.
      */
@@ -52,8 +52,7 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
     }
 
     /**
-     * Tear down the test fixture by calling
-     * {@link bbct.android.common.About#finish()}.
+     * Tear down the test fixture by calling {@link About#finish()}.
      *
      * @throws Exception If an error occurs while chaining to the super class.
      */
@@ -65,7 +64,8 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
     }
 
     /**
-     * Assert that the Activity to test is not <code>null</code>.
+     * Assert that the Activity to test is not
+     * <code>null</code>.
      */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);

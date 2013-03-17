@@ -30,16 +30,14 @@ import java.io.InputStream;
 import junit.framework.Assert;
 
 /**
- * Tests editing card value and count in a
- * {@link bbct.android.common.BaseballCardDetails} activity.
+ * Tests editing card value and count in a {@link BaseballCardDetails} activity.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
     /**
-     * Create instrumented test cases for
-     * {@link bbct.android.common.BaseballCardDetails}.
+     * Create instrumented test cases for {@link BaseballCardDetails}.
      */
     public BaseballCardDetailsEditCardTest() {
         super(BaseballCardDetails.class);
@@ -47,9 +45,9 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
 
     /**
      * Set up test fixture. This consists of an instance of the
-     * {@link bbct.android.common.BaseballCardDetails} activity and two
-     * {@link bbct.common.data.BaseballCard} objects with the original data when
-     * first launching the activity and the new data when editing
+     * {@link BaseballCardDetails} activity and two {@link BaseballCard} objects
+     * with the original data when first launching the activity and the new data
+     * when editing.
      *
      * @throws Exception If an error occurs while chaining to the super class or
      * while reading data from the baseball card data asset file.
@@ -87,8 +85,7 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
 
     /**
      * Tear down the test fixture by calling
-     * {@link bbct.android.common.BaseballCardDetails#finish()} and deleting the
-     * app's database.
+     * {@link BaseballCardDetails#finish()} and deleting the app's database.
      *
      * @throws Exception If an error occurs while chaining to the super class.
      */
@@ -102,7 +99,7 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
 
     /**
      * Test that the value and count field can be edited in the
-     * {@link bbct.android.common.BaseballCardDetails} activity.
+     * {@link BaseballCardDetails} activity.
      */
     public void testEditCard() {
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);

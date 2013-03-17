@@ -132,11 +132,10 @@ public class BaseballCard implements Serializable {
     }
 
     /**
-     * Compare this {@link BaseballCard} with any other {@link java.lang.Object}
-     * for equality.
+     * Compare this {@link BaseballCard} for equality with another given
+     * {@link Object}.
      *
-     * @param o The {@link java.lang.Object} to compare with this
-     * {@link BaseballCard}.
+     * @param o The {@link Object} to compare with this {@link BaseballCard}.
      * @return True if <code>o</code> is a {@link BaseballCard} with identical
      * values. False, otherwise.
      */
@@ -177,12 +176,12 @@ public class BaseballCard implements Serializable {
     }
 
     /**
-     * Create a {@link java.lang.String} representation containing the values of
-     * all properties of this {@link BaseballCard}. This should only be used for
+     * Create a {@link String} representation containing the values of all
+     * properties of this {@link BaseballCard}. This should only be used for
      * debugging purposes.
      *
-     * @return A {@link java.lang.String} representation containing the values
-     * of this {@link BaseballCard}.
+     * @return A {@link String} representation containing the values of this
+     * {@link BaseballCard}.
      */
     @Override
     public String toString() {

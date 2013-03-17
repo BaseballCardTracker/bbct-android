@@ -23,7 +23,7 @@ import android.net.Uri;
 
 /**
  * This class contains constant values which are necessary to interact correctly
- * with {@link bbct.android.BaseballCardContentProvider}.
+ * with {@link BaseballCardProvider}.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
@@ -34,13 +34,11 @@ public final class BaseballCardContract {
      */
     public static final String TABLE_NAME = "baseball_cards";
     /**
-     * Authority used to access data with
-     * {@link bbct.android.BaseballCardContentProvider}.
+     * Authority used to access data with {@link BaseballCardProvider}.
      */
     public static final String AUTHORITY = "bbct.android.provider";
     /**
-     * URI used to access data with
-     * {@link bbct.android.BaseballCardContentProvider}.
+     * URI used to access data with {@link BaseballCardProvider}.
      */
     public static final Uri CONTENT_URI = new Uri.Builder().scheme("content").authority(AUTHORITY).path(TABLE_NAME).build();
     /**
@@ -49,8 +47,9 @@ public final class BaseballCardContract {
     public static final String BASEBALL_CARD_LIST_MIME_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/baseball_card";
     /**
      * MIME type for data about a single baseball card.
-     * 
-     * TODO How can I centralize this so I don't repeat it in AndroidManifest.xml?
+     *
+     * TODO How can I centralize this so I don't repeat it in
+     * AndroidManifest.xml?
      */
     public static final String BASEBALL_CARD_ITEM_MIME_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/baseball_card";
     /**
@@ -89,7 +88,6 @@ public final class BaseballCardContract {
      * Convenience variable that can be used when the ContentResolver wants
      * every column from the ContentProvider.
      */
-    public static final String[] PROJECTION =
-        {BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME,
+    public static final String[] PROJECTION = {BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME,
         COUNT_COL_NAME, PLAYER_NAME_COL_NAME, PLAYER_POSITION_COL_NAME};
 }

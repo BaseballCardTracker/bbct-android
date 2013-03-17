@@ -36,12 +36,10 @@ public class BaseballCardCsvFileReader {
 
     /**
      * Create a {@link BaseballCardCsvFileReader} object which reads baseball
-     * card data as comma-separated values from the given
-     * {@link java.io.InputStream}. The input may contain column headers, which
-     * will be ignored.
+     * card data as comma-separated values from the given {@link InputStream}.
+     * The input may contain column headers, which will be ignored.
      *
-     * @param in The {@link java.io.InputStream} containing the comma-separated
-     * values.
+     * @param in The {@link InputStream} containing the comma-separated values.
      * @param hasColHeaders Whether or not the input contains column headers.
      * @throws IOException If an error occurs while reading the input.
      */

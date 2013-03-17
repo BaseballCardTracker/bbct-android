@@ -33,8 +33,8 @@ import junit.framework.TestSuite;
 
 /**
  * A parameterized test which can test any combination of input in the
- * {@link bbct.android.common.BaseballCardDetails} activity. This test can be
- * run using {@link bbct.android.tests.BBCTTestRunner}.
+ * {@link BaseballCardDetails} activity. This test can be run using
+ * {@link BBCTTestRunner}.
  *
  * @author codeguru <codeguru@users.sourceforge.net==
  */
@@ -42,12 +42,10 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
 
     /**
      * Creates a {@link TestSuite} containing every possible combination of
-     * blank TextEdits in the {@link bbct.android.common.bAseballCardDetails}
-     * activity.
+     * blank TextEdits in the {@link BaseballCardDetails} activity.
      *
      * @return A {@link TestSuite} containing every possible combination of
-     * blank TextEdits in the {@link bbct.android.common.bAseballCardDetails}
-     * activity.
+     * blank {@link EditText} views in the {@link BaseballCardDetails} activity.
      */
     public static Test suite() {
         TestSuite suite = new TestSuite(BaseballCardDetailsPartialInputTest.class.getName());
@@ -62,19 +60,18 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     /**
      * Creates a test which will input data to the TextEdits indicated by the
      * given flags. The valid values for the flags are defined in
-     * {@link bbct.android.common.BBCTTestUtil} and may be combined with the
-     * logical OR operator |.
+     * {@link BBCTTestUtil} and may be combined with the logical OR operator |.
      *
      * @param inputFieldsFlags The TextEdits to receive input.
-     * 
-     * @see bbct.android.common.BBCTTestUtil#NO_FIELDS
-     * @see bbct.android.common.BBCTTestUtil#BRAND_FIELD
-     * @see bbct.android.common.BBCTTestUtil#YEAR_FIELD
-     * @see bbct.android.common.BBCTTestUtil#NUMBER_FIELD
-     * @see bbct.android.common.BBCTTestUtil#COUNT_FIELD
-     * @see bbct.android.common.BBCTTestUtil#VALUE_FIELD
-     * @see bbct.android.common.BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see bbct.android.common.BBCTTestUtil#ALL_FIELDS
+     *
+     * @see BBCTTestUtil#NO_FIELDS
+     * @see BBCTTestUtil#BRAND_FIELD
+     * @see BBCTTestUtil#YEAR_FIELD
+     * @see BBCTTestUtil#NUMBER_FIELD
+     * @see BBCTTestUtil#COUNT_FIELD
+     * @see BBCTTestUtil#VALUE_FIELD
+     * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#ALL_FIELDS
      */
     public BaseballCardDetailsPartialInputTest(int inputFieldsFlags) {
         super(BaseballCardDetails.class);
@@ -110,9 +107,8 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     }
 
     /**
-     * Validates that {@link bbct.android.common.BaseballCardDetails} correctly
-     * handles missing input by setting the error messages of any blank EditText
-     * views.
+     * Validates that {@link BaseballCardDetails} correctly handles missing
+     * input by setting the error messages of any blank {@link EditText} views.
      */
     public void testPartialInput() {
         Log.d(TAG, "testPartialInput()");

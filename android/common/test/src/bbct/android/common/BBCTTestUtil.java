@@ -44,15 +44,13 @@ abstract public class BBCTTestUtil {
 
     /**
      * Assert that the given ListView contains same data as the given list of
-     * {@link bbct.common.data.BaseballCard}s.
+     * {@link BaseballCard}s.
      *
      * @param inst The instrumentation for the running test case. Used to
      * synchronize this assertion with the instrumented activity class being
      * tested.
-     * @param expectedItems A List of the expected
-     * {@link bbct.common.data.BaseballCard} data.
-     * @param listView The List view to check for
-     * {@link bbct.common.data.BaseballCard} data.
+     * @param expectedItems A List of the expected {@link BaseballCard} data.
+     * @param listView The List view to check for {@link BaseballCard} data.
      */
     public static void assertListViewContainsItems(Instrumentation inst, List<BaseballCard> expectedItems, ListView listView) {
         inst.waitForIdleSync();
@@ -99,15 +97,14 @@ abstract public class BBCTTestUtil {
     }
 
     /**
-     * Add a card to the database using the TextViews from the given
-     * @link bbct.android.common BaseballCardDetails} activity and check that
-     * the save button can be clicked.
+     * Add a card to the database using the {@link EditText} views from the
+     * given {@link BaseballCardDetails} activity and check that the save button
+     * can be clicked.
      *
      * @param test The InstrumentationTestCase object performing the test.
-     * @param cardDetails The {@link bbct.android.common.BaseballCardDetails}
-     * activity being tested.
-     * @param card The {@link bbct.common.data.BaseballCard} object holding the
-     * baseball card data to add to the database.
+     * @param cardDetails The {@link BaseballCardDetails} activity being tested.
+     * @param card The {@link BaseballCard} object holding the data to add to
+     * the database.
      */
     public static void addCard(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) {
         BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card);
@@ -125,15 +122,14 @@ abstract public class BBCTTestUtil {
     }
 
     /**
-     * Click the "Done" button on the given
-     * {@link bbct.android.common.BaseballCardDetails} activity and assert that
-     * the activity is finishing. This is all wrapped into a helper method
-     * because the button click must be done on the UI thread while the
-     * assertion must not.
+     * Click the "Done" button on the given {@link BaseballCardDetails} activity
+     * and assert that the activity is finishing. This is all wrapped into a
+     * helper method because the button click must be done on the UI thread
+     * while the assertion must not.
      *
-     * @param inst The Instrumentation instance that controls the UI thread.
-     * @param cardDetails The {@link bbctandroid.common.BaseballCardDetails}
-     * activity being tested.
+     * @param inst The {@link Instrumentation} instance that controls the UI
+     * thread.
+     * @param cardDetails The {@link BaseballCardDetails} activity being tested.
      */
     public static void clickCardDetailsDone(Instrumentation inst, Activity cardDetails) {
         final Button doneButton = (Button) cardDetails.findViewById(R.id.done_button);
@@ -149,14 +145,14 @@ abstract public class BBCTTestUtil {
     }
 
     /**
-     * Fills in all EditText views of the given
-     * {@link bbct.android.common.BaseballCardDetails} activity.
+     * Fills in all {@link EditText} views of the given
+     * {@link BaseballCardDetails} activity.
      *
-     * @param test The InstrumentationTestCase object performing the test.
-     * @param cardDetails The {@link bbct.android.common.BaseballCardDetails}
-     * activity being tested.
-     * @param card The {@link bbct.common.data.BaseballCard} object holding the
-     * baseball card data to add to the database.
+     * @param test The {@link InstrumentationTestCase} object performing the
+     * test.
+     * @param cardDetails The {@link BaseballCardDetails} activity being tested.
+     * @param card The {@link BaseballCard} object holding the data to add to
+     * the database.
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
@@ -166,23 +162,22 @@ abstract public class BBCTTestUtil {
 
     /**
      * Fills in all EditText views, except the ones indicated, of the given
-     * {@link bbct.android.common.BaseballCardDetails} activity.
+     * {@link BaseballCardDetails} activity.
      *
      * @param test The InstrumentationTestCase object performing the test.
-     * @param cardDetails The {@link bbct.android.common.BaseballCardDetails}
-     * activity being tested.
-     * @param card The {@link bbct.common.data.BaseballCard} object holding the
-     * baseball card data to add to the database.
-     * @param fieldFlags The EditText views to fill in.
+     * @param cardDetails The {@link BaseballCardDetails} activity being tested.
+     * @param card The {@link BaseballCard} object holding the data to add to
+     * the database.
+     * @param fieldFlags The {@link EditText} views to fill in.
      *
-     * @see bbct.android.common.BBCTTestUtil#NO_FIELDS
-     * @see bbct.android.common.BBCTTestUtil#BRAND_FIELD
-     * @see bbct.android.common.BBCTTestUtil#YEAR_FIELD
-     * @see bbct.android.common.BBCTTestUtil#NUMBER_FIELD
-     * @see bbct.android.common.BBCTTestUtil#COUNT_FIELD
-     * @see bbct.android.common.BBCTTestUtil#VALUE_FIELD
-     * @see bbct.android.common.BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see bbct.android.common.BBCTTestUtil#ALL_FIELDS
+     * @see BBCTTestUtil#NO_FIELDS
+     * @see BBCTTestUtil#BRAND_FIELD
+     * @see BBCTTestUtil#YEAR_FIELD
+     * @see BBCTTestUtil#NUMBER_FIELD
+     * @see BBCTTestUtil#COUNT_FIELD
+     * @see BBCTTestUtil#VALUE_FIELD
+     * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#ALL_FIELDS
      */
     public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, int fieldFlags) {
         Log.d(TAG, "sendKeysToCardDetails()");
@@ -249,13 +244,13 @@ abstract public class BBCTTestUtil {
 
     /**
      * Assert that the {@link EditText} views in the given
-     * {@link bbct.android.common.BaseballCardDetails} activity contain the
-     * baseball card data from the given {@link bbct.common.data.BaseballCard}.
+     * {@link BaseballCardDetails} activity contain the same data as the given
+     * {@link BaseballCard}.
      *
-     * @param cardDetails The {@link bbct.android.common.BaseballCardDetails}
-     * containing the {@link EditText} views to check.
-     * @param expectedCard The {@link bbct.common.data.BaseballCard} containing
-     * the expected data.
+     * @param cardDetails The {@link BaseballCardDetails} containing the
+     * {@link EditText} views to check.
+     * @param expectedCard The {@link BaseballCard} containing the expected
+     * data.
      */
     public static void assertAllEditTextContents(Activity cardDetails, BaseballCard expectedCard) {
         EditText brandText = (EditText) cardDetails.findViewById(R.id.brand_text);
@@ -282,6 +277,14 @@ abstract public class BBCTTestUtil {
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
+     * @see BBCTTestUtil#NO_FIELDS
+     * @see BBCTTestUtil#BRAND_FIELD
+     * @see BBCTTestUtil#YEAR_FIELD
+     * @see BBCTTestUtil#NUMBER_FIELD
+     * @see BBCTTestUtil#COUNT_FIELD
+     * @see BBCTTestUtil#VALUE_FIELD
+     * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#ALL_FIELDS
      */
     public static final int NO_FIELDS = 0x00;
     /**
@@ -289,6 +292,14 @@ abstract public class BBCTTestUtil {
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
+     * @see BBCTTestUtil#NO_FIELDS
+     * @see BBCTTestUtil#BRAND_FIELD
+     * @see BBCTTestUtil#YEAR_FIELD
+     * @see BBCTTestUtil#NUMBER_FIELD
+     * @see BBCTTestUtil#COUNT_FIELD
+     * @see BBCTTestUtil#VALUE_FIELD
+     * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#ALL_FIELDS
      */
     public static final int BRAND_FIELD = 0x01;
     /**
@@ -296,6 +307,14 @@ abstract public class BBCTTestUtil {
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
+     * @see BBCTTestUtil#NO_FIELDS
+     * @see BBCTTestUtil#BRAND_FIELD
+     * @see BBCTTestUtil#YEAR_FIELD
+     * @see BBCTTestUtil#NUMBER_FIELD
+     * @see BBCTTestUtil#COUNT_FIELD
+     * @see BBCTTestUtil#VALUE_FIELD
+     * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#ALL_FIELDS
      */
     public static final int YEAR_FIELD = 0x02;
     /**
@@ -303,6 +322,14 @@ abstract public class BBCTTestUtil {
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
+     * @see BBCTTestUtil#NO_FIELDS
+     * @see BBCTTestUtil#BRAND_FIELD
+     * @see BBCTTestUtil#YEAR_FIELD
+     * @see BBCTTestUtil#NUMBER_FIELD
+     * @see BBCTTestUtil#COUNT_FIELD
+     * @see BBCTTestUtil#VALUE_FIELD
+     * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#ALL_FIELDS
      */
     public static final int NUMBER_FIELD = 0x04;
     /**
@@ -310,6 +337,14 @@ abstract public class BBCTTestUtil {
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
+     * @see BBCTTestUtil#NO_FIELDS
+     * @see BBCTTestUtil#BRAND_FIELD
+     * @see BBCTTestUtil#YEAR_FIELD
+     * @see BBCTTestUtil#NUMBER_FIELD
+     * @see BBCTTestUtil#COUNT_FIELD
+     * @see BBCTTestUtil#VALUE_FIELD
+     * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#ALL_FIELDS
      */
     public static final int VALUE_FIELD = 0x08;
     /**
@@ -317,6 +352,14 @@ abstract public class BBCTTestUtil {
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
+     * @see BBCTTestUtil#NO_FIELDS
+     * @see BBCTTestUtil#BRAND_FIELD
+     * @see BBCTTestUtil#YEAR_FIELD
+     * @see BBCTTestUtil#NUMBER_FIELD
+     * @see BBCTTestUtil#COUNT_FIELD
+     * @see BBCTTestUtil#VALUE_FIELD
+     * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#ALL_FIELDS
      */
     public static final int COUNT_FIELD = 0x10;
     /**
@@ -324,6 +367,14 @@ abstract public class BBCTTestUtil {
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
+     * @see BBCTTestUtil#NO_FIELDS
+     * @see BBCTTestUtil#BRAND_FIELD
+     * @see BBCTTestUtil#YEAR_FIELD
+     * @see BBCTTestUtil#NUMBER_FIELD
+     * @see BBCTTestUtil#COUNT_FIELD
+     * @see BBCTTestUtil#VALUE_FIELD
+     * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#ALL_FIELDS
      */
     public static final int PLAYER_NAME_FIELD = 0x20;
     /**
@@ -331,6 +382,14 @@ abstract public class BBCTTestUtil {
      *
      * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
+     * @see BBCTTestUtil#NO_FIELDS
+     * @see BBCTTestUtil#BRAND_FIELD
+     * @see BBCTTestUtil#YEAR_FIELD
+     * @see BBCTTestUtil#NUMBER_FIELD
+     * @see BBCTTestUtil#COUNT_FIELD
+     * @see BBCTTestUtil#VALUE_FIELD
+     * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#ALL_FIELDS
      */
     public static final int ALL_FIELDS = BRAND_FIELD | YEAR_FIELD | NUMBER_FIELD | VALUE_FIELD | COUNT_FIELD | PLAYER_NAME_FIELD;
     /**
