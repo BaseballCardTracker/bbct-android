@@ -22,15 +22,29 @@ import android.widget.EditText;
 import junit.framework.Assert;
 
 /**
+ * Tests for {@link NumberFilter}.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
 
+    /**
+     * Create instrumented test cases for {@link NumberFilter}.
+     */
     public NumberFilterTest() {
         super(NumberFilter.class);
     }
 
+    /**
+     * Set up test fixture. Most of the test fixture is set up by
+     * {@link FilterActivityTest#setUp()}. This class adds a {@link EditText}
+     * view which contain card number value being edited and an
+     * <code>int</code> value for card number.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     *
+     * @see FilterActivityTest#setUp()
+     */
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -40,11 +54,27 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
         this.testNumber = 123;
     }
 
+    /**
+     * Tear down the test fixture by calling {@link Activity#finish()}.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     *
+     * @see FilterActivityTest#tearDown()
+     */
     @Override
     public void tearDown() throws Exception {
         super.tearDown();
     }
 
+    /**
+     * Check preconditions which must hold to guarantee the validity of all
+     * other tests. Most preconditions are checked by
+     * {@link FilterActivityTest#testPreConditions()}. In addition, this class
+     * checks that the {@link EditText} view for card number is not
+     * <code>null</code>, that it is empty, and that it has focus.
+     *
+     * @see FilterActivityTest#testPreConditions()
+     */
     @Override
     public void testPreConditions() {
         super.testPreConditions();
@@ -55,22 +85,47 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
         Assert.assertTrue(this.numberText.hasFocus());
     }
 
+    /**
+     * Get the substring representing this {@link Activity} which should appear
+     * in the title bar.
+     *
+     * @return The substring representing this {@link Activity} which should
+     * appear in the title bar.
+     *
+     * @see FilterActivityTest#testTitle()
+     */
     @Override
     protected String getTitleSubString() {
         return this.activity.getString(R.string.number_filter_title);
     }
 
+    /**
+     * Assert that the correct error message is set in the {@link EditText} view
+     * when it is empty.
+     *
+     * @see FilterActivityTest#testOkButtonOnClickWithNoInput()}
+     */
     @Override
     protected void checkErrorMessage() {
         String expectedNumberError = this.activity.getString(R.string.number_input_error);
         Assert.assertEquals(expectedNumberError, this.numberText.getError());
     }
 
+    /**
+     * Set the text of the card number {@link EditText} views.
+     *
+     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
+     */
     @Override
     protected void setInputText() {
         this.numberText.setText(Integer.toString(this.testNumber));
     }
 
+    /**
+     * Inject instrumented key events for the card number text.
+     *
+     * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()
+     */
     @Override
     protected void sendInputKeys() {
         this.getInstrumentation().sendStringSync(Integer.toString(this.testNumber));
