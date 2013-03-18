@@ -109,9 +109,14 @@ public class BBCTFrame extends JFrame {
     }
 
     private void initComponents() {
-        URL iconUrl = this.getClass().getClassLoader().getResource(ICON_PATH);
-        Image icon = this.getToolkit().getImage(iconUrl);
-        this.setIconImage(icon);
+        URL iconUrl = this.getClass().getResource(ICON_PATH);
+
+        Logger.getLogger(BBCTFrame.class.getName()).log(Level.INFO, "iconUrl=" + iconUrl);
+
+        if (iconUrl != null) {
+            Image icon = this.getToolkit().getImage(iconUrl);
+            this.setIconImage(icon);
+        }
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setTitle(BBCTStringResources.TitleResources.BASEBALL_FRAME_TITLE);
@@ -147,7 +152,7 @@ public class BBCTFrame extends JFrame {
 
         this.setLocation(x, y);
     }
-    private static final String ICON_PATH = "/res/baseball.png";
+    private static final String ICON_PATH = "res/baseball.png";
     private JLabel instructionLabel;
     private MainPanel mainPanel;
     private BaseballCardIO bcio = null;

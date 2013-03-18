@@ -77,7 +77,7 @@
         <copy todir="dist/usermanual">
             <fileset dir="docs/usermanual"/>
         </copy>
-        <copy todir="build/classes/res">
+        <copy todir="build/classes/bbct/swing/gui/res">
             <fileset dir="res"/>
         </copy>
     </target>
