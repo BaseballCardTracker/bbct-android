@@ -68,7 +68,7 @@ import javax.swing.event.AncestorListener;
  * TODO: Instructions should change depending on value of allEditable field.
  *
  * TODO: Add $ at the beginning of valueTextField's text if it is not present?
- * 
+ *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class CardDetailsPanel extends JPanel {
@@ -198,7 +198,7 @@ public class CardDetailsPanel extends JPanel {
         cardDetailsPanel.setBorder(cardDetailsBorder);
 
         JPanel cardDetailsInputPanel = new JPanel(new GridBagLayout());
-        
+
         JLabel brandLabel = new JLabel(BBCTStringResources.LabelResources.CARD_BRAND_LABEL);
         brandLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         GridBagConstraints gbc = new GridBagConstraints();
@@ -302,7 +302,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.weightx = 2;
         gbc.insets = rightInsets;
         cardDetailsInputPanel.add(this.countTextField, gbc);
-        
+
         cardDetailsPanel.add(cardDetailsInputPanel, BorderLayout.PAGE_START);
 
         JPanel playerDetailsPanel = new JPanel(new BorderLayout());
@@ -312,7 +312,7 @@ public class CardDetailsPanel extends JPanel {
         playerDetailsPanel.setBorder(playerDetailsBorder);
 
         JPanel playerDetailsInputPanel = new JPanel(new GridBagLayout());
-        
+
         JLabel playerNameLabel = new JLabel(BBCTStringResources.LabelResources.PLAYER_NAME_LABEL);
         playerNameLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         gbc.gridx = 0;
@@ -349,7 +349,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.weightx = 2;
         gbc.insets = bottomRightInsets;
         playerDetailsInputPanel.add(this.playerPositionComboBox, gbc);
-        
+
         playerDetailsPanel.add(playerDetailsInputPanel, BorderLayout.PAGE_START);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

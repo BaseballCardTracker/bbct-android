@@ -46,7 +46,10 @@ public class BBCTStringResources {
          * UPDATE statement error message.
          */
         public static final String DATABASE_UPDATE_ERROR = "Unable to update baseball card data.";
-        
+        /**
+         * Error when baseball card already exists in the underlying storage
+         * system.
+         */
         public static final String CARD_ALREADY_EXISTS_ERROR = "A %1$d card from %2$s with number %3$d already exists.";
 
         private ErrorResources() {

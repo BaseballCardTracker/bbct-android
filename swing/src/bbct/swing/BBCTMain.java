@@ -65,11 +65,11 @@ public class BBCTMain {
 
     private static void initLogger() throws IOException {
         File logFolder = new File(BBCTMain.LOG_FOLDER_NAME);
-        
+
         if (!logFolder.exists()) {
             logFolder.mkdir();
         }
-        
+
         // TODO: Configure logger using a property file.
         boolean append = true;
         Handler handler = new FileHandler(BBCTMain.LOG_FILE_NAME, append);
@@ -78,7 +78,7 @@ public class BBCTMain {
         Logger logger = Logger.getLogger("");
         logger.setLevel(Level.INFO);
         logger.addHandler(handler);
-        
+
         // TODO: Should I set this in a property file?
         System.setProperty("hsqldb.reconfig_logging", "false");
     }

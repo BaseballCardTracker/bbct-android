@@ -101,7 +101,7 @@ public class BBCTStringResources {
     public static class AboutResources {
 
         public static final String ABOUT_TITLE = "Baseball Card Tracker";
-        public static final String ABOUT_VERSION = "Version 0.5.2 (beta)";
+        public static final String ABOUT_VERSION = "Version 0.5.3 (beta)";
         public static final String ABOUT_COPYRIGHT = "<html>&copy 2012 codeguru</html>";
         public static final String ABOUT_WEBSITE = "Project website: http://sf.net/p/bbct";
         public static final String ABOUT_LICENSE = "<html>This software is licensed under the GPL. Visit<br> http://www.gnu.org/licenses/ for a copy of the license.</html>";
@@ -159,6 +159,7 @@ public class BBCTStringResources {
         public static final String PLAYER_POSITION_INSTRUCTIONS = "Select player position.";
         public static final String FIND_CARDS_MENU_INSTRUCTIONS = "Choose an option:";
         public static final String MENU_INSTRUCTIONS = "Choose an option:";
+        public static final String ABOUT_INSTRUCTIONS = "Click OK when ready.";
 
         private InstructionResources() {
         }

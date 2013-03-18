@@ -25,7 +25,7 @@ import java.awt.CardLayout;
  * {@link MainPanel} contains all the other {@link javax.swing.JPanel}s used in
  * the BBCT application. A {@link java.awt.CardLayout} selects which
  * {@link javax.swing.JPanel} is displayed.
- * 
+ *
  * @see MenuPanel
  * @see AddCardsPanel
  * @see FindCardsPanel

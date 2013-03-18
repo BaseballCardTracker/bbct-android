@@ -68,7 +68,7 @@ public class FindCardsPanel extends JPanel {
         this.add(this.inputPanel, BorderLayout.CENTER);
 
         JPanel buttonsPanel = new JPanel();
-        
+
         final JButton findButton = new JButton(BBCTStringResources.ButtonResources.FIND_BUTTON);
         // TODO: Don't create Font objects.
         findButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N

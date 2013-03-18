@@ -51,7 +51,7 @@ public class AboutPanel extends JPanel {
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new GridBagLayout());
-        
+
         GridBagConstraints gbc = new GridBagConstraints();
 
         JLabel titleLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_TITLE);
@@ -100,7 +100,7 @@ public class AboutPanel extends JPanel {
         this.add(buttonPanel, BorderLayout.SOUTH);
 
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.ABOUT_PANEL_TITLE));
-        this.addAncestorListener(new UpdateInstructionsAncestorListener("Click OK when ready."));
+        this.addAncestorListener(new UpdateInstructionsAncestorListener(BBCTStringResources.InstructionResources.ABOUT_INSTRUCTIONS));
         this.addAncestorListener(new SetDefaultButtonAncestorListener(okButton));
     }
 

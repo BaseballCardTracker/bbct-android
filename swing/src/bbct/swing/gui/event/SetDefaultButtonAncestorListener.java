@@ -54,6 +54,5 @@ public class SetDefaultButtonAncestorListener implements AncestorListener {
     @Override
     public void ancestorMoved(AncestorEvent ae) {
     }
-    
     private JButton button = null;
 }
