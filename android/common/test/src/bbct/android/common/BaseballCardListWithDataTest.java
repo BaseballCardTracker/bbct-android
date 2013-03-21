@@ -57,8 +57,10 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
         // Create the database and populate table with test data
         InputStream cardInputStream = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
-        this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
-        this.allCards = this.cardInput.getAllBaseballCards();
+        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
+        this.allCards = cardInput.getAllBaseballCards();
+        cardInput.close();
+
         this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
         this.dbUtil.populateTable(allCards);
 
@@ -69,7 +71,6 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     public void tearDown() throws Exception {
         this.activity.finish();
         this.dbUtil.deleteDatabase();
-        this.cardInput.close();
 
         super.tearDown();
     }
@@ -181,10 +182,9 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     }
 
     public void testAddDuplicateCard() throws IOException, Throwable {
-        this.cardInput.close();
         InputStream cardInputStream = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
-        this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
-        BaseballCard card = this.cardInput.getNextBaseballCard();
+        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
+        BaseballCard card = cardInput.getNextBaseballCard();
 
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, card);
@@ -375,7 +375,6 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     private List<BaseballCard> expectedCards;
     private Instrumentation inst = null;
     private Activity activity = null;
-    private BaseballCardCsvFileReader cardInput = null;
     private DatabaseUtil dbUtil = null;
     private ListView listView = null;
     private BaseballCard newCard = null;
