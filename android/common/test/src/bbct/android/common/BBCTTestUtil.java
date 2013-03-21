@@ -280,7 +280,8 @@ abstract public class BBCTTestUtil {
     }
 
     /**
-     * Assert that database was created with the correct version and table and that it is empty.
+     * Assert that database was created with the correct version and table and
+     * that it is empty.
      *
      * @param targetPackage The name of the Android package being tested.
      */
