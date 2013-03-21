@@ -80,13 +80,13 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
     }
 
-    @Override
     /**
-     * Tear down the test fixture by calling
-     * {@link BaseballCardDetails#finish()} and deleting the app's database.
+     * Tear down the test fixture by calling {@link Activity#finish()} and
+     * deleting the app's database.
      *
      * @throws Exception If an error occurs while chaining to the super class.
      */
+    @Override
     public void tearDown() throws Exception {
         this.activity.finish();
         this.dbUtil.deleteDatabase();
@@ -95,9 +95,10 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     /**
-     * Assert that the Activity to test is not
-     * <code>null</code>, that none of its expected {@link EditText} or
-     * {@link Button} views are
+     * Check preconditions which must hold to guarantee the validity of all
+     * other tests. Assert that the Activity to test is not
+     * <code>null</code>, that none of its {@link EditText} views or
+     * {@link Button}s are
      * <code>null</code>, and that the SQLite database was created.
      */
     public void testPreConditions() {
@@ -153,7 +154,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     /**
      * Test that baseball card data for multiple cards is correctly added to the
      * database when it is entered into the {@link BaseballCardDetails}
-     * activity. This test enteres all data using a single invocation of the
+     * activity. This test enters all data using a single invocation of the
      * {@link BaseballCardDetails} activity.
      */
     public void testAddMultipleCards() {
