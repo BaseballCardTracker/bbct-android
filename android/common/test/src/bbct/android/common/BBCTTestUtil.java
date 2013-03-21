@@ -41,7 +41,7 @@ import junit.framework.Assert;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-abstract public class BBCTTestUtil {
+final public class BBCTTestUtil {
 
     /**
      * Assert that the given ListView contains same data as the given list of
