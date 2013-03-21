@@ -102,19 +102,19 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         Assert.fail("Check that instructions are raised as a Toast.");
     }
 
-    public void testAddCardToEmptyDatabase() throws IOException {
+    public void testAddCardToEmptyDatabase() throws IOException, Throwable {
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
         BBCTTestUtil.addCard(this, cardDetails, card);
-        BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
+        BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
 
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
         cards.add(card);
         BBCTTestUtil.assertListViewContainsItems(this.inst, cards, this.listView);
     }
 
-    public void testAddMultipleCards() throws IOException {
+    public void testAddMultipleCards() throws IOException, Throwable {
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
 
@@ -122,7 +122,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
             BBCTTestUtil.addCard(this, cardDetails, card);
         }
 
-        BBCTTestUtil.clickCardDetailsDone(this.inst, cardDetails);
+        BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
         BBCTTestUtil.assertListViewContainsItems(this.inst, cards, this.listView);
     }
     private Instrumentation inst = null;

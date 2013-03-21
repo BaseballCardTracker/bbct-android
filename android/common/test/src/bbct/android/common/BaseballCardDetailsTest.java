@@ -144,8 +144,11 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     /**
      * Test that baseball card data is correctly added to the database when it
      * is entered into the {@link BaseballCardDetails} activity.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
      */
-    public void testAddCard() {
+    public void testAddCard() throws Throwable {
         BBCTTestUtil.addCard(this, this.activity, this.card);
         this.inst.waitForIdleSync();
         Assert.assertTrue("Missing card: " + this.card, this.dbUtil.containsBaseballCard(card));
@@ -156,8 +159,11 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
      * database when it is entered into the {@link BaseballCardDetails}
      * activity. This test enters all data using a single invocation of the
      * {@link BaseballCardDetails} activity.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
      */
-    public void testAddMultipleCards() {
+    public void testAddMultipleCards() throws Throwable {
         for (BaseballCard nextCard : this.allCards) {
             BBCTTestUtil.addCard(this, this.activity, nextCard);
         }

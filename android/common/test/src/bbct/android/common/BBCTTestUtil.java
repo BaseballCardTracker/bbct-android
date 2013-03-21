@@ -102,24 +102,28 @@ abstract public class BBCTTestUtil {
      * given {@link BaseballCardDetails} activity and check that the save button
      * can be clicked.
      *
-     * @param test The InstrumentationTestCase object performing the test.
+     * @param test The {@link InstrumentationTestCase} object performing the
+     * test.
      * @param cardDetails The {@link BaseballCardDetails} activity being tested.
      * @param card The {@link BaseballCard} object holding the data to add to
      * the database.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
      */
-    public static void addCard(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) {
+    public static void addCard(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) throws Throwable {
         BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card);
 
         final Button saveButton = (Button) cardDetails.findViewById(R.id.save_button);
 
-        test.getInstrumentation().runOnMainSync(new Runnable() {
+        test.runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Assert.assertTrue(saveButton.performClick());
-
-                // TODO Check that Toast appears with correct message.
             }
         });
+
+        // TODO Check that Toast appears with correct message.
     }
 
     /**
@@ -128,14 +132,17 @@ abstract public class BBCTTestUtil {
      * helper method because the button click must be done on the UI thread
      * while the assertion must not.
      *
-     * @param inst The {@link Instrumentation} instance that controls the UI
-     * thread.
+     * @param test The {@link InstrumentationTestCase} object performing the
+     * test.
      * @param cardDetails The {@link BaseballCardDetails} activity being tested.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
      */
-    public static void clickCardDetailsDone(Instrumentation inst, Activity cardDetails) {
+    public static void clickCardDetailsDone(InstrumentationTestCase test, Activity cardDetails) throws Throwable {
         final Button doneButton = (Button) cardDetails.findViewById(R.id.done_button);
 
-        inst.runOnMainSync(new Runnable() {
+        test.runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Assert.assertTrue(doneButton.performClick());
@@ -165,7 +172,8 @@ abstract public class BBCTTestUtil {
      * Fills in all EditText views, except the ones indicated, of the given
      * {@link BaseballCardDetails} activity.
      *
-     * @param test The InstrumentationTestCase object performing the test.
+     * @param test The {@link InstrumentationTestCase} object performing the
+     * test.
      * @param cardDetails The {@link BaseballCardDetails} activity being tested.
      * @param card The {@link BaseballCard} object holding the data to add to
      * the database.

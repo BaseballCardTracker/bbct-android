@@ -177,15 +177,18 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
      * instrumentation and that the {@link Activity} finishes when the user
      * clicks the "OK" button. Calls {@link #sendInputKeys()} to inject the user
      * input to the subclass of {@link FilterActivity} being tested.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
      */
-    public void testOkButtonOnClickWithSendInputKeys() {
+    public void testOkButtonOnClickWithSendInputKeys() throws Throwable {
         Log.d(TAG, "testOkButtonOnClickWithSendInputKeys()");
 
         this.sendInputKeys();
 
         Log.d(TAG, "Run something on the UI thread");
 
-        this.inst.runOnMainSync(new Runnable() {
+        this.runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Log.d(TAG, "Can I click the OK button?");

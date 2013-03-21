@@ -109,13 +109,16 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     /**
      * Validates that {@link BaseballCardDetails} correctly handles missing
      * input by setting the error messages of any blank {@link EditText} views.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
      */
-    public void testPartialInput() {
+    public void testPartialInput() throws Throwable {
         Log.d(TAG, "testPartialInput()");
         Log.d(TAG, "inputFieldsMask=" + inputFieldsMask);
 
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, this.inputFieldsMask);
-        this.inst.runOnMainSync(new Runnable() {
+        this.runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Assert.assertTrue(BaseballCardDetailsPartialInputTest.this.saveButton.performClick());
