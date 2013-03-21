@@ -52,7 +52,7 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
     }
 
     /**
-     * Tear down the test fixture by calling {@link About#finish()}.
+     * Tear down the test fixture by calling {@link Activity#finish()}.
      *
      * @throws Exception If an error occurs while chaining to the super class.
      */
@@ -64,15 +64,16 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
     }
 
     /**
-     * Assert that the Activity to test is not
-     * <code>null</code>.
+     * Check preconditions which must hold to guarantee the validity of all
+     * other tests. Assert that the Activity to test is not
+     * <code>null</code>
      */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
     }
 
     /**
-     * Test that the title of the Activity is correct.
+     * Test that the title of the {@link Activity} is correct.
      */
     public void testTitle() {
         String title = this.activity.getTitle().toString();
