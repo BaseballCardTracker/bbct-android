@@ -65,7 +65,7 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
 
     /**
      * Check preconditions which must hold to guarantee the validity of all
-     * other tests. Assert that the Activity to test is not
+     * other tests. Assert that the {@link Activity} to test is not
      * <code>null</code>
      */
     public void testPreConditions() {
