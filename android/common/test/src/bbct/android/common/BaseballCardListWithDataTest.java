@@ -20,7 +20,6 @@ package bbct.android.common;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.database.sqlite.SQLiteDatabase;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,15 +36,27 @@ import java.util.List;
 import junit.framework.Assert;
 
 /**
+ * Tests for the {@link BaseballCardList} activity when the database contains
+ * data.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
 
+    /**
+     * Create instrumented test cases for {@link BaseballCardList}.
+     */
     public BaseballCardListWithDataTest() {
         super(BaseballCardList.class);
     }
 
+    /**
+     * Set up test fixture. This consists of an instance of the
+     * {@link BaseballCardList} activity, its {@link ListView}, and a populated
+     * database.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     */
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -67,6 +78,12 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         this.newCard = new BaseballCard("codeguru apps", 1993, 1, 50000, 1, "codeguru", "Catcher");
     }
 
+    /**
+     * Tear down the test fixture by calling {@link Activity#finish()} and
+     * deleting the database.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     */
     @Override
     public void tearDown() throws Exception {
         this.activity.finish();
@@ -75,6 +92,14 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         super.tearDown();
     }
 
+    /**
+     * Check preconditions which must hold to guarantee the validity of all
+     * other tests. Assert that the {@link  Activity} to test and its
+     * {@link ListView} are not
+     * <code>null</code>, that the {@link ListView} contains the expected data,
+     * and that the database was created with the correct table and populated
+     * with the correct data.
+     */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
 
@@ -85,6 +110,10 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Assert.assertTrue(this.dbUtil.containsAllBaseballCards(this.allCards));
     }
 
+    /**
+     * Test that a {@link BaseballCardList} activity without an active filter
+     * will be correctly restored after it is destroyed.
+     */
     public void testStateDestroyWithoutFilter() {
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
@@ -93,6 +122,13 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
+    /**
+     * Test that a {@link BaseballCardList} activity with an active filter will
+     * be correctly restored after it is destroyed.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testStateDestroyWithFilter() throws Throwable {
         this.testYearFilter();
         this.activity.finish();
@@ -102,6 +138,15 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, this.listView);
     }
 
+    /**
+     * Test that a {@link BaseballCardList} activity without an active filter
+     * will be correctly restored after it is destroyed. This tests differs from
+     * {@link #testStateDestroyWithoutFilter()} because a filter is applied and
+     * then cleared before the activity is destroyed.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testStateDestroyClearFilter() throws Throwable {
         this.testClearFilter();
         this.activity.finish();
@@ -111,28 +156,59 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
+    /**
+     * Test that a {@link BaseballCardList} activity without an active filter
+     * will be correctly restored after it is paused.
+     */
     public void testStatePauseWithoutFilter() {
         this.inst.callActivityOnRestart(this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
+    /**
+     * Test that a {@link BaseballCardList} activity with an active filter will
+     * be correctly restored after it is paused.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testStatePauseWithFilter() throws Throwable {
         this.testYearFilter();
         this.inst.callActivityOnRestart(this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, this.listView);
     }
 
+    /**
+     * Test that a {@link BaseballCardList} activity without an active filter
+     * will be correctly restored after it is destroyed. This tests differs from
+     * {@link #testStatePauseWithoutFilter()} because a filter is applied and
+     * then cleared before the activity is paused.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testStatePauseClearFilter() throws Throwable {
         this.testClearFilter();
         this.inst.callActivityOnRestart(this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
+    /**
+     * Test that the menu is correct when the {@link BaseballCardList} has no
+     * active filter.
+     */
     public void testMenuLayoutWithoutFilter() {
         this.sendKeys(KeyEvent.KEYCODE_MENU);
         Assert.fail("Now how do I check the contents of the menu?");
     }
 
+    /**
+     * Test that the menu is correct when the {@link BaseballCardList} has an
+     * active filter.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testMenuLayoutWithFilter() throws Throwable {
         this.testYearFilter();
         this.sendKeys(KeyEvent.KEYCODE_MENU);
@@ -140,7 +216,10 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     }
 
     /**
-     * Test of {@link BaseballCardList#onListItemClick}.
+     * Test that, when the user clicks on an item in the {@link ListView} of the
+     * {@link BaseballCardList} activity, a {@link BaseballCardDetails} activity
+     * is launched with its {@link EditText} views populated with the correct
+     * data.
      *
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
@@ -181,6 +260,15 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
     }
 
+    /**
+     * Test that an error message is displayed when the user attempts to add
+     * baseball card data which duplicates data already in the database.
+     *
+     * @throws IOException If an error occurs while reading baseball card data
+     * from an asset file.
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testAddDuplicateCard() throws IOException, Throwable {
         InputStream cardInputStream = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
@@ -193,6 +281,13 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Assert.fail("Check that error message is displayed.");
     }
 
+    /**
+     * Test that baseball card data is correctly added to the database when it
+     * already contains data for other cards.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testAddCardToPopulatedDatabase() throws Throwable {
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
@@ -202,6 +297,13 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
+    /**
+     * Test that the {@link ListView} is updated when the user adds a new card
+     * which matches the current filter.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testAddCardMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
 
@@ -213,6 +315,13 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, this.listView);
     }
 
+    /**
+     * Test that the {@link ListView} is not updated when the user adds a new
+     * card which does not match the current filter.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testAddCardNotMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
 
@@ -223,6 +332,13 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, this.listView);
     }
 
+    /**
+     * Test that the {@link ListView} is updated when the user adds a new card
+     * after an active filter was cleared.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testAddCardAfterClearFilter() throws Throwable {
         this.testClearFilter();
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
@@ -233,6 +349,13 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
+    /**
+     * Test that the {@link ListView} displays the correct cards when filter by
+     * the card year.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testYearFilter() throws Throwable {
         final int year = 1993;
         FilterInput yearInput = new FilterInput() {
@@ -252,6 +375,13 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         this.testFilter(YearFilter.class, R.id.year_filter_radio_button, yearInput, yearPred);
     }
 
+    /**
+     * Test that the {@link ListView} displays the correct cards when filter by
+     * the card number.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testNumberFilter() throws Throwable {
         final int number = 278;
         FilterInput numberInput = new FilterInput() {
@@ -271,6 +401,13 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         this.testFilter(NumberFilter.class, R.id.number_filter_radio_button, numberInput, numberPred);
     }
 
+    /**
+     * Test that the {@link ListView} displays the correct cards when filter by
+     * the card year and number.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testYearAndNumberFilter() throws Throwable {
         final int year = 1993;
         final int number = 18;
@@ -293,6 +430,13 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         this.testFilter(YearAndNumberFilter.class, R.id.year_and_number_filter_radio_button, yearAndNumberInput, yearAndNumberPred);
     }
 
+    /**
+     * Test that the {@link ListView} displays the correct cards when filter by
+     * the player name.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testPlayerNameFilter() throws Throwable {
         final String playerName = "Ken Griffey Jr.";
         FilterInput playerNameInput = new FilterInput() {
@@ -312,6 +456,12 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         this.testFilter(PlayerNameFilter.class, R.id.player_name_filter_radio_button, playerNameInput, playerNamePred);
     }
 
+    /**
+     * Test that all cards are displayed after a filter is cleared.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testClearFilter() throws Throwable {
         this.testYearFilter();
         Assert.assertTrue(this.inst.invokeMenuActionSync(this.activity, R.id.clear_filter_menu, 0));
