@@ -30,15 +30,27 @@ import java.util.List;
 import junit.framework.Assert;
 
 /**
+ * Tests for the {@link BaseballCardList} activity when the database does not
+ * contain data.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
 
+    /**
+     * Create instrumented test cases for {@link BaseballCardList}.
+     */
     public BaseballCardListWithoutDataTest() {
         super(BaseballCardList.class);
     }
 
+    /**
+     * Set up test fixture. This consists of an instance of the
+     * {@link BaseballCardList} activity, its {@link ListView}, and a
+     * {@link BaseballCardCsvFileReader} for sample baseball card data..
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     */
     @Override
     public void setUp() throws Exception {
         super.setUp();
@@ -53,6 +65,12 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
     }
 
+    /**
+     * Tear down the test fixture by calling {@link Activity#finish()}, deleting
+     * the database, and closing the {@link BaseballCardCsvFileReader}.
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     */
     @Override
     public void tearDown() throws Exception {
         this.activity.finish();
@@ -62,6 +80,13 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         super.tearDown();
     }
 
+    /**
+     * Check preconditions which must hold to guarantee the validity of all
+     * other tests. Assert that the {@link  Activity} to test and its
+     * {@link ListView} are not
+     * <code>null</code>, that the {@link ListView} is empty, and that the
+     * database was created and is empty.
+     */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
 
@@ -69,14 +94,22 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         Assert.assertEquals(0, this.listView.getCount());
 
         BBCTTestUtil.assertDatabaseCreated(this.activity.getPackageName());
+        Assert.fail("Check that database is emtpy.");
     }
 
+    /**
+     * Test that the title of the {@link Activity} is correct.
+     */
     public void testTitle() {
         String expectedTitle = this.activity.getString(R.string.app_name);
 
         Assert.assertEquals(expectedTitle, this.activity.getTitle());
     }
 
+    /**
+     * Test that the "Add Cards" menu item launches a
+     * {@link BaseballCardDetails} activity.
+     */
     public void testAddCardsMenuItem() {
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
 
@@ -84,6 +117,10 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         Assert.assertTrue(cardDetails.isFinishing());
     }
 
+    /**
+     * Test that the "Filter Cards" menu item launches a {@link FilterOptions}
+     * activity.
+     */
     public void testFilterCardsMenuItem() {
         Activity filterOptions = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.filter_menu, FilterOptions.class);
 
@@ -91,6 +128,9 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         Assert.assertTrue(filterOptions.isFinishing());
     }
 
+    /**
+     * Test that the "About" menu item launches a {@link About} activity.
+     */
     public void testAboutMenuItem() {
         Activity about = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.about_menu, About.class);
 
@@ -98,10 +138,23 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         Assert.assertTrue(about.isFinishing());
     }
 
+    /**
+     * Test that the instruction label appears correctly when the database and
+     * the {@link ListView} are empty.
+     */
     public void testStartActivityWithEmptyDatabase() {
         Assert.fail("Check that instructions are raised as a Toast.");
     }
 
+    /**
+     * Test that the first baseball card data is added to the database and
+     * updated in the {@link ListView}.
+     *
+     * @throws IOException If an error occurs while reading baseball card data
+     * from the asset file.
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testAddCardToEmptyDatabase() throws IOException, Throwable {
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
         BaseballCard card = this.cardInput.getNextBaseballCard();
@@ -114,6 +167,15 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         BBCTTestUtil.assertListViewContainsItems(this.inst, cards, this.listView);
     }
 
+    /**
+     * Test that data for multiple baseball cards is added to the database and
+     * updated in the {@link ListView}.
+     *
+     * @throws IOException If an error occurs while reading baseball card data
+     * from the asset file.
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
     public void testAddMultipleCards() throws IOException, Throwable {
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
