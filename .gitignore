@@ -17,3 +17,4 @@ libs
 /.metadata
 .settings
 private/
+javadoc/

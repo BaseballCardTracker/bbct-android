@@ -11,11 +11,6 @@
             <properties/>
             <folders>
                 <source-folder>
-                    <label>bbct-android-common</label>
-                    <location>.</location>
-                    <encoding>UTF-8</encoding>
-                </source-folder>
-                <source-folder>
                     <label>src</label>
                     <type>java</type>
                     <location>src</location>
@@ -27,6 +22,11 @@
                     <location>gen</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
+                <source-folder>
+                    <label>android-common</label>
+                    <location>.</location>
+                    <encoding>UTF-8</encoding>
+                </source-folder>
             </folders>
             <ide-actions>
                 <action name="build">
@@ -35,8 +35,9 @@
                 <action name="clean">
                     <target>clean</target>
                 </action>
-                <action name="test">
-                    <target>test</target>
+                <action name="run">
+                    <target>debug</target>
+                    <target>install</target>
                 </action>
                 <action name="rebuild">
                     <target>clean</target>
@@ -61,16 +62,15 @@
                     <ide-action name="build"/>
                     <ide-action name="rebuild"/>
                     <ide-action name="clean"/>
-                    <ide-action name="test"/>
+                    <ide-action name="run"/>
                 </context-menu>
             </view>
-            <subprojects/>
         </general-data>
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
             <compilation-unit>
                 <package-root>src</package-root>
                 <package-root>gen</package-root>
-                <classpath mode="compile">/usr/local/bin/android-sdk-linux/platforms/android-16/android.jar;E:\programs\java\android-sdk\platforms\android-16\android.jar</classpath>
+                <classpath mode="compile">/usr/local/bin/android-sdk-linux/platforms/android-16/android.jar</classpath>
                 <source-level>1.5</source-level>
             </compilation-unit>
         </java-data>
