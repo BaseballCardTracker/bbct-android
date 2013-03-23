@@ -28,15 +28,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
-import bbct.android.common.BaseballCardContract;
-import bbct.common.data.BaseballCard;
+import bbct.android.common.data.BaseballCard;
+import bbct.android.common.provider.BaseballCardContract;
 import java.util.List;
 
 /**
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class BaseballCardSQLHelper extends bbct.android.common.BaseballCardSQLHelper {
+public class BaseballCardSQLHelper extends bbct.android.common.database.BaseballCardSQLHelper {
 
     public BaseballCardSQLHelper(Context context) {
         super(context);
