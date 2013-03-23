@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -28,7 +28,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import bbct.common.data.BaseballCard;
+import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.activity.BaseballCardList;
+import bbct.android.common.activity.FilterActivity;
+import bbct.android.common.activity.FilterOptions;
+import bbct.android.common.activity.NumberFilter;
+import bbct.android.common.activity.PlayerNameFilter;
+import bbct.android.common.activity.YearAndNumberFilter;
+import bbct.android.common.activity.YearFilter;
+import bbct.android.common.data.BaseballCard;
+import bbct.android.common.test.util.BBCTTestUtil;
+import bbct.android.common.test.util.BaseballCardCsvFileReader;
+import bbct.android.common.test.util.DatabaseUtil;
+import bbct.android.common.test.util.Predicate;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;

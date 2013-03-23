@@ -16,11 +16,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
-import bbct.common.data.BaseballCard;
+import bbct.android.common.activity.BaseballCardList;
+import bbct.android.common.data.BaseballCard;
+import bbct.android.common.test.util.BBCTTestUtil;
+import bbct.android.common.test.util.BaseballCardCsvFileReader;
+import bbct.android.common.test.util.DatabaseUtil;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;

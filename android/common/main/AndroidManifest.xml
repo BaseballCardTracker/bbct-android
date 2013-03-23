@@ -31,7 +31,7 @@
     <application android:label="@string/app_name"
                  android:icon="@drawable/baseball"
     >
-        <activity android:name=".BaseballCardList"
+        <activity android:name=".activity.BaseballCardList"
                   android:label="@string/app_name"
         >
             <intent-filter>
@@ -39,20 +39,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BaseballCardDetails">
+        <activity android:name=".activity.BaseballCardDetails">
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="vnd.android.cursor.item/baseball_card" />
             </intent-filter>
         </activity>
-        <activity android:name=".FilterOptions"/>
-        <activity android:name=".YearFilter"/>
-        <activity android:name=".NumberFilter"/>
-        <activity android:name=".YearAndNumberFilter"/>
-        <activity android:name=".PlayerNameFilter"/>
-        <activity android:name=".About" />
-        <provider android:name=".BaseballCardProvider"
+        <activity android:name=".activity.FilterOptions"/>
+        <activity android:name=".activity.YearFilter"/>
+        <activity android:name=".activity.NumberFilter"/>
+        <activity android:name=".activity.YearAndNumberFilter"/>
+        <activity android:name=".activity.PlayerNameFilter"/>
+        <activity android:name=".activity.About" />
+        <provider android:name=".provider.BaseballCardProvider"
                   android:label="@string/provider_name"
                   android:authorities="@string/authorities"
                   android:readPermission="@string/read_permission"

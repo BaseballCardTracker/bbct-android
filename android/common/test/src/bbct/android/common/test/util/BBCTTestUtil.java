@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.test.util;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -32,7 +32,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import bbct.common.data.BaseballCard;
+import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.data.BaseballCard;
+import bbct.android.common.database.BaseballCardSQLHelper;
+import bbct.android.common.provider.BaseballCardContract;
 import java.util.List;
 import junit.framework.Assert;
 

@@ -36,7 +36,7 @@
                      android:targetPackage="bbct.android.common"
                      android:label="@string/label"
     />
-    <instrumentation android:name=".BBCTTestRunner"
+    <instrumentation android:name="bbct.android.common.test.BBCTTestRunner"
                      android:targetPackage="bbct.android.common"
                      android:label="@string/label"
     />

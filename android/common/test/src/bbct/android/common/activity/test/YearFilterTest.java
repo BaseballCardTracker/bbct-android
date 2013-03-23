@@ -16,31 +16,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.widget.EditText;
+import bbct.android.common.R;
+import bbct.android.common.activity.YearFilter;
 import junit.framework.Assert;
 
 /**
- * Tests for {@link NumberFilter}.
+ * Tests for {@link YearFilter}.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
+public class YearFilterTest extends FilterActivityTest<YearFilter> {
 
     /**
-     * Create instrumented test cases for {@link NumberFilter}.
+     * Create instrumented test cases for {@link YearFilter}.
      */
-    public NumberFilterTest() {
-        super(NumberFilter.class);
+    public YearFilterTest() {
+        super(YearFilter.class);
     }
 
     /**
      * Set up test fixture. Most of the test fixture is set up by
      * {@link FilterActivityTest#setUp()}. This class adds a {@link EditText}
-     * view which contain card number value being edited and an
-     * <code>int</code> value for card number.
+     * view which contains the year value being edited and an
+     * <code>int</code> value for the year.
      *
      * @throws Exception If an error occurs while chaining to the super class.
      *
@@ -50,9 +52,9 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
     public void setUp() throws Exception {
         super.setUp();
 
-        this.numberText = (EditText) this.activity.findViewById(R.id.number_text);
+        this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
 
-        this.testNumber = 123;
+        this.testYear = 1976;
     }
 
     /**
@@ -71,7 +73,7 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
      * Check preconditions which must hold to guarantee the validity of all
      * other tests. Most preconditions are checked by
      * {@link FilterActivityTest#testPreConditions()}. In addition, this class
-     * checks that the {@link EditText} view for card number is not
+     * checks that the {@link EditText} view for the year is not
      * <code>null</code>, that it is empty, and that it has focus.
      *
      * @see FilterActivityTest#testPreConditions()
@@ -80,10 +82,10 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
     public void testPreConditions() {
         super.testPreConditions();
 
-        Assert.assertNotNull(this.numberText);
+        Assert.assertNotNull(this.yearText);
 
-        Assert.assertEquals("", this.numberText.getText().toString());
-        Assert.assertTrue(this.numberText.hasFocus());
+        Assert.assertEquals("", this.yearText.getText().toString());
+        Assert.assertTrue(this.yearText.hasFocus());
     }
 
     /**
@@ -97,7 +99,7 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
      */
     @Override
     protected String getTitleSubString() {
-        return this.activity.getString(R.string.number_filter_title);
+        return this.activity.getString(R.string.year_filter_title);
     }
 
     /**
@@ -108,29 +110,29 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
      */
     @Override
     protected void checkErrorMessage() {
-        String expectedNumberError = this.activity.getString(R.string.number_input_error);
-        Assert.assertEquals(expectedNumberError, this.numberText.getError());
+        String expectedError = this.activity.getString(R.string.year_input_error);
+        Assert.assertEquals(expectedError, this.yearText.getError());
     }
 
     /**
-     * Set the text of the card number {@link EditText} views.
+     * Set the text of the year {@link EditText} view.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
      */
     @Override
     protected void setInputText() {
-        this.numberText.setText(Integer.toString(this.testNumber));
+        this.yearText.setText(Integer.toString(this.testYear));
     }
 
     /**
-     * Inject instrumented key events for the card number text.
+     * Inject instrumented key events for the year text.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()
      */
     @Override
     protected void sendInputKeys() {
-        this.getInstrumentation().sendStringSync(Integer.toString(this.testNumber));
+        this.getInstrumentation().sendStringSync(Integer.toString(this.testYear));
     }
-    private EditText numberText = null;
-    private int testNumber = -1;
+    private EditText yearText = null;
+    private int testYear = -1;
 }

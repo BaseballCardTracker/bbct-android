@@ -16,10 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.tests;
+package bbct.android.common.test;
 
 import android.test.InstrumentationTestRunner;
-import bbct.android.common.BaseballCardDetailsPartialInputTest;
+import bbct.android.common.activity.test.BaseballCardDetailsPartialInputTest;
 import junit.framework.TestSuite;
 
 /**

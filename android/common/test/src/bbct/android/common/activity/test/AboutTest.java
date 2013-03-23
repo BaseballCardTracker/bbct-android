@@ -16,10 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
+import bbct.android.common.R;
+import bbct.android.common.activity.About;
 import junit.framework.Assert;
 
 /**

@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.database.test;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
-import bbct.common.data.BaseballCard;
+import bbct.android.common.data.BaseballCard;
+import bbct.android.common.database.BaseballCardSQLHelper;
 import junit.framework.Assert;
 
 /**
