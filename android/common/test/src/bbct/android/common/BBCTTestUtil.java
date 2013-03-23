@@ -161,7 +161,7 @@ final public class BBCTTestUtil {
      * @param cardDetails The {@link BaseballCardDetails} activity being tested.
      * @param card The {@link BaseballCard} object holding the data to add to
      * the database.
-     * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      */
     public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) {
@@ -298,7 +298,7 @@ final public class BBCTTestUtil {
     /**
      * Leave all fields blank.
      *
-     * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      * @see BBCTTestUtil#NO_FIELDS
      * @see BBCTTestUtil#BRAND_FIELD
@@ -313,7 +313,7 @@ final public class BBCTTestUtil {
     /**
      * Include the card brand field.
      *
-     * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      * @see BBCTTestUtil#NO_FIELDS
      * @see BBCTTestUtil#BRAND_FIELD
@@ -328,7 +328,7 @@ final public class BBCTTestUtil {
     /**
      * Include the card year field.
      *
-     * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      * @see BBCTTestUtil#NO_FIELDS
      * @see BBCTTestUtil#BRAND_FIELD
@@ -343,7 +343,7 @@ final public class BBCTTestUtil {
     /**
      * Include the card number field.
      *
-     * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      * @see BBCTTestUtil#NO_FIELDS
      * @see BBCTTestUtil#BRAND_FIELD
@@ -358,7 +358,7 @@ final public class BBCTTestUtil {
     /**
      * Include the card value field.
      *
-     * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      * @see BBCTTestUtil#NO_FIELDS
      * @see BBCTTestUtil#BRAND_FIELD
@@ -373,7 +373,7 @@ final public class BBCTTestUtil {
     /**
      * Include the card count field.
      *
-     * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      * @see BBCTTestUtil#NO_FIELDS
      * @see BBCTTestUtil#BRAND_FIELD
@@ -388,7 +388,7 @@ final public class BBCTTestUtil {
     /**
      * Include the player name field.
      *
-     * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      * @see BBCTTestUtil#NO_FIELDS
      * @see BBCTTestUtil#BRAND_FIELD
@@ -403,7 +403,7 @@ final public class BBCTTestUtil {
     /**
      * Include all input fields.
      *
-     * @see sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
      * @see BBCTTestUtil#NO_FIELDS
      * @see BBCTTestUtil#BRAND_FIELD

@@ -113,7 +113,7 @@ public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFil
      * Assert that the correct error message is set in the {@link EditText}
      * views when they are empty.
      *
-     * @see FilterActivityTest#testOkButtonOnClickWithNoInput()}
+     * @see FilterActivityTest#testOkButtonOnClickWithNoInput()
      */
     @Override
     protected void checkErrorMessage() {

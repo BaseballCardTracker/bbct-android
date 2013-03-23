@@ -105,7 +105,7 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
      * Assert that the correct error message is set in the {@link EditText} view
      * when it is empty.
      *
-     * @see FilterActivityTest#testOkButtonOnClickWithNoInput()}
+     * @see FilterActivityTest#testOkButtonOnClickWithNoInput()
      */
     @Override
     protected void checkErrorMessage() {

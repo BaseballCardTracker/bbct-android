@@ -122,7 +122,7 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
      * Called from the template method
      * {@link #testOkButtonOnClickWithNoInput()}.
      *
-     * @see #testOkButtonOnClickWithNoInput()}
+     * @see #testOkButtonOnClickWithNoInput()
      */
     protected abstract void checkErrorMessage();
 
@@ -153,7 +153,7 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
     /**
      * Test that the text of all {@link EditText} views is set correctly and
      * that the {@link Activity} finishes when the user clicks the "OK" button.
-     * Calls {@link #setInputText()} to set the text of the {@link EditTex}
+     * Calls {@link #setInputText()} to set the text of the {@link EditText}
      * views in the subclass of {@link FilterActivity} being tested.
      */
     @UiThreadTest

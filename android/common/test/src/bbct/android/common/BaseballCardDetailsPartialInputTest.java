@@ -24,6 +24,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import bbct.android.common.tests.BBCTTestRunner;
 import bbct.common.data.BaseballCard;
 import java.io.IOException;
 import java.io.InputStream;

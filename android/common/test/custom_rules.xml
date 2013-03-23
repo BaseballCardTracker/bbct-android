@@ -23,7 +23,7 @@
     <property name="android.jar" value="${sdk.dir}/platforms/${target}/android.jar"/>
     <property name="android.docs" value="${sdk.dir}/docs/reference"/>
 
-    <target name="javadoc" description="Generate the Javadocs for this project">
+    <target name="javadoc" description="Generate javadocs for this project">
         <javadoc sourcepath="${source.dir}"
                  destdir="${javadoc.dir}"
                  classpath="${android.jar};../lib/bin/classes.jar"

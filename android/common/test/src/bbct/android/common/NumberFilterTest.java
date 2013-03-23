@@ -18,6 +18,7 @@
  */
 package bbct.android.common;
 
+import android.app.Activity;
 import android.widget.EditText;
 import junit.framework.Assert;
 
@@ -103,7 +104,7 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
      * Assert that the correct error message is set in the {@link EditText} view
      * when it is empty.
      *
-     * @see FilterActivityTest#testOkButtonOnClickWithNoInput()}
+     * @see FilterActivityTest#testOkButtonOnClickWithNoInput()
      */
     @Override
     protected void checkErrorMessage() {
