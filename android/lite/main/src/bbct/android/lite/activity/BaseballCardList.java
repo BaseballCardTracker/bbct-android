@@ -16,12 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android;
+package bbct.android.lite.activity;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
+import bbct.android.R;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 import java.util.Arrays;
@@ -31,7 +32,7 @@ import java.util.HashSet;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class BaseballCardList extends bbct.android.common.BaseballCardList {
+public class BaseballCardList extends bbct.android.common.activity.BaseballCardList {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class BaseballCardList extends bbct.android.common.BaseballCardList {
         if (Build.PRODUCT.contains("sdk")) {
             adRequest.addTestDevice(AdRequest.TEST_EMULATOR);
         }
-        
+
         String[] keywords = this.getResources().getStringArray(R.array.keywords);
         adRequest.addKeywords(new HashSet<String>(Arrays.asList(keywords)));
 
