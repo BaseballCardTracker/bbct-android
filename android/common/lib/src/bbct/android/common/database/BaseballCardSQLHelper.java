@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,7 +24,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import bbct.common.data.BaseballCard;
+import bbct.android.common.provider.BaseballCardContract;
+import bbct.android.common.data.BaseballCard;
 import java.util.ArrayList;
 import java.util.List;
 

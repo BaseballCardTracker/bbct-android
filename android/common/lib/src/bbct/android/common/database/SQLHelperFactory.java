@@ -16,10 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.database;
 
 import android.content.Context;
 import android.util.Log;
+import bbct.android.common.R;
+import bbct.android.common.exception.SQLHelperCreationException;
 import java.lang.reflect.Constructor;
 
 /**

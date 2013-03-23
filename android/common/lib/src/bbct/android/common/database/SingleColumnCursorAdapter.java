@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.database;
 
 import android.app.Activity;
 import android.content.Context;
@@ -28,6 +28,8 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import bbct.android.common.R;
+import bbct.android.common.exception.SQLHelperCreationException;
 
 /**
  *

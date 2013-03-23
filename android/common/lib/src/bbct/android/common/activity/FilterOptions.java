@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import bbct.android.common.R;
 
 /**
  * {@link FilterOptions} gives the user the choice to filter the baseball card

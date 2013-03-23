@@ -16,11 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import bbct.android.common.R;
 
 /**
  *
@@ -43,7 +44,7 @@ public class PlayerNameFilter extends FilterActivity {
         String playerName = this.playerNameText.getText().toString();
         return !playerName.equals("");
     }
-    
+
     @Override
     public int getErrorResourceId() {
         return R.string.player_name_input_error;

@@ -16,48 +16,61 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import bbct.android.common.R;
 
 /**
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class NumberFilter extends FilterActivity {
+public class YearAndNumberFilter extends FilterActivity {
 
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.number_filter, R.string.number_filter_title);
+        super.onCreate(savedInstanceState, R.layout.year_and_number_filter, R.string.year_and_number_filter_title);
 
+        this.yearText = (EditText) this.findViewById(R.id.year_text);
         this.numberText = (EditText) this.findViewById(R.id.number_text);
     }
 
     @Override
     public boolean isInputValid() {
+        String yearStr = this.yearText.getText().toString();
         String numberStr = this.numberText.getText().toString();
-        return !numberStr.equals("");
+        return !yearStr.equals("") && !numberStr.equals("");
     }
-    
+
     @Override
     public int getErrorResourceId() {
-        return R.string.number_input_error;
+        String yearStr = this.yearText.getText().toString();
+
+        if (yearStr.equals("")) {
+            return R.string.year_input_error;
+        } else {
+            return R.string.number_input_error;
+        }
     }
 
     @Override
     public Intent getResult() {
+        String yearStr = this.yearText.getText().toString();
         String numberStr = this.numberText.getText().toString();
+        int year = Integer.parseInt(yearStr);
         int number = Integer.parseInt(numberStr);
         Intent result = new Intent();
-        result.putExtra(this.getString(R.string.filter_request_extra), R.id.number_filter_request);
+        result.putExtra(this.getString(R.string.filter_request_extra), R.id.year_and_number_filter_request);
+        result.putExtra(this.getString(R.string.year_extra), year);
         result.putExtra(this.getString(R.string.number_extra), number);
 
         return result;
     }
+    private EditText yearText = null;
     private EditText numberText = null;
 }

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -24,6 +24,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
+import bbct.android.common.database.BaseballCardSQLHelper;
+import bbct.android.common.R;
+import bbct.android.common.exception.SQLHelperCreationException;
+import bbct.android.common.database.SQLHelperFactory;
 
 /**
  *

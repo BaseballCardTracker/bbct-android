@@ -16,48 +16,41 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common;
+package bbct.android.common.activity;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.util.Log;
+import android.widget.TextView;
+import bbct.android.common.R;
 
 /**
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class YearFilter extends FilterActivity {
+public class About extends Activity {
 
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.year_filter, R.string.year_filter_title);
+        super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.about);
 
-        this.yearText = (EditText) this.findViewById(R.id.year_text);
+        String aboutTitle = this.getString(R.string.about_title);
+        String title = this.getString(R.string.bbct_title, aboutTitle);
+        this.setTitle(title);
+
+        TextView versionLabel = (TextView) this.findViewById(R.id.version_label);
+        String versionNumber = this.getString(R.string.version_number);
+        String versionString = this.getString(R.string.version_text, versionNumber);
+
+        Log.d(TAG, "versionLabel=" + versionLabel);
+        Log.d(TAG, "versionString=" + versionString);
+
+        versionLabel.setText(versionString);
     }
 
-    @Override
-    public boolean isInputValid() {
-        String yearStr = this.yearText.getText().toString();
-        return !yearStr.equals("");
-    }
-    
-    @Override
-    public int getErrorResourceId() {
-        return R.string.year_input_error;
-    }
-
-    @Override
-    public Intent getResult() {
-        String yearStr = this.yearText.getText().toString();
-        int year = Integer.parseInt(yearStr);
-        Intent result = new Intent();
-        result.putExtra(this.getString(R.string.filter_request_extra), R.id.year_filter_request);
-        result.putExtra(this.getString(R.string.year_extra), year);
-
-        return result;
-    }
-    private EditText yearText = null;
+    private static final String TAG = About.class.getName();
 }
