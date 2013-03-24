@@ -25,13 +25,15 @@ import android.widget.TextView;
 import bbct.android.common.R;
 
 /**
+ * Displays the name and version of the app, a short description, contact links,
+ * and copyright information.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class About extends Activity {
 
     /**
-     * Called when the activity is first created.
+     * Called when the {@link Activity} is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,5 @@ public class About extends Activity {
 
         versionLabel.setText(versionString);
     }
-
     private static final String TAG = About.class.getName();
 }
