@@ -31,13 +31,13 @@ import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import bbct.android.common.provider.BaseballCardContract;
-import bbct.android.common.database.BaseballCardSQLHelper;
 import bbct.android.common.R;
-import bbct.android.common.exception.SQLHelperCreationException;
+import bbct.android.common.data.BaseballCard;
+import bbct.android.common.database.BaseballCardSQLHelper;
 import bbct.android.common.database.SQLHelperFactory;
 import bbct.android.common.database.SingleColumnCursorAdapter;
-import bbct.android.common.data.BaseballCard;
+import bbct.android.common.exception.SQLHelperCreationException;
+import bbct.android.common.provider.BaseballCardContract;
 
 /**
  *

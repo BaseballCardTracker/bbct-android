@@ -31,12 +31,12 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
-import bbct.android.common.provider.BaseballCardContract;
-import bbct.android.common.database.BaseballCardSQLHelper;
 import bbct.android.common.R;
-import bbct.android.common.exception.SQLHelperCreationException;
-import bbct.android.common.database.SQLHelperFactory;
 import bbct.android.common.data.BaseballCard;
+import bbct.android.common.database.BaseballCardSQLHelper;
+import bbct.android.common.database.SQLHelperFactory;
+import bbct.android.common.exception.SQLHelperCreationException;
+import bbct.android.common.provider.BaseballCardContract;
 
 /**
  * TODO: Make list fancier

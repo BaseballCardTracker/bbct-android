@@ -24,10 +24,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
-import bbct.android.common.database.BaseballCardSQLHelper;
 import bbct.android.common.R;
-import bbct.android.common.exception.SQLHelperCreationException;
+import bbct.android.common.database.BaseballCardSQLHelper;
 import bbct.android.common.database.SQLHelperFactory;
+import bbct.android.common.exception.SQLHelperCreationException;
 
 /**
  *
