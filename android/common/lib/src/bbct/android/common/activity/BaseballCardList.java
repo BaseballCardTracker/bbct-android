@@ -148,9 +148,7 @@ public class BaseballCardList extends ListActivity {
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
             this.sqlHelper.clearFilter();
-            Cursor cursor = this.sqlHelper.getCursor();
-            this.adapter.swapCursor(cursor);
-            this.startManagingCursor(cursor);
+            this.swapCursor();
             this.invalidateOptionsMenu();
             return true;
         } else if (itemId == R.id.about_menu) {
@@ -214,14 +212,19 @@ public class BaseballCardList extends ListActivity {
                     // TODO: Throw an exception?
                 }
 
-                Cursor cursor = this.sqlHelper.getCursor();
-                this.adapter.swapCursor(cursor);
-                this.startManagingCursor(cursor);
+                this.swapCursor();
             }
         } else {
             Log.e(TAG, "onActivityResult(): Invalid result code: " + requestCode);
             // TODO Throw exception?
         }
+    }
+
+    private void swapCursor() {
+        Cursor cursor = this.sqlHelper.getCursor();
+        this.stopManagingCursor(this.adapter.getCursor());
+        this.startManagingCursor(cursor);
+        this.adapter.changeCursor(cursor);
     }
     private static final String[] ROW_PROJECTION = {
         BaseballCardContract.BRAND_COL_NAME, BaseballCardContract.YEAR_COL_NAME,
