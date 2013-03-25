@@ -92,6 +92,10 @@ public class BaseballCardList extends ListActivity {
                 Toast.makeText(this, R.string.start, Toast.LENGTH_LONG).show();
             }
 
+            ListView listView = (ListView) this.findViewById(android.R.id.list);
+            View headerView = View.inflate(this, R.layout.list_header, null);
+            listView.addHeaderView(headerView);
+
             this.adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, ROW_PROJECTION, ROW_TEXT_VIEWS);
             this.setListAdapter(this.adapter);
         } catch (SQLHelperCreationException ex) {
