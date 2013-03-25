@@ -50,20 +50,16 @@ public abstract class FilterActivity extends Activity {
         cancelButton.setOnClickListener(this.onCancel);
     }
 
-    public abstract boolean isInputValid();
-
-    public abstract int getErrorResourceId();
+    public abstract boolean validateInput();
 
     public abstract Intent getResult();
     private View.OnClickListener onOk = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (FilterActivity.this.isInputValid()) {
+            if (FilterActivity.this.validateInput()) {
                 Intent data = FilterActivity.this.getResult();
                 FilterActivity.this.setResult(RESULT_OK, data);
                 FilterActivity.this.finish();
-            } else {
-                Toast.makeText(FilterActivity.this, FilterActivity.this.getErrorResourceId(), Toast.LENGTH_LONG).show();
             }
         }
     };

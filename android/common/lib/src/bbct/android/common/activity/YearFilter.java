@@ -40,14 +40,15 @@ public class YearFilter extends FilterActivity {
     }
 
     @Override
-    public boolean isInputValid() {
+    public boolean validateInput() {
         String yearStr = this.yearText.getText().toString();
-        return !yearStr.equals("");
-    }
+        boolean validYear = !yearStr.equals("");
 
-    @Override
-    public int getErrorResourceId() {
-        return R.string.year_input_error;
+        if(!validYear) {
+            this.yearText.setError(this.getString(R.string.year_input_error));
+        }
+
+        return validYear;
     }
 
     @Override

@@ -41,21 +41,22 @@ public class YearAndNumberFilter extends FilterActivity {
     }
 
     @Override
-    public boolean isInputValid() {
+    public boolean validateInput() {
         String yearStr = this.yearText.getText().toString();
-        String numberStr = this.numberText.getText().toString();
-        return !yearStr.equals("") && !numberStr.equals("");
-    }
+        boolean validYear = !yearStr.equals("");
 
-    @Override
-    public int getErrorResourceId() {
-        String yearStr = this.yearText.getText().toString();
-
-        if (yearStr.equals("")) {
-            return R.string.year_input_error;
-        } else {
-            return R.string.number_input_error;
+        if(!validYear) {
+            this.yearText.setError(this.getString(R.string.year_input_error));
         }
+
+        String numberStr = this.numberText.getText().toString();
+        boolean validNumber = !numberStr.equals("");
+
+        if(!validNumber) {
+            this.numberText.setError(this.getString(R.string.number_input_error));
+        }
+
+        return validYear && validNumber;
     }
 
     @Override

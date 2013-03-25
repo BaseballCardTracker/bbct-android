@@ -40,14 +40,15 @@ public class PlayerNameFilter extends FilterActivity {
     }
 
     @Override
-    public boolean isInputValid() {
+    public boolean validateInput() {
         String playerName = this.playerNameText.getText().toString();
-        return !playerName.equals("");
-    }
+        boolean validPlayerName = !playerName.equals("");
 
-    @Override
-    public int getErrorResourceId() {
-        return R.string.player_name_input_error;
+        if(!validPlayerName) {
+            this.playerNameText.setError(this.getString(R.string.player_name_input_error));
+        }
+
+        return validPlayerName;
     }
 
     @Override

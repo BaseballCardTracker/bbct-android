@@ -40,14 +40,15 @@ public class NumberFilter extends FilterActivity {
     }
 
     @Override
-    public boolean isInputValid() {
+    public boolean validateInput() {
         String numberStr = this.numberText.getText().toString();
-        return !numberStr.equals("");
-    }
+        boolean validNumber = !numberStr.equals("");
 
-    @Override
-    public int getErrorResourceId() {
-        return R.string.number_input_error;
+        if(!validNumber) {
+            this.numberText.setError(this.getString(R.string.number_input_error));
+        }
+
+        return validNumber;
     }
 
     @Override
