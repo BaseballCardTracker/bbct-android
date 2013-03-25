@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
+import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
@@ -97,12 +98,16 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
      */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-
         Assert.assertNotNull(this.listView);
-        Assert.assertEquals(0, this.listView.getCount());
+
+        TextView emptyList = (TextView) this.activity.findViewById(android.R.id.empty);
+        Assert.assertEquals(this.activity.getString(R.string.start), emptyList.getText());
+
+        // Subtract 1 from the number of views owned by the ListView to account for the header View
+        Assert.assertEquals(0, this.listView.getCount() - 1);
 
         BBCTTestUtil.assertDatabaseCreated(this.activity.getPackageName());
-        Assert.fail("Check that database is emtpy.");
+        Assert.assertTrue(this.dbUtil.isEmpty());
     }
 
     /**
@@ -147,14 +152,6 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
     }
 
     /**
-     * Test that the instruction label appears correctly when the database and
-     * the {@link ListView} are empty.
-     */
-    public void testStartActivityWithEmptyDatabase() {
-        Assert.fail("Check that instructions are raised as a Toast.");
-    }
-
-    /**
      * Test that the first baseball card data is added to the database and
      * updated in the {@link ListView}.
      *
@@ -169,6 +166,8 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
 
         BBCTTestUtil.addCard(this, cardDetails, card);
         BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
+
+        Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
 
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
         cards.add(card);
