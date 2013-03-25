@@ -50,13 +50,12 @@ public class BaseballCardList extends ListActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate()");
+        Log.d(TAG, "savedInstanceState=" + savedInstanceState);
+
         try {
             super.onCreate(savedInstanceState);
             this.sqlHelper = SQLHelperFactory.getSQLHelper(this);
-            Cursor cursor = this.sqlHelper.getCursor();
-            this.startManagingCursor(cursor);
-            this.adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, ROW_PROJECTION, ROW_TEXT_VIEWS);
-            this.setListAdapter(this.adapter);
 
             this.setContentView(R.layout.card_list);
             if (savedInstanceState != null) {
@@ -79,14 +78,22 @@ public class BaseballCardList extends ListActivity {
             } else if (this.filterRequest == R.id.player_name_filter_request) {
                 String playerName = this.filterParams.getString(this.getString(R.string.player_name_extra));
                 this.sqlHelper.filterCursorByPlayerName(playerName);
+            } else if (this.filterRequest == R.id.no_filter) {
+                this.sqlHelper.clearFilter();
             } else {
-                Log.e(TAG, "onCreate(): Invalid filter request code.");
+                Log.e(TAG, "onCreate(): Invalid filter request code: " + this.filterRequest);
                 // TODO: Throw an exception?
             }
+
+            Cursor cursor = this.sqlHelper.getCursor();
+            this.startManagingCursor(cursor);
 
             if (cursor.getCount() == 0) {
                 Toast.makeText(this, R.string.start, Toast.LENGTH_LONG).show();
             }
+
+            this.adapter = new SimpleCursorAdapter(this, R.layout.row, cursor, ROW_PROJECTION, ROW_TEXT_VIEWS);
+            this.setListAdapter(this.adapter);
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
             Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG).show();
@@ -144,7 +151,7 @@ public class BaseballCardList extends ListActivity {
             this.startActivity(new Intent(this, About.class));
             return true;
         } else {
-            Log.e(TAG, "onOptionsItemSelected(): Invalid menu code");
+            Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
             // TODO Throw exceptoin?
         }
 
@@ -197,7 +204,7 @@ public class BaseballCardList extends ListActivity {
                     this.filterParams.putString(this.getString(R.string.player_name_extra), playerName);
                     this.sqlHelper.filterCursorByPlayerName(playerName);
                 } else {
-                    Log.e(TAG, "onActivityResult(): Invalid filter request code.");
+                    Log.e(TAG, "onActivityResult(): Invalid filter request code: " + this.filterRequest);
                     // TODO: Throw an exception?
                 }
 
@@ -211,7 +218,7 @@ public class BaseballCardList extends ListActivity {
                 }
             }
         } else {
-            Log.e(TAG, "onActivityResult(): Invalid result code.");
+            Log.e(TAG, "onActivityResult(): Invalid result code: " + requestCode);
             // TODO Throw exception?
         }
     }
