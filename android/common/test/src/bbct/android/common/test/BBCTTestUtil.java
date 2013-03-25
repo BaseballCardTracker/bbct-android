@@ -59,16 +59,28 @@ final public class BBCTTestUtil {
      */
     public static void assertListViewContainsItems(Instrumentation inst, List<BaseballCard> expectedItems, ListView listView) {
         inst.waitForIdleSync();
-        Assert.assertEquals(expectedItems.size(), listView.getCount());
+
+        // Subtract 1 from the number of views owned by the ListView to account for the header View
+        Assert.assertEquals(expectedItems.size(), listView.getCount() - 1);
 
         for (int i = 0; i < expectedItems.size(); ++i) {
-            View row = listView.getChildAt(i);
+            // Add 1 to skip headers
+            View row = listView.getChildAt(i + 1);
             TextView brandTextView = (TextView) row.findViewById(R.id.brand_text_view);
             TextView yearTextView = (TextView) row.findViewById(R.id.year_text_view);
             TextView numberTextView = (TextView) row.findViewById(R.id.number_text_view);
             TextView playerNameTextView = (TextView) row.findViewById(R.id.player_name_text_view);
 
+            StringBuilder rowText = new StringBuilder("Row ").append(i).append(":")
+                    .append(brandTextView.getText()).append(',')
+                    .append(yearTextView.getText()).append(',')
+                    .append(numberTextView.getText()).append(',')
+                    .append(playerNameTextView.getText());
+            Log.d(TAG, rowText.toString());
+
             BaseballCard expectedCard = expectedItems.get(i);
+            Log.d(TAG, "Baseball Card #" + i + ":" + expectedCard);
+
             Assert.assertEquals(expectedCard.getBrand(), brandTextView.getText().toString());
             Assert.assertEquals(expectedCard.getYear(), Integer.parseInt(yearTextView.getText().toString()));
             Assert.assertEquals(expectedCard.getNumber(), Integer.parseInt(numberTextView.getText().toString()));
