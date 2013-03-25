@@ -30,6 +30,7 @@ import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
@@ -88,8 +89,9 @@ public class BaseballCardList extends ListActivity {
             Cursor cursor = this.sqlHelper.getCursor();
             this.startManagingCursor(cursor);
 
-            if (cursor.getCount() == 0) {
-                Toast.makeText(this, R.string.start, Toast.LENGTH_LONG).show();
+            if (this.filterRequest == R.id.no_filter && cursor.getCount() == 0) {
+                TextView emptyList = (TextView) this.findViewById(android.R.id.empty);
+                emptyList.setText(R.string.start);
             }
 
             ListView listView = (ListView) this.findViewById(android.R.id.list);
@@ -213,13 +215,8 @@ public class BaseballCardList extends ListActivity {
                 }
 
                 Cursor cursor = this.sqlHelper.getCursor();
-                if (cursor.getCount() == 0) {
-                    String msg = this.getString(R.string.no_cards_message);
-                    Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-                } else {
-                    this.adapter.swapCursor(cursor);
-                    this.startManagingCursor(cursor);
-                }
+                this.adapter.swapCursor(cursor);
+                this.startManagingCursor(cursor);
             }
         } else {
             Log.e(TAG, "onActivityResult(): Invalid result code: " + requestCode);
