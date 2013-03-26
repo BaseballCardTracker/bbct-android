@@ -19,7 +19,6 @@
 package bbct.android.common.activity;
 
 import android.app.Activity;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,68 +53,56 @@ public class BaseballCardDetails extends Activity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        try {
-            super.onCreate(savedInstanceState);
-            this.setContentView(R.layout.card_details);
+        super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.card_details);
 
-            String cardDetailsTitle = this.getString(R.string.card_details_title);
-            String title = this.getString(R.string.bbct_title, cardDetailsTitle);
-            this.setTitle(title);
+        String cardDetailsTitle = this.getString(R.string.card_details_title);
+        String title = this.getString(R.string.bbct_title, cardDetailsTitle);
+        this.setTitle(title);
 
-            this.sqlHelper = SQLHelperFactory.getSQLHelper(this);
-            Cursor cursor = this.sqlHelper.getCursor();
-            this.startManagingCursor(cursor);
+        this.brandText = (AutoCompleteTextView) this.findViewById(R.id.brand_text);
+        CursorAdapter brandAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.BRAND_COL_NAME);
+        this.brandText.setAdapter(brandAdapter);
 
-            this.brandText = (AutoCompleteTextView) this.findViewById(R.id.brand_text);
-            CursorAdapter brandAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.BRAND_COL_NAME);
-            this.brandText.setAdapter(brandAdapter);
+        this.yearText = (EditText) this.findViewById(R.id.year_text);
+        this.numberText = (EditText) this.findViewById(R.id.number_text);
+        this.valueText = (EditText) this.findViewById(R.id.value_text);
+        this.countText = (EditText) this.findViewById(R.id.count_text);
 
-            this.yearText = (EditText) this.findViewById(R.id.year_text);
-            this.numberText = (EditText) this.findViewById(R.id.number_text);
-            this.valueText = (EditText) this.findViewById(R.id.value_text);
-            this.countText = (EditText) this.findViewById(R.id.count_text);
+        this.playerNameText = (AutoCompleteTextView) this.findViewById(R.id.player_name_text);
+        CursorAdapter playerNameAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.PLAYER_NAME_COL_NAME);
+        this.playerNameText.setAdapter(playerNameAdapter);
 
-            this.playerNameText = (AutoCompleteTextView) this.findViewById(R.id.player_name_text);
-            CursorAdapter playerNameAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.PLAYER_NAME_COL_NAME);
-            this.playerNameText.setAdapter(playerNameAdapter);
+        this.playerPositionSpinner = (Spinner) this.findViewById(R.id.player_position_text);
+        ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter.createFromResource(this, R.array.positions, android.R.layout.simple_spinner_item);
+        positionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.playerPositionSpinner.setAdapter(positionsAdapter);
 
-            this.playerPositionSpinner = (Spinner) this.findViewById(R.id.player_position_text);
-            ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter.createFromResource(this, R.array.positions, android.R.layout.simple_spinner_item);
-            positionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            this.playerPositionSpinner.setAdapter(positionsAdapter);
+        Button saveButton = (Button) this.findViewById(R.id.save_button);
+        saveButton.setOnClickListener(this.onSave);
 
-            Button saveButton = (Button) this.findViewById(R.id.save_button);
-            saveButton.setOnClickListener(this.onSave);
+        Button doneButton = (Button) this.findViewById(R.id.done_button);
+        doneButton.setOnClickListener(this.onDone);
 
-            Button doneButton = (Button) this.findViewById(R.id.done_button);
-            doneButton.setOnClickListener(this.onDone);
+        BaseballCard card = (BaseballCard) this.getIntent().getSerializableExtra(this.getString(R.string.baseball_card_extra));
 
-            BaseballCard card = (BaseballCard) this.getIntent().getSerializableExtra(this.getString(R.string.baseball_card_extra));
+        if (card != null) {
+            this.isUpdating = true;
+            this.brandText.setText(card.getBrand());
+            this.yearText.setText(Integer.toString(card.getYear()));
+            this.numberText.setText(Integer.toString(card.getNumber()));
+            this.valueText.setText(Double.toString(card.getValue() / 100.0));
+            this.countText.setText(Integer.toString(card.getCount()));
+            this.playerNameText.setText(card.getPlayerName());
 
-            if (card != null) {
-                this.isUpdating = true;
-                this.brandText.setText(card.getBrand());
-                this.yearText.setText(Integer.toString(card.getYear()));
-                this.numberText.setText(Integer.toString(card.getNumber()));
-                this.valueText.setText(Double.toString(card.getValue() / 100.0));
-                this.countText.setText(Integer.toString(card.getCount()));
-                this.playerNameText.setText(card.getPlayerName());
-
-                int selectedPosition = positionsAdapter.getPosition(card.getPlayerPosition());
-                this.playerPositionSpinner.setSelection(selectedPosition);
-            }
-        } catch (SQLHelperCreationException ex) {
-            // TODO Show a dialog and exit app
-            Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG).show();
-            Log.e(TAG, ex.getMessage(), ex);
+            int selectedPosition = positionsAdapter.getPosition(card.getPlayerPosition());
+            this.playerPositionSpinner.setSelection(selectedPosition);
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        this.sqlHelper.close();
     }
 
     private BaseballCard getBaseballCard() {
@@ -169,19 +156,31 @@ public class BaseballCardDetails extends Activity {
     private View.OnClickListener onSave = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            BaseballCard card = BaseballCardDetails.this.getBaseballCard();
+            BaseballCardSQLHelper sqlHelper = null;
+            try {
+                BaseballCard card = BaseballCardDetails.this.getBaseballCard();
+                sqlHelper = SQLHelperFactory.getSQLHelper(view.getContext());
 
-            if (card != null) {
-                if (BaseballCardDetails.this.isUpdating) {
-                    BaseballCardDetails.this.sqlHelper.updateBaseballCard(card);
-                    BaseballCardDetails.this.finish();
-                } else {
-                    BaseballCardDetails.this.sqlHelper.insertBaseballCard(card);
-                    BaseballCardDetails.this.resetInput();
-                    BaseballCardDetails.this.brandText.requestFocus();
-                    Toast.makeText(BaseballCardDetails.this, R.string.card_added_message, Toast.LENGTH_LONG).show();
+                if (card != null) {
+                    if (BaseballCardDetails.this.isUpdating) {
+                        sqlHelper.updateBaseballCard(card);
+                        BaseballCardDetails.this.finish();
+                    } else {
+                        sqlHelper.insertBaseballCard(card);
+                        BaseballCardDetails.this.resetInput();
+                        BaseballCardDetails.this.brandText.requestFocus();
+                        Toast.makeText(view.getContext(), R.string.card_added_message, Toast.LENGTH_LONG).show();
+                    }
+                    // TODO: Catch SQL exceptions and show appropriate error messages.
                 }
-                // TODO: Catch SQL exceptions and show appropriate error messages.
+            } catch (SQLHelperCreationException ex) {
+                // TODO Show a dialog and exit app
+                Toast.makeText(view.getContext(), R.string.database_error, Toast.LENGTH_LONG).show();
+                Log.e(TAG, ex.getMessage(), ex);
+            } finally {
+                if (sqlHelper != null) {
+                    sqlHelper.close();
+                }
             }
         }
     };
@@ -198,7 +197,6 @@ public class BaseballCardDetails extends Activity {
     private EditText countText = null;
     private AutoCompleteTextView playerNameText = null;
     private Spinner playerPositionSpinner = null;
-    private BaseballCardSQLHelper sqlHelper = null;
     private boolean isUpdating = false;
     private static final String TAG = BaseballCardDetails.class.getName();
 }
