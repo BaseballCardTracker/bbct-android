@@ -103,14 +103,6 @@ public class BaseballCardDetails extends Activity {
 
                 int selectedPosition = positionsAdapter.getPosition(card.getPlayerPosition());
                 this.playerPositionSpinner.setSelection(selectedPosition);
-
-                this.brandText.setEnabled(false);
-                this.yearText.setEnabled(false);
-                this.numberText.setEnabled(false);
-                this.playerNameText.setEnabled(false);
-                this.playerPositionSpinner.setEnabled(false);
-
-                this.valueText.requestFocus();
             }
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
