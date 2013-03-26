@@ -30,9 +30,7 @@ import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
-import bbct.android.common.test.DatabaseUtil;
 import java.io.InputStream;
-import java.util.List;
 import junit.framework.Assert;
 
 /**
@@ -66,8 +64,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
 
         InputStream in = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in, true);
-        this.allCards = cardInput.getAllBaseballCards();
-        this.card = this.allCards.get(3); // Ken Griffey Jr.
+        this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
         // Must call getActivity() before creating a DatabaseUtil object to ensure that the database is created
@@ -81,8 +78,6 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         this.playerPositionSpinner = (Spinner) this.activity.findViewById(R.id.player_position_text);
         this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
         this.doneButton = (Button) this.activity.findViewById(R.id.done_button);
-
-        this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
     }
 
     /**
@@ -94,7 +89,6 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     @Override
     public void tearDown() throws Exception {
         this.activity.finish();
-        this.dbUtil.deleteDatabase();
 
         super.tearDown();
     }
@@ -104,7 +98,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
      * other tests. Assert that the Activity to test is not
      * <code>null</code>, that none of its {@link EditText} views or
      * {@link Button}s are
-     * <code>null</code>, and that the SQLite database was created.
+     * <code>null</code>.
      */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
@@ -117,9 +111,6 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.assertNotNull(this.playerPositionSpinner);
         Assert.assertNotNull(this.saveButton);
         Assert.assertNotNull(this.doneButton);
-
-        BBCTTestUtil.assertDatabaseCreated(this.activity.getPackageName());
-        Assert.assertTrue(this.dbUtil.isEmpty());
     }
 
     /**
@@ -147,39 +138,6 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     /**
-     * Test that baseball card data is correctly added to the database when it
-     * is entered into the {@link BaseballCardDetails} activity.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
-     */
-    public void testAddCard() throws Throwable {
-        BBCTTestUtil.addCard(this, this.activity, this.card);
-        this.inst.waitForIdleSync();
-        Assert.assertTrue("Missing card: " + this.card, this.dbUtil.containsBaseballCard(card));
-    }
-
-    /**
-     * Test that baseball card data for multiple cards is correctly added to the
-     * database when it is entered into the {@link BaseballCardDetails}
-     * activity. This test enters all data using a single invocation of the
-     * {@link BaseballCardDetails} activity.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
-     */
-    public void testAddMultipleCards() throws Throwable {
-        for (BaseballCard nextCard : this.allCards) {
-            BBCTTestUtil.addCard(this, this.activity, nextCard);
-        }
-
-        this.inst.waitForIdleSync();
-        for (BaseballCard nextCard : this.allCards) {
-            Assert.assertTrue("Missing card: " + nextCard, this.dbUtil.containsBaseballCard(nextCard));
-        }
-    }
-
-    /**
      * Test that the {@link BaseballCardDetails} activity finishes when the user
      * clicks the "Done" button.
      */
@@ -199,7 +157,5 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     private Button saveButton = null;
     private Button doneButton = null;
     private Instrumentation inst = null;
-    private List<BaseballCard> allCards = null;
     private BaseballCard card = null;
-    private DatabaseUtil dbUtil = null;
 }
