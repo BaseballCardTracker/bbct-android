@@ -129,7 +129,24 @@ final public class BBCTTestUtil {
      */
     public static void addCard(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) throws Throwable {
         BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card);
+        BBCTTestUtil.clickCardDetailsSave(test, cardDetails);
 
+        // TODO Check that Toast appears with correct message.
+    }
+
+    /**
+     * Click the "Save" button on the given {@link BaseballCardDetails}
+     * activity. This is all wrapped into a helper method because the button
+     * click must be done on the UI thread while the assertion must not.
+     *
+     * @param test The {@link InstrumentationTestCase} object performing the
+     * test.
+     * @param cardDetails The {@link BaseballCardDetails} activity being tested.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
+    public static void clickCardDetailsSave(InstrumentationTestCase test, Activity cardDetails) throws Throwable {
         final Button saveButton = (Button) cardDetails.findViewById(R.id.save_button);
 
         test.runTestOnUiThread(new Runnable() {
@@ -138,8 +155,6 @@ final public class BBCTTestUtil {
                 Assert.assertTrue(saveButton.performClick());
             }
         });
-
-        // TODO Check that Toast appears with correct message.
     }
 
     /**
