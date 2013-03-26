@@ -120,7 +120,6 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         BBCTTestUtil.clickCardDetailsSave(this, this.activity);
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(this.newCard));
-        dbUtil.closeDatabase();
     }
     private Instrumentation inst = null;
     private Activity activity = null;

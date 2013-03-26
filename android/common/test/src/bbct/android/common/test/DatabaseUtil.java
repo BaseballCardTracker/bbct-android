@@ -54,13 +54,6 @@ public class DatabaseUtil {
     }
 
     /**
-     * Close the database.
-     */
-    public void closeDatabase() {
-        this.db.close();
-    }
-
-    /**
      * Delete the database being tested. Should return the app to its inital
      * state after installation.
      */

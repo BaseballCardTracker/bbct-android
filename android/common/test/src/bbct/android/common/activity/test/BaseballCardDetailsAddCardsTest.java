@@ -97,7 +97,6 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
 
         DatabaseUtil dbUtil = new DatabaseUtil(this.activity.getPackageName());
         Assert.assertTrue("Missing card: " + this.card, dbUtil.containsBaseballCard(card));
-        dbUtil.closeDatabase();
     }
 
     /**
@@ -119,7 +118,6 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
         for (BaseballCard nextCard : this.allCards) {
             Assert.assertTrue("Missing card: " + nextCard, dbUtil.containsBaseballCard(nextCard));
         }
-        dbUtil.closeDatabase();
     }
 
     private Activity activity = null;
