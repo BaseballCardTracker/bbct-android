@@ -23,11 +23,10 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.KeyEvent;
-import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
+import bbct.android.common.database.BaseballCardSQLHelper;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
@@ -76,14 +75,16 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         String position = this.card.getPlayerPosition();
         this.newCard = new BaseballCard(brand, year, number, newValue, newCount, name, position);
 
-        // Must call getActivity() before creating a DatabaseUtil object to ensure that the database is created
         Context target = inst.getTargetContext();
         Intent intent = new Intent(target, BaseballCardDetails.class);
         intent.putExtra(target.getString(R.string.baseball_card_extra), this.card);
         this.setActivityIntent(intent);
         this.activity = this.getActivity();
 
-        this.valueText = (EditText) this.activity.findViewById(R.id.value_text);
+        // Insert baseball card to make sure we are updating an existing card rather than simply inserting a new card.
+        // Using BaseballCardSQLHelper to do this ensures that the database is properly created.
+        BaseballCardSQLHelper sqlHelper = new BaseballCardSQLHelper(this.activity);
+        sqlHelper.insertBaseballCard(this.card);
 
         this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
     }
@@ -97,6 +98,7 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
     @Override
     public void tearDown() throws Exception {
         this.activity.finish();
+
         this.dbUtil.deleteDatabase();
 
         super.tearDown();
@@ -105,19 +107,23 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
     /**
      * Test that the value and count field can be edited in the
      * {@link BaseballCardDetails} activity.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
      */
-    public void testEditCard() {
+    public void testEditCard() throws Throwable {
+        Assert.assertTrue(this.dbUtil.containsBaseballCard(this.card));
+
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
-        Assert.assertEquals(this.valueText, this.activity.getCurrentFocus());
-        String valueStr = String.format("%.2f", this.newCard.getValue() / 100.0);
-        this.inst.sendStringSync(valueStr);
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
-        this.inst.sendStringSync(Integer.toString(this.newCard.getCount()));
+        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.newCard, BBCTTestUtil.VALUE_FIELD | BBCTTestUtil.COUNT_FIELD);
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.newCard);
+        BBCTTestUtil.clickCardDetailsSave(this, this.activity);
+
+        Assert.assertTrue(this.dbUtil.containsBaseballCard(this.newCard));
+        dbUtil.closeDatabase();
     }
     private Instrumentation inst = null;
     private Activity activity = null;
-    private EditText valueText = null;
     private BaseballCard card = null;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil = null;
