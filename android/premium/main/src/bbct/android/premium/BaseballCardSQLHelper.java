@@ -58,9 +58,10 @@ public class BaseballCardSQLHelper extends bbct.android.common.database.Baseball
         try {
             PackageInfo liteInfo = this.context.getPackageManager().getPackageInfo(LITE_PACKAGE, SCHEMA_VERSION);
             canGetData = liteInfo.versionCode >= MIN_LITE_VERSION;
+            errorMessageEnding = this.context.getString(R.string.lite_update_message);
         } catch (NameNotFoundException ex) {
             canGetData = false;
-            errorMessageEnding = this.context.getString(R.string.lite_update_message);
+            errorMessageEnding = this.context.getString(R.string.lite_not_installed_message);
             Log.i(TAG, LITE_PACKAGE + " package not found", ex);
         }
 
@@ -83,8 +84,8 @@ public class BaseballCardSQLHelper extends bbct.android.common.database.Baseball
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.context);
             String errorMessage = this.context.getString(R.string.import_error, errorMessageEnding);
             dialogBuilder.setMessage(errorMessage);
-            dialogBuilder.setPositiveButton(R.string.ok_button, new AlertDialog.OnClickListener() {
-                public void onClick(DialogInterface dialog, int i) {
+            dialogBuilder.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
                 }
             });
 

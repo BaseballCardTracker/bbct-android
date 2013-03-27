@@ -26,4 +26,5 @@
     <string name="lite_update_message">
         Please update <a href="market://details?id=bbct.android">Lite Edition</a>.
     </string>
+    <string name="lite_not_installed_message"> Lite Edition not installed.</string>
 </resources>
