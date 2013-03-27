@@ -19,6 +19,8 @@
 package bbct.android.common.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -166,10 +168,22 @@ public class BaseballCardDetails extends Activity {
                         sqlHelper.updateBaseballCard(card);
                         BaseballCardDetails.this.finish();
                     } else {
-                        sqlHelper.insertBaseballCard(card);
-                        BaseballCardDetails.this.resetInput();
-                        BaseballCardDetails.this.brandText.requestFocus();
-                        Toast.makeText(view.getContext(), R.string.card_added_message, Toast.LENGTH_LONG).show();
+                        long result = sqlHelper.insertBaseballCard(card);
+
+                        if (result == -1) {
+                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseballCardDetails.this);
+                            dialogBuilder.setMessage(R.string.duplicate_card_error);
+                            dialogBuilder.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+
+                            dialogBuilder.create().show();
+                        } else {
+                            BaseballCardDetails.this.resetInput();
+                            BaseballCardDetails.this.brandText.requestFocus();
+                            Toast.makeText(view.getContext(), R.string.card_added_message, Toast.LENGTH_LONG).show();
+                        }
                     }
                     // TODO: Catch SQL exceptions and show appropriate error messages.
                 }

@@ -68,8 +68,14 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         // no-op
     }
 
-    public void insertBaseballCard(BaseballCard card) {
-        this.getWritableDatabase().insert(BaseballCardContract.TABLE_NAME, null, this.getContentValues(card));
+    /**
+     * Insert baseball card data into a SQLite Database.
+     *
+     * @param card The baseball card data to insert into the database.
+     * @return The row ID of the newly inserted row, or -1 if an error occurred.
+     */
+    public long insertBaseballCard(BaseballCard card) {
+        return this.getWritableDatabase().insert(BaseballCardContract.TABLE_NAME, null, this.getContentValues(card));
     }
 
     public void insertAllBaseballCards(SQLiteDatabase db, List<BaseballCard> cards) {
@@ -84,11 +90,11 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void updateBaseballCard(BaseballCard card) {
+    public int updateBaseballCard(BaseballCard card) {
         String[] args = {card.getBrand(), Integer.toString(card.getYear()), Integer.toString(card.getNumber())};
         String where = BaseballCardContract.BRAND_COL_NAME + "=? AND " + BaseballCardContract.YEAR_COL_NAME + "=? AND " + BaseballCardContract.NUMBER_COL_NAME + "=?";
 
-        this.getWritableDatabase().update(BaseballCardContract.TABLE_NAME, this.getContentValues(card), where, args);
+        return this.getWritableDatabase().update(BaseballCardContract.TABLE_NAME, this.getContentValues(card), where, args);
     }
 
     public Cursor getCursor() {

@@ -125,4 +125,6 @@
     <string name="player_position_input_error">Please enter the player\'s position.</string>
     <string name="invalid_uri_error">Invalid URI: %1$s</string>
     <string name="database_error">Error occured while connecting to database.</string>
+    <string name="duplicate_card_error">Baseball card already exists. Please update its count.</string>
+
 </resources>
