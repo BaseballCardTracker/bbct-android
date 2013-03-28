@@ -89,9 +89,11 @@ public class BaseballCardList extends ListActivity {
             Cursor cursor = this.sqlHelper.getCursor();
             this.startManagingCursor(cursor);
 
-            if (this.filterRequest == R.id.no_filter && cursor.getCount() == 0) {
-                TextView emptyList = (TextView) this.findViewById(android.R.id.empty);
-                emptyList.setText(R.string.start);
+            this.emptyList = (TextView) this.findViewById(android.R.id.empty);
+            if (this.filterRequest == R.id.no_filter) {
+                this.emptyList.setText(R.string.start);
+            } else {
+                this.emptyList.setText(R.string.empty_list);
             }
 
             ListView listView = (ListView) this.findViewById(android.R.id.list);
@@ -147,6 +149,7 @@ public class BaseballCardList extends ListActivity {
             this.startActivityForResult(new Intent(this, FilterOptions.class), R.id.filter_options_request);
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
+            this.emptyList.setText(R.string.start);
             this.sqlHelper.clearFilter();
             this.swapCursor();
             this.invalidateOptionsMenu();
@@ -186,6 +189,7 @@ public class BaseballCardList extends ListActivity {
             if (resultCode == RESULT_OK) {
                 this.filterRequest = data.getIntExtra(this.getString(R.string.filter_request_extra), DEFAULT_INT_EXTRA);
                 this.filterParams = new Bundle();
+                this.emptyList.setText(R.string.empty_list);
 
                 int year = -1;
                 int number = -1;
@@ -235,6 +239,7 @@ public class BaseballCardList extends ListActivity {
     };
     private static final String TAG = BaseballCardList.class.getName();
     private static final int DEFAULT_INT_EXTRA = -1;
+    TextView emptyList = null;
     private BaseballCardSQLHelper sqlHelper = null;
     private CursorAdapter adapter = null;
     private int filterRequest = R.id.no_filter;
