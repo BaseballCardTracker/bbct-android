@@ -43,6 +43,7 @@
     <string name="value_label">Card Value:</string>
     <string name="count_label">Card Count:</string>
     <string name="player_name_label">Player Name:</string>
+    <string name="team_label">Team:</string>
     <string name="player_position_label">Player Position:</string>
     <string name="filter_by_label">Filter By&#8230;</string>
 
@@ -68,6 +69,7 @@
     <string name="value_hint">Enter card value.</string>
     <string name="count_hint">Enter card count.</string>
     <string name="player_name_hint">Enter player name.</string>
+    <string name="team_hint">Enter player\'s team.</string>
     <string name="player_position_hint">Enter player position.</string>
 
     <!-- Radio button labels -->
@@ -122,6 +124,7 @@
     <string name="value_input_error">Please enter the card\'s value.</string>
     <string name="count_input_error">Please enter the number of cards you own.</string>
     <string name="player_name_input_error">Please enter the player\'s name.</string>
+    <string name="team_input_error">Please enter the player\'s team.</string>
     <string name="player_position_input_error">Please enter the player\'s position.</string>
     <string name="invalid_uri_error">Invalid URI: %1$s</string>
     <string name="database_error">Error occured while connecting to database.</string>

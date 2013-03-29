@@ -75,6 +75,10 @@ public class BaseballCardDetails extends Activity {
         CursorAdapter playerNameAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.PLAYER_NAME_COL_NAME);
         this.playerNameText.setAdapter(playerNameAdapter);
 
+        this.teamText = (AutoCompleteTextView) this.findViewById(R.id.team_text);
+        CursorAdapter teamAdapter = new SingleColumnCursorAdapter(this, BaseballCardContract.TEAM_COL_NAME);
+        this.teamText.setAdapter(teamAdapter);
+
         this.playerPositionSpinner = (Spinner) this.findViewById(R.id.player_position_text);
         ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter.createFromResource(this, R.array.positions, android.R.layout.simple_spinner_item);
         positionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -96,6 +100,7 @@ public class BaseballCardDetails extends Activity {
             this.valueText.setText(Double.toString(this.oldCard.getValue() / 100.0));
             this.countText.setText(Integer.toString(this.oldCard.getCount()));
             this.playerNameText.setText(this.oldCard.getPlayerName());
+            this.teamText.setText(this.oldCard.getTeam());
 
             int selectedPosition = positionsAdapter.getPosition(this.oldCard.getPlayerPosition());
             this.playerPositionSpinner.setSelection(selectedPosition);
@@ -111,9 +116,10 @@ public class BaseballCardDetails extends Activity {
         Log.d(TAG, "getBaseballCard()");
 
         EditText[] allEditTexts = {this.brandText, this.yearText, this.numberText,
-            this.countText, this.valueText, this.playerNameText};
+            this.countText, this.valueText, this.playerNameText, this.teamText};
         int[] errorIds = {R.string.brand_input_error, R.string.year_input_error, R.string.number_input_error,
-            R.string.count_input_error, R.string.value_input_error, R.string.player_name_input_error};
+            R.string.count_input_error, R.string.value_input_error, R.string.player_name_input_error,
+            R.string.team_input_error};
         boolean validInput = true;
 
         String playerPosition = (String) this.playerPositionSpinner.getSelectedItem();
@@ -139,8 +145,9 @@ public class BaseballCardDetails extends Activity {
             double value = Double.parseDouble(valueStr);
             String countStr = this.countText.getText().toString();
             int count = Integer.parseInt(countStr);
+            String team = this.teamText.getText().toString();
             String playerName = this.playerNameText.getText().toString();
-            return new BaseballCard(brand, year, number, (int) (value * 100), count, playerName, playerPosition);
+            return new BaseballCard(brand, year, number, (int) (value * 100), count, playerName, team, playerPosition);
         } else {
             return null;
         }
@@ -153,6 +160,7 @@ public class BaseballCardDetails extends Activity {
         this.valueText.setText("");
         this.countText.setText("");
         this.playerNameText.setText("");
+        this.teamText.setText("");
         this.playerPositionSpinner.setSelection(-1);
     }
     private View.OnClickListener onSave = new View.OnClickListener() {
@@ -211,6 +219,7 @@ public class BaseballCardDetails extends Activity {
     private EditText valueText = null;
     private EditText countText = null;
     private AutoCompleteTextView playerNameText = null;
+    private AutoCompleteTextView teamText = null;
     private Spinner playerPositionSpinner = null;
     private boolean isUpdating = false;
     private static final String TAG = BaseballCardDetails.class.getName();
