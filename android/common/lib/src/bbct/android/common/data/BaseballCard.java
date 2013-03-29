@@ -40,13 +40,15 @@ public class BaseballCard implements Serializable {
      * @param playerName The player on this card.
      * @param playerPosition The position this player played.
      */
-    public BaseballCard(String brand, int year, int number, int value, int count, String playerName, String playerPosition) {
+    public BaseballCard(String brand, int year, int number, int value, int count,
+            String playerName, String team, String playerPosition) {
         this.brand = brand;
         this.year = year;
         this.number = number;
         this.count = count;
         this.value = value;
         this.playerName = playerName;
+        this.team = team;
         this.playerPosition = playerPosition;
     }
 
@@ -123,6 +125,15 @@ public class BaseballCard implements Serializable {
     }
 
     /**
+     * Get the name of the team for which the player played.
+     *
+     * @return The player's team.
+     */
+    public String getTeam() {
+        return team;
+    }
+
+    /**
      * Get the position played by the player on this {@link BaseballCard}.
      *
      * @return The position played by the player on this {@link BaseballCard}.
@@ -171,6 +182,7 @@ public class BaseballCard implements Serializable {
         hash = 67 * hash + this.value;
         hash = 67 * hash + this.count;
         hash = 67 * hash + this.playerName.hashCode();
+        hash = 67 * hash + this.team.hashCode();
         hash = 67 * hash + this.playerPosition.hashCode();
         return hash;
     }
@@ -188,13 +200,14 @@ public class BaseballCard implements Serializable {
         return "BaseballCard{" + "cardBrand=" + brand + ", cardYear=" + year
                 + ", cardNumber=" + number + ", cardValue=" + value
                 + ", cardCount=" + count + ", playerName=" + playerName
-                + ", playerPosition=" + playerPosition + '}';
+                + ", team=" + team + ", playerPosition=" + playerPosition + '}';
     }
-    private String brand = "";
+    private String brand = null;
     private int year = 0;
     private int number = 0;
     private int value = 0;
     private int count = 0;
-    private String playerName = "";
-    private String playerPosition = "";
+    private String playerName = null;
+    private String team = null;
+    private String playerPosition = null;
 }
