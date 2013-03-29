@@ -81,6 +81,10 @@ public final class BaseballCardContract {
      */
     public static final String PLAYER_NAME_COL_NAME = "player_name";
     /**
+     * The column name for the player's team.
+     */
+    public static final String TEAM_COL_NAME = "team";
+    /**
      * The column name for the player's position.
      */
     public static final String PLAYER_POSITION_COL_NAME = "player_position";
@@ -88,6 +92,8 @@ public final class BaseballCardContract {
      * Convenience variable that can be used when the ContentResolver wants
      * every column from the ContentProvider.
      */
-    public static final String[] PROJECTION = {BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME,
-        COUNT_COL_NAME, PLAYER_NAME_COL_NAME, PLAYER_POSITION_COL_NAME};
+    public static final String[] PROJECTION = {
+        BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME,
+        COUNT_COL_NAME, PLAYER_NAME_COL_NAME, TEAM_COL_NAME,
+        PLAYER_POSITION_COL_NAME};
 }

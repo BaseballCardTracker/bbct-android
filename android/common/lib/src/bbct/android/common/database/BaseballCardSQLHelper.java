@@ -37,7 +37,9 @@ import java.util.List;
 public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "bbct.db";
-    public static final int SCHEMA_VERSION = 1;
+    public static final int SCHEMA_VERSION = 2;
+    public static final int ORIGINAL_SCHEMA = 1;
+    public static final int TEAM_SCHEMA = 2;
 
     public BaseballCardSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
@@ -57,6 +59,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                 + BaseballCardContract.VALUE_COL_NAME + " INTEGER, "
                 + BaseballCardContract.COUNT_COL_NAME + " INTEGER, "
                 + BaseballCardContract.PLAYER_NAME_COL_NAME + " VARCHAR(50), "
+                + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50), "
                 + BaseballCardContract.PLAYER_POSITION_COL_NAME + " VARCHAR(20),"
                 + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", " + BaseballCardContract.YEAR_COL_NAME + ", " + BaseballCardContract.NUMBER_COL_NAME + "))";
 
@@ -65,7 +68,10 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // no-op
+        if (oldVersion == ORIGINAL_SCHEMA && newVersion == TEAM_SCHEMA) {
+            String sqlUpgrade = "ALTER TABLE " + BaseballCardContract.TABLE_NAME
+                    + "ADD COLUMN " + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
+        }
     }
 
     /**
@@ -149,9 +155,10 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         int value = cursor.getInt(cursor.getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
         int count = cursor.getInt(cursor.getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
         String name = cursor.getString(cursor.getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
+        String team = cursor.getString(cursor.getColumnIndex(BaseballCardContract.TEAM_COL_NAME));
         String position = cursor.getString(cursor.getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
 
-        return new BaseballCard(brand, year, number, value, count, name, position);
+        return new BaseballCard(brand, year, number, value, count, name, team, position);
     }
 
     public List<BaseballCard> getAllBaseballCardsFromCursor(Cursor cursor) {
@@ -184,6 +191,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         cv.put(BaseballCardContract.VALUE_COL_NAME, card.getValue());
         cv.put(BaseballCardContract.COUNT_COL_NAME, card.getCount());
         cv.put(BaseballCardContract.PLAYER_NAME_COL_NAME, card.getPlayerName());
+        cv.put(BaseballCardContract.TEAM_COL_NAME, card.getTeam());
         cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME, card.getPlayerPosition());
 
         return cv;
