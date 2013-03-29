@@ -66,9 +66,10 @@ public class BaseballCardCsvFileReader {
         int value = 10000;
         int count = 1;
         String playerName = data[3];
-        String playerPosition = data[4];
+        String team = data[4];
+        String playerPosition = data[5];
 
-        return new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
+        return new BaseballCard(brand, year, number, value, count, playerName, team, playerPosition);
     }
 
     /**
