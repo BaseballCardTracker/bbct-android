@@ -47,7 +47,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
 
     /**
      * Creates a {@link TestSuite} containing every possible combination of
-     * blank TextEdits in the {@link BaseballCardDetails} activity.
+     * blank {@link TextEdit} views in the {@link BaseballCardDetails} activity.
      *
      * @return A {@link TestSuite} containing every possible combination of
      * blank {@link EditText} views in the {@link BaseballCardDetails} activity.
@@ -56,18 +56,22 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         TestSuite suite = new TestSuite();
 
         for (int inputFieldsMask = 0x00; inputFieldsMask < BBCTTestUtil.ALL_FIELDS; ++inputFieldsMask) {
-            suite.addTest(new BaseballCardDetailsPartialInputTest(inputFieldsMask));
+            if ((inputFieldsMask & BBCTTestUtil.PLAYER_POSITION_FIELD) == 0) {
+                suite.addTest(new BaseballCardDetailsPartialInputTest(inputFieldsMask));
+            }
         }
 
         return suite;
     }
 
     /**
-     * Creates a test which will input data to the TextEdits indicated by the
-     * given flags. The valid values for the flags are defined in
-     * {@link BBCTTestUtil} and may be combined with the logical OR operator |.
+     * Creates a test which will input data to the {@link TextEdit} views
+     * indicated by the given flags. The valid values for the flags are defined
+     * in {@link BBCTTestUtil} and may be combined with the logical OR operator
+     * (
+     * <code>|</code>).
      *
-     * @param inputFieldsFlags The TextEdits to receive input.
+     * @param inputFieldsFlags The {@link TextEdit} views to receive input.
      *
      * @see BBCTTestUtil#NO_FIELDS
      * @see BBCTTestUtil#BRAND_FIELD
@@ -76,6 +80,8 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
      * @see BBCTTestUtil#COUNT_FIELD
      * @see BBCTTestUtil#VALUE_FIELD
      * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#TEAM_FIELD
+     * @see BBCTTestUtil#PLAYER_POSITION_FIELD
      * @see BBCTTestUtil#ALL_FIELDS
      */
     public BaseballCardDetailsPartialInputTest(int inputFieldsFlags) {
@@ -87,8 +93,8 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
 
     /**
      * Set up the test fixture for this test. Reads an input CSV file for
-     * baseball card data to use as input. Finds the EditText and Button objects
-     * which will be used during testing.
+     * baseball card data to use as input. Finds the {@link EditText} and
+     * {@link Button} views which will be used during testing.
      *
      * @throws IOException If an error occurs while reading the CSV file.
      */
