@@ -86,5 +86,5 @@ public class BaseballCardProvider extends ContentProvider {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     private BaseballCardSQLHelper sqlHelper = null;
-    private String TAG = BaseballCardProvider.class.getName();
+    private static final String TAG = BaseballCardProvider.class.getName();
 }

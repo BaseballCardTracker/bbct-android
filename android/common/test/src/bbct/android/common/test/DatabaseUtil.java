@@ -21,6 +21,7 @@ package bbct.android.common.test;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.database.BaseballCardSQLHelper;
 import bbct.android.common.provider.BaseballCardContract;
@@ -40,6 +41,8 @@ public class DatabaseUtil {
      * @param packageName Name of the Android package being tested.
      */
     public DatabaseUtil(String packageName) {
+        Log.d(TAG, "packageName=" + packageName);
+
         this.dbPath = String.format(DB_PATH, packageName, DB_NAME);
         this.db = SQLiteDatabase.openDatabase(this.dbPath, null, SQLiteDatabase.OPEN_READWRITE);
     }
@@ -149,4 +152,5 @@ public class DatabaseUtil {
     private static final String DB_PATH = "/data/data/%s/databases/%s";
     private static final String DB_NAME = BaseballCardSQLHelper.DATABASE_NAME;
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
+    private static final String TAG = DatabaseUtil.class.getName();
 }

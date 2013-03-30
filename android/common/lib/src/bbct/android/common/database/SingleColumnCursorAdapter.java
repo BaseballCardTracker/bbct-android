@@ -77,5 +77,5 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
     private String colName = null;
     private BaseballCardSQLHelper sqlHelper = null;
     private Activity activity = null;
-    private String TAG = SingleColumnCursorAdapter.class.getName();
+    private static final String TAG = SingleColumnCursorAdapter.class.getName();
 }
