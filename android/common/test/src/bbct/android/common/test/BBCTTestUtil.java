@@ -210,14 +210,16 @@ final public class BBCTTestUtil {
      * the database.
      * @param fieldFlags The {@link EditText} views to fill in.
      *
-     * @see BBCTTestUtil#NO_FIELDS
-     * @see BBCTTestUtil#BRAND_FIELD
-     * @see BBCTTestUtil#YEAR_FIELD
-     * @see BBCTTestUtil#NUMBER_FIELD
-     * @see BBCTTestUtil#COUNT_FIELD
-     * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see BBCTTestUtil#ALL_FIELDS
+     * @see #NO_FIELDS
+     * @see #BRAND_FIELD
+     * @see #YEAR_FIELD
+     * @see #NUMBER_FIELD
+     * @see #COUNT_FIELD
+     * @see #VALUE_FIELD
+     * @see #PLAYER_NAME_FIELD
+     * @see #TEAM_FIELD
+     * @see #PLAYER_POSITION_FIELD
+     * @see #ALL_FIELDS
      */
     public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, int fieldFlags) {
         Log.d(TAG, "sendKeysToCardDetails()");
@@ -264,22 +266,23 @@ final public class BBCTTestUtil {
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
-        ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner.getAdapter();
-        int newPos = playerPositionAdapter.getPosition(card.getPlayerPosition());
-        int oldPos = playerPositionSpinner.getSelectedItemPosition();
-        int move = newPos - oldPos;
+        if ((fieldFlags & PLAYER_POSITION_FIELD) > 0) {
+            Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
+            ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner.getAdapter();
+            int newPos = playerPositionAdapter.getPosition(card.getPlayerPosition());
+            int oldPos = playerPositionSpinner.getSelectedItemPosition();
+            int move = newPos - oldPos;
 
-        Log.d(TAG, "newPos=" + newPos + ", oldPos=" + oldPos + ", move=" + move);
+            Log.d(TAG, "newPos=" + newPos + ", oldPos=" + oldPos + ", move=" + move);
 
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
-        if (move > 0) {
-            test.sendRepeatedKeys(move, KeyEvent.KEYCODE_DPAD_DOWN);
-        } else {
-            test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
+            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
+            if (move > 0) {
+                test.sendRepeatedKeys(move, KeyEvent.KEYCODE_DPAD_DOWN);
+            } else {
+                test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
+            }
+            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
     }
 
     /**
@@ -333,14 +336,15 @@ final public class BBCTTestUtil {
      *
      * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
-     * @see BBCTTestUtil#NO_FIELDS
-     * @see BBCTTestUtil#BRAND_FIELD
-     * @see BBCTTestUtil#YEAR_FIELD
-     * @see BBCTTestUtil#NUMBER_FIELD
-     * @see BBCTTestUtil#COUNT_FIELD
-     * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see BBCTTestUtil#ALL_FIELDS
+     * @see #NO_FIELDS
+     * @see #BRAND_FIELD
+     * @see #YEAR_FIELD
+     * @see #NUMBER_FIELD
+     * @see #COUNT_FIELD
+     * @see #VALUE_FIELD
+     * @see #PLAYER_NAME_FIELD
+     * @see #PLAYER_POSITION_FIELD
+     * @see #ALL_FIELDS
      */
     public static final int NO_FIELDS = 0x00;
     /**
@@ -348,14 +352,15 @@ final public class BBCTTestUtil {
      *
      * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
-     * @see BBCTTestUtil#NO_FIELDS
-     * @see BBCTTestUtil#BRAND_FIELD
-     * @see BBCTTestUtil#YEAR_FIELD
-     * @see BBCTTestUtil#NUMBER_FIELD
-     * @see BBCTTestUtil#COUNT_FIELD
-     * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see BBCTTestUtil#ALL_FIELDS
+     * @see #NO_FIELDS
+     * @see #BRAND_FIELD
+     * @see #YEAR_FIELD
+     * @see #NUMBER_FIELD
+     * @see #COUNT_FIELD
+     * @see #VALUE_FIELD
+     * @see #PLAYER_NAME_FIELD
+     * @see #PLAYER_POSITION_FIELD
+     * @see #ALL_FIELDS
      */
     public static final int BRAND_FIELD = 0x01;
     /**
@@ -363,14 +368,15 @@ final public class BBCTTestUtil {
      *
      * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
-     * @see BBCTTestUtil#NO_FIELDS
-     * @see BBCTTestUtil#BRAND_FIELD
-     * @see BBCTTestUtil#YEAR_FIELD
-     * @see BBCTTestUtil#NUMBER_FIELD
-     * @see BBCTTestUtil#COUNT_FIELD
-     * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see BBCTTestUtil#ALL_FIELDS
+     * @see #NO_FIELDS
+     * @see #BRAND_FIELD
+     * @see #YEAR_FIELD
+     * @see #NUMBER_FIELD
+     * @see #COUNT_FIELD
+     * @see #VALUE_FIELD
+     * @see #PLAYER_NAME_FIELD
+     * @see #PLAYER_POSITION_FIELD
+     * @see #ALL_FIELDS
      */
     public static final int YEAR_FIELD = 0x02;
     /**
@@ -378,14 +384,15 @@ final public class BBCTTestUtil {
      *
      * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
-     * @see BBCTTestUtil#NO_FIELDS
-     * @see BBCTTestUtil#BRAND_FIELD
-     * @see BBCTTestUtil#YEAR_FIELD
-     * @see BBCTTestUtil#NUMBER_FIELD
-     * @see BBCTTestUtil#COUNT_FIELD
-     * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see BBCTTestUtil#ALL_FIELDS
+     * @see #NO_FIELDS
+     * @see #BRAND_FIELD
+     * @see #YEAR_FIELD
+     * @see #NUMBER_FIELD
+     * @see #COUNT_FIELD
+     * @see #VALUE_FIELD
+     * @see #PLAYER_NAME_FIELD
+     * @see #PLAYER_POSITION_FIELD
+     * @see #ALL_FIELDS
      */
     public static final int NUMBER_FIELD = 0x04;
     /**
@@ -393,14 +400,15 @@ final public class BBCTTestUtil {
      *
      * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
-     * @see BBCTTestUtil#NO_FIELDS
-     * @see BBCTTestUtil#BRAND_FIELD
-     * @see BBCTTestUtil#YEAR_FIELD
-     * @see BBCTTestUtil#NUMBER_FIELD
-     * @see BBCTTestUtil#COUNT_FIELD
-     * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see BBCTTestUtil#ALL_FIELDS
+     * @see #NO_FIELDS
+     * @see #BRAND_FIELD
+     * @see #YEAR_FIELD
+     * @see #NUMBER_FIELD
+     * @see #COUNT_FIELD
+     * @see #VALUE_FIELD
+     * @see #PLAYER_NAME_FIELD
+     * @see #PLAYER_POSITION_FIELD
+     * @see #ALL_FIELDS
      */
     public static final int VALUE_FIELD = 0x08;
     /**
@@ -408,14 +416,15 @@ final public class BBCTTestUtil {
      *
      * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
-     * @see BBCTTestUtil#NO_FIELDS
-     * @see BBCTTestUtil#BRAND_FIELD
-     * @see BBCTTestUtil#YEAR_FIELD
-     * @see BBCTTestUtil#NUMBER_FIELD
-     * @see BBCTTestUtil#COUNT_FIELD
-     * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see BBCTTestUtil#ALL_FIELDS
+     * @see #NO_FIELDS
+     * @see #BRAND_FIELD
+     * @see #YEAR_FIELD
+     * @see #NUMBER_FIELD
+     * @see #COUNT_FIELD
+     * @see #VALUE_FIELD
+     * @see #PLAYER_NAME_FIELD
+     * @see #PLAYER_POSITION_FIELD
+     * @see #ALL_FIELDS
      */
     public static final int COUNT_FIELD = 0x10;
     /**
@@ -423,31 +432,52 @@ final public class BBCTTestUtil {
      *
      * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
-     * @see BBCTTestUtil#NO_FIELDS
-     * @see BBCTTestUtil#BRAND_FIELD
-     * @see BBCTTestUtil#YEAR_FIELD
-     * @see BBCTTestUtil#NUMBER_FIELD
-     * @see BBCTTestUtil#COUNT_FIELD
-     * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see BBCTTestUtil#ALL_FIELDS
+     * @see #NO_FIELDS
+     * @see #BRAND_FIELD
+     * @see #YEAR_FIELD
+     * @see #NUMBER_FIELD
+     * @see #COUNT_FIELD
+     * @see #VALUE_FIELD
+     * @see #PLAYER_NAME_FIELD
+     * @see #PLAYER_POSITION_FIELD
+     * @see #ALL_FIELDS
      */
     public static final int PLAYER_NAME_FIELD = 0x20;
+    /**
+     * Include the player position field.
+     *
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * BaseballCard, int)
+     * @see #NO_FIELDS
+     * @see #BRAND_FIELD
+     * @see #YEAR_FIELD
+     * @see #NUMBER_FIELD
+     * @see #COUNT_FIELD
+     * @see #VALUE_FIELD
+     * @see #PLAYER_NAME_FIELD
+     * @see #PLAYER_POSITION_FIELD
+     * @see #ALL_FIELDS
+     */
+    public static final int PLAYER_POSITION_FIELD = 0x40;
     /**
      * Include all input fields.
      *
      * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      * BaseballCard, int)
-     * @see BBCTTestUtil#NO_FIELDS
-     * @see BBCTTestUtil#BRAND_FIELD
-     * @see BBCTTestUtil#YEAR_FIELD
-     * @see BBCTTestUtil#NUMBER_FIELD
-     * @see BBCTTestUtil#COUNT_FIELD
-     * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see BBCTTestUtil#ALL_FIELDS
+     * @see #NO_FIELDS
+     * @see #BRAND_FIELD
+     * @see #YEAR_FIELD
+     * @see #NUMBER_FIELD
+     * @see #COUNT_FIELD
+     * @see #VALUE_FIELD
+     * @see #PLAYER_NAME_FIELD
+     * @see #TEAM_FIELD
+     * @see #PLAYER_POSITION_FIELD
+     * @see #ALL_FIELDS
      */
-    public static final int ALL_FIELDS = BRAND_FIELD | YEAR_FIELD | NUMBER_FIELD | VALUE_FIELD | COUNT_FIELD | PLAYER_NAME_FIELD;
+    public static final int ALL_FIELDS = BRAND_FIELD | YEAR_FIELD | NUMBER_FIELD
+            | VALUE_FIELD | COUNT_FIELD | PLAYER_NAME_FIELD
+            | PLAYER_POSITION_FIELD;
     /**
      * Asset file which contains card data as CSV values.
      */

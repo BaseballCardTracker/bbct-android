@@ -90,11 +90,11 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         }
     }
 
-    public int updateBaseballCard(BaseballCard card) {
-        String[] args = {card.getBrand(), Integer.toString(card.getYear()), Integer.toString(card.getNumber())};
+    public int updateBaseballCard(BaseballCard oldCard, BaseballCard newCard) {
+        String[] args = {oldCard.getBrand(), Integer.toString(oldCard.getYear()), Integer.toString(oldCard.getNumber())};
         String where = BaseballCardContract.BRAND_COL_NAME + "=? AND " + BaseballCardContract.YEAR_COL_NAME + "=? AND " + BaseballCardContract.NUMBER_COL_NAME + "=?";
 
-        return this.getWritableDatabase().update(BaseballCardContract.TABLE_NAME, this.getContentValues(card), where, args);
+        return this.getWritableDatabase().update(BaseballCardContract.TABLE_NAME, this.getContentValues(newCard), where, args);
     }
 
     public Cursor getCursor() {

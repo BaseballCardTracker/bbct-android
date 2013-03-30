@@ -86,18 +86,18 @@ public class BaseballCardDetails extends Activity {
         Button doneButton = (Button) this.findViewById(R.id.done_button);
         doneButton.setOnClickListener(this.onDone);
 
-        BaseballCard card = (BaseballCard) this.getIntent().getSerializableExtra(this.getString(R.string.baseball_card_extra));
+        this.oldCard = (BaseballCard) this.getIntent().getSerializableExtra(this.getString(R.string.baseball_card_extra));
 
-        if (card != null) {
+        if (this.oldCard != null) {
             this.isUpdating = true;
-            this.brandText.setText(card.getBrand());
-            this.yearText.setText(Integer.toString(card.getYear()));
-            this.numberText.setText(Integer.toString(card.getNumber()));
-            this.valueText.setText(Double.toString(card.getValue() / 100.0));
-            this.countText.setText(Integer.toString(card.getCount()));
-            this.playerNameText.setText(card.getPlayerName());
+            this.brandText.setText(this.oldCard.getBrand());
+            this.yearText.setText(Integer.toString(this.oldCard.getYear()));
+            this.numberText.setText(Integer.toString(this.oldCard.getNumber()));
+            this.valueText.setText(Double.toString(this.oldCard.getValue() / 100.0));
+            this.countText.setText(Integer.toString(this.oldCard.getCount()));
+            this.playerNameText.setText(this.oldCard.getPlayerName());
 
-            int selectedPosition = positionsAdapter.getPosition(card.getPlayerPosition());
+            int selectedPosition = positionsAdapter.getPosition(this.oldCard.getPlayerPosition());
             this.playerPositionSpinner.setSelection(selectedPosition);
         }
     }
@@ -160,15 +160,15 @@ public class BaseballCardDetails extends Activity {
         public void onClick(View view) {
             BaseballCardSQLHelper sqlHelper = null;
             try {
-                BaseballCard card = BaseballCardDetails.this.getBaseballCard();
+                BaseballCard newCard = BaseballCardDetails.this.getBaseballCard();
                 sqlHelper = SQLHelperFactory.getSQLHelper(view.getContext());
 
-                if (card != null) {
+                if (newCard != null) {
                     if (BaseballCardDetails.this.isUpdating) {
-                        sqlHelper.updateBaseballCard(card);
+                        sqlHelper.updateBaseballCard(BaseballCardDetails.this.oldCard, newCard);
                         BaseballCardDetails.this.finish();
                     } else {
-                        long result = sqlHelper.insertBaseballCard(card);
+                        long result = sqlHelper.insertBaseballCard(newCard);
 
                         if (result == -1) {
                             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseballCardDetails.this);
@@ -204,6 +204,7 @@ public class BaseballCardDetails extends Activity {
             BaseballCardDetails.this.finish();
         }
     };
+    private BaseballCard oldCard = null;
     private AutoCompleteTextView brandText = null;
     private EditText yearText = null;
     private EditText numberText = null;
