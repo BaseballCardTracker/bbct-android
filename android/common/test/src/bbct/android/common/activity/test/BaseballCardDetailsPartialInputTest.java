@@ -53,7 +53,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
      * blank {@link EditText} views in the {@link BaseballCardDetails} activity.
      */
     public static Test suite() {
-        TestSuite suite = new TestSuite(BaseballCardDetailsPartialInputTest.class.getName());
+        TestSuite suite = new TestSuite();
 
         for (int inputFieldsMask = 0x00; inputFieldsMask < BBCTTestUtil.ALL_FIELDS; ++inputFieldsMask) {
             suite.addTest(new BaseballCardDetailsPartialInputTest(inputFieldsMask));

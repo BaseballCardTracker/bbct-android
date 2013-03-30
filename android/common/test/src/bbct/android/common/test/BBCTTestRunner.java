@@ -19,6 +19,7 @@
 package bbct.android.common.test;
 
 import android.test.InstrumentationTestRunner;
+import bbct.android.common.activity.test.BaseballCardDetailsEditCardTest;
 import bbct.android.common.activity.test.BaseballCardDetailsPartialInputTest;
 import junit.framework.TestSuite;
 
@@ -41,6 +42,7 @@ public class BBCTTestRunner extends InstrumentationTestRunner {
     public TestSuite getAllTests() {
         TestSuite suite = new TestSuite();
         suite.addTest(BaseballCardDetailsPartialInputTest.suite());
+        suite.addTest(BaseballCardDetailsEditCardTest.suite());
 
         return suite;
     }
