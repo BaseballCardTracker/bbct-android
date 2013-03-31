@@ -21,163 +21,165 @@ package bbct.android.common.database.test;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
+import android.util.Log;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.database.BaseballCardSQLHelper;
+import bbct.android.common.test.BBCTTestUtil;
+import bbct.android.common.test.DatabaseUtil;
 import junit.framework.Assert;
 
 /**
+ * Tests for {@link BaseballCardSQLHelper}.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardSQLHelperTest extends AndroidTestCase {
 
-    public BaseballCardSQLHelperTest() {
-    }
-
+    /**
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     */
     @Override
     public void setUp() throws Exception {
+        Log.d(TAG, this.getName());
+
         super.setUp();
+
+        this.sqlHelper = new BaseballCardSQLHelper(this.getContext());
+        this.db = this.sqlHelper.getWritableDatabase();
+        this.dbUtil = new DatabaseUtil(this.getContext().getPackageName());
     }
 
+    /**
+     *
+     * @throws Exception If an error occurs while chaining to the super class.
+     */
     @Override
     public void tearDown() throws Exception {
+        this.dbUtil.deleteDatabase();
+
         super.tearDown();
     }
 
     /**
-     * Test of onCreate method, of class BaseballCardSQLHelper.
+     * Test for {@link BaseballCardSQLHelper#onCreate}.
      */
     public void testOnCreate() {
-        System.out.println("onCreate");
-        SQLiteDatabase sqld = null;
-        BaseballCardSQLHelper instance = null;
-        instance.onCreate(sqld);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+        Assert.assertNotNull(this.db);
+        BBCTTestUtil.assertDatabaseCreated(this.getContext().getPackageName());
+        Assert.assertTrue(this.dbUtil.isEmpty());
     }
 
     /**
-     * Test of onUpgrade method, of class BaseballCardSQLHelper.
+     * Test for {@link BaseballCardSQLHelper#onUpgrade}.
      */
     public void testOnUpgrade() {
-        System.out.println("onUpgrade");
-        SQLiteDatabase sqld = null;
         int oldVersion = 0;
         int newVersion = 0;
-        BaseballCardSQLHelper instance = null;
-        instance.onUpgrade(sqld, oldVersion, newVersion);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+        this.sqlHelper.onUpgrade(this.dbUtil.getDatabase(), oldVersion, newVersion);
+        Assert.fail("Check that the database is not modified.");
     }
 
     /**
-     * Test of insertBaseballCard method, of class BaseballCardSQLHelper.
+     * Test for {@link BaseballCardSQLHelper#insertBaseballCard}.
      */
     public void testInsertBaseballCard() {
-        System.out.println("insertBaseballCard");
         BaseballCard card = null;
-        BaseballCardSQLHelper instance = null;
-        instance.insertBaseballCard(card);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+        this.sqlHelper.insertBaseballCard(card);
+        Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
     }
 
     /**
-     * Test of updateBaseballCard method, of class BaseballCardSQLHelper.
+     * Test for {@link BaseballCardSQLHelper#updateBaseballCard}.
      */
     public void testUpdateBaseballCard() {
-        System.out.println("updateBaseballCard");
         BaseballCard card = null;
-        BaseballCardSQLHelper instance = null;
-        instance.updateBaseballCard(card);
-        // TODO review the generated test code and remove the default call to Assert.fail.
-        Assert.fail("The test case is a prototype.");
+        this.sqlHelper.updateBaseballCard(card);
+
+        Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
     }
 
     /**
-     * Test of getCursor method, of class BaseballCardSQLHelper.
+     * Test for {@link BaseballCardSQLHelper#getCursor}.
      */
     public void testGetCursor() {
-        System.out.println("getCursor");
-        BaseballCardSQLHelper instance = null;
         Cursor expResult = null;
-        Cursor result = instance.getCursor();
+        Cursor result = this.sqlHelper.getCursor();
+        Assert.assertNotNull(result);
         Assert.assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
 
     /**
-     * Test of clearFilter method, of class BaseballCardSQLHelper.
+     * Test for {@link BaseballCardSQLHelper#clearFilter}.
      */
     public void testClearFilter() {
         System.out.println("clearFilter");
-        BaseballCardSQLHelper instance = null;
-        instance.clearFilter();
+        this.sqlHelper.clearFilter();
         // TODO review the generated test code and remove the default call to Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
 
     /**
-     * Test of filterCursorByYear method, of class BaseballCardSQLHelper.
+     * Test for {@link BaseballCardSQLHelper#filterCursorByYear}.
      */
     public void testFilterCursorByYear() {
         System.out.println("filterCursorByYear");
         int year = 0;
-        BaseballCardSQLHelper instance = null;
-        instance.filterCursorByYear(year);
+        this.sqlHelper.filterCursorByYear(year);
         // TODO review the generated test code and remove the default call to Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
 
     /**
-     * Test of filterCursorByNumber method, of class BaseballCardSQLHelper.
+     * Test for {@link BaseballCardSQLHelper#filterCursorByNumber}.
      */
     public void testFilterCursorByNumber() {
         System.out.println("filterCursorByNumber");
         int number = 0;
-        BaseballCardSQLHelper instance = null;
-        instance.filterCursorByNumber(number);
+        this.sqlHelper.filterCursorByNumber(number);
         // TODO review the generated test code and remove the default call to Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
 
     /**
-     * Test of filterCursorByYearAndNumber method, of class
-     * BaseballCardSQLHelper.
+     * Test for {@link BaseballCardSQLHelper#filterCursorByYearAndNumber}.
      */
     public void testFilterCursorByYearAndNumber() {
         System.out.println("filterCursorByYearAndNumber");
         int year = 0;
         int number = 0;
-        BaseballCardSQLHelper instance = null;
-        instance.filterCursorByYearAndNumber(year, number);
+        this.sqlHelper.filterCursorByYearAndNumber(year, number);
         // TODO review the generated test code and remove the default call to Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
 
     /**
-     * Test of filterCursorByPlayerName method, of class BaseballCardSQLHelper.
+     * Test for {@link BaseballCardSQLHelper#filterCursorByPlayerName}.
      */
     public void testFilterCursorByPlayerName() {
         System.out.println("filterCursorByPlayerName");
         String playerName = "";
-        BaseballCardSQLHelper instance = null;
-        instance.filterCursorByPlayerName(playerName);
+        this.sqlHelper.filterCursorByPlayerName(playerName);
         // TODO review the generated test code and remove the default call to Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getBaseballCardFromCursor method, of class BaseballCardSQLHelper.
+     * Test for {@link BaseballCardSQLHelper#getBaseballCardFromCursor}.
      */
     public void testGetBaseballCardFromCursor() {
         System.out.println("getBaseballCardFromCursor");
-        BaseballCardSQLHelper instance = null;
         BaseballCard expResult = null;
-        BaseballCard result = instance.getBaseballCardFromCursor();
+        BaseballCard result = this.sqlHelper.getBaseballCardFromCursor();
+        Assert.assertNotNull(result);
         Assert.assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
+    private BaseballCardSQLHelper sqlHelper = null;
+    private SQLiteDatabase db = null;
+    private DatabaseUtil dbUtil = null;
+    private static final String TAG = BaseballCardSQLHelperTest.class.getName();
 }

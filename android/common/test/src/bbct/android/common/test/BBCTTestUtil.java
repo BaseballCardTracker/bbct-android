@@ -321,7 +321,9 @@ final public class BBCTTestUtil {
         SQLiteDatabase db = dbUtil.getDatabase();
         Assert.assertNotNull(db);
         Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION, db.getVersion());
-        Assert.assertEquals(BaseballCardContract.TABLE_NAME, SQLiteDatabase.findEditTable(BaseballCardContract.TABLE_NAME));
+
+        // TODO How do I check that a table exists in the database?
+        // TODO How do I check that a table has the correct columns?
     }
 
     private BBCTTestUtil() {
