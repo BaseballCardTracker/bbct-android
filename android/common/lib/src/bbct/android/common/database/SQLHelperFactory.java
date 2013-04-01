@@ -25,11 +25,25 @@ import bbct.android.common.exception.SQLHelperCreationException;
 import java.lang.reflect.Constructor;
 
 /**
+ * Create a {@link BaseballCardSQLHelper} object for a given {@link Context}.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 final public class SQLHelperFactory {
 
+    /**
+     * Create a {@link BaseballCardSQLHelper} object for the given
+     * {@link Context}. Uses the fully-qualified class name from the string
+     * resource named
+     * <code>sql_helper</code>.
+     *
+     * @param context The context containing the string resource with the name
+     * of the {@link BaseballCardSQLHelper} subclass.
+     * @return A {@link BaseballCardSQLHelper} object for the given
+     * {@link Context}
+     * @throws SQLHelperCreationException If an error occurs while creating the
+     * {@link BaseballCardSQLHelper}.
+     */
     public static BaseballCardSQLHelper getSQLHelper(Context context) throws SQLHelperCreationException {
         try {
             String sqlHelperClassName = context.getString(R.string.sql_helper);
