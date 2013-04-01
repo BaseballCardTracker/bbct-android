@@ -110,7 +110,7 @@ public class BaseballCardSQLHelperTest extends AndroidTestCase {
         String name = this.card.getPlayerName();
         String position = this.card.getPlayerPosition();
         BaseballCard newCard = new BaseballCard(brand, year, number, newValue, newCount, name, position);
-        this.sqlHelper.updateBaseballCard(newCard);
+        this.sqlHelper.updateBaseballCard(this.card, newCard);
 
         Assert.assertFalse(this.dbUtil.containsBaseballCard(this.card));
         Assert.assertTrue(this.dbUtil.containsBaseballCard(newCard));
