@@ -16,5 +16,5 @@ libs
 *.out
 /.metadata
 .settings
-private/
 javadoc/
+/release
