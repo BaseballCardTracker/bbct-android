@@ -47,6 +47,15 @@ then {
     echo Generating hashes...
     hash lite
     hash premium
+
+    cd ${REL_DIR}/src/android
+    md5sum *.tar.gz *.zip > $PREFIX-src.md5
+    echo Checking MD5...
+    md5sum -c $PREFIX-src.md5
+    sha1sum *.tar.gz *.zip > $PREFIX-src.sha1
+    echo Checking SHA1...
+    sha1sum -c $PREFIX-src.sha1
+    cd -
 }
 else {
     echo Usage: './release <lite_version> <premium_version>'
