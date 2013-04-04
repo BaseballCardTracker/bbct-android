@@ -88,7 +88,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
         this.dbUtil.populateTable(allCards);
 
-        this.newCard = new BaseballCard("codeguru apps", 1993, 1, 50000, 1, "codeguru", "Catcher");
+        this.newCard = new BaseballCard("codeguru apps", 1993, 1, 50000, 1, "codeguru", "codeguru devs", "Catcher");
     }
 
     /**
@@ -338,7 +338,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     public void testAddCardNotMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
 
-        this.newCard = new BaseballCard("codeguru apps", 1976, 1, 50000, 1, "codeguru", "Catcher");
+        this.newCard = new BaseballCard("codeguru apps", 1976, 1, 50000, 1, "codeguru", "codeguru devs", "Catcher");
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
         BBCTTestUtil.clickCardDetailsDone(this, cardDetails);

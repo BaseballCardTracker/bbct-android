@@ -266,6 +266,15 @@ final public class BBCTTestUtil {
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
+        if ((fieldFlags & TEAM_FIELD) > 0) {
+            inst.sendStringSync(card.getTeam());
+        }
+        AutoCompleteTextView teamText = (AutoCompleteTextView) cardDetails.findViewById(R.id.team_text);
+        if (teamText.isPopupShowing()) {
+            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+        }
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+
         if ((fieldFlags & PLAYER_POSITION_FIELD) > 0) {
             Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
             ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner.getAdapter();
@@ -281,7 +290,6 @@ final public class BBCTTestUtil {
             } else {
                 test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
             }
-            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
         }
     }
 
@@ -343,6 +351,7 @@ final public class BBCTTestUtil {
      * @see #COUNT_FIELD
      * @see #VALUE_FIELD
      * @see #PLAYER_NAME_FIELD
+     * @see #TEAM_FIELD
      * @see #PLAYER_POSITION_FIELD
      * @see #ALL_FIELDS
      */
@@ -359,6 +368,7 @@ final public class BBCTTestUtil {
      * @see #COUNT_FIELD
      * @see #VALUE_FIELD
      * @see #PLAYER_NAME_FIELD
+     * @see #TEAM_FIELD
      * @see #PLAYER_POSITION_FIELD
      * @see #ALL_FIELDS
      */
@@ -375,6 +385,7 @@ final public class BBCTTestUtil {
      * @see #COUNT_FIELD
      * @see #VALUE_FIELD
      * @see #PLAYER_NAME_FIELD
+     * @see #TEAM_FIELD
      * @see #PLAYER_POSITION_FIELD
      * @see #ALL_FIELDS
      */
@@ -391,6 +402,7 @@ final public class BBCTTestUtil {
      * @see #COUNT_FIELD
      * @see #VALUE_FIELD
      * @see #PLAYER_NAME_FIELD
+     * @see #TEAM_FIELD
      * @see #PLAYER_POSITION_FIELD
      * @see #ALL_FIELDS
      */
@@ -407,6 +419,7 @@ final public class BBCTTestUtil {
      * @see #COUNT_FIELD
      * @see #VALUE_FIELD
      * @see #PLAYER_NAME_FIELD
+     * @see #TEAM_FIELD
      * @see #PLAYER_POSITION_FIELD
      * @see #ALL_FIELDS
      */
@@ -423,6 +436,7 @@ final public class BBCTTestUtil {
      * @see #COUNT_FIELD
      * @see #VALUE_FIELD
      * @see #PLAYER_NAME_FIELD
+     * @see #TEAM_FIELD
      * @see #PLAYER_POSITION_FIELD
      * @see #ALL_FIELDS
      */
@@ -439,10 +453,28 @@ final public class BBCTTestUtil {
      * @see #COUNT_FIELD
      * @see #VALUE_FIELD
      * @see #PLAYER_NAME_FIELD
+     * @see #TEAM_FIELD
      * @see #PLAYER_POSITION_FIELD
      * @see #ALL_FIELDS
      */
     public static final int PLAYER_NAME_FIELD = 0x20;
+    /**
+     * Include the team field.
+     *
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     * BaseballCard, int)
+     * @see #NO_FIELDS
+     * @see #BRAND_FIELD
+     * @see #YEAR_FIELD
+     * @see #NUMBER_FIELD
+     * @see #COUNT_FIELD
+     * @see #VALUE_FIELD
+     * @see #PLAYER_NAME_FIELD
+     * @see #TEAM_FIELD
+     * @see #PLAYER_POSITION_FIELD
+     * @see #ALL_FIELDS
+     */
+    public static final int TEAM_FIELD = 0x40;
     /**
      * Include the player position field.
      *
@@ -455,10 +487,11 @@ final public class BBCTTestUtil {
      * @see #COUNT_FIELD
      * @see #VALUE_FIELD
      * @see #PLAYER_NAME_FIELD
+     * @see #TEAM_FIELD
      * @see #PLAYER_POSITION_FIELD
      * @see #ALL_FIELDS
      */
-    public static final int PLAYER_POSITION_FIELD = 0x40;
+    public static final int PLAYER_POSITION_FIELD = 0x80;
     /**
      * Include all input fields.
      *
@@ -476,7 +509,7 @@ final public class BBCTTestUtil {
      * @see #ALL_FIELDS
      */
     public static final int ALL_FIELDS = BRAND_FIELD | YEAR_FIELD | NUMBER_FIELD
-            | VALUE_FIELD | COUNT_FIELD | PLAYER_NAME_FIELD
+            | VALUE_FIELD | COUNT_FIELD | PLAYER_NAME_FIELD | TEAM_FIELD
             | PLAYER_POSITION_FIELD;
     /**
      * Asset file which contains card data as CSV values.
