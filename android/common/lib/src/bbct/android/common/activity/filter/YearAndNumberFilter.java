@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.activity;
+package bbct.android.common.activity.filter;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,14 +45,14 @@ public class YearAndNumberFilter extends FilterActivity {
         String yearStr = this.yearText.getText().toString();
         boolean validYear = !yearStr.equals("");
 
-        if(!validYear) {
+        if (!validYear) {
             this.yearText.setError(this.getString(R.string.year_input_error));
         }
 
         String numberStr = this.numberText.getText().toString();
         boolean validNumber = !numberStr.equals("");
 
-        if(!validNumber) {
+        if (!validNumber) {
             this.numberText.setError(this.getString(R.string.number_input_error));
         }
 

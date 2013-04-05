@@ -28,6 +28,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import bbct.android.common.R;
+import bbct.android.common.activity.filter.NumberFilter;
+import bbct.android.common.activity.filter.PlayerNameFilter;
+import bbct.android.common.activity.filter.YearAndNumberFilter;
+import bbct.android.common.activity.filter.YearFilter;
 
 /**
  * {@link FilterOptions} gives the user the choice to filter the baseball card

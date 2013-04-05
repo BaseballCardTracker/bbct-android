@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.activity;
+package bbct.android.common.activity.filter;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,38 +27,39 @@ import bbct.android.common.R;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class PlayerNameFilter extends FilterActivity {
+public class NumberFilter extends FilterActivity {
 
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.player_name_filter, R.string.player_name_filter_title);
+        super.onCreate(savedInstanceState, R.layout.number_filter, R.string.number_filter_title);
 
-        this.playerNameText = (EditText) this.findViewById(R.id.player_name_text);
+        this.numberText = (EditText) this.findViewById(R.id.number_text);
     }
 
     @Override
     public boolean validateInput() {
-        String playerName = this.playerNameText.getText().toString();
-        boolean validPlayerName = !playerName.equals("");
+        String numberStr = this.numberText.getText().toString();
+        boolean validNumber = !numberStr.equals("");
 
-        if(!validPlayerName) {
-            this.playerNameText.setError(this.getString(R.string.player_name_input_error));
+        if (!validNumber) {
+            this.numberText.setError(this.getString(R.string.number_input_error));
         }
 
-        return validPlayerName;
+        return validNumber;
     }
 
     @Override
     public Intent getResult() {
-        String playerName = this.playerNameText.getText().toString();
+        String numberStr = this.numberText.getText().toString();
+        int number = Integer.parseInt(numberStr);
         Intent result = new Intent();
-        result.putExtra(this.getString(R.string.filter_request_extra), R.id.player_name_filter_request);
-        result.putExtra(this.getString(R.string.player_name_extra), playerName);
+        result.putExtra(this.getString(R.string.filter_request_extra), R.id.number_filter_request);
+        result.putExtra(this.getString(R.string.number_extra), number);
 
         return result;
     }
-    private EditText playerNameText = null;
+    private EditText numberText = null;
 }

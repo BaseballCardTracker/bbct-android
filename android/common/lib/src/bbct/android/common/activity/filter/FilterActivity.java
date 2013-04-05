@@ -1,3 +1,4 @@
+
 /*
  * This file is part of BBCT for Android.
  *
@@ -16,14 +17,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.activity;
+package bbct.android.common.activity.filter;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import bbct.android.common.R;
 
 /**

@@ -47,10 +47,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.FilterOptions"/>
-        <activity android:name=".activity.YearFilter"/>
-        <activity android:name=".activity.NumberFilter"/>
-        <activity android:name=".activity.YearAndNumberFilter"/>
-        <activity android:name=".activity.PlayerNameFilter"/>
+        <activity android:name=".activity.filter.YearFilter"/>
+        <activity android:name=".activity.filter.NumberFilter"/>
+        <activity android:name=".activity.filter.YearAndNumberFilter"/>
+        <activity android:name=".activity.filter.PlayerNameFilter"/>
         <activity android:name=".activity.About" />
         <provider android:name=".provider.BaseballCardProvider"
                   android:label="@string/provider_name"

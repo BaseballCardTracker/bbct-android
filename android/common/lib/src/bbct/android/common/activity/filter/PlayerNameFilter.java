@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.activity;
+package bbct.android.common.activity.filter;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,39 +27,38 @@ import bbct.android.common.R;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class YearFilter extends FilterActivity {
+public class PlayerNameFilter extends FilterActivity {
 
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState, R.layout.year_filter, R.string.year_filter_title);
+        super.onCreate(savedInstanceState, R.layout.player_name_filter, R.string.player_name_filter_title);
 
-        this.yearText = (EditText) this.findViewById(R.id.year_text);
+        this.playerNameText = (EditText) this.findViewById(R.id.player_name_text);
     }
 
     @Override
     public boolean validateInput() {
-        String yearStr = this.yearText.getText().toString();
-        boolean validYear = !yearStr.equals("");
+        String playerName = this.playerNameText.getText().toString();
+        boolean validPlayerName = !playerName.equals("");
 
-        if(!validYear) {
-            this.yearText.setError(this.getString(R.string.year_input_error));
+        if (!validPlayerName) {
+            this.playerNameText.setError(this.getString(R.string.player_name_input_error));
         }
 
-        return validYear;
+        return validPlayerName;
     }
 
     @Override
     public Intent getResult() {
-        String yearStr = this.yearText.getText().toString();
-        int year = Integer.parseInt(yearStr);
+        String playerName = this.playerNameText.getText().toString();
         Intent result = new Intent();
-        result.putExtra(this.getString(R.string.filter_request_extra), R.id.year_filter_request);
-        result.putExtra(this.getString(R.string.year_extra), year);
+        result.putExtra(this.getString(R.string.filter_request_extra), R.id.player_name_filter_request);
+        result.putExtra(this.getString(R.string.player_name_extra), playerName);
 
         return result;
     }
-    private EditText yearText = null;
+    private EditText playerNameText = null;
 }
