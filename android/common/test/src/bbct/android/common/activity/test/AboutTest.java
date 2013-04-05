@@ -54,18 +54,6 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
     }
 
     /**
-     * Tear down the test fixture by calling {@link Activity#finish()}.
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     */
-    @Override
-    public void tearDown() throws Exception {
-        this.activity.finish();
-
-        super.tearDown();
-    }
-
-    /**
      * Check preconditions which must hold to guarantee the validity of all
      * other tests. Assert that the {@link Activity} to test is not
      * <code>null</code>

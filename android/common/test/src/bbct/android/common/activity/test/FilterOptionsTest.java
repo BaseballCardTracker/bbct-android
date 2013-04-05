@@ -70,18 +70,6 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
     }
 
     /**
-     * Tear down the test fixture by calling {@link Activity#finish()}.
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     */
-    @Override
-    public void tearDown() throws Exception {
-        this.activity.finish();
-
-        super.tearDown();
-    }
-
-    /**
      * Check preconditions which must hold to guarantee the validity of all
      * other tests. Assert that the Activity to test and its {@link RadioGroup}
      * and {@link Button}s are not

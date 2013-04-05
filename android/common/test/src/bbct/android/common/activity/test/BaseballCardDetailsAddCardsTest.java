@@ -76,8 +76,6 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
      */
     @Override
     public void tearDown() throws Exception {
-        this.activity.finish();
-
         DatabaseUtil dbUtil = new DatabaseUtil(this.activity.getPackageName());
         dbUtil.deleteDatabase();
 

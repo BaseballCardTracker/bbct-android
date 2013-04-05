@@ -59,18 +59,6 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
     }
 
     /**
-     * Tear down the test fixture by calling {@link Activity#finish()}.
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     *
-     * @see FilterActivityTest#tearDown()
-     */
-    @Override
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
-
-    /**
      * Check preconditions which must hold to guarantee the validity of all
      * other tests. Most preconditions are checked by
      * {@link FilterActivityTest#testPreConditions()}. In addition, this class

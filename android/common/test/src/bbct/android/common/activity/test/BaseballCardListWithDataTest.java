@@ -99,7 +99,6 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
      */
     @Override
     public void tearDown() throws Exception {
-        this.activity.finish();
         this.dbUtil.deleteDatabase();
 
         super.tearDown();

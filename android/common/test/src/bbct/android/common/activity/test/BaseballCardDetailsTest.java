@@ -81,19 +81,6 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     /**
-     * Tear down the test fixture by calling {@link Activity#finish()} and
-     * deleting the app's database.
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     */
-    @Override
-    public void tearDown() throws Exception {
-        this.activity.finish();
-
-        super.tearDown();
-    }
-
-    /**
      * Check preconditions which must hold to guarantee the validity of all
      * other tests. Assert that the Activity to test is not
      * <code>null</code>, that none of its {@link EditText} views or

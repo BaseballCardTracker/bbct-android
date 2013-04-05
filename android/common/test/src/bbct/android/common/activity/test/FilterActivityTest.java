@@ -69,18 +69,6 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
     }
 
     /**
-     * Tear down the test fixture by calling {@link Activity#finish()}.
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     */
-    @Override
-    public void tearDown() throws Exception {
-        this.activity.finish();
-
-        super.tearDown();
-    }
-
-    /**
      * Check preconditions which must hold to guarantee the validity of all
      * other tests. Asserts that the {@link Activity} and "OK" and "Cancel"
      * {@link Button}s are not
