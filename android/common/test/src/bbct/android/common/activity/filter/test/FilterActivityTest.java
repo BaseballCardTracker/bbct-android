@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.activity.test;
+package bbct.android.common.activity.filter.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -26,7 +26,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import bbct.android.common.R;
-import bbct.android.common.activity.FilterActivity;
+import bbct.android.common.activity.filter.FilterActivity;
 import junit.framework.Assert;
 
 /**

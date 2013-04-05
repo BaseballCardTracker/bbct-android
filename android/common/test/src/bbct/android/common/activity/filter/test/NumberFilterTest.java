@@ -16,33 +16,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.activity.test;
+package bbct.android.common.activity.filter.test;
 
 import android.app.Activity;
 import android.widget.EditText;
 import bbct.android.common.R;
-import bbct.android.common.activity.PlayerNameFilter;
+import bbct.android.common.activity.filter.NumberFilter;
 import junit.framework.Assert;
 
 /**
- * Tests for {@link PlayerNameFilter}.
+ * Tests for {@link NumberFilter}.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
+public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
 
     /**
-     * Create instrumented test cases for {@link PlayerNameFilter}.
+     * Create instrumented test cases for {@link NumberFilter}.
      */
-    public PlayerNameFilterTest() {
-        super(PlayerNameFilter.class);
+    public NumberFilterTest() {
+        super(NumberFilter.class);
     }
 
     /**
      * Set up test fixture. Most of the test fixture is set up by
      * {@link FilterActivityTest#setUp()}. This class adds a {@link EditText}
-     * view which contains the player name being edited and a {@link String}
-     * for the player name.
+     * view which contain card number value being edited and an
+     * <code>int</code> value for card number.
      *
      * @throws Exception If an error occurs while chaining to the super class.
      *
@@ -52,16 +52,16 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
     public void setUp() throws Exception {
         super.setUp();
 
-        this.playerNameText = (EditText) this.activity.findViewById(R.id.player_name_text);
+        this.numberText = (EditText) this.activity.findViewById(R.id.number_text);
 
-        this.testPlayerName = "codeguru";
+        this.testNumber = 123;
     }
 
     /**
      * Check preconditions which must hold to guarantee the validity of all
      * other tests. Most preconditions are checked by
      * {@link FilterActivityTest#testPreConditions()}. In addition, this class
-     * checks that the {@link EditText} view for player name is not
+     * checks that the {@link EditText} view for card number is not
      * <code>null</code>, that it is empty, and that it has focus.
      *
      * @see FilterActivityTest#testPreConditions()
@@ -70,10 +70,10 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
     public void testPreConditions() {
         super.testPreConditions();
 
-        Assert.assertNotNull(this.playerNameText);
+        Assert.assertNotNull(this.numberText);
 
-        Assert.assertEquals("", this.playerNameText.getText().toString());
-        Assert.assertTrue(this.playerNameText.hasFocus());
+        Assert.assertEquals("", this.numberText.getText().toString());
+        Assert.assertTrue(this.numberText.hasFocus());
     }
 
     /**
@@ -87,7 +87,7 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
      */
     @Override
     protected String getTitleSubString() {
-        return this.activity.getString(R.string.player_name_filter_title);
+        return this.activity.getString(R.string.number_filter_title);
     }
 
     /**
@@ -98,29 +98,29 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
      */
     @Override
     protected void checkErrorMessage() {
-        String expectedError = this.activity.getString(R.string.player_name_input_error);
-        Assert.assertEquals(expectedError, this.playerNameText.getError());
+        String expectedNumberError = this.activity.getString(R.string.number_input_error);
+        Assert.assertEquals(expectedNumberError, this.numberText.getError());
     }
 
     /**
-     * Set the text of the player name {@link EditText} view.
+     * Set the text of the card number {@link EditText} views.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
      */
     @Override
     protected void setInputText() {
-        this.playerNameText.setText(this.testPlayerName);
+        this.numberText.setText(Integer.toString(this.testNumber));
     }
 
     /**
-     * Inject instrumented key events to the player name {@link EditText} view.
+     * Inject instrumented key events to the card number {@link EditText} view.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()
      */
     @Override
     protected void sendInputKeys() {
-        this.getInstrumentation().sendStringSync(this.testPlayerName);
+        this.getInstrumentation().sendStringSync(Integer.toString(this.testNumber));
     }
-    private EditText playerNameText = null;
-    private String testPlayerName = null;
+    private EditText numberText = null;
+    private int testNumber = -1;
 }

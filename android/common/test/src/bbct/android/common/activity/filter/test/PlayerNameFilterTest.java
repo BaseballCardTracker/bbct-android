@@ -16,33 +16,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.activity.test;
+package bbct.android.common.activity.filter.test;
 
 import android.app.Activity;
 import android.widget.EditText;
 import bbct.android.common.R;
-import bbct.android.common.activity.YearFilter;
+import bbct.android.common.activity.filter.PlayerNameFilter;
 import junit.framework.Assert;
 
 /**
- * Tests for {@link YearFilter}.
+ * Tests for {@link PlayerNameFilter}.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class YearFilterTest extends FilterActivityTest<YearFilter> {
+public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
 
     /**
-     * Create instrumented test cases for {@link YearFilter}.
+     * Create instrumented test cases for {@link PlayerNameFilter}.
      */
-    public YearFilterTest() {
-        super(YearFilter.class);
+    public PlayerNameFilterTest() {
+        super(PlayerNameFilter.class);
     }
 
     /**
      * Set up test fixture. Most of the test fixture is set up by
      * {@link FilterActivityTest#setUp()}. This class adds a {@link EditText}
-     * view which contains the year value being edited and an
-     * <code>int</code> value for the year.
+     * view which contains the player name being edited and a {@link String}
+     * for the player name.
      *
      * @throws Exception If an error occurs while chaining to the super class.
      *
@@ -52,16 +52,16 @@ public class YearFilterTest extends FilterActivityTest<YearFilter> {
     public void setUp() throws Exception {
         super.setUp();
 
-        this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
+        this.playerNameText = (EditText) this.activity.findViewById(R.id.player_name_text);
 
-        this.testYear = 1976;
+        this.testPlayerName = "codeguru";
     }
 
     /**
      * Check preconditions which must hold to guarantee the validity of all
      * other tests. Most preconditions are checked by
      * {@link FilterActivityTest#testPreConditions()}. In addition, this class
-     * checks that the {@link EditText} view for the year is not
+     * checks that the {@link EditText} view for player name is not
      * <code>null</code>, that it is empty, and that it has focus.
      *
      * @see FilterActivityTest#testPreConditions()
@@ -70,10 +70,10 @@ public class YearFilterTest extends FilterActivityTest<YearFilter> {
     public void testPreConditions() {
         super.testPreConditions();
 
-        Assert.assertNotNull(this.yearText);
+        Assert.assertNotNull(this.playerNameText);
 
-        Assert.assertEquals("", this.yearText.getText().toString());
-        Assert.assertTrue(this.yearText.hasFocus());
+        Assert.assertEquals("", this.playerNameText.getText().toString());
+        Assert.assertTrue(this.playerNameText.hasFocus());
     }
 
     /**
@@ -87,7 +87,7 @@ public class YearFilterTest extends FilterActivityTest<YearFilter> {
      */
     @Override
     protected String getTitleSubString() {
-        return this.activity.getString(R.string.year_filter_title);
+        return this.activity.getString(R.string.player_name_filter_title);
     }
 
     /**
@@ -98,29 +98,29 @@ public class YearFilterTest extends FilterActivityTest<YearFilter> {
      */
     @Override
     protected void checkErrorMessage() {
-        String expectedError = this.activity.getString(R.string.year_input_error);
-        Assert.assertEquals(expectedError, this.yearText.getError());
+        String expectedError = this.activity.getString(R.string.player_name_input_error);
+        Assert.assertEquals(expectedError, this.playerNameText.getError());
     }
 
     /**
-     * Set the text of the year {@link EditText} view.
+     * Set the text of the player name {@link EditText} view.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
      */
     @Override
     protected void setInputText() {
-        this.yearText.setText(Integer.toString(this.testYear));
+        this.playerNameText.setText(this.testPlayerName);
     }
 
     /**
-     * Inject instrumented key events to the year {@link EditText} view.
+     * Inject instrumented key events to the player name {@link EditText} view.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()
      */
     @Override
     protected void sendInputKeys() {
-        this.getInstrumentation().sendStringSync(Integer.toString(this.testYear));
+        this.getInstrumentation().sendStringSync(this.testPlayerName);
     }
-    private EditText yearText = null;
-    private int testYear = -1;
+    private EditText playerNameText = null;
+    private String testPlayerName = null;
 }
