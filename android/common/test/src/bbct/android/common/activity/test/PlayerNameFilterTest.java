@@ -19,7 +19,6 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
-import android.util.Log;
 import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.PlayerNameFilter;
@@ -42,8 +41,8 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
     /**
      * Set up test fixture. Most of the test fixture is set up by
      * {@link FilterActivityTest#setUp()}. This class adds a {@link EditText}
-     * view which contain player name being edited and an {@link String} for the
-     * player name.
+     * view which contains the player name being edited and a {@link String}
+     * for the player name.
      *
      * @throws Exception If an error occurs while chaining to the super class.
      *
@@ -104,7 +103,9 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
     }
 
     /**
-     * Set the text of the player name {@link EditText} views.
+     * Set the text of the player name {@link EditText} view.
+     *
+     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
      */
     @Override
     protected void setInputText() {
@@ -112,16 +113,14 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
     }
 
     /**
-     * Inject instrumented key events for the player name text.
+     * Inject instrumented key events to the player name {@link EditText} view.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()
      */
     @Override
     protected void sendInputKeys() {
-        Log.d(TAG, "sendInputKeys()");
         this.getInstrumentation().sendStringSync(this.testPlayerName);
     }
     private EditText playerNameText = null;
     private String testPlayerName = null;
-    private static final String TAG = "PlayerNameFilterTest";
 }

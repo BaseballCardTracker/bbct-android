@@ -113,7 +113,7 @@ public class YearFilterTest extends FilterActivityTest<YearFilter> {
     }
 
     /**
-     * Inject instrumented key events for the year text.
+     * Inject instrumented key events to the year {@link EditText} view.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()
      */

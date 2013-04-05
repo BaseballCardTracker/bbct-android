@@ -127,7 +127,8 @@ public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFil
     }
 
     /**
-     * Inject instrumented key events for the year and card number text.
+     * Inject instrumented key events to the year and card number
+     * {@link EditText} views.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()
      */

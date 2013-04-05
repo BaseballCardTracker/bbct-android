@@ -113,7 +113,7 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
     }
 
     /**
-     * Inject instrumented key events for the card number text.
+     * Inject instrumented key events to the card number {@link EditText} view.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()
      */
