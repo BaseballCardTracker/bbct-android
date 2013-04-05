@@ -17,6 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Test utility classes for the BBCT for Android Common Library.
+ * Utility classes for tests for the BBCT for Android Common Library.
  */
 package bbct.android.common.test;
