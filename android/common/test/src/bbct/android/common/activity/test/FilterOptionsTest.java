@@ -27,12 +27,12 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import bbct.android.common.R;
-import bbct.android.common.activity.FilterActivity;
 import bbct.android.common.activity.FilterOptions;
-import bbct.android.common.activity.NumberFilter;
-import bbct.android.common.activity.PlayerNameFilter;
-import bbct.android.common.activity.YearAndNumberFilter;
-import bbct.android.common.activity.YearFilter;
+import bbct.android.common.activity.filter.FilterActivity;
+import bbct.android.common.activity.filter.NumberFilter;
+import bbct.android.common.activity.filter.PlayerNameFilter;
+import bbct.android.common.activity.filter.YearAndNumberFilter;
+import bbct.android.common.activity.filter.YearFilter;
 import junit.framework.Assert;
 
 /**
