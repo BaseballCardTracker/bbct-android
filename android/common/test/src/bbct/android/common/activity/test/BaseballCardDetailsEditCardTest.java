@@ -46,11 +46,13 @@ import junit.framework.TestSuite;
 public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
     /**
-     * Creates a {@link TestSuite} containing tests for every possible combination of
-     * {@link TextEdit} views in the {@link BaseballCardDetails} activity.
+     * Creates a {@link TestSuite} containing tests for every possible
+     * combination of {@link TextEdit} views in the {@link BaseballCardDetails}
+     * activity.
      *
-     * @return A {@link TestSuite} containing tests for every possible combination of
-     * {@link EditText} views in the {@link BaseballCardDetails} activity.
+     * @return A {@link TestSuite} containing tests for every possible
+     * combination of {@link EditText} views in the {@link BaseballCardDetails}
+     * activity.
      */
     public static Test suite() {
         TestSuite suite = new TestSuite();
@@ -76,7 +78,9 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
      * @see BBCTTestUtil#NUMBER_FIELD
      * @see BBCTTestUtil#COUNT_FIELD
      * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD
+     * @see BBCTTestUtil#PLAYER_NAME_FIELD <<<<<<< HEAD =======
+     * @see BBCTTestUtil#TEAM_FIELD >>>>>>> BBCT Common Tests: Test all
+     * combinations of input in BaseballCardDetailsEditCardTest
      * @see BBCTTestUtil#PLAYER_POSITION_FIELD
      * @see BBCTTestUtil#ALL_FIELDS
      */
@@ -172,8 +176,9 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         int value = (this.inputMask & BBCTTestUtil.VALUE_FIELD) == 0 ? this.oldCard.getValue() : this.newCard.getValue();
         int count = (this.inputMask & BBCTTestUtil.COUNT_FIELD) == 0 ? this.oldCard.getCount() : this.newCard.getCount();
         String name = (this.inputMask & BBCTTestUtil.PLAYER_NAME_FIELD) == 0 ? this.oldCard.getPlayerName() : this.newCard.getPlayerName();
+        String team = (this.inputMask & BBCTTestUtil.TEAM_FIELD) == 0 ? this.oldCard.getTeam() : this.newCard.getTeam();
         String position = (this.inputMask & BBCTTestUtil.PLAYER_POSITION_FIELD) == 0 ? this.oldCard.getPlayerPosition() : this.newCard.getPlayerPosition();
-        return new BaseballCard(brand, year, number, value, count, name, position);
+        return new BaseballCard(brand, year, number, value, count, name, team, position);
     }
     private final int inputMask;
     private Instrumentation inst = null;
