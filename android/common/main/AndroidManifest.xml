@@ -51,6 +51,7 @@
         <activity android:name=".activity.filter.NumberFilter"/>
         <activity android:name=".activity.filter.YearAndNumberFilter"/>
         <activity android:name=".activity.filter.PlayerNameFilter"/>
+        <activity android:name=".activity.filter.TeamFilter"/>
         <activity android:name=".activity.About" />
         <provider android:name=".provider.BaseballCardProvider"
                   android:label="@string/provider_name"

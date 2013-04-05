@@ -21,6 +21,7 @@ package bbct.android.common.activity.filter.test;
 import android.app.Activity;
 import android.widget.EditText;
 import bbct.android.common.R;
+import bbct.android.common.activity.filter.TeamFilter;
 import junit.framework.Assert;
 
 /**

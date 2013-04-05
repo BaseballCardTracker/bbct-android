@@ -24,5 +24,6 @@
     <string name="year_extra">year</string>
     <string name="number_extra">number</string>
     <string name="player_name_extra">player_name</string>
+    <string name="team_extra">team</string>
     <string name="filter_params_extra">filter_params</string>
 </resources>

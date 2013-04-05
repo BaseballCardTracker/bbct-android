@@ -49,6 +49,7 @@
         <activity android:name="bbct.android.common.activity.filter.NumberFilter"/>
         <activity android:name="bbct.android.common.activity.filter.YearAndNumberFilter"/>
         <activity android:name="bbct.android.common.activity.filter.PlayerNameFilter"/>
+        <activity android:name="bbct.android.common.activity.filter.TeamFilter"/>
         <activity android:name="bbct.android.common.activity.About" />
     </application>
 </manifest>

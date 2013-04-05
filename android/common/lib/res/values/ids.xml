@@ -39,5 +39,6 @@
     <item type="id" name="number_filter_request"/>
     <item type="id" name="year_and_number_filter_request"/>
     <item type="id" name="player_name_filter_request"/>
+    <item type="id" name="team_filter_request"/>
     <item type="id" name="no_filter"/>
 </resources>
