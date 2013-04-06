@@ -45,10 +45,10 @@
             </intent-filter>
         </activity>
         <activity android:name="bbct.android.common.activity.FilterOptions"/>
-        <activity android:name="bbct.android.common.activity.YearFilter"/>
-        <activity android:name="bbct.android.common.activity.NumberFilter"/>
-        <activity android:name="bbct.android.common.activity.YearAndNumberFilter"/>
-        <activity android:name="bbct.android.common.activity.PlayerNameFilter"/>
+        <activity android:name="bbct.android.common.activity.filter.YearFilter"/>
+        <activity android:name="bbct.android.common.activity.filter.NumberFilter"/>
+        <activity android:name="bbct.android.common.activity.filter.YearAndNumberFilter"/>
+        <activity android:name="bbct.android.common.activity.filter.PlayerNameFilter"/>
         <activity android:name="bbct.android.common.activity.About" />
     </application>
 </manifest>
