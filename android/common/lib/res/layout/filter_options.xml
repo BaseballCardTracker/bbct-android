@@ -22,10 +22,10 @@
               android:layout_height="fill_parent"
               android:orientation="vertical"
 >
-    <TextView     
+    <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/filter_by_label" 
+        android:text="@string/filter_by_label"
     />
     <RadioGroup android:id="@+id/filter_options_radio_group"
                 android:layout_width="fill_parent"
@@ -42,6 +42,9 @@
         />
         <RadioButton android:id="@+id/player_name_filter_radio_button"
                      android:text="@string/player_name_radio_button"
+        />
+        <RadioButton android:id="@+id/team_filter_radio_button"
+                     android:text="@string/team_radio_button"
         />
     </RadioGroup>
     <LinearLayout

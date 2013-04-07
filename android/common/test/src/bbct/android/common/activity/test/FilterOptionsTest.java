@@ -31,6 +31,7 @@ import bbct.android.common.activity.FilterOptions;
 import bbct.android.common.activity.filter.FilterActivity;
 import bbct.android.common.activity.filter.NumberFilter;
 import bbct.android.common.activity.filter.PlayerNameFilter;
+import bbct.android.common.activity.filter.TeamFilter;
 import bbct.android.common.activity.filter.YearAndNumberFilter;
 import bbct.android.common.activity.filter.YearFilter;
 import junit.framework.Assert;
@@ -171,8 +172,19 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
      */
-    public void testOkButtonOnClickWithPlayerRadioButtonChecked() throws Throwable {
+    public void testOkButtonOnClickWithPlayerNameRadioButtonChecked() throws Throwable {
         this.testOkButtonOnClick(PlayerNameFilter.class, R.id.player_name_filter_radio_button);
+    }
+
+    /**
+     * Test that {@link PlayerNameFilter} starts when the user selects the
+     * "Team" radio button and clicks "OK".
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
+    public void testOkButtonOnClickWithTeamRadioButtonChecked() throws Throwable {
+        this.testOkButtonOnClick(TeamFilter.class, R.id.team_filter_radio_button);
     }
 
     /**
@@ -188,7 +200,7 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
     private RadioGroup filterOptionsRadioGroup = null;
     private Button okButton = null;
     private Button cancelButton = null;
-    private static final int RADIO_BUTTON_COUNT = 4;
+    private static final int RADIO_BUTTON_COUNT = 5;
     private static final int NO_RADIO_BUTTON_CHECKED = -1;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = "FilterOptionsTest";

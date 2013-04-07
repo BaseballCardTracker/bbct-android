@@ -26,12 +26,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import bbct.android.common.R;
+import bbct.android.common.activity.filter.FilterActivity;
 import bbct.android.common.activity.filter.NumberFilter;
 import bbct.android.common.activity.filter.PlayerNameFilter;
+import bbct.android.common.activity.filter.TeamFilter;
 import bbct.android.common.activity.filter.YearAndNumberFilter;
 import bbct.android.common.activity.filter.YearFilter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * {@link FilterOptions} gives the user the choice to filter the baseball card
@@ -47,10 +52,28 @@ import bbct.android.common.activity.filter.YearFilter;
  * @see NumberFilter
  * @see YearAndNumberFilter
  * @see PlayerNameFilter
+ * @see TeamFilter
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FilterOptions extends Activity {
+
+    /**
+     * Register a {@link FilterActivity} which should be launched when the
+     * {@link RadioButton} with the given id is selected.
+     *
+     * @param id The radio button associated with the given
+     * {@link FilterActivity} class.
+     * @param filterActivityClass The {@link Class} for the
+     * {@link FilterActivity} which should be launched when the
+     * {@link RadioButton} with the given id is selected.
+     */
+    public static void registerFilterActivity(int id, Class<? extends FilterActivity> filterActivityClass) {
+        Log.d(TAG, "registerFilterActivity()");
+        Log.d(TAG, "id=" + id + ", filterActivityClass=" + filterActivityClass);
+
+        filterActivities.put(id, filterActivityClass);
+    }
 
     /**
      * Called when the activity is first created.
@@ -92,11 +115,16 @@ public class FilterOptions extends Activity {
     private View.OnClickListener onOk = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            // TODO Remove Ok and Cancel buttons and launch FilterActivities immediately after user clicks the radio button
+
             Log.d(TAG, "OK button clicked.");
             RadioGroup filterByRadioGroup = (RadioGroup) FilterOptions.this.findViewById(R.id.filter_options_radio_group);
 
             int radioButtonId = filterByRadioGroup.getCheckedRadioButtonId();
+            Log.d(TAG, "radioButtonId=" + radioButtonId);
+
             if (radioButtonId == NONE) {
+                // TODO Refactor to a static method createErrorDialog(int titleId, int messageId)
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FilterOptions.this);
                 dialogBuilder.setTitle(R.string.input_error_title);
                 dialogBuilder.setMessage(R.string.no_radio_button_error);
@@ -111,6 +139,8 @@ public class FilterOptions extends Activity {
                 FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearAndNumberFilter.class), R.id.year_and_number_filter_request);
             } else if (radioButtonId == R.id.player_name_filter_radio_button) {
                 FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, PlayerNameFilter.class), R.id.player_name_filter_request);
+            } else if (radioButtonId == R.id.team_filter_radio_button) {
+                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, TeamFilter.class), R.id.team_filter_request);
             } else {
                 Log.e(TAG, "Invalid radio button ID.");
                 // TODO: Throw an exception?
@@ -129,6 +159,7 @@ public class FilterOptions extends Activity {
         public void onClick(DialogInterface dialog, int which) {
         }
     };
+    private static Map<Integer, Class<? extends FilterActivity>> filterActivities = new HashMap<Integer, Class<? extends FilterActivity>>();
     private static final String TAG = FilterOptions.class.getName();
     private static final int NONE = -1;
 }

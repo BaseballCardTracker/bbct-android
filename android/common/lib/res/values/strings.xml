@@ -78,6 +78,7 @@
     <string name="number_radio_button">Number</string>
     <string name="year_and_number_radio_button">Year and Number</string>
     <string name="player_name_radio_button">Player Name</string>
+    <string name="team_radio_button">Team</string>
 
     <!-- Menu text -->
     <string name="add_menu">Add Cards</string>
