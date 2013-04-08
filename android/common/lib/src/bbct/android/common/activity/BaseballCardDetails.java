@@ -19,8 +19,6 @@
 package bbct.android.common.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +31,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import bbct.android.common.R;
+import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.database.BaseballCardSQLHelper;
 import bbct.android.common.database.SQLHelperFactory;
@@ -179,14 +178,7 @@ public class BaseballCardDetails extends Activity {
                         long result = sqlHelper.insertBaseballCard(newCard);
 
                         if (result == -1) {
-                            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(BaseballCardDetails.this);
-                            dialogBuilder.setMessage(R.string.duplicate_card_error);
-                            dialogBuilder.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            });
-
-                            dialogBuilder.create().show();
+                            DialogUtil.showErrorDialog(BaseballCardDetails.this, R.string.duplicate_card_title, R.string.duplicate_card_error);
                         } else {
                             BaseballCardDetails.this.resetInput();
                             BaseballCardDetails.this.brandText.requestFocus();

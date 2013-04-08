@@ -19,8 +19,6 @@
 package bbct.android.common.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +33,7 @@ import bbct.android.common.activity.filter.PlayerNameFilter;
 import bbct.android.common.activity.filter.TeamFilter;
 import bbct.android.common.activity.filter.YearAndNumberFilter;
 import bbct.android.common.activity.filter.YearFilter;
+import bbct.android.common.activity.util.DialogUtil;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -125,12 +124,7 @@ public class FilterOptions extends Activity {
             Log.d(TAG, "radioButtonId=" + radioButtonId);
 
             if (radioButtonId == NONE) {
-                // TODO Refactor to a static method createErrorDialog(int titleId, int messageId)
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FilterOptions.this);
-                dialogBuilder.setTitle(R.string.input_error_title);
-                dialogBuilder.setMessage(R.string.no_radio_button_error);
-                dialogBuilder.setPositiveButton(R.string.ok_button, FilterOptions.this.onDialogOkClick);
-                dialogBuilder.show();
+                DialogUtil.showErrorDialog(FilterOptions.this, R.string.input_error_title, R.string.no_radio_button_error);
             } else if (radioButtonId == R.id.year_filter_radio_button) {
                 Log.d(TAG, "Year radio button selected.");
                 FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearFilter.class), R.id.year_filter_request);
@@ -153,11 +147,6 @@ public class FilterOptions extends Activity {
         public void onClick(View view) {
             FilterOptions.this.setResult(RESULT_CANCELED);
             FilterOptions.this.finish();
-        }
-    };
-    private DialogInterface.OnClickListener onDialogOkClick = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
         }
     };
     private static Map<Integer, Class<? extends FilterActivity>> filterActivities = new HashMap<Integer, Class<? extends FilterActivity>>();
