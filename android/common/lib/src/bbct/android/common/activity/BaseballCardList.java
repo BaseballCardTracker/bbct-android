@@ -211,6 +211,10 @@ public class BaseballCardList extends ListActivity {
                     String playerName = data.getStringExtra(this.getString(R.string.player_name_extra));
                     this.filterParams.putString(this.getString(R.string.player_name_extra), playerName);
                     this.sqlHelper.filterCursorByPlayerName(playerName);
+                } else if (this.filterRequest == R.id.team_filter_request) {
+                    String team = data.getStringExtra(this.getString(R.string.team_extra));
+                    this.filterParams.putString(this.getString(R.string.team_extra), team);
+                    this.sqlHelper.filterCursorByTeam(team);
                 } else {
                     Log.e(TAG, "onActivityResult(): Invalid filter request code: " + this.filterRequest);
                     // TODO: Throw an exception?

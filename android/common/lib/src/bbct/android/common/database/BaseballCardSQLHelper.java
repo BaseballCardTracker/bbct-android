@@ -144,6 +144,13 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         this.currCursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
     }
 
+    public void filterCursorByTeam(String team) {
+        // TODO: Document wild cards in user manual?
+        String filter = BaseballCardContract.TEAM_COL_NAME + " LIKE ?";
+        String[] args = {team};
+        this.currCursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, filter, args, null, null, null);
+    }
+
     public BaseballCard getBaseballCardFromCursor() {
         return this.getBaseballCardFromCursor(this.currCursor);
     }

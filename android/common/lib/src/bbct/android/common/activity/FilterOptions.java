@@ -102,7 +102,8 @@ public class FilterOptions extends Activity {
         if (requestCode == R.id.year_filter_request
                 || requestCode == R.id.number_filter_request
                 || requestCode == R.id.year_and_number_filter_request
-                || requestCode == R.id.player_name_filter_request) {
+                || requestCode == R.id.player_name_filter_request
+                || requestCode == R.id.team_filter_request) {
             if (resultCode == RESULT_OK) {
                 this.setResult(RESULT_OK, data);
                 this.finish();
