@@ -35,6 +35,7 @@ import bbct.android.common.activity.FilterOptions;
 import bbct.android.common.activity.filter.FilterActivity;
 import bbct.android.common.activity.filter.NumberFilter;
 import bbct.android.common.activity.filter.PlayerNameFilter;
+import bbct.android.common.activity.filter.TeamFilter;
 import bbct.android.common.activity.filter.YearAndNumberFilter;
 import bbct.android.common.activity.filter.YearFilter;
 import bbct.android.common.data.BaseballCard;
@@ -362,8 +363,8 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     }
 
     /**
-     * Test that the {@link ListView} displays the correct cards when filter by
-     * the card year.
+     * Test that the {@link ListView} displays the correct cards when filtered
+     * by the card year.
      *
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
@@ -388,8 +389,8 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     }
 
     /**
-     * Test that the {@link ListView} displays the correct cards when filter by
-     * the card number.
+     * Test that the {@link ListView} displays the correct cards when filtered
+     * by the card number.
      *
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
@@ -414,8 +415,8 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     }
 
     /**
-     * Test that the {@link ListView} displays the correct cards when filter by
-     * the card year and number.
+     * Test that the {@link ListView} displays the correct cards when filtered
+     * by the card year and number.
      *
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
@@ -443,8 +444,8 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     }
 
     /**
-     * Test that the {@link ListView} displays the correct cards when filter by
-     * the player name.
+     * Test that the {@link ListView} displays the correct cards when filtered
+     * by the player name.
      *
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
@@ -466,6 +467,32 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         };
 
         this.testFilter(PlayerNameFilter.class, R.id.player_name_filter_radio_button, playerNameInput, playerNamePred);
+    }
+
+    /**
+     * Test that the {@link ListView} displays the correct cards when filtered
+     * by the team name.
+     *
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
+     */
+    public void testTeamFilter() throws Throwable {
+        final String team = "Mets";
+        FilterInput teamInput = new FilterInput() {
+            @Override
+            public void doInput() {
+                BaseballCardListWithDataTest.this.inst.sendStringSync(team);
+            }
+        };
+
+        Predicate<BaseballCard> teamPred = new Predicate<BaseballCard>() {
+            @Override
+            public boolean doTest(BaseballCard card) {
+                return team.equals(card.getTeam());
+            }
+        };
+
+        this.testFilter(TeamFilter.class, R.id.team_filter_radio_button, teamInput, teamPred);
     }
 
     /**
