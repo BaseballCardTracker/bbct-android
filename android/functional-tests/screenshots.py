@@ -1,73 +1,52 @@
+# This file is part of BBCT for Android.
+#
+# Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+#
+# BBCT for Android is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+
+# BBCT for Android is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice
+import util
 
 # Amount of time to sleep in order to allow the Android emulator to finish
 # a task before taking a screenshot. This is necessary for my slow-ass computer
-delay = 5.0
-
-#The directory where screenshots will be saved
-screenshots = '../screenshots/'
-
-class BaseballCard:
-    '''Data on a baseball card'''
-
-    def __init__(self, brand, year, number, value, count, player, team,
-                 position):
-        self.brand = brand
-        self.year = year
-        self.number = number
-        self.value = value
-        self.count = count
-        self.player = player
-        self.team = team
-
-    def __str__(self):
-        return 'BaseballCard['\
-            'brand=' + self.brand + ','\
-            'year=' + str(self.year) + ','\
-            'number=' + str(self.number) + ','\
-            'value=' + str(self.value) + ','\
-            'count=' + str(self.count) + ','\
-            'player=' + self.player + ','\
-            'team=' + self.team + ']'
-
-def read_card_data(filepath):
-    '''Read card data from the given file and return a list of BaseballCard\
-       objects'''
-    cards = []
-    card_file = open(filepath)
-
-    for card_line in card_file:
-        card_data = card_line.strip().split(',')
-        card = BaseballCard(*(card_data[:3] + [10000, 1] + card_data[3:]))
-        cards.append(card)
-
-    card_file.close
-    return cards
-
-def take_screenshot(device, filename):
-    '''Take a screenshot of the given device and save it to the given PNG file\
-       in the screenshots directory'''
-    MonkeyRunner.sleep(delay)
-    result = device.takeSnapshot()
-    result.writeToFile(screenshots + filename, 'png')
+delay = 10.0
 
 device = MonkeyRunner.waitForConnection()
 
 apkFile = '../common/main/bin/bbct-android-common-debug.apk'
 
 if device.installPackage(apkFile):
-    cards = read_card_data('cards.csv')
+    cards = util.read_card_data('cards.csv')
+
+    for card in cards:
+        print card
 
     package = 'bbct.android.common'
     activity = '.activity.BaseballCardList' 
     runComponent = package + '/' + activity
 
     device.startActivity(component=runComponent)
+    MonkeyRunner.sleep(delay)
+    util.take_screenshot(device, 'start.png', delay)
 
     device.press('KEYCODE_MENU', MonkeyDevice.DOWN_AND_UP)
-    take_screenshot(device, 'menu.png')
+    util.take_screenshot(device, 'menu.png', delay)
 
     device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
-    take_screenshot(device, 'add-card.png')
+    util.take_screenshot(device, 'add-card-blank.png', delay)
+
+    util.input_card(device, cards[0])
+    util.take_screenshot(device, 'add-card-filled.png', delay)
 
     device.removePackage(package)
