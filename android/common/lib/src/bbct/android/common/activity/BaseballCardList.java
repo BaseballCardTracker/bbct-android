@@ -149,6 +149,7 @@ public class BaseballCardList extends ListActivity {
             this.startActivityForResult(new Intent(this, FilterOptions.class), R.id.filter_options_request);
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
+            this.filterRequest = R.id.no_filter;
             this.emptyList.setText(R.string.start);
             this.sqlHelper.clearFilter();
             this.swapCursor();
