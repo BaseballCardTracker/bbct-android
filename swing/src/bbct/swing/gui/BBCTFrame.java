@@ -23,6 +23,7 @@ import bbct.common.data.BaseballCardIO;
 import bbct.common.data.JDBCBaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -138,7 +139,7 @@ public class BBCTFrame extends JFrame {
 
         JPanel instructionPanel = new JPanel();
         this.instructionLabel = new JLabel(BBCTStringResources.InstructionResources.DUMMY_INSTRUCTIONS);
-        this.instructionLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        this.instructionLabel.setFont(FontResources.INSTRUCTIONS_FONT);
         instructionPanel.add(this.instructionLabel);
 
         this.getContentPane().add(instructionPanel, BorderLayout.NORTH);
@@ -156,7 +157,6 @@ public class BBCTFrame extends JFrame {
     private JLabel instructionLabel;
     private MainPanel mainPanel;
     private BaseballCardIO bcio = null;
-
     /**
      * Tests for {@link BBCTFrame}. Creates a
      * {@link bbct.common.data.JDBCBaseballCardIO} and populates it with data

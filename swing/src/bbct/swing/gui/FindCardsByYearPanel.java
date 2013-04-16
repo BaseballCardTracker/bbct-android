@@ -23,6 +23,7 @@ import bbct.common.data.BaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.common.exceptions.InputException;
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.UpdateInstructionsFocusListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import bbct.swing.gui.inputverifiers.YearInputVerifier;
@@ -99,7 +100,7 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
         JPanel inputPanel = new JPanel(new GridBagLayout());
 
         JLabel yearLabel = new JLabel("Card Year:");
-        yearLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        yearLabel.setFont(FontResources.DEFAULT_FONT);
 
         GridBagConstraints yearLabelConstraints = new GridBagConstraints();
         yearLabelConstraints.gridx = 0;
@@ -110,7 +111,7 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
 
         this.yearTextField = new JFormattedTextField();
         this.yearTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
-        this.yearTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        this.yearTextField.setFont(FontResources.DEFAULT_FONT);
         this.yearTextField.setColumns(10);
         this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_YEAR_INSTRUCTIONS));
 

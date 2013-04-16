@@ -19,12 +19,12 @@
 package bbct.swing.gui;
 
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.SetDefaultButtonAncestorListener;
 import bbct.swing.gui.event.ShowCardActionListener;
 import bbct.swing.gui.event.UpdateInstructionsAncestorListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
@@ -55,21 +55,21 @@ public class AboutPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
 
         JLabel titleLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_TITLE);
-        titleLabel.setFont(new Font("Tahoma", 0, 36)); // NOI18N
+        titleLabel.setFont(FontResources.TITLE_FONT);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.CENTER;
         infoPanel.add(titleLabel, gbc);
 
         JLabel versionLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_VERSION);
-        versionLabel.setFont(new Font("Tahoma", 0, 18)); // NOI18N
+        versionLabel.setFont(FontResources.VERSION_FONT);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         infoPanel.add(versionLabel, gbc);
 
         JLabel copyrightLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_COPYRIGHT);
-        copyrightLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        copyrightLabel.setFont(FontResources.DEFAULT_FONT);
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.ipady = 10;
@@ -77,13 +77,13 @@ public class AboutPanel extends JPanel {
         infoPanel.add(copyrightLabel, gbc);
 
         JLabel websiteLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_WEBSITE);
-        websiteLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        websiteLabel.setFont(FontResources.DEFAULT_FONT);
         gbc.gridx = 0;
         gbc.gridy = 4;
         infoPanel.add(websiteLabel, gbc);
 
         JLabel gplLabel = new JLabel(BBCTStringResources.AboutResources.ABOUT_LICENSE);
-        gplLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        gplLabel.setFont(FontResources.DEFAULT_FONT);
         gbc.gridx = 0;
         gbc.gridy = 5;
         infoPanel.add(gplLabel, gbc);
@@ -92,9 +92,10 @@ public class AboutPanel extends JPanel {
 
         JPanel buttonPanel = new JPanel();
         final JButton okButton = new JButton();
-        okButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
+        okButton.setFont(FontResources.BUTTON_FONT);
         okButton.setText(BBCTStringResources.ButtonResources.OK_BUTTON);
-        okButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
+        okButton.addActionListener(new ShowCardActionListener(this,
+                BBCTFrame.MENU_CARD_NAME));
         buttonPanel.add(okButton);
 
         this.add(buttonPanel, BorderLayout.SOUTH);
@@ -108,7 +109,8 @@ public class AboutPanel extends JPanel {
      * Tests for {@link AboutPanel}. Simply creates a {@link javax.swing.JFrame}
      * in which to display it.
      *
-     * @param args Command-line arguments. (ignored)
+     * @param args
+     *            Command-line arguments. (ignored)
      */
     public static void main(String[] args) {
         JFrame f = new JFrame("AboutPanel Test");
