@@ -180,7 +180,9 @@ public class BBCTStringResources {
         public static final String CLOSE_ERROR_TITLE = "Clean Up Error";
         public static final String IO_ERROR_TITLE = "I/O Error";
         public static final String INPUT_ERROR_TITLE = "Invalid Input";
-        public static final String NO_CARDS_FOUND_ERROR_TITLE = "No cards found.";
+        public static final String NO_CARDS_FOUND_ERROR_TITLE = "No Cards Found";
+        public static final String INITIALIZATION_ERROR_TITLE = "Initialization Error";
+        public static final String UNEXPECTED_EXCEPTION_ERROR_TITLE = "Unexpected Exception";
 
         private ErrorResources() {
         }
