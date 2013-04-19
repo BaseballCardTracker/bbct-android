@@ -37,9 +37,10 @@ import java.util.List;
 public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "bbct.db";
-    public static final int SCHEMA_VERSION = 2;
+    public static final int SCHEMA_VERSION = 3;
     public static final int ORIGINAL_SCHEMA = 1;
-    public static final int TEAM_SCHEMA = 2;
+    public static final int BAD_TEAM_SCHEMA = 2;
+    public static final int TEAM_SCHEMA = 3;
 
     public BaseballCardSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
@@ -68,9 +69,11 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion == ORIGINAL_SCHEMA && newVersion == TEAM_SCHEMA) {
+        if ((oldVersion == ORIGINAL_SCHEMA || oldVersion == BAD_TEAM_SCHEMA) &&
+                newVersion == TEAM_SCHEMA) {
             String sqlUpgrade = "ALTER TABLE " + BaseballCardContract.TABLE_NAME
-                    + "ADD COLUMN " + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
+                    + " ADD COLUMN " + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
+            db.execSQL(sqlUpgrade);
         }
     }
 
