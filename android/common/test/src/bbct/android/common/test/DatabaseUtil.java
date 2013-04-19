@@ -79,6 +79,7 @@ public class DatabaseUtil {
         cv.put(BaseballCardContract.VALUE_COL_NAME, card.getValue());
         cv.put(BaseballCardContract.COUNT_COL_NAME, card.getCount());
         cv.put(BaseballCardContract.PLAYER_NAME_COL_NAME, card.getPlayerName());
+        cv.put(BaseballCardContract.TEAM_COL_NAME, card.getTeam());
         cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME, card.getPlayerPosition());
 
         return this.db.insert(TABLE_NAME, null, cv);
