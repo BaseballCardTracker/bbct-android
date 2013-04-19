@@ -55,8 +55,10 @@
         <activity android:name=".activity.About" />
         <provider android:name=".provider.BaseballCardProvider"
                   android:label="@string/provider_name"
+                  android:icon="@drawable/baseball"
                   android:authorities="@string/authorities"
                   android:readPermission="@string/read_permission"
+                  android:writePermission="@string/write_permission"
         />
     </application>
 </manifest>

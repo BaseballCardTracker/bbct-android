@@ -21,5 +21,7 @@
     <string name="provider_name">BBCT Lite Data</string>
     <string name="authorities">bbct.android.lite.provider</string>
     <string name="read_permission">bbct.android.lite.permission.READ</string>
-    <string name="permission_desc">Baseball Card data from BBCT Lite</string>
+    <string name="read_permission_desc">Read Baseball Card data from BBCT Lite database</string>
+    <string name="write_permission">bbct.android.premium.permission.WRITE</string>
+    <string name="write_permission_desc">Write Baseball Card data to BBCT Lite database</string>
 </resources>

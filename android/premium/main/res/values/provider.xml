@@ -18,9 +18,10 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="app_name">BBCT Common</string>
-    <string name="provider_name">BBCT Common Data</string>
-    <string name="authorities">bbct.android.common.provider</string>
-    <string name="read_permission">bbct.android.common.permission.READ</string>
-    <string name="write_permission">bbct.android.common.permission.WRITE</string>
+    <string name="provider_name">BBCT Premium Data</string>
+    <string name="authorities">bbct.android.premium.provider</string>
+    <string name="read_permission">bbct.android.premium.permission.READ</string>
+    <string name="read_permission_desc">Baseball Card data from BBCT Premium database</string>
+    <string name="write_permisson">bbct.android.premium.permission.WRITE</string>
+    <string name="write_permission_desc">Write Baseball Card data to BBCT Premium database</string>
 </resources>
