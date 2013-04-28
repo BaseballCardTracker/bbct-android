@@ -35,7 +35,7 @@ import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.database.BaseballCardSQLHelper;
+import bbct.android.common.provider.BaseballCardSQLHelper;
 import java.util.List;
 import junit.framework.Assert;
 

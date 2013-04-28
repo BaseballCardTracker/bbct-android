@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.database;
+package bbct.android.common.provider;
 
 import android.content.Context;
 import android.util.Log;
