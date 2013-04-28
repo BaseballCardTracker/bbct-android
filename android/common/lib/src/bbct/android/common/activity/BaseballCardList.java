@@ -79,6 +79,9 @@ public class BaseballCardList extends ListActivity {
             } else if (this.filterRequest == R.id.player_name_filter_request) {
                 String playerName = this.filterParams.getString(this.getString(R.string.player_name_extra));
                 this.sqlHelper.filterCursorByPlayerName(playerName);
+            } else if (this.filterRequest == R.id.team_filter_request) {
+                String team = this.filterParams.getString(this.getString(R.string.team_extra));
+                this.sqlHelper.filterCursorByTeam(team);
             } else if (this.filterRequest == R.id.no_filter) {
                 this.sqlHelper.clearFilter();
             } else {
