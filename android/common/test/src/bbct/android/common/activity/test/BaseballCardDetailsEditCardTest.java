@@ -28,7 +28,6 @@ import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.database.BaseballCardSQLHelper;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
@@ -125,11 +124,9 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         this.activity = this.getActivity();
 
         // Insert baseball card to make sure we are updating an existing card rather than simply inserting a new card.
-        // Using BaseballCardSQLHelper to do this ensures that the database is properly created.
-        BaseballCardSQLHelper sqlHelper = new BaseballCardSQLHelper(this.activity);
-        sqlHelper.insertBaseballCard(this.oldCard);
-
+        // TODO Make sure this still works without using BaseballCardSQLHelper
         this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
+        this.dbUtil.insertBaseballCard(this.oldCard);
     }
 
     /**
