@@ -69,8 +69,8 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if ((oldVersion == ORIGINAL_SCHEMA || oldVersion == BAD_TEAM_SCHEMA) &&
-                newVersion == TEAM_SCHEMA) {
+        if ((oldVersion == ORIGINAL_SCHEMA || oldVersion == BAD_TEAM_SCHEMA)
+                && newVersion == TEAM_SCHEMA) {
             String sqlUpgrade = "ALTER TABLE " + BaseballCardContract.TABLE_NAME
                     + " ADD COLUMN " + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
             db.execSQL(sqlUpgrade);
@@ -84,14 +84,14 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      * @return The row ID of the newly inserted row, or -1 if an error occurred.
      */
     public long insertBaseballCard(BaseballCard card) {
-        return this.getWritableDatabase().insert(BaseballCardContract.TABLE_NAME, null, this.getContentValues(card));
+        return this.getWritableDatabase().insert(BaseballCardContract.TABLE_NAME, null, BaseballCardContract.getContentValues(card));
     }
 
     public void insertAllBaseballCards(SQLiteDatabase db, List<BaseballCard> cards) {
         db.beginTransactionNonExclusive();
         try {
             for (BaseballCard card : cards) {
-                db.insert(BaseballCardContract.TABLE_NAME, null, this.getContentValues(card));
+                db.insert(BaseballCardContract.TABLE_NAME, null, BaseballCardContract.getContentValues(card));
             }
             db.setTransactionSuccessful();
         } finally {
@@ -103,7 +103,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         String[] args = {oldCard.getBrand(), Integer.toString(oldCard.getYear()), Integer.toString(oldCard.getNumber())};
         String where = BaseballCardContract.BRAND_COL_NAME + "=? AND " + BaseballCardContract.YEAR_COL_NAME + "=? AND " + BaseballCardContract.NUMBER_COL_NAME + "=?";
 
-        return this.getWritableDatabase().update(BaseballCardContract.TABLE_NAME, this.getContentValues(newCard), where, args);
+        return this.getWritableDatabase().update(BaseballCardContract.TABLE_NAME, BaseballCardContract.getContentValues(newCard), where, args);
     }
 
     public Cursor getCursor() {
@@ -191,20 +191,6 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         String[] args = {constraint.trim() + '%'};
 
         return this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, cols, filter, args, colName, null, null, null);
-    }
-
-    private ContentValues getContentValues(BaseballCard card) {
-        ContentValues cv = new ContentValues(7);
-        cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
-        cv.put(BaseballCardContract.YEAR_COL_NAME, card.getYear());
-        cv.put(BaseballCardContract.NUMBER_COL_NAME, card.getNumber());
-        cv.put(BaseballCardContract.VALUE_COL_NAME, card.getValue());
-        cv.put(BaseballCardContract.COUNT_COL_NAME, card.getCount());
-        cv.put(BaseballCardContract.PLAYER_NAME_COL_NAME, card.getPlayerName());
-        cv.put(BaseballCardContract.TEAM_COL_NAME, card.getTeam());
-        cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME, card.getPlayerPosition());
-
-        return cv;
     }
     private static final String TAG = BaseballCardSQLHelper.class.getName();
     private Cursor currCursor = null;

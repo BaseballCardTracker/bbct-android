@@ -116,4 +116,26 @@ public final class BaseballCardContract {
      * Convenience variable to select cards with a given team.
      */
     public static final String TEAM_SELECTION = String.format(STRING_SELECTION_FORMAT, TEAM_COL_NAME);
+
+    /**
+     * Convenience method to create a {@link ContentValues} map for the data
+     * from the given {@link BaseballCard} object. The returned
+     * {@link ContentValues} can be used with the appropriate methods of a
+     * {@link ContentResolver} to access data from {@link BaseballCardProvider}.
+     *
+     * @param card The baseball card data.
+     * @return The mapping of data.
+     */
+    public static ContentValues getContentValues(BaseballCard card) {
+        ContentValues cv = new ContentValues(7);
+        cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
+        cv.put(BaseballCardContract.YEAR_COL_NAME, card.getYear());
+        cv.put(BaseballCardContract.NUMBER_COL_NAME, card.getNumber());
+        cv.put(BaseballCardContract.VALUE_COL_NAME, card.getValue());
+        cv.put(BaseballCardContract.COUNT_COL_NAME, card.getCount());
+        cv.put(BaseballCardContract.PLAYER_NAME_COL_NAME, card.getPlayerName());
+        cv.put(BaseballCardContract.TEAM_COL_NAME, card.getTeam());
+        cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME, card.getPlayerPosition());
+        return cv;
+    }
 }
