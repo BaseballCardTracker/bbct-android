@@ -20,7 +20,7 @@
 <resources>
     <!-- IDs for views -->
     <item type="id" name="ad_view"/>
-    
+
     <!-- AdMob Publisher ID -->
     <string name="admob_id">a151047824e2718</string>
 </resources>
