@@ -38,7 +38,7 @@ public final class BaseballCardContract {
     /**
      * Authority used to access data with {@link BaseballCardProvider}.
      */
-    public static final String AUTHORITY = "bbct.android.provider";
+    public static final String AUTHORITY = "bbct.android.common.provider";
     /**
      * URI used to access data with {@link BaseballCardProvider}.
      */
@@ -95,8 +95,8 @@ public final class BaseballCardContract {
      * wants every column from the {@link BaseballCardProvider}.
      */
     public static final String[] PROJECTION = {
-        BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME,
-        COUNT_COL_NAME, PLAYER_NAME_COL_NAME, TEAM_COL_NAME,
+        ID_COL_NAME, BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME,
+        VALUE_COL_NAME, COUNT_COL_NAME, PLAYER_NAME_COL_NAME, TEAM_COL_NAME,
         PLAYER_POSITION_COL_NAME};
     private static final String INT_SELECTION_FORMAT = "%s = ?";
     /**
