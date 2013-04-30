@@ -27,7 +27,7 @@ device = MonkeyRunner.waitForConnection()
 apkFile = '../common/main/bin/bbct-android-common-debug.apk'
 
 if device.installPackage(apkFile):
-    cards = util.read_card_data('cards.csv')
+    cards = util.read_card_data('data/cards.csv')
 
     for card in cards:
         print card
