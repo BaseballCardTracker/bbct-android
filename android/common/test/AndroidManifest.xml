@@ -21,6 +21,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="bbct.android.common.tests"
 >
+    <uses-sdk android:targetSdkVersion="17"
+              android:minSdkVersion="7" />
     <!-- We add an application tag here just so that we can indicate that
     this package needs to link against the android.test library,
     which is needed when building test cases. -->
