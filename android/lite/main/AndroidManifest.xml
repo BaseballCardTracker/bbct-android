@@ -27,7 +27,7 @@
     />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <permission android:name="@string/read_permission"
+    <permission android:name="bbct.android.lite.permission.READ"
                 android:label="@string/permission_label"
                 android:description="@string/permission_desc"
                 android:protectionLevel="signature"

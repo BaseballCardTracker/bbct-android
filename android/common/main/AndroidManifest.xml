@@ -23,7 +23,7 @@
     <uses-sdk android:minSdkVersion="7"
               android:targetSdkVersion="16"
     />
-    <permission android:name="@string/read_permission"
+    <permission android:name="bbct.android.common.permission.READ"
                 android:label="@string/permission_label"
                 android:description="@string/permission_desc"
                 android:protectionLevel="signature"
