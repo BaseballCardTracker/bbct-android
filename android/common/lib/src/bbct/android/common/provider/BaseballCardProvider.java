@@ -25,8 +25,6 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 import bbct.android.common.R;
-import bbct.android.common.database.BaseballCardSQLHelper;
-import bbct.android.common.database.SQLHelperFactory;
 import bbct.android.common.exception.SQLHelperCreationException;
 
 /**
@@ -53,6 +51,8 @@ public class BaseballCardProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+        Log.d(TAG, "query()");
+
         if (uri.equals(BaseballCardContract.CONTENT_URI)) {
             return this.sqlHelper.getReadableDatabase().query(BaseballCardContract.TABLE_NAME, projection, selection, selectionArgs, sortOrder, null, null);
         } else {
@@ -72,8 +72,18 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues cv) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Uri insert(Uri uri, ContentValues values) {
+        if (uri.equals(BaseballCardContract.CONTENT_URI)) {
+            long row = this.sqlHelper.getWritableDatabase().insert(BaseballCardContract.TABLE_NAME, null, values);
+
+            if (row != -1) {
+                return uri.buildUpon().appendPath(Long.toString(row)).build();
+            } else {
+                return null;
+            }
+        }
+
+        return null;
     }
 
     @Override

@@ -34,8 +34,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.database.BaseballCardSQLHelper;
-import bbct.android.common.database.SQLHelperFactory;
+import bbct.android.common.provider.BaseballCardSQLHelper;
+import bbct.android.common.provider.SQLHelperFactory;
 import bbct.android.common.exception.SQLHelperCreationException;
 import bbct.android.common.provider.BaseballCardContract;
 

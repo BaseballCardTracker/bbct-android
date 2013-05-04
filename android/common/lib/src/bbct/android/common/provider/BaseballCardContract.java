@@ -19,7 +19,9 @@
 package bbct.android.common.provider;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.net.Uri;
+import bbct.android.common.data.BaseballCard;
 
 /**
  * This class contains constant values which are necessary to interact correctly
@@ -36,7 +38,7 @@ public final class BaseballCardContract {
     /**
      * Authority used to access data with {@link BaseballCardProvider}.
      */
-    public static final String AUTHORITY = "bbct.android.provider";
+    public static final String AUTHORITY = "bbct.android.common.provider";
     /**
      * URI used to access data with {@link BaseballCardProvider}.
      */
@@ -89,11 +91,51 @@ public final class BaseballCardContract {
      */
     public static final String PLAYER_POSITION_COL_NAME = "player_position";
     /**
-     * Convenience variable that can be used when the ContentResolver wants
-     * every column from the ContentProvider.
+     * Convenience variable that can be used when the {@link ContentResolver}
+     * wants every column from the {@link BaseballCardProvider}.
      */
     public static final String[] PROJECTION = {
-        BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME,
-        COUNT_COL_NAME, PLAYER_NAME_COL_NAME, TEAM_COL_NAME,
+        ID_COL_NAME, BRAND_COL_NAME, YEAR_COL_NAME, NUMBER_COL_NAME,
+        VALUE_COL_NAME, COUNT_COL_NAME, PLAYER_NAME_COL_NAME, TEAM_COL_NAME,
         PLAYER_POSITION_COL_NAME};
+    private static final String INT_SELECTION_FORMAT = "%s = ?";
+    /**
+     * Convenience variable to select cards with a given year.
+     */
+    public static final String YEAR_SELECTION = String.format(INT_SELECTION_FORMAT, YEAR_COL_NAME);
+    /**
+     * Convenience variable to select cards with a given number.
+     */
+    public static final String NUMBER_SELECTION = String.format(INT_SELECTION_FORMAT, NUMBER_COL_NAME);
+    /**
+     * Convenience variable to select cards with a given player name.
+     */
+    private static final String STRING_SELECTION_FORMAT = "%s LIKE ?";
+    public static final String PLAYER_NAME_SELECTION = String.format(STRING_SELECTION_FORMAT, PLAYER_NAME_COL_NAME);
+    /**
+     * Convenience variable to select cards with a given team.
+     */
+    public static final String TEAM_SELECTION = String.format(STRING_SELECTION_FORMAT, TEAM_COL_NAME);
+
+    /**
+     * Convenience method to create a {@link ContentValues} map for the data
+     * from the given {@link BaseballCard} object. The returned
+     * {@link ContentValues} can be used with the appropriate methods of a
+     * {@link ContentResolver} to access data from {@link BaseballCardProvider}.
+     *
+     * @param card The baseball card data.
+     * @return The mapping of data.
+     */
+    public static ContentValues getContentValues(BaseballCard card) {
+        ContentValues cv = new ContentValues(7);
+        cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
+        cv.put(BaseballCardContract.YEAR_COL_NAME, card.getYear());
+        cv.put(BaseballCardContract.NUMBER_COL_NAME, card.getNumber());
+        cv.put(BaseballCardContract.VALUE_COL_NAME, card.getValue());
+        cv.put(BaseballCardContract.COUNT_COL_NAME, card.getCount());
+        cv.put(BaseballCardContract.PLAYER_NAME_COL_NAME, card.getPlayerName());
+        cv.put(BaseballCardContract.TEAM_COL_NAME, card.getTeam());
+        cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME, card.getPlayerPosition());
+        return cv;
+    }
 }

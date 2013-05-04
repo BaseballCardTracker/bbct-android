@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Tests for the {@link bbct.android.common.database} package in the BBCT for
+ * Tests for the {@link bbct.android.common.provider} package in the BBCT for
  * Android Common Library.
  */
-package bbct.android.common.database.test;
+package bbct.android.common.provider.test;
