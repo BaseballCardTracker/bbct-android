@@ -116,11 +116,11 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
 
-        Assert.assertNotNull(this.listView);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
-
         BBCTTestUtil.assertDatabaseCreated(this.activity.getPackageName());
         Assert.assertTrue(this.dbUtil.containsAllBaseballCards(this.allCards));
+
+        Assert.assertNotNull(this.listView);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, this.listView);
     }
 
     /**
