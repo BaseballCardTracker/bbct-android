@@ -114,11 +114,13 @@ public class BaseballCardDetails extends Activity {
     private BaseballCard getBaseballCard() {
         Log.d(TAG, "getBaseballCard()");
 
-        EditText[] allEditTexts = {this.brandText, this.yearText, this.numberText,
-            this.countText, this.valueText, this.playerNameText, this.teamText};
-        int[] errorIds = {R.string.brand_input_error, R.string.year_input_error, R.string.number_input_error,
-            R.string.count_input_error, R.string.value_input_error, R.string.player_name_input_error,
-            R.string.team_input_error};
+        EditText[] allEditTexts = { this.brandText, this.yearText,
+            this.numberText, this.valueText, this.countText,
+            this.playerNameText, this.teamText };
+        int[] errorIds = { R.string.brand_input_error,
+            R.string.year_input_error, R.string.number_input_error,
+            R.string.value_input_error, R.string.count_input_error,
+            R.string.player_name_input_error, R.string.team_input_error };
         boolean validInput = true;
 
         String playerPosition = (String) this.playerPositionSpinner.getSelectedItem();
