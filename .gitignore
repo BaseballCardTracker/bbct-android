@@ -8,13 +8,7 @@ local.properties
 bin
 gen
 libs
-/launch4j.log
-/tmp/
-/mem/
-/icons/
-/screenshots/
 *.out
-/.metadata
 .settings
 javadoc/
 /release
