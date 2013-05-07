@@ -279,6 +279,7 @@ final public class BBCTTestUtil {
             } else {
                 test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
             }
+            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
         }
     }
 
