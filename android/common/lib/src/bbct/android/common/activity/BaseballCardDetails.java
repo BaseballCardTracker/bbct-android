@@ -106,11 +106,6 @@ public class BaseballCardDetails extends Activity {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
     private BaseballCard getBaseballCard() {
         Log.d(TAG, "getBaseballCard()");
 
