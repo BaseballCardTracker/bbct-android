@@ -304,4 +304,37 @@ public class JDBCBaseballCardIONominalTest {
 
         Assert.fail("The test case is a prototype.");
     }
+        
+    /**
+     * Test for {@link JDBCBaseballCardIOremoveupdateBaseballCard(BaseballCard)}.
+     * Actual result is a boolean indicating whether the current pointer in ResultSet
+     * is positioned after the last row (false value if it is). Expected result is 
+     * therefore a boolean value of false, which indicates that no rows were returned.
+     *
+     * @throws Exception
+     */
+     @Test
+     public void testRemoveCard() throws Exception {
+    	 this.instance.insertBaseballCard(this.card);
+        	 
+    	 String playerName = card.getPlayerName();
+    	 int year = card.getYear();
+    	 int number = card.getNumber();
+         String query = "SELECT * "
+                 + "  FROM " + JDBCBaseballCardIO.TABLE_NAME
+                 + " WHERE " + JDBCBaseballCardIO.NAME_COL_NAME + " = ? "
+                 + "   AND " + JDBCBaseballCardIO.YEAR_COL_NAME + " = ? "
+                 + "   AND " + JDBCBaseballCardIO.NUMBER_COL_NAME + " = ?";
+         
+         PreparedStatement ps = this.conn.prepareStatement(query);
+         ps.setString(1, playerName);
+         ps.setInt(2, year);
+         ps.setInt(3, number);
+             
+         this.instance.removeBaseballCard(this.card);
+         ResultSet rs = ps.executeQuery();
+         boolean result = rs.next();
+             
+         Assert.assertEquals(false, result);
+     }
 }

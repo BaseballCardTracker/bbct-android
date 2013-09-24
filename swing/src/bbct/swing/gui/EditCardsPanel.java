@@ -106,12 +106,18 @@ public class EditCardsPanel extends JPanel {
             public void actionPerformed(ActionEvent evt) {
                 try {
                     List<BaseballCard> cards = new ArrayList<BaseballCard>();
+                    List<BaseballCard> toRemove = new ArrayList<BaseballCard>();
 
                     synchronized (EditCardsPanel.this.getTreeLock()) {
                         Component[] panels = EditCardsPanel.this.allCardDetailsPanel.getComponents();
 
                         for (Component panel : panels) {
-                            cards.add(((CardDetailsPanel) panel).getBaseballCard());
+                            CardDetailsPanel cur = (CardDetailsPanel) panel;
+                            
+                            if (cur.deleteCard())
+                            	toRemove.add(cur.getBaseballCard());
+                            else
+                            	cards.add(cur.getBaseballCard());
                         }
                     }
 
@@ -121,6 +127,13 @@ public class EditCardsPanel extends JPanel {
                         Logger.getLogger(EditCardsPanel.class.getName()).log(Level.SEVERE, "Unable to update baseball card data.", ex);
                         JOptionPane.showMessageDialog(EditCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.IO_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                     }
+                    
+                    try {
+						EditCardsPanel.this.bcio.removeBaseballCards(toRemove);
+					} catch (BBCTIOException ex) {
+						Logger.getLogger(EditCardsPanel.class.getName()).log(Level.SEVERE, "Unable to remove baseball card data.", ex);
+                        JOptionPane.showMessageDialog(EditCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.IO_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+					}
 
                     Container parent = EditCardsPanel.this.getParent();
                     CardLayout layout = (CardLayout) parent.getLayout();

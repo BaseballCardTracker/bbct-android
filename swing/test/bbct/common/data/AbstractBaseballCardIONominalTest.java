@@ -118,5 +118,9 @@ public class AbstractBaseballCardIONominalTest {
         public void updateBaseballCard(BaseballCard card) throws BBCTIOException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
+        @Override
+        public void removeBaseballCard(BaseballCard card) throws BBCTIOException {
+        	throw new UnsupportedOperationException("Not supported yet.");
+        }
     }
 }

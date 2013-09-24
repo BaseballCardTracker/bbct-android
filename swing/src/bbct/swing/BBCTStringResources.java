@@ -119,6 +119,7 @@ public class BBCTStringResources {
         public static final String CARD_COUNT_LABEL = "Card Count:";
         public static final String PLAYER_NAME_LABEL = "Player Name:";
         public static final String PLAYER_POSITION_LABEL = "Player Position:";
+        public static final String DELETE_CARD_LABEL = "Delete this card";
 
         private LabelResources() {
         }

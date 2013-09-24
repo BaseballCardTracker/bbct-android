@@ -18,15 +18,6 @@
  */
 package bbct.swing.gui;
 
-import bbct.common.data.BaseballCard;
-import bbct.common.exceptions.InputException;
-import bbct.swing.BBCTStringResources;
-import bbct.swing.BBCTStringResources.TitleResources;
-import bbct.swing.gui.event.UpdateInstructionsFocusListener;
-import bbct.swing.gui.inputverifiers.CurrencyInputVerifier;
-import bbct.swing.gui.inputverifiers.NotEmptyInputVerifier;
-import bbct.swing.gui.inputverifiers.PositiveIntegerInputVerifier;
-import bbct.swing.gui.inputverifiers.YearInputVerifier;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Font;
@@ -36,10 +27,12 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -51,6 +44,16 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+
+import bbct.common.data.BaseballCard;
+import bbct.common.exceptions.InputException;
+import bbct.swing.BBCTStringResources;
+import bbct.swing.BBCTStringResources.TitleResources;
+import bbct.swing.gui.event.UpdateInstructionsFocusListener;
+import bbct.swing.gui.inputverifiers.CurrencyInputVerifier;
+import bbct.swing.gui.inputverifiers.NotEmptyInputVerifier;
+import bbct.swing.gui.inputverifiers.PositiveIntegerInputVerifier;
+import bbct.swing.gui.inputverifiers.YearInputVerifier;
 
 /**
  * {@link CardDetailsPanel} contains labels and text fields for the data stored
@@ -302,6 +305,15 @@ public class CardDetailsPanel extends JPanel {
         gbc.weightx = 2;
         gbc.insets = rightInsets;
         cardDetailsInputPanel.add(this.countTextField, gbc);
+        
+        if (!this.allEditable) {
+        	this.deleteOption = new JCheckBox(BBCTStringResources.LabelResources.DELETE_CARD_LABEL);
+        	this.deleteOption.setFont(new Font("Tahoma", 0, 14));
+        	gbc.gridx = 0;
+        	gbc.gridy = 5;
+        	gbc.insets = leftInsets;
+        	cardDetailsInputPanel.add(this.deleteOption, gbc);
+        }
 
         cardDetailsPanel.add(cardDetailsInputPanel, BorderLayout.PAGE_START);
 
@@ -368,6 +380,11 @@ public class CardDetailsPanel extends JPanel {
                 } else {
                     CardDetailsPanel.this.valueTextField.requestFocusInWindow();
                 }
+                
+                // to accommodate additional JCheckBox
+                JFrame frame = (JFrame) CardDetailsPanel.this.getTopLevelAncestor();
+                frame.pack();
+                frame.setLocationRelativeTo(null); // center frame
             }
 
             @Override
@@ -390,6 +407,11 @@ public class CardDetailsPanel extends JPanel {
 
         return tf.getValue();
     }
+    
+    public boolean deleteCard() {
+    	return this.deleteOption.isSelected();
+    }
+    
     private JTextField brandTextField;
     private JFormattedTextField countTextField;
     private JFormattedTextField numberTextField;
@@ -403,6 +425,7 @@ public class CardDetailsPanel extends JPanel {
     private InputVerifier yearVerifier = new YearInputVerifier();
     private InputVerifier currencyVerifier = new CurrencyInputVerifier();
     private static final int TEXT_FIELD_COLUMNS = 15;
+    private JCheckBox deleteOption;
 
     private static BaseballCard createBaseballCard() {
         String brand = "Topps";
