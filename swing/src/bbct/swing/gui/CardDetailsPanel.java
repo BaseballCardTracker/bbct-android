@@ -307,12 +307,12 @@ public class CardDetailsPanel extends JPanel {
         cardDetailsInputPanel.add(this.countTextField, gbc);
         
         if (!this.allEditable) {
-        	this.deleteOption = new JCheckBox(BBCTStringResources.LabelResources.DELETE_CARD_LABEL);
-        	this.deleteOption.setFont(new Font("Tahoma", 0, 14));
-        	gbc.gridx = 0;
-        	gbc.gridy = 5;
-        	gbc.insets = leftInsets;
-        	cardDetailsInputPanel.add(this.deleteOption, gbc);
+            this.deleteOption = new JCheckBox(BBCTStringResources.LabelResources.DELETE_CARD_LABEL);
+            this.deleteOption.setFont(new Font("Tahoma", 0, 14));
+            gbc.gridx = 0;
+            gbc.gridy = 5;
+            gbc.insets = leftInsets;
+            cardDetailsInputPanel.add(this.deleteOption, gbc);
         }
 
         cardDetailsPanel.add(cardDetailsInputPanel, BorderLayout.PAGE_START);
@@ -409,7 +409,7 @@ public class CardDetailsPanel extends JPanel {
     }
     
     public boolean deleteCard() {
-    	return this.deleteOption.isSelected();
+        return this.deleteOption.isSelected();
     }
     
     private JTextField brandTextField;

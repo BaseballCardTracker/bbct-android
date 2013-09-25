@@ -99,6 +99,82 @@ public class EditCardsPanel extends JPanel {
             }
         });
         buttonsPanel.add(nextButton);
+        
+        JButton deleteButton = new JButton(BBCTStringResources.ButtonResources.DELETE_BUTTON);
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                try {
+                    List<CardDetailsPanel> toRemove = new ArrayList<CardDetailsPanel>();
+                    int numMarked = 0, numCards = 0; 
+                    CardDetailsPanel activePanel = null;
+                
+                    synchronized (EditCardsPanel.this.getTreeLock()) {
+                        Component[] panels = EditCardsPanel.this.allCardDetailsPanel.getComponents();
+                        
+                        for (Component panel : panels) {
+                            CardDetailsPanel cur = (CardDetailsPanel) panel;
+                            numCards++;
+                            
+                            if (cur.deleteCard()) {
+                                numMarked++;
+                                toRemove.add(cur);
+                            }
+                            
+                            if (cur.isVisible())
+                                activePanel = cur;
+                        }
+                    }
+                    
+                    String dialogLabel = (numMarked < 1) ? BBCTStringResources.DialogResources.DELETE_SINGLE_CARD_PROMPT : String.format(BBCTStringResources.DialogResources.DELETE_MULTIPLE_CARD_PROMPT, numMarked);
+                    int choice = JOptionPane.showConfirmDialog(EditCardsPanel.this, dialogLabel, BBCTStringResources.TitleResources.EDIT_CARD_PANEL_TITLE, JOptionPane.YES_NO_OPTION);
+                    
+                    if (choice != JOptionPane.YES_OPTION)
+                        return;
+                    
+                    try {
+                        
+                        // remove all marked cards
+                        if (numMarked > 0) {
+                            for (CardDetailsPanel panel : toRemove) {
+                                EditCardsPanel.this.bcio.removeBaseballCard(panel.getBaseballCard());
+                                EditCardsPanel.this.allCardDetailsPanel.remove(panel);
+                                numCards--;
+                            }
+                        }
+                            
+                        // remove currently active card
+                        else {
+                            EditCardsPanel.this.bcio.removeBaseballCard(activePanel.getBaseballCard());
+                            EditCardsPanel.this.allCardDetailsPanel.remove(activePanel);
+                            numCards--;
+                        }
+                        
+                        // update the view
+                        if (numCards == 0) {
+                            Container parent = EditCardsPanel.this.getParent();
+                            CardLayout layout = (CardLayout) parent.getLayout();
+
+                            parent.remove(EditCardsPanel.this);
+                            layout.show(parent, BBCTFrame.FIND_CARDS_MENU_CARD_NAME);
+                            
+                        } else {              
+                            CardLayout layout = (CardLayout) EditCardsPanel.this.allCardDetailsPanel.getLayout();
+                            layout.next(EditCardsPanel.this.allCardDetailsPanel);
+                        }
+                        
+                    } catch (BBCTIOException ex) {
+                        Logger.getLogger(EditCardsPanel.class.getName()).log(Level.SEVERE, "Unable to remove baseball card data.", ex);
+                        JOptionPane.showMessageDialog(EditCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.IO_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                } catch (InputException ex) {
+                    Logger.getLogger(EditCardsPanel.class.getName()).log(Level.INFO, "Invalid input.", ex);
+                    JOptionPane.showMessageDialog(EditCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.INPUT_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+                } 
+            }
+        });
+        buttonsPanel.add(deleteButton);
 
         final JButton doneButton = new JButton(BBCTStringResources.ButtonResources.DONE_BUTTON);
         doneButton.addActionListener(new ActionListener() {
@@ -106,18 +182,12 @@ public class EditCardsPanel extends JPanel {
             public void actionPerformed(ActionEvent evt) {
                 try {
                     List<BaseballCard> cards = new ArrayList<BaseballCard>();
-                    List<BaseballCard> toRemove = new ArrayList<BaseballCard>();
 
                     synchronized (EditCardsPanel.this.getTreeLock()) {
                         Component[] panels = EditCardsPanel.this.allCardDetailsPanel.getComponents();
 
                         for (Component panel : panels) {
-                            CardDetailsPanel cur = (CardDetailsPanel) panel;
-                            
-                            if (cur.deleteCard())
-                            	toRemove.add(cur.getBaseballCard());
-                            else
-                            	cards.add(cur.getBaseballCard());
+                            cards.add(((CardDetailsPanel) panel).getBaseballCard());
                         }
                     }
 
@@ -127,13 +197,6 @@ public class EditCardsPanel extends JPanel {
                         Logger.getLogger(EditCardsPanel.class.getName()).log(Level.SEVERE, "Unable to update baseball card data.", ex);
                         JOptionPane.showMessageDialog(EditCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.IO_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                     }
-                    
-                    try {
-						EditCardsPanel.this.bcio.removeBaseballCards(toRemove);
-					} catch (BBCTIOException ex) {
-						Logger.getLogger(EditCardsPanel.class.getName()).log(Level.SEVERE, "Unable to remove baseball card data.", ex);
-                        JOptionPane.showMessageDialog(EditCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.IO_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
-					}
 
                     Container parent = EditCardsPanel.this.getParent();
                     CardLayout layout = (CardLayout) parent.getLayout();

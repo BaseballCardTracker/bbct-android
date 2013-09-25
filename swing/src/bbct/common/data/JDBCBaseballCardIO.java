@@ -285,25 +285,25 @@ public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
     }
     
     /**
-     * Executes a DELETE query to remove records in the database
-     * containing playerName, year and number from the given 
-     * {@link BaseballCard}.
-     *
-     * @param card The card to remove.
-     * @throws BBCTIOException If any I/O errors occur while writing to the
-     * underlying storage mechanism.
-     */
+    * Executes a DELETE query to remove records in the database
+    * containing playerName, year and number from the given 
+    * {@link BaseballCard}.
+    *
+    * @param card The card to remove.
+    * @throws BBCTIOException If any I/O errors occur while writing to the
+    * underlying storage mechanism.
+    */
     @Override
     public void removeBaseballCard(BaseballCard card) throws BBCTIOException {
-    	try {
-			String playerName = card.getPlayerName();
-			int year = card.getYear();
-			int number = card.getNumber();
+        try {
+            String playerName = card.getPlayerName();
+            int year = card.getYear();
+            int number = card.getNumber();
 			
-			String sqlQuery = "DELETE FROM " + TABLE_NAME
-					+ " WHERE " + NAME_COL_NAME + " = ?"
-					+ " AND " + YEAR_COL_NAME + " = ?"
-					+ " AND " + NUMBER_COL_NAME + " = ?";
+            String sqlQuery = "DELETE FROM " + TABLE_NAME
+                    + " WHERE " + NAME_COL_NAME + " = ?"
+                    + " AND " + YEAR_COL_NAME + " = ?"
+                    + " AND " + NUMBER_COL_NAME + " = ?";
 			
             PreparedStatement stmt = this.conn.prepareStatement(sqlQuery);
             stmt.setString(1, playerName);
@@ -311,9 +311,9 @@ public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
             stmt.setInt(3, number);
 			
             stmt.executeUpdate();
-		} catch (SQLException ex) {
-			throw new BBCTIOException(BBCTStringResources.ErrorResources.DATABASE_DELETE_ERROR, ex);
-		}
+        } catch (SQLException ex) {
+            throw new BBCTIOException(BBCTStringResources.ErrorResources.DATABASE_DELETE_ERROR, ex);
+        }
     }
 
     private List<BaseballCard> getBaseballCards(ResultSet rs) throws SQLException {
