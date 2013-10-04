@@ -185,12 +185,12 @@ public class BBCTStringResources {
         private ErrorResources() {
         }
     }
-    
+
     public static class DialogResources {
-        
+
         public static final String DELETE_MULTIPLE_CARD_PROMPT = "You are about to delete %d cards. Are you sure?";
         public static final String DELETE_SINGLE_CARD_PROMPT = "You are about to delete this card. Are you sure?";
-        
+
         private DialogResources() {
         }
     }

@@ -66,7 +66,7 @@ public abstract class AbstractBaseballCardIO implements BaseballCardIO {
             this.updateBaseballCard(card);
         }
     }
-    
+
     /**
      * Default implementation of
      * {@link BaseballCardIO#removeBaseballCards(List)} which iterates through

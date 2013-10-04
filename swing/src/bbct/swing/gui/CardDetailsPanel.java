@@ -18,6 +18,15 @@
  */
 package bbct.swing.gui;
 
+import bbct.common.data.BaseballCard;
+import bbct.common.exceptions.InputException;
+import bbct.swing.BBCTStringResources;
+import bbct.swing.BBCTStringResources.TitleResources;
+import bbct.swing.gui.event.UpdateInstructionsFocusListener;
+import bbct.swing.gui.inputverifiers.CurrencyInputVerifier;
+import bbct.swing.gui.inputverifiers.NotEmptyInputVerifier;
+import bbct.swing.gui.inputverifiers.PositiveIntegerInputVerifier;
+import bbct.swing.gui.inputverifiers.YearInputVerifier;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Font;
@@ -27,7 +36,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.InputVerifier;
@@ -44,16 +52,6 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
-
-import bbct.common.data.BaseballCard;
-import bbct.common.exceptions.InputException;
-import bbct.swing.BBCTStringResources;
-import bbct.swing.BBCTStringResources.TitleResources;
-import bbct.swing.gui.event.UpdateInstructionsFocusListener;
-import bbct.swing.gui.inputverifiers.CurrencyInputVerifier;
-import bbct.swing.gui.inputverifiers.NotEmptyInputVerifier;
-import bbct.swing.gui.inputverifiers.PositiveIntegerInputVerifier;
-import bbct.swing.gui.inputverifiers.YearInputVerifier;
 
 /**
  * {@link CardDetailsPanel} contains labels and text fields for the data stored
@@ -305,7 +303,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.weightx = 2;
         gbc.insets = rightInsets;
         cardDetailsInputPanel.add(this.countTextField, gbc);
-        
+
         if (!this.allEditable) {
             this.deleteOption = new JCheckBox(BBCTStringResources.LabelResources.DELETE_CARD_LABEL);
             this.deleteOption.setFont(new Font("Tahoma", 0, 14));
@@ -380,7 +378,7 @@ public class CardDetailsPanel extends JPanel {
                 } else {
                     CardDetailsPanel.this.valueTextField.requestFocusInWindow();
                 }
-                
+
                 // to accommodate additional JCheckBox
                 JFrame frame = (JFrame) CardDetailsPanel.this.getTopLevelAncestor();
                 frame.pack();
@@ -407,11 +405,11 @@ public class CardDetailsPanel extends JPanel {
 
         return tf.getValue();
     }
-    
+
     public boolean deleteCard() {
         return this.deleteOption.isSelected();
     }
-    
+
     private JTextField brandTextField;
     private JFormattedTextField countTextField;
     private JFormattedTextField numberTextField;
@@ -419,13 +417,13 @@ public class CardDetailsPanel extends JPanel {
     private JComboBox playerPositionComboBox;
     private JFormattedTextField valueTextField;
     private JFormattedTextField yearTextField;
+    private JCheckBox deleteOption;
     private boolean allEditable = true;
     private InputVerifier notEmptyVerifier = new NotEmptyInputVerifier();
     private InputVerifier numVerifier = new PositiveIntegerInputVerifier();
     private InputVerifier yearVerifier = new YearInputVerifier();
     private InputVerifier currencyVerifier = new CurrencyInputVerifier();
     private static final int TEXT_FIELD_COLUMNS = 15;
-    private JCheckBox deleteOption;
 
     private static BaseballCard createBaseballCard() {
         String brand = "Topps";
@@ -479,7 +477,7 @@ public class CardDetailsPanel extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     // TODO: How do I get the currently visible CardDetailsPanel?
-//                    CardDetailsPanel panel = (CardDetailsPanel)cl.
+                    //                    CardDetailsPanel panel = (CardDetailsPanel)cl.
                     BaseballCard card = editablePanel.getBaseballCard();
 
                     JOptionPane.showMessageDialog(frame, card, "Baseball Card", JOptionPane.INFORMATION_MESSAGE);

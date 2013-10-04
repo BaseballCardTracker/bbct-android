@@ -118,7 +118,7 @@ public interface BaseballCardIO {
      * underlying storage mechanism.
      */
     public void updateBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
-    
+
     /**
      * Removes data in the underlying persistent storage for the given card.
      * 
@@ -127,7 +127,7 @@ public interface BaseballCardIO {
      * underlying storage mechanism.
      */
     public void removeBaseballCard(BaseballCard card) throws BBCTIOException;
-    
+
     /**
      * Removes data in the underlying persistent storage for all the cards in
      * the given List.
