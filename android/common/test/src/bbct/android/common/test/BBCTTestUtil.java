@@ -281,7 +281,7 @@ final public class BBCTTestUtil {
             }
         }
     }
-    
+
     /**
      * Fills in the current AutoCompleteTextView/EditText view,  of the given
      * {@link BaseballCardDetails} activity.
@@ -289,7 +289,7 @@ final public class BBCTTestUtil {
      * @param inst The {@link Instrumentation} object performing the
      * test.
      * @param editTextView The {@link BaseballCardDetails} EditText object
-     *                         of the view to be filled 
+     *                         of the view to be filled
      * @param cardDetail The {@link BaseballCard} string object holding the data to add to
      * the database.
      */
@@ -297,7 +297,6 @@ final public class BBCTTestUtil {
         Log.d(TAG, "sendKeysToCurrFieldCardDetails()");
 
         inst.sendStringSync(cardDetail);
-        
         if (editTextView instanceof AutoCompleteTextView)
         {
             inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ESCAPE);
