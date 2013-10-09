@@ -75,6 +75,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         this.valueText = (EditText) this.activity.findViewById(R.id.value_text);
         this.countText = (EditText) this.activity.findViewById(R.id.count_text);
         this.playerNameText = (EditText) this.activity.findViewById(R.id.player_name_text);
+        this.playerTeamText = (EditText) this.activity.findViewById(R.id.team_text);
         this.playerPositionSpinner = (Spinner) this.activity.findViewById(R.id.player_position_text);
         this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
         this.doneButton = (Button) this.activity.findViewById(R.id.done_button);
@@ -95,6 +96,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.assertNotNull(this.valueText);
         Assert.assertNotNull(this.countText);
         Assert.assertNotNull(this.playerNameText);
+        Assert.assertNotNull(this.playerTeamText);
         Assert.assertNotNull(this.playerPositionSpinner);
         Assert.assertNotNull(this.saveButton);
         Assert.assertNotNull(this.doneButton);
@@ -140,6 +142,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     private EditText valueText = null;
     private EditText countText = null;
     private EditText playerNameText = null;
+    private EditText playerTeamText = null;
     private Spinner playerPositionSpinner = null;
     private Button saveButton = null;
     private Button doneButton = null;
