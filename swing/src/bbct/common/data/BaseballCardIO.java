@@ -121,7 +121,7 @@ public interface BaseballCardIO {
 
     /**
      * Removes data in the underlying persistent storage for the given card.
-     * 
+     *
      * @param card The card to remove.
      * @throws BBCTIOException If any I/O errors occur while writing to the
      * underlying storage mechanism.

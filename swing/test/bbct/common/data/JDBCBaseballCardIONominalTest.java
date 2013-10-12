@@ -65,7 +65,7 @@ public class JDBCBaseballCardIONominalTest {
 
     /**
      *
-     * @throws BBCTIOException 
+     * @throws BBCTIOException
      * @throws SQLException
      */
     @Before
@@ -87,7 +87,7 @@ public class JDBCBaseballCardIONominalTest {
 
     /**
      *
-     * @throws BBCTIOException 
+     * @throws BBCTIOException
      * @throws SQLException
      */
     @After
@@ -104,7 +104,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testConstructor() throws Exception {
+    public void testConstructor() throws Exception {
         // Constructor is called from setUp(). This method simply asserts
         // that the table was created.
 
@@ -217,7 +217,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testGetBaseballCardsByYear() throws Exception {
+    public void testGetBaseballCardsByYear() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
@@ -232,7 +232,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testGetBaseballCardsByNumber() throws Exception {
+    public void testGetBaseballCardsByNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
@@ -248,7 +248,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testGetBaseballCardsByYearAndNumber() throws Exception {
+    public void testGetBaseballCardsByYearAndNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
@@ -263,7 +263,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testGetBaseballCardsByPlayerName() throws Exception {
+    public void testGetBaseballCardsByPlayerName() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
@@ -278,7 +278,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
-        public void testUpdateCard() throws Exception {
+    public void testUpdateCard() throws Exception {
         this.instance.insertBaseballCard(this.card);
         int newValue = 20000;
         int newCount = 3;
@@ -304,37 +304,37 @@ public class JDBCBaseballCardIONominalTest {
 
         Assert.fail("The test case is a prototype.");
     }
-        
+
     /**
      * Test for {@link JDBCBaseballCardIOremoveupdateBaseballCard(BaseballCard)}.
      * Actual result is a boolean indicating whether the current pointer in ResultSet
-     * is positioned after the last row (false value if it is). Expected result is 
+     * is positioned after the last row (false value if it is). Expected result is
      * therefore a boolean value of false, which indicates that no rows were returned.
      *
      * @throws Exception
      */
-     @Test
-     public void testRemoveCard() throws Exception {
-    	 this.instance.insertBaseballCard(this.card);
-        	 
-    	 String playerName = card.getPlayerName();
-    	 int year = card.getYear();
-    	 int number = card.getNumber();
-         String query = "SELECT * "
-                 + "  FROM " + JDBCBaseballCardIO.TABLE_NAME
-                 + " WHERE " + JDBCBaseballCardIO.NAME_COL_NAME + " = ? "
-                 + "   AND " + JDBCBaseballCardIO.YEAR_COL_NAME + " = ? "
-                 + "   AND " + JDBCBaseballCardIO.NUMBER_COL_NAME + " = ?";
-         
-         PreparedStatement ps = this.conn.prepareStatement(query);
-         ps.setString(1, playerName);
-         ps.setInt(2, year);
-         ps.setInt(3, number);
-             
-         this.instance.removeBaseballCard(this.card);
-         ResultSet rs = ps.executeQuery();
-         boolean result = rs.next();
-             
-         Assert.assertEquals(false, result);
-     }
+    @Test
+    public void testRemoveCard() throws Exception {
+        this.instance.insertBaseballCard(this.card);
+
+        String playerName = card.getPlayerName();
+        int year = card.getYear();
+        int number = card.getNumber();
+        String query = "SELECT * "
+                + "  FROM " + JDBCBaseballCardIO.TABLE_NAME
+                + " WHERE " + JDBCBaseballCardIO.NAME_COL_NAME + " = ? "
+                + "   AND " + JDBCBaseballCardIO.YEAR_COL_NAME + " = ? "
+                + "   AND " + JDBCBaseballCardIO.NUMBER_COL_NAME + " = ?";
+
+        PreparedStatement ps = this.conn.prepareStatement(query);
+        ps.setString(1, playerName);
+        ps.setInt(2, year);
+        ps.setInt(3, number);
+
+        this.instance.removeBaseballCard(this.card);
+        ResultSet rs = ps.executeQuery();
+        boolean result = rs.next();
+
+        Assert.assertEquals(false, result);
+    }
 }

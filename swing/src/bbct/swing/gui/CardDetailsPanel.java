@@ -304,16 +304,17 @@ public class CardDetailsPanel extends JPanel {
         gbc.insets = rightInsets;
         cardDetailsInputPanel.add(this.countTextField, gbc);
 
-        if (!this.allEditable) {
-            this.deleteOption = new JCheckBox(BBCTStringResources.LabelResources.DELETE_CARD_LABEL);
-            this.deleteOption.setFont(new Font("Tahoma", 0, 14));
-            gbc.gridx = 0;
-            gbc.gridy = 5;
-            gbc.insets = leftInsets;
-            cardDetailsInputPanel.add(this.deleteOption, gbc);
-        }
-
         cardDetailsPanel.add(cardDetailsInputPanel, BorderLayout.PAGE_START);
+
+        JPanel deleteOptionPanel = new JPanel(new GridBagLayout());
+        this.deleteOption = new JCheckBox(BBCTStringResources.LabelResources.DELETE_CARD_LABEL);
+        this.deleteOption.setFont(new Font("Tahoma", 0, 14));
+        this.deleteOption.setEnabled(!this.allEditable);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = leftInsets;
+
+        deleteOptionPanel.add(this.deleteOption, gbc);
 
         JPanel playerDetailsPanel = new JPanel(new BorderLayout());
         TitledBorder titledPlayerDetailsBorder = BorderFactory.createTitledBorder(TitleResources.PLAYER_DETAILS_BORDER_TITLE);
@@ -365,6 +366,7 @@ public class CardDetailsPanel extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(cardDetailsPanel);
         this.add(playerDetailsPanel);
+        this.add(deleteOptionPanel);
 
         addAncestorListener(new AncestorListener() {
             @Override
@@ -477,7 +479,7 @@ public class CardDetailsPanel extends JPanel {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     // TODO: How do I get the currently visible CardDetailsPanel?
-                    //                    CardDetailsPanel panel = (CardDetailsPanel)cl.
+//                    CardDetailsPanel panel = (CardDetailsPanel)cl.
                     BaseballCard card = editablePanel.getBaseballCard();
 
                     JOptionPane.showMessageDialog(frame, card, "Baseball Card", JOptionPane.INFORMATION_MESSAGE);
