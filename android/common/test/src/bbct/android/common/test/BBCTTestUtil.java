@@ -226,51 +226,41 @@ final public class BBCTTestUtil {
         Instrumentation inst = test.getInstrumentation();
 
         if ((fieldFlags & BRAND_FIELD) > 0) {
-            inst.sendStringSync(card.getBrand());
-            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ESCAPE);
-        }
-        AutoCompleteTextView brandText = (AutoCompleteTextView) cardDetails.findViewById(R.id.brand_text);
-        if (brandText.isPopupShowing()) {
-            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+            AutoCompleteTextView brandText = (AutoCompleteTextView) cardDetails.findViewById(R.id.brand_text);
+            sendKeysToCurrFieldCardDetails(inst, brandText, card.getBrand());
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if ((fieldFlags & YEAR_FIELD) > 0) {
-            inst.sendStringSync(Integer.toString(card.getYear()));
+            sendKeysToCurrFieldCardDetails(inst, null, Integer.toString(card.getYear()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if ((fieldFlags & NUMBER_FIELD) > 0) {
-            inst.sendStringSync(Integer.toString(card.getNumber()));
+            sendKeysToCurrFieldCardDetails(inst, null, Integer.toString(card.getNumber()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if ((fieldFlags & VALUE_FIELD) > 0) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
-            inst.sendStringSync(valueStr);
+            sendKeysToCurrFieldCardDetails(inst, null, valueStr);
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if ((fieldFlags & COUNT_FIELD) > 0) {
-            inst.sendStringSync(Integer.toString(card.getCount()));
+            sendKeysToCurrFieldCardDetails(inst, null, Integer.toString(card.getCount()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if ((fieldFlags & PLAYER_NAME_FIELD) > 0) {
-            inst.sendStringSync(card.getPlayerName());
-        }
-        AutoCompleteTextView playerNameText = (AutoCompleteTextView) cardDetails.findViewById(R.id.player_name_text);
-        if (playerNameText.isPopupShowing()) {
-            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+            AutoCompleteTextView playerNameText = (AutoCompleteTextView) cardDetails.findViewById(R.id.player_name_text);
+            sendKeysToCurrFieldCardDetails(inst, playerNameText, card.getPlayerName());
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if ((fieldFlags & TEAM_FIELD) > 0) {
-            inst.sendStringSync(card.getTeam());
-        }
-        AutoCompleteTextView teamText = (AutoCompleteTextView) cardDetails.findViewById(R.id.team_text);
-        if (teamText.isPopupShowing()) {
-            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+            AutoCompleteTextView teamText = (AutoCompleteTextView) cardDetails.findViewById(R.id.team_text);
+            sendKeysToCurrFieldCardDetails(inst, teamText, card.getTeam());
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
@@ -289,6 +279,29 @@ final public class BBCTTestUtil {
             } else {
                 test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
             }
+        }
+    }
+
+    /**
+     * Fills in the current AutoCompleteTextView/EditText view,  of the given
+     * {@link BaseballCardDetails} activity.
+     *
+     * @param inst The {@link Instrumentation} object performing the
+     * test.
+     * @param editTextView The {@link BaseballCardDetails} EditText object
+     *                         of the view to be filled
+     * @param cardDetail The {@link BaseballCard} string object holding the data to add to
+     * the database.
+     */
+     public static void sendKeysToCurrFieldCardDetails(Instrumentation inst, EditText editTextView, String cardDetail) {
+        Log.d(TAG, "sendKeysToCurrFieldCardDetails()");
+
+        inst.sendStringSync(cardDetail);
+        if (editTextView instanceof AutoCompleteTextView)
+        {
+            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ESCAPE);
+            if(((AutoCompleteTextView)editTextView).isPopupShowing())
+                inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
         }
     }
 
