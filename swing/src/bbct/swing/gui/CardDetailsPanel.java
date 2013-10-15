@@ -381,10 +381,6 @@ public class CardDetailsPanel extends JPanel {
                     CardDetailsPanel.this.valueTextField.requestFocusInWindow();
                 }
 
-                // to accommodate additional JCheckBox
-                JFrame frame = (JFrame) CardDetailsPanel.this.getTopLevelAncestor();
-                frame.pack();
-                frame.setLocationRelativeTo(null); // center frame
             }
 
             @Override
