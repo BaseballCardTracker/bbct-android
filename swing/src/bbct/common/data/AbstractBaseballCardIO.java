@@ -66,4 +66,21 @@ public abstract class AbstractBaseballCardIO implements BaseballCardIO {
             this.updateBaseballCard(card);
         }
     }
+
+    /**
+     * Default implementation of
+     * {@link BaseballCardIO#removeBaseballCards(List)} which iterates through
+     * the list of cards and calls {@link #removeBaseballCard(BaseballCard)} on
+     * each one.
+     *
+     * @param cards The list of cards to remove.
+     * @throws BBCTIOException If any I/O errors occur while writing to the
+     * underlying storage mechanism.
+     */
+    @Override
+    public void removeBaseballCards(List<BaseballCard> cards) throws BBCTIOException {
+        for (BaseballCard card : cards) {
+            this.removeBaseballCard(card);
+        }
+    }
 }

@@ -47,6 +47,10 @@ public class BBCTStringResources {
          */
         public static final String DATABASE_UPDATE_ERROR = "Unable to update baseball card data.";
         /**
+         * DELETE statement error message.
+         */
+        public static final String DATABASE_DELETE_ERROR = "Unable to remove baseball card data.";
+        /**
          * Error when baseball card already exists in the underlying storage
          * system.
          */

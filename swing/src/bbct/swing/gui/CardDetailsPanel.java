@@ -40,6 +40,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.InputVerifier;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
@@ -305,6 +306,16 @@ public class CardDetailsPanel extends JPanel {
 
         cardDetailsPanel.add(cardDetailsInputPanel, BorderLayout.PAGE_START);
 
+        JPanel deleteOptionPanel = new JPanel(new GridBagLayout());
+        this.deleteOption = new JCheckBox(BBCTStringResources.LabelResources.DELETE_CARD_LABEL);
+        this.deleteOption.setFont(new Font("Tahoma", 0, 14));
+        this.deleteOption.setEnabled(!this.allEditable);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = leftInsets;
+
+        deleteOptionPanel.add(this.deleteOption, gbc);
+
         JPanel playerDetailsPanel = new JPanel(new BorderLayout());
         TitledBorder titledPlayerDetailsBorder = BorderFactory.createTitledBorder(TitleResources.PLAYER_DETAILS_BORDER_TITLE);
         titledPlayerDetailsBorder.setTitleFont(new Font("Tahoma", 0, 18));
@@ -355,6 +366,7 @@ public class CardDetailsPanel extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(cardDetailsPanel);
         this.add(playerDetailsPanel);
+        this.add(deleteOptionPanel);
 
         addAncestorListener(new AncestorListener() {
             @Override
@@ -368,6 +380,7 @@ public class CardDetailsPanel extends JPanel {
                 } else {
                     CardDetailsPanel.this.valueTextField.requestFocusInWindow();
                 }
+
             }
 
             @Override
@@ -390,6 +403,11 @@ public class CardDetailsPanel extends JPanel {
 
         return tf.getValue();
     }
+
+    public boolean deleteCard() {
+        return this.deleteOption.isSelected();
+    }
+
     private JTextField brandTextField;
     private JFormattedTextField countTextField;
     private JFormattedTextField numberTextField;
@@ -397,6 +415,7 @@ public class CardDetailsPanel extends JPanel {
     private JComboBox playerPositionComboBox;
     private JFormattedTextField valueTextField;
     private JFormattedTextField yearTextField;
+    private JCheckBox deleteOption;
     private boolean allEditable = true;
     private InputVerifier notEmptyVerifier = new NotEmptyInputVerifier();
     private InputVerifier numVerifier = new PositiveIntegerInputVerifier();
