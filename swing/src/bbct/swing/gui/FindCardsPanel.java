@@ -23,6 +23,7 @@ import bbct.common.data.BaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.common.exceptions.InputException;
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.SetDefaultButtonAncestorListener;
 import bbct.swing.gui.event.ShowCardActionListener;
 import java.awt.BorderLayout;
@@ -71,7 +72,7 @@ public class FindCardsPanel extends JPanel {
 
         final JButton findButton = new JButton(BBCTStringResources.ButtonResources.FIND_BUTTON);
         // TODO: Don't create Font objects.
-        findButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        findButton.setFont(FontResources.BUTTON_FONT);
         findButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +101,7 @@ public class FindCardsPanel extends JPanel {
         buttonsPanel.add(findButton);
 
         JButton backButton = new JButton(BBCTStringResources.ButtonResources.BACK_BUTTON);
-        backButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        backButton.setFont(FontResources.BUTTON_FONT);
         backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_MENU_CARD_NAME));
         buttonsPanel.add(backButton);
 

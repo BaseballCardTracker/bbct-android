@@ -23,10 +23,14 @@ import bbct.common.data.BaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.common.exceptions.InputException;
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.UpdateInstructionsFocusListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import bbct.swing.gui.inputverifiers.PositiveIntegerInputVerifier;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.List;
@@ -100,7 +104,7 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
         JPanel inputPanel = new JPanel(new GridBagLayout());
 
         JLabel numberLabel = new JLabel(BBCTStringResources.LabelResources.CARD_NUMBER_LABEL);
-        numberLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        numberLabel.setFont(FontResources.DEFAULT_FONT);
 
         GridBagConstraints numberLabelConstraints = new GridBagConstraints();
         numberLabelConstraints.gridx = 0;
@@ -112,7 +116,7 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
 
         this.numberTextField = new JFormattedTextField();
         this.numberTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
-        this.numberTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        this.numberTextField.setFont(FontResources.DEFAULT_FONT);
         this.numberTextField.setColumns(10);
         this.numberTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_NUMBER_INSTRUCTIONS));
 

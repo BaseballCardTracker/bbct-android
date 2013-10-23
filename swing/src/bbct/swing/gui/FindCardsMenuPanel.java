@@ -19,11 +19,11 @@
 package bbct.swing.gui;
 
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.SetDefaultButtonAncestorListener;
 import bbct.swing.gui.event.ShowCardActionListener;
 import bbct.swing.gui.event.UpdateInstructionsAncestorListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
-import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -57,27 +57,27 @@ public class FindCardsMenuPanel extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(40, 70, 40, 70));
 
         JButton findCardsByYearButton = new JButton(BBCTStringResources.ButtonResources.FIND_CARDS_BY_YEAR_BUTTON);
-        findCardsByYearButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
+        findCardsByYearButton.setFont(FontResources.BUTTON_FONT);
         findCardsByYearButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_BY_YEAR_CARD_NAME));
         this.add(findCardsByYearButton);
 
         JButton findCardsByNumberButton = new JButton(BBCTStringResources.ButtonResources.FIND_CARDS_BY_NUMBER_BUTTON);
-        findCardsByNumberButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
+        findCardsByNumberButton.setFont(FontResources.BUTTON_FONT);
         findCardsByNumberButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_BY_NUMBER_CARD_NAME));
         this.add(findCardsByNumberButton);
 
         JButton findCardsByYearAndNumberButton = new JButton(BBCTStringResources.ButtonResources.FIND_CARDS_BY_YEAR_AND_NUMBER_BUTTON);
-        findCardsByYearAndNumberButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
+        findCardsByYearAndNumberButton.setFont(FontResources.BUTTON_FONT);
         findCardsByYearAndNumberButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_BY_YEAR_AND_NUMBER_CARD_NAME));
         this.add(findCardsByYearAndNumberButton);
 
         JButton findCardsByPlayerNameButton = new JButton(BBCTStringResources.ButtonResources.FIND_CARDS_BY_PLAYER_NAME_BUTTON);
-        findCardsByPlayerNameButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
+        findCardsByPlayerNameButton.setFont(FontResources.BUTTON_FONT);
         findCardsByPlayerNameButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_BY_PLAYER_NAME_CARD_NAME));
         this.add(findCardsByPlayerNameButton);
 
         JButton backButton = new JButton(BBCTStringResources.ButtonResources.BACK_BUTTON);
-        backButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
+        backButton.setFont(FontResources.BUTTON_FONT);
         backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
         this.add(backButton);
 

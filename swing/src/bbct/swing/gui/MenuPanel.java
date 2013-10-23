@@ -19,11 +19,11 @@
 package bbct.swing.gui;
 
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.SetDefaultButtonAncestorListener;
 import bbct.swing.gui.event.ShowCardActionListener;
 import bbct.swing.gui.event.UpdateInstructionsAncestorListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
-import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -57,22 +57,22 @@ public class MenuPanel extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(50, 110, 50, 110));
 
         JButton addCardsButton = new JButton(BBCTStringResources.ButtonResources.ADD_CARDS_BUTTON);
-        addCardsButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
+		addCardsButton.setFont(FontResources.MENU_BUTTON_FONT);
         addCardsButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.ADD_CARDS_CARD_NAME));
         this.add(addCardsButton);
 
         JButton findCardsButton = new JButton(BBCTStringResources.ButtonResources.FIND_CARDS_BUTTON);
-        findCardsButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
+        findCardsButton.setFont(FontResources.MENU_BUTTON_FONT);
         findCardsButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_MENU_CARD_NAME));
         this.add(findCardsButton);
 
         JButton aboutButton = new JButton(BBCTStringResources.ButtonResources.ABOUT_BUTTON);
-        aboutButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
+        aboutButton.setFont(FontResources.MENU_BUTTON_FONT);
         aboutButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.ABOUT_CARD_NAME));
         this.add(aboutButton);
 
         JButton exitButton = new JButton(BBCTStringResources.ButtonResources.EXIT_BUTTON);
-        exitButton.setFont(new Font("Tahoma", 0, 24)); // NOI18N
+        exitButton.setFont(FontResources.MENU_BUTTON_FONT);
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {

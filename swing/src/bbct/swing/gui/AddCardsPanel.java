@@ -23,11 +23,11 @@ import bbct.common.data.BaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.common.exceptions.InputException;
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.SetDefaultButtonAncestorListener;
 import bbct.swing.gui.event.ShowCardActionListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
@@ -71,7 +71,7 @@ public class AddCardsPanel extends JPanel {
         JPanel buttonsPanel = new JPanel();
 
         final JButton addCardButton = new JButton(BBCTStringResources.ButtonResources.ADD_CARD_BUTTON);
-        addCardButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
+        addCardButton.setFont(FontResources.BUTTON_FONT);
         addCardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -97,7 +97,7 @@ public class AddCardsPanel extends JPanel {
         buttonsPanel.add(addCardButton);
 
         JButton backButton = new JButton(BBCTStringResources.ButtonResources.BACK_BUTTON);
-        backButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
+        backButton.setFont(FontResources.BUTTON_FONT);
         backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
         buttonsPanel.add(backButton);
 

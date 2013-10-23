@@ -23,6 +23,7 @@ import bbct.common.data.BaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.common.exceptions.InputException;
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.UpdateInstructionsFocusListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import bbct.swing.gui.inputverifiers.PositiveIntegerInputVerifier;
@@ -118,7 +119,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         JPanel inputPanel = new JPanel(new GridBagLayout());
 
         JLabel yearLabel = new JLabel(BBCTStringResources.LabelResources.CARD_YEAR_LABEL);
-        yearLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        yearLabel.setFont(FontResources.DEFAULT_FONT);
 
         GridBagConstraints yearLabelConstraints = new GridBagConstraints();
         yearLabelConstraints.gridx = 0;
@@ -130,7 +131,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
 
         this.yearTextField = new JFormattedTextField();
         this.yearTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
-        this.yearTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        this.yearTextField.setFont(FontResources.DEFAULT_FONT);
         this.yearTextField.setColumns(10);
         this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_YEAR_INSTRUCTIONS));
 
@@ -143,7 +144,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         inputPanel.add(this.yearTextField, yearTextFieldConstraints);
 
         JLabel cardNumberLabel = new JLabel(BBCTStringResources.LabelResources.CARD_NUMBER_LABEL);
-        cardNumberLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        cardNumberLabel.setFont(FontResources.DEFAULT_FONT);
 
         GridBagConstraints numberLabelConstraints = new GridBagConstraints();
         numberLabelConstraints.gridx = 0;
@@ -155,7 +156,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
 
         this.numberTextField = new JFormattedTextField();
         this.numberTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
-        this.numberTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        this.numberTextField.setFont(FontResources.DEFAULT_FONT);
         this.numberTextField.setColumns(10);
         this.numberTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_NUMBER_INSTRUCTIONS));
 
