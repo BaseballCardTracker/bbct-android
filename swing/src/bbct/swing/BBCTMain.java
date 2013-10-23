@@ -18,6 +18,7 @@
  */
 package bbct.swing;
 
+import bbct.common.BBCTStringResources.ErrorResources;
 import bbct.common.data.BaseballCardIO;
 import bbct.common.data.JDBCBaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
@@ -59,7 +60,7 @@ public class BBCTMain {
             JOptionPane.showMessageDialog(null, ex.getMessage(), ex.getMessage(), JOptionPane.ERROR_MESSAGE);
         } catch (BBCTIOException ex) {
             Logger.getLogger(BBCTMain.class.getName()).log(Level.SEVERE, "Unable to initialize storage.", ex);
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Initialization Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), BBCTStringResources.ErrorResources.INITIALIZATION_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
         }
     }
 

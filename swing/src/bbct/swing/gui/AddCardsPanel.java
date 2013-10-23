@@ -87,10 +87,10 @@ public class AddCardsPanel extends JPanel {
                     JOptionPane.showMessageDialog(AddCardsPanel.this, ex.getMessage(), ex.getMessage(), JOptionPane.ERROR_MESSAGE);
                 } catch (InputException ex) {
                     Logger.getLogger(AddCardsPanel.class.getName()).log(Level.INFO, "Invalid input", ex);
-                    JOptionPane.showMessageDialog(AddCardsPanel.this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(AddCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.INPUT_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
-                    Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Unexpected Exception", ex);
-                    JOptionPane.showMessageDialog(AddCardsPanel.this, ex, "Unexpected Exception", JOptionPane.ERROR_MESSAGE);
+                    Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Unexpected exception", ex);
+                    JOptionPane.showMessageDialog(AddCardsPanel.this, ex, BBCTStringResources.ErrorResources.UNEXPECTED_EXCEPTION_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
