@@ -150,6 +150,31 @@ public class BaseballCardDetails extends Activity {
             return null;
         }
     }
+  
+    /**
+     *
+     * Called when a key was released and not handled by any of the views inside of the activity.
+     * @param keyCode - The value in event.getKeyCode().
+     * @param event   - Description of the key event.
+     */
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        //If the key entered is 'Enter'('next' or 'done'), then move the focus
+        // to the next view.
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+            if (brandText.hasFocus()) {
+                yearText.requestFocus();
+                return true;
+            } else if (playerNameText.hasFocus()) {
+                teamText.requestFocus();
+                return true;
+            } else if (teamText.hasFocus() == true) {
+                playerPositionSpinner.requestFocus();
+                return true;
+            }
+        }
+        return super.onKeyUp(keyCode, event);
+    }
 
     /**
      *
