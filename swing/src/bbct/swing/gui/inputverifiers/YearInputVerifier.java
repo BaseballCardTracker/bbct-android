@@ -26,8 +26,6 @@ import javax.swing.JTextField;
  * {@link YearInputVerifier} verifies that a
  * {@link javax.swing.JFormattedTextField} contains a positive four-digit
  * integer that can represent a year.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class YearInputVerifier extends InputVerifier {
 

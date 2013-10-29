@@ -47,8 +47,6 @@ import javax.swing.WindowConstants;
 
 /**
  * The main window for the BBCT application.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BBCTFrame extends JFrame {
 

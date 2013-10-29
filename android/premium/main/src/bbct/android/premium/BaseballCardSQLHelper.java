@@ -34,7 +34,6 @@ import java.util.List;
 
 /**
  *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardSQLHelper extends bbct.android.common.provider.BaseballCardSQLHelper {
 

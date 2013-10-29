@@ -24,8 +24,6 @@ import javax.swing.JTextField;
 
 /**
  * Validates that a {@link javax.swing.JFormattedTextField} is not empty.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class NotEmptyInputVerifier extends InputVerifier {
 

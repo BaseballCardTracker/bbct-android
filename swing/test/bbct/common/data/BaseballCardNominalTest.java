@@ -22,8 +22,6 @@ import org.junit.*;
 
 /**
  * TODO: JavaDoc
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardNominalTest {
 

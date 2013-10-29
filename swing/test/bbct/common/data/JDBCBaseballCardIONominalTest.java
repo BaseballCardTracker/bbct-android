@@ -30,8 +30,6 @@ import org.junit.*;
  *
  * TODO: testGetBaseballCardByX() methods should be extended to find multiple
  * cards
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class JDBCBaseballCardIONominalTest {
 

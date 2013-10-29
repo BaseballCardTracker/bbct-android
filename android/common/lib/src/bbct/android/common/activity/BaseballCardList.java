@@ -41,8 +41,6 @@ import bbct.android.common.provider.BaseballCardContract;
 
 /**
  * TODO: Make list fancier
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardList extends ListActivity {
 

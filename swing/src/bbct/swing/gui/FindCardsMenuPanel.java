@@ -40,8 +40,6 @@ import javax.swing.JPanel;
  * @see FindCardsByNumberPanel
  * @see FindCardsByYearAndNumberPanel
  * @see FindCardsByPlayerNamePanel
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FindCardsMenuPanel extends JPanel {
 

@@ -31,8 +31,6 @@ import java.util.List;
 
 /**
  * TODO: Write JUnit tests.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 

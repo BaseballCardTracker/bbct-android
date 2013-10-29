@@ -22,8 +22,6 @@ package bbct.swing;
  * {@link BBCTStringResources} provides resources for the Swing GUI for BBCT.
  * Most of these are Strings which will be displayed in various parts of the
  * interface.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BBCTStringResources {
 

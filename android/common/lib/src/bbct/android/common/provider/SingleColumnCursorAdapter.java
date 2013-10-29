@@ -33,7 +33,6 @@ import bbct.android.common.exception.SQLHelperCreationException;
 
 /**
  *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class SingleColumnCursorAdapter extends CursorAdapter {
 

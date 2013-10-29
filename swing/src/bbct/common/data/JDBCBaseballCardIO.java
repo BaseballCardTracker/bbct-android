@@ -29,8 +29,6 @@ import java.util.logging.Logger;
 /**
  * An implementation of {@link BaseballCardIO} which uses a database table as
  * the underlying persistent storage mechanism.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
 

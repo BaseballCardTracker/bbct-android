@@ -69,8 +69,6 @@ import javax.swing.event.AncestorListener;
  * TODO: Instructions should change depending on value of allEditable field.
  *
  * TODO: Add $ at the beginning of valueTextField's text if it is not present?
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class CardDetailsPanel extends JPanel {
 

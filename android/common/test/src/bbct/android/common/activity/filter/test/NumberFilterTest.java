@@ -26,8 +26,6 @@ import junit.framework.Assert;
 
 /**
  * Tests for {@link NumberFilter}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
 

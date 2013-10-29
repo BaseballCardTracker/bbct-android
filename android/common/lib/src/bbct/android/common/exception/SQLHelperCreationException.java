@@ -20,7 +20,6 @@ package bbct.android.common.exception;
 
 /**
  *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class SQLHelperCreationException extends Exception {
 

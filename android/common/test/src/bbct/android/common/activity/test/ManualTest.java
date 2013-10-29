@@ -32,8 +32,6 @@ import java.util.List;
 /**
  * This test adds data to the app's database so that a tester can perform manual
  * tests.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class ManualTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
 

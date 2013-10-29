@@ -34,8 +34,6 @@ import junit.framework.Assert;
 
 /**
  * Tests for {@link BaseballCardSQLHelper}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardSQLHelperTest extends AndroidTestCase {
 

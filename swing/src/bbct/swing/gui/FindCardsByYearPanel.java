@@ -43,8 +43,6 @@ import javax.swing.text.NumberFormatter;
  * {@link FindCardsByYearPanel} allows the user to input a card year. This value
  * is used as the parameters when searching the underlying storage mechanism for
  * cards with the given year.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FindCardsByYearPanel extends FindCardsByPanel {
 

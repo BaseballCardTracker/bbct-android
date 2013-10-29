@@ -34,8 +34,6 @@ import javax.swing.JPanel;
 
 /**
  * A panel that displays the name of this application and copyright information.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class AboutPanel extends JPanel {
 

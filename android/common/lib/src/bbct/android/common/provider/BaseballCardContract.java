@@ -26,8 +26,6 @@ import bbct.android.common.data.BaseballCard;
 /**
  * This class contains constant values which are necessary to interact correctly
  * with {@link BaseballCardProvider}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public final class BaseballCardContract {
 

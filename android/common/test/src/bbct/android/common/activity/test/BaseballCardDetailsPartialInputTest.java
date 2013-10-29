@@ -40,8 +40,6 @@ import junit.framework.TestSuite;
  * A parameterized test which can test any combination of input in the
  * {@link BaseballCardDetails} activity. This test can be run using
  * {@link BBCTTestRunner}.
- *
- * @author codeguru <codeguru@users.sourceforge.net==
  */
 public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 

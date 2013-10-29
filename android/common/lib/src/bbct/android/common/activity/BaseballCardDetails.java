@@ -41,7 +41,6 @@ import bbct.android.common.provider.BaseballCardContract;
 
 /**
  *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardDetails extends Activity {
 

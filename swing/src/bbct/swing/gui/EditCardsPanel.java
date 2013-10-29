@@ -51,8 +51,6 @@ import javax.swing.JPanel;
  * card?
  *
  * TODO: Uneditable text fields should not be in the focus order when tabbing.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class EditCardsPanel extends JPanel {
 

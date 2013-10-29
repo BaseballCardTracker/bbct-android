@@ -28,7 +28,6 @@ import bbct.android.common.R;
 
 /**
  *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public abstract class FilterActivity extends Activity {
 

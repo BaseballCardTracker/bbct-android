@@ -25,8 +25,6 @@ import bbct.android.common.R;
 
 /**
  * Static utility methods for showing common dialogs.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class DialogUtil {
 

@@ -40,8 +40,6 @@ import junit.framework.Assert;
  * Tests for {@link FilterOptions} activity class.
  *
  * TODO Add tests for configuration changes
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOptions> {
 

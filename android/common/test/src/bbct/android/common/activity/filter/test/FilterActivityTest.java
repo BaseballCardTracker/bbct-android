@@ -35,8 +35,6 @@ import junit.framework.Assert;
  * TODO Add tests for configuration changes
  *
  * @param <T> The concrete subclass of {@link FilterActivity} being tested.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public abstract class FilterActivityTest<T extends FilterActivity> extends ActivityInstrumentationTestCase2<T> {
 

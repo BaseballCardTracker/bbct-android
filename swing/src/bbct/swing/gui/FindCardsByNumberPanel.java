@@ -46,8 +46,6 @@ import javax.swing.text.NumberFormatter;
  * {@link FindCardsByNumberPanel} allows the user to input a card number. This
  * value is used as the parameters when searching the underlying storage
  * mechanism for cards with the given number.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FindCardsByNumberPanel extends FindCardsByPanel {
 

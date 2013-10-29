@@ -34,8 +34,6 @@ import junit.framework.Assert;
 
 /**
  * Tests for {@link BaseballCardDetails}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
