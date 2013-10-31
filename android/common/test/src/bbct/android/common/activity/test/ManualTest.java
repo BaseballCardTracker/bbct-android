@@ -18,7 +18,6 @@
  */
 package bbct.android.common.activity.test;
 
-import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.data.BaseballCard;

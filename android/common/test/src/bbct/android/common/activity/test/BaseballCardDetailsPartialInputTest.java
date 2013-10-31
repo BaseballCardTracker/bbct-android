@@ -18,8 +18,6 @@
  */
 package bbct.android.common.activity.test;
 
-import java.util.EnumSet;
-
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
@@ -33,6 +31,7 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.EnumSet;
 import java.util.Set;
 import junit.framework.Assert;
 import junit.framework.Test;
