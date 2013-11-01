@@ -32,10 +32,20 @@ import bbct.android.common.R;
 import bbct.android.common.exception.SQLHelperCreationException;
 
 /**
- *
+ * Provides a {@link CursorAdapter} for a single column from a database.
  */
 public class SingleColumnCursorAdapter extends CursorAdapter {
 
+    /**
+     * Create a {@link SingleColumnCursorAdapter} for the column with the given
+     * name.
+     *
+     * @param activity
+     *            The {@link Activity} responsible for managing the
+     *            {@link Cursor} underlying this [@link Adapter}.
+     * @param colName
+     *            The name of the column to query.
+     */
     public SingleColumnCursorAdapter(Activity activity, String colName) {
         super(activity, null, true);
 
