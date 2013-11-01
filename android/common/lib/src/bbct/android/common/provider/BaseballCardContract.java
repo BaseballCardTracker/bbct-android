@@ -109,6 +109,9 @@ public final class BaseballCardContract {
      * Convenience variable to select cards with a given player name.
      */
     private static final String STRING_SELECTION_FORMAT = "%s LIKE ?";
+    /**
+     * Convenience variable to select cards for a given player.
+     */
     public static final String PLAYER_NAME_SELECTION = String.format(STRING_SELECTION_FORMAT, PLAYER_NAME_COL_NAME);
     /**
      * Convenience variable to select cards with a given team.
@@ -121,7 +124,8 @@ public final class BaseballCardContract {
      * {@link ContentValues} can be used with the appropriate methods of a
      * {@link ContentResolver} to access data from {@link BaseballCardProvider}.
      *
-     * @param card The baseball card data.
+     * @param card
+     *            The baseball card data.
      * @return The mapping of data.
      */
     public static ContentValues getContentValues(BaseballCard card) {
