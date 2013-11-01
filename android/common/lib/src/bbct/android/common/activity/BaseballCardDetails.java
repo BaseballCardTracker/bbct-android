@@ -40,12 +40,15 @@ import bbct.android.common.exception.SQLHelperCreationException;
 import bbct.android.common.provider.BaseballCardContract;
 
 /**
- *
+ * Allows user to add a new card or view and edit details of an existing card.
  */
 public class BaseballCardDetails extends Activity {
 
     private static final String DETAILS_AUTHORITY = "bbct.android.details";
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
+    /**
+     * URI for viewing card details.
+     */
     public static final Uri DETAILS_URI = new Uri.Builder().scheme("content").authority(DETAILS_AUTHORITY).path(TABLE_NAME).build();
 
     /**
