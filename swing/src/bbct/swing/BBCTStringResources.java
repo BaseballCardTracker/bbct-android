@@ -25,6 +25,9 @@ package bbct.swing;
  */
 public class BBCTStringResources {
 
+    /**
+     * String resources related to database access.
+     */
     public static class DatabaseResources {
 
         /**
@@ -38,6 +41,9 @@ public class BBCTStringResources {
         }
     }
 
+    /**
+     * String resources for frame titles.
+     */
     public static class TitleResources {
 
         /**
@@ -89,40 +95,94 @@ public class BBCTStringResources {
          * is visible.
          */
         public static final String ABOUT_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - About";
+        /**
+         * Title in the Player Details section of the card details panel.
+         */
         public static final String PLAYER_DETAILS_BORDER_TITLE = "Player Details";
+        /**
+         * Title in the Card Details section of the card details panel.
+         */
         public static final String CARD_DETAILS_BORDER_TITLE = "Card Details";
 
         private TitleResources() {
         }
     }
 
+    /**
+     * String resources for the About box.
+     */
     public static class AboutResources {
 
+        /**
+         * Title bar in the About box.
+         */
         public static final String ABOUT_TITLE = "Baseball Card Tracker";
+        /**
+         * Version string.
+         */
         public static final String ABOUT_VERSION = "Version 0.5.3 (beta)";
+        /**
+         * Copyright notice.
+         */
         public static final String ABOUT_COPYRIGHT = "<html>&copy 2012 codeguru</html>";
+        /**
+         * Website address.
+         */
         public static final String ABOUT_WEBSITE = "Project website: http://sf.net/p/bbct";
+        /**
+         * GPL license information.
+         */
         public static final String ABOUT_LICENSE = "<html>This software is licensed under the GPL. Visit<br> http://www.gnu.org/licenses/ for a copy of the license.</html>";
 
         private AboutResources() {
         }
     }
 
+    /**
+     * Labels used in the Card Details panel.
+     */
     public static class LabelResources {
 
+        /**
+         * Card brand.
+         */
         public static final String CARD_BRAND_LABEL = "Card Brand:";
+        /**
+         * Card year.
+         */
         public static final String CARD_YEAR_LABEL = "Card Year:";
+        /**
+         * Card number.
+         */
         public static final String CARD_NUMBER_LABEL = "Card Number:";
+        /**
+         * Card value.
+         */
         public static final String CARD_VALUE_LABEL = "Card Value:";
+        /**
+         * Card count.
+         */
         public static final String CARD_COUNT_LABEL = "Card Count:";
+        /**
+         * Player name.
+         */
         public static final String PLAYER_NAME_LABEL = "Player Name:";
+        /**
+         * Player position.
+         */
         public static final String PLAYER_POSITION_LABEL = "Player Position:";
+        /**
+         * Label for Delete Card checkbox.
+         */
         public static final String DELETE_CARD_LABEL = "Delete this card";
 
         private LabelResources() {
         }
     }
 
+    /**
+     * Text shown in buttons.
+     */
     public static class ButtonResources {
 
         public static final String OK_BUTTON = "OK";
