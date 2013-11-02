@@ -28,6 +28,9 @@ import bbct.android.lite.activity.BaseballCardList;
  */
 public class BaseballCardListTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
 
+    /**
+     * Create test cases for {@link BaseballCardList}.
+     */
     public BaseballCardListTest() {
         super(BaseballCardList.class);
     }
