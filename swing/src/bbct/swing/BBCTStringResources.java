@@ -59,42 +59,50 @@ public class BBCTStringResources {
          * Title shown in the BBCT window when
          * {@link bbct.swing.gui.AddCardsPanel} is visible.
          */
-        public static final String ADD_CARDS_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Add Cards";
+        public static final String ADD_CARDS_PANEL_TITLE = BASEBALL_FRAME_TITLE
+                + " - Add Cards";
         /**
          * Title shown in the BBCT window when
          * {@link bbct.swing.gui.FindCardsMenuPanel} is visible.
          */
-        public static final String FIND_CARDS_MENU_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards";
+        public static final String FIND_CARDS_MENU_PANEL_TITLE = BASEBALL_FRAME_TITLE
+                + " - Find Cards";
         /**
          * Title shown in the BBCT window when
          * {@link bbct.swing.gui.FindCardsByYearPanel} is visible.
          */
-        public static final String FIND_CARDS_BY_YEAR_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards by Year";
+        public static final String FIND_CARDS_BY_YEAR_PANEL_TITLE = BASEBALL_FRAME_TITLE
+                + " - Find Cards by Year";
         /**
          * Title shown in the BBCT window when
          * {@link bbct.swing.gui.FindCardsByNumberPanel} is visible.
          */
-        public static final String FIND_CARDS_BY_NUMBER_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards by Number";
+        public static final String FIND_CARDS_BY_NUMBER_PANEL_TITLE = BASEBALL_FRAME_TITLE
+                + " - Find Cards by Number";
         /**
          * Title shown in the BBCT window when
          * {@link bbct.swing.gui.FindCardsByNumberPanel} is visible.
          */
-        public static final String FIND_CARDS_BY_YEAR_AND_NUMBER_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards by Year and Number";
+        public static final String FIND_CARDS_BY_YEAR_AND_NUMBER_PANEL_TITLE = BASEBALL_FRAME_TITLE
+                + " - Find Cards by Year and Number";
         /**
          * Title shown in the BBCT window when
          * {@link bbct.swing.gui.FindCardsByPlayerNamePanel} is visible.
          */
-        public static final String FIND_CARDS_BY_PLAYER_NAME_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Find Cards by Player Name";
+        public static final String FIND_CARDS_BY_PLAYER_NAME_PANEL_TITLE = BASEBALL_FRAME_TITLE
+                + " - Find Cards by Player Name";
         /**
          * Title shown in the BBCT window when
          * {@link bbct.swing.gui.EditCardsPanel} is visible.
          */
-        public static final String EDIT_CARD_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Edit Card";
+        public static final String EDIT_CARD_PANEL_TITLE = BASEBALL_FRAME_TITLE
+                + " - Edit Card";
         /**
          * Title shown in the BBCT window when {@link bbct.swing.gui.AboutPanel}
          * is visible.
          */
-        public static final String ABOUT_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - About";
+        public static final String ABOUT_PANEL_TITLE = BASEBALL_FRAME_TITLE
+                + " - About";
         /**
          * Title in the Player Details section of the card details panel.
          */
@@ -185,89 +193,230 @@ public class BBCTStringResources {
      */
     public static class ButtonResources {
 
+        /**
+         * Text for the OK button.
+         */
         public static final String OK_BUTTON = "OK";
+        /**
+         * Text for the Add Card button.
+         */
         public static final String ADD_CARD_BUTTON = "Add Card";
+        /**
+         * Text for the Previous button.
+         */
         public static final String PREVIOUS_BUTTON = "<-- Previous";
+        /**
+         * Text for the Next button.
+         */
         public static final String NEXT_BUTTON = "Next -->";
+        /**
+         * Text for the Done button.
+         */
         public static final String DONE_BUTTON = "Done";
+        /**
+         * Text for the Find Cards by Year button.
+         */
         public static final String FIND_CARDS_BY_YEAR_BUTTON = "Find Cards By Year";
+        /**
+         * Text for the Find Cards by Number button.
+         */
         public static final String FIND_CARDS_BY_NUMBER_BUTTON = "Find Cards By Number";
+        /**
+         * Text for the Find Cards by Year and Number button.
+         */
         public static final String FIND_CARDS_BY_YEAR_AND_NUMBER_BUTTON = "Find Cards By Year and Number";
+        /**
+         * Text for the Find Cards by Player Name button.
+         */
         public static final String FIND_CARDS_BY_PLAYER_NAME_BUTTON = "Find Cards By Player Name";
+        /**
+         * Text for the Back button.
+         */
         public static final String BACK_BUTTON = "Back";
+        /**
+         * Text for the Find button.
+         */
         public static final String FIND_BUTTON = "Find";
+        /**
+         * Text for the Add Cards button.
+         */
         public static final String ADD_CARDS_BUTTON = "Add Cards";
+        /**
+         * Text for the Find Cards button.
+         */
         public static final String FIND_CARDS_BUTTON = "Find Cards";
+        /**
+         * Text for the About button.
+         */
         public static final String ABOUT_BUTTON = "About";
+        /**
+         * Text for the Exit button.
+         */
         public static final String EXIT_BUTTON = "Exit";
+        /**
+         * Text for the Delete button.
+         */
         public static final String DELETE_BUTTON = "Delete";
 
         private ButtonResources() {
         }
     }
 
+    /**
+     * Instructions to the user shown at the top of the frame.
+     */
     public static class InstructionResources {
 
+        /**
+         * Default instruction used to initialize the instruction label.
+         */
         public static final String DUMMY_INSTRUCTIONS = "Just Starting!";
+        /**
+         * Tell the user that the card was added successfully and prompt for the
+         * brand name for the next card.
+         */
         public static final String CARD_ADDED_INSTRUCTIONS = "Card added. Enter brand name for another card.";
+        /**
+         * Prompt the user for the card's brand.
+         */
         public static final String CARD_BRAND_INSTRUCTIONS = "Enter card brand name.";
+        /**
+         * Prompt the user for the card's year.
+         */
         public static final String CARD_YEAR_INSTRUCTIONS = "Enter card year.";
+        /**
+         * Prompt the user for the card's number.
+         */
         public static final String CARD_NUMBER_INSTRUCTIONS = "Enter card number.";
+        /**
+         * Prompt the user for the card's value.
+         */
         public static final String CARD_VALUE_INSTRUCTIONS = "Enter card value.";
+        /**
+         * Prompt the user for the card count.
+         */
         public static final String CARD_COUNT_INSTRUCTIONS = "Enter card count.";
+        /**
+         * Prompt the user for the name of the player on the card.
+         */
         public static final String PLAYER_NAME_INSTRUCTIONS = "Enter player name.";
+        /**
+         * Prompt the user for the position played by the player on the card.
+         */
         public static final String PLAYER_POSITION_INSTRUCTIONS = "Select player position.";
+        /**
+         * Prompt the user to choose an option for how they want to search for
+         * cards.
+         */
         public static final String FIND_CARDS_MENU_INSTRUCTIONS = "Choose an option:";
+        /**
+         * Prompt the user to choose an option from the main menu.
+         */
         public static final String MENU_INSTRUCTIONS = "Choose an option:";
+        /**
+         * Tell the user how to close the About window.
+         */
         public static final String ABOUT_INSTRUCTIONS = "Click OK when ready.";
 
         private InstructionResources() {
         }
     }
 
+    /**
+     * Error messages.
+     */
     public static class ErrorResources {
 
+        /**
+         * Error when the user fails to provide a card brand.
+         */
         public static final String CARD_BRAND_ERROR = "Please enter a card brand.";
+        /**
+         * Error when the user fails to provide a card year.
+         */
         public static final String CARD_YEAR_ERROR = "Please enter a valid four-digit year.";
+        /**
+         * Error when the user fails to provide a card number.
+         */
         public static final String CARD_NUMBER_ERROR = "Please enter a positive integer for the card number.";
+        /**
+         * Error when the user fails to provide a card value.
+         */
         public static final String CARD_VALUE_ERROR = "Please enter a valid dollar amount.";
+        /**
+         * Error when the user fails to provide a card count.
+         */
         public static final String CARD_COUNT_ERROR = "Please enter a positive integer for the card count.";
+        /**
+         * Error when the user fails to provide a player name.
+         */
         public static final String PLAYER_NAME_ERROR = "Please enter a player name.";
+        /**
+         * Error when the user fails to provide a player position.
+         */
         public static final String PLAYER_POSITION_ERROR = "Please select a player position.";
+        /**
+         * Error when a search returns an empty data set.
+         */
         public static final String NO_CARDS_FOUND_ERROR = "No cards found.";
+        /**
+         * Error when the application encounters an error while closing.
+         */
         public static final String CLOSE_ERROR_TITLE = "Clean Up Error";
+        /**
+         * Error when an error occurs with an I/O operation.
+         */
         public static final String IO_ERROR_TITLE = "I/O Error";
+        /**
+         * Error indicating that the input was invalid.
+         */
         public static final String INPUT_ERROR_TITLE = "Invalid Input";
+        /**
+         * Title for a dialog when no cards are found from a search.
+         */
         public static final String NO_CARDS_FOUND_ERROR_TITLE = "No Cards Found";
+        /**
+         * Title for a dialog when there is an error at start up.
+         */
         public static final String INITIALIZATION_ERROR_TITLE = "Initialization Error";
+        /**
+         * Title for a catch-all dialog for errors that should never occur.
+         */
         public static final String UNEXPECTED_EXCEPTION_ERROR_TITLE = "Unexpected Exception";
 
         private ErrorResources() {
         }
     }
 
+    /**
+     * Strings displayed in a message dialog.
+     */
     public static class DialogResources {
 
+        /**
+         * Prompt the user when deleting multiple cards.
+         */
         public static final String DELETE_MULTIPLE_CARD_PROMPT = "You are about to delete %d cards. Are you sure?";
+        /**
+         * Prompt the user when deleting a single card.
+         */
         public static final String DELETE_SINGLE_CARD_PROMPT = "You are about to delete this card. Are you sure?";
 
         private DialogResources() {
         }
     }
 
+    /**
+     * Text used in any ComboBoxes.
+     */
     public static class ComboBoxResources {
 
-        public static final String[] POSITIONS = {
-            "Pitcher",
-            "Catcher",
-            "First Base",
-            "Second Base",
-            "Third Base",
-            "Shortstop",
-            "Left Field",
-            "Center Field",
-            "Right Field"
-        };
+        /**
+         * The choices for a player's position.
+         */
+        public static final String[] POSITIONS = { "Pitcher", "Catcher",
+                "First Base", "Second Base", "Third Base", "Shortstop",
+                "Left Field", "Center Field", "Right Field" };
 
         private ComboBoxResources() {
         }
