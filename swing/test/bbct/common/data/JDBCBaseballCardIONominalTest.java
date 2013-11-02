@@ -18,6 +18,8 @@
  */
 package bbct.common.data;
 
+import java.sql.SQLException;
+
 import bbct.common.exceptions.BBCTIOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ import junit.framework.Assert;
 import org.junit.*;
 
 /**
+ * Nominal tests for {@link JDBCBaseballCardIO}.
+ *
  * TODO: JavaDoc
  *
  * TODO: testGetBaseballCardByX() methods should be extended to find multiple
@@ -40,53 +44,34 @@ public class JDBCBaseballCardIONominalTest {
     private BaseballCard card = null;
 
     /**
-     *
-     */
-    public JDBCBaseballCardIONominalTest() {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    /**
+     * Set up the fixture for this test case.
      *
      * @throws BBCTIOException
+     *             If an error occurs while creating a
+     *             {@link JDBCBaseballCardIO} object to test.
      * @throws SQLException
+     *             If an error occurs while connecting to the database.
      */
     @Before
     public void setUp() throws BBCTIOException, SQLException {
-        try {
-            this.instance = new JDBCBaseballCardIO(this.url);
+        this.instance = new JDBCBaseballCardIO(this.url);
 
-            // TODO: Do I need to pass in a user name and password for HSQLDB?
-            this.conn = DriverManager.getConnection(this.url);
-            this.stmt = this.conn.createStatement();
+        // TODO: Do I need to pass in a user name and password for HSQLDB?
+        this.conn = DriverManager.getConnection(this.url);
+        this.stmt = this.conn.createStatement();
 
-            this.card = createBaseballCard();
-        } catch (BBCTIOException ex) {
-            System.out.println("IOException caught in setUp()");
-            ex.printStackTrace();
-            throw ex;
-        }
+        this.card = createBaseballCard();
     }
 
     /**
+     * Return the system to its initial state by dropping the database table
+     * created by this test case.
      *
      * @throws BBCTIOException
+     *             If an error occurs while closing the
+     *             {@link JDBCBaseballCardIO} object being tested.
      * @throws SQLException
+     *             If an error occurs while executing the DROP query.
      */
     @After
     public void tearDown() throws BBCTIOException, SQLException {
@@ -98,11 +83,14 @@ public class JDBCBaseballCardIONominalTest {
     }
 
     /**
-     * Test for {@link JDBCBaseballCardIO#JDBCBaseballCardIO}.
+     * Test for {@link JDBCBaseballCardIO#JDBCBaseballCardIO}. Asserts that the
+     * database table was created.
      *
-     * @throws Exception
+     * @throws SQLException
+     *             If an error occurs while executing the query to check that
+     *             the database table was created.
      */
-    public void testConstructor() throws Exception {
+    public void testConstructor() throws SQLException {
         // Constructor is called from setUp(). This method simply asserts
         // that the table was created.
 
@@ -119,20 +107,25 @@ public class JDBCBaseballCardIONominalTest {
     /**
      * Test for {@link JDBCBaseballCardIO#close()}.
      *
-     * @throws Exception
+     * @throws BBCTIOException
      */
     @Test
-    public void testClose() throws Exception {
+    public void testClose() throws BBCTIOException {
         instance.close();
     }
 
     /**
      * Test for {@link JDBCBaseballCardIO#insertBaseballCard(BaseballCard)}.
      *
-     * @throws Exception
+     * @throws BBCTIOException
+     *             If an error occurs when calling
+     *             {@link JDBCBaseballCardIO#insertBaseballCard(BaseballCard)}.
+     * @throws SQLException
+     *             If an error occurs while checking that the card was inserted
+     *             in to the database table.
      */
     @Test
-    public void testInsertBaseballCard() throws Exception {
+    public void testInsertBaseballCard() throws BBCTIOException, SQLException {
         this.instance.insertBaseballCard(this.card);
 
         String select = "SELECT * FROM " + JDBCBaseballCardIO.TABLE_NAME;
@@ -145,31 +138,36 @@ public class JDBCBaseballCardIONominalTest {
         Assert.assertEquals(card.getValue(), rs.getInt("value"));
         Assert.assertEquals(card.getCount(), rs.getInt("card_count"));
         Assert.assertEquals(card.getPlayerName(), rs.getString("player_name"));
-        Assert.assertEquals(card.getPlayerPosition(), rs.getString("player_position"));
+        Assert.assertEquals(card.getPlayerPosition(),
+                rs.getString("player_position"));
         Assert.assertFalse(rs.next());
     }
 
     /**
      * Test for {@link JDBCBaseballCardIO#getBaseballCardByYear(int)}.
      *
-     * @throws Exception
+     * @throws BBCTIOException
+     *             If an error occurs during this test.
      */
     @Test
-    public void testGetBaseballCardByYear() throws Exception {
+    public void testGetBaseballCardByYear() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
-        List<BaseballCard> result = this.instance.getBaseballCardsByYear(card.getYear());
+        List<BaseballCard> result = this.instance.getBaseballCardsByYear(card
+                .getYear());
         Assert.assertEquals(card, result.get(0));
     }
 
     /**
      * Test for {@link JDBCBaseballCardIO#getBaseballCardByNumber(int)}.
      *
-     * @throws Exception
+     * @throws BBCTIOException
+     *             If an error occurs during this test.
      */
     @Test
-    public void testGetBaseballCardByNumber() throws Exception {
+    public void testGetBaseballCardByNumber() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
-        List<BaseballCard> result = this.instance.getBaseballCardsByNumber(card.getNumber());
+        List<BaseballCard> result = this.instance.getBaseballCardsByNumber(card
+                .getNumber());
         Assert.assertEquals(card, result.get(0));
     }
 
@@ -177,24 +175,29 @@ public class JDBCBaseballCardIONominalTest {
      * Test for
      * {@link JDBCBaseballCardIO#getBaseballCardsByYearAndNumber(int, int)}.
      *
-     * @throws Exception
+     * @throws BBCTIOException
+     *             If an error occurs during this test.
      */
     @Test
-    public void testGetBaseballCardByYearAndNumber() throws Exception {
+    public void testGetBaseballCardByYearAndNumber() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
-        List<BaseballCard> result = this.instance.getBaseballCardsByYearAndNumber(card.getYear(), card.getNumber());
+        List<BaseballCard> result = this.instance
+                .getBaseballCardsByYearAndNumber(card.getYear(),
+                        card.getNumber());
         Assert.assertEquals(card, result.get(0));
     }
 
     /**
      * Test for {@link JDBCBaseballCardIO#getBaseballCardsByPlayerName(String)}.
      *
-     * @throws Exception
+     * @throws BBCTIOException
+     *             If an error occurs during this test.
      */
     @Test
-    public void testGetBaseballCardByPlayerName() throws Exception {
+    public void testGetBaseballCardByPlayerName() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
-        List<BaseballCard> result = this.instance.getBaseballCardsByPlayerName(card.getPlayerName());
+        List<BaseballCard> result = this.instance
+                .getBaseballCardsByPlayerName(card.getPlayerName());
         Assert.assertEquals(card, result.get(0));
     }
 
@@ -213,30 +216,34 @@ public class JDBCBaseballCardIONominalTest {
     /**
      * Test for {@link JDBCBaseballCardIO#getBaseballCardsByYear(int)}.
      *
-     * @throws Exception
+     * @throws BBCTIOException
+     *             If an error occurs during this test.
      */
-    public void testGetBaseballCardsByYear() throws Exception {
+    public void testGetBaseballCardsByYear() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
-        List<BaseballCard> result = instance.getBaseballCardsByYear(this.card.getYear());
+        List<BaseballCard> result = instance.getBaseballCardsByYear(this.card
+                .getYear());
         Assert.assertEquals(expResult, result);
     }
 
     /**
      * Test for {@link JDBCBaseballCardIO#getBaseballCardsByNumber(int)}.
      *
-     * @throws Exception
+     * @throws BBCTIOException
+     *             If an error occurs during this test.
      */
-    public void testGetBaseballCardsByNumber() throws Exception {
+    public void testGetBaseballCardsByNumber() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
-        List<BaseballCard> result = instance.getBaseballCardsByNumber(this.card.getNumber());
+        List<BaseballCard> result = instance.getBaseballCardsByNumber(this.card
+                .getNumber());
         Assert.assertEquals(expResult, result);
     }
 
@@ -244,39 +251,46 @@ public class JDBCBaseballCardIONominalTest {
      * Test for
      * {@link JDBCBaseballCardIO#getBaseballCardsByYearAndNumber(int, int)}.
      *
-     * @throws Exception
+     * @throws BBCTIOException
+     *             If an error occurs during this test.
      */
-    public void testGetBaseballCardsByYearAndNumber() throws Exception {
+    public void testGetBaseballCardsByYearAndNumber() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
-        List<BaseballCard> result = instance.getBaseballCardsByYearAndNumber(this.card.getYear(), this.card.getNumber());
+        List<BaseballCard> result = instance.getBaseballCardsByYearAndNumber(
+                this.card.getYear(), this.card.getNumber());
         Assert.assertEquals(expResult, result);
     }
 
     /**
      * Test for {@link JDBCBaseballCardIO#getBaseballCardsByPlayerName(String)}.
      *
-     * @throws Exception
+     * @throws BBCTIOException
+     *             If an error occurs during this test.
      */
-    public void testGetBaseballCardsByPlayerName() throws Exception {
+    public void testGetBaseballCardsByPlayerName() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
         List<BaseballCard> expResult = new ArrayList<BaseballCard>();
         expResult.add(this.card);
 
-        List<BaseballCard> result = instance.getBaseballCardsByPlayerName(this.card.getPlayerName());
+        List<BaseballCard> result = instance
+                .getBaseballCardsByPlayerName(this.card.getPlayerName());
         Assert.assertEquals(expResult, result);
     }
 
     /**
      * Test for {@link JDBCBaseballCardIO#updateBaseballCard(BaseballCard)}.
      *
-     * @throws Exception
+     * @throws BBCTIOException
+     *             If an error occurs during this test.
+     * @throws SQLException
+     *             If an error occurs while connecting to the database.
      */
-    public void testUpdateCard() throws Exception {
+    public void testUpdateCard() throws BBCTIOException, SQLException {
         this.instance.insertBaseballCard(this.card);
         int newValue = 20000;
         int newCount = 3;
@@ -287,8 +301,7 @@ public class JDBCBaseballCardIONominalTest {
         String brand = card.getBrand();
         int year = card.getYear();
         int number = card.getNumber();
-        String query = "SELECT * "
-                + "  FROM " + JDBCBaseballCardIO.TABLE_NAME
+        String query = "SELECT * " + "  FROM " + JDBCBaseballCardIO.TABLE_NAME
                 + " WHERE " + JDBCBaseballCardIO.BRAND_COL_NAME + " = ? "
                 + "   AND " + JDBCBaseballCardIO.YEAR_COL_NAME + " = ? "
                 + "   AND " + JDBCBaseballCardIO.NUMBER_COL_NAME + " = ?";
@@ -304,22 +317,26 @@ public class JDBCBaseballCardIONominalTest {
     }
 
     /**
-     * Test for {@link JDBCBaseballCardIOremoveupdateBaseballCard(BaseballCard)}.
-     * Actual result is a boolean indicating whether the current pointer in ResultSet
-     * is positioned after the last row (false value if it is). Expected result is
-     * therefore a boolean value of false, which indicates that no rows were returned.
+     * Test for
+     * {@link JDBCBaseballCardIO#removeupdateBaseballCard(BaseballCard)}. Actual
+     * result is a boolean indicating whether the current pointer in ResultSet
+     * is positioned after the last row (false value if it is). Expected result
+     * is therefore a boolean value of false, which indicates that no rows were
+     * returned.
      *
-     * @throws Exception
+     * @throws BBCTIOException
+     *             If an error occurs during this test.
+     * @throws SQLException
+     *             If an error occurs while connecting to the database.
      */
     @Test
-    public void testRemoveCard() throws Exception {
+    public void testRemoveCard() throws BBCTIOException, SQLException {
         this.instance.insertBaseballCard(this.card);
 
         String playerName = card.getPlayerName();
         int year = card.getYear();
         int number = card.getNumber();
-        String query = "SELECT * "
-                + "  FROM " + JDBCBaseballCardIO.TABLE_NAME
+        String query = "SELECT * " + "  FROM " + JDBCBaseballCardIO.TABLE_NAME
                 + " WHERE " + JDBCBaseballCardIO.NAME_COL_NAME + " = ? "
                 + "   AND " + JDBCBaseballCardIO.YEAR_COL_NAME + " = ? "
                 + "   AND " + JDBCBaseballCardIO.NUMBER_COL_NAME + " = ?";
