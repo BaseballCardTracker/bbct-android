@@ -22,7 +22,6 @@ import bbct.common.exceptions.BBCTIOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.Assert;
 import org.junit.*;
 
 /**
