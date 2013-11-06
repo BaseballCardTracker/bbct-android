@@ -103,6 +103,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
+    @Test
     public void testConstructor() throws Exception {
         // Constructor is called from setUp(). This method simply asserts
         // that the table was created.
@@ -216,6 +217,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
+    @Test
     public void testGetBaseballCardsByYear() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
@@ -231,6 +233,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
+    @Test
     public void testGetBaseballCardsByNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
@@ -247,6 +250,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
+    @Test
     public void testGetBaseballCardsByYearAndNumber() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
@@ -262,6 +266,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
+    @Test
     public void testGetBaseballCardsByPlayerName() throws Exception {
         this.instance.insertBaseballCard(this.card);
 
@@ -277,6 +282,7 @@ public class JDBCBaseballCardIONominalTest {
      *
      * @throws Exception
      */
+    @Test
     public void testUpdateCard() throws Exception {
         this.instance.insertBaseballCard(this.card);
         int newValue = 20000;
