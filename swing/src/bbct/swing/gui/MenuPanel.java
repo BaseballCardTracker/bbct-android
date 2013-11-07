@@ -43,6 +43,7 @@ import javax.swing.JPanel;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class MenuPanel extends JPanel {
 
     /**

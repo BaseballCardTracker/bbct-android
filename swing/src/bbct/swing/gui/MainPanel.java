@@ -38,6 +38,7 @@ import java.awt.CardLayout;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class MainPanel extends javax.swing.JPanel {
 
     /**

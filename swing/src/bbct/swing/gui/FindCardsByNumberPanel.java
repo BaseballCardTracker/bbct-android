@@ -49,6 +49,7 @@ import javax.swing.text.NumberFormatter;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class FindCardsByNumberPanel extends FindCardsByPanel {
 
     /**

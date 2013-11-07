@@ -49,6 +49,7 @@ import javax.swing.JPanel;
  * TODO: Instructions not correct after clicking Add Card button
  *
  */
+@SuppressWarnings("serial")
 public class AddCardsPanel extends JPanel {
 
     /**

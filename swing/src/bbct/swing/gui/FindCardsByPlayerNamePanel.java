@@ -47,6 +47,7 @@ import javax.swing.JTextField;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
 
     /**

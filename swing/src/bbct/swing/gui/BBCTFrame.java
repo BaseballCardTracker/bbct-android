@@ -50,6 +50,7 @@ import javax.swing.WindowConstants;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class BBCTFrame extends JFrame {
 
     /**

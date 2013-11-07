@@ -72,6 +72,7 @@ import javax.swing.event.AncestorListener;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class CardDetailsPanel extends JPanel {
 
     /**
