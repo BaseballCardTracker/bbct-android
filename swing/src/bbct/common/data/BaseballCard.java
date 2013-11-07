@@ -198,4 +198,5 @@ public class BaseballCard implements Serializable {
     private int count = 0;
     private String playerName = "";
     private String playerPosition = "";
+    private static final long serialVersionUID = 3647601679580625279L;
 }
