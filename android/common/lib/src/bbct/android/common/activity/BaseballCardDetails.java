@@ -150,7 +150,7 @@ public class BaseballCardDetails extends Activity {
             return null;
         }
     }
-  
+
     /**
      *
      * Called when a key was released and not handled by any of the views inside of the activity.
@@ -168,7 +168,7 @@ public class BaseballCardDetails extends Activity {
             } else if (playerNameText.hasFocus()) {
                 teamText.requestFocus();
                 return true;
-            } else if (teamText.hasFocus() == true) {
+            } else if (teamText.hasFocus()) {
                 playerPositionSpinner.requestFocus();
                 return true;
             }
