@@ -141,6 +141,13 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
     }
 
     /**
+     * Test that the "Delete Cards" menu item is disabled.
+     */
+    public void testDeleteCardsMenuItem() {
+        Assert.assertFalse(this.inst.invokeMenuActionSync(this.activity, R.id.delete_menu, 0));
+    }
+
+    /**
      * Test that the "About" menu item launches a {@link About} activity.
      */
     public void testAboutMenuItem() {

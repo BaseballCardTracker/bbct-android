@@ -34,10 +34,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.android.common.provider.SQLHelperFactory;
 import bbct.android.common.exception.SQLHelperCreationException;
 import bbct.android.common.provider.BaseballCardContract;
+import bbct.android.common.provider.BaseballCardSQLHelper;
+import bbct.android.common.provider.SQLHelperFactory;
 
 /**
  * TODO: Make list fancier
@@ -77,7 +77,7 @@ public class BaseballCardList extends ListActivity {
 
             this.adapter = new SimpleCursorAdapter(this, R.layout.row, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
             this.setListAdapter(this.adapter);
-            this.applyFilter();
+            this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
             this.swapCursor();
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
@@ -110,6 +110,14 @@ public class BaseballCardList extends ListActivity {
             menu.findItem(R.id.clear_filter_menu).setVisible(true);
         }
 
+        MenuItem deleteItem = menu.findItem(R.id.delete_menu);
+        Cursor c = this.sqlHelper.getCursor();
+
+        if (c.getCount() < 1)
+            deleteItem.setEnabled(false);
+        else
+            deleteItem.setEnabled(true);
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -130,8 +138,16 @@ public class BaseballCardList extends ListActivity {
             this.emptyList.setText(R.string.start);
             this.sqlHelper.clearFilter();
             this.swapCursor();
-            this.invalidateOptionsMenu();
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB)
+                this.invalidateOptionsMenu();
+
             return true;
+        } else if (itemId == R.id.delete_menu) {
+            Intent intent = new Intent(this, DeleteCardList.class);
+            intent.putExtra(this.getString(R.string.filter_request_extra), this.filterRequest);
+            intent.putExtra(this.getString(R.string.filter_params_extra), this.filterParams);
+            this.startActivity(intent);
         } else if (itemId == R.id.about_menu) {
             this.startActivity(new Intent(this, About.class));
             return true;
@@ -169,7 +185,7 @@ public class BaseballCardList extends ListActivity {
                 this.filterParams = data.getExtras();
                 this.emptyList.setText(R.string.empty_list);
 
-                this.applyFilter();
+                this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
                 this.swapCursor();
             }
         } else {
@@ -178,46 +194,25 @@ public class BaseballCardList extends ListActivity {
         }
     }
 
-    private void applyFilter() {
-        if (this.filterRequest == R.id.year_filter_request) {
-            int year = this.filterParams.getInt(this.getString(R.string.year_extra));
-            this.sqlHelper.filterCursorByYear(year);
-        } else if (this.filterRequest == R.id.number_filter_request) {
-            int number = this.filterParams.getInt(this.getString(R.string.number_extra));
-            this.sqlHelper.filterCursorByNumber(number);
-        } else if (this.filterRequest == R.id.year_and_number_filter_request) {
-            int year = this.filterParams.getInt(this.getString(R.string.year_extra));
-            int number = this.filterParams.getInt(this.getString(R.string.number_extra));
-            this.sqlHelper.filterCursorByYearAndNumber(year, number);
-        } else if (this.filterRequest == R.id.player_name_filter_request) {
-            String playerName = this.filterParams.getString(this.getString(R.string.player_name_extra));
-            this.sqlHelper.filterCursorByPlayerName(playerName);
-        } else if (this.filterRequest == R.id.team_filter_request) {
-            String team = this.filterParams.getString(this.getString(R.string.team_extra));
-            this.sqlHelper.filterCursorByTeam(team);
-        } else if (this.filterRequest == R.id.no_filter) {
-            this.sqlHelper.clearFilter();
-        } else {
-            Log.e(TAG, "onCreate(): Invalid filter request code: " + this.filterRequest);
-            // TODO: Throw an exception?
-        }
-    }
-
     private void swapCursor() {
         Cursor cursor = this.sqlHelper.getCursor();
         this.stopManagingCursor(this.adapter.getCursor());
         this.startManagingCursor(cursor);
         this.adapter.changeCursor(cursor);
+
+        // update delete option in menu
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB)
+            this.invalidateOptionsMenu();
     }
-    private static final String[] ROW_PROJECTION = {
+    public static final String[] ROW_PROJECTION = {
         BaseballCardContract.BRAND_COL_NAME, BaseballCardContract.YEAR_COL_NAME,
         BaseballCardContract.NUMBER_COL_NAME, BaseballCardContract.PLAYER_NAME_COL_NAME
     };
-    private static final int[] ROW_TEXT_VIEWS = {
+    public static final int[] ROW_TEXT_VIEWS = {
         R.id.brand_text_view, R.id.year_text_view, R.id.number_text_view, R.id.player_name_text_view
     };
     private static final String TAG = BaseballCardList.class.getName();
-    private static final int DEFAULT_INT_EXTRA = -1;
+    public static final int DEFAULT_INT_EXTRA = -1;
     TextView emptyList = null;
     private BaseballCardSQLHelper sqlHelper = null;
     private CursorAdapter adapter = null;

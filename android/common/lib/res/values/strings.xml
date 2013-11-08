@@ -34,6 +34,7 @@
     <string name="about_title">About</string>
     <string name="input_error_title">Input Error</string>
     <string name="duplicate_card_title">Duplicate Card</string>
+    <string name="delete_cards_title">Delete Cards</string>
 
     <string name="start">Press the menu button to get started.</string>
     <string name="empty_list">No cards found.</string>
@@ -63,6 +64,7 @@
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancel</string>
     <string name="done_button">Done</string>
+    <string name="delete_button">Delete</string>
 
     <!-- Hints for TextEdit widgets -->
     <string name="brand_hint">Enter card brand name.</string>
@@ -86,6 +88,7 @@
     <string name="filter_menu">Filter Cards</string>
     <string name="clear_filter_menu">Clear Filter</string>
     <string name="about_menu">About</string>
+    <string name="delete_menu">Delete Cards</string>
 
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
@@ -105,6 +108,7 @@
 
     <!-- Card details toasts -->
     <string name="card_added_message">Card added successfully.</string>
+    <string name="card_deleted_message">Cards deleted successfully.</string>
 
     <!-- Strings for position spinner in card details activity -->
     <string-array name="positions">

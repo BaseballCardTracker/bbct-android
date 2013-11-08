@@ -32,6 +32,7 @@
     <item type="id" name="done_button"/>
     <item type="id" name="ok_button"/>
     <item type="id" name="cancel_button"/>
+    <item type="id" name="delete_button" />
 
     <!-- IDs for request and result codes -->
     <item type="id" name="filter_options_request"/>
