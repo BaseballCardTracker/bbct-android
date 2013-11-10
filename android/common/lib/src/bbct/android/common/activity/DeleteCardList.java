@@ -48,7 +48,7 @@ public class DeleteCardList extends ListActivity {
             View headerView = View.inflate(this, R.layout.list_header_mark, null);
             this.getListView().addHeaderView(headerView);
 
-            this.adapter = new SimpleCursorAdapter(this, R.layout.row_mark, null, BaseballCardList.ROW_PROJECTION, BaseballCardList.ROW_TEXT_VIEWS);
+            this.adapter = new SimpleCursorAdapter(this, R.layout.row_mark, null, this.sqlHelper.ROW_PROJECTION, this.sqlHelper.ROW_TEXT_VIEWS);
             this.setListAdapter(this.adapter);
             this.sqlHelper.applyFilter(this, request, params);
             this.swapCursor();

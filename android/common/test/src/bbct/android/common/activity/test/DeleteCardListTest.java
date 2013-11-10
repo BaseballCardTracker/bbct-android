@@ -52,6 +52,16 @@ public class DeleteCardListTest extends ActivityInstrumentationTestCase2<DeleteC
     }
 
     /**
+     * Destroy the test fixture and remove database.
+     */
+    @Override
+    public void tearDown() throws Exception {
+        this.dbUtil.deleteDatabase();
+
+        super.tearDown();
+    }
+
+    /**
      * Make sure that everything is ok in order to
      * validate other tests.
      */

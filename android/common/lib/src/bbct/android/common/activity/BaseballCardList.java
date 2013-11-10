@@ -75,7 +75,7 @@ public class BaseballCardList extends ListActivity {
             View headerView = View.inflate(this, R.layout.list_header, null);
             listView.addHeaderView(headerView);
 
-            this.adapter = new SimpleCursorAdapter(this, R.layout.row, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
+            this.adapter = new SimpleCursorAdapter(this, R.layout.row, null, this.sqlHelper.ROW_PROJECTION, this.sqlHelper.ROW_TEXT_VIEWS);
             this.setListAdapter(this.adapter);
             this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
             this.swapCursor();
@@ -204,13 +204,6 @@ public class BaseballCardList extends ListActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB)
             this.invalidateOptionsMenu();
     }
-    public static final String[] ROW_PROJECTION = {
-        BaseballCardContract.BRAND_COL_NAME, BaseballCardContract.YEAR_COL_NAME,
-        BaseballCardContract.NUMBER_COL_NAME, BaseballCardContract.PLAYER_NAME_COL_NAME
-    };
-    public static final int[] ROW_TEXT_VIEWS = {
-        R.id.brand_text_view, R.id.year_text_view, R.id.number_text_view, R.id.player_name_text_view
-    };
     private static final String TAG = BaseballCardList.class.getName();
     public static final int DEFAULT_INT_EXTRA = -1;
     TextView emptyList = null;

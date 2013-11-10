@@ -226,6 +226,13 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
         return this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, cols, filter, args, colName, null, null, null);
     }
+    public static final String[] ROW_PROJECTION = {
+        BaseballCardContract.BRAND_COL_NAME, BaseballCardContract.YEAR_COL_NAME,
+        BaseballCardContract.NUMBER_COL_NAME, BaseballCardContract.PLAYER_NAME_COL_NAME
+    };
+    public static final int[] ROW_TEXT_VIEWS = {
+        R.id.brand_text_view, R.id.year_text_view, R.id.number_text_view, R.id.player_name_text_view
+    };
     private static final String TAG = BaseballCardSQLHelper.class.getName();
     private Cursor currCursor = null;
 }
