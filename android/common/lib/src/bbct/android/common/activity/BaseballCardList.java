@@ -28,6 +28,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.CheckedTextView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -75,6 +78,7 @@ public class BaseballCardList extends ListActivity {
             ListView listView = (ListView) this.findViewById(android.R.id.list);
             View headerView = View.inflate(this, R.layout.list_header, null);
             listView.addHeaderView(headerView);
+            listView.setOnItemLongClickListener(this.longClick);
 
             this.adapter = new SimpleCursorAdapter(this, R.layout.row, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
             this.setListAdapter(this.adapter);
@@ -111,6 +115,21 @@ public class BaseballCardList extends ListActivity {
             menu.findItem(R.id.clear_filter_menu).setVisible(true);
         }
 
+        // update delete menu option
+        MenuItem deleteItem = menu.findItem(R.id.delete_menu);
+        deleteItem.setEnabled(false);
+
+        ListView lst = this.getListView();
+        for (int i = 1; i < lst.getChildCount(); i++) {
+            View v = lst.getChildAt(i);
+
+            CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
+            if (ctv.isChecked()) {
+                deleteItem.setEnabled(true);
+                break;
+            }
+        }
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -137,6 +156,22 @@ public class BaseballCardList extends ListActivity {
             }
 
             return true;
+        } else if (itemId == R.id.delete_menu) {
+
+            ListView lst = this.getListView();
+            for (int i = 1; i < lst.getChildCount(); i++) {
+                CheckedTextView ctv = (CheckedTextView) lst.getChildAt(i).findViewById(R.id.checkmark);
+
+                if (ctv.isChecked()) {
+                    BaseballCard card = getBaseballCard(lst.getChildAt(i));
+                    this.sqlHelper.removeBaseballCard(card);
+                }
+            }
+
+            Toast.makeText(this, R.string.card_deleted_message, Toast.LENGTH_LONG).show();
+            this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
+            this.swapCursor();
+
         } else if (itemId == R.id.about_menu) {
             this.startActivity(new Intent(this, About.class));
             return true;
@@ -183,30 +218,66 @@ public class BaseballCardList extends ListActivity {
         }
     }
 
-    private void applyFilter() {
-        if (this.filterRequest == R.id.year_filter_request) {
-            int year = this.filterParams.getInt(this.getString(R.string.year_extra));
-            this.sqlHelper.filterCursorByYear(year);
-        } else if (this.filterRequest == R.id.number_filter_request) {
-            int number = this.filterParams.getInt(this.getString(R.string.number_extra));
-            this.sqlHelper.filterCursorByNumber(number);
-        } else if (this.filterRequest == R.id.year_and_number_filter_request) {
-            int year = this.filterParams.getInt(this.getString(R.string.year_extra));
-            int number = this.filterParams.getInt(this.getString(R.string.number_extra));
-            this.sqlHelper.filterCursorByYearAndNumber(year, number);
-        } else if (this.filterRequest == R.id.player_name_filter_request) {
-            String playerName = this.filterParams.getString(this.getString(R.string.player_name_extra));
-            this.sqlHelper.filterCursorByPlayerName(playerName);
-        } else if (this.filterRequest == R.id.team_filter_request) {
-            String team = this.filterParams.getString(this.getString(R.string.team_extra));
-            this.sqlHelper.filterCursorByTeam(team);
-        } else if (this.filterRequest == R.id.no_filter) {
-            this.sqlHelper.clearFilter();
-        } else {
-            Log.e(TAG, "onCreate(): Invalid filter request code: " + this.filterRequest);
-            // TODO: Throw an exception?
+    /**
+     * Obtains {@link BaseballCard} from @param v
+     * The returned {@link BaseballCard} only includes
+     * partial data - data required to delete a card.
+     */
+    private BaseballCard getBaseballCard(View v) {
+        TextView yearCol = (TextView) v.findViewById(R.id.year_text_view);
+        int year = Integer.parseInt(yearCol.getText().toString());
+
+        TextView numCol = (TextView) v.findViewById(R.id.number_text_view);
+        int number = Integer.parseInt(numCol.getText().toString());
+
+        TextView nameCol = (TextView) v.findViewById(R.id.player_name_text_view);
+        String player = nameCol.getText().toString();
+
+        return new BaseballCard("", year, number, 0, 0, player, "", "");
+    }
+
+    /**
+     * Marks/unmarks all items in the list according to @param check
+     */
+    private void toggleAll(boolean check) {
+        ListView lst = this.getListView();
+
+        for (int i = 0; i < lst.getChildCount(); i++) {
+            View v = lst.getChildAt(i);
+
+            CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
+            ctv.setChecked(check);
         }
     }
+
+    /**
+     * Listener for long presses on list items. On long press mark the
+     * corresponding {@link CheckedTextView}.
+     */
+    private OnItemLongClickListener longClick = new OnItemLongClickListener() {
+
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
+            CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.checkmark);
+
+            if (position == 0) {
+                if (ctv.isChecked())
+                    BaseballCardList.this.toggleAll(false);
+                else
+                    BaseballCardList.this.toggleAll(true);
+            }
+
+            else
+                ctv.toggle();
+
+            // update delete option in menu
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB)
+                BaseballCardList.this.invalidateOptionsMenu();
+
+            // do not react to other events, such as onListItemClick()
+            return true;
+        }
+    };
 
     private void swapCursor() {
         Cursor cursor = this.sqlHelper.getCursor();
