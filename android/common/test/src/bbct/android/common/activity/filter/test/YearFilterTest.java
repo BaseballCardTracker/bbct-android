@@ -103,16 +103,6 @@ public class YearFilterTest extends FilterActivityTest<YearFilter> {
     }
 
     /**
-     * Set the text of the year {@link EditText} view.
-     *
-     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
-     */
-    @Override
-    protected void setInputText() {
-        this.yearText.setText(Integer.toString(this.testYear));
-    }
-
-    /**
      * Inject instrumented key events to the year {@link EditText} view.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()

@@ -36,7 +36,11 @@ import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import junit.framework.Assert;
 
 /**
@@ -191,11 +195,10 @@ final public class BBCTTestUtil {
      * @param cardDetails The {@link BaseballCardDetails} activity being tested.
      * @param card The {@link BaseballCard} object holding the data to add to
      * the database.
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     * BaseballCard, int)
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity, BaseballCard, Set)
      */
     public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) {
-        BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card, ALL_FIELDS);
+        BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card, EnumSet.allOf(EditTexts.class));
     }
 
     /**
@@ -208,63 +211,52 @@ final public class BBCTTestUtil {
      * @param card The {@link BaseballCard} object holding the data to add to
      * the database.
      * @param fieldFlags The {@link EditText} views to fill in.
-     *
-     * @see #NO_FIELDS
-     * @see #BRAND_FIELD
-     * @see #YEAR_FIELD
-     * @see #NUMBER_FIELD
-     * @see #COUNT_FIELD
-     * @see #VALUE_FIELD
-     * @see #PLAYER_NAME_FIELD
-     * @see #TEAM_FIELD
-     * @see #PLAYER_POSITION_FIELD
-     * @see #ALL_FIELDS
      */
-    public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, int fieldFlags) {
+    public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, Set<EditTexts> fieldFlags) {
         Log.d(TAG, "sendKeysToCardDetails()");
 
         Instrumentation inst = test.getInstrumentation();
 
-        if ((fieldFlags & BRAND_FIELD) > 0) {
+        if (fieldFlags.contains(EditTexts.BRAND)) {
             AutoCompleteTextView brandText = (AutoCompleteTextView) cardDetails.findViewById(R.id.brand_text);
             sendKeysToCurrFieldCardDetails(inst, brandText, card.getBrand());
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((fieldFlags & YEAR_FIELD) > 0) {
+        if (fieldFlags.contains(EditTexts.YEAR)) {
             sendKeysToCurrFieldCardDetails(inst, null, Integer.toString(card.getYear()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((fieldFlags & NUMBER_FIELD) > 0) {
+        if (fieldFlags.contains(EditTexts.NUMBER)) {
             sendKeysToCurrFieldCardDetails(inst, null, Integer.toString(card.getNumber()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((fieldFlags & VALUE_FIELD) > 0) {
+        if (fieldFlags.contains(EditTexts.VALUE)) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
             sendKeysToCurrFieldCardDetails(inst, null, valueStr);
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((fieldFlags & COUNT_FIELD) > 0) {
+        if (fieldFlags.contains(EditTexts.COUNT)) {
             sendKeysToCurrFieldCardDetails(inst, null, Integer.toString(card.getCount()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((fieldFlags & PLAYER_NAME_FIELD) > 0) {
+        if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
             AutoCompleteTextView playerNameText = (AutoCompleteTextView) cardDetails.findViewById(R.id.player_name_text);
             sendKeysToCurrFieldCardDetails(inst, playerNameText, card.getPlayerName());
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((fieldFlags & TEAM_FIELD) > 0) {
+        if (fieldFlags.contains(EditTexts.TEAM)) {
             AutoCompleteTextView teamText = (AutoCompleteTextView) cardDetails.findViewById(R.id.team_text);
             sendKeysToCurrFieldCardDetails(inst, teamText, card.getTeam());
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if ((fieldFlags & PLAYER_POSITION_FIELD) > 0) {
+        if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
             Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
             ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner.getAdapter();
             int newPos = playerPositionAdapter.getPosition(card.getPlayerPosition());
@@ -279,6 +271,7 @@ final public class BBCTTestUtil {
             } else {
                 test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
             }
+            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
         }
     }
 
@@ -349,180 +342,90 @@ final public class BBCTTestUtil {
         // TODO How do I check that a table has the correct columns?
     }
 
+    /**
+     * Generate the power set of a given {@link Set}.
+     *
+     * @param input A set of elements
+     * @return The power set of the given {@link Set}
+     */
+    public static <T> Set<Set<T>> powerSet(Set<T> input) {
+        Log.d(TAG, "powerSet()");
+        Log.d(TAG, "input=" + input);
+
+        Set<T> copy = new HashSet<T>(input);
+        if (copy.isEmpty()) {
+            Set<Set<T>> power = new HashSet<Set<T>>();
+            power.add(new HashSet<T>());
+            return power;
+        }
+
+        Iterator<T> itr = copy.iterator();
+        T elem = itr.next();
+        itr.remove();
+
+        Log.d(TAG, "elem=" + elem);
+
+        Set<Set<T>> power = powerSet(copy);
+
+        Log.d(TAG, "power=" + power);
+
+        Set<Set<T>> powerCopy = new HashSet<Set<T>>();
+
+        for (Set<T> set : power) {
+            Set<T> setCopy = new HashSet<T>(set);
+            setCopy.add(elem);
+            powerCopy.add(setCopy);
+        }
+
+        power.addAll(powerCopy);
+
+        Log.d(TAG, "power=" + power);
+
+        return power;
+    }
+
     private BBCTTestUtil() {
     }
+
     /**
-     * Leave all fields blank.
-     *
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     * BaseballCard, int)
-     * @see #NO_FIELDS
-     * @see #BRAND_FIELD
-     * @see #YEAR_FIELD
-     * @see #NUMBER_FIELD
-     * @see #COUNT_FIELD
-     * @see #VALUE_FIELD
-     * @see #PLAYER_NAME_FIELD
-     * @see #TEAM_FIELD
-     * @see #PLAYER_POSITION_FIELD
-     * @see #ALL_FIELDS
+     * Enumeration for {@link android.widget.EditText} views which will be used in
+     * {@link #sendKeysToCardDetails(InstrumentationTestCase, Activity, BaseballCard, Set)}.
      */
-    public static final int NO_FIELDS = 0x00;
-    /**
-     * Include the card brand field.
-     *
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     * BaseballCard, int)
-     * @see #NO_FIELDS
-     * @see #BRAND_FIELD
-     * @see #YEAR_FIELD
-     * @see #NUMBER_FIELD
-     * @see #COUNT_FIELD
-     * @see #VALUE_FIELD
-     * @see #PLAYER_NAME_FIELD
-     * @see #TEAM_FIELD
-     * @see #PLAYER_POSITION_FIELD
-     * @see #ALL_FIELDS
-     */
-    public static final int BRAND_FIELD = 0x01;
-    /**
-     * Include the card year field.
-     *
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     * BaseballCard, int)
-     * @see #NO_FIELDS
-     * @see #BRAND_FIELD
-     * @see #YEAR_FIELD
-     * @see #NUMBER_FIELD
-     * @see #COUNT_FIELD
-     * @see #VALUE_FIELD
-     * @see #PLAYER_NAME_FIELD
-     * @see #TEAM_FIELD
-     * @see #PLAYER_POSITION_FIELD
-     * @see #ALL_FIELDS
-     */
-    public static final int YEAR_FIELD = 0x02;
-    /**
-     * Include the card number field.
-     *
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     * BaseballCard, int)
-     * @see #NO_FIELDS
-     * @see #BRAND_FIELD
-     * @see #YEAR_FIELD
-     * @see #NUMBER_FIELD
-     * @see #COUNT_FIELD
-     * @see #VALUE_FIELD
-     * @see #PLAYER_NAME_FIELD
-     * @see #TEAM_FIELD
-     * @see #PLAYER_POSITION_FIELD
-     * @see #ALL_FIELDS
-     */
-    public static final int NUMBER_FIELD = 0x04;
-    /**
-     * Include the card value field.
-     *
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     * BaseballCard, int)
-     * @see #NO_FIELDS
-     * @see #BRAND_FIELD
-     * @see #YEAR_FIELD
-     * @see #NUMBER_FIELD
-     * @see #COUNT_FIELD
-     * @see #VALUE_FIELD
-     * @see #PLAYER_NAME_FIELD
-     * @see #TEAM_FIELD
-     * @see #PLAYER_POSITION_FIELD
-     * @see #ALL_FIELDS
-     */
-    public static final int VALUE_FIELD = 0x08;
-    /**
-     * Include the card count field.
-     *
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     * BaseballCard, int)
-     * @see #NO_FIELDS
-     * @see #BRAND_FIELD
-     * @see #YEAR_FIELD
-     * @see #NUMBER_FIELD
-     * @see #COUNT_FIELD
-     * @see #VALUE_FIELD
-     * @see #PLAYER_NAME_FIELD
-     * @see #TEAM_FIELD
-     * @see #PLAYER_POSITION_FIELD
-     * @see #ALL_FIELDS
-     */
-    public static final int COUNT_FIELD = 0x10;
-    /**
-     * Include the player name field.
-     *
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     * BaseballCard, int)
-     * @see #NO_FIELDS
-     * @see #BRAND_FIELD
-     * @see #YEAR_FIELD
-     * @see #NUMBER_FIELD
-     * @see #COUNT_FIELD
-     * @see #VALUE_FIELD
-     * @see #PLAYER_NAME_FIELD
-     * @see #TEAM_FIELD
-     * @see #PLAYER_POSITION_FIELD
-     * @see #ALL_FIELDS
-     */
-    public static final int PLAYER_NAME_FIELD = 0x20;
-    /**
-     * Include the team field.
-     *
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     * BaseballCard, int)
-     * @see #NO_FIELDS
-     * @see #BRAND_FIELD
-     * @see #YEAR_FIELD
-     * @see #NUMBER_FIELD
-     * @see #COUNT_FIELD
-     * @see #VALUE_FIELD
-     * @see #PLAYER_NAME_FIELD
-     * @see #TEAM_FIELD
-     * @see #PLAYER_POSITION_FIELD
-     * @see #ALL_FIELDS
-     */
-    public static final int TEAM_FIELD = 0x40;
-    /**
-     * Include the player position field.
-     *
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     * BaseballCard, int)
-     * @see #NO_FIELDS
-     * @see #BRAND_FIELD
-     * @see #YEAR_FIELD
-     * @see #NUMBER_FIELD
-     * @see #COUNT_FIELD
-     * @see #VALUE_FIELD
-     * @see #PLAYER_NAME_FIELD
-     * @see #TEAM_FIELD
-     * @see #PLAYER_POSITION_FIELD
-     * @see #ALL_FIELDS
-     */
-    public static final int PLAYER_POSITION_FIELD = 0x80;
-    /**
-     * Include all input fields.
-     *
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     * BaseballCard, int)
-     * @see #NO_FIELDS
-     * @see #BRAND_FIELD
-     * @see #YEAR_FIELD
-     * @see #NUMBER_FIELD
-     * @see #COUNT_FIELD
-     * @see #VALUE_FIELD
-     * @see #PLAYER_NAME_FIELD
-     * @see #TEAM_FIELD
-     * @see #PLAYER_POSITION_FIELD
-     * @see #ALL_FIELDS
-     */
-    public static final int ALL_FIELDS = BRAND_FIELD | YEAR_FIELD | NUMBER_FIELD
-            | VALUE_FIELD | COUNT_FIELD | PLAYER_NAME_FIELD | TEAM_FIELD
-            | PLAYER_POSITION_FIELD;
+    public enum EditTexts {
+        /**
+         * Input the card brand field.
+         */
+        BRAND,
+        /**
+         * Input the card year field.
+         */
+        YEAR,
+        /**
+         * Input the card number field.
+         */
+        NUMBER,
+        /**
+         * Input the card value field.
+         */
+        VALUE,
+        /**
+         * Input the card count field.
+         */
+        COUNT,
+        /**
+         * Input the player name field.
+         */
+        PLAYER_NAME,
+        /**
+         * Input the team field.
+         */
+        TEAM,
+        /**
+         * Input the player position field.
+         */
+        PLAYER_POSITION
+    }
+
     /**
      * Asset file which contains card data as CSV values.
      */

@@ -18,6 +18,8 @@
  */
 package bbct.android.common.activity.test;
 
+import java.util.EnumSet;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
@@ -33,6 +35,7 @@ import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Set;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -46,7 +49,7 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
 
     /**
      * Creates a {@link TestSuite} containing tests for every possible
-     * combination of {@link TextEdit} views in the {@link BaseballCardDetails}
+     * combination of {@link EditText} views in the {@link BaseballCardDetails}
      * activity.
      *
      * @return A {@link TestSuite} containing tests for every possible
@@ -54,36 +57,27 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
      * activity.
      */
     public static Test suite() {
+        Log.d(TAG, "suite()");
+        
         TestSuite suite = new TestSuite();
+        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(EnumSet.allOf(BBCTTestUtil.EditTexts.class)); 
+//      Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(EnumSet.of(BBCTTestUtil.EditTexts.BRAND, BBCTTestUtil.EditTexts.YEAR, BBCTTestUtil.EditTexts.NUMBER)); 
 
-        for (int inputFieldsMask = 0x00; inputFieldsMask <= BBCTTestUtil.ALL_FIELDS; ++inputFieldsMask) {
-            suite.addTest(new BaseballCardDetailsEditCardTest(inputFieldsMask));
+        for (Set<BBCTTestUtil.EditTexts> mask : masks) {
+            Log.d(TAG, "mask: " + mask);
+            suite.addTest(new BaseballCardDetailsEditCardTest(mask));
         }
 
         return suite;
     }
 
     /**
-     * Creates a test which will edit data in the {@link TextEdit} views
-     * indicated by the given mask. The valid values for the flags are defined
-     * in {@link BBCTTestUtil} and may be combined with the logical OR operator
-     * (<code>|</code>).
+     * Creates a test which will edit data in the {@link EditText} views
+     * indicated by the given mask.
      *
-     * @param inputMask The {@link TextEdit} views to edit.
-     *
-     * @see BBCTTestUtil#NO_FIELDS
-     * @see BBCTTestUtil#BRAND_FIELD
-     * @see BBCTTestUtil#YEAR_FIELD
-     * @see BBCTTestUtil#NUMBER_FIELD
-     * @see BBCTTestUtil#COUNT_FIELD
-     * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD <<<<<<< HEAD =======
-     * @see BBCTTestUtil#TEAM_FIELD >>>>>>> BBCT Common Tests: Test all
-     * combinations of input in BaseballCardDetailsEditCardTest
-     * @see BBCTTestUtil#PLAYER_POSITION_FIELD
-     * @see BBCTTestUtil#ALL_FIELDS
+     * @param inputMask The {@link EditText} views to edit.
      */
-    public BaseballCardDetailsEditCardTest(int inputMask) {
+    public BaseballCardDetailsEditCardTest(Set<BBCTTestUtil.EditTexts> inputMask) {
         super(BaseballCardDetails.class);
 
         this.setName(TEST_NAME);
@@ -167,17 +161,18 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
     }
 
     private BaseballCard getExpectedCard() {
-        String brand = (this.inputMask & BBCTTestUtil.BRAND_FIELD) == 0 ? this.oldCard.getBrand() : this.newCard.getBrand();
-        int year = (this.inputMask & BBCTTestUtil.YEAR_FIELD) == 0 ? this.oldCard.getYear() : this.newCard.getYear();
-        int number = (this.inputMask & BBCTTestUtil.NUMBER_FIELD) == 0 ? this.oldCard.getNumber() : this.newCard.getNumber();
-        int value = (this.inputMask & BBCTTestUtil.VALUE_FIELD) == 0 ? this.oldCard.getValue() : this.newCard.getValue();
-        int count = (this.inputMask & BBCTTestUtil.COUNT_FIELD) == 0 ? this.oldCard.getCount() : this.newCard.getCount();
-        String name = (this.inputMask & BBCTTestUtil.PLAYER_NAME_FIELD) == 0 ? this.oldCard.getPlayerName() : this.newCard.getPlayerName();
-        String team = (this.inputMask & BBCTTestUtil.TEAM_FIELD) == 0 ? this.oldCard.getTeam() : this.newCard.getTeam();
-        String position = (this.inputMask & BBCTTestUtil.PLAYER_POSITION_FIELD) == 0 ? this.oldCard.getPlayerPosition() : this.newCard.getPlayerPosition();
+        String brand = this.inputMask.contains(BBCTTestUtil.EditTexts.BRAND) ? this.newCard.getBrand() : this.oldCard.getBrand();
+        int year = this.inputMask.contains(BBCTTestUtil.EditTexts.YEAR) ? this.newCard.getYear() : this.oldCard.getYear();
+        int number = this.inputMask.contains(BBCTTestUtil.EditTexts.NUMBER) ? this.newCard.getNumber() : this.oldCard.getNumber();
+        int value = this.inputMask.contains(BBCTTestUtil.EditTexts.VALUE) ? this.newCard.getValue() : this.oldCard.getValue();
+        int count = this.inputMask.contains(BBCTTestUtil.EditTexts.COUNT) ? this.newCard.getCount() : this.oldCard.getCount();
+        String name = this.inputMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME) ? this.newCard.getPlayerName() : this.oldCard.getPlayerName();
+        String team = this.inputMask.contains(BBCTTestUtil.EditTexts.TEAM) ? this.newCard.getTeam() : this.oldCard.getTeam();
+        String position = this.inputMask.contains(BBCTTestUtil.EditTexts.PLAYER_POSITION) ? this.newCard.getPlayerPosition() : this.oldCard.getPlayerPosition();
         return new BaseballCard(brand, year, number, value, count, name, team, position);
     }
-    private final int inputMask;
+
+    private Set<BBCTTestUtil.EditTexts> inputMask;
     private Instrumentation inst = null;
     private Activity activity = null;
     private BaseballCard oldCard = null;
