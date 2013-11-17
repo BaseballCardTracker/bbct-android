@@ -78,7 +78,7 @@ public class BaseballCardList extends ListActivity {
 
             this.adapter = new SimpleCursorAdapter(this, R.layout.row, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
             this.setListAdapter(this.adapter);
-            this.applyFilter();
+            this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
             this.swapCursor();
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
@@ -174,7 +174,7 @@ public class BaseballCardList extends ListActivity {
                 this.filterParams = data.getExtras();
                 this.emptyList.setText(R.string.empty_list);
 
-                this.applyFilter();
+                this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
                 this.swapCursor();
             }
         } else {

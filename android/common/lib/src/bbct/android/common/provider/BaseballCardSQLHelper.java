@@ -18,14 +18,14 @@
  */
 package bbct.android.common.provider;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 import android.util.Log;
+import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.provider.BaseballCardContract;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +106,13 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         return this.getWritableDatabase().update(BaseballCardContract.TABLE_NAME, BaseballCardContract.getContentValues(newCard), where, args);
     }
 
+    public int removeBaseballCard(BaseballCard card) {
+        String[] args = {Integer.toString(card.getYear()), Integer.toString(card.getNumber()), card.getPlayerName()};
+        String where = BaseballCardContract.YEAR_COL_NAME + "=? AND " + BaseballCardContract.NUMBER_COL_NAME + "=? AND " + BaseballCardContract.PLAYER_NAME_COL_NAME + "=?";
+
+        return this.getWritableDatabase().delete(BaseballCardContract.TABLE_NAME, where, args);
+    }
+
     public Cursor getCursor() {
         Log.d(TAG, "getCursor()");
 
@@ -120,6 +127,33 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         Log.d(TAG, "clearFilter()");
 
         this.currCursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, null, null, null, null, null);
+    }
+
+    public void applyFilter(Context context, int request, Bundle params) {
+        Log.d(TAG, "applyFilter()");
+
+        if (request == R.id.year_filter_request) {
+            int year = params.getInt(context.getString(R.string.year_extra));
+            this.filterCursorByYear(year);
+        } else if (request == R.id.number_filter_request) {
+            int number = params.getInt(context.getString(R.string.number_extra));
+            this.filterCursorByNumber(number);
+        } else if (request == R.id.year_and_number_filter_request) {
+            int year = params.getInt(context.getString(R.string.year_extra));
+            int number = params.getInt(context.getString(R.string.number_extra));
+            this.filterCursorByYearAndNumber(year, number);
+        } else if (request == R.id.player_name_filter_request) {
+            String playerName = params.getString(context.getString(R.string.player_name_extra));
+            this.filterCursorByPlayerName(playerName);
+        } else if (request == R.id.team_filter_request) {
+            String team = params.getString(context.getString(R.string.team_extra));
+            this.filterCursorByTeam(team);
+        } else if (request == R.id.no_filter) {
+            this.clearFilter();
+        } else {
+            Log.e(TAG, "applyFilter(): Invalid filter request code: " + request);
+            // TODO: Throw an exception?
+        }
     }
 
     public void filterCursorByYear(int year) {
