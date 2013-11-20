@@ -28,12 +28,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
+import android.view.View.OnClickListener;
 import android.widget.CheckedTextView;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
@@ -41,6 +39,7 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.exception.SQLHelperCreationException;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
+import bbct.android.common.provider.CheckedCursorAdapter;
 import bbct.android.common.provider.SQLHelperFactory;
 
 /**
@@ -77,10 +76,17 @@ public class BaseballCardList extends ListActivity {
 
             ListView listView = (ListView) this.findViewById(android.R.id.list);
             View headerView = View.inflate(this, R.layout.list_header, null);
+            ((CheckedTextView) headerView.findViewById(R.id.checkmark)).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
+                    ctv.toggle();
+                    BaseballCardList.this.toggleAll(ctv.isChecked());
+                }
+            });
             listView.addHeaderView(headerView);
-            listView.setOnItemLongClickListener(this.longClick);
 
-            this.adapter = new SimpleCursorAdapter(this, R.layout.row, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
+            this.adapter = new CheckedCursorAdapter(this, R.layout.row, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
             this.setListAdapter(this.adapter);
             this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
             this.swapCursor();
@@ -163,7 +169,8 @@ public class BaseballCardList extends ListActivity {
                 CheckedTextView ctv = (CheckedTextView) lst.getChildAt(i).findViewById(R.id.checkmark);
 
                 if (ctv.isChecked()) {
-                    BaseballCard card = getBaseballCard(lst.getChildAt(i));
+                    ctv.setChecked(false);
+                    BaseballCard card = this.getBaseballCard(lst.getChildAt(i));
                     this.sqlHelper.removeBaseballCard(card);
                 }
             }
@@ -171,6 +178,7 @@ public class BaseballCardList extends ListActivity {
             Toast.makeText(this, R.string.card_deleted_message, Toast.LENGTH_LONG).show();
             this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
             this.swapCursor();
+            return true;
 
         } else if (itemId == R.id.about_menu) {
             this.startActivity(new Intent(this, About.class));
@@ -193,6 +201,9 @@ public class BaseballCardList extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
+        if (position == 0)
+            return;
+
         Intent intent = new Intent(Intent.ACTION_EDIT, BaseballCardDetails.DETAILS_URI);
         BaseballCard card = BaseballCardList.this.sqlHelper.getBaseballCardFromCursor();
 
@@ -249,35 +260,6 @@ public class BaseballCardList extends ListActivity {
             ctv.setChecked(check);
         }
     }
-
-    /**
-     * Listener for long presses on list items. On long press mark the
-     * corresponding {@link CheckedTextView}.
-     */
-    private OnItemLongClickListener longClick = new OnItemLongClickListener() {
-
-        @Override
-        public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
-            CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.checkmark);
-
-            if (position == 0) {
-                if (ctv.isChecked())
-                    BaseballCardList.this.toggleAll(false);
-                else
-                    BaseballCardList.this.toggleAll(true);
-            }
-
-            else
-                ctv.toggle();
-
-            // update delete option in menu
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB)
-                BaseballCardList.this.invalidateOptionsMenu();
-
-            // do not react to other events, such as onListItemClick()
-            return true;
-        }
-    };
 
     private void swapCursor() {
         Cursor cursor = this.sqlHelper.getCursor();

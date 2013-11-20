@@ -38,5 +38,4 @@
           android:title="@string/about_menu"
           android:icon="@drawable/ic_menu_about"
     />
-    
 </menu>

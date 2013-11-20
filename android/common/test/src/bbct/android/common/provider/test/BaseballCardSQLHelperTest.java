@@ -120,6 +120,17 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
     }
 
     /**
+     * Test for {@link BaseballCardSQLHelper#removeBaseballCard}.
+     */
+    public void testRemoveBaseballCard() {
+        this.sqlHelper.insertBaseballCard(this.card);
+        Assert.assertTrue(this.dbUtil.containsBaseballCard(this.card));
+
+        this.sqlHelper.removeBaseballCard(this.card);
+        Assert.assertFalse(this.dbUtil.containsBaseballCard(this.card));
+    }
+
+    /**
      * Test for {@link BaseballCardSQLHelper#getCursor}.
      */
     public void testGetCursor() {
