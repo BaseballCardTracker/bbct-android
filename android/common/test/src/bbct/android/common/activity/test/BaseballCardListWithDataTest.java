@@ -512,14 +512,12 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         this.inst.addMonitor(filterMonitor);
 
         Activity filterOptions = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.filter_menu, FilterOptions.class);
-        final Button optionsOkButton = (Button) filterOptions.findViewById(R.id.ok_button);
         final RadioButton filterRadioButton = (RadioButton) filterOptions.findViewById(radioButtonId);
 
         this.runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Assert.assertFalse(filterRadioButton.performClick());
-                Assert.assertTrue(optionsOkButton.performClick());
             }
         });
 
