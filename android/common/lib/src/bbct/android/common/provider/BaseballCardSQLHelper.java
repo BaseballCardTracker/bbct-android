@@ -106,6 +106,12 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         return this.getWritableDatabase().update(BaseballCardContract.TABLE_NAME, BaseballCardContract.getContentValues(newCard), where, args);
     }
 
+    /**
+     * Removes data related with {@link BaseballCard} from
+     * the database.
+     * @param card - the card to remove from database
+     * @return - see {@link SQLiteDatabase#delete}
+     */
     public int removeBaseballCard(BaseballCard card) {
         String[] args = {Integer.toString(card.getYear()), Integer.toString(card.getNumber()), card.getPlayerName()};
         String where = BaseballCardContract.YEAR_COL_NAME + "=? AND " + BaseballCardContract.NUMBER_COL_NAME + "=? AND " + BaseballCardContract.PLAYER_NAME_COL_NAME + "=?";
@@ -129,6 +135,14 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         this.currCursor = this.getWritableDatabase().query(BaseballCardContract.TABLE_NAME, null, null, null, null, null, null);
     }
 
+    /**
+     * Re-queries the database based on a filter and obtains a new
+     * {@link Cursor} according to filter parameters.
+     * 
+     * @param context - the {@link Context} from which this method was called
+     * @param request - the type of filter that needs to be applied
+     * @param params - additional filter information such as year integer
+     */
     public void applyFilter(Context context, int request, Bundle params) {
         Log.d(TAG, "applyFilter()");
 

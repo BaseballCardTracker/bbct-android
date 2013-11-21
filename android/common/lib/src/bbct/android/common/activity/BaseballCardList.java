@@ -230,9 +230,12 @@ public class BaseballCardList extends ListActivity {
     }
 
     /**
-     * Obtains {@link BaseballCard} from @param v
+     * Obtains {@link BaseballCard} from {@link View}.
      * The returned {@link BaseballCard} only includes
      * partial data - data required to delete a card.
+     * @param v - {@link View} object to obtain the card from
+     * @return the {@link BaseballCard} containing year, brand,
+     * number and playerName.
      */
     private BaseballCard getBaseballCard(View v) {
         TextView yearCol = (TextView) v.findViewById(R.id.year_text_view);
@@ -248,7 +251,8 @@ public class BaseballCardList extends ListActivity {
     }
 
     /**
-     * Marks/unmarks all items in the list according to @param check
+     * Marks/unmarks all items in the {@link ListView}.
+     * @param check - a boolean indicating whether all items will be checked
      */
     private void toggleAll(boolean check) {
         ListView lst = this.getListView();
