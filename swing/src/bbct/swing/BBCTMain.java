@@ -34,7 +34,7 @@ import java.util.logging.SimpleFormatter;
 import javax.swing.JOptionPane;
 
 /**
- * This is the driver class for the Baseball Card Tracker program (BBCT).
+ * This is the driver class for the Baseball Card Tracker program (BBCT) hup dup.
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
