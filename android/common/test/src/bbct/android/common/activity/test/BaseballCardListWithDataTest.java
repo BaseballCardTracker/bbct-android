@@ -207,28 +207,6 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     }
 
     /**
-     * Test that the menu is correct when the {@link BaseballCardList} has no
-     * active filter.
-     */
-    public void testMenuLayoutWithoutFilter() {
-        this.sendKeys(KeyEvent.KEYCODE_MENU);
-        Assert.fail("Now how do I check the contents of the menu?");
-    }
-
-    /**
-     * Test that the menu is correct when the {@link BaseballCardList} has an
-     * active filter.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
-     */
-    public void testMenuLayoutWithFilter() throws Throwable {
-        this.testYearFilter();
-        this.sendKeys(KeyEvent.KEYCODE_MENU);
-        Assert.fail("Now how do I check the contents of the menu?");
-    }
-
-    /**
      * Test that, when the user clicks on an item in the {@link ListView} of the
      * {@link BaseballCardList} activity, a {@link BaseballCardDetails} activity
      * is launched with its {@link EditText} views populated with the correct
