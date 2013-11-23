@@ -21,7 +21,6 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.UiThreadTest;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -66,8 +65,6 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
         this.inst = this.getInstrumentation();
         this.activity = this.getActivity();
         this.filterOptionsRadioGroup = (RadioGroup) this.activity.findViewById(R.id.filter_options_radio_group);
-        this.okButton = (Button) this.activity.findViewById(R.id.ok_button);
-        this.cancelButton = (Button) this.activity.findViewById(R.id.cancel_button);
     }
 
     /**
@@ -81,8 +78,6 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
         Assert.assertNotNull(this.filterOptionsRadioGroup);
-        Assert.assertNotNull(this.okButton);
-        Assert.assertNotNull(this.cancelButton);
 
         Assert.assertEquals(RADIO_BUTTON_COUNT, this.filterOptionsRadioGroup.getChildCount());
         Assert.assertEquals(NO_RADIO_BUTTON_CHECKED, this.filterOptionsRadioGroup.getCheckedRadioButtonId());
@@ -98,18 +93,7 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
         Assert.assertTrue(title.contains(filterOptionsTitle));
     }
 
-    /**
-     * Check that an error message is displayed when the user clicks the "OK"
-     * button without selecting a radio button.
-     */
-    @UiThreadTest
-    public void testOkButtonOnClickWithNoRadioButtonChecked() {
-        Assert.assertTrue(this.okButton.performClick());
-        Assert.fail("How do I check that the error Toast is raised?");
-        Assert.assertFalse(this.activity.isFinishing());
-    }
-
-    private void testOkButtonOnClick(Class<? extends FilterActivity> filterActivityClass, final int radioButtonId) throws Throwable {
+    private void testRadioButtonOnClick(Class<? extends FilterActivity> filterActivityClass, final int radioButtonId) throws Throwable {
         Instrumentation.ActivityMonitor filterActivityMonitor = new Instrumentation.ActivityMonitor(filterActivityClass.getName(), null, false);
         this.inst.addMonitor(filterActivityMonitor);
 
@@ -120,7 +104,6 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
             public void run() {
                 Log.d(TAG, "Running on UI Thread");
                 Assert.assertFalse(filterRadioButton.performClick());
-                Assert.assertTrue(FilterOptionsTest.this.okButton.performClick());
             }
         });
 
@@ -133,73 +116,74 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
 
     /**
      * Test that {@link YearFilter} starts when the user selects the "Year"
-     * radio button and clicks "OK".
+     * radio button.
      *
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
      */
-    public void testOkButtonOnClickWithYearRadioButtonChecked() throws Throwable {
-        Log.d(TAG, "testOkButtonOnClickWithYearRadioButtonChecked()");
-        this.testOkButtonOnClick(YearFilter.class, R.id.year_filter_radio_button);
+    public void testYearRadioButtonOnClick() throws Throwable {
+        Log.d(TAG, "testYearRadioButtonOnClick()");
+        this.testRadioButtonOnClick(YearFilter.class, R.id.year_filter_radio_button);
     }
 
     /**
      * Test that {@link NumberFilter} starts when the user selects the "Number"
-     * radio button and clicks "OK".
+     * radio button.
      *
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
      */
-    public void testOkButtonOnClickWithNumberRadioButtonChecked() throws Throwable {
-        this.testOkButtonOnClick(NumberFilter.class, R.id.number_filter_radio_button);
+    public void testNumberRadioButtonOnClick() throws Throwable {
+        this.testRadioButtonOnClick(NumberFilter.class, R.id.number_filter_radio_button);
     }
 
     /**
      * Test that {@link YearAndNumberFilter} starts when the user selects the
-     * "Year and Number" radio button and clicks "OK".
+     * "Year and Number" radio button.
      *
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
      */
-    public void testOkButtonOnClickWithYearAndNumberRadioButtonChecked() throws Throwable {
-        this.testOkButtonOnClick(YearAndNumberFilter.class, R.id.year_and_number_filter_radio_button);
+    public void testYearAndNumberRadioButtonOnClick() throws Throwable {
+        this.testRadioButtonOnClick(YearAndNumberFilter.class, R.id.year_and_number_filter_radio_button);
     }
 
     /**
      * Test that {@link PlayerNameFilter} starts when the user selects the
-     * "Player Name" radio button and clicks "OK".
+     * "Player Name" radio button.
      *
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
      */
-    public void testOkButtonOnClickWithPlayerNameRadioButtonChecked() throws Throwable {
-        this.testOkButtonOnClick(PlayerNameFilter.class, R.id.player_name_filter_radio_button);
+    public void testPlayerNameRadioButtonOnClick() throws Throwable {
+        this.testRadioButtonOnClick(PlayerNameFilter.class, R.id.player_name_filter_radio_button);
     }
 
     /**
      * Test that {@link PlayerNameFilter} starts when the user selects the
-     * "Team" radio button and clicks "OK".
+     * "Team" radio button.
      *
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
      */
-    public void testOkButtonOnClickWithTeamRadioButtonChecked() throws Throwable {
-        this.testOkButtonOnClick(TeamFilter.class, R.id.team_filter_radio_button);
+    public void testTeamRadioButtonOnClick() throws Throwable {
+        this.testRadioButtonOnClick(TeamFilter.class, R.id.team_filter_radio_button);
     }
 
     /**
-     * Test that the {@link Activity} finishes when the user clicks "Cancel".
+     * Test that {@link RadioGroup} has no selection once the user returns
+     * from FilterActivity.
+     * 
+     * @throws Throwable If an error occurs while the portion of the test on the
+     * UI thread runs.
      */
-    @UiThreadTest
-    public void testCancelButtonOnClick() {
-        Assert.assertTrue(this.cancelButton.performClick());
-        Assert.assertTrue(this.activity.isFinishing());
+    public void testRadioGroupAfterSelection() throws Throwable {
+        this.testYearRadioButtonOnClick();
+        Assert.assertEquals(this.filterOptionsRadioGroup.getCheckedRadioButtonId(), NO_RADIO_BUTTON_CHECKED);
     }
     private Instrumentation inst = null;
     private Activity activity = null;
     private RadioGroup filterOptionsRadioGroup = null;
-    private Button okButton = null;
-    private Button cancelButton = null;
     private static final int RADIO_BUTTON_COUNT = 5;
     private static final int NO_RADIO_BUTTON_CHECKED = -1;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
