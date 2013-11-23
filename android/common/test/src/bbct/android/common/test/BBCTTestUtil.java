@@ -290,9 +290,7 @@ final public class BBCTTestUtil {
         Log.d(TAG, "sendKeysToCurrFieldCardDetails()");
 
         inst.sendStringSync(cardDetail);
-        if (editTextView instanceof AutoCompleteTextView)
-        {
-            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ESCAPE);
+        if (editTextView instanceof AutoCompleteTextView) {
             if(((AutoCompleteTextView)editTextView).isPopupShowing())
                 inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
         }
