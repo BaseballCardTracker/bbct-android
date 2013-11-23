@@ -89,7 +89,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
         this.dbUtil.populateTable(allCards);
 
-        this.newCard = new BaseballCard("codeguru apps", 1993, 1, 50000, 1, "codeguru", "codeguru devs", "Catcher");
+        this.newCard = new BaseballCard("Code Guru Apps", 1993, 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
     }
 
     /**
