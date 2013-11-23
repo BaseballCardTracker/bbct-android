@@ -131,7 +131,7 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
      */
     @Override
     public void tearDown() throws Exception {
-        this.dbUtil.deleteDatabase();
+        this.dbUtil.deleteDatabase(this.activity);
 
         super.tearDown();
 

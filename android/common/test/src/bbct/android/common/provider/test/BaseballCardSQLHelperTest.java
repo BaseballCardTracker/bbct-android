@@ -66,7 +66,7 @@ public class BaseballCardSQLHelperTest extends AndroidTestCase {
      */
     @Override
     public void tearDown() throws Exception {
-        this.dbUtil.deleteDatabase();
+        this.dbUtil.deleteDatabase(this.getContext());
 
         super.tearDown();
     }

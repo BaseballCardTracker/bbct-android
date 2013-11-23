@@ -19,13 +19,13 @@
 package bbct.android.common.test;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
-import java.io.File;
 import java.util.List;
 
 /**
@@ -60,9 +60,9 @@ public class DatabaseUtil {
      * Delete the database being tested. Should return the app to its inital
      * state after installation.
      */
-    public void deleteDatabase() {
+    public void deleteDatabase(Context context) {
         this.db.close();
-        SQLiteDatabase.deleteDatabase(new File(this.dbPath));
+        context.deleteDatabase(DB_NAME);
     }
 
     /**
