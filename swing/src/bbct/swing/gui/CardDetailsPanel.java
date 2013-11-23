@@ -352,7 +352,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.insets = bottomLeftInsets;
         playerDetailsInputPanel.add(playerPositionLabel, gbc);
 
-        this.playerPositionComboBox = new JComboBox(BBCTStringResources.ComboBoxResources.POSITIONS);
+        this.playerPositionComboBox = new JComboBox<String>(BBCTStringResources.ComboBoxResources.POSITIONS);
         this.playerPositionComboBox.setEditable(this.allEditable);
         this.playerPositionComboBox.setFont(FontResources.DEFAULT_FONT);
         this.playerPositionComboBox.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.PLAYER_POSITION_INSTRUCTIONS));
@@ -413,7 +413,7 @@ public class CardDetailsPanel extends JPanel {
     private JFormattedTextField countTextField;
     private JFormattedTextField numberTextField;
     private JTextField playerNameTextField;
-    private JComboBox playerPositionComboBox;
+    private JComboBox<String> playerPositionComboBox;
     private JFormattedTextField valueTextField;
     private JFormattedTextField yearTextField;
     private JCheckBox deleteOption;
