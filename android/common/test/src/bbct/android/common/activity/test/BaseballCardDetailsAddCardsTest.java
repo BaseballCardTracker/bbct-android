@@ -91,7 +91,7 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
      */
     public void testAddCard() throws Throwable {
         BBCTTestUtil.addCard(this, this.activity, this.card);
-        this.inst.waitForIdleSync();
+        this.activity.finish();
 
         DatabaseUtil dbUtil = new DatabaseUtil(this.activity.getPackageName());
         Assert.assertTrue("Missing card: " + this.card, dbUtil.containsBaseballCard(card));
