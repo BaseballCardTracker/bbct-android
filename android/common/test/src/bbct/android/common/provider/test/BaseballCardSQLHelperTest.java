@@ -18,9 +18,10 @@
  */
 package bbct.android.common.provider.test;
 
+import android.app.Instrumentation;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
 import android.util.Log;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
@@ -37,7 +38,7 @@ import junit.framework.Assert;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
-public class BaseballCardSQLHelperTest extends AndroidTestCase {
+public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
 
     /**
      *
@@ -49,11 +50,12 @@ public class BaseballCardSQLHelperTest extends AndroidTestCase {
 
         super.setUp();
 
-        this.sqlHelper = new BaseballCardSQLHelper(this.getContext());
+        this.inst = this.getInstrumentation();
+        this.sqlHelper = new BaseballCardSQLHelper(this.inst.getTargetContext());
         this.db = this.sqlHelper.getWritableDatabase();
-        this.dbUtil = new DatabaseUtil(this.getContext().getPackageName());
+        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext().getPackageName());
 
-        InputStream input = this.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
+        InputStream input = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader reader = new BaseballCardCsvFileReader(input, true);
         this.allCards = reader.getAllBaseballCards();
         this.card = this.allCards.get(3); // Ken Griffey, Jr.
@@ -66,7 +68,7 @@ public class BaseballCardSQLHelperTest extends AndroidTestCase {
      */
     @Override
     public void tearDown() throws Exception {
-        this.dbUtil.deleteDatabase(this.getContext());
+        this.dbUtil.deleteDatabase(this.inst.getTargetContext());
 
         super.tearDown();
     }
@@ -76,7 +78,7 @@ public class BaseballCardSQLHelperTest extends AndroidTestCase {
      */
     public void testOnCreate() {
         Assert.assertNotNull(this.db);
-        BBCTTestUtil.assertDatabaseCreated(this.getContext().getPackageName());
+        BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext().getPackageName());
         Assert.assertTrue(this.dbUtil.isEmpty());
     }
 
@@ -205,6 +207,8 @@ public class BaseballCardSQLHelperTest extends AndroidTestCase {
         // TODO review the generated test code and remove the default call to Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
+
+    private Instrumentation inst = null;
     private BaseballCardSQLHelper sqlHelper = null;
     private SQLiteDatabase db = null;
     private List<BaseballCard> allCards = null;
