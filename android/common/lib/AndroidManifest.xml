@@ -48,6 +48,7 @@
         <activity android:name=".activity.filter.PlayerNameFilter"/>
         <activity android:name=".activity.filter.TeamFilter"/>
         <activity android:name=".activity.About" />
+        <activity android:name=".activity.DeleteCardList" />
         <provider android:name=".provider.BaseballCardProvider"
                   android:label="@string/provider_name"
                   android:icon="@drawable/baseball"

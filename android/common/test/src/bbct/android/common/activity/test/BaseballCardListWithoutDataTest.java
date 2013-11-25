@@ -141,6 +141,17 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
     }
 
     /**
+     * Test that the "Delete Cards" menu item is disabled.
+     * Menu item should be disabled if there is no data displayed
+     * in {@link ListView}. There is also a test which indirectly
+     * checks if this menu item is enabled when {@link ListView}
+     * is populated - see {@link BaseballCardListWithDataTest#testDeleteMenuItem()}.
+     */
+    public void testDeleteCardsMenuItem() {
+        Assert.assertFalse(this.inst.invokeMenuActionSync(this.activity, R.id.delete_menu, 0));
+    }
+
+    /**
      * Test that the "About" menu item launches a {@link About} activity.
      */
     public void testAboutMenuItem() {
