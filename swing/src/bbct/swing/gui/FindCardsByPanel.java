@@ -38,6 +38,7 @@ import javax.swing.event.AncestorListener;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public abstract class FindCardsByPanel extends JPanel {
 
     /**

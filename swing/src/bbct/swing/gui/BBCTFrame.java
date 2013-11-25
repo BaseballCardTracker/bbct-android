@@ -50,6 +50,7 @@ import javax.swing.WindowConstants;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class BBCTFrame extends JFrame {
 
     /**
@@ -177,25 +178,33 @@ public class BBCTFrame extends JFrame {
 
     private static List<BaseballCard> readCards(String fileName) throws FileNotFoundException, IOException {
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
-        BufferedReader in = new BufferedReader(new FileReader(fileName));
+        BufferedReader in = null;
 
-        // Throw away first line with headings
-        String line = in.readLine();
-        while (in.ready()) {
-            line = in.readLine();
-            String[] data = line.split(",");
-            String brand = data[0];
-            int year = Integer.parseInt(data[1]);
-            int number = Integer.parseInt(data[2]);
-            int value = number * 10;
-            int count = 1;
-            String playerName = data[3];
-            String playerPosition = data[4];
-            BaseballCard card = new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
+        try {
+            in = new BufferedReader(new FileReader(fileName));
 
-            cards.add(card);
+            // Throw away first line with headings
+            String line = in.readLine();
+            while (in.ready()) {
+                line = in.readLine();
+                String[] data = line.split(",");
+                String brand = data[0];
+                int year = Integer.parseInt(data[1]);
+                int number = Integer.parseInt(data[2]);
+                int value = number * 10;
+                int count = 1;
+                String playerName = data[3];
+                String playerPosition = data[4];
+                BaseballCard card = new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
+
+                cards.add(card);
+            }
+
+            return cards;
+        } finally {
+            if (in != null) {
+                in.close();
+            }
         }
-
-        return cards;
     }
 }

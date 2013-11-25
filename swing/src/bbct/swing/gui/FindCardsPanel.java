@@ -47,6 +47,7 @@ import javax.swing.JPanel;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class FindCardsPanel extends JPanel {
 
     /**

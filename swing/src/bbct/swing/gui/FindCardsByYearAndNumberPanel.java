@@ -47,6 +47,7 @@ import javax.swing.text.NumberFormatter;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
 
     /**

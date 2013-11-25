@@ -24,6 +24,7 @@ package bbct.common.exceptions;
  *
  * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class InputException extends Exception {
 
     /**
