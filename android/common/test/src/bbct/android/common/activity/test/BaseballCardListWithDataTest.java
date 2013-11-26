@@ -75,9 +75,6 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     public void setUp() throws Exception {
         super.setUp();
 
-        // Start Activity to insure that database is created before trying to insert data
-        this.activity = this.getActivity();
-        this.listView = (ListView) this.activity.findViewById(android.R.id.list);
         this.inst = this.getInstrumentation();
 
         // Create the database and populate table with test data
@@ -86,10 +83,13 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         this.allCards = cardInput.getAllBaseballCards();
         cardInput.close();
 
-        this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
+        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         this.dbUtil.populateTable(allCards);
 
-        this.newCard = new BaseballCard("codeguru apps", 1993, 1, 50000, 1, "codeguru", "codeguru devs", "Catcher");
+        // Start Activity
+        this.activity = this.getActivity();
+        this.listView = (ListView) this.activity.findViewById(android.R.id.list);
+        this.newCard = new BaseballCard("Code Guru Apps", 1993, 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
     }
 
     /**
@@ -116,7 +116,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
 
-        BBCTTestUtil.assertDatabaseCreated(this.activity.getPackageName());
+        BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.containsAllBaseballCards(this.allCards));
 
         Assert.assertNotNull(this.listView);
@@ -207,28 +207,6 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
     }
 
     /**
-     * Test that the menu is correct when the {@link BaseballCardList} has no
-     * active filter.
-     */
-    public void testMenuLayoutWithoutFilter() {
-        this.sendKeys(KeyEvent.KEYCODE_MENU);
-        Assert.fail("Now how do I check the contents of the menu?");
-    }
-
-    /**
-     * Test that the menu is correct when the {@link BaseballCardList} has an
-     * active filter.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
-     */
-    public void testMenuLayoutWithFilter() throws Throwable {
-        this.testYearFilter();
-        this.sendKeys(KeyEvent.KEYCODE_MENU);
-        Assert.fail("Now how do I check the contents of the menu?");
-    }
-
-    /**
      * Test that, when the user clicks on an item in the {@link ListView} of the
      * {@link BaseballCardList} activity, a {@link BaseballCardDetails} activity
      * is launched with its {@link EditText} views populated with the correct
@@ -261,7 +239,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         EditText playerNameText = (EditText) cardDetails.findViewById(R.id.player_name_text);
         Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
 
-        BaseballCard expectedCard = this.allCards.get(cardIndex);
+        BaseballCard expectedCard = this.allCards.get(cardIndex - 1);
         Assert.assertEquals(expectedCard.getBrand(), brandText.getText().toString());
         Assert.assertEquals(expectedCard.getYear(), Integer.parseInt(yearText.getText().toString()));
         Assert.assertEquals(expectedCard.getNumber(), Integer.parseInt(numberText.getText().toString()));

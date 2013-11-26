@@ -21,6 +21,7 @@ package bbct.android.common.activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -34,10 +35,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.android.common.provider.SQLHelperFactory;
 import bbct.android.common.exception.SQLHelperCreationException;
 import bbct.android.common.provider.BaseballCardContract;
+import bbct.android.common.provider.BaseballCardSQLHelper;
+import bbct.android.common.provider.SQLHelperFactory;
 
 /**
  * TODO: Make list fancier
@@ -130,7 +131,11 @@ public class BaseballCardList extends ListActivity {
             this.emptyList.setText(R.string.start);
             this.sqlHelper.clearFilter();
             this.swapCursor();
-            this.invalidateOptionsMenu();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                invalidateOptionsMenu();
+            }
+
             return true;
         } else if (itemId == R.id.about_menu) {
             this.startActivity(new Intent(this, About.class));

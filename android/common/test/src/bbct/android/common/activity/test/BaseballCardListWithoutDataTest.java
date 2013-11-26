@@ -71,7 +71,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
 
         InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
-        this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
+        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
     }
 
     /**
@@ -105,7 +105,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         // Subtract 1 from the number of views owned by the ListView to account for the header View
         Assert.assertEquals(0, this.listView.getCount() - 1);
 
-        BBCTTestUtil.assertDatabaseCreated(this.activity.getPackageName());
+        BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.isEmpty());
     }
 
