@@ -53,7 +53,7 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
         this.inst = this.getInstrumentation();
         this.sqlHelper = new BaseballCardSQLHelper(this.inst.getTargetContext());
         this.db = this.sqlHelper.getWritableDatabase();
-        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext().getPackageName());
+        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
 
         InputStream input = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader reader = new BaseballCardCsvFileReader(input, true);
@@ -68,7 +68,7 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
      */
     @Override
     public void tearDown() throws Exception {
-        this.dbUtil.deleteDatabase(this.inst.getTargetContext());
+        this.dbUtil.deleteDatabase();
 
         super.tearDown();
     }
@@ -78,7 +78,7 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
      */
     public void testOnCreate() {
         Assert.assertNotNull(this.db);
-        BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext().getPackageName());
+        BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.isEmpty());
     }
 

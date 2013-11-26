@@ -76,8 +76,8 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
      */
     @Override
     public void tearDown() throws Exception {
-        DatabaseUtil dbUtil = new DatabaseUtil(this.activity.getPackageName());
-        dbUtil.deleteDatabase(this.activity);
+        DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
+        dbUtil.deleteDatabase();
 
         super.tearDown();
     }
@@ -91,9 +91,7 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
      */
     public void testAddCard() throws Throwable {
         BBCTTestUtil.addCard(this, this.activity, this.card);
-        this.activity.finish();
-
-        DatabaseUtil dbUtil = new DatabaseUtil(this.activity.getPackageName());
+        DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         Assert.assertTrue("Missing card: " + this.card, dbUtil.containsBaseballCard(card));
     }
 
@@ -112,7 +110,7 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
         }
 
         this.inst.waitForIdleSync();
-        DatabaseUtil dbUtil = new DatabaseUtil(this.activity.getPackageName());
+        DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         for (BaseballCard nextCard : this.allCards) {
             Assert.assertTrue("Missing card: " + nextCard, dbUtil.containsBaseballCard(nextCard));
         }

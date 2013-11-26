@@ -20,6 +20,7 @@ package bbct.android.common.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
@@ -33,7 +34,6 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import java.util.EnumSet;
@@ -328,10 +328,10 @@ final public class BBCTTestUtil {
      * Assert that database was created with the correct version and table and
      * that it is empty.
      *
-     * @param targetPackage The name of the Android package being tested.
+     * @param targetPackage The target context.
      */
-    public static void assertDatabaseCreated(String targetPackage) {
-        DatabaseUtil dbUtil = new DatabaseUtil(targetPackage);
+    public static void assertDatabaseCreated(Context targetContext) {
+        DatabaseUtil dbUtil = new DatabaseUtil(targetContext);
         SQLiteDatabase db = dbUtil.getDatabase();
         Assert.assertNotNull(db);
         Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION, db.getVersion());

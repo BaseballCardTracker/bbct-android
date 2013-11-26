@@ -58,10 +58,10 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
      */
     public static Test suite() {
         Log.d(TAG, "suite()");
-        
+
         TestSuite suite = new TestSuite();
-        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(EnumSet.allOf(BBCTTestUtil.EditTexts.class)); 
-//      Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(EnumSet.of(BBCTTestUtil.EditTexts.BRAND, BBCTTestUtil.EditTexts.YEAR, BBCTTestUtil.EditTexts.NUMBER)); 
+        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(EnumSet.allOf(BBCTTestUtil.EditTexts.class));
+//      Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(EnumSet.of(BBCTTestUtil.EditTexts.BRAND, BBCTTestUtil.EditTexts.YEAR, BBCTTestUtil.EditTexts.NUMBER));
 
         for (Set<BBCTTestUtil.EditTexts> mask : masks) {
             Log.d(TAG, "mask: " + mask);
@@ -119,7 +119,7 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
 
         // Insert baseball card to make sure we are updating an existing card rather than simply inserting a new card.
         // TODO Make sure this still works without using BaseballCardSQLHelper
-        this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
+        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         this.dbUtil.insertBaseballCard(this.oldCard);
     }
 
@@ -131,7 +131,7 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
      */
     @Override
     public void tearDown() throws Exception {
-        this.dbUtil.deleteDatabase(this.activity);
+        this.dbUtil.deleteDatabase();
 
         super.tearDown();
 
