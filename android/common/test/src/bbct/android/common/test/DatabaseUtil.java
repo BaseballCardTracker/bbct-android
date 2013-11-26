@@ -161,7 +161,6 @@ public class DatabaseUtil {
     }
     private SQLiteDatabase db = null;
     private Context context = null;
-    private static final String DB_PATH = "/data/data/%s/databases/%s";
     private static final String DB_NAME = BaseballCardSQLHelper.DATABASE_NAME;
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
     private static final String TAG = DatabaseUtil.class.getName();
