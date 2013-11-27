@@ -85,6 +85,7 @@ public class BaseballCardSQLHelper extends bbct.android.common.provider.Baseball
             String errorMessage = this.context.getString(R.string.import_error, errorMessageEnding);
             dialogBuilder.setMessage(errorMessage);
             dialogBuilder.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
+                @Override
                 public void onClick(DialogInterface dialog, int which) {
                 }
             });
