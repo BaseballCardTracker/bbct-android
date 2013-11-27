@@ -357,8 +357,6 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
      * once an item is selected from {@link ListView}.
      */
     public void testSelection() throws Throwable {
-        this.testClearFilter();
-
         ListView lv = ((ListActivity) this.activity).getListView();
         int index = (int) (Math.random()*(lv.getChildCount()-1)) + 1;
         final CheckedTextView ctv = (CheckedTextView) lv.getChildAt(index).findViewById(R.id.checkmark);
@@ -378,8 +376,6 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
      * items in {@link ListView} are selected.
      */
     public void testMarkAll() throws Throwable {
-        this.testClearFilter();
-
         final ListView lv = ((ListActivity) this.activity).getListView();
         final CheckedTextView header = (CheckedTextView) lv.getChildAt(0).findViewById(R.id.checkmark);
 
