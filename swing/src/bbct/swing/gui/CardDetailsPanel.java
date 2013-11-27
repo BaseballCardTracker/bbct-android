@@ -35,6 +35,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -52,6 +53,8 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
 
 /**
  * {@link CardDetailsPanel} contains labels and text fields for the data stored
@@ -251,6 +254,8 @@ public class CardDetailsPanel extends JPanel {
         gbc.weightx = 1;
         gbc.insets = leftInsets;
         cardDetailsInputPanel.add(numberLabel, gbc);
+        
+        
 
         this.numberTextField = new JFormattedTextField();
         this.numberTextField.setEditable(this.allEditable);
@@ -274,7 +279,7 @@ public class CardDetailsPanel extends JPanel {
         cardDetailsInputPanel.add(valueLabel, gbc);
 
         this.valueTextField = new JFormattedTextField();
-        this.valueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        this.valueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getNumberInstance())));
         this.valueTextField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         this.valueTextField.setFont(FontResources.DEFAULT_FONT);
         this.valueTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
@@ -394,8 +399,8 @@ public class CardDetailsPanel extends JPanel {
         tf.selectAll();
         tf.requestFocusInWindow();
         try {
-            tf.commitEdit();
-        } catch (ParseException ex) {
+        	tf.commitEdit();
+        	} catch (ParseException ex) {
             throw new InputException(errorMessage, ex);
         }
         if (!v.verify(tf)) {
@@ -408,7 +413,6 @@ public class CardDetailsPanel extends JPanel {
     public boolean deleteCard() {
         return this.deleteOption.isSelected();
     }
-
     private JTextField brandTextField;
     private JFormattedTextField countTextField;
     private JFormattedTextField numberTextField;
