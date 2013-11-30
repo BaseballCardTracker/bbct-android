@@ -32,9 +32,6 @@ import bbct.android.common.R;
  * This class adds click listeners to {@link CheckedTextView} in
  * {@link SimpleCursorAdapter}. It enables {@link CheckedTextView}
  * to toggle its' state.
- * 
- * @author tmatek
- *
  */
 public class CheckedCursorAdapter extends SimpleCursorAdapter {
 
@@ -53,7 +50,6 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
         super.bindView(view, context, cursor);
 
         // set listeners for CheckedTextView
-        final Cursor c = cursor;
         final CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.checkmark);
         final Activity curActivity = (Activity) context;
         ctv.setOnClickListener(new OnClickListener() {
@@ -69,8 +65,9 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
 
                     @Override
                     public void run() {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                             curActivity.invalidateOptionsMenu();
+                        }
                     }
 
                 });
