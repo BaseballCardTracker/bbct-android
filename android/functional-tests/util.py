@@ -81,15 +81,9 @@ def input_card(device, card):
     device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
     device.type(str(card.count))
     device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
-
-    print(card.player)
-
-    device.type(card.player)
+    typeWithSpaces(device, card.player)
     device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
-
-    print(card.team)
-
-    device.type(card.team)
+    typeWithSpaces(device, card.team)
     device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
 
 #    nextPosIndex = positions.find(card.position)
@@ -101,3 +95,10 @@ def input_card(device, card):
     # Click "Save" button
     device.press('KEYCODE_DPAD_LEFT', MonkeyDevice.DOWN_AND_UP)
     device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+
+def typeWithSpaces(device, str):
+    strs = str.split(' ')
+    for i in range(len(strs)):
+        device.type(strs[i])
+        if i != len(strs) - 1:
+            device.press('KEYCODE_SPACE', MonkeyDevice.DOWN_AND_UP)
