@@ -16,6 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice
+import math
 
 positions = ['Pitcher', 'Catcher', 'First Base', 'Second Base', 'Third Base',
              'Shortstop', 'Left Field', 'Center Field', 'Right Field']
@@ -89,13 +90,24 @@ def input_card(device, card):
     typeWithSpaces(device, card.team)
     device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
 
-#    nextPosIndex = positions.find(card.position)
-#    print nextPosIndex
+    global currPosIndex
+    nextPosIndex = positions.index(card.position)
+    delta = nextPosIndex - currPosIndex
+    if delta != 0:
+        device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+        key = 'KEYCODE_DPAD_DOWN'
+        if delta > 0:
+            key = 'KEYCODE_DPAD_UP'
+        for i in range(math.fabs(delta)):
+            device.press(key, MonkeyDevice.DOWN_AND_UP)
+        device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+    currPosIndex = nextPosIndex
 
-    device.type(card.position)
-    device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
+def save_card(device, card):
+    input_card(device, card)
 
     # Click "Save" button
+    device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
     device.press('KEYCODE_DPAD_LEFT', MonkeyDevice.DOWN_AND_UP)
     device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
 

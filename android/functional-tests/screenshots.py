@@ -64,9 +64,6 @@ if device.installPackage(apkFile):
     print("Reading baseball card data...")
     cards = util.read_card_data('data/cards.csv')
 
-    for card in cards:
-        print card
-
     print("Starting activity: " + runComponent + "...")
     device.startActivity(component=runComponent)
     MonkeyRunner.sleep(delay)
