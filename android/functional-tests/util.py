@@ -85,12 +85,12 @@ def input_card(device, card):
     device.type(str(card.count))
     device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
 
-    print card.player
+    print(card.player)
 
     device.type(card.player)
     device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
 
-    print card.team
+    print(card.team)
 
     device.type(card.team)
     device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)

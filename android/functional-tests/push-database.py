@@ -31,13 +31,13 @@ remoteDb = "/data/data/" + package + "/databases/" + dbFileName
 # a task before taking a screenshot. This is necessary for my slow-ass computer
 delay = 10.0
 
-print "Connect to device..."
+print("Connect to device...")
 device = MonkeyRunner.waitForConnection()
 
-print "Install APK: " + apkFile + "..."
+print("Install APK: " + apkFile + "...")
 if device.installPackage(apkFile):
-    print "Push database to device..."
+    print("Push database to device...")
     os.system("adb push " + localDb + " " + remoteDb)
 
-    print "Start activity: " + runComponent + "..."
+    print("Start activity: " + runComponent + "...")
     device.startActivity(component=runComponent)

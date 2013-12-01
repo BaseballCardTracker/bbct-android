@@ -27,15 +27,15 @@ runComponent = package + '/' + activity
 # a task before taking a screenshot. This is necessary for my slow-ass computer
 delay = 10.0
 
-print "Connecting to device..."
+print("Connecting to device...")
 device = MonkeyRunner.waitForConnection()
 
-print "Installing APK: " + apkFile + "..."
+print("Installing APK: " + apkFile + "...")
 if device.installPackage(apkFile):
-    print "Starting activity: " + runComponent + "..."
+    print("Starting activity: " + runComponent + "...")
     device.startActivity(component=runComponent)
 
     # Insert code here
 
-    print "Removing package: " + package + "..."
+    print("Removing package: " + package + "...")
     device.removePackage(package)

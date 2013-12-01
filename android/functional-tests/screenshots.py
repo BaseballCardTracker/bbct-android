@@ -25,35 +25,35 @@ runComponent = package + '/' + activity
 
 # Amount of time to sleep in order to allow the Android emulator to finish
 # a task before taking a screenshot. This is necessary for my slow-ass computer
-delay = 120.0
+delay = 15.0
 
-print "Connecting to device..."
+print("Connecting to device...")
 device = MonkeyRunner.waitForConnection()
 
-print "Installing APK: " + apkFile + "..."
+print("Installing APK: " + apkFile + "...")
 if device.installPackage(apkFile):
-    print "Reading baseball card data..."
+    print("Reading baseball card data...")
     cards = util.read_card_data('data/cards.csv')
 
     for card in cards:
         print card
 
-    print "Starting activity: " + runComponent + "..."
+    print("Starting activity: " + runComponent + "...")
     device.startActivity(component=runComponent)
     MonkeyRunner.sleep(delay)
     util.take_screenshot(device, 'start.png', delay)
 
-    print "Menu..."
+    print("Menu...")
     device.press('KEYCODE_MENU', MonkeyDevice.DOWN_AND_UP)
     util.take_screenshot(device, 'menu.png', delay)
 
-    print "Add card..."
+    print("Add card...")
     device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
     util.take_screenshot(device, 'add-card-blank.png', delay)
 
-    print "Enter data..."
+    print("Enter data...")
     util.input_card(device, cards[0])
     util.take_screenshot(device, 'add-card-filled.png', delay)
 
-    print "Removing package: " + package + "..."
+    print("Removing package: " + package + "...")
     device.removePackage(package)
