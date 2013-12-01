@@ -17,9 +17,6 @@
 
 from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice
 
-#The directory where screenshots will be saved
-screenshots = '../screenshots/'
-
 positions = ['Pitcher', 'Catcher', 'First Base', 'Second Base', 'Third Base',
              'Shortstop', 'Left Field', 'Center Field', 'Right Field']
 
@@ -68,7 +65,7 @@ def take_screenshot(device, filename, delay=0.0):
        in the screenshots directory'''
     MonkeyRunner.sleep(delay)
     result = device.takeSnapshot()
-    result.writeToFile(screenshots + filename, 'png')
+    result.writeToFile(filename, 'png')
 
 currPosIndex = 0
 def input_card(device, card):

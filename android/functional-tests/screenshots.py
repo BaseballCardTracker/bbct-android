@@ -25,11 +25,13 @@ import sys
 defaultPackage = 'bbct.android.common'
 defaultDbFileName = 'data/bbct.db'
 defaultDelay = 30.0
+defaultScreenshotDir='screenshots'
 
 parser = OptionParser(usage='Usage: %prog [options] <APK file> <list activity>')
 parser.add_option('-k', '--package', dest='package', help='Android package name', default=defaultPackage)
 parser.add_option('-f', '--dbfile', dest='dbfile', help='Path to local database file', default=defaultDbFileName)
 parser.add_option('-d', '--delay', dest='delay', type='float', help='delay before taking a screenshot', default=defaultDelay)
+parser.add_option('-s', '--screenshots', dest='screenshotDir', help='destination directory for screenshots', default=defaultScreenshotDir)
 
 try:
     options, (apkFile, activity) = parser.parse_args()
@@ -41,12 +43,17 @@ package = options.package
 dbFileName = "bbct.db"
 localDb = options.dbfile
 remoteDb = "/data/data/" + package + "/databases/" + dbFileName
+screenshotDir = options.screenshotDir
 
 runComponent = package + '/' + activity
 
 # Amount of time to sleep in order to allow the Android emulator to finish
 # a task before taking a screenshot. This is necessary for my slow-ass computer
 delay = options.delay
+
+# Create screenshot directory
+if not os.path.exists(screenshotDir):
+    os.makedirs(screenshotDir)
 
 print("Connecting to device...")
 device = MonkeyRunner.waitForConnection()
@@ -62,19 +69,19 @@ if device.installPackage(apkFile):
     print("Starting activity: " + runComponent + "...")
     device.startActivity(component=runComponent)
     MonkeyRunner.sleep(delay)
-    util.take_screenshot(device, 'start.png', delay)
+    util.take_screenshot(device, screenshotDir + '/001.png', delay)
 
     print("Menu...")
     device.press('KEYCODE_MENU', MonkeyDevice.DOWN_AND_UP)
-    util.take_screenshot(device, 'menu.png', delay)
+    util.take_screenshot(device, screenshotDir + '/002.png', delay)
 
     print("Add card...")
     device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
-    util.take_screenshot(device, 'add-card-blank.png', delay)
+    util.take_screenshot(device, screenshotDir + '/003.png', delay)
 
     print("Enter data...")
     util.input_card(device, cards[0])
-    util.take_screenshot(device, 'add-card-filled.png', delay)
+    util.take_screenshot(device, screenshotDir + '/004.png', delay)
 
     print("Removing package: " + package + "...")
     device.removePackage(package)
