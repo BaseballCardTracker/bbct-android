@@ -16,16 +16,37 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice
+from optparse import OptionParser
 import util
 
-apkFile = '../common/main/bin/bbct-android-common-debug.apk'
-package = 'bbct.android.common'
-activity = '.activity.BaseballCardList' 
+import os
+import sys
+
+defaultPackage = 'bbct.android.common'
+defaultDbFileName = 'data/bbct.db'
+defaultDelay = 30.0
+
+parser = OptionParser(usage='Usage: %prog [options] <APK file> <list activity>')
+parser.add_option('-k', '--package', dest='package', help='Android package name', default=defaultPackage)
+parser.add_option('-f', '--dbfile', dest='dbfile', help='Path to local database file', default=defaultDbFileName)
+parser.add_option('-d', '--delay', dest='delay', type='float', help='delay before taking a screenshot', default=defaultDelay)
+
+try:
+    options, (apkFile, activity) = parser.parse_args()
+except ValueError:
+    parser.print_help()
+    sys.exit(1)
+
+package = options.package
+dbFileName = "bbct.db"
+localDb = options.dbfile
+remoteDb = "/data/data/" + package + "/databases/" + dbFileName
+
 runComponent = package + '/' + activity
 
 # Amount of time to sleep in order to allow the Android emulator to finish
 # a task before taking a screenshot. This is necessary for my slow-ass computer
-delay = 15.0
+delay = options.delay
 
 print("Connecting to device...")
 device = MonkeyRunner.waitForConnection()
