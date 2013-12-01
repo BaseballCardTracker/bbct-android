@@ -16,15 +16,26 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice
+from optparse import OptionParser
 import os
+import sys
 
-apkFile = '../common/main/bin/bbct-android-common-debug.apk'
-package = 'bbct.android.common'
-activity = '.activity.BaseballCardList' 
-runComponent = package + '/' + activity
+defaultPackage = 'bbct.android.common'
+defaultDbFileName = 'data/bbct.db'
 
+parser = OptionParser(usage='Usage: %prog [options] <APK file>')
+parser.add_option('-k', '--package', dest='package', help='Android package name', default=defaultPackage)
+parser.add_option('-f', '--dbfile', dest='dbfile', help='Path to local database file', default=defaultDbFileName)
+
+try:
+    options, (apkFile,) = parser.parse_args()
+except ValueError:
+    parser.print_help()
+    sys.exit(1)
+
+package = options.package
 dbFileName = "bbct.db"
-localDb = "data/" + dbFileName
+localDb = options.dbfile
 remoteDb = "/data/data/" + package + "/databases/" + dbFileName
 
 # Amount of time to sleep in order to allow the Android emulator to finish
@@ -38,6 +49,3 @@ print("Install APK: " + apkFile + "...")
 if device.installPackage(apkFile):
     print("Push database to device...")
     os.system("adb push " + localDb + " " + remoteDb)
-
-    print("Start activity: " + runComponent + "...")
-    device.startActivity(component=runComponent)
