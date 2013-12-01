@@ -50,6 +50,7 @@ runComponent = package + '/' + activity
 # Amount of time to sleep in order to allow the Android emulator to finish
 # a task before taking a screenshot. This is necessary for my slow-ass computer
 delay = options.delay
+scrnCnt = 0
 
 # Create screenshot directory
 if not os.path.exists(screenshotDir):
@@ -69,19 +70,19 @@ if device.installPackage(apkFile):
     print("Starting activity: " + runComponent + "...")
     device.startActivity(component=runComponent)
     MonkeyRunner.sleep(delay)
-    util.take_screenshot(device, screenshotDir + '/001.png', delay)
+    util.take_screenshot(device, screenshotDir, delay)
 
     print("Menu...")
     device.press('KEYCODE_MENU', MonkeyDevice.DOWN_AND_UP)
-    util.take_screenshot(device, screenshotDir + '/002.png', delay)
+    util.take_screenshot(device, screenshotDir, delay)
 
     print("Add card...")
     device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
-    util.take_screenshot(device, screenshotDir + '/003.png', delay)
+    util.take_screenshot(device, screenshotDir, delay)
 
     print("Enter data...")
     util.input_card(device, cards[0])
-    util.take_screenshot(device, screenshotDir + '/004.png', delay)
+    util.take_screenshot(device, screenshotDir, delay)
 
     print("Removing package: " + package + "...")
     device.removePackage(package)

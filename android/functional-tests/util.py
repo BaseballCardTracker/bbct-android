@@ -60,12 +60,15 @@ def read_card_data(filepath):
     card_file.close
     return cards
 
-def take_screenshot(device, filename, delay=0.0):
+scrnCnt = 0
+def take_screenshot(device, screenshotDir, delay=0.0):
     '''Take a screenshot of the given device and save it to the given PNG file\
        in the screenshots directory'''
+    global scrnCnt
     MonkeyRunner.sleep(delay)
     result = device.takeSnapshot()
-    result.writeToFile(filename, 'png')
+    result.writeToFile(screenshotDir + '/' + ("%03d" % scrnCnt) + '.png', 'png')
+    scrnCnt += 1
 
 currPosIndex = 0
 def input_card(device, card):
