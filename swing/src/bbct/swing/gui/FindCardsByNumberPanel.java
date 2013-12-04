@@ -47,6 +47,7 @@ import javax.swing.text.NumberFormatter;
  * value is used as the parameters when searching the underlying storage
  * mechanism for cards with the given number.
  */
+@SuppressWarnings("serial")
 public class FindCardsByNumberPanel extends FindCardsByPanel {
 
     /**

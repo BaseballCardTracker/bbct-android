@@ -18,6 +18,8 @@
  */
 package bbct.android.common.activity.test;
 
+import java.util.EnumSet;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
@@ -27,62 +29,49 @@ import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.test.BBCTTestRunner;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Set;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
  * A parameterized test which can test any combination of input in the
- * {@link BaseballCardDetails} activity. This test can be run using
- * {@link BBCTTestRunner}.
+ * {@link BaseballCardDetails} activity.
  */
 public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
     /**
      * Creates a {@link TestSuite} containing every possible combination of
-     * blank {@link TextEdit} views in the {@link BaseballCardDetails} activity.
+     * blank {@link EditText} views in the {@link BaseballCardDetails} activity.
      *
      * @return A {@link TestSuite} containing every possible combination of
      * blank {@link EditText} views in the {@link BaseballCardDetails} activity.
      */
     public static Test suite() {
         TestSuite suite = new TestSuite();
+        Set<BBCTTestUtil.EditTexts> editTexts = EnumSet.allOf(BBCTTestUtil.EditTexts.class);
+        editTexts.remove(BBCTTestUtil.EditTexts.PLAYER_POSITION);
+        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(editTexts);
 
-        for (int inputFieldsMask = 0x00; inputFieldsMask < BBCTTestUtil.ALL_FIELDS; ++inputFieldsMask) {
-            if ((inputFieldsMask & BBCTTestUtil.PLAYER_POSITION_FIELD) == 0) {
-                suite.addTest(new BaseballCardDetailsPartialInputTest(inputFieldsMask));
-            }
+        for (Set<BBCTTestUtil.EditTexts> mask : masks) {
+            suite.addTest(new BaseballCardDetailsPartialInputTest(mask));
         }
 
         return suite;
     }
 
     /**
-     * Creates a test which will input data to the {@link TextEdit} views
-     * indicated by the given flags. The valid values for the flags are defined
-     * in {@link BBCTTestUtil} and may be combined with the logical OR operator
-     * (
-     * <code>|</code>).
+     * Creates a test which will input data to the {@link EditText} views
+     * indicated by the given flags.<code>|</code>).
      *
-     * @param inputFieldsFlags The {@link TextEdit} views to receive input.
+     * @param inputFieldsFlags The {@link EditText} views to receive input.
      *
-     * @see BBCTTestUtil#NO_FIELDS
-     * @see BBCTTestUtil#BRAND_FIELD
-     * @see BBCTTestUtil#YEAR_FIELD
-     * @see BBCTTestUtil#NUMBER_FIELD
-     * @see BBCTTestUtil#COUNT_FIELD
-     * @see BBCTTestUtil#VALUE_FIELD
-     * @see BBCTTestUtil#PLAYER_NAME_FIELD
-     * @see BBCTTestUtil#TEAM_FIELD
-     * @see BBCTTestUtil#PLAYER_POSITION_FIELD
-     * @see BBCTTestUtil#ALL_FIELDS
      */
-    public BaseballCardDetailsPartialInputTest(int inputFieldsFlags) {
+    public BaseballCardDetailsPartialInputTest(Set<BBCTTestUtil.EditTexts> inputFieldsFlags) {
         super(BaseballCardDetails.class);
 
         this.setName(TEST_NAME);
@@ -136,27 +125,31 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
 
         EditText focusEditText = null;
 
-        if ((this.inputFieldsMask & BBCTTestUtil.BRAND_FIELD) == 0) {
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.BRAND)) {
             Assert.assertEquals(this.activity.getString(R.string.brand_input_error), this.brandEditText.getError());
             focusEditText = this.brandEditText;
         }
-        if ((this.inputFieldsMask & BBCTTestUtil.YEAR_FIELD) == 0) {
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.YEAR)) {
             Assert.assertEquals(this.activity.getString(R.string.year_input_error), this.yearEditText.getError());
             focusEditText = this.yearEditText;
         }
-        if ((this.inputFieldsMask & BBCTTestUtil.NUMBER_FIELD) == 0) {
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.NUMBER)) {
             Assert.assertEquals(this.activity.getString(R.string.number_input_error), this.numberEditText.getError());
             focusEditText = this.numberEditText;
         }
-        if ((this.inputFieldsMask & BBCTTestUtil.COUNT_FIELD) == 0) {
-            Assert.assertEquals(this.activity.getString(R.string.count_input_error), this.countEditText.getError());
-            focusEditText = this.countEditText;
-        }
-        if ((this.inputFieldsMask & BBCTTestUtil.VALUE_FIELD) == 0) {
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.VALUE)) {
             Assert.assertEquals(this.activity.getString(R.string.value_input_error), this.valueEditText.getError());
             focusEditText = this.valueEditText;
         }
-        if ((this.inputFieldsMask & BBCTTestUtil.PLAYER_NAME_FIELD) == 0) {
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.COUNT)) {
+            Assert.assertEquals(this.activity.getString(R.string.count_input_error), this.countEditText.getError());
+            focusEditText = this.countEditText;
+        }
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME)) {
+            Assert.assertEquals(this.activity.getString(R.string.player_name_input_error), this.playerNameEditText.getError());
+            focusEditText = this.playerNameEditText;
+        }
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME)) {
             Assert.assertEquals(this.activity.getString(R.string.player_name_input_error), this.playerNameEditText.getError());
             focusEditText = this.playerNameEditText;
         }
@@ -175,7 +168,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     private EditText valueEditText = null;
     private EditText playerNameEditText = null;
     private BaseballCard card = null;
-    private final int inputFieldsMask;
+    private Set<BBCTTestUtil.EditTexts> inputFieldsMask;
     private static final String TEST_NAME = "testPartialInput";
     private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
 }

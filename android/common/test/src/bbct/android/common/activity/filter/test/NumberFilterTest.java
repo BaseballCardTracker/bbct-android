@@ -101,16 +101,6 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
     }
 
     /**
-     * Set the text of the card number {@link EditText} views.
-     *
-     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
-     */
-    @Override
-    protected void setInputText() {
-        this.numberText.setText(Integer.toString(this.testNumber));
-    }
-
-    /**
      * Inject instrumented key events to the card number {@link EditText} view.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()

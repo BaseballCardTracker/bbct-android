@@ -45,6 +45,7 @@ import javax.swing.JTextField;
  *
  * TODO: Add support for wild cards.
  */
+@SuppressWarnings("serial")
 public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
 
     /**

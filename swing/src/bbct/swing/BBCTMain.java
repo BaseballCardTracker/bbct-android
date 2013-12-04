@@ -18,7 +18,6 @@
  */
 package bbct.swing;
 
-import bbct.common.BBCTStringResources.ErrorResources;
 import bbct.common.data.BaseballCardIO;
 import bbct.common.data.JDBCBaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;

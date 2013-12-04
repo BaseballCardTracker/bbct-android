@@ -131,29 +131,6 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
     }
 
     /**
-     * Set the text of any {@link EditText} views in the subclass of
-     * {@link FilterActivity} being tested. Called from the template method
-     * {@link #testOkButtonOnClickWithSetInputText()}.
-     *
-     * @see #testOkButtonOnClickWithSetInputText()
-     */
-    protected abstract void setInputText();
-
-    /**
-     * Test that the text of all {@link EditText} views is set correctly and
-     * that the {@link Activity} finishes when the user clicks the "OK" button.
-     * Calls {@link #setInputText()} to set the text of the {@link EditText}
-     * views in the subclass of {@link FilterActivity} being tested.
-     */
-    @UiThreadTest
-    public void testOkButtonOnClickWithSetInputText() {
-        this.setInputText();
-        Assert.assertTrue(this.okButton.performClick());
-        Assert.assertTrue(this.activity.isFinishing());
-        // TODO Assert that the text views contain the correct text?
-    }
-
-    /**
      * Inject instrumented key events to the {@link EditText} views. Called from
      * the template method {@link #testOkButtonOnClickWithSendInputKeys()}.
      *

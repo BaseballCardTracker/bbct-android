@@ -41,6 +41,7 @@ import javax.swing.JPanel;
  * @see FindCardsMenuPanel
  * @see AboutPanel
  */
+@SuppressWarnings("serial")
 public class MenuPanel extends JPanel {
 
     /**

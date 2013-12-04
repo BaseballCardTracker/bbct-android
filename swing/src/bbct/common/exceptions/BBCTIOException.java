@@ -27,6 +27,7 @@ package bbct.common.exceptions;
 =======
 >>>>>>> Javadocs: Remove all @author tags.
  */
+@SuppressWarnings("serial")
 public class BBCTIOException extends Exception {
 
     /**

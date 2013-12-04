@@ -101,16 +101,6 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
     }
 
     /**
-     * Set the text of the player name {@link EditText} view.
-     *
-     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
-     */
-    @Override
-    protected void setInputText() {
-        this.playerNameText.setText(this.testPlayerName);
-    }
-
-    /**
      * Inject instrumented key events to the player name {@link EditText} view.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()

@@ -171,6 +171,7 @@ public class BaseballCard implements Serializable {
                     && this.value == c.getValue()
                     && this.count == c.getCount()
                     && this.playerName.equals(c.getPlayerName())
+                    && this.team.equals(c.getTeam())
                     && this.playerPosition.equals(c.getPlayerPosition());
         }
 

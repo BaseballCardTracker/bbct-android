@@ -48,11 +48,11 @@ public class ManualTest extends ActivityInstrumentationTestCase2<BaseballCardLis
      * @throws IOException If an error occurs while populating the database.
      */
     public void testManually() throws IOException {
-        Activity activity = this.getActivity();
         InputStream in = this.getInstrumentation().getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader input = new BaseballCardCsvFileReader(in, true);
         List<BaseballCard> allCards = input.getAllBaseballCards();
-        DatabaseUtil dbUtil = new DatabaseUtil(activity.getPackageName());
+        DatabaseUtil dbUtil = new DatabaseUtil(this.getInstrumentation().getTargetContext());
         dbUtil.populateTable(allCards);
+        this.getActivity();
     }
 }

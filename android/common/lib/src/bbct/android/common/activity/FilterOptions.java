@@ -22,10 +22,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import bbct.android.common.R;
 import bbct.android.common.activity.filter.FilterActivity;
 import bbct.android.common.activity.filter.NumberFilter;
@@ -33,7 +32,6 @@ import bbct.android.common.activity.filter.PlayerNameFilter;
 import bbct.android.common.activity.filter.TeamFilter;
 import bbct.android.common.activity.filter.YearAndNumberFilter;
 import bbct.android.common.activity.filter.YearFilter;
-import bbct.android.common.activity.util.DialogUtil;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,11 +85,8 @@ public class FilterOptions extends Activity {
         String title = String.format(format, filterOptionsTitle);
         this.setTitle(title);
 
-        Button okButton = (Button) this.findViewById(R.id.ok_button);
-        okButton.setOnClickListener(this.onOk);
-
-        Button cancelButton = (Button) this.findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(this.onCancel);
+        RadioGroup filterByRadioGroup = (RadioGroup) this.findViewById(R.id.filter_options_radio_group);
+        filterByRadioGroup.setOnCheckedChangeListener(this.onRadioButtonSelected);
     }
 
     @Override
@@ -110,41 +105,35 @@ public class FilterOptions extends Activity {
             // TODO: Throw an exception?
         }
     }
-    private View.OnClickListener onOk = new View.OnClickListener() {
+    private OnCheckedChangeListener onRadioButtonSelected = new OnCheckedChangeListener() {
         @Override
-        public void onClick(View view) {
-            // TODO Remove Ok and Cancel buttons and launch FilterActivities immediately after user clicks the radio button
+        public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-            Log.d(TAG, "OK button clicked.");
-            RadioGroup filterByRadioGroup = (RadioGroup) FilterOptions.this.findViewById(R.id.filter_options_radio_group);
+            // we do not want this call when selection on radio button gets cleared
+            if (checkedId == -1)
+                return;
 
-            int radioButtonId = filterByRadioGroup.getCheckedRadioButtonId();
-            Log.d(TAG, "radioButtonId=" + radioButtonId);
+            Log.d(TAG, "Radio button selected.");
+            Log.d(TAG, "radioButtonId=" + checkedId);
 
-            if (radioButtonId == NONE) {
-                DialogUtil.showErrorDialog(FilterOptions.this, R.string.input_error_title, R.string.no_radio_button_error);
-            } else if (radioButtonId == R.id.year_filter_radio_button) {
+            if (checkedId == R.id.year_filter_radio_button) {
                 Log.d(TAG, "Year radio button selected.");
                 FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearFilter.class), R.id.year_filter_request);
-            } else if (radioButtonId == R.id.number_filter_radio_button) {
+            } else if (checkedId == R.id.number_filter_radio_button) {
                 FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, NumberFilter.class), R.id.number_filter_request);
-            } else if (radioButtonId == R.id.year_and_number_filter_radio_button) {
+            } else if (checkedId == R.id.year_and_number_filter_radio_button) {
                 FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearAndNumberFilter.class), R.id.year_and_number_filter_request);
-            } else if (radioButtonId == R.id.player_name_filter_radio_button) {
+            } else if (checkedId == R.id.player_name_filter_radio_button) {
                 FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, PlayerNameFilter.class), R.id.player_name_filter_request);
-            } else if (radioButtonId == R.id.team_filter_radio_button) {
+            } else if (checkedId == R.id.team_filter_radio_button) {
                 FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, TeamFilter.class), R.id.team_filter_request);
             } else {
                 Log.e(TAG, "Invalid radio button ID.");
                 // TODO: Throw an exception?
             }
-        }
-    };
-    private View.OnClickListener onCancel = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            FilterOptions.this.setResult(RESULT_CANCELED);
-            FilterOptions.this.finish();
+
+            // clear radio button in case user cancels filter activity
+            group.clearCheck();
         }
     };
     private static Map<Integer, Class<? extends FilterActivity>> filterActivities = new HashMap<Integer, Class<? extends FilterActivity>>();

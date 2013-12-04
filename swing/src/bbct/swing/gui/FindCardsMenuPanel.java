@@ -41,6 +41,7 @@ import javax.swing.JPanel;
  * @see FindCardsByYearAndNumberPanel
  * @see FindCardsByPlayerNamePanel
  */
+@SuppressWarnings("serial")
 public class FindCardsMenuPanel extends JPanel {
 
     /**

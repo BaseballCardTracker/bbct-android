@@ -35,6 +35,7 @@ import javax.swing.JPanel;
 /**
  * A panel that displays the name of this application and copyright information.
  */
+@SuppressWarnings("serial")
 public class AboutPanel extends JPanel {
 
     /**

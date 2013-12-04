@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -133,6 +134,49 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.assertTrue(this.doneButton.performClick());
         Assert.assertTrue(this.activity.isFinishing());
     }
+
+    /**
+     * Test that the focus moves to the next control {@link EditText} in the
+     * {@link BaseballCardDetails} activity when the next button is clicked in
+     * the soft keyboard.
+     */
+    public void testNextButtonOnClick() {
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
+                brandText, card.getBrand());
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(yearText.hasFocus());
+
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
+                yearText, Integer.toString(card.getYear()));
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(numberText.hasFocus());
+
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
+                numberText, Integer.toString(card.getNumber()));
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(valueText.hasFocus());
+
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
+                valueText, Integer.toString(card.getValue()));
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(countText.hasFocus());
+
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
+                countText, Integer.toString(card.getCount()));
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(playerNameText.hasFocus());
+
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
+                playerNameText, card.getPlayerName());
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(playerTeamText.hasFocus());
+
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
+                playerTeamText, card.getTeam());
+        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(playerPositionSpinner.hasFocus());
+    }
+
     private Activity activity = null;
     private EditText brandText = null;
     private EditText yearText = null;

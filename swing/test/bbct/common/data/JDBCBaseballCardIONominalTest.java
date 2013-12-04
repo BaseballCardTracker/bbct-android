@@ -24,7 +24,6 @@ import bbct.common.exceptions.BBCTIOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import junit.framework.Assert;
 import org.junit.*;
 
 /**
@@ -90,6 +89,7 @@ public class JDBCBaseballCardIONominalTest {
      *             If an error occurs while executing the query to check that
      *             the database table was created.
      */
+    @Test
     public void testConstructor() throws SQLException {
         // Constructor is called from setUp(). This method simply asserts
         // that the table was created.
@@ -143,64 +143,6 @@ public class JDBCBaseballCardIONominalTest {
         Assert.assertFalse(rs.next());
     }
 
-    /**
-     * Test for {@link JDBCBaseballCardIO#getBaseballCardByYear(int)}.
-     *
-     * @throws BBCTIOException
-     *             If an error occurs during this test.
-     */
-    @Test
-    public void testGetBaseballCardByYear() throws BBCTIOException {
-        this.instance.insertBaseballCard(this.card);
-        List<BaseballCard> result = this.instance.getBaseballCardsByYear(card
-                .getYear());
-        Assert.assertEquals(card, result.get(0));
-    }
-
-    /**
-     * Test for {@link JDBCBaseballCardIO#getBaseballCardByNumber(int)}.
-     *
-     * @throws BBCTIOException
-     *             If an error occurs during this test.
-     */
-    @Test
-    public void testGetBaseballCardByNumber() throws BBCTIOException {
-        this.instance.insertBaseballCard(this.card);
-        List<BaseballCard> result = this.instance.getBaseballCardsByNumber(card
-                .getNumber());
-        Assert.assertEquals(card, result.get(0));
-    }
-
-    /**
-     * Test for
-     * {@link JDBCBaseballCardIO#getBaseballCardsByYearAndNumber(int, int)}.
-     *
-     * @throws BBCTIOException
-     *             If an error occurs during this test.
-     */
-    @Test
-    public void testGetBaseballCardByYearAndNumber() throws BBCTIOException {
-        this.instance.insertBaseballCard(this.card);
-        List<BaseballCard> result = this.instance
-                .getBaseballCardsByYearAndNumber(card.getYear(),
-                        card.getNumber());
-        Assert.assertEquals(card, result.get(0));
-    }
-
-    /**
-     * Test for {@link JDBCBaseballCardIO#getBaseballCardsByPlayerName(String)}.
-     *
-     * @throws BBCTIOException
-     *             If an error occurs during this test.
-     */
-    @Test
-    public void testGetBaseballCardByPlayerName() throws BBCTIOException {
-        this.instance.insertBaseballCard(this.card);
-        List<BaseballCard> result = this.instance
-                .getBaseballCardsByPlayerName(card.getPlayerName());
-        Assert.assertEquals(card, result.get(0));
-    }
-
     private BaseballCard createBaseballCard() {
         String brand = "Topps";
         int year = 1991;
@@ -219,6 +161,7 @@ public class JDBCBaseballCardIONominalTest {
      * @throws BBCTIOException
      *             If an error occurs during this test.
      */
+    @Test
     public void testGetBaseballCardsByYear() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
@@ -236,6 +179,7 @@ public class JDBCBaseballCardIONominalTest {
      * @throws BBCTIOException
      *             If an error occurs during this test.
      */
+    @Test
     public void testGetBaseballCardsByNumber() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
@@ -254,6 +198,7 @@ public class JDBCBaseballCardIONominalTest {
      * @throws BBCTIOException
      *             If an error occurs during this test.
      */
+    @Test
     public void testGetBaseballCardsByYearAndNumber() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
@@ -271,6 +216,7 @@ public class JDBCBaseballCardIONominalTest {
      * @throws BBCTIOException
      *             If an error occurs during this test.
      */
+    @Test
     public void testGetBaseballCardsByPlayerName() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
@@ -290,6 +236,7 @@ public class JDBCBaseballCardIONominalTest {
      * @throws SQLException
      *             If an error occurs while connecting to the database.
      */
+    @Test
     public void testUpdateCard() throws BBCTIOException, SQLException {
         this.instance.insertBaseballCard(this.card);
         int newValue = 20000;

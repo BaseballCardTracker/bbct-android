@@ -101,16 +101,6 @@ public class TeamFilterTest extends FilterActivityTest<TeamFilter> {
     }
 
     /**
-     * Set the text of the team {@link EditText} view.
-     *
-     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
-     */
-    @Override
-    protected void setInputText() {
-        this.teamText.setText(this.testTeam);
-    }
-
-    /**
      * Inject instrumented key events to the team {@link EditText} view.
      *
      * @see FilterActivityTest#testOkButtonOnClickWithSendInputKeys()

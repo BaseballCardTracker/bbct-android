@@ -36,6 +36,7 @@ import javax.swing.event.AncestorListener;
  * {@link #getBaseballCards()} method to implement the specific search depending
  * on the subclasses exact criteria.
  */
+@SuppressWarnings("serial")
 public abstract class FindCardsByPanel extends JPanel {
 
     /**

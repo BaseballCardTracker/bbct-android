@@ -116,17 +116,6 @@ public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFil
     }
 
     /**
-     * Set the text of the year and card number {@link EditText} views.
-     *
-     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
-     */
-    @Override
-    protected void setInputText() {
-        this.yearText.setText(Integer.toString(this.testYear));
-        this.numberText.setText(Integer.toString(this.testNumber));
-    }
-
-    /**
      * Inject instrumented key events to the year and card number
      * {@link EditText} views.
      *

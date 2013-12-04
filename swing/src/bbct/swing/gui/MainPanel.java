@@ -36,6 +36,7 @@ import java.awt.CardLayout;
  * @see FindCardsByPlayerNamePanel
  * @see AboutPanel
  */
+@SuppressWarnings("serial")
 public class MainPanel extends javax.swing.JPanel {
 
     /**

@@ -19,13 +19,13 @@
 package bbct.android.common.test;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
-import java.io.File;
 import java.util.List;
 
 /**
@@ -40,11 +40,22 @@ public class DatabaseUtil {
      *
      * @param packageName Name of the Android package being tested.
      */
-    public DatabaseUtil(String packageName) {
-        Log.d(TAG, "packageName=" + packageName);
+    public DatabaseUtil(Context context) {
+        String sqlCreate = "CREATE TABLE IF NOT EXISTS " + BaseballCardContract.TABLE_NAME + "("
+                + BaseballCardContract.ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BaseballCardContract.BRAND_COL_NAME + " VARCHAR(10), "
+                + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
+                + BaseballCardContract.NUMBER_COL_NAME + " INTEGER, "
+                + BaseballCardContract.VALUE_COL_NAME + " INTEGER, "
+                + BaseballCardContract.COUNT_COL_NAME + " INTEGER, "
+                + BaseballCardContract.PLAYER_NAME_COL_NAME + " VARCHAR(50), "
+                + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50), "
+                + BaseballCardContract.PLAYER_POSITION_COL_NAME + " VARCHAR(20),"
+                + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", " + BaseballCardContract.YEAR_COL_NAME + ", " + BaseballCardContract.NUMBER_COL_NAME + "))";
 
-        this.dbPath = String.format(DB_PATH, packageName, DB_NAME);
-        this.db = SQLiteDatabase.openDatabase(this.dbPath, null, SQLiteDatabase.OPEN_READWRITE);
+        this.context = context;
+        this.db = this.context.openOrCreateDatabase(DB_NAME, SQLiteDatabase.OPEN_READWRITE, null);
+        this.db.execSQL(sqlCreate);
     }
 
     /**
@@ -62,7 +73,7 @@ public class DatabaseUtil {
      */
     public void deleteDatabase() {
         this.db.close();
-        SQLiteDatabase.deleteDatabase(new File(this.dbPath));
+        this.context.deleteDatabase(DB_NAME);
     }
 
     /**
@@ -149,8 +160,7 @@ public class DatabaseUtil {
         return cursor.getCount() == 0;
     }
     private SQLiteDatabase db = null;
-    private String dbPath = null;
-    private static final String DB_PATH = "/data/data/%s/databases/%s";
+    private Context context = null;
     private static final String DB_NAME = BaseballCardSQLHelper.DATABASE_NAME;
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
     private static final String TAG = DatabaseUtil.class.getName();

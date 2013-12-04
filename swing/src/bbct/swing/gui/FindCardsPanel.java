@@ -45,6 +45,7 @@ import javax.swing.JPanel;
  * a {@link EditCardsPanel}. The "Back" button returns to the
  * {@link FindCardsMenuPanel}.
  */
+@SuppressWarnings("serial")
 public class FindCardsPanel extends JPanel {
 
     /**
