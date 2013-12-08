@@ -189,7 +189,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
     public void testCardDetailsScroll() {
         View parentView = activity.getWindow().getDecorView();
-        //hide the softkeypad
+        //hide the soft keypad
         InputMethodManager imm = (InputMethodManager) activity
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(parentView.getWindowToken(), 0);
@@ -200,7 +200,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
             Log.e("getResult", e.getMessage());
         }
         //check if the 'save' button is already visible. If yes, then
-        //the screen cannot be scrolled. Assert true and return.   
+        //the screen cannot be scrolled. Assert true and return.
         //Logic same as what is followed in viewAssert.assertOnScreen.
         //If the button is visible on screen, then
         //view should have positive y coordinate on screen and
