@@ -18,9 +18,7 @@
  */
 package bbct.android.common.activity.test;
 
-import java.io.InputStream;
 
-import junit.framework.Assert;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
@@ -29,17 +27,19 @@ import android.test.UiThreadTest;
 import android.test.ViewAsserts;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.test.BBCTTestUtil;
+import bbct.android.common.R;
 import bbct.android.common.test.BaseballCardCsvFileReader;
+import bbct.android.common.test.BBCTTestUtil;
+import java.io.InputStream;
+import junit.framework.Assert;
 
 /**
  * Tests for {@link BaseballCardDetails}.
@@ -187,6 +187,11 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
         Assert.assertTrue(playerPositionSpinner.hasFocus());
     }
+
+     /**
+     * Test that view of {@link BaseballCardDetails} activity can be scrolled
+     * when the save button is not visible on screen.
+     */
     public void testCardDetailsScroll() {
         View parentView = activity.getWindow().getDecorView();
         //hide the soft keypad
