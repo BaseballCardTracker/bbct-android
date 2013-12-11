@@ -18,6 +18,8 @@
  */
 package bbct.android.common.test;
 
+import android.test.ViewAsserts;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
@@ -389,7 +391,7 @@ final public class BBCTTestUtil {
 
     /**
      * Checks if the given child view is visible in the given parent view.
-     * Logic followed is same as viewAssert.assertOnScreen.
+     * Logic followed is same as {@link ViewAsserts.assertOnScreen()}.
      *
      * @param parentView The {@link View} object containing the child view
      * test.
