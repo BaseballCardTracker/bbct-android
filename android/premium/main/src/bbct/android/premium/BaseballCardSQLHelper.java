@@ -33,11 +33,19 @@ import bbct.android.common.provider.BaseballCardContract;
 import java.util.List;
 
 /**
- *
- * @author codeguru <codeguru@users.sourceforge.net>
+ * Overrides
+ * {@link bbct.android.common.provider.BaseballCardSQLHelper#onConfigure(SQLiteDatabase)}
+ * in order to import data from the Lite edition.
  */
 public class BaseballCardSQLHelper extends bbct.android.common.provider.BaseballCardSQLHelper {
 
+    /**
+     * Create a {@link BaseballCardSQLHelper} with the given {@link Context}.
+     *
+     * @param context
+     *            The Android {@link Context} for this
+     *            {@link BaseballCardSQLHelper}.
+     */
     public BaseballCardSQLHelper(Context context) {
         super(context);
 

@@ -45,8 +45,6 @@ import junit.framework.Assert;
  * Tests for {@link BaseballCardDetails}.
  *
  * TODO: Add tests for the layout of {@link BaseballCardDetails}
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 

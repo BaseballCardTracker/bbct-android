@@ -28,8 +28,6 @@ import java.awt.event.ActionListener;
  * {@link ShowCardActionListener} is used for buttons which change the currently
  * visible card in a {@link java.awt.Container} using a
  * {@link java.awt.CardLayout}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class ShowCardActionListener implements ActionListener {
 

@@ -26,8 +26,6 @@ import junit.framework.Assert;
 
 /**
  * Tests for {@link TeamFilter}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class TeamFilterTest extends FilterActivityTest<TeamFilter> {
 

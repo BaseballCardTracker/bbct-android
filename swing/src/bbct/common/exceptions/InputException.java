@@ -21,8 +21,6 @@ package bbct.common.exceptions;
 /**
  * This exception signals an error during user input operations and is used by
  * the BBCT GUI classes.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 @SuppressWarnings("serial")
 public class InputException extends Exception {

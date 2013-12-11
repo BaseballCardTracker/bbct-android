@@ -30,8 +30,6 @@ import javax.swing.JComponent;
  * is typically used for {@link javax.swing.JTextField}s.
  *
  * @see bbct.gui.BBCTFrame#setInstructions(java.lang.String)
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class UpdateInstructionsFocusListener extends FocusAdapter {
 

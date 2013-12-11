@@ -43,9 +43,9 @@ import bbct.android.common.provider.CheckedCursorAdapter;
 import bbct.android.common.provider.SQLHelperFactory;
 
 /**
- * TODO: Make list fancier
+ * Displays a list of all baseball cards stored in the database.
  *
- * @author codeguru <codeguru@users.sourceforge.net>
+ * TODO: Make list fancier
  */
 public class BaseballCardList extends ListActivity {
 
@@ -63,8 +63,10 @@ public class BaseballCardList extends ListActivity {
 
             this.setContentView(R.layout.card_list);
             if (savedInstanceState != null) {
-                this.filterRequest = savedInstanceState.getInt(this.getString(R.string.filter_request_extra));
-                this.filterParams = savedInstanceState.getBundle(this.getString(R.string.filter_params_extra));
+                this.filterRequest = savedInstanceState.getInt(this
+                        .getString(R.string.filter_request_extra));
+                this.filterParams = savedInstanceState.getBundle(this
+                        .getString(R.string.filter_params_extra));
             }
 
             this.emptyList = (TextView) this.findViewById(android.R.id.empty);
@@ -76,27 +78,35 @@ public class BaseballCardList extends ListActivity {
 
             ListView listView = (ListView) this.findViewById(android.R.id.list);
             View headerView = View.inflate(this, R.layout.list_header, null);
-            ((CheckedTextView) headerView.findViewById(R.id.checkmark)).setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
-                    ctv.toggle();
-                    BaseballCardList.this.toggleAll(ctv.isChecked());
-                }
-            });
+            ((CheckedTextView) headerView.findViewById(R.id.checkmark))
+                    .setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CheckedTextView ctv = (CheckedTextView) v
+                                    .findViewById(R.id.checkmark);
+                            ctv.toggle();
+                            BaseballCardList.this.toggleAll(ctv.isChecked());
+                        }
+                    });
             listView.addHeaderView(headerView);
 
-            this.adapter = new CheckedCursorAdapter(this, R.layout.row, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
+            this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
+                    ROW_PROJECTION, ROW_TEXT_VIEWS);
             this.setListAdapter(this.adapter);
-            this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
+            this.sqlHelper.applyFilter(this, this.filterRequest,
+                    this.filterParams);
             this.swapCursor();
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
-            Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG)
+                    .show();
             Log.e(TAG, ex.getMessage(), ex);
         }
     }
 
+    /**
+     * Close the connection to the database when the activity is destroyed.
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -104,6 +114,13 @@ public class BaseballCardList extends ListActivity {
         this.sqlHelper.close();
     }
 
+    /**
+     * Create the options menu. This is simply inflated from the
+     * {@code option.xml} resource file.
+     *
+     * @param The
+     *            The options menu in which new menu items are placed.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         new MenuInflater(this).inflate(R.menu.option, menu);
@@ -111,6 +128,14 @@ public class BaseballCardList extends ListActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Prepare the options menu to be displayed. If a filter is active and
+     * displays the "Clear Filter" menu item, otherwise displays the
+     * "Filter Cards" menu item.
+     *
+     * @param menu
+     *            The options menu which will be displayed.
+     */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         if (this.filterRequest == R.id.no_filter) {
@@ -129,7 +154,8 @@ public class BaseballCardList extends ListActivity {
         for (int i = 1; i < lst.getChildCount(); i++) {
             View v = lst.getChildAt(i);
 
-            CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
+            CheckedTextView ctv = (CheckedTextView) v
+                    .findViewById(R.id.checkmark);
             if (ctv.isChecked()) {
                 deleteItem.setEnabled(true);
                 break;
@@ -139,17 +165,25 @@ public class BaseballCardList extends ListActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
+    /**
+     * Respond to the user selecting a menu item.
+     *
+     * @param item
+     *            The menu item selected.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
         if (itemId == R.id.add_menu) {
-            Intent intent = new Intent(Intent.ACTION_EDIT, BaseballCardDetails.DETAILS_URI);
+            Intent intent = new Intent(Intent.ACTION_EDIT,
+                    BaseballCardDetails.DETAILS_URI);
             intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
             this.startActivity(intent);
             return true;
         } else if (itemId == R.id.filter_menu) {
-            this.startActivityForResult(new Intent(this, FilterOptions.class), R.id.filter_options_request);
+            this.startActivityForResult(new Intent(this, FilterOptions.class),
+                    R.id.filter_options_request);
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
             this.filterRequest = R.id.no_filter;
@@ -166,7 +200,8 @@ public class BaseballCardList extends ListActivity {
 
             ListView lst = this.getListView();
             for (int i = 1; i < lst.getChildCount(); i++) {
-                CheckedTextView ctv = (CheckedTextView) lst.getChildAt(i).findViewById(R.id.checkmark);
+                CheckedTextView ctv = (CheckedTextView) lst.getChildAt(i)
+                        .findViewById(R.id.checkmark);
 
                 if (ctv.isChecked()) {
                     ctv.setChecked(false);
@@ -175,8 +210,10 @@ public class BaseballCardList extends ListActivity {
                 }
             }
 
-            Toast.makeText(this, R.string.card_deleted_message, Toast.LENGTH_LONG).show();
-            this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
+            Toast.makeText(this, R.string.card_deleted_message,
+                    Toast.LENGTH_LONG).show();
+            this.sqlHelper.applyFilter(this, this.filterRequest,
+                    this.filterParams);
             this.swapCursor();
             return true;
 
@@ -185,57 +222,102 @@ public class BaseballCardList extends ListActivity {
             return true;
         } else {
             Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
-            // TODO Throw exceptoin?
+            // TODO Throw exception?
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Save the currently active filter when the system asks for it.
+     *
+     * @param outState
+     *            The saved state.
+     */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(this.getString(R.string.filter_request_extra), this.filterRequest);
-        outState.putBundle(this.getString(R.string.filter_params_extra), this.filterParams);
+        outState.putInt(this.getString(R.string.filter_request_extra),
+                this.filterRequest);
+        outState.putBundle(this.getString(R.string.filter_params_extra),
+                this.filterParams);
     }
 
+    /**
+     * Respond to the user clicking on an item in the list. If the user clicks
+     * on a checkbox, then the corresponding row will be marked for the next
+     * delete operation. Otherwise, the app will display the card data for
+     * editing in a {@link BaseballCardDetails}.
+     *
+     * @param l
+     *            The ListView where the click happened.
+     * @param v
+     *            The view that was clicked within the ListView.
+     * @param position
+     *            The position of the view in the list.
+     * @param id
+     *            The row id of the item that was clicked.
+     */
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         if (position == 0)
             return;
 
-        Intent intent = new Intent(Intent.ACTION_EDIT, BaseballCardDetails.DETAILS_URI);
-        BaseballCard card = BaseballCardList.this.sqlHelper.getBaseballCardFromCursor();
+        Intent intent = new Intent(Intent.ACTION_EDIT,
+                BaseballCardDetails.DETAILS_URI);
+        BaseballCard card = BaseballCardList.this.sqlHelper
+                .getBaseballCardFromCursor();
 
         intent.putExtra(this.getString(R.string.baseball_card_extra), card);
         intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
         BaseballCardList.this.startActivity(intent);
     }
 
+    /**
+     * Respond to the result of a child activity by applying a filter after
+     * {@link FilterOptions} returns the appropriate parameters.
+     *
+     * @param requestCode
+     *            The integer request code originally supplied to
+     *            {@link #startActivityForResult()}, allowing you to identify
+     *            who this result came from.
+     * @param resultCode
+     *            The integer result code returned by the child activity through
+     *            its {@link #setResult()}.
+     * @param data
+     *            An Intent with the data returned by the child activity.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == R.id.filter_options_request) {
             if (resultCode == RESULT_OK) {
-                this.filterRequest = data.getIntExtra(this.getString(R.string.filter_request_extra), DEFAULT_INT_EXTRA);
+                this.filterRequest = data.getIntExtra(
+                        this.getString(R.string.filter_request_extra),
+                        DEFAULT_INT_EXTRA);
                 this.filterParams = data.getExtras();
                 this.emptyList.setText(R.string.empty_list);
 
-                this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
+                this.sqlHelper.applyFilter(this, this.filterRequest,
+                        this.filterParams);
                 this.swapCursor();
             }
         } else {
-            Log.e(TAG, "onActivityResult(): Invalid result code: " + requestCode);
+            Log.e(TAG, "onActivityResult(): Invalid result code: "
+                    + requestCode);
             // TODO Throw exception?
         }
     }
 
     /**
-     * Obtains {@link BaseballCard} from {@link View}.
-     * The returned {@link BaseballCard} only includes
-     * partial data - data required to delete a card.
-     * @param v - {@link View} object to obtain the card from
-     * @return the {@link BaseballCard} containing year, brand,
-     * number and playerName.
+     * Obtains {@link BaseballCard} from {@link View}. The returned
+     * {@link BaseballCard} only includes partial data - data required to delete
+     * a card.
+     *
+     * @param v
+     *            - {@link View} object to obtain the card from
+     * @return the {@link BaseballCard} containing year, brand, number and
+     *         playerName.
      */
     private BaseballCard getBaseballCard(View v) {
         TextView yearCol = (TextView) v.findViewById(R.id.year_text_view);
@@ -244,7 +326,8 @@ public class BaseballCardList extends ListActivity {
         TextView numCol = (TextView) v.findViewById(R.id.number_text_view);
         int number = Integer.parseInt(numCol.getText().toString());
 
-        TextView nameCol = (TextView) v.findViewById(R.id.player_name_text_view);
+        TextView nameCol = (TextView) v
+                .findViewById(R.id.player_name_text_view);
         String player = nameCol.getText().toString();
 
         return new BaseballCard("", year, number, 0, 0, player, "", "");
@@ -252,7 +335,9 @@ public class BaseballCardList extends ListActivity {
 
     /**
      * Marks/unmarks all items in the {@link ListView}.
-     * @param check - a boolean indicating whether all items will be checked
+     *
+     * @param check
+     *            - a boolean indicating whether all items will be checked
      */
     private void toggleAll(boolean check) {
         ListView lst = this.getListView();
@@ -260,7 +345,8 @@ public class BaseballCardList extends ListActivity {
         for (int i = 0; i < lst.getChildCount(); i++) {
             View v = lst.getChildAt(i);
 
-            CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
+            CheckedTextView ctv = (CheckedTextView) v
+                    .findViewById(R.id.checkmark);
             ctv.setChecked(check);
         }
     }
@@ -271,13 +357,17 @@ public class BaseballCardList extends ListActivity {
         this.startManagingCursor(cursor);
         this.adapter.changeCursor(cursor);
     }
+
     private static final String[] ROW_PROJECTION = {
-        BaseballCardContract.BRAND_COL_NAME, BaseballCardContract.YEAR_COL_NAME,
-        BaseballCardContract.NUMBER_COL_NAME, BaseballCardContract.PLAYER_NAME_COL_NAME
-    };
-    private static final int[] ROW_TEXT_VIEWS = {
-        R.id.brand_text_view, R.id.year_text_view, R.id.number_text_view, R.id.player_name_text_view
-    };
+            BaseballCardContract.BRAND_COL_NAME,
+            BaseballCardContract.YEAR_COL_NAME,
+            BaseballCardContract.NUMBER_COL_NAME,
+            BaseballCardContract.PLAYER_NAME_COL_NAME };
+
+    private static final int[] ROW_TEXT_VIEWS = { R.id.brand_text_view,
+            R.id.year_text_view, R.id.number_text_view,
+            R.id.player_name_text_view };
+
     private static final String TAG = BaseballCardList.class.getName();
     private static final int DEFAULT_INT_EXTRA = -1;
     TextView emptyList = null;

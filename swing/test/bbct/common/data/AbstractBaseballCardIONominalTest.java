@@ -24,7 +24,6 @@ import org.junit.*;
 
 /**
  *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class AbstractBaseballCardIONominalTest {
 

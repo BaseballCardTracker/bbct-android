@@ -28,8 +28,6 @@ import java.util.List;
  * {@link BaseballCardIO#insertBaseballCards(java.util.List)} which iterate
  * through the list of cards and calls {@link #updateCard(BaseballCard)} or
  * {@link #insertBaseballCard(BaseballCard)} respectively on each card.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public abstract class AbstractBaseballCardIO implements BaseballCardIO {
 

@@ -41,8 +41,6 @@ import junit.framework.TestSuite;
 /**
  * A parameterized test which can test any combination of input in the
  * {@link BaseballCardDetails} activity.
- *
- * @author codeguru <codeguru@users.sourceforge.net==
  */
 public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
@@ -57,7 +55,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         TestSuite suite = new TestSuite();
         Set<BBCTTestUtil.EditTexts> editTexts = EnumSet.allOf(BBCTTestUtil.EditTexts.class);
         editTexts.remove(BBCTTestUtil.EditTexts.PLAYER_POSITION);
-        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(editTexts); 
+        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(editTexts);
 
         for (Set<BBCTTestUtil.EditTexts> mask : masks) {
             suite.addTest(new BaseballCardDetailsPartialInputTest(mask));

@@ -33,8 +33,6 @@ import javax.swing.event.AncestorListener;
  * @see bbct.gui.FindCardsByNumberPanel
  * @see bbct.gui.FindCardsByYearAndNumberPanel
  * @see bbct.gui.FindCardsByPlayerNamePanel
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class UpdateTitleAncestorListener implements AncestorListener {
 

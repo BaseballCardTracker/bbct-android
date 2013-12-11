@@ -28,8 +28,6 @@ import junit.framework.Assert;
  * Tests for {@link About} activity class.
  *
  * TODO: Add tests for the layout of {@link About}
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class AboutTest extends ActivityInstrumentationTestCase2<About> {
 

@@ -42,8 +42,6 @@ import junit.framework.TestSuite;
 
 /**
  * Tests editing card value and count in a {@link BaseballCardDetails} activity.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 

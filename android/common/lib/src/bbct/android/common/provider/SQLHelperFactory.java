@@ -26,8 +26,6 @@ import java.lang.reflect.Constructor;
 
 /**
  * Create a {@link BaseballCardSQLHelper} object for a given {@link Context}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 final public class SQLHelperFactory {
 

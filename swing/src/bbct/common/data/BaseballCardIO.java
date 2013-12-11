@@ -25,8 +25,6 @@ import java.util.List;
  * The {@link BaseballCardIO} interface provides the contract for all I/O
  * operations for the BBCT application. These provide persistence for
  * {@link BaseballCard} objects.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public interface BaseballCardIO {
 

@@ -56,8 +56,6 @@ import junit.framework.Assert;
 /**
  * Tests for the {@link BaseballCardList} activity when the database contains
  * data.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
 

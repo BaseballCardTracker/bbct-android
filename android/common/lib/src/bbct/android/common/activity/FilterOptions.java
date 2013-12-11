@@ -50,8 +50,6 @@ import java.util.Map;
  * @see YearAndNumberFilter
  * @see PlayerNameFilter
  * @see TeamFilter
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class FilterOptions extends Activity {
 

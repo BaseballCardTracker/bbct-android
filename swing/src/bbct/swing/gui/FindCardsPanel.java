@@ -44,8 +44,6 @@ import javax.swing.JPanel;
  * {@link FindCardsByPanel#getBaseballCards()} and displays the returned data in
  * a {@link EditCardsPanel}. The "Back" button returns to the
  * {@link FindCardsMenuPanel}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 @SuppressWarnings("serial")
 public class FindCardsPanel extends JPanel {

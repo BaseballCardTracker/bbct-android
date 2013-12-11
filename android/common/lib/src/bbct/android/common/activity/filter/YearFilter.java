@@ -25,7 +25,6 @@ import bbct.android.common.R;
 
 /**
  *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class YearFilter extends FilterActivity {
 

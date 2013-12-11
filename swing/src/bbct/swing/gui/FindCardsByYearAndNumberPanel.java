@@ -44,8 +44,6 @@ import javax.swing.text.NumberFormatter;
  * {@link FindCardsByYearAndNumberPanel} allows the user to input a card number
  * and year. These values are used as the parameters when searching the
  * underlying storage mechanism for cards with the given year and number.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 @SuppressWarnings("serial")
 public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
