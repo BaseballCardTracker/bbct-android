@@ -19,6 +19,7 @@
 package bbct.android.common.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,11 +36,11 @@ import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.data.BaseballCard;
+import bbct.android.common.exception.SQLHelperCreationException;
+import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.android.common.provider.SQLHelperFactory;
 import bbct.android.common.provider.SingleColumnCursorAdapter;
-import bbct.android.common.exception.SQLHelperCreationException;
-import bbct.android.common.provider.BaseballCardContract;
 
 /**
  * Allows user to add a new card or view and edit details of an existing card.
@@ -182,8 +183,9 @@ public class BaseballCardDetails extends Activity {
      */
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        // If the key entered is 'Enter'('next' or 'done'), then move the focus
-        // to the next view.
+        // If the key entered is 'Enter'('next' or 'done'), then 
+        // 1) move the focus to the next view if the current focus is in brand or player name view and
+        // 2) hide the keypad if the current focus is in team view.
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             if (brandText.hasFocus()) {
                 yearText.requestFocus();
@@ -192,7 +194,9 @@ public class BaseballCardDetails extends Activity {
                 teamText.requestFocus();
                 return true;
             } else if (teamText.hasFocus()) {
-                playerPositionSpinner.requestFocus();
+                //hide the soft keypad
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(teamText.getWindowToken(), 0);
                 return true;
             }
         }
