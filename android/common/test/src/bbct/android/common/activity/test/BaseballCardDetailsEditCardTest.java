@@ -18,15 +18,12 @@
  */
 package bbct.android.common.activity.test;
 
-import java.util.EnumSet;
-
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
-import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
@@ -34,6 +31,7 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import java.io.InputStream;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
 import junit.framework.Assert;

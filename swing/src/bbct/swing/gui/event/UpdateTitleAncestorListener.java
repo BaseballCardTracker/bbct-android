@@ -55,7 +55,7 @@ public class UpdateTitleAncestorListener implements AncestorListener {
      */
     @Override
     public void ancestorAdded(AncestorEvent ae) {
-        JFrame frame = (JFrame) ((JComponent) ae.getComponent()).getTopLevelAncestor();
+        JFrame frame = (JFrame) ae.getComponent().getTopLevelAncestor();
         frame.setTitle(title);
     }
 
