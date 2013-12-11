@@ -17,11 +17,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="fill_parent"
-             android:layout_height="fill_parent"
-             android:stretchColumns="1"
->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/scroll_card_details"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:stretchColumns="1"
+    >
     <TableRow>
         <TextView android:text="@string/brand_label"
                   android:textStyle="bold"
@@ -129,4 +133,5 @@
                 android:text="@string/done_button"
         />
     </LinearLayout>
-</TableLayout>
+    </TableLayout>
+</ScrollView>

@@ -27,6 +27,7 @@
     <item type="id" name="player_name_text"/>
     <item type="id" name="team_text"/>
     <item type="id" name="player_position_text"/>
+    <item type="id" name="scroll_card_details"/>
 
     <item type="id" name="save_button"/>
     <item type="id" name="done_button"/>

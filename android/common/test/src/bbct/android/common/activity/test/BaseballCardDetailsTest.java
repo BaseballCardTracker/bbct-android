@@ -18,19 +18,26 @@
  */
 package bbct.android.common.activity.test;
 
+
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
+import android.test.ViewAsserts;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.inputmethod.InputMethodManager;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
-import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.test.BBCTTestUtil;
+import bbct.android.common.R;
 import bbct.android.common.test.BaseballCardCsvFileReader;
+import bbct.android.common.test.BBCTTestUtil;
 import java.io.InputStream;
 import junit.framework.Assert;
 
@@ -80,6 +87,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         this.playerPositionSpinner = (Spinner) this.activity.findViewById(R.id.player_position_text);
         this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
         this.doneButton = (Button) this.activity.findViewById(R.id.done_button);
+        this.scrollView = (ScrollView)this.activity.findViewById(R.id.scroll_card_details);
     }
 
     /**
@@ -101,6 +109,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.assertNotNull(this.playerPositionSpinner);
         Assert.assertNotNull(this.saveButton);
         Assert.assertNotNull(this.doneButton);
+        Assert.assertNotNull(this.scrollView);
     }
 
     /**
@@ -179,6 +188,44 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         Assert.assertTrue(playerPositionSpinner.hasFocus());
     }
 
+     /**
+     * Test that view of {@link BaseballCardDetails} activity can be scrolled
+     * when the save button is not visible on screen.
+     */
+    public void testCardDetailsScroll() {
+        View parentView = activity.getWindow().getDecorView();
+        //hide the soft keypad
+        InputMethodManager imm = (InputMethodManager) activity
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(parentView.getWindowToken(), 0);
+        //Wait till the keypad disappears
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            Log.e("getResult", e.getMessage());
+        }
+        //check if the 'save' button is already visible. If yes, then
+        //the screen cannot be scrolled. Assert true and return.
+        if (BBCTTestUtil.isViewOnScreen(parentView, saveButton)) {
+            assertTrue(true);
+        } else {
+            //scroll to the bottom and check if save button is on the screen
+            scrollView.post(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.fullScroll(View.FOCUS_DOWN);
+                }
+            });
+            // Wait for the scroll
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                Log.e("getResult", e.getMessage());
+            }
+            ViewAsserts.assertOnScreen(parentView, saveButton);
+        }
+    }
+
     private Activity activity = null;
     private EditText brandText = null;
     private EditText yearText = null;
@@ -190,6 +237,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     private Spinner playerPositionSpinner = null;
     private Button saveButton = null;
     private Button doneButton = null;
+    private ScrollView scrollView = null;
     private Instrumentation inst = null;
     private BaseballCard card = null;
 }
