@@ -388,6 +388,31 @@ final public class BBCTTestUtil {
     }
 
     /**
+     * Checks if the given child view is visible in the given parent view.
+     * Logic followed is same as viewAssert.assertOnScreen.
+     *
+     * @param parentView The {@link View} object containing the child view
+     * test.
+     * @param childView The {@link View} object to be checked.
+     */
+    public static boolean isViewOnScreen(View parentView, View childView) {
+        int[] xyChild = new int[2];
+        childView.getLocationOnScreen(xyChild);
+        int[] xyParent = new int[2];
+        parentView.getLocationOnScreen(xyParent);
+        int childViewYFromRoot = xyChild[1] - xyParent[1];
+        int rootViewHeight = childView.getRootView().getHeight();
+        //If the button is visible on screen, then
+        //view should have positive y coordinate on screen and
+        //view should have y location on screen less than drawing
+        //height of root view
+        if (childViewYFromRoot >= 0 && childViewYFromRoot <= rootViewHeight) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Generate the power set of a given {@link Set}.
      *
      * @param input A set of elements

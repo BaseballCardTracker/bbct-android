@@ -206,18 +206,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         }
         //check if the 'save' button is already visible. If yes, then
         //the screen cannot be scrolled. Assert true and return.
-        //Logic same as what is followed in viewAssert.assertOnScreen.
-        //If the button is visible on screen, then
-        //view should have positive y coordinate on screen and
-        //view should have y location on screen less than drawing
-        //height of root view
-        int[] xy = new int[2];
-        saveButton.getLocationOnScreen(xy);
-        int[] xyRoot = new int[2];
-        parentView.getLocationOnScreen(xyRoot);
-        int saveButtonYFromRoot = xy[1] - xyRoot[1];
-        int rootViewHeight = saveButton.getRootView().getHeight();
-        if (saveButtonYFromRoot >= 0 && saveButtonYFromRoot <= rootViewHeight) {
+        if (BBCTTestUtil.isViewOnScreen(parentView, saveButton)) {
             assertTrue(true);
         } else {
             //scroll to the bottom and check if save button is on the screen
