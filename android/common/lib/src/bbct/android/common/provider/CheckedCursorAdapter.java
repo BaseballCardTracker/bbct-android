@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.os.Build;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 import android.widget.SimpleCursorAdapter;
 import bbct.android.common.R;
@@ -35,8 +36,9 @@ import bbct.android.common.R;
  */
 public class CheckedCursorAdapter extends SimpleCursorAdapter {
 
-    public CheckedCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to) {
+    public CheckedCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, boolean[] sel) {
         super(context, layout, c, from, to);
+        this.selection = sel;
     }
 
     /**
@@ -78,4 +80,24 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
 
     }
 
+    /**
+     * Restores selection of {@link CheckedTextView} if there
+     * was a previous selection made on the same element.
+     * 
+     * @see {@link SimpleCursorAdapater#getView}
+     */
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View v = super.getView(position, convertView, parent);
+
+        if (this.selection != null) {
+            CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
+            ctv.setChecked(this.selection[position + 1]); // position + 1 because header row is not part of adapter logic
+        }
+
+        return v;
+    }
+
+    private boolean[] selection;
 }
+

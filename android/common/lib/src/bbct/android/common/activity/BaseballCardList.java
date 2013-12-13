@@ -62,11 +62,13 @@ public class BaseballCardList extends ListActivity {
             this.sqlHelper = SQLHelperFactory.getSQLHelper(this);
 
             this.setContentView(R.layout.card_list);
+            boolean[] savedSelection = null;
             if (savedInstanceState != null) {
                 this.filterRequest = savedInstanceState.getInt(this
                         .getString(R.string.filter_request_extra));
                 this.filterParams = savedInstanceState.getBundle(this
                         .getString(R.string.filter_params_extra));
+                savedSelection = savedInstanceState.getBooleanArray(this.getString(R.string.selection_extra));
             }
 
             this.emptyList = (TextView) this.findViewById(android.R.id.empty);
@@ -90,8 +92,13 @@ public class BaseballCardList extends ListActivity {
                     });
             listView.addHeaderView(headerView);
 
+            if (savedSelection != null) {
+                CheckedTextView headerCheck = (CheckedTextView) headerView.findViewById(R.id.checkmark);
+                headerCheck.setChecked(savedSelection[0]);
+            }
+
             this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
-                    ROW_PROJECTION, ROW_TEXT_VIEWS);
+                    ROW_PROJECTION, ROW_TEXT_VIEWS, savedSelection);
             this.setListAdapter(this.adapter);
             this.sqlHelper.applyFilter(this, this.filterRequest,
                     this.filterParams);
@@ -242,6 +249,17 @@ public class BaseballCardList extends ListActivity {
                 this.filterRequest);
         outState.putBundle(this.getString(R.string.filter_params_extra),
                 this.filterParams);
+
+        ListView lst = this.getListView();
+        boolean[] selection = new boolean[lst.getChildCount()];
+        for (int i = 0; i < selection.length; i++) {
+            CheckedTextView ctv = (CheckedTextView) lst.getChildAt(i).findViewById(R.id.checkmark);
+
+            if (ctv.isChecked())
+                selection[i] = true;
+        }
+
+        outState.putBooleanArray(this.getString(R.string.selection_extra), selection);
     }
 
     /**
