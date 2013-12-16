@@ -18,6 +18,8 @@
  */
 package bbct.android.premium;
 
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -30,14 +32,14 @@ import android.util.Log;
 import android.widget.Toast;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
-import java.util.List;
 
 /**
  * Overrides
  * {@link bbct.android.common.provider.BaseballCardSQLHelper#onConfigure(SQLiteDatabase)}
  * in order to import data from the Lite edition.
  */
-public class BaseballCardSQLHelper extends bbct.android.common.provider.BaseballCardSQLHelper {
+public class BaseballCardSQLHelper extends
+        bbct.android.common.provider.BaseballCardSQLHelper {
 
     /**
      * Create a {@link BaseballCardSQLHelper} with the given {@link Context}.
@@ -64,24 +66,30 @@ public class BaseballCardSQLHelper extends bbct.android.common.provider.Baseball
         String errorMessageEnding = null;
 
         try {
-            PackageInfo liteInfo = this.context.getPackageManager().getPackageInfo(LITE_PACKAGE, SCHEMA_VERSION);
+            PackageInfo liteInfo = this.context.getPackageManager()
+                    .getPackageInfo(LITE_PACKAGE, SCHEMA_VERSION);
             canGetData = liteInfo.versionCode >= MIN_LITE_VERSION;
-            errorMessageEnding = this.context.getString(R.string.lite_update_message);
+            errorMessageEnding = this.context
+                    .getString(R.string.lite_update_message);
         } catch (NameNotFoundException ex) {
             canGetData = false;
-            errorMessageEnding = this.context.getString(R.string.lite_not_installed_message);
+            errorMessageEnding = this.context
+                    .getString(R.string.lite_not_installed_message);
             Log.i(TAG, LITE_PACKAGE + " package not found", ex);
         }
 
         if (canGetData) {
             ContentResolver resolver = this.context.getContentResolver();
-            Cursor results = resolver.query(BaseballCardContract.CONTENT_URI, BaseballCardContract.PROJECTION, null, null, null);
+            Cursor results = resolver.query(BaseballCardContract.CONTENT_URI,
+                    BaseballCardContract.PROJECTION, null, null, null);
 
             if (results != null) {
-                Toast.makeText(context, R.string.import_message, Toast.LENGTH_LONG).show();
+                Toast.makeText(this.context, R.string.import_message,
+                        Toast.LENGTH_LONG).show();
 
-                List<BaseballCard> cards = this.getAllBaseballCardsFromCursor(results);
-                this.insertAllBaseballCards(db, cards);
+                List<BaseballCard> cards = this
+                        .getAllBaseballCardsFromCursor(results);
+                this.insertAllBaseballCards(cards);
             } else {
                 canGetData = false;
                 errorMessageEnding = "";
@@ -89,18 +97,22 @@ public class BaseballCardSQLHelper extends bbct.android.common.provider.Baseball
         }
 
         if (!canGetData) {
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.context);
-            String errorMessage = this.context.getString(R.string.import_error, errorMessageEnding);
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
+                    this.context);
+            String errorMessage = this.context.getString(R.string.import_error,
+                    errorMessageEnding);
             dialogBuilder.setMessage(errorMessage);
-            dialogBuilder.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
+            dialogBuilder.setPositiveButton(R.string.ok_button,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
 
             dialogBuilder.create().show();
         }
     }
+
     private static final String TAG = BaseballCardSQLHelper.class.getName();
     private static final String LITE_PACKAGE = "bbct.android";
     private static final int MIN_LITE_VERSION = 3;
