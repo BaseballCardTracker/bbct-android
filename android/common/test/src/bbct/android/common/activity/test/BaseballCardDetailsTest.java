@@ -19,6 +19,8 @@
 package bbct.android.common.activity.test;
 
 
+import android.graphics.Rect;
+
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
@@ -26,9 +28,10 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.ViewAsserts;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -145,9 +148,12 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     /**
-     * Test that the focus moves to the next control {@link EditText} in the
+     * Test that
+     * 1)the focus moves to the next control {@link EditText} in the
      * {@link BaseballCardDetails} activity when the next button is clicked in
      * the soft keyboard.
+     * 2)keyboard is removed when the done button is clicked in the soft
+     * keyboard
      */
     public void testNextButtonOnClick() {
         BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
@@ -180,10 +186,31 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
         Assert.assertTrue(playerTeamText.hasFocus());
 
+        View rootView = ((ViewGroup)this.activity.findViewById(android.R.id.content)).getChildAt(0);
+        Rect r = new Rect();
+        //r will be populated with the coordinates of the view area still visible.
+        rootView.getWindowVisibleDisplayFrame(r);
+
+        int heightdiffBefore = rootView.getRootView().getHeight() - (r.bottom - r.top);
+        boolean condnBefore = false;
+        if(heightdiffBefore>100)
+            condnBefore = true;
+
         BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
                 playerTeamText, card.getTeam());
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(playerPositionSpinner.hasFocus());
+        //Wait for the keyboard to disappear and view to be refreshed
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            Log.e("Click Done button in soft Keyboard", e.getMessage());
+        }
+        rootView.getWindowVisibleDisplayFrame(r);
+        int heightdiffAfter = rootView.getRootView().getHeight() - (r.bottom - r.top);
+        boolean condnAfter = false;
+        if(heightdiffAfter<100)
+            condnAfter = true;
+        Assert.assertTrue(condnBefore&&condnAfter);
     }
 
      /**
