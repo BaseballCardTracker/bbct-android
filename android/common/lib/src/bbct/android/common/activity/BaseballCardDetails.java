@@ -23,9 +23,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -170,7 +170,6 @@ public class BaseballCardDetails extends Activity {
         }
     }
 
-
     /**
      *
      * Called when a key was released and not handled by any of the views inside
@@ -184,7 +183,7 @@ public class BaseballCardDetails extends Activity {
      */
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        // If the key entered is 'Enter'('next' or 'done'), then
+        // If the key entered is 'Enter'('next' or 'done'), then 
         // 1) move the focus to the next view if the current focus is in brand or player name view and
         // 2) hide the keypad if the current focus is in team view.
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
@@ -203,6 +202,7 @@ public class BaseballCardDetails extends Activity {
         }
         return super.onKeyUp(keyCode, event);
     }
+
     private void resetInput() {
         this.brandText.setText("");
         this.yearText.setText("");
