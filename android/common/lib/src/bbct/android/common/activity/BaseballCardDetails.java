@@ -183,7 +183,7 @@ public class BaseballCardDetails extends Activity {
      */
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        // If the key entered is 'Enter'('next' or 'done'), then 
+        // If the key entered is 'Enter'('next' or 'done'), then
         // 1) move the focus to the next view if the current focus is in brand or player name view and
         // 2) hide the keypad if the current focus is in team view.
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
