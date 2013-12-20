@@ -473,6 +473,39 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         }
     }
 
+    /**
+     * Test that the state of {@link CheckedTextView} is maintained when
+     * a user adds a new card.
+     */
+    public void testSelectionAfterAddCard() throws Throwable {
+        ListView lv = ((ListActivity) this.activity).getListView();
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+
+        for (int i = 0; i < 3; i++) {
+            int cardIndex = (int) (Math.random()*(lv.getChildCount()-1) + 1);
+            final CheckedTextView ctv = (CheckedTextView) lv.getChildAt(cardIndex).findViewById(R.id.checkmark);
+
+            if (!ctv.isChecked()) {
+                indexes.add(cardIndex);
+
+                this.runTestOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Assert.assertTrue(ctv.performClick());
+                    }
+                });
+            }
+        }
+
+        this.testAddCardToPopulatedDatabase();
+
+        lv = ((ListActivity) this.activity).getListView();
+        for (int i = 0; i < indexes.size(); i++) {
+            CheckedTextView ctv = (CheckedTextView) lv.getChildAt(indexes.get(i)).findViewById(R.id.checkmark);
+            Assert.assertTrue(ctv.isChecked());
+        }
+    }
+
     private BaseballCard getBaseballCardFromView(View v) {
         TextView playerName = (TextView) v.findViewById(R.id.player_name_text_view);
         TextView brand = (TextView) v.findViewById(R.id.brand_text_view);

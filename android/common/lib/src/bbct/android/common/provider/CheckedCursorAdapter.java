@@ -36,31 +36,38 @@ import bbct.android.common.R;
  */
 public class CheckedCursorAdapter extends SimpleCursorAdapter {
 
-    public CheckedCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, boolean[] sel) {
+    public CheckedCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to) {
         super(context, layout, c, from, to);
-        this.selection = sel;
+        this.context = context;
     }
 
     /**
-     * Binds data from {@link Cursor} to the appropriate {@link View}.
-     * Also adds {@link OnClickListener} to {@link CheckedTextView}.
+     * Restores selection of {@link CheckedTextView} if there
+     * was a previous selection made on the same element. Also
+     * adds {@link OnClickListener} to {@link CheckedTextView}.
      * 
-     * @see {@link SimpleCursorAdapter#bindView}
+     * @see {@link SimpleCursorAdapater#getView}
      */
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        super.bindView(view, context, cursor);
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        View v = super.getView(position, convertView, parent);
 
-        // set listeners for CheckedTextView
-        final CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.checkmark);
-        final Activity curActivity = (Activity) context;
+        CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
+        final Activity curActivity = (Activity) this.context;
+
+        // restore selection
+        if (this.selection != null) {
+            ctv.setChecked(this.selection[position]);
+        }
+
+        // set listener
         ctv.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
-
                 CheckedTextView cview = (CheckedTextView) v.findViewById(R.id.checkmark);
                 cview.toggle();
+                CheckedCursorAdapter.this.selection[position] = cview.isChecked();
 
                 // update menu in the correct Activity
                 curActivity.runOnUiThread(new Runnable() {
@@ -78,26 +85,38 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
 
         });
 
-    }
-
-    /**
-     * Restores selection of {@link CheckedTextView} if there
-     * was a previous selection made on the same element.
-     * 
-     * @see {@link SimpleCursorAdapater#getView}
-     */
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View v = super.getView(position, convertView, parent);
-
-        if (this.selection != null) {
-            CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
-            ctv.setChecked(this.selection[position + 1]); // position + 1 because header row is not part of adapter logic
-        }
-
         return v;
     }
 
+    /**
+     * Marks/unmarks all items in the {@link CheckedCursorAdapter}.
+     *
+     * @param check
+     *            - a boolean indicating whether all items will be checked
+     */
+    public void toggleAll(boolean check) {
+        for (int i = 0; i < this.selection.length; i++) {
+            this.selection[i] = check;
+        }
+    }
+
+    /**
+     * Returns the saved selection object.
+     * @return an array of marked items
+     */
+    public boolean[] getSelection() {
+        return this.selection;
+    }
+
+    /**
+     * Sets the saved selection object.
+     * @param sel - an array of marked items
+     */
+    public void setSelection(boolean[] sel) {
+        this.selection = sel;
+    }
+
     private boolean[] selection;
+    private Context context;
 }
 
