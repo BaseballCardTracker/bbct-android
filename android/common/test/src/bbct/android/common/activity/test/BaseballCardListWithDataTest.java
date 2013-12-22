@@ -375,7 +375,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
      * items in {@link ListView} are selected.
      */
     public void testMarkAll() throws Throwable {
-        final ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = ((ListActivity) this.activity).getListView();
         final CheckedTextView header = (CheckedTextView) lv.getChildAt(0).findViewById(R.id.checkmark);
 
         this.runTestOnUiThread(new Runnable() {

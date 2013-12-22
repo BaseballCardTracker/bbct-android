@@ -59,6 +59,7 @@ public class BaseballCardList extends ListActivity {
         try {
             super.onCreate(savedInstanceState);
             this.sqlHelper = SQLHelperFactory.getSQLHelper(this);
+            savedSelection = null;
 
             this.setContentView(R.layout.card_list);
             if (savedInstanceState != null) {
@@ -86,17 +87,12 @@ public class BaseballCardList extends ListActivity {
                             .findViewById(R.id.checkmark);
                     ctv.toggle();
                     BaseballCardList.this.adapter.toggleAll(ctv.isChecked());
-                    BaseballCardList.this.adapter.notifyDataSetChanged();
                 }
             });
             listView.addHeaderView(this.headerView);
 
             this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
                     ROW_PROJECTION, ROW_TEXT_VIEWS);
-            this.sqlHelper.applyFilter(this, this.filterRequest,
-                    this.filterParams);
-            this.setListAdapter(this.adapter);
-            this.swapCursor();
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
             Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG)
@@ -113,7 +109,6 @@ public class BaseballCardList extends ListActivity {
         super.onDestroy();
 
         this.sqlHelper.close();
-        savedSelection = null;
     }
 
     /**
@@ -133,8 +128,11 @@ public class BaseballCardList extends ListActivity {
     public void onResume() {
         super.onResume();
 
-        // restore default state - everything unchecked
-        this.adapter.setSelection(new boolean[this.sqlHelper.getCursor().getCount()]);
+        this.sqlHelper.applyFilter(this, this.filterRequest,
+                this.filterParams);
+        this.swapCursor();
+
+        // restore default header state
         CheckedTextView headerCheck = (CheckedTextView) this.headerView.findViewById(R.id.checkmark);
         headerCheck.setChecked(false);
 
@@ -160,7 +158,6 @@ public class BaseballCardList extends ListActivity {
 
             // restore state
             this.adapter.setSelection(newSelection);
-            this.adapter.notifyDataSetChanged();
         }
     }
 
@@ -236,6 +233,7 @@ public class BaseballCardList extends ListActivity {
         } else if (itemId == R.id.clear_filter_menu) {
             this.filterRequest = R.id.no_filter;
             this.emptyList.setText(R.string.start);
+            savedSelection = null;
             this.sqlHelper.clearFilter();
             this.swapCursor();
 
@@ -384,6 +382,7 @@ public class BaseballCardList extends ListActivity {
 
     private void swapCursor() {
         Cursor cursor = this.sqlHelper.getCursor();
+        this.adapter.setSelection(new boolean[cursor.getCount()]);
         this.stopManagingCursor(this.adapter.getCursor());
         this.startManagingCursor(cursor);
         this.adapter.changeCursor(cursor);

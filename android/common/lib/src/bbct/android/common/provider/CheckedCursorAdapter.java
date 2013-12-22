@@ -19,6 +19,7 @@
 package bbct.android.common.provider;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Build;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import bbct.android.common.R;
 
@@ -98,6 +100,8 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
         for (int i = 0; i < this.selection.length; i++) {
             this.selection[i] = check;
         }
+
+        this.updateDataSet();
     }
 
     /**
@@ -114,6 +118,23 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
      */
     public void setSelection(boolean[] sel) {
         this.selection = sel;
+        this.updateDataSet();
+    }
+
+    /**
+     * Notifies {@link CheckedCursorAdapter} of changed data
+     * and also updates {@link ListView} in the appropriate
+     * {@link ListActivity}
+     */
+    private void updateDataSet() {
+        this.notifyDataSetChanged();
+        final ListActivity curActivity = (ListActivity) this.context;
+        curActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                curActivity.getListView().setAdapter(CheckedCursorAdapter.this);
+            }
+        });
     }
 
     private boolean[] selection;
