@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
+import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
@@ -107,7 +108,7 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         this.newCard.setValue(this.newCard.getValue() + 50);
         this.newCard.setCount(this.newCard.getCount() + 1);
 
-        Context target = inst.getTargetContext();
+        Context target = this.inst.getTargetContext();
         Intent intent = new Intent(target, BaseballCardDetails.class);
         intent.putExtra(target.getString(R.string.baseball_card_extra), this.oldCard);
         this.setActivityIntent(intent);
@@ -168,7 +169,7 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         return new BaseballCard(brand, year, number, value, count, name, team, position);
     }
 
-    private Set<BBCTTestUtil.EditTexts> inputMask;
+    private final Set<BBCTTestUtil.EditTexts> inputMask;
     private Instrumentation inst = null;
     private Activity activity = null;
     private BaseballCard oldCard = null;
