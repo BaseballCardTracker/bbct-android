@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
+import android.content.ContentProvider;
 import android.content.ContentResolver;
+import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.net.Uri;
 import android.test.ProviderTestCase2;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
@@ -13,6 +16,9 @@ import bbct.android.common.provider.BaseballCardProvider;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.android.common.test.DatabaseUtil;
 
+/**
+ * Tests for {@link BaseballCardProvider}.
+ */
 public class BaseballCardProviderTest extends
         ProviderTestCase2<BaseballCardProvider> {
     private static final String CREATE_TABLE = "CREATE TABLE baseball_cards"
@@ -31,21 +37,21 @@ public class BaseballCardProviderTest extends
             + "INSERT INTO \"baseball_cards\" VALUES(6,'Upper Deck',1990,189,10000,1,'Tom Browning','Reds','Pitcher');\n"
             + "INSERT INTO \"baseball_cards\" VALUES(7,'Topps',1982,121,10000,1,'Ed Lynch','Mets','Pitcher');\n"
             + "COMMIT;\n";
-    private static final List<BaseballCard> cards = new ArrayList<BaseballCard>();
+    private static final List<BaseballCard> CARDS = new ArrayList<BaseballCard>();
     static {
-        cards.add(new BaseballCard("Topps", 1991, 278, 10000, 1,
+        CARDS.add(new BaseballCard("Topps", 1991, 278, 10000, 1,
                 "Alex Fernandez", "White Sox", "Pitcher"));
-        cards.add(new BaseballCard("Topps", 1974, 175, 10000, 1, "Bob Stanley",
+        CARDS.add(new BaseballCard("Topps", 1974, 175, 10000, 1, "Bob Stanley",
                 "Red Sox", "Pitcher"));
-        cards.add(new BaseballCard("Topps", 1985, 201, 10000, 1,
+        CARDS.add(new BaseballCard("Topps", 1985, 201, 10000, 1,
                 "Vince Coleman", "Cardinals", "Left Field"));
-        cards.add(new BaseballCard("TMG", 1993, 5, 10000, 1, "Ken Griffey Jr.",
+        CARDS.add(new BaseballCard("TMG", 1993, 5, 10000, 1, "Ken Griffey Jr.",
                 "All-Star", "Center Field"));
-        cards.add(new BaseballCard("Upper Deck", 1993, 18, 10000, 1,
+        CARDS.add(new BaseballCard("Upper Deck", 1993, 18, 10000, 1,
                 "Dave Hollins", "Phillies", "Third Base"));
-        cards.add(new BaseballCard("Upper Deck", 1990, 189, 10000, 1,
+        CARDS.add(new BaseballCard("Upper Deck", 1990, 189, 10000, 1,
                 "Tom Browning", "Reds", "Pitcher"));
-        cards.add(new BaseballCard("Topps", 1982, 121, 10000, 1, "Ed Lynch",
+        CARDS.add(new BaseballCard("Topps", 1982, 121, 10000, 1, "Ed Lynch",
                 "Mets", "Pitcher"));
     }
 
@@ -80,15 +86,37 @@ public class BaseballCardProviderTest extends
     public void testPreConditions() {
         DatabaseUtil dbUtil = new DatabaseUtil(this.getMockContext());
         Assert.assertTrue(dbUtil
-                .containsAllBaseballCards(BaseballCardProviderTest.cards));
+                .containsAllBaseballCards(BaseballCardProviderTest.CARDS));
     }
 
-    public void testQuery() {
-        Assert.fail("Stub");
+    /**
+     * Test for
+     * {@link BaseballCardProvider#query(android.net.Uri, String[], String, String[], String)}
+     * . Query the {@link ContentProvider} without any selection arguments.
+     */
+    public void testQueryAll() {
+        Cursor cursor = this.resolver.query(BaseballCardContract.CONTENT_URI,
+                BaseballCardContract.PROJECTION, null, null, null);
+        Assert.assertNotNull(cursor);
+
+        BaseballCardSQLHelper sqlHelper = new BaseballCardSQLHelper(
+                this.getMockContext());
+        List<BaseballCard> actual = sqlHelper
+                .getAllBaseballCardsFromCursor(cursor);
+        Assert.assertTrue(BaseballCardProviderTest.CARDS.containsAll(actual));
+        Assert.assertTrue(actual.containsAll(BaseballCardProviderTest.CARDS));
     }
 
+    /**
+     * Test for
+     * {@link BaseballCardProvider#insert(Uri, android.content.ContentValues)}.
+     */
     public void testInsert() {
-        Assert.fail("Stub");
+        BaseballCard newCard = new BaseballCard("Code Guru Apps", 2013, 1, 25,
+                1, "Code Guru", "Code Guru Devs", "Pitcher");
+        Uri result = this.resolver.insert(BaseballCardContract.CONTENT_URI,
+                BaseballCardContract.getContentValues(newCard));
+        Assert.assertNotNull(result);
     }
 
     public void testUpdate() {
