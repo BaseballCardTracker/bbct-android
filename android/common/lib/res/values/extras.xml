@@ -26,4 +26,5 @@
     <string name="player_name_extra">player_name</string>
     <string name="team_extra">team</string>
     <string name="filter_params_extra">filter_params</string>
+    <string name="selection_extra">selection</string>
 </resources>

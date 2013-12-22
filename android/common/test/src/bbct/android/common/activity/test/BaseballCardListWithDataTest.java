@@ -21,6 +21,7 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.app.ListActivity;
+import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -374,7 +375,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
      * items in {@link ListView} are selected.
      */
     public void testMarkAll() throws Throwable {
-        final ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = ((ListActivity) this.activity).getListView();
         final CheckedTextView header = (CheckedTextView) lv.getChildAt(0).findViewById(R.id.checkmark);
 
         this.runTestOnUiThread(new Runnable() {
@@ -435,6 +436,74 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
         BBCTTestUtil.removeCard(this, this.activity, toDelete);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, lv);
+    }
+
+    /**
+     * Test that the state of {@link CheckedTextView} is maintained when the
+     * {@link BaseballCardList} activity changes orientation.
+     */
+    public void testSelectionAfterSaveInstanceState() throws Throwable {
+        ListView lv = ((ListActivity) this.activity).getListView();
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+
+        for (int i = 0; i < 3; i++) {
+            int cardIndex = (int) (Math.random()*(lv.getChildCount()-1) + 1);
+            final CheckedTextView ctv = (CheckedTextView) lv.getChildAt(cardIndex).findViewById(R.id.checkmark);
+
+            if (!ctv.isChecked()) {
+                indexes.add(cardIndex);
+
+                this.runTestOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Assert.assertTrue(ctv.performClick());
+                    }
+                });
+            }
+        }
+
+        this.setActivity(null);
+        this.activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        this.activity = this.getActivity();
+
+        lv = ((ListActivity) this.activity).getListView();
+        for (int i = 0; i < indexes.size(); i++) {
+            CheckedTextView ctv = (CheckedTextView) lv.getChildAt(indexes.get(i)).findViewById(R.id.checkmark);
+            Assert.assertTrue(ctv.isChecked());
+        }
+    }
+
+    /**
+     * Test that the state of {@link CheckedTextView} is maintained when
+     * a user adds a new card.
+     */
+    public void testSelectionAfterAddCard() throws Throwable {
+        ListView lv = ((ListActivity) this.activity).getListView();
+        ArrayList<Integer> indexes = new ArrayList<Integer>();
+
+        for (int i = 0; i < 3; i++) {
+            int cardIndex = (int) (Math.random()*(lv.getChildCount()-1) + 1);
+            final CheckedTextView ctv = (CheckedTextView) lv.getChildAt(cardIndex).findViewById(R.id.checkmark);
+
+            if (!ctv.isChecked()) {
+                indexes.add(cardIndex);
+
+                this.runTestOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Assert.assertTrue(ctv.performClick());
+                    }
+                });
+            }
+        }
+
+        this.testAddCardToPopulatedDatabase();
+
+        lv = ((ListActivity) this.activity).getListView();
+        for (int i = 0; i < indexes.size(); i++) {
+            CheckedTextView ctv = (CheckedTextView) lv.getChildAt(indexes.get(i)).findViewById(R.id.checkmark);
+            Assert.assertTrue(ctv.isChecked());
+        }
     }
 
     private BaseballCard getBaseballCardFromView(View v) {
