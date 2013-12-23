@@ -42,7 +42,8 @@ import junit.framework.TestSuite;
 /**
  * Tests editing card value and count in a {@link BaseballCardDetails} activity.
  */
-public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
+public class BaseballCardDetailsEditCardTest extends
+        ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
     /**
      * Creates a {@link TestSuite} containing tests for every possible
@@ -50,15 +51,15 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
      * activity.
      *
      * @return A {@link TestSuite} containing tests for every possible
-     * combination of {@link EditText} views in the {@link BaseballCardDetails}
-     * activity.
+     *         combination of {@link EditText} views in the
+     *         {@link BaseballCardDetails} activity.
      */
     public static Test suite() {
         Log.d(TAG, "suite()");
 
         TestSuite suite = new TestSuite();
-        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(EnumSet.allOf(BBCTTestUtil.EditTexts.class));
-//      Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(EnumSet.of(BBCTTestUtil.EditTexts.BRAND, BBCTTestUtil.EditTexts.YEAR, BBCTTestUtil.EditTexts.NUMBER));
+        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(EnumSet
+                .allOf(BBCTTestUtil.EditTexts.class));
 
         for (Set<BBCTTestUtil.EditTexts> mask : masks) {
             Log.d(TAG, "mask: " + mask);
@@ -72,7 +73,8 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
      * Creates a test which will edit data in the {@link EditText} views
      * indicated by the given mask.
      *
-     * @param inputMask The {@link EditText} views to edit.
+     * @param inputMask
+     *            The {@link EditText} views to edit.
      */
     public BaseballCardDetailsEditCardTest(Set<BBCTTestUtil.EditTexts> inputMask) {
         super(BaseballCardDetails.class);
@@ -87,8 +89,9 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
      * with the original data when first launching the activity and the new data
      * when editing.
      *
-     * @throws Exception If an error occurs while chaining to the super class or
-     * while reading data from the baseball card data asset file.
+     * @throws Exception
+     *             If an error occurs while chaining to the super class or while
+     *             reading data from the baseball card data asset file.
      */
     @Override
     public void setUp() throws Exception {
@@ -98,8 +101,10 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         super.setUp();
 
         this.inst = this.getInstrumentation();
-        InputStream in = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
-        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in, true);
+        InputStream in = this.inst.getContext().getAssets()
+                .open(BBCTTestUtil.CARD_DATA);
+        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
+                true);
         List<BaseballCard> allCards = cardInput.getAllBaseballCards();
         this.oldCard = allCards.get(0); // Alex Fernandez
         this.newCard = allCards.get(4); // Dave Hollins
@@ -108,13 +113,15 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         this.newCard.setValue(this.newCard.getValue() + 50);
         this.newCard.setCount(this.newCard.getCount() + 1);
 
-        Context target = inst.getTargetContext();
+        Context target = this.inst.getTargetContext();
         Intent intent = new Intent(target, BaseballCardDetails.class);
-        intent.putExtra(target.getString(R.string.baseball_card_extra), this.oldCard);
+        intent.putExtra(target.getString(R.string.baseball_card_extra),
+                this.oldCard);
         this.setActivityIntent(intent);
         this.activity = this.getActivity();
 
-        // Insert baseball card to make sure we are updating an existing card rather than simply inserting a new card.
+        // Insert baseball card to make sure we are updating an existing card
+        // rather than simply inserting a new card.
         // TODO Make sure this still works without using BaseballCardSQLHelper
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         this.dbUtil.insertBaseballCard(this.oldCard);
@@ -124,7 +131,8 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
      * Tear down the test fixture by calling
      * {@link BaseballCardDetails#finish()} and deleting the app's database.
      *
-     * @throws Exception If an error occurs while chaining to the super class.
+     * @throws Exception
+     *             If an error occurs while chaining to the super class.
      */
     @Override
     public void tearDown() throws Exception {
@@ -139,8 +147,9 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
      * Test that the value and count field can be edited in the
      * {@link BaseballCardDetails} activity.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
     public void testEditCard() throws Throwable {
         Log.d(TAG, "testEditCard()");
@@ -148,7 +157,8 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
         Assert.assertTrue(this.dbUtil.containsBaseballCard(this.oldCard));
 
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.oldCard);
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.newCard, this.inputMask);
+        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.newCard,
+                this.inputMask);
 
         BaseballCard expected = this.getExpectedCard();
         BBCTTestUtil.assertAllEditTextContents(this.activity, expected);
@@ -158,23 +168,35 @@ public class BaseballCardDetailsEditCardTest extends ActivityInstrumentationTest
     }
 
     private BaseballCard getExpectedCard() {
-        String brand = this.inputMask.contains(BBCTTestUtil.EditTexts.BRAND) ? this.newCard.getBrand() : this.oldCard.getBrand();
-        int year = this.inputMask.contains(BBCTTestUtil.EditTexts.YEAR) ? this.newCard.getYear() : this.oldCard.getYear();
-        int number = this.inputMask.contains(BBCTTestUtil.EditTexts.NUMBER) ? this.newCard.getNumber() : this.oldCard.getNumber();
-        int value = this.inputMask.contains(BBCTTestUtil.EditTexts.VALUE) ? this.newCard.getValue() : this.oldCard.getValue();
-        int count = this.inputMask.contains(BBCTTestUtil.EditTexts.COUNT) ? this.newCard.getCount() : this.oldCard.getCount();
-        String name = this.inputMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME) ? this.newCard.getPlayerName() : this.oldCard.getPlayerName();
-        String team = this.inputMask.contains(BBCTTestUtil.EditTexts.TEAM) ? this.newCard.getTeam() : this.oldCard.getTeam();
-        String position = this.inputMask.contains(BBCTTestUtil.EditTexts.PLAYER_POSITION) ? this.newCard.getPlayerPosition() : this.oldCard.getPlayerPosition();
-        return new BaseballCard(brand, year, number, value, count, name, team, position);
+        String brand = this.inputMask.contains(BBCTTestUtil.EditTexts.BRAND) ? this.newCard
+                .getBrand() : this.oldCard.getBrand();
+        int year = this.inputMask.contains(BBCTTestUtil.EditTexts.YEAR) ? this.newCard
+                .getYear() : this.oldCard.getYear();
+        int number = this.inputMask.contains(BBCTTestUtil.EditTexts.NUMBER) ? this.newCard
+                .getNumber() : this.oldCard.getNumber();
+        int value = this.inputMask.contains(BBCTTestUtil.EditTexts.VALUE) ? this.newCard
+                .getValue() : this.oldCard.getValue();
+        int count = this.inputMask.contains(BBCTTestUtil.EditTexts.COUNT) ? this.newCard
+                .getCount() : this.oldCard.getCount();
+        String name = this.inputMask
+                .contains(BBCTTestUtil.EditTexts.PLAYER_NAME) ? this.newCard
+                .getPlayerName() : this.oldCard.getPlayerName();
+        String team = this.inputMask.contains(BBCTTestUtil.EditTexts.TEAM) ? this.newCard
+                .getTeam() : this.oldCard.getTeam();
+        String position = this.inputMask
+                .contains(BBCTTestUtil.EditTexts.PLAYER_POSITION) ? this.newCard
+                .getPlayerPosition() : this.oldCard.getPlayerPosition();
+        return new BaseballCard(brand, year, number, value, count, name, team,
+                position);
     }
 
-    private Set<BBCTTestUtil.EditTexts> inputMask;
+    private final Set<BBCTTestUtil.EditTexts> inputMask;
     private Instrumentation inst = null;
     private Activity activity = null;
     private BaseballCard oldCard = null;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil = null;
     private static final String TEST_NAME = "testEditCard";
-    private static final String TAG = BaseballCardDetailsEditCardTest.class.getName();
+    private static final String TAG = BaseballCardDetailsEditCardTest.class
+            .getName();
 }

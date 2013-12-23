@@ -112,7 +112,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
      */
     public void testPartialInput() throws Throwable {
         Log.d(TAG, "testPartialInput()");
-        Log.d(TAG, "inputFieldsMask=" + inputFieldsMask);
+        Log.d(TAG, "inputFieldsMask=" + this.inputFieldsMask);
 
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, this.inputFieldsMask);
         this.runTestOnUiThread(new Runnable() {
@@ -167,7 +167,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     private EditText valueEditText = null;
     private EditText playerNameEditText = null;
     private BaseballCard card = null;
-    private Set<BBCTTestUtil.EditTexts> inputFieldsMask;
+    private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
     private static final String TEST_NAME = "testPartialInput";
     private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
 }
