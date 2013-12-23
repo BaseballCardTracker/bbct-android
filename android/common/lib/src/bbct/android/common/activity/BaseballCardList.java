@@ -147,8 +147,9 @@ public class BaseballCardList extends ListActivity {
             for (int i = 0; i < savedSelection.length; i++) {
                 newSelection[i] = savedSelection[i];
 
-                if (newSelection[i])
+                if (newSelection[i]) {
                     numSelected++;
+                }
             }
 
             // restore header state
@@ -238,7 +239,7 @@ public class BaseballCardList extends ListActivity {
             this.swapCursor();
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                invalidateOptionsMenu();
+                this.invalidateOptionsMenu();
             }
 
             return true;
@@ -308,8 +309,9 @@ public class BaseballCardList extends ListActivity {
      */
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        if (position == 0)
+        if (position == 0) {
             return;
+        }
 
         Intent intent = new Intent(Intent.ACTION_EDIT,
                 BaseballCardDetails.DETAILS_URI);
@@ -380,6 +382,7 @@ public class BaseballCardList extends ListActivity {
         return new BaseballCard("", year, number, 0, 0, player, "", "");
     }
 
+    @SuppressWarnings("deprecation")
     private void swapCursor() {
         Cursor cursor = this.sqlHelper.getCursor();
         this.adapter.setSelection(new boolean[cursor.getCount()]);
