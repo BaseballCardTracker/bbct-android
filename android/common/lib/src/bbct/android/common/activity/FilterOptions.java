@@ -105,13 +105,14 @@ public class FilterOptions extends Activity {
             // TODO: Throw an exception?
         }
     }
-    private OnCheckedChangeListener onRadioButtonSelected = new OnCheckedChangeListener() {
+    private final OnCheckedChangeListener onRadioButtonSelected = new OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
 
             // we do not want this call when selection on radio button gets cleared
-            if (checkedId == -1)
+            if (checkedId == -1) {
                 return;
+            }
 
             Log.d(TAG, "Radio button selected.");
             Log.d(TAG, "radioButtonId=" + checkedId);
@@ -138,5 +139,4 @@ public class FilterOptions extends Activity {
     };
     private static Map<Integer, Class<? extends FilterActivity>> filterActivities = new HashMap<Integer, Class<? extends FilterActivity>>();
     private static final String TAG = FilterOptions.class.getName();
-    private static final int NONE = -1;
 }
