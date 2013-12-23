@@ -28,6 +28,11 @@ import java.io.Serializable;
 public class BaseballCard implements Serializable {
 
     /**
+     * Serial Version ID
+     */
+    private static final long serialVersionUID = -4027752761089257290L;
+
+    /**
      * Create a {@link BaseballCard} with the given values.
      *
      * @param brand
@@ -65,7 +70,7 @@ public class BaseballCard implements Serializable {
      * @return The brand name of this {@link BaseballCard}.
      */
     public String getBrand() {
-        return brand;
+        return this.brand;
     }
 
     /**
@@ -74,7 +79,7 @@ public class BaseballCard implements Serializable {
      * @return The year of publication.
      */
     public int getYear() {
-        return year;
+        return this.year;
     }
 
     /**
@@ -83,7 +88,7 @@ public class BaseballCard implements Serializable {
      * @return The number of this {@link BaseballCard}.
      */
     public int getNumber() {
-        return number;
+        return this.number;
     }
 
     /**
@@ -92,7 +97,7 @@ public class BaseballCard implements Serializable {
      * @return The monetary value of this {@link BaseballCard}.
      */
     public int getValue() {
-        return value;
+        return this.value;
     }
 
     /**
@@ -111,7 +116,7 @@ public class BaseballCard implements Serializable {
      * @return The count of copies of this {@link BaseballCard}s owned.
      */
     public int getCount() {
-        return count;
+        return this.count;
     }
 
     /**
@@ -130,7 +135,7 @@ public class BaseballCard implements Serializable {
      * @return The name of the player on this {@link BaseballCard}.
      */
     public String getPlayerName() {
-        return playerName;
+        return this.playerName;
     }
 
     /**
@@ -139,7 +144,7 @@ public class BaseballCard implements Serializable {
      * @return The player's team.
      */
     public String getTeam() {
-        return team;
+        return this.team;
     }
 
     /**
@@ -148,7 +153,7 @@ public class BaseballCard implements Serializable {
      * @return The position played by the player on this {@link BaseballCard}.
      */
     public String getPlayerPosition() {
-        return playerPosition;
+        return this.playerPosition;
     }
 
     /**
@@ -208,10 +213,10 @@ public class BaseballCard implements Serializable {
      */
     @Override
     public String toString() {
-        return "BaseballCard{" + "cardBrand=" + brand + ", cardYear=" + year
-                + ", cardNumber=" + number + ", cardValue=" + value
-                + ", cardCount=" + count + ", playerName=" + playerName
-                + ", team=" + team + ", playerPosition=" + playerPosition + '}';
+        return "BaseballCard{" + "cardBrand=" + this.brand + ", cardYear=" + this.year
+                + ", cardNumber=" + this.number + ", cardValue=" + this.value
+                + ", cardCount=" + this.count + ", playerName=" + this.playerName
+                + ", team=" + this.team + ", playerPosition=" + this.playerPosition + '}';
     }
     private String brand = null;
     private int year = 0;

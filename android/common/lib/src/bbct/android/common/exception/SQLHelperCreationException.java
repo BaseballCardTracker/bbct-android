@@ -24,6 +24,7 @@ import bbct.android.common.provider.BaseballCardSQLHelper;
  * Indicates an error occurred when attempting to create a
  * {@link BaseballCardSQLHelper}.
  */
+@SuppressWarnings("serial")
 public class SQLHelperCreationException extends Exception {
 
     /**
