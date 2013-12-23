@@ -261,6 +261,7 @@ final public class BBCTTestUtil {
 
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
             Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
+            @SuppressWarnings("unchecked")
             ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner.getAdapter();
             int newPos = playerPositionAdapter.getPosition(card.getPlayerPosition());
             int oldPos = playerPositionSpinner.getSelectedItemPosition();
@@ -294,8 +295,9 @@ final public class BBCTTestUtil {
 
         inst.sendStringSync(cardDetail);
         if (editTextView instanceof AutoCompleteTextView) {
-            if(((AutoCompleteTextView)editTextView).isPopupShowing())
+            if(((AutoCompleteTextView)editTextView).isPopupShowing()) {
                 inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+            }
         }
     }
 
