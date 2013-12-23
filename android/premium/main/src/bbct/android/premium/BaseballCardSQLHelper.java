@@ -18,8 +18,6 @@
  */
 package bbct.android.premium;
 
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -32,6 +30,7 @@ import android.util.Log;
 import android.widget.Toast;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
+import java.util.List;
 
 /**
  * Overrides

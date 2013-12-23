@@ -18,12 +18,10 @@
  */
 package bbct.android.common.test;
 
-import android.test.ViewAsserts;
-
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.Context;
 import android.app.ListActivity;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
@@ -38,6 +36,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import java.util.EnumSet;

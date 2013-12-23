@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import bbct.android.common.R;
