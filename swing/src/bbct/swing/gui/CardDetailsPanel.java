@@ -58,19 +58,15 @@ import javax.swing.event.AncestorListener;
  * in a {@link bbct.data.BaseballCard} model object. This panel can be used in
  * two modes. The first mode, which is set by using the default constructor
  * {@link #CardDetailsPanel()} or {@link #CardDetailsPanel(boolean)} with a
- * value of
- * <code>true</code>, allows editing of all of the text fields. The second mode,
- * set with {@link #CardDetailsPanel(boolean)} or
+ * value of {@code true}, allows editing of all of the text fields. The second
+ * mode, set with {@link #CardDetailsPanel(boolean)} or
  * {@link #CardDetailsPanel(bbct.data.BaseballCard, boolean)} with a value of
- * <code>false</code> for the
- * <code>boolean </code> parameter, only allows editing of the value and count
- * text fields.
+ * {@code false} for the {@code boolean } parameter, only allows editing of the
+ * value and count text fields.
  *
  * TODO: Instructions should change depending on value of allEditable field.
  *
  * TODO: Add $ at the beginning of valueTextField's text if it is not present?
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 @SuppressWarnings("serial")
 public class CardDetailsPanel extends JPanel {
@@ -78,9 +74,10 @@ public class CardDetailsPanel extends JPanel {
     /**
      * Creates a new {@link CardDetailsPanel}.
      *
-     * @param allEditable Whether or not all text fields are editable. The count
-     * and value text fields will always be editable regardless of the value of
-     * this flag.
+     * @param allEditable
+     *            Whether or not all text fields are editable. The count and
+     *            value text fields will always be editable regardless of the
+     *            value of this flag.
      */
     public CardDetailsPanel(boolean allEditable) {
         this.allEditable = allEditable;
@@ -90,11 +87,13 @@ public class CardDetailsPanel extends JPanel {
     /**
      * Creates a new {@link CardDetailsPanel}.
      *
-     * @param card The {@link bbct.data.BaseballCard} object used to initialize
-     * the values of the text fields in this panel.
-     * @param allEditable Whether or not all text fields are editable. The count
-     * and value text fields will always be editable regardless of the value of
-     * this flag.
+     * @param card
+     *            The {@link bbct.data.BaseballCard} object used to initialize
+     *            the values of the text fields in this panel.
+     * @param allEditable
+     *            Whether or not all text fields are editable. The count and
+     *            value text fields will always be editable regardless of the
+     *            value of this flag.
      */
     public CardDetailsPanel(BaseballCard card, boolean allEditable) {
         this.allEditable = allEditable;
@@ -123,9 +122,10 @@ public class CardDetailsPanel extends JPanel {
      * in this panel.
      *
      * @return A {@link bbct.data.BaseballCard} initialized with data from the
-     * text fields in this panel.
-     * @throws InputException If any text field is blank or contains text with
-     * invalid formatting.
+     *         text fields in this panel.
+     * @throws InputException
+     *             If any text field is blank or contains text with invalid
+     *             formatting.
      */
     public BaseballCard getBaseballCard() throws InputException {
         // TODO: Thoroughly test all error handling code.
@@ -439,7 +439,8 @@ public class CardDetailsPanel extends JPanel {
      * This is a test function for {@link CardDetailsPanel}. It simply creates a
      * {@link javax.swing.JFrame} in which to display the panel.
      *
-     * @param args The command-line arguments (ignored).
+     * @param args
+     *            The command-line arguments (ignored).
      */
     public static void main(String[] args) {
         // TODO: Add a way to test getBaseballCard()

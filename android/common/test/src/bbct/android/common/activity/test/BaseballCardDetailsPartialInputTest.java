@@ -18,8 +18,6 @@
  */
 package bbct.android.common.activity.test;
 
-import java.util.EnumSet;
-
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
@@ -33,6 +31,7 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.EnumSet;
 import java.util.Set;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -41,8 +40,6 @@ import junit.framework.TestSuite;
 /**
  * A parameterized test which can test any combination of input in the
  * {@link BaseballCardDetails} activity.
- *
- * @author codeguru <codeguru@users.sourceforge.net==
  */
 public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
@@ -57,7 +54,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         TestSuite suite = new TestSuite();
         Set<BBCTTestUtil.EditTexts> editTexts = EnumSet.allOf(BBCTTestUtil.EditTexts.class);
         editTexts.remove(BBCTTestUtil.EditTexts.PLAYER_POSITION);
-        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(editTexts); 
+        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(editTexts);
 
         for (Set<BBCTTestUtil.EditTexts> mask : masks) {
             suite.addTest(new BaseballCardDetailsPartialInputTest(mask));
@@ -115,7 +112,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
      */
     public void testPartialInput() throws Throwable {
         Log.d(TAG, "testPartialInput()");
-        Log.d(TAG, "inputFieldsMask=" + inputFieldsMask);
+        Log.d(TAG, "inputFieldsMask=" + this.inputFieldsMask);
 
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, this.inputFieldsMask);
         this.runTestOnUiThread(new Runnable() {
@@ -170,7 +167,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     private EditText valueEditText = null;
     private EditText playerNameEditText = null;
     private BaseballCard card = null;
-    private Set<BBCTTestUtil.EditTexts> inputFieldsMask;
+    private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
     private static final String TEST_NAME = "testPartialInput";
     private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
 }

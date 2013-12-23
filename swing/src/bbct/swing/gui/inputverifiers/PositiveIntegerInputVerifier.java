@@ -26,8 +26,6 @@ import javax.swing.JFormattedTextField;
  * {@link PositiveIntegerInputVerifier} verifies that a
  * {@link javax.swing.JFormattedTextField} contains a positive integer. This is
  * typically used for text fields that hold a baseball card number.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class PositiveIntegerInputVerifier extends InputVerifier {
 

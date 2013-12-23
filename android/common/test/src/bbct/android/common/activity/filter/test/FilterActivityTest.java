@@ -34,17 +34,16 @@ import junit.framework.Assert;
  *
  * TODO Add tests for configuration changes
  *
- * @param <T> The concrete subclass of {@link FilterActivity} being tested.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
+ * @param <T>
+ *            The concrete subclass of {@link FilterActivity} being tested.
  */
 public abstract class FilterActivityTest<T extends FilterActivity> extends ActivityInstrumentationTestCase2<T> {
 
     /**
      * Create instrumented test cases for a subclass of {@link FilterActivity}.
      *
-     * @param activityClass The concrete subclass of {@link FilterActivity}
-     * being tested.
+     * @param activityClass
+     *            The concrete subclass of {@link FilterActivity} being tested.
      */
     public FilterActivityTest(Class<T> activityClass) {
         super(activityClass);
@@ -55,7 +54,8 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
      * subclass of {@link FilterActivity} being tested and the "OK" and "Cancel"
      * {@link Button}s from that activity.
      *
-     * @throws Exception If an error occurs while chaining to the super class.
+     * @throws Exception
+     *             If an error occurs while chaining to the super class.
      */
     @Override
     public void setUp() throws Exception {
@@ -71,8 +71,7 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
     /**
      * Check preconditions which must hold to guarantee the validity of all
      * other tests. Asserts that the {@link Activity} and "OK" and "Cancel"
-     * {@link Button}s are not
-     * <code>null</code>.
+     * {@link Button}s are not {@code null}.
      */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
@@ -86,7 +85,7 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
      * {@link #testTitle()}.
      *
      * @return The substring which should appear in the title bar of the
-     * {@link Activity} being tested.
+     *         {@link Activity} being tested.
      *
      * @see #testTitle()
      */
@@ -109,8 +108,8 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
     /**
      * Assert that the correct error messages are set in the {@link EditText}
      * views of the subclass of {@link FilterActivity} when they are empty.
-     * Called from the template method
-     * {@link #testOkButtonOnClickWithNoInput()}.
+     * Called from the {@link #testOkButtonOnClickWithNoInput()} template
+     * method.
      *
      * @see #testOkButtonOnClickWithNoInput()
      */
@@ -145,8 +144,9 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
      * clicks the "OK" button. Calls {@link #sendInputKeys()} to inject the user
      * input to the subclass of {@link FilterActivity} being tested.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
     public void testOkButtonOnClickWithSendInputKeys() throws Throwable {
         Log.d(TAG, "testOkButtonOnClickWithSendInputKeys()");

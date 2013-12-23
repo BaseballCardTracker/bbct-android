@@ -25,11 +25,12 @@ import bbct.android.lite.activity.BaseballCardList;
  * Tests for {@link BaseballCardList} activity class.
  *
  * TODO: Add tests for the layout of {@link BaseballCardList}
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardListTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
 
+    /**
+     * Create test cases for {@link BaseballCardList}.
+     */
     public BaseballCardListTest() {
         super(BaseballCardList.class);
     }

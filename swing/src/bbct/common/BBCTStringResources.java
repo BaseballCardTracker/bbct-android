@@ -20,8 +20,6 @@ package bbct.common;
 
 /**
  * String resources used in the {@link bbct.common} package.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BBCTStringResources {
 

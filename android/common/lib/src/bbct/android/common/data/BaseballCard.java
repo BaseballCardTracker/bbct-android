@@ -24,21 +24,33 @@ import java.io.Serializable;
  * {@link BaseballCard} is the model underlying the BBCT application. It
  * contains properties for the brand, year, number, value, count, player name,
  * and player position.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCard implements Serializable {
 
     /**
+     * Serial Version ID
+     */
+    private static final long serialVersionUID = -4027752761089257290L;
+
+    /**
      * Create a {@link BaseballCard} with the given values.
      *
-     * @param brand The brand name.
-     * @param year The year this card was published.
-     * @param number The number on this card.
-     * @param value The monetary value.
-     * @param count The count of copies owned.
-     * @param playerName The player on this card.
-     * @param playerPosition The position this player played.
+     * @param brand
+     *            The brand name.
+     * @param year
+     *            The year this card was published.
+     * @param number
+     *            The number on this card.
+     * @param value
+     *            The monetary value.
+     * @param count
+     *            The count of copies owned.
+     * @param playerName
+     *            The player on this card.
+     * @param team
+     *            The team for the player on this card.
+     * @param playerPosition
+     *            The position this player played.
      */
     public BaseballCard(String brand, int year, int number, int value, int count,
             String playerName, String team, String playerPosition) {
@@ -58,7 +70,7 @@ public class BaseballCard implements Serializable {
      * @return The brand name of this {@link BaseballCard}.
      */
     public String getBrand() {
-        return brand;
+        return this.brand;
     }
 
     /**
@@ -67,7 +79,7 @@ public class BaseballCard implements Serializable {
      * @return The year of publication.
      */
     public int getYear() {
-        return year;
+        return this.year;
     }
 
     /**
@@ -76,7 +88,7 @@ public class BaseballCard implements Serializable {
      * @return The number of this {@link BaseballCard}.
      */
     public int getNumber() {
-        return number;
+        return this.number;
     }
 
     /**
@@ -85,13 +97,14 @@ public class BaseballCard implements Serializable {
      * @return The monetary value of this {@link BaseballCard}.
      */
     public int getValue() {
-        return value;
+        return this.value;
     }
 
     /**
      * Set the monetary value of this {@link BaseballCard}.
      *
-     * @param value The monetary value of this {@link BaseballCard}
+     * @param value
+     *            The monetary value of this {@link BaseballCard}
      */
     public void setValue(int value) {
         this.value = value;
@@ -103,13 +116,14 @@ public class BaseballCard implements Serializable {
      * @return The count of copies of this {@link BaseballCard}s owned.
      */
     public int getCount() {
-        return count;
+        return this.count;
     }
 
     /**
      * Set the count of copies of this {@link BaseballCard}s owned.
      *
-     * @param count The count of copies of this {@link BaseballCard}s owned.
+     * @param count
+     *            The count of copies of this {@link BaseballCard}s owned.
      */
     public void setCount(int count) {
         this.count = count;
@@ -121,7 +135,7 @@ public class BaseballCard implements Serializable {
      * @return The name of the player on this {@link BaseballCard}.
      */
     public String getPlayerName() {
-        return playerName;
+        return this.playerName;
     }
 
     /**
@@ -130,7 +144,7 @@ public class BaseballCard implements Serializable {
      * @return The player's team.
      */
     public String getTeam() {
-        return team;
+        return this.team;
     }
 
     /**
@@ -139,16 +153,17 @@ public class BaseballCard implements Serializable {
      * @return The position played by the player on this {@link BaseballCard}.
      */
     public String getPlayerPosition() {
-        return playerPosition;
+        return this.playerPosition;
     }
 
     /**
      * Compare this {@link BaseballCard} for equality with another given
      * {@link Object}.
      *
-     * @param o The {@link Object} to compare with this {@link BaseballCard}.
-     * @return True if <code>o</code> is a {@link BaseballCard} with identical
-     * values. False, otherwise.
+     * @param o
+     *            The {@link Object} to compare with this {@link BaseballCard}.
+     * @return True if {@code o} is a {@link BaseballCard} with identical
+     *         values. False, otherwise.
      */
     @Override
     public boolean equals(Object o) {
@@ -194,14 +209,14 @@ public class BaseballCard implements Serializable {
      * debugging purposes.
      *
      * @return A {@link String} representation containing the values of this
-     * {@link BaseballCard}.
+     *         {@link BaseballCard}.
      */
     @Override
     public String toString() {
-        return "BaseballCard{" + "cardBrand=" + brand + ", cardYear=" + year
-                + ", cardNumber=" + number + ", cardValue=" + value
-                + ", cardCount=" + count + ", playerName=" + playerName
-                + ", team=" + team + ", playerPosition=" + playerPosition + '}';
+        return "BaseballCard{" + "cardBrand=" + this.brand + ", cardYear=" + this.year
+                + ", cardNumber=" + this.number + ", cardValue=" + this.value
+                + ", cardCount=" + this.count + ", playerName=" + this.playerName
+                + ", team=" + this.team + ", playerPosition=" + this.playerPosition + '}';
     }
     private String brand = null;
     private int year = 0;

@@ -44,8 +44,6 @@ import javax.swing.JTextField;
  * storage mechanism for cards for the player.
  *
  * TODO: Add support for wild cards.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 @SuppressWarnings("serial")
 public class FindCardsByPlayerNamePanel extends FindCardsByPanel {

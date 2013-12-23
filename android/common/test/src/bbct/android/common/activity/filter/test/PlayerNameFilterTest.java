@@ -26,8 +26,6 @@ import junit.framework.Assert;
 
 /**
  * Tests for {@link PlayerNameFilter}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
 

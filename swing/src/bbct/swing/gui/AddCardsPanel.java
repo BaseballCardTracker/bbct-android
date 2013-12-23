@@ -44,10 +44,7 @@ import javax.swing.JPanel;
  * baseball card data to storage and to go back to the main menu of the BBCT
  * application.
  *
- * @author codeguru <codeguru@users.sourceforge.net>
- *
  * TODO: Instructions not correct after clicking Add Card button
- *
  */
 @SuppressWarnings("serial")
 public class AddCardsPanel extends JPanel {

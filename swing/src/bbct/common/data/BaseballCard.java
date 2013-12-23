@@ -24,8 +24,6 @@ import java.io.Serializable;
  * {@link BaseballCard} is the model underlying the BBCT application. It
  * contains properties for the brand, year, number, value, count, player name,
  * and player position.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCard implements Serializable {
 

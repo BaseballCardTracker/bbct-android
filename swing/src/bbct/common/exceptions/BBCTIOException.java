@@ -21,8 +21,6 @@ package bbct.common.exceptions;
 /**
  * This exception signals any I/O errors in
  * {@link bbct.common.data.BaseballCardIO} implementations.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 @SuppressWarnings("serial")
 public class BBCTIOException extends Exception {

@@ -40,8 +40,6 @@ import javax.swing.JPanel;
  * @see AddCardsPanel
  * @see FindCardsMenuPanel
  * @see AboutPanel
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 @SuppressWarnings("serial")
 public class MenuPanel extends JPanel {

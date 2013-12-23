@@ -30,7 +30,6 @@ import java.util.HashSet;
 
 /**
  *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardList extends bbct.android.common.activity.BaseballCardList {
 

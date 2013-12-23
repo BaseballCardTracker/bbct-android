@@ -18,12 +18,15 @@
  */
 package bbct.common.data;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * TODO: JavaDoc
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardNominalTest {
 

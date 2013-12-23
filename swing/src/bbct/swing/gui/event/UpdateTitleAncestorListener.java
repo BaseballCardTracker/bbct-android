@@ -18,7 +18,6 @@
  */
 package bbct.swing.gui.event;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -33,8 +32,6 @@ import javax.swing.event.AncestorListener;
  * @see bbct.gui.FindCardsByNumberPanel
  * @see bbct.gui.FindCardsByYearAndNumberPanel
  * @see bbct.gui.FindCardsByPlayerNamePanel
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class UpdateTitleAncestorListener implements AncestorListener {
 
@@ -57,7 +54,7 @@ public class UpdateTitleAncestorListener implements AncestorListener {
      */
     @Override
     public void ancestorAdded(AncestorEvent ae) {
-        JFrame frame = (JFrame) ((JComponent) ae.getComponent()).getTopLevelAncestor();
+        JFrame frame = (JFrame) ae.getComponent().getTopLevelAncestor();
         frame.setTitle(title);
     }
 

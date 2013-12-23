@@ -27,7 +27,10 @@ import bbct.swing.FontResources;
 import bbct.swing.gui.event.UpdateInstructionsFocusListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import bbct.swing.gui.inputverifiers.YearInputVerifier;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.List;
@@ -43,8 +46,6 @@ import javax.swing.text.NumberFormatter;
  * {@link FindCardsByYearPanel} allows the user to input a card year. This value
  * is used as the parameters when searching the underlying storage mechanism for
  * cards with the given year.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 @SuppressWarnings("serial")
 public class FindCardsByYearPanel extends FindCardsByPanel {

@@ -29,8 +29,6 @@ import javax.swing.event.AncestorListener;
  * added to the component tree.
  *
  * @see bbct.gui.BBCTFrame#setInstructions(java.lang.String)
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class UpdateInstructionsAncestorListener implements AncestorListener {
 

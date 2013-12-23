@@ -26,8 +26,6 @@ import java.lang.reflect.Constructor;
 
 /**
  * Create a {@link BaseballCardSQLHelper} object for a given {@link Context}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 final public class SQLHelperFactory {
 
@@ -47,15 +45,15 @@ final public class SQLHelperFactory {
     public static BaseballCardSQLHelper getSQLHelper(Context context) throws SQLHelperCreationException {
         try {
             String sqlHelperClassName = context.getString(R.string.sql_helper);
-            Class<BaseballCardSQLHelper> sqlHelperClass = (Class<BaseballCardSQLHelper>) Class.forName(sqlHelperClassName);
+            Class<?> sqlHelperClass = Class.forName(sqlHelperClassName);
 
             Log.d(TAG, "sqlHelperClass=" + sqlHelperClass.toString());
 
-            Constructor<BaseballCardSQLHelper> sqlHelperCtor = sqlHelperClass.getConstructor(Context.class);
+            Constructor<?> sqlHelperCtor = sqlHelperClass.getConstructor(Context.class);
 
             Log.d(TAG, "sqlHelperCtor=" + sqlHelperCtor.toString());
 
-            return sqlHelperCtor.newInstance(context);
+            return (BaseballCardSQLHelper) sqlHelperCtor.newInstance(context);
         } catch (Exception ex) {
             throw new SQLHelperCreationException(ex);
         }

@@ -27,8 +27,6 @@ import javax.swing.event.AncestorListener;
 /**
  * {@link SetDefaultButtonAncestorListener} sets the default button of a
  * {@link javax.swing.JFrame}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class SetDefaultButtonAncestorListener implements AncestorListener {
 

@@ -1,4 +1,3 @@
-
 /*
  * This file is part of BBCT for Android.
  *
@@ -25,15 +24,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardList;
 
 /**
- *
- * @author codeguru <codeguru@users.sourceforge.net>
+ * Base class for any {@link Activity} which requests parameter values for a
+ * filter on the list of baseball cards displayed in {@link BaseballCardList}.
  */
 public abstract class FilterActivity extends Activity {
 
     /**
      * Called when the activity is first created.
+     *
+     * @param savedInstanceState
+     *            the icicle for this activity
+     * @param layout
+     *            the id of the XML layout file for this filter
+     * @param titleResId
+     *            the id of the string resource for the title of this filter
      */
     public void onCreate(Bundle savedInstanceState, int layout, int titleResId) {
         super.onCreate(savedInstanceState);
@@ -50,8 +57,21 @@ public abstract class FilterActivity extends Activity {
         cancelButton.setOnClickListener(this.onCancel);
     }
 
+    /**
+     * Validate input fields which are defined by a subclass of
+     * {@link FilterActivity}.
+     *
+     * @return {@code true} if the input is valid, {@code false} otherwise.
+     */
     public abstract boolean validateInput();
 
+    /**
+     * Return an {@link Intent} with the parameter values defined by this
+     * filter.
+     *
+     * @return an {@link Intent} with the parameter values defined by this
+     *         filter
+     */
     public abstract Intent getResult();
     private View.OnClickListener onOk = new View.OnClickListener() {
         @Override
