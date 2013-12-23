@@ -38,6 +38,7 @@ import bbct.android.common.R;
  */
 public class CheckedCursorAdapter extends SimpleCursorAdapter {
 
+    @SuppressWarnings("deprecation")
     public CheckedCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to) {
         super(context, layout, c, from, to);
         this.context = context;
@@ -47,7 +48,7 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
      * Restores selection of {@link CheckedTextView} if there
      * was a previous selection made on the same element. Also
      * adds {@link OnClickListener} to {@link CheckedTextView}.
-     * 
+     *
      * @see {@link SimpleCursorAdapater#getView}
      */
     @Override
@@ -138,6 +139,6 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
     }
 
     private boolean[] selection;
-    private Context context;
+    private final Context context;
 }
 

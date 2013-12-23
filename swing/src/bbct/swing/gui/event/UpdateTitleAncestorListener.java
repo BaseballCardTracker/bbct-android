@@ -18,7 +18,6 @@
  */
 package bbct.swing.gui.event;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
