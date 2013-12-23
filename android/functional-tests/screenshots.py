@@ -83,3 +83,58 @@ if device.installPackage(apkFile):
 
     print("Removing package: " + package + "...")
     device.removePackage(package)
+
+print("Push database...")
+print("Install APK: " + apkFile + "...")
+if device.installPackage(apkFile):
+    print("Push database to device...")
+    os.system("adb push " + localDb + " " + remoteDb)
+
+    print("Starting activity: " + runComponent + "...")
+    device.startActivity(component=runComponent)
+    MonkeyRunner.sleep(delay)
+    util.take_screenshot(device, screenshotDir, delay)
+
+    print("Filter Cards...")
+    device.press('KEYCODE_MENU', MonkeyDevice.DOWN_AND_UP)
+    MonkeyRunner.sleep(delay)
+    device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
+    MonkeyRunner.sleep(delay)
+    device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+    util.take_screenshot(device, screenshotDir, delay)
+
+    print("Filter By Year...")
+    device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+    device.type("1993")
+    util.take_screenshot(device, screenshotDir, delay)
+
+    print("Apply filter...")
+    device.press('KEYCODE_DPAD_DOWN')
+    MonkeyRunner.sleep(delay)
+    device.press('KEYCODE_DPAD_CENTER')
+    util.take_screenshot(device, screenshotDir, delay)
+
+    print("Clear filter...")
+    device.press('KEYCODE_MENU', MonkeyDevice.DOWN_AND_UP)
+    MonkeyRunner.sleep(delay)
+    device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+    MonkeyRunner.sleep(delay)
+
+    print("Select cards...")
+    x = 20
+    y = 165
+    device.touch(x, y, MonkeyDevice.DOWN_AND_UP)
+    device.touch(x, y + 80, MonkeyDevice.DOWN_AND_UP)
+    util.take_screenshot(device, screenshotDir, delay)
+
+    print("About...")
+    device.press('KEYCODE_MENU', MonkeyDevice.DOWN_AND_UP)
+    MonkeyRunner.sleep(delay)
+    for i in range(3):
+        device.press('KEYCODE_DPAD_DOWN', MonkeyDevice.DOWN_AND_UP)
+        MonkeyRunner.sleep(delay)
+    device.press('KEYCODE_DPAD_CENTER', MonkeyDevice.DOWN_AND_UP)
+    util.take_screenshot(device, screenshotDir, delay)
+
+    print("Removing package: " + package + "...")
+    device.removePackage(package)
