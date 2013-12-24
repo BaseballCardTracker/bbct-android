@@ -19,11 +19,10 @@
 package bbct.android.common.activity.test;
 
 
-import android.graphics.Rect;
-
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
+import android.graphics.Rect;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.ViewAsserts;
@@ -51,6 +50,8 @@ import junit.framework.Assert;
  */
 public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
+    private static final int sleeptimetorefresh = 200;
+    private static final int keypadheight = 100;
     /**
      * Create instrumented test cases for {@link BaseballCardDetails}.
      */
@@ -193,23 +194,25 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
 
         int heightdiffBefore = rootView.getRootView().getHeight() - (r.bottom - r.top);
         boolean condnBefore = false;
-        if(heightdiffBefore>100)
+        if (heightdiffBefore>keypadheight) {
             condnBefore = true;
+        }
 
         BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
                 playerTeamText, card.getTeam());
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
         //Wait for the keyboard to disappear and view to be refreshed
         try {
-            Thread.sleep(200);
+            Thread.sleep(sleeptimetorefresh);
         } catch (InterruptedException e) {
             Log.e("Click Done button in soft Keyboard", e.getMessage());
         }
         rootView.getWindowVisibleDisplayFrame(r);
         int heightdiffAfter = rootView.getRootView().getHeight() - (r.bottom - r.top);
         boolean condnAfter = false;
-        if(heightdiffAfter<100)
+        if (heightdiffAfter<keypadheight) {
             condnAfter = true;
+        }
         Assert.assertTrue(condnBefore&&condnAfter);
     }
 
@@ -225,7 +228,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         imm.hideSoftInputFromWindow(parentView.getWindowToken(), 0);
         //Wait till the keypad disappears
         try {
-            Thread.sleep(200);
+            Thread.sleep(sleeptimetorefresh);
         } catch (InterruptedException e) {
             Log.e("getResult", e.getMessage());
         }
@@ -243,7 +246,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
             });
             // Wait for the scroll
             try {
-                Thread.sleep(200);
+                Thread.sleep(sleeptimetorefresh);
             } catch (InterruptedException e) {
                 Log.e("getResult", e.getMessage());
             }
