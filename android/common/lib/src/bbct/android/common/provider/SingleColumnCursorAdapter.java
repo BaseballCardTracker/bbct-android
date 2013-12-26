@@ -117,6 +117,7 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
      *
      * @return A cursor with the requested items. May be empty.
      */
+    @SuppressWarnings("deprecation")
     @Override
     public Cursor runQueryOnBackgroundThread(CharSequence constraint) {
         Cursor cursor = this.sqlHelper.getDistinctValues(this.colName,

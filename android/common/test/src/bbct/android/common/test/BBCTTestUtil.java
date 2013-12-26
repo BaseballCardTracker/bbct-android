@@ -18,12 +18,10 @@
  */
 package bbct.android.common.test;
 
-import android.test.ViewAsserts;
-
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.Context;
 import android.app.ListActivity;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
@@ -38,6 +36,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import java.util.EnumSet;
@@ -262,6 +261,7 @@ final public class BBCTTestUtil {
 
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
             Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
+            @SuppressWarnings("unchecked")
             ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner.getAdapter();
             int newPos = playerPositionAdapter.getPosition(card.getPlayerPosition());
             int oldPos = playerPositionSpinner.getSelectedItemPosition();
@@ -295,8 +295,9 @@ final public class BBCTTestUtil {
 
         inst.sendStringSync(cardDetail);
         if (editTextView instanceof AutoCompleteTextView) {
-            if(((AutoCompleteTextView)editTextView).isPopupShowing())
+            if(((AutoCompleteTextView)editTextView).isPopupShowing()) {
                 inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+            }
         }
     }
 

@@ -18,8 +18,6 @@
  */
 package bbct.common.data;
 
-import java.sql.SQLException;
-
 import bbct.common.exceptions.BBCTIOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,10 +28,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**

@@ -18,6 +18,7 @@
  */
 package bbct.android.common.activity.filter.test;
 
+import android.app.Activity;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import bbct.android.common.R;
