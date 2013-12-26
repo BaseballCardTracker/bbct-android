@@ -1,9 +1,5 @@
 package bbct.android.common.provider.test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import junit.framework.Assert;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -15,6 +11,9 @@ import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardProvider;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.android.common.test.DatabaseUtil;
+import java.util.ArrayList;
+import java.util.List;
+import junit.framework.Assert;
 
 /**
  * Tests for {@link BaseballCardProvider}.
@@ -125,6 +124,19 @@ public class BaseballCardProviderTest extends
 
     public void testDelete() {
         Assert.fail("Stub");
+    }
+
+    public void testGetTypeItem() {
+        String expected = BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE;
+        String actual = this.resolver.getType(Uri.withAppendedPath(
+                BaseballCardContract.CONTENT_URI, "/1"));
+        Assert.assertEquals(expected, actual);
+    }
+
+    public void testGetTypeList() {
+        String expected = BaseballCardContract.BASEBALL_CARD_LIST_MIME_TYPE;
+        String actual = this.resolver.getType(BaseballCardContract.CONTENT_URI);
+        Assert.assertEquals(expected, actual);
     }
 
 }

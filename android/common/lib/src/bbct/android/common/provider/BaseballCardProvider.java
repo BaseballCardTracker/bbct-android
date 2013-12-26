@@ -20,6 +20,7 @@ package bbct.android.common.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
@@ -32,6 +33,19 @@ import bbct.android.common.exception.SQLHelperCreationException;
  */
 public class BaseballCardProvider extends ContentProvider {
 
+    private static final int ALL_CARDS = 1;
+    private static final int CARD_ID = 2;
+
+    public static final UriMatcher uriMatcher = new UriMatcher(
+            UriMatcher.NO_MATCH);
+
+    static {
+        uriMatcher.addURI(BaseballCardContract.AUTHORITY,
+                BaseballCardContract.TABLE_NAME, ALL_CARDS);
+        uriMatcher.addURI(BaseballCardContract.AUTHORITY,
+                BaseballCardContract.TABLE_NAME + "/#", CARD_ID);
+    }
+
     @Override
     public boolean onCreate() {
         Log.d(TAG, "onCreate()");
@@ -42,20 +56,25 @@ public class BaseballCardProvider extends ContentProvider {
             return true;
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
-            Toast.makeText(this.getContext(), R.string.database_error, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), R.string.database_error,
+                    Toast.LENGTH_LONG).show();
             Log.e(TAG, ex.getMessage(), ex);
             return false;
         }
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection,
+            String[] selectionArgs, String sortOrder) {
         Log.d(TAG, "query()");
 
         if (uri.equals(BaseballCardContract.CONTENT_URI)) {
-            return this.sqlHelper.getReadableDatabase().query(BaseballCardContract.TABLE_NAME, projection, selection, selectionArgs, sortOrder, null, null);
+            return this.sqlHelper.getReadableDatabase().query(
+                    BaseballCardContract.TABLE_NAME, projection, selection,
+                    selectionArgs, sortOrder, null, null);
         } else {
-            String errorFormat = this.getContext().getString(R.string.invalid_uri_error);
+            String errorFormat = this.getContext().getString(
+                    R.string.invalid_uri_error);
             String error = String.format(errorFormat, uri.toString());
             throw new IllegalArgumentException(error);
         }
@@ -63,17 +82,23 @@ public class BaseballCardProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        if (uri.equals(BaseballCardContract.CONTENT_URI)) {
+        switch (uriMatcher.match(uri)) {
+            case ALL_CARDS:
             return BaseballCardContract.BASEBALL_CARD_LIST_MIME_TYPE;
-        }
 
-        return null;
+            case CARD_ID:
+                return BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE;
+
+            default:
+                throw new IllegalArgumentException("Unknown URI: " + uri);
+        }
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         if (uri.equals(BaseballCardContract.CONTENT_URI)) {
-            long row = this.sqlHelper.getWritableDatabase().insert(BaseballCardContract.TABLE_NAME, null, values);
+            long row = this.sqlHelper.getWritableDatabase().insert(
+                    BaseballCardContract.TABLE_NAME, null, values);
 
             if (row != -1) {
                 return uri.buildUpon().appendPath(Long.toString(row)).build();
@@ -94,6 +119,7 @@ public class BaseballCardProvider extends ContentProvider {
     public int update(Uri uri, ContentValues cv, String string, String[] strings) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
     private BaseballCardSQLHelper sqlHelper = null;
     private static final String TAG = BaseballCardProvider.class.getName();
 }
