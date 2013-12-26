@@ -22,22 +22,24 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
+import android.graphics.Rect;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.ViewAsserts;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.test.BBCTTestUtil;
+import bbct.android.common.R;
 import bbct.android.common.test.BaseballCardCsvFileReader;
+import bbct.android.common.test.BBCTTestUtil;
 import java.io.InputStream;
 import junit.framework.Assert;
 
@@ -48,6 +50,8 @@ import junit.framework.Assert;
  */
 public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
+    private static final int SLEEP_TIME_TO_REFRESH = 200;
+    private static final int KEYPAD_HEIGHT = 100;
     /**
      * Create instrumented test cases for {@link BaseballCardDetails}.
      */
@@ -145,9 +149,12 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     /**
-     * Test that the focus moves to the next control {@link EditText} in the
+     * Test that
+     * 1)the focus moves to the next control {@link EditText} in the
      * {@link BaseballCardDetails} activity when the next button is clicked in
      * the soft keyboard.
+     * 2)keyboard is removed when the done button is clicked in the soft
+     * keyboard
      */
     public void testNextButtonOnClick() {
         BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
@@ -180,10 +187,33 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
         Assert.assertTrue(playerTeamText.hasFocus());
 
+        View rootView = ((ViewGroup)this.activity.findViewById(android.R.id.content)).getChildAt(0);
+        Rect r = new Rect();
+        //r will be populated with the coordinates of the view area still visible.
+        rootView.getWindowVisibleDisplayFrame(r);
+
+        int heightdiffBefore = rootView.getRootView().getHeight() - (r.bottom - r.top);
+        boolean condnBefore = false;
+        if (heightdiffBefore>KEYPAD_HEIGHT) {
+            condnBefore = true;
+        }
+
         BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
                 playerTeamText, card.getTeam());
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(playerPositionSpinner.hasFocus());
+        //Wait for the keyboard to disappear and view to be refreshed
+        try {
+            Thread.sleep(SLEEP_TIME_TO_REFRESH);
+        } catch (InterruptedException e) {
+            Log.e("Click Done button in soft Keyboard", e.getMessage());
+        }
+        rootView.getWindowVisibleDisplayFrame(r);
+        int heightdiffAfter = rootView.getRootView().getHeight() - (r.bottom - r.top);
+        boolean condnAfter = false;
+        if (heightdiffAfter<KEYPAD_HEIGHT) {
+            condnAfter = true;
+        }
+        Assert.assertTrue(condnBefore&&condnAfter);
     }
 
      /**
@@ -198,7 +228,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
         imm.hideSoftInputFromWindow(parentView.getWindowToken(), 0);
         //Wait till the keypad disappears
         try {
-            Thread.sleep(200);
+            Thread.sleep(SLEEP_TIME_TO_REFRESH);
         } catch (InterruptedException e) {
             Log.e("getResult", e.getMessage());
         }
@@ -216,7 +246,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
             });
             // Wait for the scroll
             try {
-                Thread.sleep(200);
+                Thread.sleep(SLEEP_TIME_TO_REFRESH);
             } catch (InterruptedException e) {
                 Log.e("getResult", e.getMessage());
             }
