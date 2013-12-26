@@ -132,7 +132,7 @@ public class BBCTStringResources {
         /**
          * Copyright notice.
          */
-        public static final String ABOUT_COPYRIGHT = "<html>&copy 2012 codeguru</html>";
+        public static final String ABOUT_COPYRIGHT = "<html>&copy 2012-14 codeguru</html>";
         /**
          * Website address.
          */
