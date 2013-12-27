@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,7 +132,7 @@ public class BBCTStringResources {
         /**
          * Copyright notice.
          */
-        public static final String ABOUT_COPYRIGHT = "<html>&copy 2012 codeguru</html>";
+        public static final String ABOUT_COPYRIGHT = "<html>&copy 2012-14 codeguru</html>";
         /**
          * Website address.
          */
