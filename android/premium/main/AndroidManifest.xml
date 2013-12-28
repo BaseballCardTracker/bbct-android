@@ -61,7 +61,7 @@
         <activity android:name="bbct.android.common.activity.filter.PlayerNameFilter"/>
         <activity android:name="bbct.android.common.activity.filter.TeamFilter"/>
         <activity android:name="bbct.android.common.activity.About" />
-        <provider android:name="bbct.android.common..provider.BaseballCardProvider"
+        <provider android:name="bbct.android.common.provider.BaseballCardProvider"
                   android:label="@string/provider_name"
                   android:icon="@drawable/baseball"
                   android:authorities="@string/authorities"
