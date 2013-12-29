@@ -19,6 +19,7 @@
 package bbct.android.common.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -68,29 +69,51 @@ public class BaseballCardProvider extends ContentProvider {
             String[] selectionArgs, String sortOrder) {
         Log.d(TAG, "query()");
 
-        if (uri.equals(BaseballCardContract.CONTENT_URI)) {
-            return this.sqlHelper.getReadableDatabase().query(
-                    BaseballCardContract.TABLE_NAME, projection, selection,
-                    selectionArgs, sortOrder, null, null);
-        } else {
-            String errorFormat = this.getContext().getString(
-                    R.string.invalid_uri_error);
-            String error = String.format(errorFormat, uri.toString());
-            throw new IllegalArgumentException(error);
+        Cursor cursor = null;
+
+        switch (uriMatcher.match(uri)) {
+            case ALL_CARDS:
+                cursor = this.sqlHelper.getReadableDatabase().query(
+                        BaseballCardContract.TABLE_NAME, projection, selection,
+                        selectionArgs, null, null, sortOrder);
+                break;
+
+            case CARD_ID:
+                String where = "ID = ? AND (" + selection + ")";
+                String[] whereArgs = new String[selectionArgs.length + 1];
+                long id = ContentUris.parseId(uri);
+                whereArgs[0] = Long.toString(id);
+                cursor = this.sqlHelper.getReadableDatabase().query(
+                        BaseballCardContract.TABLE_NAME, projection, where,
+                        whereArgs, null, null, sortOrder);
+                break;
+
+            default:
+                String errorFormat = this.getContext().getString(
+                        R.string.invalid_uri_error);
+                String error = String.format(errorFormat, uri.toString());
+                throw new IllegalArgumentException(error);
         }
+
+        cursor.setNotificationUri(this.getContext().getContentResolver(),
+                BaseballCardContract.CONTENT_URI);
+        return cursor;
     }
 
     @Override
     public String getType(Uri uri) {
         switch (uriMatcher.match(uri)) {
             case ALL_CARDS:
-            return BaseballCardContract.BASEBALL_CARD_LIST_MIME_TYPE;
+                return BaseballCardContract.BASEBALL_CARD_LIST_MIME_TYPE;
 
             case CARD_ID:
                 return BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE;
 
             default:
-                throw new IllegalArgumentException("Unknown URI: " + uri);
+                String errorFormat = this.getContext().getString(
+                        R.string.invalid_uri_error);
+                String error = String.format(errorFormat, uri.toString());
+                throw new IllegalArgumentException(error);
         }
     }
 
