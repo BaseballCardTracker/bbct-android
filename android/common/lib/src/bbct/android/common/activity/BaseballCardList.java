@@ -38,7 +38,7 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.exception.SQLHelperCreationException;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.android.common.provider.CheckedCursorAdapter;
+import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.SQLHelperFactory;
 
 /**
@@ -91,7 +91,7 @@ public class BaseballCardList extends ListActivity {
             });
             listView.addHeaderView(this.headerView);
 
-            this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
+            this.adapter = new BaseballCardAdapter(this, R.layout.row, null,
                     ROW_PROJECTION, ROW_TEXT_VIEWS);
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
@@ -406,7 +406,7 @@ public class BaseballCardList extends ListActivity {
     private static boolean[] savedSelection;
     TextView emptyList = null;
     private BaseballCardSQLHelper sqlHelper = null;
-    private CheckedCursorAdapter adapter = null;
+    private BaseballCardAdapter adapter = null;
     private int filterRequest = R.id.no_filter;
     private Bundle filterParams = null;
     private View headerView;

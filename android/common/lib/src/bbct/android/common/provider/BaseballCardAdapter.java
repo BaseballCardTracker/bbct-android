@@ -18,6 +18,7 @@
  */
 package bbct.android.common.provider;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -36,10 +37,10 @@ import bbct.android.common.R;
  * {@link SimpleCursorAdapter}. It enables {@link CheckedTextView}
  * to toggle its' state.
  */
-public class CheckedCursorAdapter extends SimpleCursorAdapter {
+public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     @SuppressWarnings("deprecation")
-    public CheckedCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to) {
+    public BaseballCardAdapter(Context context, int layout, Cursor c, String[] from, int[] to) {
         super(context, layout, c, from, to);
         this.context = context;
     }
@@ -70,11 +71,12 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
             public void onClick(View v) {
                 CheckedTextView cview = (CheckedTextView) v.findViewById(R.id.checkmark);
                 cview.toggle();
-                CheckedCursorAdapter.this.selection[position] = cview.isChecked();
+                BaseballCardAdapter.this.selection[position] = cview.isChecked();
 
                 // update menu in the correct Activity
                 curActivity.runOnUiThread(new Runnable() {
 
+                    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
                     @Override
                     public void run() {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -92,7 +94,7 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
     }
 
     /**
-     * Marks/unmarks all items in the {@link CheckedCursorAdapter}.
+     * Marks/unmarks all items in the {@link BaseballCardAdapter}.
      *
      * @param check
      *            - a boolean indicating whether all items will be checked
@@ -123,7 +125,7 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
     }
 
     /**
-     * Notifies {@link CheckedCursorAdapter} of changed data
+     * Notifies {@link BaseballCardAdapter} of changed data
      * and also updates {@link ListView} in the appropriate
      * {@link ListActivity}
      */
@@ -133,7 +135,7 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
         curActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                curActivity.getListView().setAdapter(CheckedCursorAdapter.this);
+                curActivity.getListView().setAdapter(BaseballCardAdapter.this);
             }
         });
     }
