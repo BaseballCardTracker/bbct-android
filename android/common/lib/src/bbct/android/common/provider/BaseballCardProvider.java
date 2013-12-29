@@ -23,6 +23,7 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -119,18 +120,23 @@ public class BaseballCardProvider extends ContentProvider {
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        if (uri.equals(BaseballCardContract.CONTENT_URI)) {
-            long row = this.sqlHelper.getWritableDatabase().insert(
-                    BaseballCardContract.TABLE_NAME, null, values);
-
-            if (row != -1) {
-                return uri.buildUpon().appendPath(Long.toString(row)).build();
-            } else {
-                return null;
-            }
+        if (uriMatcher.match(uri) != ALL_CARDS) {
+            String errorFormat = this.getContext().getString(
+                    R.string.invalid_uri_error);
+            String error = String.format(errorFormat, uri.toString());
+            throw new IllegalArgumentException(error);
         }
 
-        return null;
+        long row = this.sqlHelper.getWritableDatabase().insert(
+                BaseballCardContract.TABLE_NAME, null, values);
+
+        if (row > 0) {
+            Uri newUri = ContentUris.withAppendedId(uri, row);
+            this.getContext().getContentResolver().notifyChange(newUri, null);
+            return newUri;
+        }
+
+        throw new SQLException("Failed to insert row into " + uri);
     }
 
     @Override
