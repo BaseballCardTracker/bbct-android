@@ -18,7 +18,7 @@
  */
 package bbct.android.common.provider;
 
-import android.annotation.TargetApi;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -34,21 +34,22 @@ import bbct.android.common.R;
 
 /**
  * This class adds click listeners to {@link CheckedTextView} in
- * {@link SimpleCursorAdapter}. It enables {@link CheckedTextView}
- * to toggle its' state.
+ * {@link SimpleCursorAdapter}. It enables {@link CheckedTextView} to toggle
+ * its' state.
  */
 public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     @SuppressWarnings("deprecation")
-    public BaseballCardAdapter(Context context, int layout, Cursor c, String[] from, int[] to) {
+    public BaseballCardAdapter(Context context, int layout, Cursor c,
+            String[] from, int[] to) {
         super(context, layout, c, from, to);
         this.context = context;
     }
 
     /**
-     * Restores selection of {@link CheckedTextView} if there
-     * was a previous selection made on the same element. Also
-     * adds {@link OnClickListener} to {@link CheckedTextView}.
+     * Restores selection of {@link CheckedTextView} if there was a previous
+     * selection made on the same element. Also adds {@link OnClickListener} to
+     * {@link CheckedTextView}.
      *
      * @see {@link SimpleCursorAdapater#getView}
      */
@@ -67,24 +68,18 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
         // set listener
         ctv.setOnClickListener(new OnClickListener() {
 
+            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                CheckedTextView cview = (CheckedTextView) v.findViewById(R.id.checkmark);
+                CheckedTextView cview = (CheckedTextView) v
+                        .findViewById(R.id.checkmark);
                 cview.toggle();
-                BaseballCardAdapter.this.selection[position] = cview.isChecked();
+                BaseballCardAdapter.this.selection[position] = cview
+                        .isChecked();
 
-                // update menu in the correct Activity
-                curActivity.runOnUiThread(new Runnable() {
-
-                    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-                    @Override
-                    public void run() {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                            curActivity.invalidateOptionsMenu();
-                        }
-                    }
-
-                });
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                    curActivity.invalidateOptionsMenu();
+                }
 
             }
 
@@ -109,6 +104,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     /**
      * Returns the saved selection object.
+     *
      * @return an array of marked items
      */
     public boolean[] getSelection() {
@@ -117,7 +113,9 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     /**
      * Sets the saved selection object.
-     * @param sel - an array of marked items
+     *
+     * @param sel
+     *            - an array of marked items
      */
     public void setSelection(boolean[] sel) {
         this.selection = sel;
@@ -125,9 +123,8 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
     }
 
     /**
-     * Notifies {@link BaseballCardAdapter} of changed data
-     * and also updates {@link ListView} in the appropriate
-     * {@link ListActivity}
+     * Notifies {@link BaseballCardAdapter} of changed data and also updates
+     * {@link ListView} in the appropriate {@link ListActivity}
      */
     private void updateDataSet() {
         this.notifyDataSetChanged();
@@ -143,4 +140,3 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
     private boolean[] selection;
     private final Context context;
 }
-
