@@ -118,6 +118,7 @@ public class BaseballCardProviderTest extends
         Cursor cursor = this.resolver.query(uri,
                 BaseballCardContract.PROJECTION, null, null, null);
         Assert.assertNotNull(cursor);
+        Assert.assertEquals(1, cursor.getCount());
     }
 
     /**

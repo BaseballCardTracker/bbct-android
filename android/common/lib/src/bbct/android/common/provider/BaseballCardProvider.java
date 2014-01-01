@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 import bbct.android.common.R;
@@ -201,7 +202,8 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     private String getWhereWithId(String selection) {
-        return BaseballCardContract.ID_COL_NAME + " = ? AND (" + selection + ")";
+        String idSelection = BaseballCardContract.ID_COL_NAME + " = ?";
+        return TextUtils.isEmpty(selection) ? idSelection : idSelection + " AND (" + selection + ")";
 
     }
 
