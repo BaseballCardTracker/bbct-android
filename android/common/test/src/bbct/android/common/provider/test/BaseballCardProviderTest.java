@@ -2,6 +2,7 @@ package bbct.android.common.provider.test;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
@@ -104,6 +105,19 @@ public class BaseballCardProviderTest extends
                 .getAllBaseballCardsFromCursor(cursor);
         Assert.assertTrue(BaseballCardProviderTest.CARDS.containsAll(actual));
         Assert.assertTrue(actual.containsAll(BaseballCardProviderTest.CARDS));
+    }
+
+    /**
+     * Test for
+     * {@link BaseballCardProvider#query(android.net.Uri, String[], String, String[], String)}
+     * . Query the {@link ContentProvider} without any selection arguments.
+     */
+    public void testQueryId() {
+        Uri uri = ContentUris.withAppendedId(BaseballCardContract.CONTENT_URI,
+                1);
+        Cursor cursor = this.resolver.query(uri,
+                BaseballCardContract.PROJECTION, null, null, null);
+        Assert.assertNotNull(cursor);
     }
 
     /**

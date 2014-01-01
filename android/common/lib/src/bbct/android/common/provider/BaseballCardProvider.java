@@ -201,16 +201,19 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     private String getWhereWithId(String selection) {
-        return BaseballCardContract.ID_COL_NAME + " ? AND (" + selection + ")";
+        return BaseballCardContract.ID_COL_NAME + " = ? AND (" + selection + ")";
 
     }
 
     private String[] getWhereArgsWithId(String[] selectionArgs, long id) {
-        String[] whereArgs = new String[selectionArgs.length + 1];
+        int argCount = selectionArgs == null ? 1 : selectionArgs.length + 1;
+        String[] whereArgs = new String[argCount];
         whereArgs[0] = Long.toString(id);
 
-        for (int i = 0; i < selectionArgs.length; ++i) {
-            whereArgs[i + 1] = selectionArgs[i];
+        if (selectionArgs != null) {
+            for (int i = 0; i < selectionArgs.length; ++i) {
+                whereArgs[i + 1] = selectionArgs[i];
+            }
         }
 
         return whereArgs;
