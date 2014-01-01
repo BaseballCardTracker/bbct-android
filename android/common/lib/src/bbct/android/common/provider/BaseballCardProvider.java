@@ -24,6 +24,7 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -71,22 +72,20 @@ public class BaseballCardProvider extends ContentProvider {
         Log.d(TAG, "query()");
 
         Cursor cursor = null;
+        SQLiteDatabase db = this.sqlHelper.getReadableDatabase();
 
         switch (uriMatcher.match(uri)) {
             case ALL_CARDS:
-                cursor = this.sqlHelper.getReadableDatabase().query(
-                        BaseballCardContract.TABLE_NAME, projection, selection,
-                        selectionArgs, null, null, sortOrder);
+                cursor = db.query(BaseballCardContract.TABLE_NAME, projection,
+                        selection, selectionArgs, null, null, sortOrder);
                 break;
 
             case CARD_ID:
                 String where = "ID = ? AND (" + selection + ")";
-                String[] whereArgs = new String[selectionArgs.length + 1];
                 long id = ContentUris.parseId(uri);
-                whereArgs[0] = Long.toString(id);
-                cursor = this.sqlHelper.getReadableDatabase().query(
-                        BaseballCardContract.TABLE_NAME, projection, where,
-                        whereArgs, null, null, sortOrder);
+                String[] whereArgs = this.getWhereArgsWithId(selectionArgs, id);
+                cursor = db.query(BaseballCardContract.TABLE_NAME, projection,
+                        where, whereArgs, null, null, sortOrder);
                 break;
 
             default:
@@ -145,8 +144,46 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues cv, String string, String[] strings) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int update(Uri uri, ContentValues values, String selection,
+            String[] selectionArgs) {
+        SQLiteDatabase db = this.sqlHelper.getWritableDatabase();
+
+        int affected = 0;
+
+        switch (uriMatcher.match(uri)) {
+            case ALL_CARDS:
+                affected = db.update(BaseballCardContract.TABLE_NAME, values,
+                        selection, selectionArgs);
+                break;
+
+            case CARD_ID:
+                String where = "ID = ? AND (" + selection + ")";
+                long id = ContentUris.parseId(uri);
+                String[] whereArgs = this.getWhereArgsWithId(selectionArgs, id);
+                affected = db.update(BaseballCardContract.TABLE_NAME, values,
+                        where, whereArgs);
+                break;
+
+            default:
+                String errorFormat = this.getContext().getString(
+                        R.string.invalid_uri_error);
+                String error = String.format(errorFormat, uri.toString());
+                throw new IllegalArgumentException(error);
+        }
+
+        this.getContext().getContentResolver().notifyChange(uri, null);
+        return affected;
+    }
+
+    private String[] getWhereArgsWithId(String[] selectionArgs, long id) {
+        String[] whereArgs = new String[selectionArgs.length + 1];
+        whereArgs[0] = Long.toString(id);
+
+        for (int i = 0; i < selectionArgs.length; ++i) {
+            whereArgs[i + 1] = selectionArgs[i];
+        }
+
+        return whereArgs;
     }
 
     private BaseballCardSQLHelper sqlHelper = null;
