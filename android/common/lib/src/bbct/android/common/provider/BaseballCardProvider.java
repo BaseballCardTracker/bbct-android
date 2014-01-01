@@ -139,8 +139,33 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String string, String[] strings) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        int affected = 0;
+        SQLiteDatabase db = this.sqlHelper.getWritableDatabase();
+
+        switch (uriMatcher.match(uri)) {
+            case ALL_CARDS:
+                affected = db.delete(BaseballCardContract.TABLE_NAME,
+                        selection, selectionArgs);
+                break;
+
+            case CARD_ID:
+                String where = "ID = ? AND (" + selection + ")";
+                long id = ContentUris.parseId(uri);
+                String[] whereArgs = this.getWhereArgsWithId(selectionArgs, id);
+                affected = db.delete(BaseballCardContract.TABLE_NAME, where,
+                        whereArgs);
+                break;
+
+            default:
+                String errorFormat = this.getContext().getString(
+                        R.string.invalid_uri_error);
+                String error = String.format(errorFormat, uri.toString());
+                throw new IllegalArgumentException(error);
+        }
+
+        this.getContext().getContentResolver().notifyChange(uri, null);
+        return affected;
     }
 
     @Override
