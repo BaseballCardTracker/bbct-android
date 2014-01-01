@@ -36,9 +36,9 @@ import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.exception.SQLHelperCreationException;
+import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.SQLHelperFactory;
 
 /**
@@ -67,7 +67,8 @@ public class BaseballCardList extends ListActivity {
                         .getString(R.string.filter_request_extra));
                 this.filterParams = savedInstanceState.getBundle(this
                         .getString(R.string.filter_params_extra));
-                savedSelection = savedInstanceState.getBooleanArray(this.getString(R.string.selection_extra));
+                savedSelection = savedInstanceState.getBooleanArray(this
+                        .getString(R.string.selection_extra));
             }
 
             this.emptyList = (TextView) this.findViewById(android.R.id.empty);
@@ -80,15 +81,16 @@ public class BaseballCardList extends ListActivity {
             ListView listView = (ListView) this.findViewById(android.R.id.list);
             this.headerView = View.inflate(this, R.layout.list_header, null);
             ((CheckedTextView) this.headerView.findViewById(R.id.checkmark))
-            .setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CheckedTextView ctv = (CheckedTextView) v
-                            .findViewById(R.id.checkmark);
-                    ctv.toggle();
-                    BaseballCardList.this.adapter.toggleAll(ctv.isChecked());
-                }
-            });
+                    .setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CheckedTextView ctv = (CheckedTextView) v
+                                    .findViewById(R.id.checkmark);
+                            ctv.toggle();
+                            BaseballCardList.this.adapter.toggleAll(ctv
+                                    .isChecked());
+                        }
+                    });
             listView.addHeaderView(this.headerView);
 
             this.adapter = new BaseballCardAdapter(this, R.layout.row, null,
@@ -128,12 +130,12 @@ public class BaseballCardList extends ListActivity {
     public void onResume() {
         super.onResume();
 
-        this.sqlHelper.applyFilter(this, this.filterRequest,
-                this.filterParams);
+        this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
         this.swapCursor();
 
         // restore default header state
-        CheckedTextView headerCheck = (CheckedTextView) this.headerView.findViewById(R.id.checkmark);
+        CheckedTextView headerCheck = (CheckedTextView) this.headerView
+                .findViewById(R.id.checkmark);
         headerCheck.setChecked(false);
 
         // restore old state if it exists
@@ -153,7 +155,8 @@ public class BaseballCardList extends ListActivity {
             }
 
             // restore header state
-            if (numSelected == this.adapter.getSelection().length && newSelection.length == savedSelection.length) {
+            if (numSelected == this.adapter.getSelection().length
+                    && newSelection.length == savedSelection.length) {
                 headerCheck.setChecked(true);
             }
 
@@ -249,7 +252,8 @@ public class BaseballCardList extends ListActivity {
             for (int i = 0; i < selected.length; i++) {
                 if (selected[i]) {
                     selected[i] = false;
-                    BaseballCard card = this.getBaseballCard(this.adapter.getView(i, null, null));
+                    BaseballCard card = this.getBaseballCard(this.adapter
+                            .getView(i, null, null));
                     this.sqlHelper.removeBaseballCard(card);
                 }
             }
@@ -275,8 +279,8 @@ public class BaseballCardList extends ListActivity {
     }
 
     /**
-     * Save the currently active filter when the system asks for it.
-     * Also save the current state of marked list items.
+     * Save the currently active filter when the system asks for it. Also save
+     * the current state of marked list items.
      *
      * @param outState
      *            The saved state.
@@ -289,7 +293,8 @@ public class BaseballCardList extends ListActivity {
                 this.filterRequest);
         outState.putBundle(this.getString(R.string.filter_params_extra),
                 this.filterParams);
-        outState.putBooleanArray(this.getString(R.string.selection_extra), this.adapter.getSelection());
+        outState.putBooleanArray(this.getString(R.string.selection_extra),
+                this.adapter.getSelection());
     }
 
     /**
@@ -315,8 +320,7 @@ public class BaseballCardList extends ListActivity {
 
         Intent intent = new Intent(Intent.ACTION_EDIT,
                 BaseballCardDetails.DETAILS_URI);
-        BaseballCard card = BaseballCardList.this.sqlHelper
-                .getBaseballCardFromCursor();
+        BaseballCard card = BaseballCardList.this.adapter.getSelectedCard();
 
         intent.putExtra(this.getString(R.string.baseball_card_extra), card);
         intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);

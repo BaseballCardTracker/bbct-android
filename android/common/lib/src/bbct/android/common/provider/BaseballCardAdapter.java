@@ -31,6 +31,7 @@ import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import bbct.android.common.R;
+import bbct.android.common.data.BaseballCard;
 
 /**
  * This class adds click listeners to {@link CheckedTextView} in
@@ -135,6 +136,29 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
                 curActivity.getListView().setAdapter(BaseballCardAdapter.this);
             }
         });
+    }
+
+    public BaseballCard getSelectedCard() {
+        Cursor cursor = this.getCursor();
+        String brand = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
+        int year = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.YEAR_COL_NAME));
+        int number = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
+        int value = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
+        int count = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
+        String name = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
+        String team = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.TEAM_COL_NAME));
+        String position = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
+
+        return new BaseballCard(brand, year, number, value, count, name, team,
+                position);
     }
 
     private boolean[] selection;
