@@ -81,7 +81,7 @@ public class BaseballCardProvider extends ContentProvider {
                 break;
 
             case CARD_ID:
-                String where = "ID = ? AND (" + selection + ")";
+                String where = this.getWhereWithId(selection);
                 long id = ContentUris.parseId(uri);
                 String[] whereArgs = this.getWhereArgsWithId(selectionArgs, id);
                 cursor = db.query(BaseballCardContract.TABLE_NAME, projection,
@@ -150,7 +150,7 @@ public class BaseballCardProvider extends ContentProvider {
                 break;
 
             case CARD_ID:
-                String where = "ID = ? AND (" + selection + ")";
+                String where = this.getWhereWithId(selection);
                 long id = ContentUris.parseId(uri);
                 String[] whereArgs = this.getWhereArgsWithId(selectionArgs, id);
                 affected = db.delete(BaseballCardContract.TABLE_NAME, where,
@@ -182,7 +182,7 @@ public class BaseballCardProvider extends ContentProvider {
                 break;
 
             case CARD_ID:
-                String where = "ID = ? AND (" + selection + ")";
+                String where = this.getWhereWithId(selection);
                 long id = ContentUris.parseId(uri);
                 String[] whereArgs = this.getWhereArgsWithId(selectionArgs, id);
                 affected = db.update(BaseballCardContract.TABLE_NAME, values,
@@ -198,6 +198,11 @@ public class BaseballCardProvider extends ContentProvider {
 
         this.getContext().getContentResolver().notifyChange(uri, null);
         return affected;
+    }
+
+    private String getWhereWithId(String selection) {
+        return BaseballCardContract.ID_COL_NAME + " ? AND (" + selection + ")";
+
     }
 
     private String[] getWhereArgsWithId(String[] selectionArgs, long id) {
