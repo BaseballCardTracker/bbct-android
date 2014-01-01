@@ -3,6 +3,7 @@ package bbct.android.common.provider.test;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
@@ -133,12 +134,28 @@ public class BaseballCardProviderTest extends
         Assert.assertNotNull(result);
     }
 
-    public void testUpdate() {
-        Assert.fail("Stub");
+    public void testUpdateValue() {
+        ContentValues values = new ContentValues();
+        int newValue = 50000;
+        values.put(BaseballCardContract.VALUE_COL_NAME, newValue);
+        int affected = this.resolver.update(BaseballCardContract.CONTENT_URI,
+                values, null, null);
+        Assert.assertEquals(CARDS.size(), affected);
+
+        Cursor cursor = this.resolver.query(BaseballCardContract.CONTENT_URI,
+                BaseballCardContract.PROJECTION, null, null, null);
+
+        while (!cursor.moveToNext()) {
+            int value = cursor.getInt(cursor
+                    .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
+            Assert.assertEquals(value, newValue);
+        }
     }
 
-    public void testDelete() {
-        Assert.fail("Stub");
+    public void testDeleteAll() {
+        int affected = this.resolver.delete(BaseballCardContract.CONTENT_URI,
+                null, null);
+        Assert.assertEquals(CARDS.size(), affected);
     }
 
     public void testGetTypeItem() {
