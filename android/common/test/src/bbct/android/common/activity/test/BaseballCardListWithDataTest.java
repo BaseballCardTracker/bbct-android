@@ -87,7 +87,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         cardInput.close();
 
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        this.dbUtil.populateTable(allCards);
+        this.dbUtil.populateTable(this.allCards);
 
         // Start Activity
         this.activity = this.getActivity();
@@ -389,8 +389,9 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         for (int i = 0; i < lv.getChildCount(); i++) {
             CheckedTextView ctv = (CheckedTextView) lv.getChildAt(i).findViewById(R.id.checkmark);
 
-            if (ctv.isChecked())
+            if (ctv.isChecked()) {
                 numMarked++;
+            }
         }
 
         Assert.assertEquals(lv.getChildCount(), numMarked);
@@ -411,8 +412,9 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         this.expectedCards = new ArrayList<BaseballCard>();
         for (int i = 1; i < lv.getChildCount(); i++) {
             BaseballCard bc = this.getBaseballCardFromView(lv.getChildAt(i));
-            if (!bc.equals(toDelete))
-                expectedCards.add(bc);
+            if (!bc.equals(toDelete)) {
+                this.expectedCards.add(bc);
+            }
         }
 
         BBCTTestUtil.removeCard(this, this.activity, toDelete);
@@ -518,8 +520,9 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
             boolean isEqualYear = Integer.parseInt(year.getText().toString()) == bc.getYear();
             boolean isEqualNumber = Integer.parseInt(number.getText().toString()) == bc.getNumber();
 
-            if (isEqualPName && isEqualBrand && isEqualYear && isEqualNumber)
+            if (isEqualPName && isEqualBrand && isEqualYear && isEqualNumber) {
                 return bc;
+            }
         }
 
         return null;
