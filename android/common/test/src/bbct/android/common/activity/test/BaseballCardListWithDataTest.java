@@ -428,6 +428,8 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
      * {@link BaseballCardList} activity changes orientation.
      */
     public void testSelectionAfterSaveInstanceState() throws Throwable {
+        Log.d(TAG, "testSelectionAfterSaveInstanceState()");
+
         ListView lv = ((ListActivity) this.activity).getListView();
         ArrayList<Integer> indexes = new ArrayList<Integer>();
 
@@ -447,15 +449,21 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
             }
         }
 
-        this.setActivity(null);
+        Log.d(TAG, "change orientation");
         this.activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        Log.d(TAG, "null activity");
+        this.setActivity(null);
+        Log.d(TAG, "restart activity");
         this.activity = this.getActivity();
 
+        Log.d(TAG, "assertions");
         lv = ((ListActivity) this.activity).getListView();
         for (int i = 0; i < indexes.size(); i++) {
             CheckedTextView ctv = (CheckedTextView) lv.getChildAt(indexes.get(i)).findViewById(R.id.checkmark);
             Assert.assertTrue(ctv.isChecked());
         }
+
+        Log.d(TAG, "finished");
     }
 
     /**
