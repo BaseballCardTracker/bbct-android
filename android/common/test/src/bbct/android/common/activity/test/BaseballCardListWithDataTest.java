@@ -31,7 +31,6 @@ import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
@@ -225,7 +224,7 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
         Instrumentation.ActivityMonitor detailsMonitor = new Instrumentation.ActivityMonitor(BaseballCardDetails.class.getName(), null, false);
         this.inst.addMonitor(detailsMonitor);
 
-        int cardIndex = (int) (Math.random() * this.allCards.size());
+        int cardIndex = 3;
 
         Log.d(TAG, "cardIndex=" + cardIndex);
 
@@ -233,24 +232,8 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
 
         Activity cardDetails = this.inst.waitForMonitorWithTimeout(detailsMonitor, TIME_OUT);
         Assert.assertNotNull(cardDetails);
-
-        EditText brandText = (EditText) cardDetails.findViewById(R.id.brand_text);
-        EditText yearText = (EditText) cardDetails.findViewById(R.id.year_text);
-        EditText numberText = (EditText) cardDetails.findViewById(R.id.number_text);
-        EditText valueText = (EditText) cardDetails.findViewById(R.id.value_text);
-        EditText countText = (EditText) cardDetails.findViewById(R.id.count_text);
-        EditText playerNameText = (EditText) cardDetails.findViewById(R.id.player_name_text);
-        Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
-
         BaseballCard expectedCard = this.allCards.get(cardIndex - 1);
-        Assert.assertEquals(expectedCard.getBrand(), brandText.getText().toString());
-        Assert.assertEquals(expectedCard.getYear(), Integer.parseInt(yearText.getText().toString()));
-        Assert.assertEquals(expectedCard.getNumber(), Integer.parseInt(numberText.getText().toString()));
-        Assert.assertEquals(expectedCard.getCount(), Integer.parseInt(countText.getText().toString()));
-        Assert.assertEquals(expectedCard.getValue(), (int) (Double.parseDouble(valueText.getText().toString()) * 100));
-        Assert.assertEquals(expectedCard.getPlayerName(), playerNameText.getText().toString());
-        Assert.assertEquals(expectedCard.getPlayerPosition(), playerPositionSpinner.getSelectedItem().toString());
-
+        BBCTTestUtil.assertAllEditTextContents(cardDetails, expectedCard);
         BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
     }
 
