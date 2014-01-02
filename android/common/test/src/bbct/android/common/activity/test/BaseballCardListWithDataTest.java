@@ -473,6 +473,8 @@ public class BaseballCardListWithDataTest extends ActivityInstrumentationTestCas
             CheckedTextView ctv = (CheckedTextView) lv.getChildAt(indexes.get(i)).findViewById(R.id.checkmark);
             Assert.assertTrue(ctv.isChecked());
         }
+
+        this.activity.finish();
     }
 
     /**
