@@ -33,7 +33,7 @@ import bbct.android.common.R;
 import bbct.android.common.exception.SQLHelperCreationException;
 
 /**
- *
+ * {@link ContentProvider} for baseball card data.
  */
 public class BaseballCardProvider extends ContentProvider {
 
