@@ -198,9 +198,10 @@ final public class BBCTTestUtil {
      * @param cardDetails The {@link BaseballCardDetails} activity being tested.
      * @param card The {@link BaseballCard} object holding the data to add to
      * the database.
+     * @throws InterruptedException If {@link Thread#sleep()} is interrupted.
      * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity, BaseballCard, Set)
      */
-    public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) {
+    public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) throws InterruptedException {
         BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card, EnumSet.allOf(EditTexts.class));
     }
 
@@ -214,8 +215,9 @@ final public class BBCTTestUtil {
      * @param card The {@link BaseballCard} object holding the data to add to
      * the database.
      * @param fieldFlags The {@link EditText} views to fill in.
+     * @throws InterruptedException If {@link Thread#sleep()} is interrupted.
      */
-    public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, Set<EditTexts> fieldFlags) {
+    public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, Set<EditTexts> fieldFlags) throws InterruptedException {
         Log.d(TAG, "sendKeysToCardDetails()");
 
         Instrumentation inst = test.getInstrumentation();
@@ -270,11 +272,13 @@ final public class BBCTTestUtil {
             Log.d(TAG, "newPos=" + newPos + ", oldPos=" + oldPos + ", move=" + move);
 
             inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
+            Thread.sleep(500);
             if (move > 0) {
                 test.sendRepeatedKeys(move, KeyEvent.KEYCODE_DPAD_DOWN);
             } else {
                 test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
             }
+            Thread.sleep(500);
             inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
         }
     }
