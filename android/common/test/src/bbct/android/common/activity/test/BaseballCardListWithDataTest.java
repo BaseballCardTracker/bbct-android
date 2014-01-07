@@ -502,16 +502,15 @@ public class BaseballCardListWithDataTest extends
         Log.d(TAG, "change orientation");
         this.activity
                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        Log.d(TAG, "null activity");
-        this.setActivity(null);
-        Log.d(TAG, "restart activity");
-        this.activity = this.getActivity();
 
         Log.d(TAG, "assertions");
         lv = ((ListActivity) this.activity).getListView();
+        Log.d(TAG, "lv.getChildCount()=" + lv.getChildCount());
         for (int i = 0; i < indexes.size(); i++) {
-            CheckedTextView ctv = (CheckedTextView) lv.getChildAt(
-                    indexes.get(i)).findViewById(R.id.checkmark);
+            View row = lv.getChildAt(indexes.get(i));
+            Log.d(TAG, "row=" + row);
+            CheckedTextView ctv = (CheckedTextView) row
+                    .findViewById(R.id.checkmark);
             Assert.assertTrue(ctv.isChecked());
         }
 
