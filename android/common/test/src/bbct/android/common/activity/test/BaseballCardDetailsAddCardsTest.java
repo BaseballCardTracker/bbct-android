@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,8 @@ import junit.framework.Assert;
 /**
  * Tests for {@link BaseballCardDetails}.
  */
-public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
+public class BaseballCardDetailsAddCardsTest extends
+        ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
     /**
      * Create instrumented test cases for {@link BaseballCardDetails}.
@@ -49,7 +50,8 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
      * {@link BaseballCardDetails} activity and all of its {@link EditText} and
      * {@link Button} views and a list of {@link BaseballCard} data.
      *
-     * @throws Exception If an error occurs while chaining to the super class.
+     * @throws Exception
+     *             If an error occurs while chaining to the super class.
      */
     @Override
     public void setUp() throws Exception {
@@ -57,8 +59,10 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
 
         this.inst = this.getInstrumentation();
 
-        InputStream in = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
-        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in, true);
+        InputStream in = this.inst.getContext().getAssets()
+                .open(BBCTTestUtil.CARD_DATA);
+        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
+                true);
         this.allCards = cardInput.getAllBaseballCards();
         this.card = this.allCards.get(3); // Ken Griffey Jr.
         cardInput.close();
@@ -70,7 +74,8 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
      * Tear down the test fixture by calling {@link Activity#finish()} and
      * deleting the app's database.
      *
-     * @throws Exception If an error occurs while chaining to the super class.
+     * @throws Exception
+     *             If an error occurs while chaining to the super class.
      */
     @Override
     public void tearDown() throws Exception {
@@ -84,13 +89,15 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
      * Test that baseball card data is correctly added to the database when it
      * is entered into the {@link BaseballCardDetails} activity.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
     public void testAddCard() throws Throwable {
         BBCTTestUtil.addCard(this, this.activity, this.card);
         DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        Assert.assertTrue("Missing card: " + this.card, dbUtil.containsBaseballCard(card));
+        Assert.assertTrue("Missing card: " + this.card,
+                dbUtil.containsBaseballCard(this.card));
     }
 
     /**
@@ -99,18 +106,19 @@ public class BaseballCardDetailsAddCardsTest extends ActivityInstrumentationTest
      * activity. This test enters all data using a single invocation of the
      * {@link BaseballCardDetails} activity.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
     public void testAddMultipleCards() throws Throwable {
         for (BaseballCard nextCard : this.allCards) {
             BBCTTestUtil.addCard(this, this.activity, nextCard);
         }
 
-        this.inst.waitForIdleSync();
         DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         for (BaseballCard nextCard : this.allCards) {
-            Assert.assertTrue("Missing card: " + nextCard, dbUtil.containsBaseballCard(nextCard));
+            Assert.assertTrue("Missing card: " + nextCard,
+                    dbUtil.containsBaseballCard(nextCard));
         }
     }
 

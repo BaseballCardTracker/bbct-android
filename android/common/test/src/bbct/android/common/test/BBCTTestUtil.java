@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,28 +57,37 @@ final public class BBCTTestUtil {
      * Assert that the given ListView contains same data as the given list of
      * {@link BaseballCard}s.
      *
-     * @param inst The instrumentation for the running test case. Used to
-     * synchronize this assertion with the instrumented activity class being
-     * tested.
-     * @param expectedItems A List of the expected {@link BaseballCard} data.
-     * @param listView The List view to check for {@link BaseballCard} data.
+     * @param inst
+     *            The instrumentation for the running test case. Used to
+     *            synchronize this assertion with the instrumented activity
+     *            class being tested.
+     * @param expectedItems
+     *            A List of the expected {@link BaseballCard} data.
+     * @param listView
+     *            The List view to check for {@link BaseballCard} data.
      */
-    public static void assertListViewContainsItems(Instrumentation inst, List<BaseballCard> expectedItems, ListView listView) {
+    public static void assertListViewContainsItems(Instrumentation inst,
+            List<BaseballCard> expectedItems, ListView listView) {
         inst.waitForIdleSync();
 
-        // Subtract 1 from the number of views owned by the ListView to account for the header View
+        // Subtract 1 from the number of views owned by the ListView to account
+        // for the header View
         Assert.assertEquals(expectedItems.size(), listView.getCount() - 1);
 
         for (int i = 0; i < expectedItems.size(); ++i) {
             // Add 1 to skip headers
             View row = listView.getChildAt(i + 1);
-            TextView brandTextView = (TextView) row.findViewById(R.id.brand_text_view);
-            TextView yearTextView = (TextView) row.findViewById(R.id.year_text_view);
-            TextView numberTextView = (TextView) row.findViewById(R.id.number_text_view);
-            TextView playerNameTextView = (TextView) row.findViewById(R.id.player_name_text_view);
+            TextView brandTextView = (TextView) row
+                    .findViewById(R.id.brand_text_view);
+            TextView yearTextView = (TextView) row
+                    .findViewById(R.id.year_text_view);
+            TextView numberTextView = (TextView) row
+                    .findViewById(R.id.number_text_view);
+            TextView playerNameTextView = (TextView) row
+                    .findViewById(R.id.player_name_text_view);
 
-            StringBuilder rowText = new StringBuilder("Row ").append(i).append(":")
-                    .append(brandTextView.getText()).append(',')
+            StringBuilder rowText = new StringBuilder("Row ").append(i)
+                    .append(":").append(brandTextView.getText()).append(',')
                     .append(yearTextView.getText()).append(',')
                     .append(numberTextView.getText()).append(',')
                     .append(playerNameTextView.getText());
@@ -87,31 +96,43 @@ final public class BBCTTestUtil {
             BaseballCard expectedCard = expectedItems.get(i);
             Log.d(TAG, "Baseball Card #" + i + ":" + expectedCard);
 
-            Assert.assertEquals(expectedCard.getBrand(), brandTextView.getText().toString());
-            Assert.assertEquals(expectedCard.getYear(), Integer.parseInt(yearTextView.getText().toString()));
-            Assert.assertEquals(expectedCard.getNumber(), Integer.parseInt(numberTextView.getText().toString()));
-            Assert.assertEquals(expectedCard.getPlayerName(), playerNameTextView.getText().toString());
+            Assert.assertEquals(expectedCard.getBrand(), brandTextView
+                    .getText().toString());
+            Assert.assertEquals(expectedCard.getYear(),
+                    Integer.parseInt(yearTextView.getText().toString()));
+            Assert.assertEquals(expectedCard.getNumber(),
+                    Integer.parseInt(numberTextView.getText().toString()));
+            Assert.assertEquals(expectedCard.getPlayerName(),
+                    playerNameTextView.getText().toString());
         }
     }
 
     /**
      * Test that a menu item correctly launches a child activity.
      *
-     * @param inst The instrumentation used for this test.
-     * @param activity The activity associated with the menu being tested.
-     * @param menuId The id of the menu resource.
-     * @param childActivityClass The Class of the child activity which should be
-     * launched.
+     * @param inst
+     *            The instrumentation used for this test.
+     * @param activity
+     *            The activity associated with the menu being tested.
+     * @param menuId
+     *            The id of the menu resource.
+     * @param childActivityClass
+     *            The Class of the child activity which should be launched.
      * @return A reference to the child activity which is launched, if the test
-     * succeeds.
+     *         succeeds.
      */
-    public static Activity testMenuItem(Instrumentation inst, Activity activity, int menuId, Class<? extends Activity> childActivityClass) {
-        Instrumentation.ActivityMonitor monitor = new Instrumentation.ActivityMonitor(childActivityClass.getName(), null, false);
+    public static Activity testMenuItem(Instrumentation inst,
+            Activity activity, int menuId,
+            Class<? extends Activity> childActivityClass) {
+        Instrumentation.ActivityMonitor monitor = new Instrumentation.ActivityMonitor(
+                childActivityClass.getName(), null, false);
         inst.addMonitor(monitor);
 
-        Assert.assertTrue(inst.invokeMenuActionSync(activity, menuId, MENU_FLAGS));
+        Assert.assertTrue(inst.invokeMenuActionSync(activity, menuId,
+                MENU_FLAGS));
 
-        Activity childActivity = inst.waitForMonitorWithTimeout(monitor, TIME_OUT);
+        Activity childActivity = inst.waitForMonitorWithTimeout(monitor,
+                TIME_OUT);
 
         Assert.assertNotNull(childActivity);
         Assert.assertEquals(childActivityClass, childActivity.getClass());
@@ -124,16 +145,21 @@ final public class BBCTTestUtil {
      * given {@link BaseballCardDetails} activity and check that the save button
      * can be clicked.
      *
-     * @param test The {@link InstrumentationTestCase} object performing the
-     * test.
-     * @param cardDetails The {@link BaseballCardDetails} activity being tested.
-     * @param card The {@link BaseballCard} object holding the data to add to
-     * the database.
+     * @param test
+     *            The {@link InstrumentationTestCase} object performing the
+     *            test.
+     * @param cardDetails
+     *            The {@link BaseballCardDetails} activity being tested.
+     * @param card
+     *            The {@link BaseballCard} object holding the data to add to the
+     *            database.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
-    public static void addCard(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) throws Throwable {
+    public static void addCard(InstrumentationTestCase test,
+            Activity cardDetails, BaseballCard card) throws Throwable {
         BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card);
         BBCTTestUtil.clickCardDetailsSave(test, cardDetails);
 
@@ -145,15 +171,20 @@ final public class BBCTTestUtil {
      * activity. This is all wrapped into a helper method because the button
      * click must be done on the UI thread while the assertion must not.
      *
-     * @param test The {@link InstrumentationTestCase} object performing the
-     * test.
-     * @param cardDetails The {@link BaseballCardDetails} activity being tested.
+     * @param test
+     *            The {@link InstrumentationTestCase} object performing the
+     *            test.
+     * @param cardDetails
+     *            The {@link BaseballCardDetails} activity being tested.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
-    public static void clickCardDetailsSave(InstrumentationTestCase test, Activity cardDetails) throws Throwable {
-        final Button saveButton = (Button) cardDetails.findViewById(R.id.save_button);
+    public static void clickCardDetailsSave(InstrumentationTestCase test,
+            Activity cardDetails) throws Throwable {
+        final Button saveButton = (Button) cardDetails
+                .findViewById(R.id.save_button);
 
         test.runTestOnUiThread(new Runnable() {
             @Override
@@ -169,15 +200,20 @@ final public class BBCTTestUtil {
      * helper method because the button click must be done on the UI thread
      * while the assertion must not.
      *
-     * @param test The {@link InstrumentationTestCase} object performing the
-     * test.
-     * @param cardDetails The {@link BaseballCardDetails} activity being tested.
+     * @param test
+     *            The {@link InstrumentationTestCase} object performing the
+     *            test.
+     * @param cardDetails
+     *            The {@link BaseballCardDetails} activity being tested.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
-    public static void clickCardDetailsDone(InstrumentationTestCase test, Activity cardDetails) throws Throwable {
-        final Button doneButton = (Button) cardDetails.findViewById(R.id.done_button);
+    public static void clickCardDetailsDone(InstrumentationTestCase test,
+            Activity cardDetails) throws Throwable {
+        final Button doneButton = (Button) cardDetails
+                .findViewById(R.id.done_button);
 
         test.runTestOnUiThread(new Runnable() {
             @Override
@@ -193,46 +229,66 @@ final public class BBCTTestUtil {
      * Fills in all {@link EditText} views of the given
      * {@link BaseballCardDetails} activity.
      *
-     * @param test The {@link InstrumentationTestCase} object performing the
-     * test.
-     * @param cardDetails The {@link BaseballCardDetails} activity being tested.
-     * @param card The {@link BaseballCard} object holding the data to add to
-     * the database.
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity, BaseballCard, Set)
+     * @param test
+     *            The {@link InstrumentationTestCase} object performing the
+     *            test.
+     * @param cardDetails
+     *            The {@link BaseballCardDetails} activity being tested.
+     * @param card
+     *            The {@link BaseballCard} object holding the data to add to the
+     *            database.
+     * @throws InterruptedException
+     *             If {@link Thread#sleep()} is interrupted.
+     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
+     *      BaseballCard, Set)
      */
-    public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card) {
-        BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card, EnumSet.allOf(EditTexts.class));
+    public static void sendKeysToCardDetails(InstrumentationTestCase test,
+            Activity cardDetails, BaseballCard card)
+            throws InterruptedException {
+        BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card,
+                EnumSet.allOf(EditTexts.class));
     }
 
     /**
      * Fills in all EditText views, except the ones indicated, of the given
      * {@link BaseballCardDetails} activity.
      *
-     * @param test The {@link InstrumentationTestCase} object performing the
-     * test.
-     * @param cardDetails The {@link BaseballCardDetails} activity being tested.
-     * @param card The {@link BaseballCard} object holding the data to add to
-     * the database.
-     * @param fieldFlags The {@link EditText} views to fill in.
+     * @param test
+     *            The {@link InstrumentationTestCase} object performing the
+     *            test.
+     * @param cardDetails
+     *            The {@link BaseballCardDetails} activity being tested.
+     * @param card
+     *            The {@link BaseballCard} object holding the data to add to the
+     *            database.
+     * @param fieldFlags
+     *            The {@link EditText} views to fill in.
+     * @throws InterruptedException
+     *             If {@link Thread#sleep()} is interrupted.
      */
-    public static void sendKeysToCardDetails(InstrumentationTestCase test, Activity cardDetails, BaseballCard card, Set<EditTexts> fieldFlags) {
+    public static void sendKeysToCardDetails(InstrumentationTestCase test,
+            Activity cardDetails, BaseballCard card, Set<EditTexts> fieldFlags)
+            throws InterruptedException {
         Log.d(TAG, "sendKeysToCardDetails()");
 
         Instrumentation inst = test.getInstrumentation();
 
         if (fieldFlags.contains(EditTexts.BRAND)) {
-            AutoCompleteTextView brandText = (AutoCompleteTextView) cardDetails.findViewById(R.id.brand_text);
+            AutoCompleteTextView brandText = (AutoCompleteTextView) cardDetails
+                    .findViewById(R.id.brand_text);
             sendKeysToCurrFieldCardDetails(inst, brandText, card.getBrand());
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.YEAR)) {
-            sendKeysToCurrFieldCardDetails(inst, null, Integer.toString(card.getYear()));
+            sendKeysToCurrFieldCardDetails(inst, null,
+                    Integer.toString(card.getYear()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.NUMBER)) {
-            sendKeysToCurrFieldCardDetails(inst, null, Integer.toString(card.getNumber()));
+            sendKeysToCurrFieldCardDetails(inst, null,
+                    Integer.toString(card.getNumber()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
@@ -243,59 +299,72 @@ final public class BBCTTestUtil {
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.COUNT)) {
-            sendKeysToCurrFieldCardDetails(inst, null, Integer.toString(card.getCount()));
+            sendKeysToCurrFieldCardDetails(inst, null,
+                    Integer.toString(card.getCount()));
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
-            AutoCompleteTextView playerNameText = (AutoCompleteTextView) cardDetails.findViewById(R.id.player_name_text);
-            sendKeysToCurrFieldCardDetails(inst, playerNameText, card.getPlayerName());
+            AutoCompleteTextView playerNameText = (AutoCompleteTextView) cardDetails
+                    .findViewById(R.id.player_name_text);
+            sendKeysToCurrFieldCardDetails(inst, playerNameText,
+                    card.getPlayerName());
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.TEAM)) {
-            AutoCompleteTextView teamText = (AutoCompleteTextView) cardDetails.findViewById(R.id.team_text);
+            AutoCompleteTextView teamText = (AutoCompleteTextView) cardDetails
+                    .findViewById(R.id.team_text);
             sendKeysToCurrFieldCardDetails(inst, teamText, card.getTeam());
         }
         inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
-            Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
+            Spinner playerPositionSpinner = (Spinner) cardDetails
+                    .findViewById(R.id.player_position_text);
             @SuppressWarnings("unchecked")
-            ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner.getAdapter();
-            int newPos = playerPositionAdapter.getPosition(card.getPlayerPosition());
+            ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner
+                    .getAdapter();
+            int newPos = playerPositionAdapter.getPosition(card
+                    .getPlayerPosition());
             int oldPos = playerPositionSpinner.getSelectedItemPosition();
             int move = newPos - oldPos;
 
-            Log.d(TAG, "newPos=" + newPos + ", oldPos=" + oldPos + ", move=" + move);
+            Log.d(TAG, "newPos=" + newPos + ", oldPos=" + oldPos + ", move="
+                    + move);
 
             inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
+            Thread.sleep(500);
             if (move > 0) {
                 test.sendRepeatedKeys(move, KeyEvent.KEYCODE_DPAD_DOWN);
             } else {
                 test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
             }
+            Thread.sleep(500);
             inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
         }
     }
 
     /**
-     * Fills in the current AutoCompleteTextView/EditText view,  of the given
+     * Fills in the current AutoCompleteTextView/EditText view, of the given
      * {@link BaseballCardDetails} activity.
      *
-     * @param inst The {@link Instrumentation} object performing the
-     * test.
-     * @param editTextView The {@link BaseballCardDetails} EditText object
-     *                         of the view to be filled
-     * @param cardDetail The {@link BaseballCard} string object holding the data to add to
-     * the database.
+     * @param inst
+     *            The {@link Instrumentation} object performing the test.
+     * @param editTextView
+     *            The {@link BaseballCardDetails} EditText object of the view to
+     *            be filled
+     * @param cardDetail
+     *            The {@link BaseballCard} string object holding the data to add
+     *            to the database.
      */
-    public static void sendKeysToCurrFieldCardDetails(Instrumentation inst, EditText editTextView, String cardDetail) {
+    public static void sendKeysToCurrFieldCardDetails(Instrumentation inst,
+            EditText editTextView, String cardDetail) {
         Log.d(TAG, "sendKeysToCurrFieldCardDetails()");
 
         inst.sendStringSync(cardDetail);
         if (editTextView instanceof AutoCompleteTextView) {
-            if(((AutoCompleteTextView)editTextView).isPopupShowing()) {
+            if (((AutoCompleteTextView) editTextView).isPopupShowing()) {
                 inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
             }
         }
@@ -306,40 +375,58 @@ final public class BBCTTestUtil {
      * {@link BaseballCardDetails} activity contain the same data as the given
      * {@link BaseballCard}.
      *
-     * @param cardDetails The {@link BaseballCardDetails} containing the
-     * {@link EditText} views to check.
-     * @param expectedCard The {@link BaseballCard} containing the expected
-     * data.
+     * @param cardDetails
+     *            The {@link BaseballCardDetails} containing the
+     *            {@link EditText} views to check.
+     * @param expectedCard
+     *            The {@link BaseballCard} containing the expected data.
      */
-    public static void assertAllEditTextContents(Activity cardDetails, BaseballCard expectedCard) {
-        EditText brandText = (EditText) cardDetails.findViewById(R.id.brand_text);
+    public static void assertAllEditTextContents(Activity cardDetails,
+            BaseballCard expectedCard) {
+        EditText brandText = (EditText) cardDetails
+                .findViewById(R.id.brand_text);
         EditText yearText = (EditText) cardDetails.findViewById(R.id.year_text);
-        EditText numberText = (EditText) cardDetails.findViewById(R.id.number_text);
-        EditText valueText = (EditText) cardDetails.findViewById(R.id.value_text);
-        EditText countText = (EditText) cardDetails.findViewById(R.id.count_text);
-        EditText playerNameText = (EditText) cardDetails.findViewById(R.id.player_name_text);
-        Spinner playerPositionSpinner = (Spinner) cardDetails.findViewById(R.id.player_position_text);
+        EditText numberText = (EditText) cardDetails
+                .findViewById(R.id.number_text);
+        EditText valueText = (EditText) cardDetails
+                .findViewById(R.id.value_text);
+        EditText countText = (EditText) cardDetails
+                .findViewById(R.id.count_text);
+        EditText playerNameText = (EditText) cardDetails
+                .findViewById(R.id.player_name_text);
+        Spinner playerPositionSpinner = (Spinner) cardDetails
+                .findViewById(R.id.player_position_text);
 
-        Assert.assertEquals(expectedCard.getBrand(), brandText.getText().toString());
-        Assert.assertEquals(expectedCard.getYear(), Integer.parseInt(yearText.getText().toString()));
-        Assert.assertEquals(expectedCard.getNumber(), Integer.parseInt(numberText.getText().toString()));
-        Assert.assertEquals(expectedCard.getValue(), (int) (Double.parseDouble(valueText.getText().toString()) * 100));
-        Assert.assertEquals(expectedCard.getCount(), Integer.parseInt(countText.getText().toString()));
-        Assert.assertEquals(expectedCard.getPlayerName(), playerNameText.getText().toString());
-        Assert.assertEquals(expectedCard.getPlayerPosition(), playerPositionSpinner.getSelectedItem());
+        Assert.assertEquals(expectedCard.getBrand(), brandText.getText()
+                .toString());
+        Assert.assertEquals(expectedCard.getYear(),
+                Integer.parseInt(yearText.getText().toString()));
+        Assert.assertEquals(expectedCard.getNumber(),
+                Integer.parseInt(numberText.getText().toString()));
+        Assert.assertEquals(
+                expectedCard.getValue(),
+                (int) (Double.parseDouble(valueText.getText().toString()) * 100));
+        Assert.assertEquals(expectedCard.getCount(),
+                Integer.parseInt(countText.getText().toString()));
+        Assert.assertEquals(expectedCard.getPlayerName(), playerNameText
+                .getText().toString());
+        Assert.assertEquals(expectedCard.getPlayerPosition(),
+                playerPositionSpinner.getSelectedItem());
     }
 
     /**
      * Assert that database was created with the correct version and table and
      * that it is empty.
      *
-     * @param targetPackage The target context.
+     * @param targetPackage
+     *            The target context.
      */
     public static void assertDatabaseCreated(Context targetContext) {
         DatabaseUtil dbUtil = new DatabaseUtil(targetContext);
         SQLiteDatabase db = dbUtil.getDatabase();
         Assert.assertNotNull(db);
-        Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION, db.getVersion());
+        Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION,
+                db.getVersion());
 
         // TODO How do I check that a table exists in the database?
         // TODO How do I check that a table has the correct columns?
@@ -349,12 +436,14 @@ final public class BBCTTestUtil {
      * Delete a card from the database by using {@link CheckedTextView} to mark
      * a card to delete and then clicking on "Delete" {@link Button}.
      */
-    public static void removeCard(InstrumentationTestCase test, Activity cardList, BaseballCard card) throws Throwable {
+    public static void removeCard(InstrumentationTestCase test,
+            Activity cardList, BaseballCard card) throws Throwable {
         BBCTTestUtil.markCard(test, cardList, card);
         BBCTTestUtil.clickDeleteCardMenuItem(test, cardList);
     }
 
-    public static void markCard(InstrumentationTestCase test, Activity cardList, BaseballCard card) throws Throwable {
+    public static void markCard(InstrumentationTestCase test,
+            Activity cardList, BaseballCard card) throws Throwable {
         final ListView lv = ((ListActivity) cardList).getListView();
 
         String playerName = card.getPlayerName();
@@ -364,12 +453,18 @@ final public class BBCTTestUtil {
 
         for (int i = 1; i < lv.getChildCount(); i++) {
             View v = lv.getChildAt(i);
-            final CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
+            final CheckedTextView ctv = (CheckedTextView) v
+                    .findViewById(R.id.checkmark);
 
-            boolean isEqualPName = playerName.equals(((TextView)v.findViewById(R.id.player_name_text_view)).getText().toString());
-            boolean isEqualBrand = brand.equals(((TextView)v.findViewById(R.id.brand_text_view)).getText().toString());
-            boolean isEqualYear = ( year == Integer.parseInt(((TextView)v.findViewById(R.id.year_text_view)).getText().toString()) );
-            boolean isEqualNumber = ( number == Integer.parseInt(((TextView)v.findViewById(R.id.number_text_view)).getText().toString()) );
+            boolean isEqualPName = playerName.equals(((TextView) v
+                    .findViewById(R.id.player_name_text_view)).getText()
+                    .toString());
+            boolean isEqualBrand = brand.equals(((TextView) v
+                    .findViewById(R.id.brand_text_view)).getText().toString());
+            boolean isEqualYear = (year == Integer.parseInt(((TextView) v
+                    .findViewById(R.id.year_text_view)).getText().toString()));
+            boolean isEqualNumber = (number == Integer.parseInt(((TextView) v
+                    .findViewById(R.id.number_text_view)).getText().toString()));
 
             if (isEqualPName && isEqualBrand && isEqualYear && isEqualNumber) {
 
@@ -386,17 +481,20 @@ final public class BBCTTestUtil {
 
     }
 
-    public static void clickDeleteCardMenuItem(InstrumentationTestCase test, Activity cardList) throws Throwable {
-        Assert.assertTrue(test.getInstrumentation().invokeMenuActionSync(cardList, R.id.delete_menu, 0));
+    public static void clickDeleteCardMenuItem(InstrumentationTestCase test,
+            Activity cardList) throws Throwable {
+        Assert.assertTrue(test.getInstrumentation().invokeMenuActionSync(
+                cardList, R.id.delete_menu, 0));
     }
 
     /**
-     * Checks if the given child view is visible in the given parent view.
-     * Logic followed is same as {@link ViewAsserts.assertOnScreen()}.
+     * Checks if the given child view is visible in the given parent view. Logic
+     * followed is same as {@link ViewAsserts.assertOnScreen()}.
      *
-     * @param parentView The {@link View} object containing the child view
-     * test.
-     * @param childView The {@link View} object to be checked.
+     * @param parentView
+     *            The {@link View} object containing the child view test.
+     * @param childView
+     *            The {@link View} object to be checked.
      */
     public static boolean isViewOnScreen(View parentView, View childView) {
         int[] xyChild = new int[2];
@@ -405,10 +503,10 @@ final public class BBCTTestUtil {
         parentView.getLocationOnScreen(xyParent);
         int childViewYFromRoot = xyChild[1] - xyParent[1];
         int rootViewHeight = childView.getRootView().getHeight();
-        //If the button is visible on screen, then
-        //view should have positive y coordinate on screen and
-        //view should have y location on screen less than drawing
-        //height of root view
+        // If the button is visible on screen, then
+        // view should have positive y coordinate on screen and
+        // view should have y location on screen less than drawing
+        // height of root view
         if (childViewYFromRoot >= 0 && childViewYFromRoot <= rootViewHeight) {
             return true;
         }
@@ -418,7 +516,8 @@ final public class BBCTTestUtil {
     /**
      * Generate the power set of a given {@link Set}.
      *
-     * @param input A set of elements
+     * @param input
+     *            A set of elements
      * @return The power set of the given {@link Set}
      */
     public static <T> Set<Set<T>> powerSet(Set<T> input) {
@@ -461,8 +560,10 @@ final public class BBCTTestUtil {
     }
 
     /**
-     * Enumeration for {@link android.widget.EditText} views which will be used in
-     * {@link #sendKeysToCardDetails(InstrumentationTestCase, Activity, BaseballCard, Set)}.
+     * Enumeration for {@link android.widget.EditText} views which will be used
+     * in
+     * {@link #sendKeysToCardDetails(InstrumentationTestCase, Activity, BaseballCard, Set)}
+     * .
      */
     public enum EditTexts {
         /**

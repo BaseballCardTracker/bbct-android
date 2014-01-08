@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  */
 package bbct.android.common.provider;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -30,24 +31,26 @@ import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import bbct.android.common.R;
+import bbct.android.common.data.BaseballCard;
 
 /**
  * This class adds click listeners to {@link CheckedTextView} in
- * {@link SimpleCursorAdapter}. It enables {@link CheckedTextView}
- * to toggle its' state.
+ * {@link SimpleCursorAdapter}. It enables {@link CheckedTextView} to toggle
+ * its' state.
  */
-public class CheckedCursorAdapter extends SimpleCursorAdapter {
+public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     @SuppressWarnings("deprecation")
-    public CheckedCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to) {
+    public BaseballCardAdapter(Context context, int layout, Cursor c,
+            String[] from, int[] to) {
         super(context, layout, c, from, to);
         this.context = context;
     }
 
     /**
-     * Restores selection of {@link CheckedTextView} if there
-     * was a previous selection made on the same element. Also
-     * adds {@link OnClickListener} to {@link CheckedTextView}.
+     * Restores selection of {@link CheckedTextView} if there was a previous
+     * selection made on the same element. Also adds {@link OnClickListener} to
+     * {@link CheckedTextView}.
      *
      * @see {@link SimpleCursorAdapater#getView}
      */
@@ -66,23 +69,18 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
         // set listener
         ctv.setOnClickListener(new OnClickListener() {
 
+            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                CheckedTextView cview = (CheckedTextView) v.findViewById(R.id.checkmark);
+                CheckedTextView cview = (CheckedTextView) v
+                        .findViewById(R.id.checkmark);
                 cview.toggle();
-                CheckedCursorAdapter.this.selection[position] = cview.isChecked();
+                BaseballCardAdapter.this.selection[position] = cview
+                        .isChecked();
 
-                // update menu in the correct Activity
-                curActivity.runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                            curActivity.invalidateOptionsMenu();
-                        }
-                    }
-
-                });
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                    curActivity.invalidateOptionsMenu();
+                }
 
             }
 
@@ -92,7 +90,7 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
     }
 
     /**
-     * Marks/unmarks all items in the {@link CheckedCursorAdapter}.
+     * Marks/unmarks all items in the {@link BaseballCardAdapter}.
      *
      * @param check
      *            - a boolean indicating whether all items will be checked
@@ -107,6 +105,7 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
 
     /**
      * Returns the saved selection object.
+     *
      * @return an array of marked items
      */
     public boolean[] getSelection() {
@@ -115,7 +114,9 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
 
     /**
      * Sets the saved selection object.
-     * @param sel - an array of marked items
+     *
+     * @param sel
+     *            - an array of marked items
      */
     public void setSelection(boolean[] sel) {
         this.selection = sel;
@@ -123,9 +124,8 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
     }
 
     /**
-     * Notifies {@link CheckedCursorAdapter} of changed data
-     * and also updates {@link ListView} in the appropriate
-     * {@link ListActivity}
+     * Notifies {@link BaseballCardAdapter} of changed data and also updates
+     * {@link ListView} in the appropriate {@link ListActivity}
      */
     private void updateDataSet() {
         this.notifyDataSetChanged();
@@ -133,12 +133,34 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
         curActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                curActivity.getListView().setAdapter(CheckedCursorAdapter.this);
+                curActivity.getListView().setAdapter(BaseballCardAdapter.this);
             }
         });
+    }
+
+    public BaseballCard getSelectedCard() {
+        Cursor cursor = this.getCursor();
+        String brand = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
+        int year = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.YEAR_COL_NAME));
+        int number = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
+        int value = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
+        int count = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
+        String name = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
+        String team = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.TEAM_COL_NAME));
+        String position = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
+
+        return new BaseballCard(brand, year, number, value, count, name, team,
+                position);
     }
 
     private boolean[] selection;
     private final Context context;
 }
-

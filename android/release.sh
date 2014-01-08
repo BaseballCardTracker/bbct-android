@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REL_DIR=$HOME/src/java/bbct/release
+REL_DIR=$HOME/dev/src/java/bbct/release
 BIN_REL=$REL_DIR/bin/android
 SRC_REL=$REL_DIR/src/android
 

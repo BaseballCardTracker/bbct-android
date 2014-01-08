@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
  */
 package bbct.android.common.activity.test;
 
-
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
@@ -27,19 +26,19 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.ViewAsserts;
 import android.util.Log;
-import android.view.inputmethod.InputMethodManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.R;
-import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.BBCTTestUtil;
+import bbct.android.common.test.BaseballCardCsvFileReader;
 import java.io.InputStream;
 import junit.framework.Assert;
 
@@ -48,10 +47,12 @@ import junit.framework.Assert;
  *
  * TODO: Add tests for the layout of {@link BaseballCardDetails}
  */
-public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
+public class BaseballCardDetailsTest extends
+        ActivityInstrumentationTestCase2<BaseballCardDetails> {
 
     private static final int SLEEP_TIME_TO_REFRESH = 200;
     private static final int KEYPAD_HEIGHT = 100;
+
     /**
      * Create instrumented test cases for {@link BaseballCardDetails}.
      */
@@ -64,7 +65,8 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
      * {@link BaseballCardDetails} activity and all of its {@link EditText} and
      * {@link Button} views and a list of {@link BaseballCard} data.
      *
-     * @throws Exception If an error occurs while chaining to the super class.
+     * @throws Exception
+     *             If an error occurs while chaining to the super class.
      */
     @Override
     public void setUp() throws Exception {
@@ -72,31 +74,38 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
 
         this.inst = this.getInstrumentation();
 
-        InputStream in = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
-        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in, true);
+        InputStream in = this.inst.getContext().getAssets()
+                .open(BBCTTestUtil.CARD_DATA);
+        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
+                true);
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
-        // Must call getActivity() before creating a DatabaseUtil object to ensure that the database is created
+        // Must call getActivity() before creating a DatabaseUtil object to
+        // ensure that the database is created
         this.activity = this.getActivity();
         this.brandText = (EditText) this.activity.findViewById(R.id.brand_text);
         this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
-        this.numberText = (EditText) this.activity.findViewById(R.id.number_text);
+        this.numberText = (EditText) this.activity
+                .findViewById(R.id.number_text);
         this.valueText = (EditText) this.activity.findViewById(R.id.value_text);
         this.countText = (EditText) this.activity.findViewById(R.id.count_text);
-        this.playerNameText = (EditText) this.activity.findViewById(R.id.player_name_text);
-        this.playerTeamText = (EditText) this.activity.findViewById(R.id.team_text);
-        this.playerPositionSpinner = (Spinner) this.activity.findViewById(R.id.player_position_text);
+        this.playerNameText = (EditText) this.activity
+                .findViewById(R.id.player_name_text);
+        this.playerTeamText = (EditText) this.activity
+                .findViewById(R.id.team_text);
+        this.playerPositionSpinner = (Spinner) this.activity
+                .findViewById(R.id.player_position_text);
         this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
         this.doneButton = (Button) this.activity.findViewById(R.id.done_button);
-        this.scrollView = (ScrollView)this.activity.findViewById(R.id.scroll_card_details);
+        this.scrollView = (ScrollView) this.activity
+                .findViewById(R.id.scroll_card_details);
     }
 
     /**
      * Check preconditions which must hold to guarantee the validity of all
-     * other tests. Assert that the Activity to test is not
-     * <code>null</code>, that none of its {@link EditText} views or
-     * {@link Button}s are
+     * other tests. Assert that the Activity to test is not <code>null</code>,
+     * that none of its {@link EditText} views or {@link Button}s are
      * <code>null</code>.
      */
     public void testPreConditions() {
@@ -118,8 +127,11 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
      * Test that all text in the {@link EditText} views of a
      * {@link BaseballCardDetails} activity is preserved when the activity is
      * destroyed and the text is restored when the activity is restarted.
+     *
+     * @throws InterruptedException
+     *             If BBCTTestUtil#sendKeysToCardDetails() is interrupted.
      */
-    public void testStateDestroy() {
+    public void testStateDestroy() throws InterruptedException {
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
@@ -131,8 +143,12 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
      * Test that all text in the {@link EditText} views of a
      * {@link BaseballCardDetails} activity is preserved when the activity is
      * paused and the text is restored when the activity is restarted.
+     *
+     * @throws InterruptedException
+     *             If {@link BBCTTestUtil#sendKeysToCardDetails()} is
+     *             interrupted.
      */
-    public void testStatePause() {
+    public void testStatePause() throws InterruptedException {
         BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
         this.inst.callActivityOnRestart(this.activity);
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
@@ -149,99 +165,102 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
     }
 
     /**
-     * Test that
-     * 1)the focus moves to the next control {@link EditText} in the
+     * Test that 1)the focus moves to the next control {@link EditText} in the
      * {@link BaseballCardDetails} activity when the next button is clicked in
-     * the soft keyboard.
-     * 2)keyboard is removed when the done button is clicked in the soft
-     * keyboard
+     * the soft keyboard. 2)keyboard is removed when the done button is clicked
+     * in the soft keyboard
      */
     public void testNextButtonOnClick() {
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
-                brandText, card.getBrand());
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(yearText.hasFocus());
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.brandText,
+                this.card.getBrand());
+        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(this.yearText.hasFocus());
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
-                yearText, Integer.toString(card.getYear()));
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(numberText.hasFocus());
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.yearText,
+                Integer.toString(this.card.getYear()));
+        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(this.numberText.hasFocus());
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
-                numberText, Integer.toString(card.getNumber()));
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(valueText.hasFocus());
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.numberText,
+                Integer.toString(this.card.getNumber()));
+        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(this.valueText.hasFocus());
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
-                valueText, Integer.toString(card.getValue()));
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(countText.hasFocus());
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.valueText,
+                Integer.toString(this.card.getValue()));
+        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(this.countText.hasFocus());
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
-                countText, Integer.toString(card.getCount()));
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(playerNameText.hasFocus());
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.countText,
+                Integer.toString(this.card.getCount()));
+        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(this.playerNameText.hasFocus());
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
-                playerNameText, card.getPlayerName());
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(playerTeamText.hasFocus());
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst,
+                this.playerNameText, this.card.getPlayerName());
+        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        Assert.assertTrue(this.playerTeamText.hasFocus());
 
-        View rootView = ((ViewGroup)this.activity.findViewById(android.R.id.content)).getChildAt(0);
+        View rootView = ((ViewGroup) this.activity
+                .findViewById(android.R.id.content)).getChildAt(0);
         Rect r = new Rect();
-        //r will be populated with the coordinates of the view area still visible.
+        // r will be populated with the coordinates of the view area still
+        // visible.
         rootView.getWindowVisibleDisplayFrame(r);
 
-        int heightdiffBefore = rootView.getRootView().getHeight() - (r.bottom - r.top);
+        int heightdiffBefore = rootView.getRootView().getHeight()
+                - (r.bottom - r.top);
         boolean condnBefore = false;
-        if (heightdiffBefore>KEYPAD_HEIGHT) {
+        if (heightdiffBefore > KEYPAD_HEIGHT) {
             condnBefore = true;
         }
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(inst,
-                playerTeamText, card.getTeam());
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        //Wait for the keyboard to disappear and view to be refreshed
+        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst,
+                this.playerTeamText, this.card.getTeam());
+        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        // Wait for the keyboard to disappear and view to be refreshed
         try {
             Thread.sleep(SLEEP_TIME_TO_REFRESH);
         } catch (InterruptedException e) {
             Log.e("Click Done button in soft Keyboard", e.getMessage());
         }
         rootView.getWindowVisibleDisplayFrame(r);
-        int heightdiffAfter = rootView.getRootView().getHeight() - (r.bottom - r.top);
+        int heightdiffAfter = rootView.getRootView().getHeight()
+                - (r.bottom - r.top);
         boolean condnAfter = false;
-        if (heightdiffAfter<KEYPAD_HEIGHT) {
+        if (heightdiffAfter < KEYPAD_HEIGHT) {
             condnAfter = true;
         }
-        Assert.assertTrue(condnBefore&&condnAfter);
+        Assert.assertTrue(condnBefore && condnAfter);
     }
 
-     /**
+    /**
      * Test that view of {@link BaseballCardDetails} activity can be scrolled
      * when the save button is not visible on screen.
      */
     public void testCardDetailsScroll() {
-        View parentView = activity.getWindow().getDecorView();
-        //hide the soft keypad
-        InputMethodManager imm = (InputMethodManager) activity
+        View parentView = this.activity.getWindow().getDecorView();
+        // hide the soft keypad
+        InputMethodManager imm = (InputMethodManager) this.activity
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(parentView.getWindowToken(), 0);
-        //Wait till the keypad disappears
+        // Wait till the keypad disappears
         try {
             Thread.sleep(SLEEP_TIME_TO_REFRESH);
         } catch (InterruptedException e) {
             Log.e("getResult", e.getMessage());
         }
-        //check if the 'save' button is already visible. If yes, then
-        //the screen cannot be scrolled. Assert true and return.
-        if (BBCTTestUtil.isViewOnScreen(parentView, saveButton)) {
+        // check if the 'save' button is already visible. If yes, then
+        // the screen cannot be scrolled. Assert true and return.
+        if (BBCTTestUtil.isViewOnScreen(parentView, this.saveButton)) {
             assertTrue(true);
         } else {
-            //scroll to the bottom and check if save button is on the screen
-            scrollView.post(new Runnable() {
+            // scroll to the bottom and check if save button is on the screen
+            this.scrollView.post(new Runnable() {
                 @Override
                 public void run() {
-                    scrollView.fullScroll(View.FOCUS_DOWN);
+                    BaseballCardDetailsTest.this.scrollView
+                            .fullScroll(View.FOCUS_DOWN);
                 }
             });
             // Wait for the scroll
@@ -250,7 +269,7 @@ public class BaseballCardDetailsTest extends ActivityInstrumentationTestCase2<Ba
             } catch (InterruptedException e) {
                 Log.e("getResult", e.getMessage());
             }
-            ViewAsserts.assertOnScreen(parentView, saveButton);
+            ViewAsserts.assertOnScreen(parentView, this.saveButton);
         }
     }
 
