@@ -23,6 +23,7 @@ import android.app.Instrumentation;
 import android.app.ListActivity;
 import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -476,6 +477,7 @@ public class BaseballCardListWithDataTest extends
      * Test that the state of {@link CheckedTextView} is maintained when the
      * {@link BaseballCardList} activity changes orientation.
      */
+    @UiThreadTest
     public void testSelectionAfterSaveInstanceState() throws Throwable {
         Log.d(TAG, "testSelectionAfterSaveInstanceState()");
 
@@ -489,13 +491,7 @@ public class BaseballCardListWithDataTest extends
 
             if (!ctv.isChecked()) {
                 indexes.add(cardIndex);
-
-                this.runTestOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Assert.assertTrue(ctv.performClick());
-                    }
-                });
+                Assert.assertTrue(ctv.performClick());
             }
         }
 
@@ -514,6 +510,7 @@ public class BaseballCardListWithDataTest extends
             Assert.assertTrue(ctv.isChecked());
         }
 
+        this.activity.finish();
         Log.d(TAG, "finished");
     }
 
