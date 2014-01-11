@@ -410,7 +410,7 @@ final public class BBCTTestUtil {
      * Assert that database was created with the correct version and table and
      * that it is empty.
      *
-     * @param targetPackage
+     * @param targetContext
      *            The target context.
      */
     public static void assertDatabaseCreated(Context targetContext) {
