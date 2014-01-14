@@ -17,25 +17,31 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:bbct="http://schemas.android.com/apk/res-auto" >
     <item android:id="@+id/add_menu"
           android:title="@string/add_menu"
           android:icon="@drawable/ic_menu_add"
+          bbct:showAsAction="always"
     />
     <item android:id="@+id/filter_menu"
           android:title="@string/filter_menu"
           android:icon="@drawable/ic_menu_find"
+          bbct:showAsAction="always"
     />
     <item android:id="@+id/clear_filter_menu"
           android:title="@string/clear_filter_menu"
           android:icon="@drawable/ic_menu_block"
+          bbct:showAsAction="always"
     />
     <item android:id="@+id/delete_menu"
           android:title="@string/delete_menu"
           android:icon="@drawable/ic_menu_delete"
+          bbct:showAsAction="ifRoom"
     />
     <item android:id="@+id/about_menu"
           android:title="@string/about_menu"
           android:icon="@drawable/ic_menu_about"
+          bbct:showAsAction="ifRoom"
     />
 </menu>
