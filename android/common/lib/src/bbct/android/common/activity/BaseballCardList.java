@@ -18,17 +18,19 @@
  */
 package bbct.android.common.activity;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,7 +48,7 @@ import bbct.android.common.provider.SQLHelperFactory;
  *
  * TODO: Make list fancier
  */
-public class BaseballCardList extends ListActivity {
+public class BaseballCardList extends ActionBarActivity {
 
     /**
      * Called when the activity is first created.
@@ -67,7 +69,8 @@ public class BaseballCardList extends ListActivity {
                         .getString(R.string.filter_request_extra));
                 this.filterParams = savedInstanceState.getBundle(this
                         .getString(R.string.filter_params_extra));
-                savedSelection = savedInstanceState.getBooleanArray(this.getString(R.string.selection_extra));
+                savedSelection = savedInstanceState.getBooleanArray(this
+                        .getString(R.string.selection_extra));
             }
 
             this.emptyList = (TextView) this.findViewById(android.R.id.empty);
@@ -80,15 +83,16 @@ public class BaseballCardList extends ListActivity {
             ListView listView = (ListView) this.findViewById(android.R.id.list);
             this.headerView = View.inflate(this, R.layout.list_header, null);
             ((CheckedTextView) this.headerView.findViewById(R.id.checkmark))
-            .setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CheckedTextView ctv = (CheckedTextView) v
-                            .findViewById(R.id.checkmark);
-                    ctv.toggle();
-                    BaseballCardList.this.adapter.toggleAll(ctv.isChecked());
-                }
-            });
+                    .setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CheckedTextView ctv = (CheckedTextView) v
+                                    .findViewById(R.id.checkmark);
+                            ctv.toggle();
+                            BaseballCardList.this.adapter.toggleAll(ctv
+                                    .isChecked());
+                        }
+                    });
             listView.addHeaderView(this.headerView);
 
             this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
@@ -128,12 +132,12 @@ public class BaseballCardList extends ListActivity {
     public void onResume() {
         super.onResume();
 
-        this.sqlHelper.applyFilter(this, this.filterRequest,
-                this.filterParams);
+        this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
         this.swapCursor();
 
         // restore default header state
-        CheckedTextView headerCheck = (CheckedTextView) this.headerView.findViewById(R.id.checkmark);
+        CheckedTextView headerCheck = (CheckedTextView) this.headerView
+                .findViewById(R.id.checkmark);
         headerCheck.setChecked(false);
 
         // restore old state if it exists
@@ -153,7 +157,8 @@ public class BaseballCardList extends ListActivity {
             }
 
             // restore header state
-            if (numSelected == this.adapter.getSelection().length && newSelection.length == savedSelection.length) {
+            if (numSelected == this.adapter.getSelection().length
+                    && newSelection.length == savedSelection.length) {
                 headerCheck.setChecked(true);
             }
 
@@ -249,7 +254,8 @@ public class BaseballCardList extends ListActivity {
             for (int i = 0; i < selected.length; i++) {
                 if (selected[i]) {
                     selected[i] = false;
-                    BaseballCard card = this.getBaseballCard(this.adapter.getView(i, null, null));
+                    BaseballCard card = this.getBaseballCard(this.adapter
+                            .getView(i, null, null));
                     this.sqlHelper.removeBaseballCard(card);
                 }
             }
@@ -275,8 +281,8 @@ public class BaseballCardList extends ListActivity {
     }
 
     /**
-     * Save the currently active filter when the system asks for it.
-     * Also save the current state of marked list items.
+     * Save the currently active filter when the system asks for it. Also save
+     * the current state of marked list items.
      *
      * @param outState
      *            The saved state.
@@ -289,39 +295,42 @@ public class BaseballCardList extends ListActivity {
                 this.filterRequest);
         outState.putBundle(this.getString(R.string.filter_params_extra),
                 this.filterParams);
-        outState.putBooleanArray(this.getString(R.string.selection_extra), this.adapter.getSelection());
+        outState.putBooleanArray(this.getString(R.string.selection_extra),
+                this.adapter.getSelection());
     }
 
-    /**
-     * Respond to the user clicking on an item in the list. If the user clicks
-     * on a checkbox, then the corresponding row will be marked for the next
-     * delete operation. Otherwise, the app will display the card data for
-     * editing in a {@link BaseballCardDetails}.
-     *
-     * @param l
-     *            The ListView where the click happened.
-     * @param v
-     *            The view that was clicked within the ListView.
-     * @param position
-     *            The position of the view in the list.
-     * @param id
-     *            The row id of the item that was clicked.
-     */
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        if (position == 0) {
-            return;
+    private final OnItemClickListener onCardClick = new OnItemClickListener() {
+        /**
+         * Respond to the user clicking on an item in the list. If the user
+         * clicks on a checkbox, then the corresponding row will be marked for
+         * the next delete operation. Otherwise, the app will display the card
+         * data for editing in a {@link BaseballCardDetails}.
+         *
+         * @param l
+         *            The ListView where the click happened.
+         * @param v
+         *            The view that was clicked within the ListView.
+         * @param position
+         *            The position of the view in the list.
+         * @param id
+         *            The row id of the item that was clicked.
+         */
+        @Override
+        public void onItemClick(AdapterView<?> row, View v, int position, long id) {
+            if (position == 0) {
+                return;
+            }
+
+            Intent intent = new Intent(Intent.ACTION_EDIT,
+                    BaseballCardDetails.DETAILS_URI);
+            BaseballCard card = BaseballCardList.this.sqlHelper
+                    .getBaseballCardFromCursor();
+
+            intent.putExtra(BaseballCardList.this.getString(R.string.baseball_card_extra), card);
+            intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
+            BaseballCardList.this.startActivity(intent);
         }
-
-        Intent intent = new Intent(Intent.ACTION_EDIT,
-                BaseballCardDetails.DETAILS_URI);
-        BaseballCard card = BaseballCardList.this.sqlHelper
-                .getBaseballCardFromCursor();
-
-        intent.putExtra(this.getString(R.string.baseball_card_extra), card);
-        intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
-        BaseballCardList.this.startActivity(intent);
-    }
+    };
 
     /**
      * Respond to the result of a child activity by applying a filter after
