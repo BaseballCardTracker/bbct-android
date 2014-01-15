@@ -733,8 +733,8 @@ public class BaseballCardListWithDataTest extends
      */
     public void testClearFilter() throws Throwable {
         this.testYearFilter();
-        Assert.assertTrue(this.inst.invokeMenuActionSync(this.activity,
-                R.id.clear_filter_menu, 0));
+        BBCTTestUtil.testMenuItem(this.inst, this.activity,
+                R.id.clear_filter_menu);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards,
                 this.listView);
     }

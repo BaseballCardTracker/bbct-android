@@ -106,6 +106,23 @@ final public class BBCTTestUtil {
         }
     }
 
+    public static void testMenuItem(Instrumentation inst,
+            Activity activity, int menuId) {
+        final View menuView = activity.findViewById(menuId);
+
+        if (menuView == null) {
+            Assert.assertTrue(inst.invokeMenuActionSync(activity, menuId,
+                    MENU_FLAGS));
+        } else {
+            inst.runOnMainSync(new Runnable() {
+                @Override
+                public void run() {
+                    Assert.assertTrue(menuView.performClick());
+                }
+            });
+        }
+    }
+
     /**
      * Test that a menu item correctly launches a child activity.
      *
@@ -126,21 +143,7 @@ final public class BBCTTestUtil {
         Instrumentation.ActivityMonitor monitor = new Instrumentation.ActivityMonitor(
                 childActivityClass.getName(), null, false);
         inst.addMonitor(monitor);
-
-        final View menuView = activity.findViewById(menuId);
-
-        if (menuView == null) {
-            Assert.assertTrue(inst.invokeMenuActionSync(activity, menuId,
-                    MENU_FLAGS));
-        } else {
-            inst.runOnMainSync(new Runnable() {
-                @Override
-                public void run() {
-                    Assert.assertTrue(menuView.performClick());
-                }
-            });
-        }
-
+        BBCTTestUtil.testMenuItem(inst, activity, menuId);
         Activity childActivity = inst.waitForMonitorWithTimeout(monitor,
                 TIME_OUT);
 
