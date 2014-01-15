@@ -19,6 +19,7 @@
 package bbct.android.common.activity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -73,7 +74,8 @@ public class BaseballCardList extends ActionBarActivity {
             }
 
             this.emptyList = (TextView) this.findViewById(android.R.id.empty);
-            if (this.filterRequest == R.id.no_filter) {
+            Resources res = this.getResources();
+            if (this.filterRequest == res.getInteger(R.integer.no_filter)) {
                 this.emptyList.setText(R.string.start);
             } else {
                 this.emptyList.setText(R.string.empty_list);
@@ -140,7 +142,7 @@ public class BaseballCardList extends ActionBarActivity {
         headerCheck.setChecked(false);
 
         // restore old state if it exists
-        if (savedSelection != null && this.filterRequest == R.id.no_filter) {
+        if (savedSelection != null && this.filterRequest == INVALID) {
 
             // array needs to be extended in case a card was added
             boolean[] newSelection = new boolean[this.adapter.getSelection().length];
@@ -190,7 +192,8 @@ public class BaseballCardList extends ActionBarActivity {
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (this.filterRequest == R.id.no_filter) {
+        Resources res = this.getResources();
+        if (this.filterRequest == res.getInteger(R.integer.no_filter)) {
             menu.findItem(R.id.filter_menu).setVisible(true);
             menu.findItem(R.id.clear_filter_menu).setVisible(false);
         } else {
@@ -225,6 +228,7 @@ public class BaseballCardList extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
+        Resources res = this.getResources();
         if (itemId == R.id.add_menu) {
             Intent intent = new Intent(Intent.ACTION_EDIT,
                     BaseballCardDetails.DETAILS_URI);
@@ -232,11 +236,12 @@ public class BaseballCardList extends ActionBarActivity {
             this.startActivity(intent);
             return true;
         } else if (itemId == R.id.filter_menu) {
+            int requestCode = res.getInteger(R.integer.filter_options_request);
             this.startActivityForResult(new Intent(this, FilterOptions.class),
-                    R.id.filter_options_request);
+                    requestCode);
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
-            this.filterRequest = R.id.no_filter;
+            this.filterRequest = res.getInteger(R.integer.no_filter);
             this.emptyList.setText(R.string.start);
             savedSelection = null;
             this.sqlHelper.clearFilter();
@@ -315,7 +320,8 @@ public class BaseballCardList extends ActionBarActivity {
          *            The row id of the item that was clicked.
          */
         @Override
-        public void onItemClick(AdapterView<?> row, View v, int position, long id) {
+        public void onItemClick(AdapterView<?> row, View v, int position,
+                long id) {
             if (position == 0) {
                 return;
             }
@@ -325,7 +331,8 @@ public class BaseballCardList extends ActionBarActivity {
             BaseballCard card = BaseballCardList.this.sqlHelper
                     .getBaseballCardFromCursor();
 
-            intent.putExtra(BaseballCardList.this.getString(R.string.baseball_card_extra), card);
+            intent.putExtra(BaseballCardList.this
+                    .getString(R.string.baseball_card_extra), card);
             intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
             BaseballCardList.this.startActivity(intent);
         }
@@ -347,7 +354,9 @@ public class BaseballCardList extends ActionBarActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == R.id.filter_options_request) {
+        Resources res = this.getResources();
+
+        if (requestCode == res.getInteger(R.integer.filter_options_request)) {
             if (resultCode == RESULT_OK) {
                 this.filterRequest = data.getIntExtra(
                         this.getString(R.string.filter_request_extra),
@@ -411,11 +420,12 @@ public class BaseballCardList extends ActionBarActivity {
 
     private static final String TAG = BaseballCardList.class.getName();
     private static final int DEFAULT_INT_EXTRA = -1;
+    private static final int INVALID = -1;
     private static boolean[] savedSelection;
     TextView emptyList = null;
     private BaseballCardSQLHelper sqlHelper = null;
     private CheckedCursorAdapter adapter = null;
-    private int filterRequest = R.id.no_filter;
+    private int filterRequest = INVALID;
     private Bundle filterParams = null;
     private View headerView;
 }

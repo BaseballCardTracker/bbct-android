@@ -20,6 +20,7 @@ package bbct.android.common.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RadioButton;
@@ -91,11 +92,12 @@ public class FilterOptions extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == R.id.year_filter_request
-                || requestCode == R.id.number_filter_request
-                || requestCode == R.id.year_and_number_filter_request
-                || requestCode == R.id.player_name_filter_request
-                || requestCode == R.id.team_filter_request) {
+        Resources res = this.getResources();
+        if (requestCode == res.getInteger(R.integer.year_filter_request)
+                || requestCode == res.getInteger(R.integer.number_filter_request)
+                || requestCode == res.getInteger(R.integer.year_and_number_filter_request)
+                || requestCode == res.getInteger(R.integer.player_name_filter_request)
+                || requestCode == res.getInteger(R.integer.team_filter_request)) {
             if (resultCode == RESULT_OK) {
                 this.setResult(RESULT_OK, data);
                 this.finish();
@@ -117,17 +119,18 @@ public class FilterOptions extends Activity {
             Log.d(TAG, "Radio button selected.");
             Log.d(TAG, "radioButtonId=" + checkedId);
 
+            Resources res = FilterOptions.this.getResources();
             if (checkedId == R.id.year_filter_radio_button) {
                 Log.d(TAG, "Year radio button selected.");
-                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearFilter.class), R.id.year_filter_request);
+                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearFilter.class), res.getInteger(R.integer.year_filter_request));
             } else if (checkedId == R.id.number_filter_radio_button) {
-                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, NumberFilter.class), R.id.number_filter_request);
+                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, NumberFilter.class), res.getInteger(R.integer.number_filter_request));
             } else if (checkedId == R.id.year_and_number_filter_radio_button) {
-                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearAndNumberFilter.class), R.id.year_and_number_filter_request);
+                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearAndNumberFilter.class), res.getInteger(R.integer.year_and_number_filter_request));
             } else if (checkedId == R.id.player_name_filter_radio_button) {
-                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, PlayerNameFilter.class), R.id.player_name_filter_request);
+                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, PlayerNameFilter.class), res.getInteger(R.integer.player_name_filter_request));
             } else if (checkedId == R.id.team_filter_radio_button) {
-                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, TeamFilter.class), R.id.team_filter_request);
+                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, TeamFilter.class), res.getInteger(R.integer.team_filter_request));
             } else {
                 Log.e(TAG, "Invalid radio button ID.");
                 // TODO: Throw an exception?
