@@ -128,8 +128,19 @@ final public class BBCTTestUtil {
                 childActivityClass.getName(), null, false);
         inst.addMonitor(monitor);
 
-        Assert.assertTrue(inst.invokeMenuActionSync(activity, menuId,
-                MENU_FLAGS));
+        final View menuView = activity.findViewById(menuId);
+
+        if (menuView == null) {
+            Assert.assertTrue(inst.invokeMenuActionSync(activity, menuId,
+                    MENU_FLAGS));
+        } else {
+            inst.runOnMainSync(new Runnable() {
+                @Override
+                public void run() {
+                    Assert.assertTrue(menuView.performClick());
+                }
+            });
+        }
 
         Activity childActivity = inst.waitForMonitorWithTimeout(monitor,
                 TIME_OUT);
