@@ -83,7 +83,6 @@ public class BaseballCardList extends ActionBarActivity {
             }
 
             ListView listView = (ListView) this.findViewById(android.R.id.list);
-            listView.setEmptyView(this.emptyList);
             this.headerView = View.inflate(this, R.layout.list_header, null);
             ((CheckedTextView) this.headerView.findViewById(R.id.checkmark))
                     .setOnClickListener(new OnClickListener() {
@@ -97,6 +96,8 @@ public class BaseballCardList extends ActionBarActivity {
                         }
                     });
             listView.addHeaderView(this.headerView);
+            listView.setEmptyView(this.emptyList);
+            listView.setOnItemClickListener(this.onCardClick);
 
             this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
                     ROW_PROJECTION, ROW_TEXT_VIEWS);
