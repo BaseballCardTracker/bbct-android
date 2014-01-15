@@ -64,6 +64,7 @@ public class BaseballCardList extends ActionBarActivity {
             savedSelection = null;
 
             this.setContentView(R.layout.card_list);
+            this.filterRequest = this.getResources().getInteger(R.integer.no_filter);
             if (savedInstanceState != null) {
                 this.filterRequest = savedInstanceState.getInt(this
                         .getString(R.string.filter_request_extra));
@@ -82,6 +83,7 @@ public class BaseballCardList extends ActionBarActivity {
             }
 
             ListView listView = (ListView) this.findViewById(android.R.id.list);
+            listView.setEmptyView(this.emptyList);
             this.headerView = View.inflate(this, R.layout.list_header, null);
             ((CheckedTextView) this.headerView.findViewById(R.id.checkmark))
                     .setOnClickListener(new OnClickListener() {
