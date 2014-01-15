@@ -58,13 +58,16 @@ public class FilterOptions extends Activity {
      * Register a {@link FilterActivity} which should be launched when the
      * {@link RadioButton} with the given id is selected.
      *
-     * @param id The radio button associated with the given
-     * {@link FilterActivity} class.
-     * @param filterActivityClass The {@link Class} for the
-     * {@link FilterActivity} which should be launched when the
-     * {@link RadioButton} with the given id is selected.
+     * @param id
+     *            The radio button associated with the given
+     *            {@link FilterActivity} class.
+     * @param filterActivityClass
+     *            The {@link Class} for the {@link FilterActivity} which should
+     *            be launched when the {@link RadioButton} with the given id is
+     *            selected.
      */
-    public static void registerFilterActivity(int id, Class<? extends FilterActivity> filterActivityClass) {
+    public static void registerFilterActivity(int id,
+            Class<? extends FilterActivity> filterActivityClass) {
         Log.d(TAG, "registerFilterActivity()");
         Log.d(TAG, "id=" + id + ", filterActivityClass=" + filterActivityClass);
 
@@ -74,7 +77,8 @@ public class FilterOptions extends Activity {
     /**
      * Called when the activity is first created.
      *
-     * @param savedInstanceState Ignored
+     * @param savedInstanceState
+     *            Ignored
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,36 +86,45 @@ public class FilterOptions extends Activity {
         this.setContentView(R.layout.filter_options);
 
         String format = this.getString(R.string.bbct_title);
-        String filterOptionsTitle = this.getString(R.string.filter_options_title);
+        String filterOptionsTitle = this
+                .getString(R.string.filter_options_title);
         String title = String.format(format, filterOptionsTitle);
         this.setTitle(title);
 
-        RadioGroup filterByRadioGroup = (RadioGroup) this.findViewById(R.id.filter_options_radio_group);
-        filterByRadioGroup.setOnCheckedChangeListener(this.onRadioButtonSelected);
+        RadioGroup filterByRadioGroup = (RadioGroup) this
+                .findViewById(R.id.filter_options_radio_group);
+        filterByRadioGroup
+                .setOnCheckedChangeListener(this.onRadioButtonSelected);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Resources res = this.getResources();
         if (requestCode == res.getInteger(R.integer.year_filter_request)
-                || requestCode == res.getInteger(R.integer.number_filter_request)
-                || requestCode == res.getInteger(R.integer.year_and_number_filter_request)
-                || requestCode == res.getInteger(R.integer.player_name_filter_request)
+                || requestCode == res
+                        .getInteger(R.integer.number_filter_request)
+                || requestCode == res
+                        .getInteger(R.integer.year_and_number_filter_request)
+                || requestCode == res
+                        .getInteger(R.integer.player_name_filter_request)
                 || requestCode == res.getInteger(R.integer.team_filter_request)) {
             if (resultCode == RESULT_OK) {
                 this.setResult(RESULT_OK, data);
                 this.finish();
             }
         } else {
-            Log.e(TAG, "onActivityResult(): Invalid Activity request: " + requestCode);
+            Log.e(TAG, "onActivityResult(): Invalid Activity request: "
+                    + requestCode);
             // TODO: Throw an exception?
         }
     }
+
     private final OnCheckedChangeListener onRadioButtonSelected = new OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-            // we do not want this call when selection on radio button gets cleared
+            // we do not want this call when selection on radio button gets
+            // cleared
             if (checkedId == -1) {
                 return;
             }
@@ -122,15 +135,25 @@ public class FilterOptions extends Activity {
             Resources res = FilterOptions.this.getResources();
             if (checkedId == R.id.year_filter_radio_button) {
                 Log.d(TAG, "Year radio button selected.");
-                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearFilter.class), res.getInteger(R.integer.year_filter_request));
+                FilterOptions.this.startActivityForResult(new Intent(
+                        FilterOptions.this, YearFilter.class), res
+                        .getInteger(R.integer.year_filter_request));
             } else if (checkedId == R.id.number_filter_radio_button) {
-                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, NumberFilter.class), res.getInteger(R.integer.number_filter_request));
+                FilterOptions.this.startActivityForResult(new Intent(
+                        FilterOptions.this, NumberFilter.class), res
+                        .getInteger(R.integer.number_filter_request));
             } else if (checkedId == R.id.year_and_number_filter_radio_button) {
-                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, YearAndNumberFilter.class), res.getInteger(R.integer.year_and_number_filter_request));
+                FilterOptions.this.startActivityForResult(new Intent(
+                        FilterOptions.this, YearAndNumberFilter.class), res
+                        .getInteger(R.integer.year_and_number_filter_request));
             } else if (checkedId == R.id.player_name_filter_radio_button) {
-                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, PlayerNameFilter.class), res.getInteger(R.integer.player_name_filter_request));
+                FilterOptions.this.startActivityForResult(new Intent(
+                        FilterOptions.this, PlayerNameFilter.class), res
+                        .getInteger(R.integer.player_name_filter_request));
             } else if (checkedId == R.id.team_filter_radio_button) {
-                FilterOptions.this.startActivityForResult(new Intent(FilterOptions.this, TeamFilter.class), res.getInteger(R.integer.team_filter_request));
+                FilterOptions.this.startActivityForResult(new Intent(
+                        FilterOptions.this, TeamFilter.class), res
+                        .getInteger(R.integer.team_filter_request));
             } else {
                 Log.e(TAG, "Invalid radio button ID.");
                 // TODO: Throw an exception?

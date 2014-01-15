@@ -229,12 +229,14 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
             int number = params
                     .getInt(context.getString(R.string.number_extra));
             this.filterCursorByNumber(number);
-        } else if (request == res.getInteger(R.integer.year_and_number_filter_request)) {
+        } else if (request == res
+                .getInteger(R.integer.year_and_number_filter_request)) {
             int year = params.getInt(context.getString(R.string.year_extra));
             int number = params
                     .getInt(context.getString(R.string.number_extra));
             this.filterCursorByYearAndNumber(year, number);
-        } else if (request == res.getInteger(R.integer.player_name_filter_request)) {
+        } else if (request == res
+                .getInteger(R.integer.player_name_filter_request)) {
             String playerName = params.getString(context
                     .getString(R.string.player_name_extra));
             this.filterCursorByPlayerName(playerName);
