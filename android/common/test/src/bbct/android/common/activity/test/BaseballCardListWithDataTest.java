@@ -20,7 +20,6 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.app.ListActivity;
 import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
@@ -383,7 +382,7 @@ public class BaseballCardListWithDataTest extends
      * selected from {@link ListView}.
      */
     public void testSelection() throws Throwable {
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int index = (int) (Math.random() * (lv.getChildCount() - 1)) + 1;
         final CheckedTextView ctv = (CheckedTextView) lv.getChildAt(index)
                 .findViewById(R.id.checkmark);
@@ -404,7 +403,7 @@ public class BaseballCardListWithDataTest extends
      * {@link ListView} are selected.
      */
     public void testMarkAll() throws Throwable {
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         final CheckedTextView header = (CheckedTextView) lv.getChildAt(0)
                 .findViewById(R.id.checkmark);
 
@@ -435,7 +434,7 @@ public class BaseballCardListWithDataTest extends
     public void testDeleteCardUsingFilter() throws Throwable {
         this.testYearFilter();
 
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int cardIndex = (int) (Math.random() * (lv.getChildCount() - 1) + 1);
         View v = lv.getChildAt(cardIndex);
         BaseballCard toDelete = this.getBaseballCardFromView(v);
@@ -460,7 +459,7 @@ public class BaseballCardListWithDataTest extends
     public void testDeleteCardNoFilter() throws Throwable {
         this.testClearFilter();
 
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int cardIndex = (int) (Math.random() * (lv.getChildCount() - 1) + 1);
         View v = lv.getChildAt(cardIndex);
         BaseballCard toDelete = this.getBaseballCardFromView(v);
@@ -481,7 +480,7 @@ public class BaseballCardListWithDataTest extends
     public void testSelectionAfterSaveInstanceState() throws Throwable {
         Log.d(TAG, "testSelectionAfterSaveInstanceState()");
 
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         ArrayList<Integer> indexes = new ArrayList<Integer>();
 
         for (int i = 0; i < 3; i++) {
@@ -500,7 +499,7 @@ public class BaseballCardListWithDataTest extends
                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         Log.d(TAG, "assertions");
-        lv = ((ListActivity) this.activity).getListView();
+        lv = (ListView) this.activity.findViewById(android.R.id.list);
         Log.d(TAG, "lv.getChildCount()=" + lv.getChildCount());
         for (int i = 0; i < indexes.size(); i++) {
             View row = lv.getChildAt(indexes.get(i));
@@ -519,7 +518,7 @@ public class BaseballCardListWithDataTest extends
      * adds a new card.
      */
     public void testSelectionAfterAddCard() throws Throwable {
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         ArrayList<Integer> indexes = new ArrayList<Integer>();
 
         for (int i = 0; i < 3; i++) {
@@ -541,7 +540,7 @@ public class BaseballCardListWithDataTest extends
 
         this.testAddCardToPopulatedDatabase();
 
-        lv = ((ListActivity) this.activity).getListView();
+        lv = (ListView) this.activity.findViewById(android.R.id.list);
         for (int i = 0; i < indexes.size(); i++) {
             CheckedTextView ctv = (CheckedTextView) lv.getChildAt(
                     indexes.get(i)).findViewById(R.id.checkmark);

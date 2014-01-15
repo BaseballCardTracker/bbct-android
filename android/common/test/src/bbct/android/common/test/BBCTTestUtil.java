@@ -20,7 +20,6 @@ package bbct.android.common.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.app.ListActivity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
@@ -455,7 +454,7 @@ final public class BBCTTestUtil {
 
     public static void markCard(InstrumentationTestCase test,
             Activity cardList, BaseballCard card) throws Throwable {
-        final ListView lv = ((ListActivity) cardList).getListView();
+        final ListView lv = (ListView) cardList.findViewById(android.R.id.list);
 
         String playerName = card.getPlayerName();
         String brand = card.getBrand();
