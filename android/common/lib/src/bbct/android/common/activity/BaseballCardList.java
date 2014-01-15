@@ -21,7 +21,6 @@ package bbct.android.common.activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -197,7 +196,7 @@ public class BaseballCardList extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         Resources res = this.getResources();
-        MenuItem filter =  menu.findItem(R.id.filter_menu);
+        MenuItem filter = menu.findItem(R.id.filter_menu);
         MenuItem clearFilter = menu.findItem(R.id.clear_filter_menu);
         if (this.filterRequest == res.getInteger(R.integer.no_filter)) {
             filter.setVisible(true);
@@ -258,10 +257,7 @@ public class BaseballCardList extends ActionBarActivity {
             savedSelection = null;
             this.sqlHelper.clearFilter();
             this.swapCursor();
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                this.invalidateOptionsMenu();
-            }
+            this.invalidateOptionsMenu();
 
             return true;
         } else if (itemId == R.id.delete_menu) {
@@ -379,6 +375,7 @@ public class BaseballCardList extends ActionBarActivity {
                 this.sqlHelper.applyFilter(this, this.filterRequest,
                         this.filterParams);
                 this.swapCursor();
+                this.invalidateOptionsMenu();
             }
         } else {
             Log.e(TAG, "onActivityResult(): Invalid result code: "
