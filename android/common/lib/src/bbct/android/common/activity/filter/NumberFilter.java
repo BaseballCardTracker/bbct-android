@@ -54,8 +54,9 @@ public class NumberFilter extends FilterActivity {
     public Intent getResult() {
         String numberStr = this.numberText.getText().toString();
         int number = Integer.parseInt(numberStr);
+        int requestCode = this.getResources().getInteger(R.integer.number_filter_request);
         Intent result = new Intent();
-        result.putExtra(this.getString(R.string.filter_request_extra), R.id.number_filter_request);
+        result.putExtra(this.getString(R.string.filter_request_extra), requestCode);
         result.putExtra(this.getString(R.string.number_extra), number);
 
         return result;
