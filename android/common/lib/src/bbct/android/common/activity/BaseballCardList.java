@@ -64,7 +64,8 @@ public class BaseballCardList extends ActionBarActivity {
             savedSelection = null;
 
             this.setContentView(R.layout.card_list);
-            this.filterRequest = this.getResources().getInteger(R.integer.no_filter);
+            this.filterRequest = this.getResources().getInteger(
+                    R.integer.no_filter);
             if (savedInstanceState != null) {
                 this.filterRequest = savedInstanceState.getInt(this
                         .getString(R.string.filter_request_extra));
@@ -196,12 +197,20 @@ public class BaseballCardList extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         Resources res = this.getResources();
+        MenuItem filter =  menu.findItem(R.id.filter_menu);
+        MenuItem clearFilter = menu.findItem(R.id.clear_filter_menu);
         if (this.filterRequest == res.getInteger(R.integer.no_filter)) {
-            menu.findItem(R.id.filter_menu).setVisible(true);
-            menu.findItem(R.id.clear_filter_menu).setVisible(false);
+            filter.setVisible(true);
+            filter.setEnabled(true);
+
+            clearFilter.setVisible(false);
+            clearFilter.setEnabled(false);
         } else {
-            menu.findItem(R.id.filter_menu).setVisible(false);
-            menu.findItem(R.id.clear_filter_menu).setVisible(true);
+            filter.setVisible(false);
+            filter.setEnabled(false);
+
+            clearFilter.setVisible(true);
+            clearFilter.setEnabled(true);
         }
 
         // update delete menu option
