@@ -48,8 +48,6 @@ import junit.framework.Assert;
 
 /**
  * Utility methods used for JUnit tests on classes in Android version of BBCT.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 final public class BBCTTestUtil {
 
