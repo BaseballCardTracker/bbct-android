@@ -21,6 +21,7 @@ package bbct.android.common.activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -123,6 +124,9 @@ public class BaseballCardDetails extends ActionBarActivity {
                     .getPlayerPosition());
             this.playerPositionSpinner.setSelection(selectedPosition);
         }
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private BaseballCard getBaseballCard() {
@@ -195,7 +199,7 @@ public class BaseballCardDetails extends ActionBarActivity {
                 return true;
             } else if (this.teamText.hasFocus()) {
                 //hide the soft keypad
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(this.teamText.getWindowToken(), 0);
                 return true;
             }

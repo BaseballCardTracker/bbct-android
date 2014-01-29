@@ -21,6 +21,7 @@ package bbct.android.common.activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.RadioButton;
@@ -95,6 +96,9 @@ public class FilterOptions extends ActionBarActivity {
                 .findViewById(R.id.filter_options_radio_group);
         filterByRadioGroup
                 .setOnCheckedChangeListener(this.onRadioButtonSelected);
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

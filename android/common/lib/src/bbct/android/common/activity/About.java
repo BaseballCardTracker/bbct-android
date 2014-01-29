@@ -20,6 +20,7 @@ package bbct.android.common.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.TextView;
@@ -51,6 +52,9 @@ public class About extends ActionBarActivity {
         Log.d(TAG, "versionString=" + versionString);
 
         versionLabel.setText(versionString);
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
     private static final String TAG = About.class.getName();
 }

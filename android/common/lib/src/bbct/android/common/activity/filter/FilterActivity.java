@@ -21,6 +21,7 @@ package bbct.android.common.activity.filter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
@@ -56,6 +57,9 @@ public abstract class FilterActivity extends ActionBarActivity {
 
         Button cancelButton = (Button) this.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(this.onCancel);
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     /**

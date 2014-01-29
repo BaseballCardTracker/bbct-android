@@ -52,7 +52,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="bbct.android.common.activity.BaseballCardDetails" >
+        <activity android:name=".activity.BaseballCardDetails" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
 
@@ -60,14 +60,46 @@
 
                 <data android:mimeType="vnd.android.cursor.item/baseball_card" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.BaseballCardList" />
         </activity>
-        <activity android:name="bbct.android.common.activity.FilterOptions" />
-        <activity android:name="bbct.android.common.activity.filter.YearFilter" />
-        <activity android:name="bbct.android.common.activity.filter.NumberFilter" />
-        <activity android:name="bbct.android.common.activity.filter.YearAndNumberFilter" />
-        <activity android:name="bbct.android.common.activity.filter.PlayerNameFilter" />
-        <activity android:name="bbct.android.common.activity.filter.TeamFilter" />
-        <activity android:name="bbct.android.common.activity.About" />
+        <activity android:name=".activity.FilterOptions" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.BaseballCardList" />
+        </activity>
+        <activity android:name=".activity.filter.YearFilter" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.FilterOptions" />
+        </activity>
+        <activity android:name=".activity.filter.NumberFilter" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.FilterOptions" />
+        </activity>
+        <activity android:name=".activity.filter.YearAndNumberFilter" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.FilterOptions" />
+        </activity>
+        <activity android:name=".activity.filter.PlayerNameFilter" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.FilterOptions" />
+        </activity>
+        <activity android:name=".activity.filter.TeamFilter" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.FilterOptions" />
+        </activity>
+        <activity android:name=".activity.About" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.BaseballCardList" />
+        </activity>
 
         <provider
             android:name="bbct.android.common.provider.BaseballCardProvider"
