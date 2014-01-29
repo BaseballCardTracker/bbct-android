@@ -18,10 +18,10 @@
  */
 package bbct.android.common.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -52,7 +52,7 @@ import java.util.Map;
  * @see PlayerNameFilter
  * @see TeamFilter
  */
-public class FilterOptions extends Activity {
+public class FilterOptions extends ActionBarActivity {
 
     /**
      * Register a {@link FilterActivity} which should be launched when the
