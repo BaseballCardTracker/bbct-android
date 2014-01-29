@@ -60,7 +60,7 @@ public class BaseballCardList extends ActionBarActivity {
         try {
             super.onCreate(savedInstanceState);
             this.sqlHelper = SQLHelperFactory.getSQLHelper(this);
-            savedSelection = null;
+            this.savedSelection = null;
 
             this.setContentView(R.layout.card_list);
             this.filterRequest = this.getResources().getInteger(
@@ -70,7 +70,7 @@ public class BaseballCardList extends ActionBarActivity {
                         .getString(R.string.filter_request_extra));
                 this.filterParams = savedInstanceState.getBundle(this
                         .getString(R.string.filter_params_extra));
-                savedSelection = savedInstanceState.getBooleanArray(this
+                this.savedSelection = savedInstanceState.getBooleanArray(this
                         .getString(R.string.selection_extra));
             }
 
@@ -126,7 +126,7 @@ public class BaseballCardList extends ActionBarActivity {
     public void onPause() {
         super.onPause();
 
-        savedSelection = this.adapter.getSelection();
+        this.savedSelection = this.adapter.getSelection();
     }
 
     /**
@@ -152,8 +152,8 @@ public class BaseballCardList extends ActionBarActivity {
 
             // copy old selection array into new selection array
             int numSelected = 0;
-            for (int i = 0; i < savedSelection.length; i++) {
-                newSelection[i] = savedSelection[i];
+            for (int i = 0; i < this.savedSelection.length; i++) {
+                newSelection[i] = this.savedSelection[i];
 
                 if (newSelection[i]) {
                     numSelected++;
@@ -162,7 +162,7 @@ public class BaseballCardList extends ActionBarActivity {
 
             // restore header state
             if (numSelected == this.adapter.getSelection().length
-                    && newSelection.length == savedSelection.length) {
+                    && newSelection.length == this.savedSelection.length) {
                 headerCheck.setChecked(true);
             }
 
@@ -254,7 +254,7 @@ public class BaseballCardList extends ActionBarActivity {
         } else if (itemId == R.id.clear_filter_menu) {
             this.filterRequest = res.getInteger(R.integer.no_filter);
             this.emptyList.setText(R.string.start);
-            savedSelection = null;
+            this.savedSelection = null;
             this.sqlHelper.clearFilter();
             this.swapCursor();
             this.invalidateOptionsMenu();
@@ -430,7 +430,7 @@ public class BaseballCardList extends ActionBarActivity {
     private static final String TAG = BaseballCardList.class.getName();
     private static final int DEFAULT_INT_EXTRA = -1;
     private static final int INVALID = -1;
-    private static boolean[] savedSelection;
+    private boolean[] savedSelection;
     TextView emptyList = null;
     private BaseballCardSQLHelper sqlHelper = null;
     private CheckedCursorAdapter adapter = null;
