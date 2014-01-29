@@ -145,7 +145,7 @@ public class BaseballCardList extends ActionBarActivity {
         headerCheck.setChecked(false);
 
         // restore old state if it exists
-        if (savedSelection != null && this.filterRequest == INVALID) {
+        if (this.savedSelection != null && this.filterRequest == this.getResources().getInteger(R.integer.no_filter)) {
 
             // array needs to be extended in case a card was added
             boolean[] newSelection = new boolean[this.adapter.getSelection().length];
