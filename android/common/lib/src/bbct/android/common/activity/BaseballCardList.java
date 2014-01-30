@@ -166,7 +166,7 @@ public class BaseballCardList extends ListActivity {
      * Create the options menu. This is simply inflated from the
      * {@code option.xml} resource file.
      *
-     * @param The
+     * @param menu
      *            The options menu in which new menu items are placed.
      */
     @Override
