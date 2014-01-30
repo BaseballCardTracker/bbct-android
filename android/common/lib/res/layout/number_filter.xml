@@ -30,7 +30,10 @@
             android:id="@id/number_text"
             android:hint="@string/number_hint"
             android:inputType="number"
-            android:singleLine="true" />
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
     </TableRow>
 
     <LinearLayout

@@ -39,7 +39,10 @@
                 android:hint="@string/brand_hint"
                 android:inputType="textCapWords"
                 android:selectAllOnFocus="true"
-                android:singleLine="true" />
+                android:singleLine="true" >
+
+                <requestFocus />
+            </AutoCompleteTextView>
         </TableRow>
 
         <TableRow>

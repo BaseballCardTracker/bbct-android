@@ -30,7 +30,10 @@
             android:id="@id/player_name_text"
             android:hint="@string/player_name_hint"
             android:inputType="textCapWords"
-            android:singleLine="true" />
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
     </TableRow>
 
     <LinearLayout

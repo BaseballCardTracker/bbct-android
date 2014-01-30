@@ -30,7 +30,10 @@
             android:id="@id/year_text"
             android:hint="@string/year_hint"
             android:inputType="number"
-            android:singleLine="true" />
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
     </TableRow>
 
     <TableRow>
