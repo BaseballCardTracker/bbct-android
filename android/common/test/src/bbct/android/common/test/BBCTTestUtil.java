@@ -48,8 +48,6 @@ import junit.framework.Assert;
 
 /**
  * Utility methods used for JUnit tests on classes in Android version of BBCT.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 final public class BBCTTestUtil {
 
@@ -418,7 +416,7 @@ final public class BBCTTestUtil {
      * Assert that database was created with the correct version and table and
      * that it is empty.
      *
-     * @param targetPackage
+     * @param targetContext
      *            The target context.
      */
     public static void assertDatabaseCreated(Context targetContext) {

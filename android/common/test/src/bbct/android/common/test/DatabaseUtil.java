@@ -29,8 +29,6 @@ import java.util.List;
 
 /**
  * Utility class for accessing a SQLite database during tests.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class DatabaseUtil {
 

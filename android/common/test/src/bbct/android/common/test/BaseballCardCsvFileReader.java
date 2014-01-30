@@ -29,8 +29,6 @@ import java.util.List;
 /**
  * This class reads baseball card data from an input stream which is formatted
  * as comma-separated values.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardCsvFileReader {
 
@@ -84,7 +82,7 @@ public class BaseballCardCsvFileReader {
      * @throws IOException If an error occurs while reading the input.
      */
     public boolean hasNextBaseballCard() throws IOException {
-        return in.ready();
+        return this.in.ready();
     }
 
     /**
