@@ -20,6 +20,8 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.widget.Button;
@@ -171,7 +173,7 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
     /**
      * Test that {@link RadioGroup} has no selection once the user returns
      * from FilterActivity.
-     * 
+     *
      * @throws Throwable If an error occurs while the portion of the test on the
      * UI thread runs.
      */
@@ -179,6 +181,12 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
         this.testYearRadioButtonOnClick();
         Assert.assertEquals(this.filterOptionsRadioGroup.getCheckedRadioButtonId(), NO_RADIO_BUTTON_CHECKED);
     }
+
+    public void testNavigateUp() {
+        ActionBar actionBar = ((ActionBarActivity) this.activity).getSupportActionBar();
+        Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
+    }
+
     private Instrumentation inst = null;
     private Activity activity = null;
     private RadioGroup filterOptionsRadioGroup = null;
