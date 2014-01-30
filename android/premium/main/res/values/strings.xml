@@ -20,7 +20,7 @@
 <resources>
     <string name="app_name">BBCT Premium</string>
     <string name="bbct_title">BBCT Premium - %1$s</string>
-    <string name="version_number">0.5.4</string>
+    <string name="version_number">0.5.4.1</string>
     <string name="import_message">Importing data from Lite Edition.</string>
     <string name="import_error">Cannot import data from Lite Edition. %1$s</string>
     <string name="lite_update_message">
