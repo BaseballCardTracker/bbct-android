@@ -35,7 +35,7 @@
     <string name="input_error_title">Input Error</string>
     <string name="duplicate_card_title">Duplicate Card</string>
 
-    <string name="start">Press the menu button to get started.</string>
+    <string name="start">Tap (+) to get started.</string>
     <string name="empty_list">No cards found.</string>
 
     <!-- Labels for card details -->
