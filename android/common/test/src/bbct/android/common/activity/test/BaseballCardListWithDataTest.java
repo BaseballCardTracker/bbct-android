@@ -100,6 +100,8 @@ public class BaseballCardListWithDataTest extends
                 .findViewById(android.R.id.list);
         this.newCard = new BaseballCard("Code Guru Apps", 1993, 1, 50000, 1,
                 "Code Guru", "Code Guru Devs", "Catcher");
+
+        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -111,6 +113,7 @@ public class BaseballCardListWithDataTest extends
      */
     @Override
     public void tearDown() throws Exception {
+        this.solo.finishOpenedActivities();
         this.dbUtil.deleteDatabase();
 
         super.tearDown();
@@ -275,8 +278,6 @@ public class BaseballCardListWithDataTest extends
      *             thread runs.
      */
     public void testAddDuplicateCard() throws IOException, Throwable {
-        Solo solo = new Solo(this.inst, this.activity);
-
         InputStream cardInputStream = this.inst.getContext().getAssets()
                 .open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
@@ -287,10 +288,10 @@ public class BaseballCardListWithDataTest extends
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, card);
 
-        Assert.assertTrue(solo.waitForDialogToOpen());
-        solo.clickOnButton("OK");
-        Assert.assertTrue(solo.waitForDialogToClose());
-        solo.finishOpenedActivities();
+        Assert.assertTrue(this.solo.waitForDialogToOpen());
+        this.solo.clickOnButton("OK");
+        Assert.assertTrue(this.solo.waitForDialogToClose());
+        this.solo.finishOpenedActivities();
     }
 
     /**
@@ -808,6 +809,7 @@ public class BaseballCardListWithDataTest extends
 
     private List<BaseballCard> allCards;
     private List<BaseballCard> expectedCards;
+    private Solo solo = null;
     private Instrumentation inst = null;
     private Activity activity = null;
     private DatabaseUtil dbUtil = null;
