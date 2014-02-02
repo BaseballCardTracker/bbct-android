@@ -42,9 +42,6 @@ import java.util.Map;
  * widgets to get input from the user for the parameters of the chosen filter
  * criteria.
  *
- * TODO: Remove OK and Cancel buttons. Jump directly to the appropriate
- * XxxFilter activity when user clicks a radio button.
- *
  * @see YearFilter
  * @see NumberFilter
  * @see YearAndNumberFilter
