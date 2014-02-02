@@ -19,9 +19,9 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -33,6 +33,7 @@ import bbct.android.common.activity.filter.PlayerNameFilter;
 import bbct.android.common.activity.filter.TeamFilter;
 import bbct.android.common.activity.filter.YearAndNumberFilter;
 import bbct.android.common.activity.filter.YearFilter;
+import com.robotium.solo.Solo;
 import junit.framework.Assert;
 
 /**
@@ -51,21 +52,26 @@ public class FilterOptionsTest extends
     }
 
     /**
-     * Set up test fixture. This consists of an instance of the
-     * {@link FilterOptions} activity, its {@link RadioGroup}, and the "OK" and
-     * "Cancel" {@link Button}s.
+     * Set up test fixture.
      *
      * @throws Exception
      *             If an error occurs while chaining to the super class.
      */
     @Override
-    public void setUp() throws Exception {
+    protected void setUp() throws Exception {
         super.setUp();
 
-        this.inst = this.getInstrumentation();
         this.activity = this.getActivity();
         this.filterOptionsRadioGroup = (RadioGroup) this.activity
                 .findViewById(R.id.filter_options_radio_group);
+        this.solo = new Solo(this.getInstrumentation(), this.activity);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        this.solo.finishOpenedActivities();
+
+        super.tearDown();
     }
 
     /**
@@ -78,6 +84,7 @@ public class FilterOptionsTest extends
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
         Assert.assertNotNull(this.filterOptionsRadioGroup);
+        Assert.assertNotNull(this.solo);
 
         Assert.assertEquals(RADIO_BUTTON_COUNT,
                 this.filterOptionsRadioGroup.getChildCount());
@@ -99,27 +106,10 @@ public class FilterOptionsTest extends
     private void testRadioButtonOnClick(
             Class<? extends FilterActivity> filterActivityClass,
             final int radioButtonId) throws Throwable {
-        Instrumentation.ActivityMonitor filterActivityMonitor = new Instrumentation.ActivityMonitor(
-                filterActivityClass.getName(), null, false);
-        this.inst.addMonitor(filterActivityMonitor);
-
-        final RadioButton filterRadioButton = (RadioButton) this.activity
-                .findViewById(radioButtonId);
-
-        this.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "Running on UI Thread");
-                Assert.assertFalse(filterRadioButton.performClick());
-            }
-        });
-
-        Activity filterActivity = this.inst.waitForMonitorWithTimeout(
-                filterActivityMonitor, TIME_OUT);
-        Assert.assertNotNull(filterActivity);
-        Assert.assertEquals(filterActivityClass, filterActivity.getClass());
-        filterActivity.finish();
-        Assert.assertTrue(filterActivity.isFinishing());
+        View filterRadioButton = this.activity.findViewById(radioButtonId);
+        this.solo.clickOnView(filterRadioButton);
+        Assert.assertTrue(this.solo.waitForActivity(filterActivityClass,
+                TIME_OUT));
     }
 
     /**
@@ -203,11 +193,12 @@ public class FilterOptionsTest extends
                 NO_RADIO_BUTTON_CHECKED);
     }
 
-    private Instrumentation inst = null;
-    private Activity activity = null;
-    private RadioGroup filterOptionsRadioGroup = null;
     private static final int RADIO_BUTTON_COUNT = 5;
     private static final int NO_RADIO_BUTTON_CHECKED = -1;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = "FilterOptionsTest";
+
+    private Solo solo = null;
+    private Activity activity = null;
+    private RadioGroup filterOptionsRadioGroup = null;
 }
