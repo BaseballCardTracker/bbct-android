@@ -5,6 +5,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
+import bbct.android.common.activity.FilterOptions;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
 
@@ -34,6 +35,10 @@ public class NavigateUpTest extends ActivityInstrumentationTestCase2<BaseballCar
 
     public void testNavigateUpFromDetails() {
         this.testNavigateUp(bbct.android.common.R.id.add_menu, BaseballCardDetails.class);
+    }
+
+    public void testNavigateUpFromFilterOptions() {
+        this.testNavigateUp(bbct.android.common.R.id.filter_menu, FilterOptions.class);
     }
 
     private void testNavigateUp(int menuId, Class<? extends Activity> expectedActivity) {
