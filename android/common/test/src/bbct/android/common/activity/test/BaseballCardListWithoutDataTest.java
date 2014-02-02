@@ -32,6 +32,7 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
+import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -66,6 +67,8 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
 
         this.activity = this.getActivity();
         this.listView = (ListView) this.activity.findViewById(android.R.id.list);
+
+        this.solo = new Solo(this.inst, this.activity);
 
         InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
@@ -171,7 +174,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
         BBCTTestUtil.addCard(this, cardDetails, card);
-        BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
+        BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
 
@@ -197,9 +200,11 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
             BBCTTestUtil.addCard(this, cardDetails, card);
         }
 
-        BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
+        BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
         BBCTTestUtil.assertListViewContainsItems(this.inst, cards, this.listView);
     }
+
+    private Solo solo = null;
     private Instrumentation inst = null;
     private Activity activity = null;
     private BaseballCardCsvFileReader cardInput = null;

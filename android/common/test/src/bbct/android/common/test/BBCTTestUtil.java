@@ -38,6 +38,7 @@ import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
+import com.robotium.solo.Solo;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -221,18 +222,11 @@ final public class BBCTTestUtil {
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public static void clickCardDetailsDone(InstrumentationTestCase test,
+    public static void clickCardDetailsDone(Solo solo,
             Activity cardDetails) throws Throwable {
         final Button doneButton = (Button) cardDetails
                 .findViewById(R.id.done_button);
-
-        test.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(doneButton.performClick());
-            }
-        });
-
+        solo.clickOnView(doneButton);
         Assert.assertTrue(cardDetails.isFinishing());
     }
 
