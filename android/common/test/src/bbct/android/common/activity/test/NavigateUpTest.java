@@ -1,5 +1,6 @@
 package bbct.android.common.activity.test;
 
+import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
@@ -28,17 +29,16 @@ public class NavigateUpTest extends ActivityInstrumentationTestCase2<BaseballCar
     }
 
     public void testNavigateUpFromAbout() {
-        this.solo.assertCurrentActivity("Expecting BaseballCardList", BaseballCardList.class);
-        this.solo.clickOnActionBarItem(bbct.android.common.R.id.about_menu);
-        Assert.assertTrue(this.solo.waitForActivity(About.class, TIMEOUT));
-        this.solo.clickOnActionBarHomeButton();
-        Assert.assertTrue(this.solo.waitForActivity(BaseballCardList.class, TIMEOUT));
+        this.testNavigateUp(bbct.android.common.R.id.about_menu, About.class);
     }
 
     public void testNavigateUpFromDetails() {
-        this.solo.assertCurrentActivity("Expecting BaseballCardList", BaseballCardList.class);
-        this.solo.clickOnActionBarItem(bbct.android.common.R.id.add_menu);
-        Assert.assertTrue(this.solo.waitForActivity(BaseballCardDetails.class, TIMEOUT));
+        this.testNavigateUp(bbct.android.common.R.id.add_menu, BaseballCardDetails.class);
+    }
+
+    private void testNavigateUp(int menuId, Class<? extends Activity> expectedActivity) {
+        this.solo.clickOnActionBarItem(menuId);
+        Assert.assertTrue(this.solo.waitForActivity(expectedActivity, TIMEOUT));
         this.solo.clickOnActionBarHomeButton();
         Assert.assertTrue(this.solo.waitForActivity(BaseballCardList.class, TIMEOUT));
     }
