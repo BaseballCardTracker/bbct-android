@@ -28,6 +28,7 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
+import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.List;
 import junit.framework.Assert;
@@ -68,6 +69,8 @@ public class BaseballCardDetailsAddCardsTest extends
         cardInput.close();
 
         this.activity = this.getActivity();
+
+        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -95,6 +98,7 @@ public class BaseballCardDetailsAddCardsTest extends
      */
     public void testAddCard() throws Throwable {
         BBCTTestUtil.addCard(this, this.activity, this.card);
+        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         Assert.assertTrue("Missing card: " + this.card,
                 dbUtil.containsBaseballCard(this.card));
@@ -113,6 +117,7 @@ public class BaseballCardDetailsAddCardsTest extends
     public void testAddMultipleCards() throws Throwable {
         for (BaseballCard nextCard : this.allCards) {
             BBCTTestUtil.addCard(this, this.activity, nextCard);
+            BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
         DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
@@ -122,6 +127,7 @@ public class BaseballCardDetailsAddCardsTest extends
         }
     }
 
+    private Solo solo = null;
     private Activity activity = null;
     private Instrumentation inst = null;
     private List<BaseballCard> allCards = null;

@@ -161,8 +161,11 @@ final public class BBCTTestUtil {
             Activity cardDetails, BaseballCard card) throws Throwable {
         BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card);
         BBCTTestUtil.clickCardDetailsSave(test, cardDetails);
+    }
 
-        // TODO Check that Toast appears with correct message.
+    public static void waitForToast(Solo solo, String message) {
+        Assert.assertTrue(solo.waitForDialogToOpen(TIME_OUT));
+        Assert.assertTrue(solo.searchText(message));
     }
 
     /**
@@ -596,6 +599,7 @@ final public class BBCTTestUtil {
      * Asset file which contains card data as CSV values.
      */
     public static final String CARD_DATA = "cards.csv";
+    public static String ADD_MESSAGE = "Card added successfully";
     private static final int MENU_FLAGS = 0;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = BBCTTestUtil.class.getName();

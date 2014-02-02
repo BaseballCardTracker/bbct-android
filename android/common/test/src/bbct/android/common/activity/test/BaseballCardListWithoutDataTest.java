@@ -174,6 +174,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
         BBCTTestUtil.addCard(this, cardDetails, card);
+        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
@@ -198,6 +199,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
 
         for (BaseballCard card : cards) {
             BBCTTestUtil.addCard(this, cardDetails, card);
+            BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
         BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
