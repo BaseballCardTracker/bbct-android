@@ -6,6 +6,7 @@ import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.FilterOptions;
+import bbct.android.common.activity.filter.YearFilter;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
 
@@ -39,6 +40,15 @@ public class NavigateUpTest extends ActivityInstrumentationTestCase2<BaseballCar
 
     public void testNavigateUpFromFilterOptions() {
         this.testNavigateUp(bbct.android.common.R.id.filter_menu, FilterOptions.class);
+    }
+
+    public void testNavigateUpFromYearFilter() {
+        this.solo.clickOnActionBarItem(bbct.android.common.R.id.filter_menu);
+        Assert.assertTrue(this.solo.waitForActivity(FilterOptions.class, TIMEOUT));
+        this.solo.clickOnRadioButton(0);
+        Assert.assertTrue(this.solo.waitForActivity(YearFilter.class, TIMEOUT));
+        this.solo.clickOnActionBarHomeButton();
+        Assert.assertTrue(this.solo.waitForActivity(FilterOptions.class, TIMEOUT));
     }
 
     private void testNavigateUp(int menuId, Class<? extends Activity> expectedActivity) {
