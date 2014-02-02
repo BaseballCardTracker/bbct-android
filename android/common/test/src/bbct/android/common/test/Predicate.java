@@ -25,7 +25,6 @@ package bbct.android.common.test;
  * defined by the implementation.
  *
  * @param <T> The class of objects to which this {@link Predicate} applies.
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public interface Predicate<T> {
 
