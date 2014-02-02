@@ -48,6 +48,7 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
+import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -274,6 +275,8 @@ public class BaseballCardListWithDataTest extends
      *             thread runs.
      */
     public void testAddDuplicateCard() throws IOException, Throwable {
+        Solo solo = new Solo(this.inst, this.activity);
+
         InputStream cardInputStream = this.inst.getContext().getAssets()
                 .open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
@@ -283,9 +286,11 @@ public class BaseballCardListWithDataTest extends
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, card);
-        // Assert.fail("Check that error message is displayed.");
-        BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
-        Assert.fail("Check that error message is displayed.");
+
+        Assert.assertTrue(solo.waitForDialogToOpen());
+        solo.clickOnButton("OK");
+        Assert.assertTrue(solo.waitForDialogToClose());
+        solo.finishOpenedActivities();
     }
 
     /**
