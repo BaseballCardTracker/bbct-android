@@ -15,6 +15,9 @@ import bbct.android.common.activity.filter.YearFilter;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
 
+/**
+ * Tests that the Home icon navigates up to the correct activity.
+ */
 public class NavigateUpTest extends
         ActivityInstrumentationTestCase2<BaseballCardList> {
 
@@ -36,39 +39,70 @@ public class NavigateUpTest extends
         super.tearDown();
     }
 
+    /**
+     * Navigating up from {@link About} should restore {@link BaseballCardList}.
+     */
     public void testNavigateUpFromAbout() {
         this.testNavigateUp(bbct.android.common.R.id.about_menu, About.class);
     }
 
+    /**
+     * Navigating up from {@link BaseballCardDetails} should restore
+     * {@link BaseballCardList}.
+     */
     public void testNavigateUpFromDetails() {
         this.testNavigateUp(bbct.android.common.R.id.add_menu,
                 BaseballCardDetails.class);
     }
 
+    /**
+     * Navigating up from {@link FilterOptions} should restore
+     * {@link BaseballCardList}.
+     */
     public void testNavigateUpFromFilterOptions() {
         this.testNavigateUp(bbct.android.common.R.id.filter_menu,
                 FilterOptions.class);
     }
 
+    /**
+     * Navigating up from {@link YearFilter} should restore
+     * {@link FilterOptions}.
+     */
     public void testNavigateUpFromYearFilter() {
         this.testNavigateUpFromFilter(YEAR_RADIO_BUTTON_INDEX, YearFilter.class);
     }
 
+    /**
+     * Navigating up from {@link NumberFilter} should restore
+     * {@link FilterOptions}.
+     */
     public void testNavigateUpFromNumberFilter() {
         this.testNavigateUpFromFilter(NUMBER_RADIO_BUTTON_INDEX,
                 NumberFilter.class);
     }
 
+    /**
+     * Navigating up from {@link YearAndNumberFilter} should restore
+     * {@link FilterOptions}.
+     */
     public void testNavigateUpFromYearAndNumberFilter() {
         this.testNavigateUpFromFilter(YEAR_AND_NUMBER_RADIO_BUTTON_INDEX,
                 YearAndNumberFilter.class);
     }
 
+    /**
+     * Navigating up from {@link PlayerNameFilter} should restore
+     * {@link FilterOptions}.
+     */
     public void testNavigateUpFromPlayerNameFilter() {
         this.testNavigateUpFromFilter(PLAYER_NAME_RADIO_BUTTON_INDEX,
                 PlayerNameFilter.class);
     }
 
+    /**
+     * Navigating up from {@link TeamFilter} should restore
+     * {@link FilterOptions}.
+     */
     public void testNavigateUpFromTeamFilter() {
         this.testNavigateUpFromFilter(TEAM_RADIO_BUTTON_INDEX, TeamFilter.class);
     }
