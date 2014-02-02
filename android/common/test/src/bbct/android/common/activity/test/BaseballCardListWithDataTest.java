@@ -115,7 +115,6 @@ public class BaseballCardListWithDataTest extends
     public void tearDown() throws Exception {
         this.solo.finishOpenedActivities();
         this.dbUtil.deleteDatabase();
-        this.solo.finishOpenedActivities();
 
         super.tearDown();
     }
