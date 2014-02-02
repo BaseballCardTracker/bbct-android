@@ -460,6 +460,7 @@ public class BaseballCardListWithDataTest extends
         }
 
         BBCTTestUtil.removeCard(this, this.activity, toDelete);
+        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
                 lv);
     }
@@ -480,6 +481,7 @@ public class BaseballCardListWithDataTest extends
         this.expectedCards.remove(toDelete);
 
         BBCTTestUtil.removeCard(this, this.activity, toDelete);
+        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
                 lv);
     }

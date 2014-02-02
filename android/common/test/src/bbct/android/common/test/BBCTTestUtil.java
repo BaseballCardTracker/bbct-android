@@ -600,6 +600,7 @@ final public class BBCTTestUtil {
      */
     public static final String CARD_DATA = "cards.csv";
     public static String ADD_MESSAGE = "Card added successfully";
+    public static String DELETE_MESSAGE = "Cards deleted successfully";
     private static final int MENU_FLAGS = 0;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = BBCTTestUtil.class.getName();
