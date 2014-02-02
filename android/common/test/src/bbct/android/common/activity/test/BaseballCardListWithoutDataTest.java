@@ -131,7 +131,7 @@ public class BaseballCardListWithoutDataTest extends
      * {@link BaseballCardDetails} activity.
      */
     public void testAddCardsMenuItem() {
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
 
         cardDetails.finish();
@@ -143,7 +143,7 @@ public class BaseballCardListWithoutDataTest extends
      * activity.
      */
     public void testFilterCardsMenuItem() {
-        Activity filterOptions = BBCTTestUtil.testMenuItem(this.inst,
+        Activity filterOptions = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.filter_menu, FilterOptions.class);
 
         filterOptions.finish();
@@ -164,7 +164,7 @@ public class BaseballCardListWithoutDataTest extends
      * Test that the "About" menu item launches a {@link About} activity.
      */
     public void testAboutMenuItem() {
-        Activity about = BBCTTestUtil.testMenuItem(this.inst, this.activity,
+        Activity about = BBCTTestUtil.testMenuItem(this.solo, this.activity,
                 R.id.about_menu, About.class);
 
         about.finish();
@@ -183,7 +183,7 @@ public class BaseballCardListWithoutDataTest extends
      *             thread runs.
      */
     public void testAddCardToEmptyDatabase() throws IOException, Throwable {
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
@@ -210,7 +210,7 @@ public class BaseballCardListWithoutDataTest extends
      *             thread runs.
      */
     public void testAddMultipleCards() throws IOException, Throwable {
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
 

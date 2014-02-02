@@ -284,7 +284,7 @@ public class BaseballCardListWithDataTest extends
                 cardInputStream, true);
         BaseballCard card = cardInput.getNextBaseballCard();
 
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, card);
 
@@ -303,7 +303,7 @@ public class BaseballCardListWithDataTest extends
      *             thread runs.
      */
     public void testAddCardToPopulatedDatabase() throws Throwable {
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
         BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
@@ -324,7 +324,7 @@ public class BaseballCardListWithDataTest extends
     public void testAddCardMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
 
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
         BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
@@ -347,7 +347,7 @@ public class BaseballCardListWithDataTest extends
 
         this.newCard = new BaseballCard("codeguru apps", 1976, 1, 50000, 1,
                 "codeguru", "codeguru devs", "Catcher");
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
         BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
@@ -365,7 +365,7 @@ public class BaseballCardListWithDataTest extends
      */
     public void testAddCardAfterClearFilter() throws Throwable {
         this.testClearFilter();
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
         BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
@@ -740,8 +740,8 @@ public class BaseballCardListWithDataTest extends
      */
     public void testClearFilter() throws Throwable {
         this.testYearFilter();
-        BBCTTestUtil.testMenuItem(this.inst, this.activity,
-                R.id.clear_filter_menu);
+        BBCTTestUtil.testMenuItem(this.solo, this.activity,
+                R.id.clear_filter_menu, null);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards,
                 this.listView);
     }
@@ -753,7 +753,7 @@ public class BaseballCardListWithDataTest extends
                 filterClass.getName(), null, false);
         this.inst.addMonitor(filterMonitor);
 
-        Activity filterOptions = BBCTTestUtil.testMenuItem(this.inst,
+        Activity filterOptions = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.filter_menu, FilterOptions.class);
         final RadioButton filterRadioButton = (RadioButton) filterOptions
                 .findViewById(radioButtonId);

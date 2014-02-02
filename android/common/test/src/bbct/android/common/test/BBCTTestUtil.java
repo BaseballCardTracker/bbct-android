@@ -105,23 +105,6 @@ final public class BBCTTestUtil {
         }
     }
 
-    public static void testMenuItem(Instrumentation inst,
-            Activity activity, int menuId) {
-        final View menuView = activity.findViewById(menuId);
-
-        if (menuView == null) {
-            Assert.assertTrue(inst.invokeMenuActionSync(activity, menuId,
-                    MENU_FLAGS));
-        } else {
-            inst.runOnMainSync(new Runnable() {
-                @Override
-                public void run() {
-                    Assert.assertTrue(menuView.performClick());
-                }
-            });
-        }
-    }
-
     /**
      * Test that a menu item correctly launches a child activity.
      *
@@ -136,20 +119,16 @@ final public class BBCTTestUtil {
      * @return A reference to the child activity which is launched, if the test
      *         succeeds.
      */
-    public static Activity testMenuItem(Instrumentation inst,
-            Activity activity, int menuId,
-            Class<? extends Activity> childActivityClass) {
-        Instrumentation.ActivityMonitor monitor = new Instrumentation.ActivityMonitor(
-                childActivityClass.getName(), null, false);
-        inst.addMonitor(monitor);
-        BBCTTestUtil.testMenuItem(inst, activity, menuId);
-        Activity childActivity = inst.waitForMonitorWithTimeout(monitor,
-                TIME_OUT);
+    public static Activity testMenuItem(Solo solo, Activity activity,
+            int menuId, Class<? extends Activity> childActivityClass) {
+        solo.clickOnActionBarItem(menuId);
 
-        Assert.assertNotNull(childActivity);
-        Assert.assertEquals(childActivityClass, childActivity.getClass());
+        if (childActivityClass != null) {
+            Assert.assertTrue(solo
+                    .waitForActivity(childActivityClass, TIME_OUT));
+        }
 
-        return childActivity;
+        return solo.getCurrentActivity();
     }
 
     /**
@@ -222,8 +201,8 @@ final public class BBCTTestUtil {
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public static void clickCardDetailsDone(Solo solo,
-            Activity cardDetails) throws Throwable {
+    public static void clickCardDetailsDone(Solo solo, Activity cardDetails)
+            throws Throwable {
         final Button doneButton = (Button) cardDetails
                 .findViewById(R.id.done_button);
         solo.clickOnView(doneButton);
