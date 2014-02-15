@@ -48,6 +48,7 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
+import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -99,6 +100,8 @@ public class BaseballCardListWithDataTest extends
                 .findViewById(android.R.id.list);
         this.newCard = new BaseballCard("Code Guru Apps", 1993, 1, 50000, 1,
                 "Code Guru", "Code Guru Devs", "Catcher");
+
+        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -110,6 +113,7 @@ public class BaseballCardListWithDataTest extends
      */
     @Override
     public void tearDown() throws Exception {
+        this.solo.finishOpenedActivities();
         this.dbUtil.deleteDatabase();
 
         super.tearDown();
@@ -259,7 +263,7 @@ public class BaseballCardListWithDataTest extends
         Assert.assertNotNull(cardDetails);
         BaseballCard expectedCard = this.allCards.get(cardIndex - 1);
         BBCTTestUtil.assertAllEditTextContents(cardDetails, expectedCard);
-        BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
+        BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
     }
 
     /**
@@ -283,9 +287,11 @@ public class BaseballCardListWithDataTest extends
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, card);
-        // Assert.fail("Check that error message is displayed.");
-        BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
-        Assert.fail("Check that error message is displayed.");
+
+        Assert.assertTrue(this.solo.waitForDialogToOpen());
+        this.solo.clickOnButton("OK");
+        Assert.assertTrue(this.solo.waitForDialogToClose());
+        this.solo.finishOpenedActivities();
     }
 
     /**
@@ -300,7 +306,8 @@ public class BaseballCardListWithDataTest extends
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
-        BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
+        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
+        BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
 
         this.allCards.add(this.newCard);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards,
@@ -321,7 +328,8 @@ public class BaseballCardListWithDataTest extends
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
-        BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
+        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
+        BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
 
         this.expectedCards.add(this.newCard);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
@@ -344,7 +352,8 @@ public class BaseballCardListWithDataTest extends
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
-        BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
+        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
+        BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
                 this.listView);
     }
@@ -362,7 +371,8 @@ public class BaseballCardListWithDataTest extends
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
-        BBCTTestUtil.clickCardDetailsDone(this, cardDetails);
+        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
+        BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
 
         this.allCards.add(this.newCard);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards,
@@ -449,6 +459,7 @@ public class BaseballCardListWithDataTest extends
         }
 
         BBCTTestUtil.removeCard(this, this.activity, toDelete);
+        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
                 lv);
     }
@@ -469,6 +480,7 @@ public class BaseballCardListWithDataTest extends
         this.expectedCards.remove(toDelete);
 
         BBCTTestUtil.removeCard(this, this.activity, toDelete);
+        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
                 lv);
     }
@@ -803,6 +815,7 @@ public class BaseballCardListWithDataTest extends
 
     private List<BaseballCard> allCards;
     private List<BaseballCard> expectedCards;
+    private Solo solo = null;
     private Instrumentation inst = null;
     private Activity activity = null;
     private DatabaseUtil dbUtil = null;

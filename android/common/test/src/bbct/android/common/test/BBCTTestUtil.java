@@ -39,6 +39,7 @@ import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
+import com.robotium.solo.Solo;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -160,8 +161,11 @@ final public class BBCTTestUtil {
             Activity cardDetails, BaseballCard card) throws Throwable {
         BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card);
         BBCTTestUtil.clickCardDetailsSave(test, cardDetails);
+    }
 
-        // TODO Check that Toast appears with correct message.
+    public static void waitForToast(Solo solo, String message) {
+        Assert.assertTrue(solo.waitForDialogToOpen(TIME_OUT));
+        Assert.assertTrue(solo.searchText(message));
     }
 
     /**
@@ -208,18 +212,11 @@ final public class BBCTTestUtil {
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public static void clickCardDetailsDone(InstrumentationTestCase test,
+    public static void clickCardDetailsDone(Solo solo,
             Activity cardDetails) throws Throwable {
         final Button doneButton = (Button) cardDetails
                 .findViewById(R.id.done_button);
-
-        test.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(doneButton.performClick());
-            }
-        });
-
+        solo.clickOnView(doneButton);
         Assert.assertTrue(cardDetails.isFinishing());
     }
 
@@ -602,6 +599,8 @@ final public class BBCTTestUtil {
      * Asset file which contains card data as CSV values.
      */
     public static final String CARD_DATA = "cards.csv";
+    public static String ADD_MESSAGE = "Card added successfully";
+    public static String DELETE_MESSAGE = "Cards deleted successfully";
     private static final int MENU_FLAGS = 0;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = BBCTTestUtil.class.getName();
