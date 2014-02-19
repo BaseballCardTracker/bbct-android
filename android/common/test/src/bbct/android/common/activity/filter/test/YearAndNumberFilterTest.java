@@ -107,7 +107,6 @@ public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFil
      */
     @Override
     protected void checkErrorMessage() {
-        // TODO: Need two other tests where only one of the two fields are filled
         String expectedYearError = this.activity.getString(R.string.year_input_error);
         Assert.assertEquals(expectedYearError, this.yearText.getError());
 
