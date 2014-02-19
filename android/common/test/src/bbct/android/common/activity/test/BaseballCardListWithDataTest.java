@@ -137,6 +137,17 @@ public class BaseballCardListWithDataTest extends
     }
 
     /**
+     * Test the header view of the {@link ListView}.
+     */
+    public void testHeader() {
+        Assert.assertEquals(1, this.listView.getHeaderViewsCount());
+        Assert.assertTrue(this.solo.searchText("Brand"));
+        Assert.assertTrue(this.solo.searchText("Year"));
+        Assert.assertTrue(this.solo.searchText("#"));
+        Assert.assertTrue(this.solo.searchText("Player Name"));
+    }
+
+    /**
      * Test that a {@link BaseballCardList} activity without an active filter
      * will be correctly restored after it is destroyed.
      */
