@@ -54,8 +54,9 @@ public class YearFilter extends FilterActivity {
     public Intent getResult() {
         String yearStr = this.yearText.getText().toString();
         int year = Integer.parseInt(yearStr);
+        int requestCode = this.getResources().getInteger(R.integer.year_filter_request);
         Intent result = new Intent();
-        result.putExtra(this.getString(R.string.filter_request_extra), R.id.year_filter_request);
+        result.putExtra(this.getString(R.string.filter_request_extra), requestCode);
         result.putExtra(this.getString(R.string.year_extra), year);
 
         return result;

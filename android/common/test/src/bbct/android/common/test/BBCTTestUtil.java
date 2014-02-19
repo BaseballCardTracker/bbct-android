@@ -20,7 +20,6 @@ package bbct.android.common.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.app.ListActivity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
@@ -39,6 +38,7 @@ import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
+import com.robotium.solo.Solo;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -119,23 +119,16 @@ final public class BBCTTestUtil {
      * @return A reference to the child activity which is launched, if the test
      *         succeeds.
      */
-    public static Activity testMenuItem(Instrumentation inst,
-            Activity activity, int menuId,
-            Class<? extends Activity> childActivityClass) {
-        Instrumentation.ActivityMonitor monitor = new Instrumentation.ActivityMonitor(
-                childActivityClass.getName(), null, false);
-        inst.addMonitor(monitor);
+    public static Activity testMenuItem(Solo solo, Activity activity,
+            int menuId, Class<? extends Activity> childActivityClass) {
+        solo.clickOnActionBarItem(menuId);
 
-        Assert.assertTrue(inst.invokeMenuActionSync(activity, menuId,
-                MENU_FLAGS));
+        if (childActivityClass != null) {
+            Assert.assertTrue(solo
+                    .waitForActivity(childActivityClass, TIME_OUT));
+        }
 
-        Activity childActivity = inst.waitForMonitorWithTimeout(monitor,
-                TIME_OUT);
-
-        Assert.assertNotNull(childActivity);
-        Assert.assertEquals(childActivityClass, childActivity.getClass());
-
-        return childActivity;
+        return solo.getCurrentActivity();
     }
 
     /**
@@ -160,8 +153,11 @@ final public class BBCTTestUtil {
             Activity cardDetails, BaseballCard card) throws Throwable {
         BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card);
         BBCTTestUtil.clickCardDetailsSave(test, cardDetails);
+    }
 
-        // TODO Check that Toast appears with correct message.
+    public static void waitForToast(Solo solo, String message) {
+        Assert.assertTrue(solo.waitForDialogToOpen(TIME_OUT));
+        Assert.assertTrue(solo.searchText(message));
     }
 
     /**
@@ -208,18 +204,11 @@ final public class BBCTTestUtil {
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public static void clickCardDetailsDone(InstrumentationTestCase test,
-            Activity cardDetails) throws Throwable {
+    public static void clickCardDetailsDone(Solo solo, Activity cardDetails)
+            throws Throwable {
         final Button doneButton = (Button) cardDetails
                 .findViewById(R.id.done_button);
-
-        test.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(doneButton.performClick());
-            }
-        });
-
+        solo.clickOnView(doneButton);
         Assert.assertTrue(cardDetails.isFinishing());
     }
 
@@ -442,7 +431,7 @@ final public class BBCTTestUtil {
 
     public static void markCard(InstrumentationTestCase test,
             Activity cardList, BaseballCard card) throws Throwable {
-        final ListView lv = ((ListActivity) cardList).getListView();
+        final ListView lv = (ListView) cardList.findViewById(android.R.id.list);
 
         String playerName = card.getPlayerName();
         String brand = card.getBrand();
@@ -602,6 +591,8 @@ final public class BBCTTestUtil {
      * Asset file which contains card data as CSV values.
      */
     public static final String CARD_DATA = "cards.csv";
+    public static String ADD_MESSAGE = "Card added successfully";
+    public static String DELETE_MESSAGE = "Cards deleted successfully";
     private static final int MENU_FLAGS = 0;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = BBCTTestUtil.class.getName();

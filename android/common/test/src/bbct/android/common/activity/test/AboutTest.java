@@ -19,6 +19,8 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import bbct.android.common.R;
 import bbct.android.common.activity.About;
@@ -69,5 +71,11 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
 
         Assert.assertTrue(title.contains(aboutTitle));
     }
+
+    public void testNavigateUp() {
+        ActionBar actionBar = ((ActionBarActivity) this.activity).getSupportActionBar();
+        Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
+    }
+
     private Activity activity = null;
 }

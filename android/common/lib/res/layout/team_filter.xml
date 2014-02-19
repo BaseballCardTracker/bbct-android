@@ -18,34 +18,42 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="fill_parent"
-             android:layout_height="fill_parent"
-             android:stretchColumns="1"
->
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:stretchColumns="1" >
+
     <TableRow>
+
         <TextView android:text="@string/team_label" />
-        <EditText android:id="@id/team_text"
-                  android:singleLine="true"
-                  android:inputType="textCapWords"
-                  android:hint="@string/team_hint"
-        />
+
+        <EditText
+            android:id="@id/team_text"
+            android:hint="@string/team_hint"
+            android:inputType="textCapWords"
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
     </TableRow>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="horizontal"
-    >
-        <Button android:id="@id/ok_button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/ok_button"
-        />
-        <Button android:id="@id/cancel_button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/cancel_button"
-        />
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@id/ok_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ok_button" />
+
+        <Button
+            android:id="@id/cancel_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel_button" />
     </LinearLayout>
+
 </TableLayout>

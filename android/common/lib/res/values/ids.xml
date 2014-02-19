@@ -33,13 +33,4 @@
     <item type="id" name="done_button"/>
     <item type="id" name="ok_button"/>
     <item type="id" name="cancel_button"/>
-
-    <!-- IDs for request and result codes -->
-    <item type="id" name="filter_options_request"/>
-    <item type="id" name="year_filter_request"/>
-    <item type="id" name="number_filter_request"/>
-    <item type="id" name="year_and_number_filter_request"/>
-    <item type="id" name="player_name_filter_request"/>
-    <item type="id" name="team_filter_request"/>
-    <item type="id" name="no_filter"/>
 </resources>

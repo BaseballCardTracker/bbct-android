@@ -53,8 +53,9 @@ public class TeamFilter extends FilterActivity {
     @Override
     public Intent getResult() {
         String team = this.teamText.getText().toString();
+        int requestCode = this.getResources().getInteger(R.integer.team_filter_request);
         Intent result = new Intent();
-        result.putExtra(this.getString(R.string.filter_request_extra), R.id.team_filter_request);
+        result.putExtra(this.getString(R.string.filter_request_extra), requestCode);
         result.putExtra(this.getString(R.string.team_extra), team);
 
         return result;

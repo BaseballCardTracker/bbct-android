@@ -19,9 +19,11 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
-import android.app.Instrumentation;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -33,12 +35,14 @@ import bbct.android.common.activity.filter.PlayerNameFilter;
 import bbct.android.common.activity.filter.TeamFilter;
 import bbct.android.common.activity.filter.YearAndNumberFilter;
 import bbct.android.common.activity.filter.YearFilter;
+import com.robotium.solo.Solo;
 import junit.framework.Assert;
 
 /**
  * Tests for {@link FilterOptions} activity class.
  */
-public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOptions> {
+public class FilterOptionsTest extends
+        ActivityInstrumentationTestCase2<FilterOptions> {
 
     /**
      * Create instrumented test cases for {@link FilterOptions}.
@@ -48,35 +52,44 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
     }
 
     /**
-     * Set up test fixture. This consists of an instance of the
-     * {@link FilterOptions} activity, its {@link RadioGroup}, and the "OK" and
-     * "Cancel" {@link Button}s.
+     * Set up test fixture.
      *
-     * @throws Exception If an error occurs while chaining to the super class.
+     * @throws Exception
+     *             If an error occurs while chaining to the super class.
      */
     @Override
-    public void setUp() throws Exception {
+    protected void setUp() throws Exception {
         super.setUp();
 
-        this.inst = this.getInstrumentation();
         this.activity = this.getActivity();
-        this.filterOptionsRadioGroup = (RadioGroup) this.activity.findViewById(R.id.filter_options_radio_group);
+        this.filterOptionsRadioGroup = (RadioGroup) this.activity
+                .findViewById(R.id.filter_options_radio_group);
+        this.solo = new Solo(this.getInstrumentation(), this.activity);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        this.solo.finishOpenedActivities();
+
+        super.tearDown();
     }
 
     /**
      * Check preconditions which must hold to guarantee the validity of all
      * other tests. Assert that the Activity to test and its {@link RadioGroup}
-     * and {@link Button}s are not
-     * <code>null</code>, that the {@link RadioGroup} has 4
-     * {@link RadioButton}s, and that none of the {@link RadioButton}s are
-     * checked.
+     * and {@link Button}s are not <code>null</code>, that the
+     * {@link RadioGroup} has 4 {@link RadioButton}s, and that none of the
+     * {@link RadioButton}s are checked.
      */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
         Assert.assertNotNull(this.filterOptionsRadioGroup);
+        Assert.assertNotNull(this.solo);
 
-        Assert.assertEquals(RADIO_BUTTON_COUNT, this.filterOptionsRadioGroup.getChildCount());
-        Assert.assertEquals(NO_RADIO_BUTTON_CHECKED, this.filterOptionsRadioGroup.getCheckedRadioButtonId());
+        Assert.assertEquals(RADIO_BUTTON_COUNT,
+                this.filterOptionsRadioGroup.getChildCount());
+        Assert.assertEquals(NO_RADIO_BUTTON_CHECKED,
+                this.filterOptionsRadioGroup.getCheckedRadioButtonId());
     }
 
     /**
@@ -84,102 +97,112 @@ public class FilterOptionsTest extends ActivityInstrumentationTestCase2<FilterOp
      */
     public void testTitle() {
         String title = this.activity.getTitle().toString();
-        String filterOptionsTitle = this.activity.getString(R.string.filter_options_title);
+        String filterOptionsTitle = this.activity
+                .getString(R.string.filter_options_title);
 
         Assert.assertTrue(title.contains(filterOptionsTitle));
     }
 
-    private void testRadioButtonOnClick(Class<? extends FilterActivity> filterActivityClass, final int radioButtonId) throws Throwable {
-        Instrumentation.ActivityMonitor filterActivityMonitor = new Instrumentation.ActivityMonitor(filterActivityClass.getName(), null, false);
-        this.inst.addMonitor(filterActivityMonitor);
-
-        final RadioButton filterRadioButton = (RadioButton) this.activity.findViewById(radioButtonId);
-
-        this.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "Running on UI Thread");
-                Assert.assertFalse(filterRadioButton.performClick());
-            }
-        });
-
-        Activity filterActivity = this.inst.waitForMonitorWithTimeout(filterActivityMonitor, TIME_OUT);
-        Assert.assertNotNull(filterActivity);
-        Assert.assertEquals(filterActivityClass, filterActivity.getClass());
-        filterActivity.finish();
-        Assert.assertTrue(filterActivity.isFinishing());
+    private void testRadioButtonOnClick(
+            Class<? extends FilterActivity> filterActivityClass,
+            final int radioButtonId) throws Throwable {
+        View filterRadioButton = this.activity.findViewById(radioButtonId);
+        this.solo.clickOnView(filterRadioButton);
+        Assert.assertTrue(this.solo.waitForActivity(filterActivityClass,
+                TIME_OUT));
     }
 
     /**
      * Test that {@link YearFilter} starts when the user selects the "Year"
      * radio button.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
     public void testYearRadioButtonOnClick() throws Throwable {
         Log.d(TAG, "testYearRadioButtonOnClick()");
-        this.testRadioButtonOnClick(YearFilter.class, R.id.year_filter_radio_button);
+        this.testRadioButtonOnClick(YearFilter.class,
+                R.id.year_filter_radio_button);
     }
 
     /**
      * Test that {@link NumberFilter} starts when the user selects the "Number"
      * radio button.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
     public void testNumberRadioButtonOnClick() throws Throwable {
-        this.testRadioButtonOnClick(NumberFilter.class, R.id.number_filter_radio_button);
+        this.testRadioButtonOnClick(NumberFilter.class,
+                R.id.number_filter_radio_button);
     }
 
     /**
      * Test that {@link YearAndNumberFilter} starts when the user selects the
      * "Year and Number" radio button.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
     public void testYearAndNumberRadioButtonOnClick() throws Throwable {
-        this.testRadioButtonOnClick(YearAndNumberFilter.class, R.id.year_and_number_filter_radio_button);
+        this.testRadioButtonOnClick(YearAndNumberFilter.class,
+                R.id.year_and_number_filter_radio_button);
     }
 
     /**
      * Test that {@link PlayerNameFilter} starts when the user selects the
      * "Player Name" radio button.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
     public void testPlayerNameRadioButtonOnClick() throws Throwable {
-        this.testRadioButtonOnClick(PlayerNameFilter.class, R.id.player_name_filter_radio_button);
+        this.testRadioButtonOnClick(PlayerNameFilter.class,
+                R.id.player_name_filter_radio_button);
     }
 
     /**
      * Test that {@link PlayerNameFilter} starts when the user selects the
      * "Team" radio button.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
     public void testTeamRadioButtonOnClick() throws Throwable {
-        this.testRadioButtonOnClick(TeamFilter.class, R.id.team_filter_radio_button);
+        this.testRadioButtonOnClick(TeamFilter.class,
+                R.id.team_filter_radio_button);
     }
 
     /**
-     * Test that {@link RadioGroup} has no selection once the user returns
-     * from FilterActivity.
+     * Test that {@link RadioGroup} has no selection once the user returns from
+     * {@link FilterActivity}.
      *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs.
      */
     public void testRadioGroupAfterSelection() throws Throwable {
         this.testYearRadioButtonOnClick();
-        Assert.assertEquals(this.filterOptionsRadioGroup.getCheckedRadioButtonId(), NO_RADIO_BUTTON_CHECKED);
+        Assert.assertEquals(
+                this.filterOptionsRadioGroup.getCheckedRadioButtonId(),
+                NO_RADIO_BUTTON_CHECKED);
     }
-    private Instrumentation inst = null;
+
+    public void testNavigateUp() {
+        ActionBar actionBar = ((ActionBarActivity) this.activity)
+                .getSupportActionBar();
+        Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
+    }
+
+    private Solo solo = null;
     private Activity activity = null;
     private RadioGroup filterOptionsRadioGroup = null;
+
     private static final int RADIO_BUTTON_COUNT = 5;
     private static final int NO_RADIO_BUTTON_CHECKED = -1;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds

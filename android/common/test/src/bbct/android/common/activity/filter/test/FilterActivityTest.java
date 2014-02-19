@@ -19,7 +19,8 @@
 package bbct.android.common.activity.filter.test;
 
 import android.app.Activity;
-import android.app.Instrumentation;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.util.Log;
@@ -27,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.filter.FilterActivity;
+import com.robotium.solo.Solo;
 import junit.framework.Assert;
 
 /**
@@ -37,7 +39,8 @@ import junit.framework.Assert;
  * @param <T>
  *            The concrete subclass of {@link FilterActivity} being tested.
  */
-public abstract class FilterActivityTest<T extends FilterActivity> extends ActivityInstrumentationTestCase2<T> {
+public abstract class FilterActivityTest<T extends FilterActivity> extends
+        ActivityInstrumentationTestCase2<T> {
 
     /**
      * Create instrumented test cases for a subclass of {@link FilterActivity}.
@@ -58,14 +61,22 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
      *             If an error occurs while chaining to the super class.
      */
     @Override
-    public void setUp() throws Exception {
+    protected void setUp() throws Exception {
         super.setUp();
-
-        this.inst = this.getInstrumentation();
 
         this.activity = this.getActivity();
         this.okButton = (Button) this.activity.findViewById(R.id.ok_button);
-        this.cancelButton = (Button) this.activity.findViewById(R.id.cancel_button);
+        this.cancelButton = (Button) this.activity
+                .findViewById(R.id.cancel_button);
+
+        this.solo = new Solo(this.getInstrumentation(), this.activity);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        this.solo.finishOpenedActivities();
+
+        super.tearDown();
     }
 
     /**
@@ -152,17 +163,7 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
         Log.d(TAG, "testOkButtonOnClickWithSendInputKeys()");
 
         this.sendInputKeys();
-
-        Log.d(TAG, "Run something on the UI thread");
-
-        this.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Log.d(TAG, "Can I click the OK button?");
-                Assert.assertTrue(FilterActivityTest.this.okButton.performClick());
-                Log.d(TAG, "YES!");
-            }
-        });
+        this.solo.clickOnView(this.okButton);
 
         Log.d(TAG, "Did the XxxFilterActivity finish?");
         Assert.assertTrue(FilterActivityTest.this.activity.isFinishing());
@@ -178,14 +179,17 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends Activ
         Assert.assertTrue(this.cancelButton.performClick());
         Assert.assertTrue(this.activity.isFinishing());
     }
-    /**
-     * The {@link Instrumentation} instance for this test.
-     */
-    protected Instrumentation inst = null;
+
+    public void testNavigateUp() {
+        ActionBar actionBar = ((ActionBarActivity) this.activity).getSupportActionBar();
+        Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
+    }
+
     /**
      * The instance of a subclass of {@link FilterActivity} being tested.
      */
     protected Activity activity = null;
+    private Solo solo = null;
     private Button okButton = null;
     private Button cancelButton = null;
     private static final String TAG = "FilterActivityTest";
