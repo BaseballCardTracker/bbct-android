@@ -274,7 +274,7 @@ public class CardDetailsPanel extends JPanel {
         cardDetailsInputPanel.add(valueLabel, gbc);
 
         this.valueTextField = new JFormattedTextField();
-        this.valueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
+        this.valueTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getNumberInstance())));
         this.valueTextField.setFocusLostBehavior(JFormattedTextField.PERSIST);
         this.valueTextField.setFont(FontResources.DEFAULT_FONT);
         this.valueTextField.setColumns(CardDetailsPanel.TEXT_FIELD_COLUMNS);
