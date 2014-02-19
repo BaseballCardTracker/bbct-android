@@ -19,6 +19,7 @@
 package bbct.android.common.provider;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -220,27 +221,30 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     public void applyFilter(Context context, int request, Bundle params) {
         Log.d(TAG, "applyFilter()");
 
-        if (request == R.id.year_filter_request) {
+        Resources res = context.getResources();
+        if (request == res.getInteger(R.integer.year_filter_request)) {
             int year = params.getInt(context.getString(R.string.year_extra));
             this.filterCursorByYear(year);
-        } else if (request == R.id.number_filter_request) {
+        } else if (request == res.getInteger(R.integer.number_filter_request)) {
             int number = params
                     .getInt(context.getString(R.string.number_extra));
             this.filterCursorByNumber(number);
-        } else if (request == R.id.year_and_number_filter_request) {
+        } else if (request == res
+                .getInteger(R.integer.year_and_number_filter_request)) {
             int year = params.getInt(context.getString(R.string.year_extra));
             int number = params
                     .getInt(context.getString(R.string.number_extra));
             this.filterCursorByYearAndNumber(year, number);
-        } else if (request == R.id.player_name_filter_request) {
+        } else if (request == res
+                .getInteger(R.integer.player_name_filter_request)) {
             String playerName = params.getString(context
                     .getString(R.string.player_name_extra));
             this.filterCursorByPlayerName(playerName);
-        } else if (request == R.id.team_filter_request) {
+        } else if (request == res.getInteger(R.integer.team_filter_request)) {
             String team = params.getString(context
                     .getString(R.string.team_extra));
             this.filterCursorByTeam(team);
-        } else if (request == R.id.no_filter) {
+        } else if (request == res.getInteger(R.integer.no_filter)) {
             this.clearFilter();
         } else {
             Log.e(TAG, "applyFilter(): Invalid filter request code: " + request);

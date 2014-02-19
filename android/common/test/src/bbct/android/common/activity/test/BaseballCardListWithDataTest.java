@@ -20,7 +20,6 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.app.ListActivity;
 import android.content.pm.ActivityInfo;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
@@ -284,7 +283,7 @@ public class BaseballCardListWithDataTest extends
                 cardInputStream, true);
         BaseballCard card = cardInput.getNextBaseballCard();
 
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, card);
 
@@ -303,7 +302,7 @@ public class BaseballCardListWithDataTest extends
      *             thread runs.
      */
     public void testAddCardToPopulatedDatabase() throws Throwable {
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
@@ -325,7 +324,7 @@ public class BaseballCardListWithDataTest extends
     public void testAddCardMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
 
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
@@ -349,7 +348,7 @@ public class BaseballCardListWithDataTest extends
 
         this.newCard = new BaseballCard("codeguru apps", 1976, 1, 50000, 1,
                 "codeguru", "codeguru devs", "Catcher");
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
@@ -368,7 +367,7 @@ public class BaseballCardListWithDataTest extends
      */
     public void testAddCardAfterClearFilter() throws Throwable {
         this.testClearFilter();
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
+        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
@@ -393,7 +392,7 @@ public class BaseballCardListWithDataTest extends
      * selected from {@link ListView}.
      */
     public void testSelection() throws Throwable {
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int index = (int) (Math.random() * (lv.getChildCount() - 1)) + 1;
         final CheckedTextView ctv = (CheckedTextView) lv.getChildAt(index)
                 .findViewById(R.id.checkmark);
@@ -414,7 +413,7 @@ public class BaseballCardListWithDataTest extends
      * {@link ListView} are selected.
      */
     public void testMarkAll() throws Throwable {
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         final CheckedTextView header = (CheckedTextView) lv.getChildAt(0)
                 .findViewById(R.id.checkmark);
 
@@ -445,7 +444,7 @@ public class BaseballCardListWithDataTest extends
     public void testDeleteCardUsingFilter() throws Throwable {
         this.testYearFilter();
 
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int cardIndex = (int) (Math.random() * (lv.getChildCount() - 1) + 1);
         View v = lv.getChildAt(cardIndex);
         BaseballCard toDelete = this.getBaseballCardFromView(v);
@@ -471,7 +470,7 @@ public class BaseballCardListWithDataTest extends
     public void testDeleteCardNoFilter() throws Throwable {
         this.testClearFilter();
 
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int cardIndex = (int) (Math.random() * (lv.getChildCount() - 1) + 1);
         View v = lv.getChildAt(cardIndex);
         BaseballCard toDelete = this.getBaseballCardFromView(v);
@@ -493,7 +492,7 @@ public class BaseballCardListWithDataTest extends
     public void testSelectionAfterSaveInstanceState() throws Throwable {
         Log.d(TAG, "testSelectionAfterSaveInstanceState()");
 
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         ArrayList<Integer> indexes = new ArrayList<Integer>();
 
         for (int i = 0; i < 3; i++) {
@@ -512,7 +511,7 @@ public class BaseballCardListWithDataTest extends
                 .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         Log.d(TAG, "assertions");
-        lv = ((ListActivity) this.activity).getListView();
+        lv = (ListView) this.activity.findViewById(android.R.id.list);
         Log.d(TAG, "lv.getChildCount()=" + lv.getChildCount());
         for (int i = 0; i < indexes.size(); i++) {
             View row = lv.getChildAt(indexes.get(i));
@@ -531,7 +530,7 @@ public class BaseballCardListWithDataTest extends
      * adds a new card.
      */
     public void testSelectionAfterAddCard() throws Throwable {
-        ListView lv = ((ListActivity) this.activity).getListView();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         ArrayList<Integer> indexes = new ArrayList<Integer>();
 
         for (int i = 0; i < 3; i++) {
@@ -553,7 +552,7 @@ public class BaseballCardListWithDataTest extends
 
         this.testAddCardToPopulatedDatabase();
 
-        lv = ((ListActivity) this.activity).getListView();
+        lv = (ListView) this.activity.findViewById(android.R.id.list);
         for (int i = 0; i < indexes.size(); i++) {
             CheckedTextView ctv = (CheckedTextView) lv.getChildAt(
                     indexes.get(i)).findViewById(R.id.checkmark);
@@ -746,8 +745,8 @@ public class BaseballCardListWithDataTest extends
      */
     public void testClearFilter() throws Throwable {
         this.testYearFilter();
-        Assert.assertTrue(this.inst.invokeMenuActionSync(this.activity,
-                R.id.clear_filter_menu, 0));
+        BBCTTestUtil.testMenuItem(this.solo, this.activity,
+                R.id.clear_filter_menu, null);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards,
                 this.listView);
     }
@@ -759,7 +758,7 @@ public class BaseballCardListWithDataTest extends
                 filterClass.getName(), null, false);
         this.inst.addMonitor(filterMonitor);
 
-        Activity filterOptions = BBCTTestUtil.testMenuItem(this.inst,
+        Activity filterOptions = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.filter_menu, FilterOptions.class);
         final RadioButton filterRadioButton = (RadioButton) filterOptions
                 .findViewById(radioButtonId);

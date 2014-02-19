@@ -20,7 +20,6 @@ package bbct.android.common.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.app.ListActivity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
@@ -120,23 +119,16 @@ final public class BBCTTestUtil {
      * @return A reference to the child activity which is launched, if the test
      *         succeeds.
      */
-    public static Activity testMenuItem(Instrumentation inst,
-            Activity activity, int menuId,
-            Class<? extends Activity> childActivityClass) {
-        Instrumentation.ActivityMonitor monitor = new Instrumentation.ActivityMonitor(
-                childActivityClass.getName(), null, false);
-        inst.addMonitor(monitor);
+    public static Activity testMenuItem(Solo solo, Activity activity,
+            int menuId, Class<? extends Activity> childActivityClass) {
+        solo.clickOnActionBarItem(menuId);
 
-        Assert.assertTrue(inst.invokeMenuActionSync(activity, menuId,
-                MENU_FLAGS));
+        if (childActivityClass != null) {
+            Assert.assertTrue(solo
+                    .waitForActivity(childActivityClass, TIME_OUT));
+        }
 
-        Activity childActivity = inst.waitForMonitorWithTimeout(monitor,
-                TIME_OUT);
-
-        Assert.assertNotNull(childActivity);
-        Assert.assertEquals(childActivityClass, childActivity.getClass());
-
-        return childActivity;
+        return solo.getCurrentActivity();
     }
 
     /**
@@ -212,8 +204,8 @@ final public class BBCTTestUtil {
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public static void clickCardDetailsDone(Solo solo,
-            Activity cardDetails) throws Throwable {
+    public static void clickCardDetailsDone(Solo solo, Activity cardDetails)
+            throws Throwable {
         final Button doneButton = (Button) cardDetails
                 .findViewById(R.id.done_button);
         solo.clickOnView(doneButton);
@@ -439,7 +431,7 @@ final public class BBCTTestUtil {
 
     public static void markCard(InstrumentationTestCase test,
             Activity cardList, BaseballCard card) throws Throwable {
-        final ListView lv = ((ListActivity) cardList).getListView();
+        final ListView lv = (ListView) cardList.findViewById(android.R.id.list);
 
         String playerName = card.getPlayerName();
         String brand = card.getBrand();

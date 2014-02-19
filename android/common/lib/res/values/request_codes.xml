@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Request and result code for FilterOptions -->
+    <integer name="filter_options_request">0x0001</integer>
+
+    <!-- Request and result code for FilterByYear -->
+    <integer name="year_filter_request">0x0002</integer>
+
+    <!-- Request and result code for FilterByNumber -->
+    <integer name="number_filter_request">0x0003</integer>
+    
+    <!-- Request and result code for FilterByYearAndNumber -->
+    <integer name="year_and_number_filter_request">0x0004</integer>
+    
+    <!-- Request and result code for FilterByPlayerName -->
+    <integer name="player_name_filter_request">0x0005</integer>
+    
+    <!-- Request and result code for FilterByTeam -->
+    <integer name="team_filter_request">0x0006</integer>
+    
+    <!-- Result code for no filter -->
+    <integer name="no_filter">0x0000</integer>
+
+</resources>

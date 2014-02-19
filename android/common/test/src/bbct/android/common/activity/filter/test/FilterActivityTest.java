@@ -19,6 +19,8 @@
 package bbct.android.common.activity.filter.test;
 
 import android.app.Activity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.util.Log;
@@ -176,6 +178,11 @@ public abstract class FilterActivityTest<T extends FilterActivity> extends
     public void testCancelButtonOnClick() {
         Assert.assertTrue(this.cancelButton.performClick());
         Assert.assertTrue(this.activity.isFinishing());
+    }
+
+    public void testNavigateUp() {
+        ActionBar actionBar = ((ActionBarActivity) this.activity).getSupportActionBar();
+        Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
     }
 
     /**

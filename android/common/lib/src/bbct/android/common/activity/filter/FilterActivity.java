@@ -21,6 +21,8 @@ package bbct.android.common.activity.filter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import bbct.android.common.R;
@@ -30,7 +32,7 @@ import bbct.android.common.activity.BaseballCardList;
  * Base class for any {@link Activity} which requests parameter values for a
  * filter on the list of baseball cards displayed in {@link BaseballCardList}.
  */
-public abstract class FilterActivity extends Activity {
+public abstract class FilterActivity extends ActionBarActivity {
 
     /**
      * Called when the activity is first created.
@@ -55,6 +57,9 @@ public abstract class FilterActivity extends Activity {
 
         Button cancelButton = (Button) this.findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(this.onCancel);
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     /**
@@ -73,7 +78,7 @@ public abstract class FilterActivity extends Activity {
      *         filter
      */
     public abstract Intent getResult();
-    private View.OnClickListener onOk = new View.OnClickListener() {
+    private final View.OnClickListener onOk = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (FilterActivity.this.validateInput()) {
@@ -83,7 +88,7 @@ public abstract class FilterActivity extends Activity {
             }
         }
     };
-    private View.OnClickListener onCancel = new View.OnClickListener() {
+    private final View.OnClickListener onCancel = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             FilterActivity.this.setResult(RESULT_CANCELED);

@@ -19,6 +19,8 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.view.View;
@@ -179,12 +181,17 @@ public class FilterOptionsTest extends
     }
 
     /**
-     * Test that {@link RadioGroup} has no selection once the user returns from
-     * FilterActivity.
+     * <<<<<<< HEAD Test that {@link RadioGroup} has no selection once the user
+     * returns from FilterActivity.
      *
      * @throws Throwable
      *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     *             thread runs. ======= Test that {@link RadioGroup} has no
+     *             selection once the user returns from FilterActivity.
+     *
+     * @throws Throwable
+     *             If an error occurs while the portion of the test on the UI
+     *             thread runs. >>>>>>> robotium
      */
     public void testRadioGroupAfterSelection() throws Throwable {
         this.testYearRadioButtonOnClick();
@@ -193,12 +200,18 @@ public class FilterOptionsTest extends
                 NO_RADIO_BUTTON_CHECKED);
     }
 
-    private static final int RADIO_BUTTON_COUNT = 5;
-    private static final int NO_RADIO_BUTTON_CHECKED = -1;
-    private static final int TIME_OUT = 5 * 1000; // 5 seconds
-    private static final String TAG = "FilterOptionsTest";
+    public void testNavigateUp() {
+        ActionBar actionBar = ((ActionBarActivity) this.activity)
+                .getSupportActionBar();
+        Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
+    }
 
     private Solo solo = null;
     private Activity activity = null;
     private RadioGroup filterOptionsRadioGroup = null;
+
+    private static final int RADIO_BUTTON_COUNT = 5;
+    private static final int NO_RADIO_BUTTON_CHECKED = -1;
+    private static final int TIME_OUT = 5 * 1000; // 5 seconds
+    private static final String TAG = "FilterOptionsTest";
 }
