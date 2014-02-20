@@ -40,8 +40,6 @@ import junit.framework.Assert;
 
 /**
  * Tests for {@link FilterOptions} activity class.
- *
- * TODO Add tests for configuration changes
  */
 public class FilterOptionsTest extends
         ActivityInstrumentationTestCase2<FilterOptions> {
@@ -181,17 +179,12 @@ public class FilterOptionsTest extends
     }
 
     /**
-     * <<<<<<< HEAD Test that {@link RadioGroup} has no selection once the user
-     * returns from FilterActivity.
+     * Test that {@link RadioGroup} has no selection once the user returns from
+     * {@link FilterActivity}.
      *
      * @throws Throwable
      *             If an error occurs while the portion of the test on the UI
-     *             thread runs. ======= Test that {@link RadioGroup} has no
-     *             selection once the user returns from FilterActivity.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs. >>>>>>> robotium
+     *             thread runs.
      */
     public void testRadioGroupAfterSelection() throws Throwable {
         this.testYearRadioButtonOnClick();

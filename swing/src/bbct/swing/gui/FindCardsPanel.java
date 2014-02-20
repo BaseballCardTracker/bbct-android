@@ -70,7 +70,6 @@ public class FindCardsPanel extends JPanel {
         JPanel buttonsPanel = new JPanel();
 
         final JButton findButton = new JButton(BBCTStringResources.ButtonResources.FIND_BUTTON);
-        // TODO: Don't create Font objects.
         findButton.setFont(FontResources.BUTTON_FONT);
         findButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
