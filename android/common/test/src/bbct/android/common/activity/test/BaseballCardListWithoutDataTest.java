@@ -85,6 +85,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
     public void tearDown() throws Exception {
         this.dbUtil.deleteDatabase();
         this.cardInput.close();
+        this.solo.finishOpenedActivities();
 
         super.tearDown();
     }
