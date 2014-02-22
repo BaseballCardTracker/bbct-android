@@ -92,8 +92,8 @@
     <string name="version_text">Version %1$s</string>
     <string name="version_number">0.5.x</string>
     <string name="copyright">Copyright 2012-14 by codeguru</string>
-    <string name="email">Email: &lt;codeguru@users.sf.net&gt;</string>
-    <string name="website">Website: http://sf.net/p/bbct</string>
+    <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
+    <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">This software is licensed under the GPL. Visit\nhttp://www.gnu.org/licenses/ for a copy of the license.</string>
     <string name="about">
         BBCT is a simple database app for your baseball card collection.
@@ -134,5 +134,6 @@
     <string name="invalid_uri_error">Invalid URI: %1$s</string>
     <string name="database_error">Error occured while connecting to database.</string>
     <string name="duplicate_card_error">Baseball card already exists. Please update its count.</string>
+    <string name="sponsor">Proud Sponsor of:</string>
 
 </resources>
