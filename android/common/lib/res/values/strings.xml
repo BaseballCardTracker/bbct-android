@@ -52,7 +52,7 @@
     <!-- Column headings for card list -->
     <string name="brand_col">Brand</string>
     <string name="year_col">Year</string>
-    <string name="number_col">Number</string>
+    <string name="number_col">#</string>
     <string name="value_col">Value</string>
     <string name="count_col">Count</string>
     <string name="player_name_col">Player Name</string>
