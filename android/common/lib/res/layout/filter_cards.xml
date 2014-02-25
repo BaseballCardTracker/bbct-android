@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+                
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/option_size"
+                    android:text="@string/brand_option" />
+                
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/brand_hint"
+                    android:ems="10" >
+                    
+                    <requestFocus />
+                    </EditText>
+                    
+            </TableRow>
+            
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+                
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/option_size"
+                    android:text="@string/year_option" />
+                
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/year_hint"
+                    android:ems="10" >
+                </EditText>
+                
+            </TableRow>
+
+	        <TableRow
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" >
+	           
+	           <CheckBox
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content" />
+	
+	           <TextView
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content"
+	               android:textSize="@dimen/option_size"
+	               android:text="@string/number_option" />
+	
+	           <EditText
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content"
+	               android:hint="@string/number_hint"
+	               android:ems="10" >
+	           </EditText>
+	            
+	        </TableRow>
+
+	        <TableRow
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" >
+	           
+	           <CheckBox
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content" />
+	
+	           <TextView
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content"
+	               android:textSize="@dimen/option_size"
+	               android:text="@string/player_name_option" />
+	
+	           <EditText
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content"
+	               android:hint="@string/player_name_hint"
+	               android:ems="10" >
+	           </EditText>
+	                       
+	        </TableRow>
+        
+	       <TableRow
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content" >
+	           
+	           <CheckBox
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content" />
+	
+	           <TextView
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content"
+	               android:textSize="@dimen/option_size"
+	               android:text="@string/team_option" />
+	
+	           <EditText
+	               android:layout_width="wrap_content"
+	               android:layout_height="wrap_content"
+	               android:hint="@string/team_hint"
+	               android:ems="10" >
+	           </EditText>
+	                       
+	        </TableRow>        
+        
+        </TableLayout>
+    
+	    <LinearLayout 
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:orientation="horizontal"
+	        android:gravity="center">
+	
+	        <Button
+	            android:id="@id/cancel_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/cancel_button" />
+	
+	        <Button
+	            android:id="@id/ok_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/ok_button" />
+	        
+	    </LinearLayout>
+    
+    </LinearLayout>
+    
+</ScrollView>

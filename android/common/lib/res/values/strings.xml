@@ -80,6 +80,13 @@
     <string name="year_and_number_radio_button">Year and Number</string>
     <string name="player_name_radio_button">Player Name</string>
     <string name="team_radio_button">Team</string>
+    
+    <!-- Filter cards TextView labels -->
+    <string name="year_option">Year</string>
+    <string name="number_option">Number</string>
+    <string name="brand_option">Brand</string>
+    <string name="player_name_option">Player Name</string>
+    <string name="team_option">Team</string>
 
     <!-- Menu text -->
     <string name="add_menu">Add Cards</string>
