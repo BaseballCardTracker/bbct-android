@@ -63,6 +63,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.common.activity.BaseballCardList" />
         </activity>
+        <activity android:name=".activity.FilterCards" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.BaseballCardList" />
+        </activity>        
         <activity android:name=".activity.FilterOptions" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
