@@ -19,23 +19,23 @@ public class FilterCards extends ActionBarActivity {
         this.buttonOk = (Button) this.findViewById(R.id.ok_button);
         this.mainLayout = (LinearLayout) this.findViewById(R.id.mainLayout);
 
-        // restore input fields state and "Ok" button state
+        // restore input fields state
         if (savedInstanceState != null) {
             ArrayList<Integer> enabledFields = savedInstanceState.getIntegerArrayList(this.getString(R.string.input_extra));
             for (int i : enabledFields) {
-                if (i == -1) {
-                    this.buttonOk.setEnabled(true);
-                } else {
-                    EditText et = (EditText) this.findViewById(TEXT_FIELDS[i]);
-                    et.setEnabled(true);
-                }
+                EditText et = (EditText) this.findViewById(TEXT_FIELDS[i]);
+                et.setEnabled(true);
             }
+        }
+
+        // restore "Ok" button state
+        if (this.numberChecked() > 0) {
+            this.buttonOk.setEnabled(true);
         }
     }
 
     /**
-     * Save the state of all {@link EditText} elements
-     * and also the state of "Ok" {@link Button}.
+     * Save the state of all {@link EditText} elements.
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -47,11 +47,6 @@ public class FilterCards extends ActionBarActivity {
             if (et.isEnabled()) {
                 enabledFields.add(i);
             }
-        }
-
-        // also add the button
-        if (this.buttonOk.isEnabled()) {
-            enabledFields.add(-1);
         }
 
         outState.putIntegerArrayList(this.getString(R.string.input_extra), enabledFields);
