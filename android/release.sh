@@ -36,6 +36,11 @@ then {
     lite_version=$1
     premium_version=$2
 
+    echo Pull devel branch...
+    git stash save 'Stash before building release'
+    git checkout devel
+    git pull bbct devel
+
     echo Building APKs...
     build_apk lite ${lite_version}
     build_apk premium ${premium_version}
@@ -56,6 +61,14 @@ then {
     echo Checking SHA1...
     sha1sum -c $PREFIX-src.sha1
     cd -
+
+    echo Merge master...
+    git checkout master
+    git merge devel
+
+    echo Tag...
+    git tag l$lite_version
+    git tag p$premium_version
 }
 else {
     echo Usage: './release <lite_version> <premium_version>'
