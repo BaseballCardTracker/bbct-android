@@ -19,12 +19,12 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="bbct.android.premium"
-    android:versionCode="8"
+    android:versionCode="9"
     android:versionName="@string/version_number" >
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="bbct.android.lite.permission.READ" />
 
