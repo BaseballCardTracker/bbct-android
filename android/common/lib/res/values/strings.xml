@@ -25,6 +25,7 @@
     <string name="bbct_title">BBCT Common - %1$s</string>
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
+    <string name="filter_cards_title">Filter Options</string>
     <string name="filter_options_title">Filter Options</string>
     <string name="year_filter_title">Filter By Year</string>
     <string name="number_filter_title">Filter By Number</string>

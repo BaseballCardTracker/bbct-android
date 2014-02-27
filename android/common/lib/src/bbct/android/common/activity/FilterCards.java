@@ -1,6 +1,7 @@
 package bbct.android.common.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,16 @@ public class FilterCards extends ActionBarActivity {
         this.setContentView(R.layout.filter_cards);
         this.buttonOk = (Button) this.findViewById(R.id.ok_button);
         this.mainLayout = (LinearLayout) this.findViewById(R.id.mainLayout);
+
+        // set title
+        String format = this.getString(R.string.bbct_title);
+        String filterCardsTitle = this
+                .getString(R.string.filter_cards_title);
+        String title = String.format(format, filterCardsTitle);
+        this.setTitle(title);
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         // restore input fields state
         if (savedInstanceState != null) {
