@@ -63,11 +63,11 @@ public class BaseballCardList extends ActionBarActivity {
             this.savedSelection = null;
 
             this.setContentView(R.layout.card_list);
-            this.filterRequest = this.getResources().getInteger(
+            this.filterStatus = this.getResources().getInteger(
                     R.integer.no_filter);
             if (savedInstanceState != null) {
-                this.filterRequest = savedInstanceState.getInt(this
-                        .getString(R.string.filter_request_extra));
+                this.filterStatus = savedInstanceState.getInt(this
+                        .getString(R.string.filter_status_extra));
                 this.filterParams = savedInstanceState.getBundle(this
                         .getString(R.string.filter_params_extra));
                 this.savedSelection = savedInstanceState.getBooleanArray(this
@@ -76,7 +76,7 @@ public class BaseballCardList extends ActionBarActivity {
 
             this.emptyList = (TextView) this.findViewById(android.R.id.empty);
             Resources res = this.getResources();
-            if (this.filterRequest == res.getInteger(R.integer.no_filter)) {
+            if (this.filterStatus == res.getInteger(R.integer.no_filter)) {
                 this.emptyList.setText(R.string.start);
             } else {
                 this.emptyList.setText(R.string.empty_list);
@@ -85,16 +85,16 @@ public class BaseballCardList extends ActionBarActivity {
             ListView listView = (ListView) this.findViewById(android.R.id.list);
             this.headerView = View.inflate(this, R.layout.list_header, null);
             ((CheckedTextView) this.headerView.findViewById(R.id.checkmark))
-                    .setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            CheckedTextView ctv = (CheckedTextView) v
-                                    .findViewById(R.id.checkmark);
-                            ctv.toggle();
-                            BaseballCardList.this.adapter.toggleAll(ctv
-                                    .isChecked());
-                        }
-                    });
+            .setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CheckedTextView ctv = (CheckedTextView) v
+                            .findViewById(R.id.checkmark);
+                    ctv.toggle();
+                    BaseballCardList.this.adapter.toggleAll(ctv
+                            .isChecked());
+                }
+            });
             listView.addHeaderView(this.headerView);
             listView.setEmptyView(this.emptyList);
             listView.setOnItemClickListener(this.onCardClick);
@@ -104,7 +104,7 @@ public class BaseballCardList extends ActionBarActivity {
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
             Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG)
-                    .show();
+            .show();
             Log.e(TAG, ex.getMessage(), ex);
         }
     }
@@ -136,7 +136,7 @@ public class BaseballCardList extends ActionBarActivity {
     public void onResume() {
         super.onResume();
 
-        this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
+        this.sqlHelper.applyFilter(this, this.filterStatus, this.filterParams);
         this.swapCursor();
 
         // restore default header state
@@ -145,7 +145,7 @@ public class BaseballCardList extends ActionBarActivity {
         headerCheck.setChecked(false);
 
         // restore old state if it exists
-        if (this.savedSelection != null && this.filterRequest == this.getResources().getInteger(R.integer.no_filter)) {
+        if (this.savedSelection != null && this.filterStatus == this.getResources().getInteger(R.integer.no_filter)) {
 
             // array needs to be extended in case a card was added
             boolean[] newSelection = new boolean[this.adapter.getSelection().length];
@@ -198,7 +198,7 @@ public class BaseballCardList extends ActionBarActivity {
         Resources res = this.getResources();
         MenuItem filter = menu.findItem(R.id.filter_menu);
         MenuItem clearFilter = menu.findItem(R.id.clear_filter_menu);
-        if (this.filterRequest == res.getInteger(R.integer.no_filter)) {
+        if (this.filterStatus == res.getInteger(R.integer.no_filter)) {
             filter.setVisible(true);
             filter.setEnabled(true);
 
@@ -247,12 +247,12 @@ public class BaseballCardList extends ActionBarActivity {
             this.startActivity(intent);
             return true;
         } else if (itemId == R.id.filter_menu) {
-            int requestCode = res.getInteger(R.integer.filter_options_request);
-            this.startActivityForResult(new Intent(this, FilterOptions.class),
+            int requestCode = res.getInteger(R.integer.filter_cards_request);
+            this.startActivityForResult(new Intent(this, FilterCards.class),
                     requestCode);
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
-            this.filterRequest = res.getInteger(R.integer.no_filter);
+            this.filterStatus = res.getInteger(R.integer.no_filter);
             this.emptyList.setText(R.string.start);
             this.savedSelection = null;
             this.sqlHelper.clearFilter();
@@ -276,8 +276,7 @@ public class BaseballCardList extends ActionBarActivity {
                     Toast.LENGTH_LONG).show();
 
             this.adapter.setSelection(selected);
-            this.sqlHelper.applyFilter(this, this.filterRequest,
-                    this.filterParams);
+            this.sqlHelper.applyFilter(this, this.filterStatus, this.filterParams);
             this.swapCursor();
             return true;
 
@@ -303,8 +302,8 @@ public class BaseballCardList extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(this.getString(R.string.filter_request_extra),
-                this.filterRequest);
+        outState.putInt(this.getString(R.string.filter_status_extra),
+                this.filterStatus);
         outState.putBundle(this.getString(R.string.filter_params_extra),
                 this.filterParams);
         outState.putBooleanArray(this.getString(R.string.selection_extra),
@@ -364,16 +363,13 @@ public class BaseballCardList extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Resources res = this.getResources();
 
-        if (requestCode == res.getInteger(R.integer.filter_options_request)) {
+        if (requestCode == res.getInteger(R.integer.filter_cards_request)) {
             if (resultCode == RESULT_OK) {
-                this.filterRequest = data.getIntExtra(
-                        this.getString(R.string.filter_request_extra),
-                        DEFAULT_INT_EXTRA);
+                this.filterStatus = res.getInteger(R.integer.active_filter);
                 this.filterParams = data.getExtras();
                 this.emptyList.setText(R.string.empty_list);
 
-                this.sqlHelper.applyFilter(this, this.filterRequest,
-                        this.filterParams);
+                this.sqlHelper.applyFilter(this, this.filterStatus, this.filterParams);
                 this.swapCursor();
                 this.invalidateOptionsMenu();
             }
@@ -418,23 +414,22 @@ public class BaseballCardList extends ActionBarActivity {
     }
 
     private static final String[] ROW_PROJECTION = {
-            BaseballCardContract.BRAND_COL_NAME,
-            BaseballCardContract.YEAR_COL_NAME,
-            BaseballCardContract.NUMBER_COL_NAME,
-            BaseballCardContract.PLAYER_NAME_COL_NAME };
+        BaseballCardContract.BRAND_COL_NAME,
+        BaseballCardContract.YEAR_COL_NAME,
+        BaseballCardContract.NUMBER_COL_NAME,
+        BaseballCardContract.PLAYER_NAME_COL_NAME };
 
     private static final int[] ROW_TEXT_VIEWS = { R.id.brand_text_view,
-            R.id.year_text_view, R.id.number_text_view,
-            R.id.player_name_text_view };
+        R.id.year_text_view, R.id.number_text_view,
+        R.id.player_name_text_view };
 
     private static final String TAG = BaseballCardList.class.getName();
-    private static final int DEFAULT_INT_EXTRA = -1;
     private static final int INVALID = -1;
     private boolean[] savedSelection;
     TextView emptyList = null;
     private BaseballCardSQLHelper sqlHelper = null;
     private CheckedCursorAdapter adapter = null;
-    private int filterRequest = INVALID;
+    private int filterStatus = INVALID;
     private Bundle filterParams = null;
     private View headerView;
 }

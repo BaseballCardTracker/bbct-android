@@ -170,7 +170,8 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:text="@string/cancel_button" />
+	            android:text="@string/cancel_button"
+	            android:onClick="onCancel" />
 	
 	        <Button
 	            android:id="@id/ok_button"
@@ -178,7 +179,8 @@
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:enabled="false"
-	            android:text="@string/ok_button" />
+	            android:text="@string/ok_button"
+	            android:onClick="onConfirm" />
 	        
 	    </LinearLayout>
     

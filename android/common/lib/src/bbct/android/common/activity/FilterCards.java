@@ -1,5 +1,6 @@
 package bbct.android.common.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import bbct.android.common.R;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FilterCards extends ActionBarActivity {
 
@@ -117,6 +119,37 @@ public class FilterCards extends ActionBarActivity {
         return count;
     }
 
+    /**
+     * Sets the combination of filter parameters as a result
+     * of {@link FilterCards} activity and exits.
+     * @param v - "Ok" button that was clicked
+     */
+    public void onConfirm(View v) {
+        HashMap<String, String> params = new HashMap<String, String>();
+        for (int i = 0; i < TEXT_FIELDS.length; i++) {
+            EditText input = (EditText) this.findViewById(TEXT_FIELDS[i]);
+            if (input.isEnabled() && input.getText().toString().length() > 0) {
+                String key = this.getString(EXTRAS[i]);
+                params.put(key, input.getText().toString());
+            }
+        }
+
+        Intent intent = new Intent();
+        intent.putExtra(this.getString(R.string.filter_params_extra), params);
+        this.setResult(RESULT_OK, intent);
+        this.finish();
+    }
+
+    /**
+     * Finishes {@link FilterCards} activity without
+     * returning a result.
+     * @param v - "Cancel" button that was clicked
+     */
+    public void onCancel(View v) {
+        this.setResult(RESULT_CANCELED);
+        this.finish();
+    }
+
     private static final int[] CHECKBOXES = { R.id.brand_check,
         R.id.year_check, R.id.number_check, R.id.player_name_check,
         R.id.team_check };
@@ -124,6 +157,10 @@ public class FilterCards extends ActionBarActivity {
     private static final int[] TEXT_FIELDS = { R.id.brand_input,
         R.id.year_input, R.id.number_input, R.id.player_name_input,
         R.id.team_input };
+
+    private static final int[] EXTRAS = { R.string.brand_extra,
+        R.string.year_extra, R.string.number_extra, R.string.player_name_extra,
+        R.string.team_extra };
 
     private Button buttonOk;
     private LinearLayout mainLayout;

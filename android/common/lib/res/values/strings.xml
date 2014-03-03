@@ -26,12 +26,6 @@
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
     <string name="filter_cards_title">Filter Options</string>
-    <string name="filter_options_title">Filter Options</string>
-    <string name="year_filter_title">Filter By Year</string>
-    <string name="number_filter_title">Filter By Number</string>
-    <string name="year_and_number_filter_title">Filter By Year and Number</string>
-    <string name="player_name_filter_title">Filter By Player Name</string>
-    <string name="team_filter_title">Filter By Team</string>
     <string name="about_title">About</string>
     <string name="input_error_title">Input Error</string>
     <string name="duplicate_card_title">Duplicate Card</string>
@@ -48,7 +42,6 @@
     <string name="player_name_label">Player Name:</string>
     <string name="team_label">Team:</string>
     <string name="player_position_label">Player Position:</string>
-    <string name="filter_by_label">Filter By&#8230;</string>
 
     <!-- Column headings for card list -->
     <string name="brand_col">Brand</string>
@@ -74,13 +67,6 @@
     <string name="player_name_hint">Enter player name.</string>
     <string name="team_hint">Enter player\'s team.</string>
     <string name="player_position_hint">Enter player position.</string>
-
-    <!-- Radio button labels -->
-    <string name="year_radio_button">Year</string>
-    <string name="number_radio_button">Number</string>
-    <string name="year_and_number_radio_button">Year and Number</string>
-    <string name="player_name_radio_button">Player Name</string>
-    <string name="team_radio_button">Team</string>
     
     <!-- Filter cards TextView labels -->
     <string name="year_option">Year</string>

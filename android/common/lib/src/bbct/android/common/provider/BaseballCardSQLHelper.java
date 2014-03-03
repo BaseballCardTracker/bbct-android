@@ -28,7 +28,9 @@ import android.util.Log;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides helper methods to access the underlying SQLite database.
@@ -213,126 +215,66 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      *
      * @param context
      *            - the {@link Context} from which this method was called
-     * @param request
-     *            - the type of filter that needs to be applied
+     * @param status
+     *            - the status of the filter applied
      * @param params
-     *            - additional filter information such as year integer
+     *            - filter parameters
      */
-    public void applyFilter(Context context, int request, Bundle params) {
+    public void applyFilter(Context context, int status, Bundle params) {
         Log.d(TAG, "applyFilter()");
 
         Resources res = context.getResources();
-        if (request == res.getInteger(R.integer.year_filter_request)) {
-            int year = params.getInt(context.getString(R.string.year_extra));
-            this.filterCursorByYear(year);
-        } else if (request == res.getInteger(R.integer.number_filter_request)) {
-            int number = params
-                    .getInt(context.getString(R.string.number_extra));
-            this.filterCursorByNumber(number);
-        } else if (request == res
-                .getInteger(R.integer.year_and_number_filter_request)) {
-            int year = params.getInt(context.getString(R.string.year_extra));
-            int number = params
-                    .getInt(context.getString(R.string.number_extra));
-            this.filterCursorByYearAndNumber(year, number);
-        } else if (request == res
-                .getInteger(R.integer.player_name_filter_request)) {
-            String playerName = params.getString(context
-                    .getString(R.string.player_name_extra));
-            this.filterCursorByPlayerName(playerName);
-        } else if (request == res.getInteger(R.integer.team_filter_request)) {
-            String team = params.getString(context
-                    .getString(R.string.team_extra));
-            this.filterCursorByTeam(team);
-        } else if (request == res.getInteger(R.integer.no_filter)) {
+        if (status == res.getInteger(R.integer.active_filter)) {
+            HashMap<String, String> map = (HashMap<String, String>) params.getSerializable(res.getString(R.string.filter_params_extra));
+            this.buildAndExecuteQuery(context, map);
+        } else if (status == res.getInteger(R.integer.no_filter)) {
             this.clearFilter();
         } else {
-            Log.e(TAG, "applyFilter(): Invalid filter request code: " + request);
+            Log.e(TAG, "applyFilter(): Invalid filter status code: " + status);
             // TODO: Throw an exception?
         }
     }
 
     /**
-     * Open a {@link Cursor} which contains all baseball cards published during
-     * the given year. Call {@link #getCursor()} to obtain the opened
-     * {@link Cursor}.
-     *
-     * @param year
-     *            The card publication year to query.
+     * Constructs a query from multiple filter parameters
+     * and executes it, updating the {@link Cursor}.
+     * @param context - the {@link Context} from which this method was called
+     * @param params - parameters which should be added to the query
      */
-    public void filterCursorByYear(int year) {
-        String filter = BaseballCardContract.YEAR_COL_NAME + " = ?";
-        String[] args = { Integer.toString(year) };
-        this.currCursor = this.getWritableDatabase().query(
-                BaseballCardContract.TABLE_NAME, null, filter, args, null,
-                null, null);
-    }
+    public void buildAndExecuteQuery(Context context, HashMap<String, String> params) {
 
-    /**
-     * Open a {@link Cursor} which contains all baseball cards with the given
-     * card number. Call {@link #getCursor()} to obtain the opened
-     * {@link Cursor}.
-     *
-     * @param number
-     *            The card number to query.
-     */
-    public void filterCursorByNumber(int number) {
-        String filter = BaseballCardContract.NUMBER_COL_NAME + " = ?";
-        String[] args = { Integer.toString(number) };
-        this.currCursor = this.getWritableDatabase().query(
-                BaseballCardContract.TABLE_NAME, null, filter, args, null,
-                null, null);
-    }
+        StringBuilder sb = new StringBuilder();
+        String[] args = new String[params.size()];
 
-    /**
-     * Open a {@link Cursor} which contains all baseball cards published during
-     * the given year with the given card number. Call {@link #getCursor()} to
-     * obtain the opened {@link Cursor}.
-     *
-     * @param year
-     *            The card publication year to query.
-     * @param number
-     *            The card number to query.
-     */
-    public void filterCursorByYearAndNumber(int year, int number) {
-        String filter = BaseballCardContract.YEAR_COL_NAME + " = ?  AND "
-                + BaseballCardContract.NUMBER_COL_NAME + " = ?";
-        String[] args = { Integer.toString(year), Integer.toString(number) };
-        this.currCursor = this.getWritableDatabase().query(
-                BaseballCardContract.TABLE_NAME, null, filter, args, null,
-                null, null);
-    }
+        int numQueries = 0;
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
 
-    /**
-     * Open a {@link Cursor} which contains all baseball cards for the given
-     * player. Call {@link #getCursor()} to obtain the opened {@link Cursor}.
-     *
-     * @param playerName
-     *            The player name to query.
-     */
-    public void filterCursorByPlayerName(String playerName) {
-        // TODO: Document wild cards in user manual?
-        String filter = BaseballCardContract.PLAYER_NAME_COL_NAME + " LIKE ?";
-        String[] args = { playerName };
-        this.currCursor = this.getWritableDatabase().query(
-                BaseballCardContract.TABLE_NAME, null, filter, args, null,
-                null, null);
-    }
+            if (key.equals(context.getString(R.string.year_extra))) {
+                sb.append(BaseballCardContract.YEAR_COL_NAME);
+            } else if (key.equals(context.getString(R.string.brand_extra))) {
+                sb.append(BaseballCardContract.BRAND_COL_NAME);
+            } else if (key.equals(context.getString(R.string.number_extra))) {
+                sb.append(BaseballCardContract.NUMBER_COL_NAME);
+            } else if (key.equals(context.getString(R.string.player_name_extra))) {
+                sb.append(BaseballCardContract.PLAYER_NAME_COL_NAME);
+            } else {
+                sb.append(BaseballCardContract.TEAM_COL_NAME);
+            }
 
-    /**
-     * Open a {@link Cursor} which contains all baseball cards for players on
-     * the given team. Call {@link #getCursor()} to obtain the opened
-     * {@link Cursor}.
-     *
-     * @param team
-     *            The team name to query.
-     */
-    public void filterCursorByTeam(String team) {
-        // TODO: Document wild cards in user manual?
-        String filter = BaseballCardContract.TEAM_COL_NAME + " LIKE ?";
-        String[] args = { team };
+            args[numQueries] = value;
+            numQueries++;
+
+            if (numQueries < args.length) {
+                sb.append(" = ?  AND ");
+            } else {
+                sb.append(" = ?");
+            }
+        }
+
         this.currCursor = this.getWritableDatabase().query(
-                BaseballCardContract.TABLE_NAME, null, filter, args, null,
+                BaseballCardContract.TABLE_NAME, null, sb.toString(), args, null,
                 null, null);
     }
 
