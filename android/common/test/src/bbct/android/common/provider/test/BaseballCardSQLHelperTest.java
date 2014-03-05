@@ -19,10 +19,12 @@
 package bbct.android.common.provider.test;
 
 import android.app.Instrumentation;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
+import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
@@ -30,6 +32,7 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import junit.framework.Assert;
 
@@ -151,11 +154,15 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
     }
 
     /**
-     * Test for {@link BaseballCardSQLHelper#filterCursorByYear}.
+     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
+     * correctly filters the {@link Cursor} by year.
      */
     public void testFilterCursorByYear() {
         int year = 1993;
-        this.sqlHelper.filterCursorByYear(year);
+        Context context = this.inst.getTargetContext();
+        this.params = new HashMap<String, String>();
+        this.params.put(context.getString(R.string.year_extra), year + "");
+        this.sqlHelper.buildAndExecuteQuery(context, this.params);
 
         Cursor cursor = this.sqlHelper.getCursor();
         while (cursor.moveToNext()) {
@@ -164,11 +171,15 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
     }
 
     /**
-     * Test for {@link BaseballCardSQLHelper#filterCursorByNumber}.
+     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
+     * correctly filters the {@link Cursor} by number.
      */
     public void testFilterCursorByNumber() {
         int number = 201;
-        this.sqlHelper.filterCursorByNumber(number);
+        Context context = this.inst.getTargetContext();
+        this.params = new HashMap<String, String>();
+        this.params.put(context.getString(R.string.number_extra), number + "");
+        this.sqlHelper.buildAndExecuteQuery(context, this.params);
 
         Cursor cursor = this.sqlHelper.getCursor();
         while (cursor.moveToNext()) {
@@ -177,12 +188,17 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
     }
 
     /**
-     * Test for {@link BaseballCardSQLHelper#filterCursorByYearAndNumber}.
+     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
+     * correctly filters the {@link Cursor} by number and year.
      */
     public void testFilterCursorByYearAndNumber() {
         int year = 1985;
         int number = 201;
-        this.sqlHelper.filterCursorByYearAndNumber(year, number);
+        Context context = this.inst.getTargetContext();
+        this.params = new HashMap<String, String>();
+        this.params.put(context.getString(R.string.year_extra), year + "");
+        this.params.put(context.getString(R.string.number_extra), number + "");
+        this.sqlHelper.buildAndExecuteQuery(context, this.params);
 
         Cursor cursor = this.sqlHelper.getCursor();
         while (cursor.moveToNext()) {
@@ -192,11 +208,15 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
     }
 
     /**
-     * Test for {@link BaseballCardSQLHelper#filterCursorByPlayerName}.
+     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
+     * correctly filters the {@link Cursor} by player name.
      */
     public void testFilterCursorByPlayerName() {
         String playerName = "Tom Browning";
-        this.sqlHelper.filterCursorByPlayerName(playerName);
+        Context context = this.inst.getTargetContext();
+        this.params = new HashMap<String, String>();
+        this.params.put(context.getString(R.string.player_name_extra), playerName);
+        this.sqlHelper.buildAndExecuteQuery(context, this.params);
 
         Cursor cursor = this.sqlHelper.getCursor();
         while (cursor.moveToNext()) {
@@ -221,6 +241,7 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
     private BaseballCardSQLHelper sqlHelper = null;
     private SQLiteDatabase db = null;
     private List<BaseballCard> allCards = null;
+    private HashMap<String, String> params = null;
     private BaseballCard card = null;
     private DatabaseUtil dbUtil = null;
     private static final String TAG = BaseballCardSQLHelperTest.class.getName();

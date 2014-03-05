@@ -27,21 +27,15 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
-import bbct.android.common.activity.FilterOptions;
-import bbct.android.common.activity.filter.FilterActivity;
-import bbct.android.common.activity.filter.NumberFilter;
-import bbct.android.common.activity.filter.PlayerNameFilter;
-import bbct.android.common.activity.filter.TeamFilter;
-import bbct.android.common.activity.filter.YearAndNumberFilter;
-import bbct.android.common.activity.filter.YearFilter;
+import bbct.android.common.activity.FilterCards;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
@@ -59,7 +53,7 @@ import junit.framework.Assert;
  * data.
  */
 public class BaseballCardListWithDataTest extends
-        ActivityInstrumentationTestCase2<BaseballCardList> {
+ActivityInstrumentationTestCase2<BaseballCardList> {
 
     /**
      * Create instrumented test cases for {@link BaseballCardList}.
@@ -519,7 +513,7 @@ public class BaseballCardListWithDataTest extends
 
         Log.d(TAG, "change orientation");
         this.activity
-                .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         Log.d(TAG, "assertions");
         lv = (ListView) this.activity.findViewById(android.R.id.list);
@@ -621,8 +615,7 @@ public class BaseballCardListWithDataTest extends
             }
         };
 
-        this.testFilter(YearFilter.class, R.id.year_filter_radio_button,
-                yearInput, yearPred);
+        this.testSingleFilter(R.id.year_check, yearInput, yearPred);
     }
 
     /**
@@ -650,8 +643,7 @@ public class BaseballCardListWithDataTest extends
             }
         };
 
-        this.testFilter(NumberFilter.class, R.id.number_filter_radio_button,
-                numberInput, numberPred);
+        this.testSingleFilter(R.id.number_check, numberInput, numberPred);
     }
 
     /**
@@ -665,16 +657,23 @@ public class BaseballCardListWithDataTest extends
     public void testYearAndNumberFilter() throws Throwable {
         final int year = 1993;
         final int number = 18;
-        FilterInput yearAndNumberInput = new FilterInput() {
-            @Override
-            public void doInput() {
-                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer
-                        .toString(year));
-                BaseballCardListWithDataTest.this
-                        .sendKeys(KeyEvent.KEYCODE_ENTER);
-                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer
-                        .toString(number));
-            }
+
+        FilterInput[] yearAndNumberInput = new FilterInput[] {
+                new FilterInput() {
+                    @Override
+                    public void doInput() {
+                        BaseballCardListWithDataTest.this.inst.sendStringSync(Integer
+                                .toString(year));
+                    }
+                },
+
+                new FilterInput() {
+                    @Override
+                    public void doInput() {
+                        BaseballCardListWithDataTest.this.inst.sendStringSync(Integer
+                                .toString(number));
+                    }
+                }
         };
 
         Predicate<BaseballCard> yearAndNumberPred = new Predicate<BaseballCard>() {
@@ -684,9 +683,8 @@ public class BaseballCardListWithDataTest extends
             }
         };
 
-        this.testFilter(YearAndNumberFilter.class,
-                R.id.year_and_number_filter_radio_button, yearAndNumberInput,
-                yearAndNumberPred);
+        this.testFilterCombination(new int[] {R.id.year_check, R.id.number_check},
+                yearAndNumberInput, yearAndNumberPred);
     }
 
     /**
@@ -703,7 +701,7 @@ public class BaseballCardListWithDataTest extends
             @Override
             public void doInput() {
                 BaseballCardListWithDataTest.this.inst
-                        .sendStringSync(playerName);
+                .sendStringSync(playerName);
             }
         };
 
@@ -714,9 +712,7 @@ public class BaseballCardListWithDataTest extends
             }
         };
 
-        this.testFilter(PlayerNameFilter.class,
-                R.id.player_name_filter_radio_button, playerNameInput,
-                playerNamePred);
+        this.testSingleFilter(R.id.player_name_check, playerNameInput, playerNamePred);
     }
 
     /**
@@ -743,8 +739,7 @@ public class BaseballCardListWithDataTest extends
             }
         };
 
-        this.testFilter(TeamFilter.class, R.id.team_filter_radio_button,
-                teamInput, teamPred);
+        this.testSingleFilter(R.id.team_check, teamInput, teamPred);
     }
 
     /**
@@ -762,43 +757,45 @@ public class BaseballCardListWithDataTest extends
                 this.listView);
     }
 
-    private void testFilter(Class<? extends FilterActivity> filterClass,
-            int radioButtonId, FilterInput filterInput,
-            Predicate<BaseballCard> filterPred) throws Throwable {
-        Instrumentation.ActivityMonitor filterMonitor = new Instrumentation.ActivityMonitor(
-                filterClass.getName(), null, false);
-        this.inst.addMonitor(filterMonitor);
+    private void testSingleFilter(int checkId,
+            FilterInput filterInput, Predicate<BaseballCard> filterPred) {
 
-        Activity filterOptions = BBCTTestUtil.testMenuItem(this.solo,
-                this.activity, R.id.filter_menu, FilterOptions.class);
-        final RadioButton filterRadioButton = (RadioButton) filterOptions
-                .findViewById(radioButtonId);
+        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
+                this.activity, R.id.filter_menu, FilterCards.class);
+        CheckBox filterCheckBox = (CheckBox) filterCards
+                .findViewById(checkId);
 
-        this.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertFalse(filterRadioButton.performClick());
-            }
-        });
-
-        Activity filter = this.inst.waitForMonitorWithTimeout(filterMonitor,
-                TIME_OUT);
-        Assert.assertNotNull(filter);
-        final Button filterOkButton = (Button) filter
+        this.solo.clickOnView(filterCheckBox);
+        Button filterOkButton = (Button) filterCards
                 .findViewById(R.id.ok_button);
 
         filterInput.doInput();
-
-        this.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(filterOkButton.performClick());
-            }
-        });
-
-        Assert.assertTrue(filter.isFinishing());
+        this.solo.clickOnView(filterOkButton);
         this.inst.waitForIdleSync();
-        Assert.assertTrue(filterOptions.isFinishing());
+        Assert.assertTrue(filterCards.isFinishing());
+
+        this.expectedCards = this.filterList(this.allCards, filterPred);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
+                this.listView);
+    }
+
+    private void testFilterCombination(int[] checkIds, FilterInput[] filterInputs, Predicate<BaseballCard> filterPred) {
+        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
+                this.activity, R.id.filter_menu, FilterCards.class);
+
+        for (int i = 0; i < checkIds.length; i++) {
+            CheckBox filterCheckBox = (CheckBox) filterCards
+                    .findViewById(checkIds[i]);
+
+            this.solo.clickOnView(filterCheckBox);
+            filterInputs[i].doInput();
+        }
+
+        Button filterOkButton = (Button) filterCards
+                .findViewById(R.id.ok_button);
+        this.solo.clickOnView(filterOkButton);
+        this.inst.waitForIdleSync();
+        Assert.assertTrue(filterCards.isFinishing());
 
         this.expectedCards = this.filterList(this.allCards, filterPred);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,

@@ -74,8 +74,9 @@ public class FilterCards extends ActionBarActivity {
         EditText input = null;
 
         for (int i = 0; i < CHECKBOXES.length; i++) {
-            if (v.getId() == CHECKBOXES[i])
+            if (v.getId() == CHECKBOXES[i]) {
                 input = (EditText) this.findViewById(TEXT_FIELDS[i]);
+            }
         }
 
         // toggle ok button

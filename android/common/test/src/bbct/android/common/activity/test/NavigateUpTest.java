@@ -5,13 +5,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
-import bbct.android.common.activity.FilterOptions;
-import bbct.android.common.activity.filter.FilterActivity;
-import bbct.android.common.activity.filter.NumberFilter;
-import bbct.android.common.activity.filter.PlayerNameFilter;
-import bbct.android.common.activity.filter.TeamFilter;
-import bbct.android.common.activity.filter.YearAndNumberFilter;
-import bbct.android.common.activity.filter.YearFilter;
+import bbct.android.common.activity.FilterCards;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
 
@@ -19,7 +13,7 @@ import junit.framework.Assert;
  * Tests that the Home icon navigates up to the correct activity.
  */
 public class NavigateUpTest extends
-        ActivityInstrumentationTestCase2<BaseballCardList> {
+ActivityInstrumentationTestCase2<BaseballCardList> {
 
     public NavigateUpTest() {
         super(BaseballCardList.class);
@@ -59,52 +53,9 @@ public class NavigateUpTest extends
      * Navigating up from {@link FilterOptions} should restore
      * {@link BaseballCardList}.
      */
-    public void testNavigateUpFromFilterOptions() {
+    public void testNavigateUpFromFilterCards() {
         this.testNavigateUp(bbct.android.common.R.id.filter_menu,
-                FilterOptions.class);
-    }
-
-    /**
-     * Navigating up from {@link YearFilter} should restore
-     * {@link FilterOptions}.
-     */
-    public void testNavigateUpFromYearFilter() {
-        this.testNavigateUpFromFilter(YEAR_RADIO_BUTTON_INDEX, YearFilter.class);
-    }
-
-    /**
-     * Navigating up from {@link NumberFilter} should restore
-     * {@link FilterOptions}.
-     */
-    public void testNavigateUpFromNumberFilter() {
-        this.testNavigateUpFromFilter(NUMBER_RADIO_BUTTON_INDEX,
-                NumberFilter.class);
-    }
-
-    /**
-     * Navigating up from {@link YearAndNumberFilter} should restore
-     * {@link FilterOptions}.
-     */
-    public void testNavigateUpFromYearAndNumberFilter() {
-        this.testNavigateUpFromFilter(YEAR_AND_NUMBER_RADIO_BUTTON_INDEX,
-                YearAndNumberFilter.class);
-    }
-
-    /**
-     * Navigating up from {@link PlayerNameFilter} should restore
-     * {@link FilterOptions}.
-     */
-    public void testNavigateUpFromPlayerNameFilter() {
-        this.testNavigateUpFromFilter(PLAYER_NAME_RADIO_BUTTON_INDEX,
-                PlayerNameFilter.class);
-    }
-
-    /**
-     * Navigating up from {@link TeamFilter} should restore
-     * {@link FilterOptions}.
-     */
-    public void testNavigateUpFromTeamFilter() {
-        this.testNavigateUpFromFilter(TEAM_RADIO_BUTTON_INDEX, TeamFilter.class);
+                FilterCards.class);
     }
 
     private void testNavigateUp(int menuId,
@@ -116,25 +67,7 @@ public class NavigateUpTest extends
                 TIMEOUT));
     }
 
-    private void testNavigateUpFromFilter(int filterIndex,
-            Class<? extends FilterActivity> filterActivity) {
-        this.solo.clickOnActionBarItem(bbct.android.common.R.id.filter_menu);
-        Assert.assertTrue(this.solo.waitForActivity(FilterOptions.class,
-                TIMEOUT));
-        this.solo.clickOnRadioButton(filterIndex);
-        Assert.assertTrue(this.solo.waitForActivity(filterActivity, TIMEOUT));
-        this.solo.clickOnActionBarHomeButton();
-        Assert.assertTrue(this.solo.waitForActivity(FilterOptions.class,
-                TIMEOUT));
-    }
-
     private static final int TIMEOUT = 500;
-    private static final int YEAR_RADIO_BUTTON_INDEX = 0;
-    private static final int NUMBER_RADIO_BUTTON_INDEX = 1;
-    private static final int YEAR_AND_NUMBER_RADIO_BUTTON_INDEX = 2;
-    private static final int PLAYER_NAME_RADIO_BUTTON_INDEX = 3;
-    private static final int TEAM_RADIO_BUTTON_INDEX = 4;
-
     private Solo solo = null;
 
 }
