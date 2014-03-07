@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/android/v7support/appcompat/android-support-v7-appcompat.iml" filepath="$PROJECT_DIR$/android/v7support/appcompat/android-support-v7-appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/swing/bbct.iml" filepath="$PROJECT_DIR$/swing/bbct.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/common/main/bbct-common.iml" filepath="$PROJECT_DIR$/android/common/main/bbct-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/common/lib/bbct-common-lib.iml" filepath="$PROJECT_DIR$/android/common/lib/bbct-common-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/common/test/bbct-common-tests.iml" filepath="$PROJECT_DIR$/android/common/test/bbct-common-tests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/functional-tests/bbct-functional-tests.iml" filepath="$PROJECT_DIR$/android/functional-tests/bbct-functional-tests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/lite/main/bbct-lite.iml" filepath="$PROJECT_DIR$/android/lite/main/bbct-lite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/lite/test/bbct-lite-tests.iml" filepath="$PROJECT_DIR$/android/lite/test/bbct-lite-tests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/premium/main/bbct-premium.iml" filepath="$PROJECT_DIR$/android/premium/main/bbct-premium.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/premium/test/bbct-premium-tests.iml" filepath="$PROJECT_DIR$/android/premium/test/bbct-premium-tests.iml" />
+    </modules>
+  </component>
+</project>
+
