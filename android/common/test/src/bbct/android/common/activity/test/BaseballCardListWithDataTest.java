@@ -53,7 +53,7 @@ import junit.framework.Assert;
  * data.
  */
 public class BaseballCardListWithDataTest extends
-ActivityInstrumentationTestCase2<BaseballCardList> {
+        ActivityInstrumentationTestCase2<BaseballCardList> {
 
     /**
      * Create instrumented test cases for {@link BaseballCardList}.
@@ -513,7 +513,7 @@ ActivityInstrumentationTestCase2<BaseballCardList> {
 
         Log.d(TAG, "change orientation");
         this.activity
-        .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         Log.d(TAG, "assertions");
         lv = (ListView) this.activity.findViewById(android.R.id.list);
@@ -662,19 +662,18 @@ ActivityInstrumentationTestCase2<BaseballCardList> {
                 new FilterInput() {
                     @Override
                     public void doInput() {
-                        BaseballCardListWithDataTest.this.inst.sendStringSync(Integer
-                                .toString(year));
+                        BaseballCardListWithDataTest.this.inst
+                                .sendStringSync(Integer.toString(year));
                     }
                 },
 
                 new FilterInput() {
                     @Override
                     public void doInput() {
-                        BaseballCardListWithDataTest.this.inst.sendStringSync(Integer
-                                .toString(number));
+                        BaseballCardListWithDataTest.this.inst
+                                .sendStringSync(Integer.toString(number));
                     }
-                }
-        };
+                } };
 
         Predicate<BaseballCard> yearAndNumberPred = new Predicate<BaseballCard>() {
             @Override
@@ -683,8 +682,8 @@ ActivityInstrumentationTestCase2<BaseballCardList> {
             }
         };
 
-        this.testFilterCombination(new int[] {R.id.year_check, R.id.number_check},
-                yearAndNumberInput, yearAndNumberPred);
+        this.testFilterCombination(new int[] { R.id.year_check,
+                R.id.number_check }, yearAndNumberInput, yearAndNumberPred);
     }
 
     /**
@@ -701,7 +700,7 @@ ActivityInstrumentationTestCase2<BaseballCardList> {
             @Override
             public void doInput() {
                 BaseballCardListWithDataTest.this.inst
-                .sendStringSync(playerName);
+                        .sendStringSync(playerName);
             }
         };
 
@@ -712,7 +711,8 @@ ActivityInstrumentationTestCase2<BaseballCardList> {
             }
         };
 
-        this.testSingleFilter(R.id.player_name_check, playerNameInput, playerNamePred);
+        this.testSingleFilter(R.id.player_name_check, playerNameInput,
+                playerNamePred);
     }
 
     /**
@@ -757,13 +757,12 @@ ActivityInstrumentationTestCase2<BaseballCardList> {
                 this.listView);
     }
 
-    private void testSingleFilter(int checkId,
-            FilterInput filterInput, Predicate<BaseballCard> filterPred) {
+    private void testSingleFilter(int checkId, FilterInput filterInput,
+            Predicate<BaseballCard> filterPred) {
 
         Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.filter_menu, FilterCards.class);
-        CheckBox filterCheckBox = (CheckBox) filterCards
-                .findViewById(checkId);
+        CheckBox filterCheckBox = (CheckBox) filterCards.findViewById(checkId);
 
         this.solo.clickOnView(filterCheckBox);
         Button filterOkButton = (Button) filterCards
@@ -779,7 +778,8 @@ ActivityInstrumentationTestCase2<BaseballCardList> {
                 this.listView);
     }
 
-    private void testFilterCombination(int[] checkIds, FilterInput[] filterInputs, Predicate<BaseballCard> filterPred) {
+    private void testFilterCombination(int[] checkIds,
+            FilterInput[] filterInputs, Predicate<BaseballCard> filterPred) {
         Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.filter_menu, FilterCards.class);
 

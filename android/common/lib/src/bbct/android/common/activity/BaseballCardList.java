@@ -85,16 +85,16 @@ public class BaseballCardList extends ActionBarActivity {
             ListView listView = (ListView) this.findViewById(android.R.id.list);
             this.headerView = View.inflate(this, R.layout.list_header, null);
             ((CheckedTextView) this.headerView.findViewById(R.id.checkmark))
-            .setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CheckedTextView ctv = (CheckedTextView) v
-                            .findViewById(R.id.checkmark);
-                    ctv.toggle();
-                    BaseballCardList.this.adapter.toggleAll(ctv
-                            .isChecked());
-                }
-            });
+                    .setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            CheckedTextView ctv = (CheckedTextView) v
+                                    .findViewById(R.id.checkmark);
+                            ctv.toggle();
+                            BaseballCardList.this.adapter.toggleAll(ctv
+                                    .isChecked());
+                        }
+                    });
             listView.addHeaderView(this.headerView);
             listView.setEmptyView(this.emptyList);
             listView.setOnItemClickListener(this.onCardClick);
@@ -104,7 +104,7 @@ public class BaseballCardList extends ActionBarActivity {
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
             Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG)
-            .show();
+                    .show();
             Log.e(TAG, ex.getMessage(), ex);
         }
     }
@@ -145,7 +145,9 @@ public class BaseballCardList extends ActionBarActivity {
         headerCheck.setChecked(false);
 
         // restore old state if it exists
-        if (this.savedSelection != null && this.filterStatus == this.getResources().getInteger(R.integer.no_filter)) {
+        if (this.savedSelection != null
+                && this.filterStatus == this.getResources().getInteger(
+                        R.integer.no_filter)) {
 
             // array needs to be extended in case a card was added
             boolean[] newSelection = new boolean[this.adapter.getSelection().length];
@@ -276,7 +278,8 @@ public class BaseballCardList extends ActionBarActivity {
                     Toast.LENGTH_LONG).show();
 
             this.adapter.setSelection(selected);
-            this.sqlHelper.applyFilter(this, this.filterStatus, this.filterParams);
+            this.sqlHelper.applyFilter(this, this.filterStatus,
+                    this.filterParams);
             this.swapCursor();
             return true;
 
@@ -369,7 +372,8 @@ public class BaseballCardList extends ActionBarActivity {
                 this.filterParams = data.getExtras();
                 this.emptyList.setText(R.string.empty_list);
 
-                this.sqlHelper.applyFilter(this, this.filterStatus, this.filterParams);
+                this.sqlHelper.applyFilter(this, this.filterStatus,
+                        this.filterParams);
                 this.swapCursor();
                 this.invalidateOptionsMenu();
             }
@@ -414,14 +418,14 @@ public class BaseballCardList extends ActionBarActivity {
     }
 
     private static final String[] ROW_PROJECTION = {
-        BaseballCardContract.BRAND_COL_NAME,
-        BaseballCardContract.YEAR_COL_NAME,
-        BaseballCardContract.NUMBER_COL_NAME,
-        BaseballCardContract.PLAYER_NAME_COL_NAME };
+            BaseballCardContract.BRAND_COL_NAME,
+            BaseballCardContract.YEAR_COL_NAME,
+            BaseballCardContract.NUMBER_COL_NAME,
+            BaseballCardContract.PLAYER_NAME_COL_NAME };
 
     private static final int[] ROW_TEXT_VIEWS = { R.id.brand_text_view,
-        R.id.year_text_view, R.id.number_text_view,
-        R.id.player_name_text_view };
+            R.id.year_text_view, R.id.number_text_view,
+            R.id.player_name_text_view };
 
     private static final String TAG = BaseballCardList.class.getName();
     private static final int INVALID = -1;
