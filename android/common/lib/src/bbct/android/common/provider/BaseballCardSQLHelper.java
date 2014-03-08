@@ -28,9 +28,7 @@ import android.util.Log;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides helper methods to access the underlying SQLite database.
@@ -210,54 +208,29 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Re-queries the database based on a filter and obtains a new
-     * {@link Cursor} according to filter parameters.
-     *
-     * @param context
-     *            - the {@link Context} from which this method was called
-     * @param status
-     *            - the status of the filter applied
-     * @param params
-     *            - filter parameters
-     */
-    public void applyFilter(Context context, int status, Bundle params) {
-        Log.d(TAG, "applyFilter()");
-
-        Resources res = context.getResources();
-        if (status == res.getInteger(R.integer.active_filter)) {
-            HashMap<String, String> map = (HashMap<String, String>) params.getSerializable(res.getString(R.string.filter_params_extra));
-            this.buildAndExecuteQuery(context, map);
-        } else if (status == res.getInteger(R.integer.no_filter)) {
-            this.clearFilter();
-        } else {
-            Log.e(TAG, "applyFilter(): Invalid filter status code: " + status);
-            // TODO: Throw an exception?
-        }
-    }
-
-    /**
-     * Constructs a query from multiple filter parameters
-     * and executes it, updating the {@link Cursor}.
+     * Constructs a query from multiple filter parameters and executes it,
+     * updating the {@link Cursor}.
      * @param context - the {@link Context} from which this method was called
      * @param params - parameters which should be added to the query
      */
-    public void buildAndExecuteQuery(Context context, HashMap<String, String> params) {
+    public void applyFilter(Context context, Bundle params) {
+        Log.d(TAG, "applyFilter()");
 
+        Resources res = context.getResources();
         StringBuilder sb = new StringBuilder();
         String[] args = new String[params.size()];
 
         int numQueries = 0;
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
+        for (String key : params.keySet()) {
+            String value = params.getString(key);
 
-            if (key.equals(context.getString(R.string.year_extra))) {
+            if (key.equals(res.getString(R.string.year_extra))) {
                 sb.append(BaseballCardContract.YEAR_COL_NAME);
-            } else if (key.equals(context.getString(R.string.brand_extra))) {
+            } else if (key.equals(res.getString(R.string.brand_extra))) {
                 sb.append(BaseballCardContract.BRAND_COL_NAME);
-            } else if (key.equals(context.getString(R.string.number_extra))) {
+            } else if (key.equals(res.getString(R.string.number_extra))) {
                 sb.append(BaseballCardContract.NUMBER_COL_NAME);
-            } else if (key.equals(context.getString(R.string.player_name_extra))) {
+            } else if (key.equals(res.getString(R.string.player_name_extra))) {
                 sb.append(BaseballCardContract.PLAYER_NAME_COL_NAME);
             } else {
                 sb.append(BaseballCardContract.TEAM_COL_NAME);
@@ -274,8 +247,8 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         }
 
         this.currCursor = this.getWritableDatabase().query(
-                BaseballCardContract.TABLE_NAME, null, sb.toString(), args, null,
-                null, null);
+                BaseballCardContract.TABLE_NAME, null, sb.toString(), args,
+                null, null, null);
     }
 
     /**

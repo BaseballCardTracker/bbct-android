@@ -29,7 +29,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import bbct.android.common.R;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class FilterCards extends ActionBarActivity {
 
@@ -42,8 +41,7 @@ public class FilterCards extends ActionBarActivity {
 
         // set title
         String format = this.getString(R.string.bbct_title);
-        String filterCardsTitle = this
-                .getString(R.string.filter_cards_title);
+        String filterCardsTitle = this.getString(R.string.filter_cards_title);
         String title = String.format(format, filterCardsTitle);
         this.setTitle(title);
 
@@ -52,7 +50,8 @@ public class FilterCards extends ActionBarActivity {
 
         // restore input fields state
         if (savedInstanceState != null) {
-            ArrayList<Integer> enabledFields = savedInstanceState.getIntegerArrayList(this.getString(R.string.input_extra));
+            ArrayList<Integer> enabledFields = savedInstanceState
+                    .getIntegerArrayList(this.getString(R.string.input_extra));
             for (int i : enabledFields) {
                 EditText et = (EditText) this.findViewById(TEXT_FIELDS[i]);
                 et.setEnabled(true);
@@ -80,7 +79,8 @@ public class FilterCards extends ActionBarActivity {
             }
         }
 
-        outState.putIntegerArrayList(this.getString(R.string.input_extra), enabledFields);
+        outState.putIntegerArrayList(this.getString(R.string.input_extra),
+                enabledFields);
     }
 
     /**
@@ -144,17 +144,15 @@ public class FilterCards extends ActionBarActivity {
      * @param v - "Ok" button that was clicked
      */
     public void onConfirm(View v) {
-        HashMap<String, String> params = new HashMap<String, String>();
+        Intent intent = new Intent();
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
             EditText input = (EditText) this.findViewById(TEXT_FIELDS[i]);
             if (input.isEnabled() && input.getText().toString().length() > 0) {
                 String key = this.getString(EXTRAS[i]);
-                params.put(key, input.getText().toString());
+                intent.putExtra(key, input.getText().toString());
             }
         }
 
-        Intent intent = new Intent();
-        intent.putExtra(this.getString(R.string.filter_params_extra), params);
         this.setResult(RESULT_OK, intent);
         this.finish();
     }
@@ -170,16 +168,16 @@ public class FilterCards extends ActionBarActivity {
     }
 
     private static final int[] CHECKBOXES = { R.id.brand_check,
-        R.id.year_check, R.id.number_check, R.id.player_name_check,
-        R.id.team_check };
+            R.id.year_check, R.id.number_check, R.id.player_name_check,
+            R.id.team_check };
 
     private static final int[] TEXT_FIELDS = { R.id.brand_input,
-        R.id.year_input, R.id.number_input, R.id.player_name_input,
-        R.id.team_input };
+            R.id.year_input, R.id.number_input, R.id.player_name_input,
+            R.id.team_input };
 
     private static final int[] EXTRAS = { R.string.brand_extra,
-        R.string.year_extra, R.string.number_extra, R.string.player_name_extra,
-        R.string.team_extra };
+            R.string.year_extra, R.string.number_extra,
+            R.string.player_name_extra, R.string.team_extra };
 
     private Button buttonOk;
     private LinearLayout mainLayout;
