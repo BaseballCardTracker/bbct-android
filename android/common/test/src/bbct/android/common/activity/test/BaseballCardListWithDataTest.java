@@ -593,20 +593,9 @@ public class BaseballCardListWithDataTest extends
     /**
      * Test that the {@link ListView} displays the correct cards when filtered
      * by the card year.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
      */
-    public void testYearFilter() throws Throwable {
+    public void testYearFilter() {
         final int year = 1993;
-        FilterInput yearInput = new FilterInput() {
-            @Override
-            public void doInput() {
-                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer
-                        .toString(year));
-            }
-        };
 
         Predicate<BaseballCard> yearPred = new Predicate<BaseballCard>() {
             @Override
@@ -615,141 +604,13 @@ public class BaseballCardListWithDataTest extends
             }
         };
 
-        this.testSingleFilter(R.id.year_check, yearInput, yearPred);
-    }
-
-    /**
-     * Test that the {@link ListView} displays the correct cards when filtered
-     * by the card number.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
-    public void testNumberFilter() throws Throwable {
-        final int number = 278;
-        FilterInput numberInput = new FilterInput() {
-            @Override
-            public void doInput() {
-                BaseballCardListWithDataTest.this.inst.sendStringSync(Integer
-                        .toString(number));
-            }
-        };
-
-        Predicate<BaseballCard> numberPred = new Predicate<BaseballCard>() {
-            @Override
-            public boolean doTest(BaseballCard card) {
-                return card.getNumber() == number;
-            }
-        };
-
-        this.testSingleFilter(R.id.number_check, numberInput, numberPred);
-    }
-
-    /**
-     * Test that the {@link ListView} displays the correct cards when filtered
-     * by the card year and number.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
-    public void testYearAndNumberFilter() throws Throwable {
-        final int year = 1993;
-        final int number = 18;
-
-        FilterInput[] yearAndNumberInput = new FilterInput[] {
-                new FilterInput() {
-                    @Override
-                    public void doInput() {
-                        BaseballCardListWithDataTest.this.inst
-                                .sendStringSync(Integer.toString(year));
-                    }
-                },
-
-                new FilterInput() {
-                    @Override
-                    public void doInput() {
-                        BaseballCardListWithDataTest.this.inst
-                                .sendStringSync(Integer.toString(number));
-                    }
-                } };
-
-        Predicate<BaseballCard> yearAndNumberPred = new Predicate<BaseballCard>() {
-            @Override
-            public boolean doTest(BaseballCard card) {
-                return card.getYear() == year && card.getNumber() == number;
-            }
-        };
-
-        this.testFilterCombination(new int[] { R.id.year_check,
-                R.id.number_check }, yearAndNumberInput, yearAndNumberPred);
-    }
-
-    /**
-     * Test that the {@link ListView} displays the correct cards when filtered
-     * by the player name.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
-    public void testPlayerNameFilter() throws Throwable {
-        final String playerName = "Ken Griffey Jr.";
-        FilterInput playerNameInput = new FilterInput() {
-            @Override
-            public void doInput() {
-                BaseballCardListWithDataTest.this.inst
-                        .sendStringSync(playerName);
-            }
-        };
-
-        Predicate<BaseballCard> playerNamePred = new Predicate<BaseballCard>() {
-            @Override
-            public boolean doTest(BaseballCard card) {
-                return playerName.equals(card.getPlayerName());
-            }
-        };
-
-        this.testSingleFilter(R.id.player_name_check, playerNameInput,
-                playerNamePred);
-    }
-
-    /**
-     * Test that the {@link ListView} displays the correct cards when filtered
-     * by the team name.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
-    public void testTeamFilter() throws Throwable {
-        final String team = "Mets";
-        FilterInput teamInput = new FilterInput() {
-            @Override
-            public void doInput() {
-                BaseballCardListWithDataTest.this.inst.sendStringSync(team);
-            }
-        };
-
-        Predicate<BaseballCard> teamPred = new Predicate<BaseballCard>() {
-            @Override
-            public boolean doTest(BaseballCard card) {
-                return team.equals(card.getTeam());
-            }
-        };
-
-        this.testSingleFilter(R.id.team_check, teamInput, teamPred);
+        this.testSingleFilter(R.id.year_check, year + "", yearPred);
     }
 
     /**
      * Test that all cards are displayed after a filter is cleared.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
      */
-    public void testClearFilter() throws Throwable {
+    public void testClearFilter() {
         this.testYearFilter();
         BBCTTestUtil.testMenuItem(this.solo, this.activity,
                 R.id.clear_filter_menu, null);
@@ -757,39 +618,23 @@ public class BaseballCardListWithDataTest extends
                 this.listView);
     }
 
-    private void testSingleFilter(int checkId, FilterInput filterInput,
+    /**
+     * Test a filter using a single parameter.
+     *
+     * @param checkId
+     *            - the id of {@link CheckBox} to activate.
+     * @param input
+     *            - the input to use for filtering.
+     * @param filterPred
+     *            - @see {@link Predicate}.
+     */
+    private void testSingleFilter(int checkId, String input,
             Predicate<BaseballCard> filterPred) {
-
-        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
-                this.activity, R.id.filter_menu, FilterCards.class);
-        CheckBox filterCheckBox = (CheckBox) filterCards.findViewById(checkId);
-
-        this.solo.clickOnView(filterCheckBox);
-        Button filterOkButton = (Button) filterCards
-                .findViewById(R.id.ok_button);
-
-        filterInput.doInput();
-        this.solo.clickOnView(filterOkButton);
-        this.inst.waitForIdleSync();
-        Assert.assertTrue(filterCards.isFinishing());
-
-        this.expectedCards = this.filterList(this.allCards, filterPred);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
-                this.listView);
-    }
-
-    private void testFilterCombination(int[] checkIds,
-            FilterInput[] filterInputs, Predicate<BaseballCard> filterPred) {
         Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.filter_menu, FilterCards.class);
 
-        for (int i = 0; i < checkIds.length; i++) {
-            CheckBox filterCheckBox = (CheckBox) filterCards
-                    .findViewById(checkIds[i]);
-
-            this.solo.clickOnView(filterCheckBox);
-            filterInputs[i].doInput();
-        }
+        BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.inst, filterCards,
+                this.solo, checkId, input);
 
         Button filterOkButton = (Button) filterCards
                 .findViewById(R.id.ok_button);
@@ -797,27 +642,9 @@ public class BaseballCardListWithDataTest extends
         this.inst.waitForIdleSync();
         Assert.assertTrue(filterCards.isFinishing());
 
-        this.expectedCards = this.filterList(this.allCards, filterPred);
+        this.expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
                 this.listView);
-    }
-
-    private List<BaseballCard> filterList(List<BaseballCard> list,
-            Predicate<BaseballCard> pred) {
-        List<BaseballCard> filteredList = new ArrayList<BaseballCard>();
-
-        for (BaseballCard obj : list) {
-            if (pred.doTest(obj)) {
-                filteredList.add(obj);
-            }
-        }
-
-        return filteredList;
-    }
-
-    private interface FilterInput {
-
-        public void doInput();
     }
 
     private List<BaseballCard> allCards;
