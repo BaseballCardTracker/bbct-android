@@ -44,7 +44,7 @@ import junit.framework.Assert;
  * contain data.
  */
 public class BaseballCardListWithoutDataTest extends
-ActivityInstrumentationTestCase2<BaseballCardList> {
+        ActivityInstrumentationTestCase2<BaseballCardList> {
 
     /**
      * Create instrumented test cases for {@link BaseballCardList}.

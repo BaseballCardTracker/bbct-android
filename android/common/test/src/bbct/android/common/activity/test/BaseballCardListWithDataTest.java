@@ -633,8 +633,8 @@ public class BaseballCardListWithDataTest extends
         Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.filter_menu, FilterCards.class);
 
-        BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.inst, filterCards,
-                this.solo, checkId, input);
+        BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.inst, this.solo,
+                checkId, input);
 
         Button filterOkButton = (Button) filterCards
                 .findViewById(R.id.ok_button);

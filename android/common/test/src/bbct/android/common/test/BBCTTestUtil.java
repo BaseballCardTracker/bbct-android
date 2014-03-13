@@ -493,33 +493,32 @@ final public class BBCTTestUtil {
      *            - the {@link EditText} views to fill in.
      */
     public static void sendKeysToFilterCards(InstrumentationTestCase test,
-            Activity filterCards, Solo solo, BaseballCard testCard,
-            Set<EditTexts> fieldFlags) {
+            Solo solo, BaseballCard testCard, Set<EditTexts> fieldFlags) {
         Instrumentation inst = test.getInstrumentation();
 
         if (fieldFlags.contains(EditTexts.BRAND)) {
-            sendKeysToCurrFieldFilterCards(inst, filterCards, solo,
-                    R.id.brand_check, testCard.getBrand());
-        }
-
-        if (fieldFlags.contains(EditTexts.NUMBER)) {
-            sendKeysToCurrFieldFilterCards(inst, filterCards, solo,
-                    R.id.number_check, testCard.getNumber() + "");
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.brand_check,
+                    testCard.getBrand());
         }
 
         if (fieldFlags.contains(EditTexts.YEAR)) {
-            sendKeysToCurrFieldFilterCards(inst, filterCards, solo,
-                    R.id.year_check, testCard.getYear() + "");
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.year_check,
+                    testCard.getYear() + "");
+        }
+
+        if (fieldFlags.contains(EditTexts.NUMBER)) {
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.number_check,
+                    testCard.getNumber() + "");
         }
 
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
-            sendKeysToCurrFieldFilterCards(inst, filterCards, solo,
-                    R.id.player_name_check, testCard.getPlayerName());
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.player_name_check,
+                    testCard.getPlayerName());
         }
 
         if (fieldFlags.contains(EditTexts.TEAM)) {
-            sendKeysToCurrFieldFilterCards(inst, filterCards, solo,
-                    R.id.team_check, testCard.getTeam());
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.team_check,
+                    testCard.getTeam());
         }
     }
 
@@ -539,7 +538,8 @@ final public class BBCTTestUtil {
      *            - the input string.
      */
     public static void sendKeysToCurrFieldFilterCards(Instrumentation inst,
-            Activity filterCards, Solo solo, int checkId, String input) {
+            Solo solo, int checkId, String input) {
+        Activity filterCards = solo.getCurrentActivity();
         CheckBox cb = (CheckBox) filterCards.findViewById(checkId);
         solo.clickOnView(cb);
         inst.sendStringSync(input);

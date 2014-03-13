@@ -145,8 +145,8 @@ public class FilterCardsPartialInputTest extends
             }
         };
 
-        BBCTTestUtil.sendKeysToFilterCards(this, filterCards, this.solo,
-                this.testCard, this.inputFieldsMask);
+        BBCTTestUtil.sendKeysToFilterCards(this, this.solo, this.testCard,
+                this.inputFieldsMask);
 
         Button filterOkButton = (Button) filterCards
                 .findViewById(R.id.ok_button);

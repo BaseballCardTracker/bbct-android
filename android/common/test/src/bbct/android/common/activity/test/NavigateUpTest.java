@@ -13,7 +13,7 @@ import junit.framework.Assert;
  * Tests that the Home icon navigates up to the correct activity.
  */
 public class NavigateUpTest extends
-ActivityInstrumentationTestCase2<BaseballCardList> {
+        ActivityInstrumentationTestCase2<BaseballCardList> {
 
     public NavigateUpTest() {
         super(BaseballCardList.class);
