@@ -19,7 +19,6 @@
 package bbct.android.common.activity;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -63,11 +62,10 @@ public class BaseballCardList extends ActionBarActivity {
             this.savedSelection = null;
 
             this.setContentView(R.layout.card_list);
-            this.filterRequest = this.getResources().getInteger(
-                    R.integer.no_filter);
+            this.filterActive = false;
             if (savedInstanceState != null) {
-                this.filterRequest = savedInstanceState.getInt(this
-                        .getString(R.string.filter_request_extra));
+                this.filterActive = savedInstanceState.getBoolean(this
+                        .getString(R.string.filter_status_extra));
                 this.filterParams = savedInstanceState.getBundle(this
                         .getString(R.string.filter_params_extra));
                 this.savedSelection = savedInstanceState.getBooleanArray(this
@@ -75,8 +73,7 @@ public class BaseballCardList extends ActionBarActivity {
             }
 
             this.emptyList = (TextView) this.findViewById(android.R.id.empty);
-            Resources res = this.getResources();
-            if (this.filterRequest == res.getInteger(R.integer.no_filter)) {
+            if (!this.filterActive) {
                 this.emptyList.setText(R.string.start);
             } else {
                 this.emptyList.setText(R.string.empty_list);
@@ -136,7 +133,7 @@ public class BaseballCardList extends ActionBarActivity {
     public void onResume() {
         super.onResume();
 
-        this.sqlHelper.applyFilter(this, this.filterRequest, this.filterParams);
+        this.updateFilter();
         this.swapCursor();
 
         // restore default header state
@@ -145,7 +142,7 @@ public class BaseballCardList extends ActionBarActivity {
         headerCheck.setChecked(false);
 
         // restore old state if it exists
-        if (this.savedSelection != null && this.filterRequest == this.getResources().getInteger(R.integer.no_filter)) {
+        if (this.savedSelection != null && !this.filterActive) {
 
             // array needs to be extended in case a card was added
             boolean[] newSelection = new boolean[this.adapter.getSelection().length];
@@ -195,10 +192,9 @@ public class BaseballCardList extends ActionBarActivity {
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        Resources res = this.getResources();
         MenuItem filter = menu.findItem(R.id.filter_menu);
         MenuItem clearFilter = menu.findItem(R.id.clear_filter_menu);
-        if (this.filterRequest == res.getInteger(R.integer.no_filter)) {
+        if (!this.filterActive) {
             filter.setVisible(true);
             filter.setEnabled(true);
 
@@ -239,7 +235,6 @@ public class BaseballCardList extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
-        Resources res = this.getResources();
         if (itemId == R.id.add_menu) {
             Intent intent = new Intent(Intent.ACTION_EDIT,
                     BaseballCardDetails.DETAILS_URI);
@@ -247,17 +242,19 @@ public class BaseballCardList extends ActionBarActivity {
             this.startActivity(intent);
             return true;
         } else if (itemId == R.id.filter_menu) {
-            int requestCode = res.getInteger(R.integer.filter_options_request);
-            this.startActivityForResult(new Intent(this, FilterOptions.class),
-                    requestCode);
+            this.startActivityForResult(new Intent(this, FilterCards.class),
+                    FILTER_CARDS_REQUEST);
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
-            this.filterRequest = res.getInteger(R.integer.no_filter);
+            this.filterActive = false;
             this.emptyList.setText(R.string.start);
             this.savedSelection = null;
-            this.sqlHelper.clearFilter();
+            this.updateFilter();
             this.swapCursor();
-            this.invalidateOptionsMenu();
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+                this.invalidateOptionsMenu();
+            }
 
             return true;
         } else if (itemId == R.id.delete_menu) {
@@ -276,8 +273,7 @@ public class BaseballCardList extends ActionBarActivity {
                     Toast.LENGTH_LONG).show();
 
             this.adapter.setSelection(selected);
-            this.sqlHelper.applyFilter(this, this.filterRequest,
-                    this.filterParams);
+            this.updateFilter();
             this.swapCursor();
             return true;
 
@@ -303,8 +299,8 @@ public class BaseballCardList extends ActionBarActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(this.getString(R.string.filter_request_extra),
-                this.filterRequest);
+        outState.putBoolean(this.getString(R.string.filter_status_extra),
+                this.filterActive);
         outState.putBundle(this.getString(R.string.filter_params_extra),
                 this.filterParams);
         outState.putBooleanArray(this.getString(R.string.selection_extra),
@@ -362,20 +358,18 @@ public class BaseballCardList extends ActionBarActivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Resources res = this.getResources();
-
-        if (requestCode == res.getInteger(R.integer.filter_options_request)) {
+        if (requestCode == FILTER_CARDS_REQUEST) {
             if (resultCode == RESULT_OK) {
-                this.filterRequest = data.getIntExtra(
-                        this.getString(R.string.filter_request_extra),
-                        DEFAULT_INT_EXTRA);
+                this.filterActive = true;
                 this.filterParams = data.getExtras();
                 this.emptyList.setText(R.string.empty_list);
 
-                this.sqlHelper.applyFilter(this, this.filterRequest,
-                        this.filterParams);
+                this.updateFilter();
                 this.swapCursor();
-                this.invalidateOptionsMenu();
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+                    this.invalidateOptionsMenu();
+                }
             }
         } else {
             Log.e(TAG, "onActivityResult(): Invalid result code: "
@@ -408,6 +402,14 @@ public class BaseballCardList extends ActionBarActivity {
         return new BaseballCard("", year, number, 0, 0, player, "", "");
     }
 
+    private void updateFilter() {
+        if (this.filterActive) {
+            this.sqlHelper.applyFilter(this, this.filterParams);
+        } else {
+            this.sqlHelper.clearFilter();
+        }
+    }
+
     @SuppressWarnings("deprecation")
     private void swapCursor() {
         Cursor cursor = this.sqlHelper.getCursor();
@@ -427,14 +429,13 @@ public class BaseballCardList extends ActionBarActivity {
             R.id.year_text_view, R.id.number_text_view,
             R.id.player_name_text_view };
 
+    private static final int FILTER_CARDS_REQUEST = 0x0001;
     private static final String TAG = BaseballCardList.class.getName();
-    private static final int DEFAULT_INT_EXTRA = -1;
-    private static final int INVALID = -1;
     private boolean[] savedSelection;
     TextView emptyList = null;
     private BaseballCardSQLHelper sqlHelper = null;
     private CheckedCursorAdapter adapter = null;
-    private int filterRequest = INVALID;
+    private boolean filterActive = false;
     private Bundle filterParams = null;
     private View headerView;
 }

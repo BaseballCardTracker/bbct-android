@@ -27,7 +27,7 @@ import bbct.android.common.R;
 import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
-import bbct.android.common.activity.FilterOptions;
+import bbct.android.common.activity.FilterCards;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
@@ -139,15 +139,15 @@ public class BaseballCardListWithoutDataTest extends
     }
 
     /**
-     * Test that the "Filter Cards" menu item launches a {@link FilterOptions}
+     * Test that the "Filter Cards" menu item launches a {@link FilterCards}
      * activity.
      */
     public void testFilterCardsMenuItem() {
-        Activity filterOptions = BBCTTestUtil.testMenuItem(this.solo,
-                this.activity, R.id.filter_menu, FilterOptions.class);
+        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
+                this.activity, R.id.filter_menu, FilterCards.class);
 
-        filterOptions.finish();
-        Assert.assertTrue(filterOptions.isFinishing());
+        filterCards.finish();
+        Assert.assertTrue(filterCards.isFinishing());
     }
 
     /**

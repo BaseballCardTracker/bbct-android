@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -36,9 +37,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.activity.FilterCards;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import com.robotium.solo.Solo;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -72,36 +75,35 @@ final public class BBCTTestUtil {
         // for the header View
         Assert.assertEquals(expectedItems.size(), listView.getCount() - 1);
 
-        for (int i = 0; i < expectedItems.size(); ++i) {
-            // Add 1 to skip headers
-            View row = listView.getChildAt(i + 1);
-            TextView brandTextView = (TextView) row
-                    .findViewById(R.id.brand_text_view);
-            TextView yearTextView = (TextView) row
-                    .findViewById(R.id.year_text_view);
-            TextView numberTextView = (TextView) row
-                    .findViewById(R.id.number_text_view);
-            TextView playerNameTextView = (TextView) row
-                    .findViewById(R.id.player_name_text_view);
+        for (BaseballCard card : expectedItems) {
 
-            StringBuilder rowText = new StringBuilder("Row ").append(i)
-                    .append(":").append(brandTextView.getText()).append(',')
-                    .append(yearTextView.getText()).append(',')
-                    .append(numberTextView.getText()).append(',')
-                    .append(playerNameTextView.getText());
-            Log.d(TAG, rowText.toString());
+            boolean listContainsCard = false;
+            for (int i = 0; i < listView.getChildCount(); i++) {
+                // Add 1 to skip headers
+                View row = listView.getChildAt(i + 1);
+                TextView brandTextView = (TextView) row
+                        .findViewById(R.id.brand_text_view);
+                TextView yearTextView = (TextView) row
+                        .findViewById(R.id.year_text_view);
+                TextView numberTextView = (TextView) row
+                        .findViewById(R.id.number_text_view);
+                TextView playerNameTextView = (TextView) row
+                        .findViewById(R.id.player_name_text_view);
 
-            BaseballCard expectedCard = expectedItems.get(i);
-            Log.d(TAG, "Baseball Card #" + i + ":" + expectedCard);
+                String brand = brandTextView.getText().toString(), playerName = playerNameTextView
+                        .getText().toString();
+                int year = Integer.parseInt(yearTextView.getText().toString()), number = Integer
+                        .parseInt(numberTextView.getText().toString());
 
-            Assert.assertEquals(expectedCard.getBrand(), brandTextView
-                    .getText().toString());
-            Assert.assertEquals(expectedCard.getYear(),
-                    Integer.parseInt(yearTextView.getText().toString()));
-            Assert.assertEquals(expectedCard.getNumber(),
-                    Integer.parseInt(numberTextView.getText().toString()));
-            Assert.assertEquals(expectedCard.getPlayerName(),
-                    playerNameTextView.getText().toString());
+                if (card.getBrand().equals(brand) && card.getYear() == year
+                        && card.getNumber() == number
+                        && card.getPlayerName().equals(playerName)) {
+                    listContainsCard = true;
+                    break;
+                }
+            }
+
+            Assert.assertTrue(listContainsCard);
         }
     }
 
@@ -472,6 +474,88 @@ final public class BBCTTestUtil {
             Activity cardList) throws Throwable {
         Assert.assertTrue(test.getInstrumentation().invokeMenuActionSync(
                 cardList, R.id.delete_menu, 0));
+    }
+
+    /**
+     * Fills in all {@link EditText} views, except the ones indicated, of the
+     * {@link FilterCards} activity.
+     *
+     * @param test
+     *            - the {@link InstrumentationTestCase} object perform in the
+     *            test.
+     * @param filterCards
+     *            - the {@link FilterCards} activity being tested.
+     * @param solo
+     *            - the {@link Solo} object to perform clicks on views.
+     * @param testCard
+     *            - the {@link BaseballCard} which is used to fill in the data.
+     * @param fieldFlags
+     *            - the {@link EditText} views to fill in.
+     */
+    public static void sendKeysToFilterCards(InstrumentationTestCase test,
+            Solo solo, BaseballCard testCard, Set<EditTexts> fieldFlags) {
+        Instrumentation inst = test.getInstrumentation();
+
+        if (fieldFlags.contains(EditTexts.BRAND)) {
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.brand_check,
+                    testCard.getBrand());
+        }
+
+        if (fieldFlags.contains(EditTexts.YEAR)) {
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.year_check,
+                    testCard.getYear() + "");
+        }
+
+        if (fieldFlags.contains(EditTexts.NUMBER)) {
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.number_check,
+                    testCard.getNumber() + "");
+        }
+
+        if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.player_name_check,
+                    testCard.getPlayerName());
+        }
+
+        if (fieldFlags.contains(EditTexts.TEAM)) {
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.team_check,
+                    testCard.getTeam());
+        }
+    }
+
+    /**
+     * Fills in the current {@link EditText} view, of the given
+     * {@link FilterCards} activity.
+     *
+     * @param inst
+     *            - the {@link Instrumentation} object perform in the test.
+     * @param filterCards
+     *            - the {@link FilterCards} activity being tested.
+     * @param solo
+     *            - the {@link Solo} object to perform clicks on view.
+     * @param checkId
+     *            - the id of {@link CheckBox} to click.
+     * @param input
+     *            - the input string.
+     */
+    public static void sendKeysToCurrFieldFilterCards(Instrumentation inst,
+            Solo solo, int checkId, String input) {
+        Activity filterCards = solo.getCurrentActivity();
+        CheckBox cb = (CheckBox) filterCards.findViewById(checkId);
+        solo.clickOnView(cb);
+        inst.sendStringSync(input);
+    }
+
+    public static List<BaseballCard> filterList(List<BaseballCard> list,
+            Predicate<BaseballCard> pred) {
+        List<BaseballCard> filteredList = new ArrayList<BaseballCard>();
+
+        for (BaseballCard obj : list) {
+            if (pred.doTest(obj)) {
+                filteredList.add(obj);
+            }
+        }
+
+        return filteredList;
     }
 
     /**
