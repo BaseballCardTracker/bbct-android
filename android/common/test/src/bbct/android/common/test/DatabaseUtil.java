@@ -74,6 +74,13 @@ public class DatabaseUtil {
     }
 
     /**
+     * Delete all rows in the database table.
+     */
+    public void clearDatabase() {
+        this.db.delete(BaseballCardContract.TABLE_NAME, null, null);
+    }
+
+    /**
      * Insert baseball card data into the database.
      *
      * @param card The baseball card data to insert.

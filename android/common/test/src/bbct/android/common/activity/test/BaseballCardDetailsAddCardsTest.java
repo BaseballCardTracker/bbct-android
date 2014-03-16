@@ -83,7 +83,7 @@ public class BaseballCardDetailsAddCardsTest extends
     @Override
     public void tearDown() throws Exception {
         DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        dbUtil.deleteDatabase();
+        dbUtil.clearDatabase();
 
         super.tearDown();
     }
