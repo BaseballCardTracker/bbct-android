@@ -114,7 +114,7 @@ public class BaseballCardListWithDataTest extends
     @Override
     public void tearDown() throws Exception {
         this.solo.finishOpenedActivities();
-        this.dbUtil.deleteDatabase();
+        this.dbUtil.clearDatabase();
 
         super.tearDown();
     }

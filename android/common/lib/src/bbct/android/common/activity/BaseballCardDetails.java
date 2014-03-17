@@ -19,7 +19,10 @@
 package bbct.android.common.activity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -184,19 +187,21 @@ public class BaseballCardDetails extends Activity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         // If the key entered is 'Enter'('next' or 'done'), then
-        // 1) move the focus to the next view if the current focus is in brand or player name view and
+        // 1) move the focus to the next view if the current focus is in brand
+        // or player name view and
         // 2) hide the keypad if the current focus is in team view.
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
-            if (brandText.hasFocus()) {
-                yearText.requestFocus();
+            if (this.brandText.hasFocus()) {
+                this.yearText.requestFocus();
                 return true;
-            } else if (playerNameText.hasFocus()) {
-                teamText.requestFocus();
+            } else if (this.playerNameText.hasFocus()) {
+                this.teamText.requestFocus();
                 return true;
-            } else if (teamText.hasFocus()) {
-                //hide the soft keypad
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(teamText.getWindowToken(), 0);
+            } else if (this.teamText.hasFocus()) {
+                // hide the soft keypad
+                InputMethodManager imm = (InputMethodManager) this
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(this.teamText.getWindowToken(), 0);
                 return true;
             }
         }
@@ -214,7 +219,7 @@ public class BaseballCardDetails extends Activity {
         this.playerPositionSpinner.setSelection(-1);
     }
 
-    private View.OnClickListener onSave = new View.OnClickListener() {
+    private final View.OnClickListener onSave = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             BaseballCardSQLHelper sqlHelper = null;
@@ -229,23 +234,28 @@ public class BaseballCardDetails extends Activity {
                                 BaseballCardDetails.this.oldCard, newCard);
                         BaseballCardDetails.this.finish();
                     } else {
-                        long result = sqlHelper.insertBaseballCard(newCard);
+                        try {
+                            ContentResolver resolver = BaseballCardDetails.this
+                                    .getContentResolver();
+                            ContentValues values = BaseballCardContract
+                                    .getContentValues(newCard);
+                            resolver.insert(BaseballCardContract.CONTENT_URI,
+                                    values);
 
-                        if (result == -1) {
-                            DialogUtil.showErrorDialog(
-                                    BaseballCardDetails.this,
-                                    R.string.duplicate_card_title,
-                                    R.string.duplicate_card_error);
-                        } else {
                             BaseballCardDetails.this.resetInput();
                             BaseballCardDetails.this.brandText.requestFocus();
                             Toast.makeText(view.getContext(),
                                     R.string.card_added_message,
                                     Toast.LENGTH_LONG).show();
+                        } catch (SQLException e) {
+                            // Is duplicate card the only reason this exception
+                            // will be thrown?
+                            DialogUtil.showErrorDialog(
+                                    BaseballCardDetails.this,
+                                    R.string.duplicate_card_title,
+                                    R.string.duplicate_card_error);
                         }
                     }
-                    // TODO: Catch SQL exceptions and show appropriate error
-                    // messages.
                 }
             } catch (SQLHelperCreationException ex) {
                 // TODO Show a dialog and exit app
@@ -260,7 +270,7 @@ public class BaseballCardDetails extends Activity {
         }
     };
 
-    private View.OnClickListener onDone = new View.OnClickListener() {
+    private final View.OnClickListener onDone = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             BaseballCardDetails.this.finish();

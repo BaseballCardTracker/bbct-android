@@ -136,7 +136,7 @@ public class BaseballCardDetailsEditCardTest extends
      */
     @Override
     public void tearDown() throws Exception {
-        this.dbUtil.deleteDatabase();
+        this.dbUtil.clearDatabase();
 
         super.tearDown();
 
