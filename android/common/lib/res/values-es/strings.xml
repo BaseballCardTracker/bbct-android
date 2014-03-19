@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of BBCT for Android.
+
+ Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+
+ BBCT for Android is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ BBCT for Android is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+
+    <string name="app_name">BBCT Common</string>
+    <string name="provider_name">BBCT Datos</string>
+
+    <!-- Activity titles -->
+    <string name="bbct_title">BBCT Common - %1$s</string>
+    <string name="card_details_title">Detalles de la tarjeta</string>
+    <string name="player_details_title">Detalles del Jugador</string>
+    <string name="filter_cards_title">Opciones de Filtro</string>
+    <string name="about_title">Acerca de</string>
+    <string name="input_error_title">Error de Entrada</string>
+    <string name="duplicate_card_title">Tarjeta Duplicadda</string>
+    <string name="start">Pulse (+) para empezar.</string>
+    <string name="empty_list">Ninguna tarjeta encontrada.</string>
+
+    <!-- Labels for card details -->
+    <string name="brand_label">Marca de la Tarjeta:</string>
+    <string name="year_label">A�o de la Tarjeta:</string>
+    <string name="number_label">N�mero de la Tarjeta:</string>
+    <string name="value_label">Valor de la Tarjeta:</string>
+    <string name="count_label">Cantidad de Tarjetas:</string>
+    <string name="player_name_label">Nombre del Jugador:</string>
+    <string name="team_label">Equipo:</string>
+    <string name="player_position_label">Posici�n del Jugador:</string>
+
+    <!-- Column headings for card list -->
+    <string name="brand_col">Marca</string>
+    <string name="year_col">A�o</string>
+    <string name="number_col">#</string>
+    <string name="value_col">Valor</string>
+    <string name="count_col">Cantidad</string>
+    <string name="player_name_col">Nombre del Jugador</string>
+    <string name="player_position_col">Posici�n del Jugador</string>
+
+    <!-- Button text -->
+    <string name="save_button">Guardar</string>
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Anular</string>
+    <string name="done_button">Hecho</string>
+
+    <!-- Hints for TextEdit widgets -->
+    <string name="brand_hint">Informa la marca de la tarjeta.</string>
+    <string name="year_hint">Informa el a�o de la tarjeta.</string>
+    <string name="number_hint">Informa el n�mero de la tarjeta.</string>
+    <string name="value_hint">Informa el valor de la tarjeta.</string>
+    <string name="count_hint">Informa la cantidad de tarjetas.</string>
+    <string name="player_name_hint">Informa el nombre del jugador.</string>
+    <string name="team_hint">Informa el equipo del jugador.</string>
+    <string name="player_position_hint">Informa la posici�n del jugador.</string>
+
+    <!-- Filter cards TextView labels -->
+    <string name="year_option">A�o</string>
+    <string name="number_option">N�mero</string>
+    <string name="brand_option">Marca</string>
+    <string name="player_name_option">Nombre</string>
+    <string name="team_option">Equipo</string>
+
+    <!-- Menu text -->
+    <string name="add_menu">A�adir Tarjetas</string>
+    <string name="filter_menu">Filtrar Tarjetas</string>
+    <string name="clear_filter_menu">Borrar Filtro</string>
+    <string name="about_menu">Acerca de</string>
+    <string name="delete_menu">Borrar Tarjetas</string>
+
+    <!-- Text in About activity -->
+    <string name="version_text">Version %1$s</string>
+    <string name="version_number">0.5.x</string>
+    <string name="copyright">Copyright 2012–14 by codeguru</string>
+    <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
+    <string name="website"><b>S�tio web:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
+    <string name="license">Este software est� licenciado bajo la GPL. Visita\n
+        http://www.gnu.org/licenses/licenses.es.html para uma c�pia de la licencia.</string>
+    <string name="about">BBCT es una aplicaci�n de base de datos simple para tu colecci�n
+        de tarjetas de b�isbol. Puedes a�adir informacion acerca de las tarjetas en tu
+        colecci�n, veer detalles de tarjetas individuales, y filtrar la lista de tarjetas
+        de acuerdo com un conjunto limitado de criterios. BBCT te ayuda a organizar tu
+        colecci�n y buscar rapidamente las tarjetas que posees. No dudes en enviar email
+        com tus opiniones y comentarios, o visita el s�tio web del proyecto.</string>
+
+    <!-- Card details toasts -->
+    <string name="card_added_message">Tarjeta a�adida com �xito.</string>
+    <string name="card_deleted_message">Tarjetas borradas com �xito.</string>
+
+    <!-- Strings para spinner posici�n en la actividad detalles de la tarjeta -->
+    <string-array name="positions">
+        <item>Lanzador</item>
+        <item>Receptor</item>
+        <item>Primera Base</item>
+        <item>Segunda Base</item>
+        <item>Tercera Base</item>
+        <item>Parador Corto</item>
+        <item>Jardinero Izquierdo</item>
+        <item>Jardinero Central</item>
+        <item>Jardinero Derecho</item>
+    </string-array>
+
+    <!-- Error messages -->
+    <string name="no_radio_button_error">Por favor selecciona una opci�n.</string>
+    <string name="brand_input_error">Por favor Informa un nombre de marca.</string>
+    <string name="year_input_error">Por favor Informa un a�o.</string>
+    <string name="number_input_error">Por favor Informa un n�mero de tarjeta.</string>
+    <string name="value_input_error">Por favor Informa el valor de la tarjeta.</string>
+    <string name="count_input_error">Por favor Informa la cantidad de tarjetas que possees.</string>
+    <string name="player_name_input_error">Por favor Informa el nombre del jugador.</string>
+    <string name="team_input_error">Por favor Informa el equipo del jugador.</string>
+    <string name="player_position_input_error">Por favor Informa la posici�n del jugador.</string>
+    <string name="invalid_uri_error">URI no v�lido: %1$s</string>
+    <string name="database_error">Se produjo un error al conectar con la base de datos.</string>
+    <string name="duplicate_card_error">La tarjeta de b�isbol ya existe. Por favor actualice su cantidad.</string>
+    <string name="sponsor">Patrocinador Orgulloso:</string>
+
+</resources>
