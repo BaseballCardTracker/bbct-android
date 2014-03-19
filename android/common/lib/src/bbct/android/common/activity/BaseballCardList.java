@@ -323,6 +323,7 @@ public class BaseballCardList extends ListActivity {
         BaseballCard card = BaseballCardList.this.adapter.getSelectedCard();
 
         intent.putExtra(this.getString(R.string.baseball_card_extra), card);
+        intent.putExtra(this.getString(R.string.card_id_extra), id);
         intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
         BaseballCardList.this.startActivity(intent);
     }

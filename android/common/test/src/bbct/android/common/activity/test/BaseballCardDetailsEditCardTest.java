@@ -113,18 +113,16 @@ public class BaseballCardDetailsEditCardTest extends
         this.newCard.setValue(this.newCard.getValue() + 50);
         this.newCard.setCount(this.newCard.getCount() + 1);
 
+        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
+        this.cardId = this.dbUtil.insertBaseballCard(this.oldCard);
+
         Context target = this.inst.getTargetContext();
         Intent intent = new Intent(target, BaseballCardDetails.class);
         intent.putExtra(target.getString(R.string.baseball_card_extra),
                 this.oldCard);
+        intent.putExtra(target.getString(R.string.card_id_extra), this.cardId);
         this.setActivityIntent(intent);
         this.activity = this.getActivity();
-
-        // Insert baseball card to make sure we are updating an existing card
-        // rather than simply inserting a new card.
-        // TODO Make sure this still works without using BaseballCardSQLHelper
-        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        this.dbUtil.insertBaseballCard(this.oldCard);
     }
 
     /**
@@ -196,6 +194,7 @@ public class BaseballCardDetailsEditCardTest extends
     private BaseballCard oldCard = null;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil = null;
+    private long cardId = -1;
     private static final String TEST_NAME = "testEditCard";
     private static final String TAG = BaseballCardDetailsEditCardTest.class
             .getName();

@@ -27,4 +27,5 @@
     <string name="team_extra">team</string>
     <string name="filter_params_extra">filter_params</string>
     <string name="selection_extra">selection</string>
+    <string name="card_id_extra">card_id</string>
 </resources>
