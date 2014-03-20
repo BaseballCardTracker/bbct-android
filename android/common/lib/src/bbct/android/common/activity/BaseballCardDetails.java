@@ -144,8 +144,6 @@ public class BaseballCardDetails extends Activity {
                 .getSelectedItem();
 
         for (int i = allEditTexts.length - 1; i >= 0; --i) {
-            Log.d(TAG, "i=" + i);
-
             String input = allEditTexts[i].getText().toString();
             if (input.equals("")) {
                 allEditTexts[i].requestFocus();

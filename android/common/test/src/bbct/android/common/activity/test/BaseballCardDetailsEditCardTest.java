@@ -31,6 +31,7 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
+import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.EnumSet;
 import java.util.List;
@@ -116,13 +117,21 @@ public class BaseballCardDetailsEditCardTest extends
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         this.cardId = this.dbUtil.insertBaseballCard(this.oldCard);
 
+        Log.d(TAG, "cardId=" + this.cardId);
+
+        if (this.cardId == -1) {
+            Log.e(TAG, this.oldCard.toString());
+        }
+
         Context target = this.inst.getTargetContext();
         Intent intent = new Intent(target, BaseballCardDetails.class);
         intent.putExtra(target.getString(R.string.baseball_card_extra),
                 this.oldCard);
         intent.putExtra(target.getString(R.string.card_id_extra), this.cardId);
         this.setActivityIntent(intent);
+
         this.activity = this.getActivity();
+        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -155,13 +164,16 @@ public class BaseballCardDetailsEditCardTest extends
         Assert.assertTrue(this.dbUtil.containsBaseballCard(this.oldCard));
 
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.oldCard);
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.newCard,
+        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.newCard,
                 this.inputMask);
 
         BaseballCard expected = this.getExpectedCard();
-        BBCTTestUtil.assertAllEditTextContents(this.activity, expected);
-        BBCTTestUtil.clickCardDetailsSave(this, this.activity);
 
+        Log.d("DEBUG", "Checking cards for inputMask " + this.inputMask);
+        BBCTTestUtil.assertAllEditTextContents(this.activity, expected);
+        Log.d("DEBUG", "Success!");
+
+        BBCTTestUtil.clickCardDetailsSave(this.solo);
         Assert.assertTrue(this.dbUtil.containsBaseballCard(expected));
     }
 
@@ -189,6 +201,7 @@ public class BaseballCardDetailsEditCardTest extends
     }
 
     private final Set<BBCTTestUtil.EditTexts> inputMask;
+    private Solo solo = null;
     private Instrumentation inst = null;
     private Activity activity = null;
     private BaseballCard oldCard = null;

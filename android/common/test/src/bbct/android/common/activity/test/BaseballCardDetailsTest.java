@@ -39,6 +39,7 @@ import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
+import com.robotium.solo.Solo;
 import java.io.InputStream;
 import junit.framework.Assert;
 
@@ -100,6 +101,8 @@ public class BaseballCardDetailsTest extends
         this.doneButton = (Button) this.activity.findViewById(R.id.done_button);
         this.scrollView = (ScrollView) this.activity
                 .findViewById(R.id.scroll_card_details);
+
+        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -132,7 +135,7 @@ public class BaseballCardDetailsTest extends
      *             If BBCTTestUtil#sendKeysToCardDetails() is interrupted.
      */
     public void testStateDestroy() throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
+        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = this.getActivity();
@@ -149,7 +152,7 @@ public class BaseballCardDetailsTest extends
      *             interrupted.
      */
     public void testStatePause() throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
+        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
         this.inst.callActivityOnRestart(this.activity);
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
     }
@@ -273,6 +276,7 @@ public class BaseballCardDetailsTest extends
         }
     }
 
+    private Solo solo = null;
     private Activity activity = null;
     private EditText brandText = null;
     private EditText yearText = null;

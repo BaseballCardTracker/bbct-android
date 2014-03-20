@@ -174,7 +174,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
-        BBCTTestUtil.addCard(this, cardDetails, card);
+        BBCTTestUtil.addCard(this.solo, card);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
 
@@ -199,7 +199,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
 
         for (BaseballCard card : cards) {
-            BBCTTestUtil.addCard(this, cardDetails, card);
+            BBCTTestUtil.addCard(this.solo, card);
             BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 

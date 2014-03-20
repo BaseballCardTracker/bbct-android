@@ -284,9 +284,9 @@ public class BaseballCardListWithDataTest extends
                 cardInputStream, true);
         BaseballCard card = cardInput.getNextBaseballCard();
 
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
-                this.activity, R.id.add_menu, BaseballCardDetails.class);
-        BBCTTestUtil.addCard(this, cardDetails, card);
+        BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu,
+                BaseballCardDetails.class);
+        BBCTTestUtil.addCard(this.solo, card);
 
         Assert.assertTrue(this.solo.waitForDialogToOpen());
         this.solo.clickOnButton("OK");
@@ -305,7 +305,7 @@ public class BaseballCardListWithDataTest extends
     public void testAddCardToPopulatedDatabase() throws Throwable {
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
-        BBCTTestUtil.addCard(this, cardDetails, this.newCard);
+        BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
 
@@ -327,7 +327,7 @@ public class BaseballCardListWithDataTest extends
 
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
-        BBCTTestUtil.addCard(this, cardDetails, this.newCard);
+        BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
 
@@ -351,7 +351,7 @@ public class BaseballCardListWithDataTest extends
                 "codeguru", "codeguru devs", "Catcher");
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
-        BBCTTestUtil.addCard(this, cardDetails, this.newCard);
+        BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
@@ -370,7 +370,7 @@ public class BaseballCardListWithDataTest extends
         this.testClearFilter();
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
-        BBCTTestUtil.addCard(this, cardDetails, this.newCard);
+        BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
 

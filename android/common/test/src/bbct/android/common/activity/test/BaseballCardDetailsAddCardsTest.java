@@ -97,7 +97,7 @@ public class BaseballCardDetailsAddCardsTest extends
      *             thread runs.
      */
     public void testAddCard() throws Throwable {
-        BBCTTestUtil.addCard(this, this.activity, this.card);
+        BBCTTestUtil.addCard(this.solo, this.card);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         Assert.assertTrue("Missing card: " + this.card,
@@ -116,7 +116,7 @@ public class BaseballCardDetailsAddCardsTest extends
      */
     public void testAddMultipleCards() throws Throwable {
         for (BaseballCard nextCard : this.allCards) {
-            BBCTTestUtil.addCard(this, this.activity, nextCard);
+            BBCTTestUtil.addCard(this.solo, nextCard);
             BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
