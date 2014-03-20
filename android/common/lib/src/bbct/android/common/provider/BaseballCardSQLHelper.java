@@ -411,7 +411,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     public Cursor getDistinctValues(String colName, String constraint) {
         String[] cols = { BaseballCardContract.ID_COL_NAME, colName };
         String filter = (constraint == null) ? null : colName + " LIKE ?";
-        String[] args = { constraint.trim() + '%' };
+        String[] args = (constraint == null) ? null : new String[]{ constraint.trim() + '%' };
 
         return this.getWritableDatabase().query(
                 BaseballCardContract.TABLE_NAME, cols, filter, args, colName,
