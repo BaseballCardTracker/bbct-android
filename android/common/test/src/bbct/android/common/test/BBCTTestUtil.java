@@ -303,6 +303,7 @@ final public class BBCTTestUtil {
         }
 
         if (teamText.isPopupShowing()) {
+            Log.d(TAG, "Clear team popup: " + card);
             solo.goBack();
         }
 
@@ -312,9 +313,10 @@ final public class BBCTTestUtil {
             @SuppressWarnings("unchecked")
             ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner
                     .getAdapter();
-            int itemIndex = playerPositionAdapter.getPosition(card
+            int newIndex = playerPositionAdapter.getPosition(card
                     .getPlayerPosition());
-            solo.pressSpinnerItem(0, itemIndex);
+            int currIndex = playerPositionSpinner.getSelectedItemPosition();
+            solo.pressSpinnerItem(0, newIndex - currIndex);
         }
     }
 
