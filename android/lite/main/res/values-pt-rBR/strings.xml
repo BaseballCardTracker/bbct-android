@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- This file is part of BBCT for Android.
+ Este arquivo é parte do BBCT para Android.
 
  Copyright 2012 codeguru <codeguru@users.sourceforge.net>
 
- BBCT for Android is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
+ BBCT para Android é um software livre: você pode redistribuí-lo e/ou modificá-lo
+ sob os termos da GNU General Public License como publicado pela
+ Free Software Foundation, seja a versão 3 da Licença, ou
+ (à sua escolha) qualquer versão posterior.
 
- BBCT for Android is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+ BBCT para Android é distribuído na esperança de que seja útil,
+ mas SEM NENHUMA GARANTIA; nem mesmo a garantia implícita de
+ COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM DETERMINADO PROPÓSITO.  Consulte a
+ GNU General Public License para mais detalhes.
 
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ Você deveria ter recebido uma cópia da GNU General Public License
+ junto com este programa.  Caso contrário, consulte <http://www.gnu.org/licenses/licenses.pt-br.html>.
 -->
 <resources>
     <string name="app_name">BBCT Lite</string>
     <string name="bbct_title">BBCT Lite - %1$s</string>
     <string name="version_number">0.5.7</string>
     <string name="premium">
-        Se vocï¿½ gosta de usar o BBCT, obtenha a
-        <a href="market://details?id=bbct.android.premium">ediï¿½ï¿½o premium</a>
+        Se você gosta de usar o BBCT, obtenha a
+        <a href="market://details?id=bbct.android.premium">edição premium</a>
         sem publicidade por apenas $3.00USD.
     </string>
 </resources>

@@ -67,7 +67,7 @@
     <string name="player_name_hint">Gebe den Namen des Spielers ein.</string>
     <string name="team_hint">Gebe die Mannschaft des Spielers ein.</string>
     <string name="player_position_hint">Gebe die Position des Spielers ein.</string>
-    
+
     <!-- Filter cards TextView labels -->
     <string name="year_option">Jahr</string>
     <string name="number_option">Nummer</string>

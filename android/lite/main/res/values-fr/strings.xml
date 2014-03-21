@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- This file is part of BBCT for Android.
+ Ce fichier fait partie de BBCT pour Android.
 
  Copyright 2012 codeguru <codeguru@users.sourceforge.net>
 
- BBCT for Android is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version 3 of the License, or
- (at your option) any later version.
+ BBCT pour Android est un logiciel libre: vous pouvez le redistribuer et/ou le modifier
+ aux termes de la GNU General Public License comme publié par
+ la Free Software Foundation, soit la version 3 de la licence, ou
+ (à votre choix) toute version ultérieure.
 
- BBCT for Android is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+ BBCT pour Android est distribué dans l\'espoir qu'il sera utile,
+ mais SANS AUCUNE GARANTIE; sans méme la garantie implicite de
+ COMMERCIALISATION ou D'ADAPTATION À UN USAGE PARTICULIER.  Voiez la
+ GNU General Public License pour plus de détails.
 
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ Vouz devriez avoir reçu une copie de la GNU General Public License
+ avec ce programme.  Si non, soiez <http://www.gnu.org/licenses/licenses.fr.html>.
 -->
 <resources>
     <string name="app_name">BBCT Lite</string>
@@ -23,7 +23,7 @@
     <string name="version_number">0.5.7</string>
     <string name="premium">
         Si vous aimez utiliser BBCT, obtenez
-        <a href="market://details?id=bbct.android.premium">l\'ï¿½dition premium</a>
-        sans publicitï¿½ pour seulement $3.00USD.
+        <a href="market://details?id=bbct.android.premium">l'édition premium</a>
+        sans publicité pour seulement $3.00USD.
     </string>
 </resources>
