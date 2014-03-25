@@ -21,10 +21,10 @@
     <string name="app_name">BBCT Premium</string>
     <string name="bbct_title">BBCT Premium - %1$s</string>
     <string name="version_number">0.5.5</string>
-    <string name="import_message">Importando dados da Edi��o Lite.</string>
-    <string name="import_error">N�o conseguiu importar dados da Edi��o Lite. %1$s</string>
+    <string name="import_message">Importando dados da Edição Lite.</string>
+    <string name="import_error">Não conseguiu importar dados da Edição Lite. %1$s</string>
     <string name="lite_update_message">
-        Por favor atualize a <a href="market://details?id=bbct.android">Edi��o Lite</a>.
+        Por favor atualize a <a href="market://details?id=bbct.android">Edição Lite</a>.
     </string>
-    <string name="lite_not_installed_message">Edi��o Lite n�o instalada.</string>
+    <string name="lite_not_installed_message">Edição Lite não instalada.</string>
 </resources>

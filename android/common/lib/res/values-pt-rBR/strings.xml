@@ -18,7 +18,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-
     <string name="app_name">BBCT Common</string>
     <string name="provider_name">BBCT Data</string>
 
@@ -26,22 +25,23 @@
     <string name="bbct_title">BBCT Common - %1$s</string>
     <string name="card_details_title">Detalhes da Carta</string>
     <string name="player_details_title">Detalhes do Jogador</string>
-    <string name="filter_cards_title">Op��es de Filtro</string>
+    <string name="filter_cards_title">Opções de Filtro</string>
     <string name="about_title">Sobre</string>
     <string name="input_error_title">Erro de Entrada</string>
     <string name="duplicate_card_title">Carta Duplicada</string>
+
     <string name="start">Pressione (+) para iniciar.</string>
     <string name="empty_list">Nenhuma carta encontrada.</string>
 
     <!-- Labels for card details -->
     <string name="brand_label">Marca da Carta:</string>
     <string name="year_label">Ano da Carta:</string>
-    <string name="number_label">N�mero da Carta:</string>
+    <string name="number_label">Número da Carta:</string>
     <string name="value_label">Valor da Carta:</string>
     <string name="count_label">Quantidade de Cartas:</string>
     <string name="player_name_label">Nome do Jogador:</string>
     <string name="team_label">Equipe:</string>
-    <string name="player_position_label">Posi��o do Jogador:</string>
+    <string name="player_position_label">Posição do Jogador:</string>
 
     <!-- Column headings for card list -->
     <string name="brand_col">Marca</string>
@@ -50,27 +50,27 @@
     <string name="value_col">Valor</string>
     <string name="count_col">Quantidade</string>
     <string name="player_name_col">Nome do Jogador</string>
-    <string name="player_position_col">Posi��o do Jogador</string>
+    <string name="player_position_col">Posição do Jogador</string>
 
     <!-- Button text -->
     <string name="save_button">Salvar</string>
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancelar</string>
-    <string name="done_button">Conclu�do</string>
+    <string name="done_button">Concluído</string>
 
     <!-- Hints for TextEdit widgets -->
     <string name="brand_hint">Informe o nome da marca da carta.</string>
     <string name="year_hint">Informe o ano da carta.</string>
-    <string name="number_hint">Informe o n�mero da carta.</string>
+    <string name="number_hint">Informe o número da carta.</string>
     <string name="value_hint">Informe o valor da carta.</string>
     <string name="count_hint">Informe a quantidade de cartas.</string>
     <string name="player_name_hint">Informe o nome do jogador.</string>
     <string name="team_hint">Informe a equipe do jogador.</string>
-    <string name="player_position_hint">Informe a posi��o do jogador.</string>
+    <string name="player_position_hint">Informe a posição do jogador.</string>
 
     <!-- Filter cards TextView labels -->
     <string name="year_option">Ano</string>
-    <string name="number_option">N�mero</string>
+    <string name="number_option">Número</string>
     <string name="brand_option">Marca</string>
     <string name="player_name_option">Nome</string>
     <string name="team_option">Equipe</string>
@@ -83,23 +83,24 @@
     <string name="delete_menu">Excluir Cartas</string>
 
     <!-- Text in About activity -->
-    <string name="version_text">Vers�o %1$s</string>
+    <string name="version_text">Versão %1$s</string>
     <string name="version_number">0.5.x</string>
     <string name="copyright">Copyright 2012–14 by codeguru</string>
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
-    <string name="license">Este software � licenciado sob a GPL. Visite\n
-        http://www.gnu.org/licenses/licenses.pt-br.html para uma c�pia da licen�a.</string>
-    <string name="about">BBCT � uma aplica��o simples de banco de dados para a sua cole��o
-        de cartas de beisebol. Voc� pode adicionar informa��es sobre as cartas da sua
-        cole��o, ver detalhes das cartas individuais e filtrar a lista de cartas de
-        acordo com um conjunto limitado de crit�rios. BBCT te ajuda a organizar sua
-        cole��o e pesquisar rapidamente quais cartas voc� possui. Sinta-se � vontade para
-        enviar email dom opini�es e coment�rios ou visite o website do projeto.</string>
+    <string name="license">Este software é licenciado sob a GPL. Visite\nhttp://www.gnu.org/licenses/licenses.pt-br.html para uma cópia da licença.</string>
+    <string name="about">
+        BBCT é uma aplicação simples de banco de dados para a sua coleção de cartas de beisebol.
+        Você pode adicionar informações sobre as cartas da sua coleção, ver
+        detalhes das cartas individuais e filtrar a lista de cartas de acordo
+        com um conjunto limitado de critérios. BBCT te ajuda a organizar sua coleção
+        e pesquisar rapidamente quais cartas você possui. Sinta-se à vontade para enviar email
+        dom opiniões e comentários ou visite o website do projeto.
+    </string>
 
     <!-- Card details toasts -->
     <string name="card_added_message">Carta adicionada com sucesso.</string>
-    <string name="card_deleted_message">Cartas exclu�das com sucesso.</string>
+    <string name="card_deleted_message">Cartas excluídas com sucesso.</string>
 
     <!-- Strings for position spinner in card details activity -->
     <string-array name="positions">
@@ -114,19 +115,19 @@
         <item>Jardineiro Direito</item>
     </string-array>
 
-    <!-- Error messages -->
-    <string name="no_radio_button_error">Por favor selecione uma op��o.</string>
+    <!-- Error messages-->
+    <string name="no_radio_button_error">Por favor selecione uma opção.</string>
     <string name="brand_input_error">Por favor informe um nome de marca.</string>
     <string name="year_input_error">Por favor informe um ano.</string>
-    <string name="number_input_error">Por favor informe um n�mero de carta.</string>
+    <string name="number_input_error">Por favor informe um número de carta.</string>
     <string name="value_input_error">Por favor informe o valor da carta.</string>
-    <string name="count_input_error">Por favor informe a quantidade de cartas que voc� tem.</string>
+    <string name="count_input_error">Por favor informe a quantidade de cartas que você tem.</string>
     <string name="player_name_input_error">Por favor informe o nome do jogador.</string>
     <string name="team_input_error">Por favor informe a equipe do jogador.</string>
-    <string name="player_position_input_error">Por favor informe a posi��o do jogador.</string>
-    <string name="invalid_uri_error">URI Inv�lido: %1$s</string>
+    <string name="player_position_input_error">Por favor informe a posição do jogador.</string>
+    <string name="invalid_uri_error">URI Inválido: %1$s</string>
     <string name="database_error">Ocorreu erro ao conectar ao banco de dados.</string>
-    <string name="duplicate_card_error">A carta de beisebol j� existe. Por favor atualize a sua quantidade.</string>
+    <string name="duplicate_card_error">A carta de beisebol já existe. Por favor atualize a sua quantidade.</string>
     <string name="sponsor">Patrocinador Orgulho:</string>
 
 </resources>
