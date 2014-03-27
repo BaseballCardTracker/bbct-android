@@ -232,7 +232,6 @@ public class BaseballCardDetails extends Activity {
                     resolver.update(uri,
                             BaseballCardContract.getContentValues(newCard),
                             null, null);
-                    // BaseballCardDetails.this.oldCard, newCard);
                     BaseballCardDetails.this.finish();
                 } else {
                     try {
