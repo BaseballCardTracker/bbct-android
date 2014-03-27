@@ -129,11 +129,13 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
      */
     private void updateDataSet() {
         this.notifyDataSetChanged();
-        final ListActivity curActivity = (ListActivity) this.context;
+        final Activity curActivity = (Activity) this.context;
         curActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                curActivity.getListView().setAdapter(BaseballCardAdapter.this);
+                ListView listView = (ListView) curActivity
+                        .findViewById(android.R.id.list);
+                listView.setAdapter(BaseballCardAdapter.this);
             }
         });
     }

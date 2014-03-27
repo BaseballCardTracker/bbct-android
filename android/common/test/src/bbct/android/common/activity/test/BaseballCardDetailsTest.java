@@ -22,6 +22,8 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.test.ViewAsserts;
@@ -274,6 +276,12 @@ public class BaseballCardDetailsTest extends
             }
             ViewAsserts.assertOnScreen(parentView, this.saveButton);
         }
+    }
+
+    public void testNavigateUp() {
+        ActionBar actionBar = ((ActionBarActivity) this.activity)
+                .getSupportActionBar();
+        Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
     }
 
     private Solo solo = null;

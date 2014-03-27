@@ -25,17 +25,12 @@
     <string name="bbct_title">BBCT Common - %1$s</string>
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
-    <string name="filter_options_title">Filter Options</string>
-    <string name="year_filter_title">Filter By Year</string>
-    <string name="number_filter_title">Filter By Number</string>
-    <string name="year_and_number_filter_title">Filter By Year and Number</string>
-    <string name="player_name_filter_title">Filter By Player Name</string>
-    <string name="team_filter_title">Filter By Team</string>
+    <string name="filter_cards_title">Filter Options</string>
     <string name="about_title">About</string>
     <string name="input_error_title">Input Error</string>
     <string name="duplicate_card_title">Duplicate Card</string>
 
-    <string name="start">Press the menu button to get started.</string>
+    <string name="start">Tap (+) to get started.</string>
     <string name="empty_list">No cards found.</string>
 
     <!-- Labels for card details -->
@@ -47,12 +42,11 @@
     <string name="player_name_label">Player Name:</string>
     <string name="team_label">Team:</string>
     <string name="player_position_label">Player Position:</string>
-    <string name="filter_by_label">Filter By&#8230;</string>
 
     <!-- Column headings for card list -->
     <string name="brand_col">Brand</string>
     <string name="year_col">Year</string>
-    <string name="number_col">Number</string>
+    <string name="number_col">#</string>
     <string name="value_col">Value</string>
     <string name="count_col">Count</string>
     <string name="player_name_col">Player Name</string>
@@ -74,12 +68,12 @@
     <string name="team_hint">Enter player\'s team.</string>
     <string name="player_position_hint">Enter player position.</string>
 
-    <!-- Radio button labels -->
-    <string name="year_radio_button">Year</string>
-    <string name="number_radio_button">Number</string>
-    <string name="year_and_number_radio_button">Year and Number</string>
-    <string name="player_name_radio_button">Player Name</string>
-    <string name="team_radio_button">Team</string>
+    <!-- Filter cards TextView labels -->
+    <string name="year_option">Year</string>
+    <string name="number_option">Number</string>
+    <string name="brand_option">Brand</string>
+    <string name="player_name_option">Name</string>
+    <string name="team_option">Team</string>
 
     <!-- Menu text -->
     <string name="add_menu">Add Cards</string>
@@ -91,7 +85,7 @@
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
     <string name="version_number">0.5.x</string>
-    <string name="copyright">Copyright 2012-14 by codeguru</string>
+    <string name="copyright">Copyright 2012–14 by codeguru</string>
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">This software is licensed under the GPL. Visit\nhttp://www.gnu.org/licenses/ for a copy of the license.</string>

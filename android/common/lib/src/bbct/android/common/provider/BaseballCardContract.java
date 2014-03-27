@@ -53,9 +53,6 @@ public final class BaseballCardContract {
 
     /**
      * MIME type for data about a single baseball card.
-     *
-     * TODO How can I centralize this so I don't repeat it in
-     * AndroidManifest.xml?
      */
     public static final String BASEBALL_CARD_ITEM_MIME_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "/baseball_card";

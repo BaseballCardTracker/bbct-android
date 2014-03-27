@@ -18,7 +18,6 @@
  */
 package bbct.android.common.activity;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -26,6 +25,8 @@ import android.content.Context;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -46,7 +47,7 @@ import bbct.android.common.provider.SingleColumnCursorAdapter;
 /**
  * Allows user to add a new card or view and edit details of an existing card.
  */
-public class BaseballCardDetails extends Activity {
+public class BaseballCardDetails extends ActionBarActivity {
 
     private static final String DETAILS_AUTHORITY = "bbct.android.details";
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
@@ -126,6 +127,9 @@ public class BaseballCardDetails extends Activity {
                     .getPlayerPosition());
             this.playerPositionSpinner.setSelection(selectedPosition);
         }
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private BaseballCard getBaseballCard() {

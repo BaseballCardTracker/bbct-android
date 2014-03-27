@@ -20,6 +20,8 @@ package bbct.android.common.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.TextView;
 import bbct.android.common.R;
@@ -28,7 +30,7 @@ import bbct.android.common.R;
  * Displays the name and version of the app, a short description, contact links,
  * and copyright information.
  */
-public class About extends Activity {
+public class About extends ActionBarActivity {
 
     /**
      * Called when the {@link Activity} is first created.
@@ -50,6 +52,9 @@ public class About extends Activity {
         Log.d(TAG, "versionString=" + versionString);
 
         versionLabel.setText(versionString);
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
     private static final String TAG = About.class.getName();
 }
