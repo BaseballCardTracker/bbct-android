@@ -156,11 +156,11 @@
                 android:text="@string/save_button" />
 
             <Button
-                android:id="@id/done_button"
+                android:id="@id/cancel_button"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/done_button" />
+                android:text="@string/cancel_button" />
         </LinearLayout>
     </TableLayout>
 
