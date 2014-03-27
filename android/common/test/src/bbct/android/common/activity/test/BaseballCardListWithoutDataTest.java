@@ -176,7 +176,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
 
         BBCTTestUtil.addCard(this.solo, card);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
+        this.solo.clickOnButton("Done");
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
 
@@ -195,7 +195,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
      * UI thread runs.
      */
     public void testAddMultipleCards() throws IOException, Throwable {
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.inst, this.activity, R.id.add_menu, BaseballCardDetails.class);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
 
         for (BaseballCard card : cards) {
@@ -203,7 +203,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
             BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
-        BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
+        this.solo.clickOnButton("Done");
         BBCTTestUtil.assertListViewContainsItems(this.inst, cards, this.listView);
     }
 

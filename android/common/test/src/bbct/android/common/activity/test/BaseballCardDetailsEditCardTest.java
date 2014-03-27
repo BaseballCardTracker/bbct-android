@@ -173,7 +173,7 @@ public class BaseballCardDetailsEditCardTest extends
         BBCTTestUtil.assertAllEditTextContents(this.activity, expected);
         Log.d("DEBUG", "Success!");
 
-        BBCTTestUtil.clickCardDetailsSave(this.solo);
+        this.solo.clickOnButton("Save");
         Assert.assertTrue(this.dbUtil.containsBaseballCard(expected));
     }
 

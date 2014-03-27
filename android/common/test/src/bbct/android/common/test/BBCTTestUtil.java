@@ -159,56 +159,12 @@ final public class BBCTTestUtil {
      */
     public static void addCard(Solo solo, BaseballCard card) throws Throwable {
         BBCTTestUtil.sendKeysToCardDetails(solo, card);
-        BBCTTestUtil.clickCardDetailsSave(solo);
+        solo.clickOnButton("Save");
     }
 
     public static void waitForToast(Solo solo, String message) {
         Assert.assertTrue(solo.waitForDialogToOpen(TIME_OUT));
         Assert.assertTrue(solo.searchText(message));
-    }
-
-    /**
-     * Click the "Save" button on the given {@link BaseballCardDetails}
-     * activity. This is all wrapped into a helper method because the button
-     * click must be done on the UI thread while the assertion must not.
-     *
-     * @param test
-     *            The {@link InstrumentationTestCase} object performing the
-     *            test.
-     * @param cardDetails
-     *            The {@link BaseballCardDetails} activity being tested.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
-    public static void clickCardDetailsSave(Solo solo) throws Throwable {
-        final Button saveButton = (Button) solo.getView(R.id.save_button);
-        solo.clickOnView(saveButton);
-    }
-
-    /**
-     * Click the "Done" button on the given {@link BaseballCardDetails} activity
-     * and assert that the activity is finishing. This is all wrapped into a
-     * helper method because the button click must be done on the UI thread
-     * while the assertion must not.
-     *
-     * @param test
-     *            The {@link InstrumentationTestCase} object performing the
-     *            test.
-     * @param cardDetails
-     *            The {@link BaseballCardDetails} activity being tested.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
-    public static void clickCardDetailsDone(Solo solo, Activity cardDetails)
-            throws Throwable {
-        final Button doneButton = (Button) cardDetails
-                .findViewById(R.id.done_button);
-        solo.clickOnView(doneButton);
-        Assert.assertTrue(cardDetails.isFinishing());
     }
 
     /**
@@ -303,7 +259,6 @@ final public class BBCTTestUtil {
         }
 
         if (teamText.isPopupShowing()) {
-            Log.d(TAG, "Clear team popup: " + card);
             solo.goBack();
         }
 
