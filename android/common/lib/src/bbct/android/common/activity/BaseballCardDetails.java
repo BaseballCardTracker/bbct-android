@@ -103,8 +103,8 @@ public class BaseballCardDetails extends ActionBarActivity {
         Button saveButton = (Button) this.findViewById(R.id.save_button);
         saveButton.setOnClickListener(this.onSave);
 
-        Button doneButton = (Button) this.findViewById(R.id.done_button);
-        doneButton.setOnClickListener(this.onDone);
+        Button cancelButton = (Button) this.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(this.onCancel);
 
         this.oldCard = (BaseballCard) this.getIntent().getSerializableExtra(
                 this.getString(R.string.baseball_card_extra));
@@ -264,7 +264,7 @@ public class BaseballCardDetails extends ActionBarActivity {
         }
     };
 
-    private final View.OnClickListener onDone = new View.OnClickListener() {
+    private final View.OnClickListener onCancel = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             BaseballCardDetails.this.finish();
