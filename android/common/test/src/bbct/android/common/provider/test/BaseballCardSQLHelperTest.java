@@ -19,10 +19,14 @@
 package bbct.android.common.provider.test;
 
 import android.app.Instrumentation;
+import android.content.Context;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
+import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
@@ -53,8 +57,10 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
         this.db = this.sqlHelper.getWritableDatabase();
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
 
-        InputStream input = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
-        BaseballCardCsvFileReader reader = new BaseballCardCsvFileReader(input, true);
+        InputStream input = this.inst.getContext().getAssets()
+                .open(BBCTTestUtil.CARD_DATA);
+        BaseballCardCsvFileReader reader = new BaseballCardCsvFileReader(input,
+                true);
         this.allCards = reader.getAllBaseballCards();
         this.card = this.allCards.get(3); // Ken Griffey, Jr.
         reader.close();
@@ -86,7 +92,8 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
     public void testOnUpgrade() {
         int oldVersion = 0;
         int newVersion = 1;
-        this.sqlHelper.onUpgrade(this.dbUtil.getDatabase(), oldVersion, newVersion);
+        this.sqlHelper.onUpgrade(this.dbUtil.getDatabase(), oldVersion,
+                newVersion);
         Assert.fail("Check that the database is not modified.");
     }
 
@@ -110,7 +117,8 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
         String name = this.card.getPlayerName();
         String team = this.card.getTeam();
         String position = this.card.getPlayerPosition();
-        BaseballCard newCard = new BaseballCard(brand, year, number, newValue, newCount, name, team, position);
+        BaseballCard newCard = new BaseballCard(brand, year, number, newValue,
+                newCount, name, team, position);
         this.sqlHelper.updateBaseballCard(this.card, newCard);
 
         Assert.assertFalse(this.dbUtil.containsBaseballCard(this.card));
@@ -136,7 +144,8 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
         Cursor result = this.sqlHelper.getCursor();
         Assert.assertNotNull(result);
         Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to Assert.fail.
+        // TODO review the generated test code and remove the default call to
+        // Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
 
@@ -146,61 +155,92 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
     public void testClearFilter() {
         this.testFilterCursorByYear();
         this.sqlHelper.clearFilter();
-        // TODO review the generated test code and remove the default call to Assert.fail.
+        // TODO review the generated test code and remove the default call to
+        // Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
 
     /**
-     * Test for {@link BaseballCardSQLHelper#filterCursorByYear}.
+     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
+     * correctly filters the {@link Cursor} by year.
      */
     public void testFilterCursorByYear() {
         int year = 1993;
-        this.sqlHelper.filterCursorByYear(year);
+        Context context = this.inst.getTargetContext();
+        Resources res = context.getResources();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(res.getString(R.string.year_extra), year + "");
+        this.sqlHelper.applyFilter(context, bundle);
 
         Cursor cursor = this.sqlHelper.getCursor();
         while (cursor.moveToNext()) {
-            Assert.assertEquals(year, cursor.getInt(cursor.getColumnIndex(BaseballCardContract.YEAR_COL_NAME)));
+            Assert.assertEquals(year, cursor.getInt(cursor
+                    .getColumnIndex(BaseballCardContract.YEAR_COL_NAME)));
         }
     }
 
     /**
-     * Test for {@link BaseballCardSQLHelper#filterCursorByNumber}.
+     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
+     * correctly filters the {@link Cursor} by number.
      */
     public void testFilterCursorByNumber() {
         int number = 201;
-        this.sqlHelper.filterCursorByNumber(number);
+        Context context = this.inst.getTargetContext();
+        Resources res = context.getResources();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(res.getString(R.string.number_extra), number + "");
+        this.sqlHelper.applyFilter(context, bundle);
 
         Cursor cursor = this.sqlHelper.getCursor();
         while (cursor.moveToNext()) {
-            Assert.assertEquals(number, cursor.getInt(cursor.getColumnIndex(BaseballCardContract.NUMBER_COL_NAME)));
+            Assert.assertEquals(number, cursor.getInt(cursor
+                    .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME)));
         }
     }
 
     /**
-     * Test for {@link BaseballCardSQLHelper#filterCursorByYearAndNumber}.
+     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
+     * correctly filters the {@link Cursor} by number and year.
      */
     public void testFilterCursorByYearAndNumber() {
         int year = 1985;
         int number = 201;
-        this.sqlHelper.filterCursorByYearAndNumber(year, number);
+        Context context = this.inst.getTargetContext();
+        Resources res = context.getResources();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(res.getString(R.string.year_extra), year + "");
+        bundle.putString(res.getString(R.string.number_extra), number + "");
+        this.sqlHelper.applyFilter(context, bundle);
 
         Cursor cursor = this.sqlHelper.getCursor();
         while (cursor.moveToNext()) {
-            Assert.assertEquals(year, cursor.getInt(cursor.getColumnIndex(BaseballCardContract.YEAR_COL_NAME)));
-            Assert.assertEquals(number, cursor.getInt(cursor.getColumnIndex(BaseballCardContract.NUMBER_COL_NAME)));
+            Assert.assertEquals(year, cursor.getInt(cursor
+                    .getColumnIndex(BaseballCardContract.YEAR_COL_NAME)));
+            Assert.assertEquals(number, cursor.getInt(cursor
+                    .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME)));
         }
     }
 
     /**
-     * Test for {@link BaseballCardSQLHelper#filterCursorByPlayerName}.
+     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
+     * correctly filters the {@link Cursor} by player name.
      */
     public void testFilterCursorByPlayerName() {
         String playerName = "Tom Browning";
-        this.sqlHelper.filterCursorByPlayerName(playerName);
+        Context context = this.inst.getTargetContext();
+        Resources res = context.getResources();
+
+        Bundle bundle = new Bundle();
+        bundle.putString(res.getString(R.string.player_name_extra), playerName);
+        this.sqlHelper.applyFilter(context, bundle);
 
         Cursor cursor = this.sqlHelper.getCursor();
         while (cursor.moveToNext()) {
-            Assert.assertEquals(playerName, cursor.getInt(cursor.getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME)));
+            Assert.assertEquals(playerName, cursor.getInt(cursor
+                    .getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME)));
         }
     }
 
@@ -213,7 +253,8 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
         BaseballCard result = this.sqlHelper.getBaseballCardFromCursor();
         Assert.assertNotNull(result);
         Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to Assert.fail.
+        // TODO review the generated test code and remove the default call to
+        // Assert.fail.
         Assert.fail("The test case is a prototype.");
     }
 

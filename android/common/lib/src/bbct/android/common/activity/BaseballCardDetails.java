@@ -18,10 +18,11 @@
  */
 package bbct.android.common.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -45,7 +46,7 @@ import bbct.android.common.provider.SingleColumnCursorAdapter;
 /**
  * Allows user to add a new card or view and edit details of an existing card.
  */
-public class BaseballCardDetails extends Activity {
+public class BaseballCardDetails extends ActionBarActivity {
 
     private static final String DETAILS_AUTHORITY = "bbct.android.details";
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
@@ -123,6 +124,9 @@ public class BaseballCardDetails extends Activity {
                     .getPlayerPosition());
             this.playerPositionSpinner.setSelection(selectedPosition);
         }
+
+        ActionBar actionBar = this.getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private BaseballCard getBaseballCard() {
@@ -187,16 +191,16 @@ public class BaseballCardDetails extends Activity {
         // 1) move the focus to the next view if the current focus is in brand or player name view and
         // 2) hide the keypad if the current focus is in team view.
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
-            if (brandText.hasFocus()) {
-                yearText.requestFocus();
+            if (this.brandText.hasFocus()) {
+                this.yearText.requestFocus();
                 return true;
-            } else if (playerNameText.hasFocus()) {
-                teamText.requestFocus();
+            } else if (this.playerNameText.hasFocus()) {
+                this.teamText.requestFocus();
                 return true;
-            } else if (teamText.hasFocus()) {
+            } else if (this.teamText.hasFocus()) {
                 //hide the soft keypad
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(teamText.getWindowToken(), 0);
+                InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(this.teamText.getWindowToken(), 0);
                 return true;
             }
         }
@@ -214,7 +218,7 @@ public class BaseballCardDetails extends Activity {
         this.playerPositionSpinner.setSelection(-1);
     }
 
-    private View.OnClickListener onSave = new View.OnClickListener() {
+    private final View.OnClickListener onSave = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             BaseballCardSQLHelper sqlHelper = null;
@@ -260,7 +264,7 @@ public class BaseballCardDetails extends Activity {
         }
     };
 
-    private View.OnClickListener onDone = new View.OnClickListener() {
+    private final View.OnClickListener onDone = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             BaseballCardDetails.this.finish();
