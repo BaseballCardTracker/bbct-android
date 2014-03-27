@@ -206,10 +206,10 @@ final public class BBCTTestUtil {
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public static void clickCardDetailsDone(Solo solo, Activity cardDetails)
+    public static void clickCardDetailsCancel(Solo solo, Activity cardDetails)
             throws Throwable {
         final Button doneButton = (Button) cardDetails
-                .findViewById(R.id.done_button);
+                .findViewById(R.id.cancel_button);
         solo.clickOnView(doneButton);
         Assert.assertTrue(cardDetails.isFinishing());
     }
