@@ -211,6 +211,7 @@ final public class BBCTTestUtil {
             solo.typeText(brandText, card.getBrand());
         }
 
+        Thread.sleep(50);
         if (brandText.isPopupShowing()) {
             solo.goBack();
         }
@@ -242,6 +243,7 @@ final public class BBCTTestUtil {
             solo.typeText(playerNameText, card.getPlayerName());
         }
 
+        Thread.sleep(50);
         if (playerNameText.isPopupShowing()) {
             solo.goBack();
         }
@@ -252,6 +254,7 @@ final public class BBCTTestUtil {
             solo.typeText(teamText, card.getTeam());
         }
 
+        Thread.sleep(50);
         if (teamText.isPopupShowing()) {
             solo.goBack();
         }
