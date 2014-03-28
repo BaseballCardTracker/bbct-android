@@ -286,12 +286,6 @@ public class BaseballCardDetailsTest extends
         Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
     }
 
-    public void testBrandAutoComplete() throws Throwable {
-        BBCTTestUtil.addCard(this.solo, this.card);
-        this.solo.typeText(this.brandText, "To");
-        Assert.assertTrue(this.brandText.isPopupShowing());
-    }
-
     private Solo solo = null;
     private Activity activity = null;
     private AutoCompleteTextView brandText = null;

@@ -21,8 +21,10 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
@@ -125,6 +127,18 @@ public class BaseballCardDetailsAddCardsTest extends
             Assert.assertTrue("Missing card: " + nextCard,
                     dbUtil.containsBaseballCard(nextCard));
         }
+    }
+
+    public void testBrandAutoComplete() throws Throwable {
+        AutoCompleteTextView brandText = (AutoCompleteTextView) this.activity.findViewById(R.id.brand_text);
+        this.testAutoComplete(brandText, this.card.getBrand());
+    }
+
+    private void testAutoComplete(AutoCompleteTextView textView, String text)
+            throws Throwable {
+        BBCTTestUtil.addCard(this.solo, this.card);
+        this.solo.typeText(textView, text.substring(0, 2));
+        Assert.assertTrue(textView.isPopupShowing());
     }
 
     private Solo solo = null;
