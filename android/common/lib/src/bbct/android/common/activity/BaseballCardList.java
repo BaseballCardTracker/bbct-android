@@ -412,11 +412,17 @@ public class BaseballCardList extends ActionBarActivity {
 
     @SuppressWarnings("deprecation")
     private void swapCursor() {
-        Cursor cursor = this.sqlHelper.getCursor();
-        this.adapter.setSelection(new boolean[cursor.getCount()]);
-        this.stopManagingCursor(this.adapter.getCursor());
-        this.startManagingCursor(cursor);
-        this.adapter.changeCursor(cursor);
+        Cursor newCursor = this.sqlHelper.getCursor();
+        Cursor oldCursor = this.adapter.getCursor();
+
+        this.adapter.setSelection(new boolean[newCursor.getCount()]);
+        this.stopManagingCursor(oldCursor);
+        this.startManagingCursor(newCursor);
+        this.adapter.changeCursor(newCursor);
+
+        if (oldCursor != null) {
+            oldCursor.close();
+        }
     }
 
     private static final String[] ROW_PROJECTION = {
