@@ -32,6 +32,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -87,7 +88,8 @@ public class BaseballCardDetailsTest extends
         // Must call getActivity() before creating a DatabaseUtil object to
         // ensure that the database is created
         this.activity = this.getActivity();
-        this.brandText = (EditText) this.activity.findViewById(R.id.brand_text);
+        this.brandText = (AutoCompleteTextView) this.activity
+                .findViewById(R.id.brand_text);
         this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
         this.numberText = (EditText) this.activity
                 .findViewById(R.id.number_text);
@@ -284,9 +286,15 @@ public class BaseballCardDetailsTest extends
         Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
     }
 
+    public void testBrandAutoComplete() throws Throwable {
+        BBCTTestUtil.addCard(this.solo, this.card);
+        this.solo.typeText(this.brandText, "To");
+        Assert.assertTrue(this.brandText.isPopupShowing());
+    }
+
     private Solo solo = null;
     private Activity activity = null;
-    private EditText brandText = null;
+    private AutoCompleteTextView brandText = null;
     private EditText yearText = null;
     private EditText numberText = null;
     private EditText valueText = null;
