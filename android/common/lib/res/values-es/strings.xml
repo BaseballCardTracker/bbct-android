@@ -23,25 +23,25 @@
 
     <!-- Activity titles -->
     <string name="bbct_title">BBCT Common - %1$s</string>
-    <string name="card_details_title">Detalles de la tarjeta</string>
-    <string name="player_details_title">Detalles del Jugador</string>
-    <string name="filter_cards_title">Opciones de Filtro</string>
+    <string name="card_details_title">Detalles tarjeta</string>
+    <string name="player_details_title">Detalles Jugador</string>
+    <string name="filter_cards_title">Opciones Filtro</string>
     <string name="about_title">Acerca de</string>
-    <string name="input_error_title">Error de Entrada</string>
-    <string name="duplicate_card_title">Tarjeta Duplicadda</string>
+    <string name="input_error_title">Error Entrada</string>
+    <string name="duplicate_card_title">Tarjeta Duplicada</string>
 
     <string name="start">Pulse (+) para empezar.</string>
     <string name="empty_list">Ninguna tarjeta encontrada.</string>
 
     <!-- Labels for card details -->
-    <string name="brand_label">Marca de la Tarjeta:</string>
-    <string name="year_label">Año de la Tarjeta:</string>
-    <string name="number_label">Número de la Tarjeta:</string>
-    <string name="value_label">Valor de la Tarjeta:</string>
-    <string name="count_label">Cantidad de Tarjetas:</string>
-    <string name="player_name_label">Nombre del Jugador:</string>
+    <string name="brand_label">Marca Tarjeta:</string>
+    <string name="year_label">Año Tarjeta:</string>
+    <string name="number_label">Número Tarjeta:</string>
+    <string name="value_label">Valor Tarjeta:</string>
+    <string name="count_label">Cantidad Tarjetas:</string>
+    <string name="player_name_label">Nombre Jugador:</string>
     <string name="team_label">Equipo:</string>
-    <string name="player_position_label">Posición del Jugador:</string>
+    <string name="player_position_label">Posición Jugador:</string>
 
     <!-- Column headings for card list -->
     <string name="brand_col">Marca</string>
@@ -49,8 +49,8 @@
     <string name="number_col">#</string>
     <string name="value_col">Valor</string>
     <string name="count_col">Cantidad</string>
-    <string name="player_name_col">Nombre del Jugador</string>
-    <string name="player_position_col">Posición del Jugador</string>
+    <string name="player_name_col">Nombre Jugador</string>
+    <string name="player_position_col">Posición Jugador</string>
 
     <!-- Button text -->
     <string name="save_button">Guardar</string>
@@ -59,14 +59,14 @@
     <string name="done_button">Hecho</string>
 
     <!-- Hints for TextEdit widgets -->
-    <string name="brand_hint">Informa la marca de la tarjeta.</string>
-    <string name="year_hint">Informa el año de la tarjeta.</string>
-    <string name="number_hint">Informa el número de la tarjeta.</string>
-    <string name="value_hint">Informa el valor de la tarjeta.</string>
-    <string name="count_hint">Informa la cantidad de tarjetas.</string>
-    <string name="player_name_hint">Informa el nombre del jugador.</string>
-    <string name="team_hint">Informa el equipo del jugador.</string>
-    <string name="player_position_hint">Informa la posición del jugador.</string>
+    <string name="brand_hint">Informar marca tarjeta.</string>
+    <string name="year_hint">Informar año tarjeta.</string>
+    <string name="number_hint">Informar número tarjeta.</string>
+    <string name="value_hint">Informar valor tarjeta.</string>
+    <string name="count_hint">Informar cantidad tarjetas.</string>
+    <string name="player_name_hint">Informar nombre jugador.</string>
+    <string name="team_hint">Informar equipo jugador.</string>
+    <string name="player_position_hint">Informar posición jugador.</string>
 
     <!-- Filter cards TextView labels -->
     <string name="year_option">Año</string>
@@ -91,7 +91,7 @@
     <string name="license">Este software está licenciado bajo la GPL. Visita\nhttp://www.gnu.org/licenses/licenses.es.html para uma cópia de la licencia.</string>
     <string name="about">
         BBCT es una aplicación de base de datos simple para tu colección de tarjetas de béisbol.
-        Puedes añadir informacion acerca de las tarjetas en tu colección, veer
+        Puedes añadir información acerca de las tarjetas en tu colección, veer
         detalles de tarjetas individuales, y filtrar la lista de tarjetas de acuerdo
         com un conjunto limitado de criterios. BBCT te ayuda a organizar tu colección
         y buscar rapidamente las tarjetas que posees. No dudes en enviar email com tus

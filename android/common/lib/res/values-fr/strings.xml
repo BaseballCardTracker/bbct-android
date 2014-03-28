@@ -23,25 +23,25 @@
 
     <!-- Activity titles -->
     <string name="bbct_title">BBCT Common - %1$s</string>
-    <string name="card_details_title">Détails de la Carte</string>
-    <string name="player_details_title">Détails du Joueur</string>
-    <string name="filter_cards_title">Options de Filtrage</string>
+    <string name="card_details_title">Détails Carte</string>
+    <string name="player_details_title">Détails Joueur</string>
+    <string name="filter_cards_title">Options Filtrage</string>
     <string name="about_title">À propos</string>
-    <string name="input_error_title">Erreur de saisie</string>
+    <string name="input_error_title">Erreur d\'Entrée</string>
     <string name="duplicate_card_title">Carte Dupliquée</string>
 
     <string name="start">Appuyez (+) pour commencer.</string>
     <string name="empty_list">Pas de cartes trouvées.</string>
 
     <!-- Labels for card details -->
-    <string name="brand_label">Marque de la Carte:</string>
-    <string name="year_label">Anée de la Carte:</string>
-    <string name="number_label">Numéro de la Carte:</string>
-    <string name="value_label">Valeur de la Carte:</string>
-    <string name="count_label">Nombre de cartes:</string>
-    <string name="player_name_label">Nom du Joueur:</string>
+    <string name="brand_label">Marque Carte:</string>
+    <string name="year_label">Anée Carte:</string>
+    <string name="number_label">Numéro Carte:</string>
+    <string name="value_label">Valeur Carte:</string>
+    <string name="count_label">Nombre cartes:</string>
+    <string name="player_name_label">Nom Joueur:</string>
     <string name="team_label">Équipe:</string>
-    <string name="player_position_label">Position du Joueur:</string>
+    <string name="player_position_label">Position Joueur:</string>
 
     <!-- Column headings for card list -->
     <string name="brand_col">Marque</string>
@@ -49,8 +49,8 @@
     <string name="number_col">#</string>
     <string name="value_col">Valeur</string>
     <string name="count_col">Nombre</string>
-    <string name="player_name_col">Nom du Joueur</string>
-    <string name="player_position_col">Position du Joueur</string>
+    <string name="player_name_col">Nom Joueur</string>
+    <string name="player_position_col">Position Joueur</string>
 
     <!-- Button text -->
     <string name="save_button">Sauver</string>
@@ -59,14 +59,14 @@
     <string name="done_button">Terminé</string>
 
     <!-- Hints for TextEdit widgets -->
-    <string name="brand_hint">Entrez la marque de la carte.</string>
-    <string name="year_hint">Entrez l\'anée de la carte.</string>
-    <string name="number_hint">Entrez le numéro de la carte.</string>
-    <string name="value_hint">Entrez le valeur de la carte.</string>
-    <string name="count_hint">Entrez le nombre de cartes.</string>
-    <string name="player_name_hint">Entrez le nom du joueur.</string>
-    <string name="team_hint">Entrez l\'équipe du joueur.</string>
-    <string name="player_position_hint">Entrez la position du joueur.</string>
+    <string name="brand_hint">Entrer marque carte.</string>
+    <string name="year_hint">Entrer anée carte.</string>
+    <string name="number_hint">Entrer numéro carte.</string>
+    <string name="value_hint">Entrer valeur carte.</string>
+    <string name="count_hint">Entrer nombre cartes.</string>
+    <string name="player_name_hint">Entrer nom joueur.</string>
+    <string name="team_hint">Entrer équipe joueur.</string>
+    <string name="player_position_hint">Entrer position joueur.</string>
 
     <!-- Filter cards TextView labels -->
     <string name="year_option">Anée</string>
