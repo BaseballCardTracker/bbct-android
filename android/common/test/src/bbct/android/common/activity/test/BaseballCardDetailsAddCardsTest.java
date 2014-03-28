@@ -130,14 +130,28 @@ public class BaseballCardDetailsAddCardsTest extends
     }
 
     public void testBrandAutoComplete() throws Throwable {
-        AutoCompleteTextView brandText = (AutoCompleteTextView) this.activity.findViewById(R.id.brand_text);
+        AutoCompleteTextView brandText = (AutoCompleteTextView) this.activity
+                .findViewById(R.id.brand_text);
         this.testAutoComplete(brandText, this.card.getBrand());
+    }
+
+    public void testPlayerNameAutoComplete() throws Throwable {
+        AutoCompleteTextView playerNameText = (AutoCompleteTextView) this.activity
+                .findViewById(R.id.player_name_text);
+        this.testAutoComplete(playerNameText, this.card.getPlayerName());
+    }
+
+    public void testTeamAutoComplete() throws Throwable {
+        AutoCompleteTextView teamText = (AutoCompleteTextView) this.activity
+                .findViewById(R.id.team_text);
+        this.testAutoComplete(teamText, this.card.getTeam());
     }
 
     private void testAutoComplete(AutoCompleteTextView textView, String text)
             throws Throwable {
         BBCTTestUtil.addCard(this.solo, this.card);
         this.solo.typeText(textView, text.substring(0, 2));
+        this.solo.waitForText(text);
         Assert.assertTrue(textView.isPopupShowing());
     }
 
