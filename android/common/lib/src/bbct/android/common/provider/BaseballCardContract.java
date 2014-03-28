@@ -130,6 +130,12 @@ public final class BaseballCardContract {
     private static final String STRING_SELECTION_FORMAT = "%s LIKE ?";
 
     /**
+     * Convenience variable to select cards with a given brand.
+     */
+    public static final Object BRAND_SELECTION = String.format(
+            STRING_SELECTION_FORMAT, BRAND_COL_NAME);
+
+    /**
      * Convenience variable to select cards for a given player.
      */
     public static final String PLAYER_NAME_SELECTION = String.format(
@@ -140,7 +146,6 @@ public final class BaseballCardContract {
      */
     public static final String TEAM_SELECTION = String.format(
             STRING_SELECTION_FORMAT, TEAM_COL_NAME);
-
 
     /**
      * Convenience method to create a {@link ContentValues} map for the data
