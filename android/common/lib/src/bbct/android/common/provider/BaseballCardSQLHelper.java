@@ -190,27 +190,6 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         return cards;
     }
 
-    /**
-     * Get the distinct values from the given column matching the given
-     * constraint.
-     *
-     * @param colName
-     *            The name of the column to query.
-     * @param constraint
-     *            An optional {@link String} to match against. May be
-     *            {@code null}.
-     * @return A {@link Cursor} containing the queried values.
-     */
-    public Cursor getDistinctValues(String colName, String constraint) {
-        String[] cols = { BaseballCardContract.ID_COL_NAME, colName };
-        String filter = (constraint == null) ? null : colName + " LIKE ?";
-        String[] args = (constraint == null) ? null : new String[]{ constraint.trim() + '%' };
-
-        return this.getWritableDatabase().query(
-                BaseballCardContract.TABLE_NAME, cols, filter, args, colName,
-                null, null, null);
-    }
-
     private static final String TAG = BaseballCardSQLHelper.class.getName();
     private final Cursor currCursor = null;
 }

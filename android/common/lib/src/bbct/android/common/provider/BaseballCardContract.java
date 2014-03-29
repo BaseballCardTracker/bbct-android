@@ -110,7 +110,7 @@ public final class BaseballCardContract {
             YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME,
             PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME };
 
-    private static final String INT_SELECTION_FORMAT = "%s = ?";
+    public static final String INT_SELECTION_FORMAT = "%s = ?";
 
     /**
      * Convenience variable to select cards with a given year.
@@ -124,10 +124,7 @@ public final class BaseballCardContract {
     public static final String NUMBER_SELECTION = String.format(
             INT_SELECTION_FORMAT, NUMBER_COL_NAME);
 
-    /**
-     * Convenience variable to select cards with a given player name.
-     */
-    private static final String STRING_SELECTION_FORMAT = "%s LIKE ?";
+    public static final String STRING_SELECTION_FORMAT = "%s LIKE ?";
 
     /**
      * Convenience variable to select cards with a given brand.

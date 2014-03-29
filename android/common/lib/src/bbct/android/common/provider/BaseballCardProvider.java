@@ -31,6 +31,7 @@ import android.util.Log;
 import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.exception.SQLHelperCreationException;
+import java.util.Arrays;
 
 /**
  * {@link ContentProvider} for baseball card data.
@@ -39,6 +40,7 @@ public class BaseballCardProvider extends ContentProvider {
 
     private static final int ALL_CARDS = 1;
     private static final int CARD_ID = 2;
+    private static final int DISTINCT = 3;
 
     public static final UriMatcher uriMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);
@@ -48,6 +50,8 @@ public class BaseballCardProvider extends ContentProvider {
                 BaseballCardContract.TABLE_NAME, ALL_CARDS);
         uriMatcher.addURI(BaseballCardContract.AUTHORITY,
                 BaseballCardContract.TABLE_NAME + "/#", CARD_ID);
+        uriMatcher.addURI(BaseballCardContract.AUTHORITY,
+                BaseballCardContract.TABLE_NAME + "/distinct", DISTINCT);
     }
 
     @Override
@@ -71,14 +75,23 @@ public class BaseballCardProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projection, String selection,
             String[] selectionArgs, String sortOrder) {
         Log.d(TAG, "query()");
+        Log.d(TAG, "  uri=" + uri);
+        Log.d(TAG, "  projection=" + Arrays.toString(projection));
+        Log.d(TAG, "  selection=" + selection);
+        Log.d(TAG, "  selectionArgs=" + Arrays.toString(selectionArgs));
+        Log.d(TAG, "  sortOrder=" + sortOrder);
 
         Cursor cursor = null;
         SQLiteDatabase db = this.sqlHelper.getReadableDatabase();
+        boolean distinct = false;
 
         switch (uriMatcher.match(uri)) {
+            case DISTINCT:
+                distinct = true;
             case ALL_CARDS:
-                cursor = db.query(BaseballCardContract.TABLE_NAME, projection,
-                        selection, selectionArgs, null, null, sortOrder);
+                cursor = db.query(distinct, BaseballCardContract.TABLE_NAME,
+                        projection, selection, selectionArgs, null, null,
+                        sortOrder, null);
                 break;
 
             case CARD_ID:
@@ -96,8 +109,7 @@ public class BaseballCardProvider extends ContentProvider {
                 throw new IllegalArgumentException(error);
         }
 
-        cursor.setNotificationUri(this.getContext().getContentResolver(),
-                BaseballCardContract.CONTENT_URI);
+        cursor.setNotificationUri(this.getContext().getContentResolver(), uri);
         return cursor;
     }
 
@@ -105,6 +117,7 @@ public class BaseballCardProvider extends ContentProvider {
     public String getType(Uri uri) {
         switch (uriMatcher.match(uri)) {
             case ALL_CARDS:
+            case DISTINCT:
                 return BaseballCardContract.BASEBALL_CARD_LIST_MIME_TYPE;
 
             case CARD_ID:
@@ -203,7 +216,8 @@ public class BaseballCardProvider extends ContentProvider {
 
     private String getWhereWithId(String selection) {
         String idSelection = BaseballCardContract.ID_COL_NAME + " = ?";
-        return TextUtils.isEmpty(selection) ? idSelection : idSelection + " AND (" + selection + ")";
+        return TextUtils.isEmpty(selection) ? idSelection : idSelection
+                + " AND (" + selection + ")";
 
     }
 
@@ -223,4 +237,5 @@ public class BaseballCardProvider extends ContentProvider {
 
     private BaseballCardSQLHelper sqlHelper = null;
     private static final String TAG = BaseballCardProvider.class.getName();
+
 }

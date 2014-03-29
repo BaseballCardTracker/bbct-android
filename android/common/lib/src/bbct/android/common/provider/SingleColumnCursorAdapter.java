@@ -21,15 +21,14 @@ package bbct.android.common.provider;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-import bbct.android.common.R;
-import bbct.android.common.exception.SQLHelperCreationException;
+import java.util.Arrays;
 
 /**
  * Provides a {@link CursorAdapter} for a single column from a database.
@@ -49,16 +48,8 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
     public SingleColumnCursorAdapter(Activity activity, String colName) {
         super(activity, null, true);
 
-        try {
-            this.activity = activity;
-            this.colName = colName;
-            this.sqlHelper = SQLHelperFactory.getSQLHelper(activity);
-        } catch (SQLHelperCreationException ex) {
-            // TODO Show a dialog and exit app
-            Toast.makeText(activity, R.string.database_error, Toast.LENGTH_LONG)
-                    .show();
-            Log.e(TAG, ex.getMessage(), ex);
-        }
+        this.activity = activity;
+        this.colName = colName;
     }
 
     /**
@@ -113,22 +104,44 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
      * Run a query for the given constraint and return a {@link Cursor} with the
      * results.
      *
-     * @param constraint The constraint for the query.
+     * @param constraint
+     *            The constraint for the query.
      *
      * @return A cursor with the requested items. May be empty.
      */
     @SuppressWarnings("deprecation")
     @Override
     public Cursor runQueryOnBackgroundThread(CharSequence constraint) {
-        Cursor cursor = this.sqlHelper.getDistinctValues(this.colName,
-                constraint == null ? null : constraint.toString());
+        Log.d(TAG, "runQueryOnBackgroundThread()");
+        Log.d(TAG, "  constraint=" + constraint);
+
+        Uri uri = BaseballCardContract.CONTENT_URI.buildUpon()
+                .appendPath("distinct").build();
+        Log.d(TAG, "  uri=" + uri);
+
+        String[] projection = new String[] { BaseballCardContract.ID_COL_NAME,
+                this.colName };
+        String selection = constraint == null ? null : String.format(
+                BaseballCardContract.STRING_SELECTION_FORMAT, this.colName);
+        String[] args = constraint == null ? null : new String[] { constraint
+                .toString().trim() + '%' };
+
+        Log.d(TAG, "  projection=" + Arrays.toString(projection));
+        Log.d(TAG, "  selection=" + selection);
+        Log.d(TAG, "  args=" + Arrays.toString(args));
+
+        Cursor cursor = this.activity.getContentResolver().query(uri,
+                projection, selection, args, null);
+
+        Log.d(TAG, "  cursor=" + cursor);
+        Log.d(TAG, "    # of rows=" + cursor.getCount());
+
         this.activity.startManagingCursor(cursor);
 
         return cursor;
     }
 
     private String colName = null;
-    private BaseballCardSQLHelper sqlHelper = null;
     private Activity activity = null;
     private static final String TAG = SingleColumnCursorAdapter.class.getName();
 }
