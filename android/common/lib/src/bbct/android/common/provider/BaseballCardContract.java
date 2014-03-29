@@ -39,11 +39,21 @@ public final class BaseballCardContract {
      */
     public static final String AUTHORITY = "bbct.android.common.provider";
 
+    public static final String LITE_AUTHORITY = "bbct.android.lite.provider";
+
+    public static final String PREMIUM_AUTHORITY = "bbct.android.premium.provider";
+
     /**
      * URI used to access data with {@link BaseballCardProvider}.
      */
     public static final Uri CONTENT_URI = new Uri.Builder().scheme("content")
             .authority(AUTHORITY).path(TABLE_NAME).build();
+
+    public static final Uri LITE_URI = new Uri.Builder().scheme("content")
+            .authority(LITE_AUTHORITY).path(TABLE_NAME).build();
+
+    public static final Uri PREMIUM_URI = new Uri.Builder().scheme("content")
+            .authority(PREMIUM_AUTHORITY).path(TABLE_NAME).build();
 
     /**
      * MIME type for a list of baseball card data.
@@ -166,5 +176,15 @@ public final class BaseballCardContract {
         cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME,
                 card.getPlayerPosition());
         return cv;
+    }
+
+    public static Uri getUri(String packageName) {
+        if (packageName.equals("bbct.android")) {
+            return LITE_URI;
+        } else if (packageName.equals("bbct.android.premium")) {
+            return PREMIUM_URI;
+        }
+
+        return CONTENT_URI;
     }
 }

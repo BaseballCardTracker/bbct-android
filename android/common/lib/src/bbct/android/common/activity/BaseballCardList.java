@@ -95,6 +95,8 @@ public class BaseballCardList extends ActionBarActivity {
 
         this.adapter = new BaseballCardAdapter(this, R.layout.row, null,
                 ROW_PROJECTION, ROW_TEXT_VIEWS);
+
+        this.uri = BaseballCardContract.getUri(this.getPackageName());
     }
 
     /**
@@ -242,8 +244,7 @@ public class BaseballCardList extends ActionBarActivity {
                 if (selected[i]) {
                     selected[i] = false;
                     long id = this.adapter.getItemId(i);
-                    Uri deleteUri = ContentUris.withAppendedId(
-                            BaseballCardContract.CONTENT_URI, id);
+                    Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
                     this.getContentResolver().delete(deleteUri, null, null);
                 }
             }
@@ -413,8 +414,7 @@ public class BaseballCardList extends ActionBarActivity {
             }
         }
 
-        Cursor cursor = this.getContentResolver().query(
-                BaseballCardContract.CONTENT_URI,
+        Cursor cursor = this.getContentResolver().query(this.uri,
                 BaseballCardContract.PROJECTION,
                 sb == null ? null : sb.toString(), args, null);
         this.swapCursor(cursor);
@@ -423,11 +423,13 @@ public class BaseballCardList extends ActionBarActivity {
     @SuppressWarnings("deprecation")
     private void swapCursor(Cursor newCursor) {
         Cursor oldCursor = this.adapter.getCursor();
-
-        this.adapter.setSelection(new boolean[newCursor.getCount()]);
         this.stopManagingCursor(oldCursor);
-        this.startManagingCursor(newCursor);
-        this.adapter.changeCursor(newCursor);
+
+        if (newCursor != null) {
+            this.adapter.setSelection(new boolean[newCursor.getCount()]);
+            this.startManagingCursor(newCursor);
+            this.adapter.changeCursor(newCursor);
+        }
 
         if (oldCursor != null) {
             oldCursor.close();
@@ -449,6 +451,7 @@ public class BaseballCardList extends ActionBarActivity {
     private boolean[] savedSelection;
     TextView emptyList = null;
     private BaseballCardAdapter adapter = null;
+    private Uri uri = null;
     private boolean filterActive = false;
     private Bundle filterParams = null;
     private View headerView;

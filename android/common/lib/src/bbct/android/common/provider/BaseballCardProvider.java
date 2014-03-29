@@ -38,9 +38,9 @@ import java.util.Arrays;
  */
 public class BaseballCardProvider extends ContentProvider {
 
-    private static final int ALL_CARDS = 1;
-    private static final int CARD_ID = 2;
-    private static final int DISTINCT = 3;
+    protected static final int ALL_CARDS = 1;
+    protected static final int CARD_ID = 2;
+    protected static final int DISTINCT = 3;
 
     public static final UriMatcher uriMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);

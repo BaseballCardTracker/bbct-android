@@ -78,7 +78,7 @@
         </activity>
 
         <provider
-            android:name="bbct.android.common.provider.BaseballCardProvider"
+            android:name="bbct.android.lite.provider.LiteProvider"
             android:authorities="@string/authorities"
             android:icon="@drawable/baseball"
             android:label="@string/provider_name"

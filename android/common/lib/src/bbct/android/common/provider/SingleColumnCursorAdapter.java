@@ -50,6 +50,8 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
 
         this.activity = activity;
         this.colName = colName;
+        this.uri = BaseballCardContract.getUri(this.activity.getPackageName())
+                .buildUpon().appendPath("distinct").build();
     }
 
     /**
@@ -115,10 +117,6 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
         Log.d(TAG, "runQueryOnBackgroundThread()");
         Log.d(TAG, "  constraint=" + constraint);
 
-        Uri uri = BaseballCardContract.CONTENT_URI.buildUpon()
-                .appendPath("distinct").build();
-        Log.d(TAG, "  uri=" + uri);
-
         String[] projection = new String[] { BaseballCardContract.ID_COL_NAME,
                 this.colName };
         String selection = constraint == null ? null : String.format(
@@ -130,7 +128,7 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
         Log.d(TAG, "  selection=" + selection);
         Log.d(TAG, "  args=" + Arrays.toString(args));
 
-        Cursor cursor = this.activity.getContentResolver().query(uri,
+        Cursor cursor = this.activity.getContentResolver().query(this.uri,
                 projection, selection, args, null);
 
         Log.d(TAG, "  cursor=" + cursor);
@@ -143,5 +141,6 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
 
     private String colName = null;
     private Activity activity = null;
+    private final Uri uri;
     private static final String TAG = SingleColumnCursorAdapter.class.getName();
 }

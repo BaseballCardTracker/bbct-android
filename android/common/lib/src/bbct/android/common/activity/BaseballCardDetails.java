@@ -130,6 +130,10 @@ public class BaseballCardDetails extends ActionBarActivity {
 
         ActionBar actionBar = this.getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        this.uri = BaseballCardContract.getUri(this.getPackageName());
+        Log.d(TAG, "package name=" + this.getPackageName());
+        Log.d(TAG, "uri=" + this.uri);
     }
 
     private BaseballCard getBaseballCard() {
@@ -231,7 +235,7 @@ public class BaseballCardDetails extends ActionBarActivity {
             if (newCard != null) {
                 if (BaseballCardDetails.this.isUpdating) {
                     Uri uri = ContentUris.withAppendedId(
-                            BaseballCardContract.CONTENT_URI,
+                            BaseballCardDetails.this.uri,
                             BaseballCardDetails.this.cardId);
                     resolver.update(uri,
                             BaseballCardContract.getContentValues(newCard),
@@ -241,8 +245,7 @@ public class BaseballCardDetails extends ActionBarActivity {
                     try {
                         ContentValues values = BaseballCardContract
                                 .getContentValues(newCard);
-                        resolver.insert(BaseballCardContract.CONTENT_URI,
-                                values);
+                        resolver.insert(BaseballCardDetails.this.uri, values);
 
                         BaseballCardDetails.this.resetInput();
                         BaseballCardDetails.this.brandText.requestFocus();
@@ -277,6 +280,7 @@ public class BaseballCardDetails extends ActionBarActivity {
     private AutoCompleteTextView playerNameText = null;
     private AutoCompleteTextView teamText = null;
     private Spinner playerPositionSpinner = null;
+    private Uri uri = null;
     private boolean isUpdating = false;
     private long cardId = -1L;
     private static final String TAG = BaseballCardDetails.class.getName();
