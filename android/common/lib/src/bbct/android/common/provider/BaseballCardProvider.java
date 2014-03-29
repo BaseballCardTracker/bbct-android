@@ -83,15 +83,22 @@ public class BaseballCardProvider extends ContentProvider {
 
         Cursor cursor = null;
         SQLiteDatabase db = this.sqlHelper.getReadableDatabase();
-        boolean distinct = false;
 
         switch (uriMatcher.match(uri)) {
             case DISTINCT:
-                distinct = true;
+                if (projection[0] != BaseballCardContract.ID_COL_NAME) {
+                    throw new SQLException("First column in the projection must be '_id'");
+                }
+
+                // Assume projection[1] == the "distinct" column
+                cursor = db.query(true, BaseballCardContract.TABLE_NAME,
+                        projection, selection, selectionArgs, projection[1],
+                        null, sortOrder, null);
+                break;
+
             case ALL_CARDS:
-                cursor = db.query(distinct, BaseballCardContract.TABLE_NAME,
-                        projection, selection, selectionArgs, null, null,
-                        sortOrder, null);
+                cursor = db.query(BaseballCardContract.TABLE_NAME, projection,
+                        selection, selectionArgs, null, null, sortOrder, null);
                 break;
 
             case CARD_ID:
