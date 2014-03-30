@@ -641,6 +641,10 @@ public class BaseballCardListWithDataTest extends
                 this.listView);
     }
 
+    /**
+     * Test that filtering cards without entering anything into {@link EditText}
+     * fields returns an empty list of cards.
+     */
     public void testEmptyFilterInputs() {
 
         // no cards should be returned after filtering
