@@ -353,30 +353,6 @@ public class BaseballCardList extends ActionBarActivity {
         }
     }
 
-    /**
-     * Obtains {@link BaseballCard} from {@link View}. The returned
-     * {@link BaseballCard} only includes partial data - data required to delete
-     * a card.
-     *
-     * @param v
-     *            - {@link View} object to obtain the card from
-     * @return the {@link BaseballCard} containing year, brand, number and
-     *         playerName.
-     */
-    private BaseballCard getBaseballCard(View v) {
-        TextView yearCol = (TextView) v.findViewById(R.id.year_text_view);
-        int year = Integer.parseInt(yearCol.getText().toString());
-
-        TextView numCol = (TextView) v.findViewById(R.id.number_text_view);
-        int number = Integer.parseInt(numCol.getText().toString());
-
-        TextView nameCol = (TextView) v
-                .findViewById(R.id.player_name_text_view);
-        String player = nameCol.getText().toString();
-
-        return new BaseballCard("", year, number, 0, 0, player, "", "");
-    }
-
     private void applyFilter() {
         Log.d(TAG, "applyFilter()");
 
