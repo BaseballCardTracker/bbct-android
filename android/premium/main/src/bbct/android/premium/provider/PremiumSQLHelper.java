@@ -16,7 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.premium;
+package bbct.android.premium.provider;
+
+import bbct.android.premium.R;
+import bbct.android.premium.R.string;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -35,17 +38,17 @@ import java.util.List;
  * {@link bbct.android.common.provider.BaseballCardSQLHelper#onConfigure(SQLiteDatabase)}
  * in order to import data from the Lite edition.
  */
-public class BaseballCardSQLHelper extends
+public class PremiumSQLHelper extends
         bbct.android.common.provider.BaseballCardSQLHelper {
 
     /**
-     * Create a {@link BaseballCardSQLHelper} with the given {@link Context}.
+     * Create a {@link PremiumSQLHelper} with the given {@link Context}.
      *
      * @param context
      *            The Android {@link Context} for this
-     *            {@link BaseballCardSQLHelper}.
+     *            {@link PremiumSQLHelper}.
      */
-    public BaseballCardSQLHelper(Context context) {
+    public PremiumSQLHelper(Context context) {
         super(context);
 
         Log.d(TAG, "ctor");
@@ -90,7 +93,7 @@ public class BaseballCardSQLHelper extends
 
     }
 
-    private static final String TAG = BaseballCardSQLHelper.class.getName();
+    private static final String TAG = PremiumSQLHelper.class.getName();
     private static final String LITE_PACKAGE = "bbct.android";
     private static final int MIN_LITE_VERSION = 3;
     private Context context = null;
