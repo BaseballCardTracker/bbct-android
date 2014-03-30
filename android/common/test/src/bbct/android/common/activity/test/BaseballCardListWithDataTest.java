@@ -309,7 +309,7 @@ public class BaseballCardListWithDataTest extends
                 BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.clickOnButton("Done");
+        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
 
         this.allCards.add(this.newCard);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards,
@@ -331,7 +331,7 @@ public class BaseballCardListWithDataTest extends
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.clickOnButton("Done");
+        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
 
         this.expectedCards.add(this.newCard);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
@@ -355,7 +355,7 @@ public class BaseballCardListWithDataTest extends
                 BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.clickOnButton("Done");
+        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
                 this.listView);
     }
@@ -374,7 +374,7 @@ public class BaseballCardListWithDataTest extends
                 BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.clickOnButton("Done");
+        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
 
         this.allCards.add(this.newCard);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards,

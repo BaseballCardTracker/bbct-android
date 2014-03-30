@@ -102,7 +102,7 @@ public class BaseballCardDetailsTest extends
         this.playerPositionSpinner = (Spinner) this.activity
                 .findViewById(R.id.player_position_text);
         this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
-        this.doneButton = (Button) this.activity.findViewById(R.id.done_button);
+        this.cancelButton = (Button) this.activity.findViewById(R.id.cancel_button);
         this.scrollView = (ScrollView) this.activity
                 .findViewById(R.id.scroll_card_details);
 
@@ -126,7 +126,7 @@ public class BaseballCardDetailsTest extends
         Assert.assertNotNull(this.playerTeamText);
         Assert.assertNotNull(this.playerPositionSpinner);
         Assert.assertNotNull(this.saveButton);
-        Assert.assertNotNull(this.doneButton);
+        Assert.assertNotNull(this.cancelButton);
         Assert.assertNotNull(this.scrollView);
     }
 
@@ -167,7 +167,7 @@ public class BaseballCardDetailsTest extends
      */
     @UiThreadTest
     public void testDoneButtonOnClick() {
-        Assert.assertTrue(this.doneButton.performClick());
+        Assert.assertTrue(this.cancelButton.performClick());
         Assert.assertTrue(this.activity.isFinishing());
     }
 
@@ -297,7 +297,7 @@ public class BaseballCardDetailsTest extends
     private EditText playerTeamText = null;
     private Spinner playerPositionSpinner = null;
     private Button saveButton = null;
-    private Button doneButton = null;
+    private Button cancelButton = null;
     private ScrollView scrollView = null;
     private Instrumentation inst = null;
     private BaseballCard card = null;
