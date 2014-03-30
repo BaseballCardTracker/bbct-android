@@ -18,16 +18,14 @@
  */
 package bbct.android.premium;
 
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import java.util.List;
@@ -62,54 +60,34 @@ public class BaseballCardSQLHelper extends
         Log.d(TAG, "onCreate()");
 
         boolean canGetData = true;
-        String errorMessageEnding = null;
 
         try {
             PackageInfo liteInfo = this.context.getPackageManager()
                     .getPackageInfo(LITE_PACKAGE, SCHEMA_VERSION);
-            canGetData = liteInfo.versionCode >= MIN_LITE_VERSION;
-            errorMessageEnding = this.context
-                    .getString(R.string.lite_update_message);
+            if (liteInfo.versionCode < MIN_LITE_VERSION) {
+                String errorMessage = this.context
+                        .getString(R.string.lite_update_message);
+                throw new SQLException(errorMessage);
+            }
         } catch (NameNotFoundException ex) {
-            canGetData = false;
-            errorMessageEnding = this.context
-                    .getString(R.string.lite_not_installed_message);
             Log.i(TAG, LITE_PACKAGE + " package not found", ex);
         }
 
         if (canGetData) {
             ContentResolver resolver = this.context.getContentResolver();
-            Cursor results = resolver.query(BaseballCardContract.CONTENT_URI,
+            Cursor results = resolver.query(BaseballCardContract.LITE_URI,
                     BaseballCardContract.PROJECTION, null, null, null);
 
             if (results != null) {
-                Toast.makeText(this.context, R.string.import_message,
-                        Toast.LENGTH_LONG).show();
-
                 List<BaseballCard> cards = this
                         .getAllBaseballCardsFromCursor(results);
-                this.insertAllBaseballCards(cards);
+                this.insertAllBaseballCards(db, cards);
             } else {
-                canGetData = false;
-                errorMessageEnding = "";
+                String errorMessage = this.context.getString(R.string.import_error);
+                throw new SQLException(errorMessage);
             }
         }
 
-        if (!canGetData) {
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
-                    this.context);
-            String errorMessage = this.context.getString(R.string.import_error,
-                    errorMessageEnding);
-            dialogBuilder.setMessage(errorMessage);
-            dialogBuilder.setPositiveButton(R.string.ok_button,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-
-            dialogBuilder.create().show();
-        }
     }
 
     private static final String TAG = BaseballCardSQLHelper.class.getName();

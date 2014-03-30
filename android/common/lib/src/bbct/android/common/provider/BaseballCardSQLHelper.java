@@ -110,9 +110,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      * @param cards
      *            The list of cards to insert into the database.
      */
-    public void insertAllBaseballCards(List<BaseballCard> cards) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
+    public void insertAllBaseballCards(SQLiteDatabase db, List<BaseballCard> cards) {
         db.beginTransaction();
         try {
             for (BaseballCard card : cards) {
