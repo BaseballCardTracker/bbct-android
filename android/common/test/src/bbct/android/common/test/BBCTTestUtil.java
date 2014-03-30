@@ -73,7 +73,9 @@ final public class BBCTTestUtil {
 
         // Subtract 1 from the number of views owned by the ListView to account
         // for the header View
-        Assert.assertEquals(expectedItems.size(), listView.getCount() - 1);
+        if (listView.getCount() > 0) {
+            Assert.assertEquals(expectedItems.size(), listView.getCount() - 1);
+        }
 
         for (BaseballCard card : expectedItems) {
 
