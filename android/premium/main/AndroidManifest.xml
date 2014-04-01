@@ -19,7 +19,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="bbct.android.premium"
-    android:versionCode="9"
+    android:versionCode="10"
     android:versionName="@string/version_number" >
 
     <uses-sdk

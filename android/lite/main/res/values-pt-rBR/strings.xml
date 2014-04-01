@@ -20,7 +20,6 @@
 <resources>
     <string name="app_name">BBCT Lite</string>
     <string name="bbct_title">BBCT Lite - %1$s</string>
-    <string name="version_number">0.5.7</string>
     <string name="premium">
         Se você gosta de usar o BBCT, obtenha a
         <a href="market://details?id=bbct.android.premium">edição premium</a>
