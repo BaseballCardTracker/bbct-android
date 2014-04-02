@@ -73,6 +73,16 @@ public final class BaseballCardContract {
     public static final String ID_COL_NAME = "_id";
 
     /**
+     * The column name for the autograph option.
+     */
+    public static final String AUTOGRAPH_COL_NAME = "autograph";
+
+    /**
+     * The column name for the card condition.
+     */
+    public static final String CONDITION_COL_NAME = "condition";
+
+    /**
      * The column name for the card brand.
      */
     public static final String BRAND_COL_NAME = "brand";
@@ -116,7 +126,8 @@ public final class BaseballCardContract {
      * Convenience variable that can be used when the {@link ContentResolver}
      * wants every column from the {@link BaseballCardProvider}.
      */
-    public static final String[] PROJECTION = { ID_COL_NAME, BRAND_COL_NAME,
+    public static final String[] PROJECTION = { ID_COL_NAME,
+            AUTOGRAPH_COL_NAME, CONDITION_COL_NAME, BRAND_COL_NAME,
             YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME,
             PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME };
 
