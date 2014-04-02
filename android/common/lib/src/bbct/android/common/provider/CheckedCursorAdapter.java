@@ -127,7 +127,7 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
      * and also updates {@link ListView} in the appropriate
      * {@link ListActivity}
      */
-    private void updateDataSet() {
+    public void updateDataSet() {
         this.notifyDataSetChanged();
         final Activity curActivity = (Activity) this.context;
         curActivity.runOnUiThread(new Runnable() {

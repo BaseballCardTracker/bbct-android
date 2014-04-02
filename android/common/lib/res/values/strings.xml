@@ -75,6 +75,10 @@
     <string name="player_name_option">Name</string>
     <string name="team_option">Team</string>
 
+    <!-- Contextual action bar text -->
+    <string name="edit_card">Edit</string>
+    <string name="delete_card">Delete</string>
+    
     <!-- Menu text -->
     <string name="add_menu">Add Cards</string>
     <string name="filter_menu">Filter Cards</string>
