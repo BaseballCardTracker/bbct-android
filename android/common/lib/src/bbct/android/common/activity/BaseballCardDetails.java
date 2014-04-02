@@ -72,14 +72,8 @@ public class BaseballCardDetails extends ActionBarActivity {
 
         this.autographCheckBox = (CheckBox) this.findViewById(R.id.autograph);
 
-        this.conditionSpinner = (Spinner) this
-                .findViewById(R.id.condition);
-        ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter
-                .createFromResource(this, R.array.condition,
-                        android.R.layout.simple_spinner_item);
-        conditionAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.conditionSpinner.setAdapter(conditionAdapter);
+        this.conditionSpinner = this.populateSpinner(R.id.condition,
+                R.array.condition);
 
         this.brandText = (AutoCompleteTextView) this
                 .findViewById(R.id.brand_text);
@@ -104,14 +98,11 @@ public class BaseballCardDetails extends ActionBarActivity {
                 BaseballCardContract.TEAM_COL_NAME);
         this.teamText.setAdapter(teamAdapter);
 
-        this.playerPositionSpinner = (Spinner) this
-                .findViewById(R.id.player_position_text);
-        ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter
-                .createFromResource(this, R.array.positions,
-                        android.R.layout.simple_spinner_item);
-        positionsAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.playerPositionSpinner.setAdapter(positionsAdapter);
+        this.playerPositionSpinner = this.populateSpinner(
+                R.id.player_position_text, R.array.positions);
+        @SuppressWarnings("unchecked")
+        ArrayAdapter<CharSequence> positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner
+                .getAdapter();
 
         Button saveButton = (Button) this.findViewById(R.id.save_button);
         saveButton.setOnClickListener(this.onSave);
@@ -146,6 +137,16 @@ public class BaseballCardDetails extends ActionBarActivity {
         this.uri = BaseballCardContract.getUri(this.getPackageName());
         Log.d(TAG, "package name=" + this.getPackageName());
         Log.d(TAG, "uri=" + this.uri);
+    }
+
+    private Spinner populateSpinner(int spinnerId, int araryId) {
+        Spinner spinner = (Spinner) this.findViewById(spinnerId);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, araryId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
     }
 
     private BaseballCard getBaseballCard() {
