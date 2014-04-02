@@ -29,11 +29,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
+import bbct.android.common.activity.callback.BaseballCardListActionCallback;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.exception.SQLHelperCreationException;
 import bbct.android.common.provider.BaseballCardContract;
@@ -43,405 +45,432 @@ import bbct.android.common.provider.SQLHelperFactory;
 
 /**
  * Displays a list of all baseball cards stored in the database.
- *
+ * 
  * TODO: Make list fancier
  */
 public class BaseballCardList extends ActionBarActivity {
 
-    /**
-     * Called when the activity is first created.
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate()");
-        Log.d(TAG, "savedInstanceState=" + savedInstanceState);
+	/**
+	 * Called when the activity is first created.
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		Log.d(TAG, "onCreate()");
+		Log.d(TAG, "savedInstanceState=" + savedInstanceState);
 
-        try {
-            super.onCreate(savedInstanceState);
-            this.sqlHelper = SQLHelperFactory.getSQLHelper(this);
-            this.savedSelection = null;
+		try {
+			super.onCreate(savedInstanceState);
+			this.sqlHelper = SQLHelperFactory.getSQLHelper(this);
+			this.savedSelection = null;
 
-            this.setContentView(R.layout.card_list);
-            this.filterActive = false;
-            if (savedInstanceState != null) {
-                this.filterActive = savedInstanceState.getBoolean(this
-                        .getString(R.string.filter_status_extra));
-                this.filterParams = savedInstanceState.getBundle(this
-                        .getString(R.string.filter_params_extra));
-                this.savedSelection = savedInstanceState.getBooleanArray(this
-                        .getString(R.string.selection_extra));
-            }
+			this.setContentView(R.layout.card_list);
+			this.filterActive = false;
+			if (savedInstanceState != null) {
+				this.filterActive = savedInstanceState.getBoolean(this
+						.getString(R.string.filter_status_extra));
+				this.filterParams = savedInstanceState.getBundle(this
+						.getString(R.string.filter_params_extra));
+				this.savedSelection = savedInstanceState.getBooleanArray(this
+						.getString(R.string.selection_extra));
+			}
 
-            this.emptyList = (TextView) this.findViewById(android.R.id.empty);
-            if (!this.filterActive) {
-                this.emptyList.setText(R.string.start);
-            } else {
-                this.emptyList.setText(R.string.empty_list);
-            }
+			this.emptyList = (TextView) this.findViewById(android.R.id.empty);
+			if (!this.filterActive) {
+				this.emptyList.setText(R.string.start);
+			} else {
+				this.emptyList.setText(R.string.empty_list);
+			}
 
-            ListView listView = (ListView) this.findViewById(android.R.id.list);
-            this.headerView = View.inflate(this, R.layout.list_header, null);
-            ((CheckedTextView) this.headerView.findViewById(R.id.checkmark))
-                    .setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            CheckedTextView ctv = (CheckedTextView) v
-                                    .findViewById(R.id.checkmark);
-                            ctv.toggle();
-                            BaseballCardList.this.adapter.toggleAll(ctv
-                                    .isChecked());
-                        }
-                    });
-            listView.addHeaderView(this.headerView);
-            listView.setEmptyView(this.emptyList);
-            listView.setOnItemClickListener(this.onCardClick);
+			final ListView listView = (ListView) this
+					.findViewById(android.R.id.list);
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+				listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-            this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
-                    ROW_PROJECTION, ROW_TEXT_VIEWS);
-        } catch (SQLHelperCreationException ex) {
-            // TODO Show a dialog and exit app
-            Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG)
-                    .show();
-            Log.e(TAG, ex.getMessage(), ex);
-        }
-    }
+					@Override
+					public boolean onItemLongClick(AdapterView<?> parent,
+							View view, int position, long id) {
+						BaseballCardList activity = BaseballCardList.this;
+						BaseballCardListActionCallback callback = new BaseballCardListActionCallback(
+								activity);
+						activity.startActionMode(callback);
+						return true;
+					}
+				});
+			}
+			this.headerView = View.inflate(this, R.layout.list_header, null);
+			((CheckedTextView) this.headerView.findViewById(R.id.checkmark))
+					.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							CheckedTextView ctv = (CheckedTextView) v
+									.findViewById(R.id.checkmark);
+							ctv.toggle();
+							BaseballCardList.this.adapter.toggleAll(ctv
+									.isChecked());
+						}
+					});
+			listView.addHeaderView(this.headerView);
+			listView.setEmptyView(this.emptyList);
+			listView.setOnItemClickListener(this.onCardClick);
 
-    /**
-     * Close the connection to the database when the activity is destroyed.
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+			this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
+					ROW_PROJECTION, ROW_TEXT_VIEWS);
+		} catch (SQLHelperCreationException ex) {
+			// TODO Show a dialog and exit app
+			Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG)
+					.show();
+			Log.e(TAG, ex.getMessage(), ex);
+		}
+	}
 
-        this.sqlHelper.close();
-    }
+	/**
+	 * Close the connection to the database when the activity is destroyed.
+	 */
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
 
-    /**
-     * Save the state of checkboxes for all list items.
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
+		this.sqlHelper.close();
+	}
 
-        this.savedSelection = this.adapter.getSelection();
-    }
+	/**
+	 * Save the state of checkboxes for all list items.
+	 */
+	@Override
+	public void onPause() {
+		super.onPause();
 
-    /**
-     * Restore the state of {@link CheckedTextView} for all list items.
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
+		this.savedSelection = this.adapter.getSelection();
+	}
 
-        this.updateFilter();
-        this.swapCursor();
+	/**
+	 * Restore the state of {@link CheckedTextView} for all list items.
+	 */
+	@Override
+	public void onResume() {
+		super.onResume();
 
-        // restore default header state
-        CheckedTextView headerCheck = (CheckedTextView) this.headerView
-                .findViewById(R.id.checkmark);
-        headerCheck.setChecked(false);
+		this.updateFilter();
+		this.swapCursor();
 
-        // restore old state if it exists
-        if (this.savedSelection != null && !this.filterActive) {
+		// restore default header state
+		CheckedTextView headerCheck = (CheckedTextView) this.headerView
+				.findViewById(R.id.checkmark);
+		headerCheck.setChecked(false);
 
-            // array needs to be extended in case a card was added
-            boolean[] newSelection = new boolean[this.adapter.getSelection().length];
+		// restore old state if it exists
+		if (this.savedSelection != null && !this.filterActive) {
 
-            // copy old selection array into new selection array
-            int numSelected = 0;
-            for (int i = 0; i < this.savedSelection.length; i++) {
-                newSelection[i] = this.savedSelection[i];
+			// array needs to be extended in case a card was added
+			boolean[] newSelection = new boolean[this.adapter.getSelection().length];
 
-                if (newSelection[i]) {
-                    numSelected++;
-                }
-            }
+			// copy old selection array into new selection array
+			int numSelected = 0;
+			for (int i = 0; i < this.savedSelection.length; i++) {
+				newSelection[i] = this.savedSelection[i];
 
-            // restore header state
-            if (numSelected == this.adapter.getSelection().length
-                    && newSelection.length == this.savedSelection.length) {
-                headerCheck.setChecked(true);
-            }
+				if (newSelection[i]) {
+					numSelected++;
+				}
+			}
 
-            // restore state
-            this.adapter.setSelection(newSelection);
-        }
-    }
+			// restore header state
+			if (numSelected == this.adapter.getSelection().length
+					&& newSelection.length == this.savedSelection.length) {
+				headerCheck.setChecked(true);
+			}
 
-    /**
-     * Create the options menu. This is simply inflated from the
-     * {@code option.xml} resource file.
-     *
-     * @param menu
-     *            The options menu in which new menu items are placed.
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.option, menu);
+			// restore state
+			this.adapter.setSelection(newSelection);
+		}
+	}
 
-        return super.onCreateOptionsMenu(menu);
-    }
+	/**
+	 * Create the options menu. This is simply inflated from the
+	 * {@code option.xml} resource file.
+	 * 
+	 * @param menu
+	 *            The options menu in which new menu items are placed.
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		this.getMenuInflater().inflate(R.menu.option, menu);
 
-    /**
-     * Prepare the options menu to be displayed. If a filter is active and
-     * displays the "Clear Filter" menu item, otherwise displays the
-     * "Filter Cards" menu item.
-     *
-     * @param menu
-     *            The options menu which will be displayed.
-     */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem filter = menu.findItem(R.id.filter_menu);
-        MenuItem clearFilter = menu.findItem(R.id.clear_filter_menu);
-        if (!this.filterActive) {
-            filter.setVisible(true);
-            filter.setEnabled(true);
+		return super.onCreateOptionsMenu(menu);
+	}
 
-            clearFilter.setVisible(false);
-            clearFilter.setEnabled(false);
-        } else {
-            filter.setVisible(false);
-            filter.setEnabled(false);
+	/**
+	 * Prepare the options menu to be displayed. If a filter is active and
+	 * displays the "Clear Filter" menu item, otherwise displays the
+	 * "Filter Cards" menu item.
+	 * 
+	 * @param menu
+	 *            The options menu which will be displayed.
+	 */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuItem filter = menu.findItem(R.id.filter_menu);
+		MenuItem clearFilter = menu.findItem(R.id.clear_filter_menu);
+		if (!this.filterActive) {
+			filter.setVisible(true);
+			filter.setEnabled(true);
 
-            clearFilter.setVisible(true);
-            clearFilter.setEnabled(true);
-        }
+			clearFilter.setVisible(false);
+			clearFilter.setEnabled(false);
+		} else {
+			filter.setVisible(false);
+			filter.setEnabled(false);
 
-        // update delete menu option
-        MenuItem deleteItem = menu.findItem(R.id.delete_menu);
-        deleteItem.setEnabled(false);
+			clearFilter.setVisible(true);
+			clearFilter.setEnabled(true);
+		}
 
-        boolean[] curSelection = this.adapter.getSelection();
-        if (curSelection != null) {
-            for (boolean b : curSelection) {
-                if (b) {
-                    deleteItem.setEnabled(true);
-                    break;
-                }
-            }
-        }
+		// update delete menu option
+		MenuItem deleteItem = menu.findItem(R.id.delete_menu);
+		deleteItem.setEnabled(false);
 
-        return super.onPrepareOptionsMenu(menu);
-    }
+		boolean[] curSelection = this.adapter.getSelection();
+		if (curSelection != null) {
+			for (boolean b : curSelection) {
+				if (b) {
+					deleteItem.setEnabled(true);
+					break;
+				}
+			}
+		}
 
-    /**
-     * Respond to the user selecting a menu item.
-     *
-     * @param item
-     *            The menu item selected.
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
+		return super.onPrepareOptionsMenu(menu);
+	}
 
-        if (itemId == R.id.add_menu) {
-            Intent intent = new Intent(Intent.ACTION_EDIT,
-                    BaseballCardDetails.DETAILS_URI);
-            intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
-            this.startActivity(intent);
-            return true;
-        } else if (itemId == R.id.filter_menu) {
-            this.startActivityForResult(new Intent(this, FilterCards.class),
-                    FILTER_CARDS_REQUEST);
-            return true;
-        } else if (itemId == R.id.clear_filter_menu) {
-            this.filterActive = false;
-            this.emptyList.setText(R.string.start);
-            this.savedSelection = null;
-            this.updateFilter();
-            this.swapCursor();
+	/**
+	 * Respond to the user selecting a menu item.
+	 * 
+	 * @param item
+	 *            The menu item selected.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int itemId = item.getItemId();
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-                this.invalidateOptionsMenu();
-            }
+		if (itemId == R.id.add_menu) {
+			Intent intent = new Intent(Intent.ACTION_EDIT,
+					BaseballCardDetails.DETAILS_URI);
+			intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
+			this.startActivity(intent);
+			return true;
+		} else if (itemId == R.id.filter_menu) {
+			this.startActivityForResult(new Intent(this, FilterCards.class),
+					FILTER_CARDS_REQUEST);
+			return true;
+		} else if (itemId == R.id.clear_filter_menu) {
+			this.filterActive = false;
+			this.emptyList.setText(R.string.start);
+			this.savedSelection = null;
+			this.updateFilter();
+			this.swapCursor();
 
-            return true;
-        } else if (itemId == R.id.delete_menu) {
+			if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+				this.invalidateOptionsMenu();
+			}
 
-            boolean[] selected = this.adapter.getSelection();
-            for (int i = 0; i < selected.length; i++) {
-                if (selected[i]) {
-                    selected[i] = false;
-                    BaseballCard card = this.getBaseballCard(this.adapter
-                            .getView(i, null, null));
-                    this.sqlHelper.removeBaseballCard(card);
-                }
-            }
+			return true;
+		} else if (itemId == R.id.delete_menu) {
 
-            Toast.makeText(this, R.string.card_deleted_message,
-                    Toast.LENGTH_LONG).show();
+			boolean[] selected = this.adapter.getSelection();
+			for (int i = 0; i < selected.length; i++) {
+				if (selected[i]) {
+					selected[i] = false;
+					BaseballCard card = this.getBaseballCard(this.adapter
+							.getView(i, null, null));
+					this.sqlHelper.removeBaseballCard(card);
+				}
+			}
 
-            this.adapter.setSelection(selected);
-            this.updateFilter();
-            this.swapCursor();
-            return true;
+			Toast.makeText(this, R.string.card_deleted_message,
+					Toast.LENGTH_LONG).show();
 
-        } else if (itemId == R.id.about_menu) {
-            this.startActivity(new Intent(this, About.class));
-            return true;
-        } else {
-            Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
-            // TODO Throw exception?
-        }
+			this.adapter.setSelection(selected);
+			this.updateFilter();
+			this.swapCursor();
+			return true;
 
-        return super.onOptionsItemSelected(item);
-    }
+		} else if (itemId == R.id.about_menu) {
+			this.startActivity(new Intent(this, About.class));
+			return true;
+		} else {
+			Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
+			// TODO Throw exception?
+		}
 
-    /**
-     * Save the currently active filter when the system asks for it. Also save
-     * the current state of marked list items.
-     *
-     * @param outState
-     *            The saved state.
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+		return super.onOptionsItemSelected(item);
+	}
 
-        outState.putBoolean(this.getString(R.string.filter_status_extra),
-                this.filterActive);
-        outState.putBundle(this.getString(R.string.filter_params_extra),
-                this.filterParams);
-        outState.putBooleanArray(this.getString(R.string.selection_extra),
-                this.adapter.getSelection());
-    }
+	/**
+	 * Save the currently active filter when the system asks for it. Also save
+	 * the current state of marked list items.
+	 * 
+	 * @param outState
+	 *            The saved state.
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
 
-    private final OnItemClickListener onCardClick = new OnItemClickListener() {
-        /**
-         * Respond to the user clicking on an item in the list. If the user
-         * clicks on a checkbox, then the corresponding row will be marked for
-         * the next delete operation. Otherwise, the app will display the card
-         * data for editing in a {@link BaseballCardDetails}.
-         *
-         * @param l
-         *            The ListView where the click happened.
-         * @param v
-         *            The view that was clicked within the ListView.
-         * @param position
-         *            The position of the view in the list.
-         * @param id
-         *            The row id of the item that was clicked.
-         */
-        @Override
-        public void onItemClick(AdapterView<?> row, View v, int position,
-                long id) {
-            if (position == 0) {
-                return;
-            }
+		outState.putBoolean(this.getString(R.string.filter_status_extra),
+				this.filterActive);
+		outState.putBundle(this.getString(R.string.filter_params_extra),
+				this.filterParams);
+		outState.putBooleanArray(this.getString(R.string.selection_extra),
+				this.adapter.getSelection());
+	}
 
-            Intent intent = new Intent(Intent.ACTION_EDIT,
-                    BaseballCardDetails.DETAILS_URI);
-            BaseballCard card = BaseballCardList.this.sqlHelper
-                    .getBaseballCardFromCursor();
+	private final OnItemClickListener onCardClick = new OnItemClickListener() {
+		/**
+		 * Respond to the user clicking on an item in the list. If the user
+		 * clicks on a checkbox, then the corresponding row will be marked for
+		 * the next delete operation. Otherwise, the app will display the card
+		 * data for editing in a {@link BaseballCardDetails}.
+		 * 
+		 * @param l
+		 *            The ListView where the click happened.
+		 * @param v
+		 *            The view that was clicked within the ListView.
+		 * @param position
+		 *            The position of the view in the list.
+		 * @param id
+		 *            The row id of the item that was clicked.
+		 */
+		@Override
+		public void onItemClick(AdapterView<?> row, View v, int position,
+				long id) {
+			if (position == 0) {
+				return;
+			}
 
-            intent.putExtra(BaseballCardList.this
-                    .getString(R.string.baseball_card_extra), card);
-            intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
-            BaseballCardList.this.startActivity(intent);
-        }
-    };
+			BaseballCard card = BaseballCardList.this.sqlHelper
+					.getBaseballCardFromCursor();
+			BaseballCardList.this.createIntentAndStartEditCardActivity(card);
+		}
+	};
 
-    /**
-     * Respond to the result of a child activity by applying a filter after
-     * {@link FilterOptions} returns the appropriate parameters.
-     *
-     * @param requestCode
-     *            The integer request code originally supplied to
-     *            {@link #startActivityForResult()}, allowing you to identify
-     *            who this result came from.
-     * @param resultCode
-     *            The integer result code returned by the child activity through
-     *            its {@link #setResult()}.
-     * @param data
-     *            An Intent with the data returned by the child activity.
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == FILTER_CARDS_REQUEST) {
-            if (resultCode == RESULT_OK) {
-                this.filterActive = true;
-                this.filterParams = data.getExtras();
-                this.emptyList.setText(R.string.empty_list);
+	/**
+	 * creates a "edit card" intent with the given card inside it, and starts an
+	 * activity for this intent
+	 */
+	public final void createIntentAndStartEditCardActivity(
+			final BaseballCard card) {
+		final Intent intent = new Intent(Intent.ACTION_EDIT,
+				BaseballCardDetails.DETAILS_URI);
 
-                this.updateFilter();
-                this.swapCursor();
+		intent.putExtra(
+				BaseballCardList.this.getString(R.string.baseball_card_extra),
+				card);
+		intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
+		BaseballCardList.this.startActivity(intent);
+	}
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-                    this.invalidateOptionsMenu();
-                }
-            }
-        } else {
-            Log.e(TAG, "onActivityResult(): Invalid result code: "
-                    + requestCode);
-            // TODO Throw exception?
-        }
-    }
+	/**
+	 * Respond to the result of a child activity by applying a filter after
+	 * {@link FilterOptions} returns the appropriate parameters.
+	 * 
+	 * @param requestCode
+	 *            The integer request code originally supplied to
+	 *            {@link #startActivityForResult()}, allowing you to identify
+	 *            who this result came from.
+	 * @param resultCode
+	 *            The integer result code returned by the child activity through
+	 *            its {@link #setResult()}.
+	 * @param data
+	 *            An Intent with the data returned by the child activity.
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == FILTER_CARDS_REQUEST) {
+			if (resultCode == RESULT_OK) {
+				this.filterActive = true;
+				this.filterParams = data.getExtras();
+				this.emptyList.setText(R.string.empty_list);
 
-    /**
-     * Obtains {@link BaseballCard} from {@link View}. The returned
-     * {@link BaseballCard} only includes partial data - data required to delete
-     * a card.
-     *
-     * @param v
-     *            - {@link View} object to obtain the card from
-     * @return the {@link BaseballCard} containing year, brand, number and
-     *         playerName.
-     */
-    private BaseballCard getBaseballCard(View v) {
-        TextView yearCol = (TextView) v.findViewById(R.id.year_text_view);
-        int year = Integer.parseInt(yearCol.getText().toString());
+				this.updateFilter();
+				this.swapCursor();
 
-        TextView numCol = (TextView) v.findViewById(R.id.number_text_view);
-        int number = Integer.parseInt(numCol.getText().toString());
+				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+					this.invalidateOptionsMenu();
+				}
+			}
+		} else {
+			Log.e(TAG, "onActivityResult(): Invalid result code: "
+					+ requestCode);
+			// TODO Throw exception?
+		}
+	}
 
-        TextView nameCol = (TextView) v
-                .findViewById(R.id.player_name_text_view);
-        String player = nameCol.getText().toString();
+	/**
+	 * Obtains {@link BaseballCard} from {@link View}. The returned
+	 * {@link BaseballCard} only includes partial data - data required to delete
+	 * a card.
+	 * 
+	 * @param v
+	 *            - {@link View} object to obtain the card from
+	 * @return the {@link BaseballCard} containing year, brand, number and
+	 *         playerName.
+	 */
+	private BaseballCard getBaseballCard(View v) {
+		TextView yearCol = (TextView) v.findViewById(R.id.year_text_view);
+		int year = Integer.parseInt(yearCol.getText().toString());
 
-        return new BaseballCard("", year, number, 0, 0, player, "", "");
-    }
+		TextView numCol = (TextView) v.findViewById(R.id.number_text_view);
+		int number = Integer.parseInt(numCol.getText().toString());
 
-    private void updateFilter() {
-        if (this.filterActive) {
-            this.sqlHelper.applyFilter(this, this.filterParams);
-        } else {
-            this.sqlHelper.clearFilter();
-        }
-    }
+		TextView nameCol = (TextView) v
+				.findViewById(R.id.player_name_text_view);
+		String player = nameCol.getText().toString();
 
-    @SuppressWarnings("deprecation")
-    private void swapCursor() {
-        Cursor newCursor = this.sqlHelper.getCursor();
-        Cursor oldCursor = this.adapter.getCursor();
+		return new BaseballCard("", year, number, 0, 0, player, "", "");
+	}
 
-        this.adapter.setSelection(new boolean[newCursor.getCount()]);
-        this.stopManagingCursor(oldCursor);
-        this.startManagingCursor(newCursor);
-        this.adapter.changeCursor(newCursor);
+	public void updateFilter() {
+		if (this.filterActive) {
+			this.sqlHelper.applyFilter(this, this.filterParams);
+		} else {
+			this.sqlHelper.clearFilter();
+		}
+	}
 
-        if (oldCursor != null) {
-            oldCursor.close();
-        }
-    }
+	/**
+	 * returns the instantiated {@link BaseballCardSQLHelper} for the
+	 * {@link BaseballCardList} activity. Note: might be null
+	 */
+	public BaseballCardSQLHelper getSqlHelper() {
+		return sqlHelper;
+	}
 
-    private static final String[] ROW_PROJECTION = {
-            BaseballCardContract.BRAND_COL_NAME,
-            BaseballCardContract.YEAR_COL_NAME,
-            BaseballCardContract.NUMBER_COL_NAME,
-            BaseballCardContract.PLAYER_NAME_COL_NAME };
+	@SuppressWarnings("deprecation")
+	public void swapCursor() {
+		Cursor cursor = this.sqlHelper.getCursor();
+		this.adapter.setSelection(new boolean[cursor.getCount()]);
+		this.stopManagingCursor(this.adapter.getCursor());
+		this.startManagingCursor(cursor);
+		this.adapter.changeCursor(cursor);
+	}
 
-    private static final int[] ROW_TEXT_VIEWS = { R.id.brand_text_view,
-            R.id.year_text_view, R.id.number_text_view,
-            R.id.player_name_text_view };
+	private static final String[] ROW_PROJECTION = {
+			BaseballCardContract.BRAND_COL_NAME,
+			BaseballCardContract.YEAR_COL_NAME,
+			BaseballCardContract.NUMBER_COL_NAME,
+			BaseballCardContract.PLAYER_NAME_COL_NAME };
 
-    private static final int FILTER_CARDS_REQUEST = 0x0001;
-    private static final String TAG = BaseballCardList.class.getName();
-    private boolean[] savedSelection;
-    TextView emptyList = null;
-    private BaseballCardSQLHelper sqlHelper = null;
-    private CheckedCursorAdapter adapter = null;
-    private boolean filterActive = false;
-    private Bundle filterParams = null;
-    private View headerView;
+	private static final int[] ROW_TEXT_VIEWS = { R.id.brand_text_view,
+			R.id.year_text_view, R.id.number_text_view,
+			R.id.player_name_text_view };
+
+	private static final int FILTER_CARDS_REQUEST = 0x0001;
+	private static final String TAG = BaseballCardList.class.getName();
+	private boolean[] savedSelection;
+	TextView emptyList = null;
+	private BaseballCardSQLHelper sqlHelper = null;
+	private CheckedCursorAdapter adapter = null;
+	private boolean filterActive = false;
+	private Bundle filterParams = null;
+	private View headerView;
 }
