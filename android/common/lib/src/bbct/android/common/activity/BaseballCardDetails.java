@@ -34,6 +34,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -68,6 +69,17 @@ public class BaseballCardDetails extends ActionBarActivity {
         String cardDetailsTitle = this.getString(R.string.card_details_title);
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
         this.setTitle(title);
+
+        this.autographCheckBox = (CheckBox) this.findViewById(R.id.autograph);
+
+        this.conditionSpinner = (Spinner) this
+                .findViewById(R.id.condition);
+        ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter
+                .createFromResource(this, R.array.condition,
+                        android.R.layout.simple_spinner_item);
+        conditionAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.conditionSpinner.setAdapter(conditionAdapter);
 
         this.brandText = (AutoCompleteTextView) this
                 .findViewById(R.id.brand_text);
@@ -272,6 +284,8 @@ public class BaseballCardDetails extends ActionBarActivity {
     };
 
     private BaseballCard oldCard = null;
+    private CheckBox autographCheckBox = null;
+    private Spinner conditionSpinner = null;
     private AutoCompleteTextView brandText = null;
     private EditText yearText = null;
     private EditText numberText = null;

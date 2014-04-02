@@ -18,6 +18,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+
     <string name="app_name">BBCT Common</string>
     <string name="provider_name">BBCT Data</string>
 
@@ -29,7 +30,6 @@
     <string name="about_title">About</string>
     <string name="input_error_title">Input Error</string>
     <string name="duplicate_card_title">Duplicate Card</string>
-
     <string name="start">Tap (+) to get started.</string>
     <string name="empty_list">No cards found.</string>
 
@@ -44,7 +44,7 @@
     <string name="player_name_label">Player Name:</string>
     <string name="team_label">Team:</string>
     <string name="player_position_label">Player Position:</string>
-    
+
     <!-- Column headings for card list -->
     <string name="brand_col">Brand</string>
     <string name="year_col">Year</string>
@@ -92,14 +92,12 @@
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">This software is licensed under the GPL. Visit\nhttp://www.gnu.org/licenses/ for a copy of the license.</string>
-    <string name="about">
-        BBCT is a simple database app for your baseball card collection.
+    <string name="about">BBCT is a simple database app for your baseball card collection.
         You can add information about the cards in your collection, view
         details about individual cards, and filter the list of cards according
         to a limited set of criteria. BBCT helps you organize your collection
         and quickly look up which cards you own. Feel free to email your
-        feedback and comments or visit the project website.
-    </string>
+        feedback and comments or visit the project website.</string>
 
     <!-- Card details toasts -->
     <string name="card_added_message">Card added successfully.</string>
@@ -118,7 +116,18 @@
         <item>Right Field</item>
     </string-array>
 
-    <!-- Error messages-->
+    <!-- Strings for card condition -->
+    <string-array name="condition">
+        <item>Gem Mint</item>
+        <item>Mint</item>
+        <item>Near Mint</item>
+        <item>Excellent</item>
+        <item>Very Good</item>
+        <item>Good</item>
+        <item>Poor</item>
+    </string-array>
+
+    <!-- Error messages -->
     <string name="no_radio_button_error">Please select an option.</string>
     <string name="brand_input_error">Please enter a brand name.</string>
     <string name="year_input_error">Please enter a year.</string>
