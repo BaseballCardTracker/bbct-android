@@ -177,6 +177,8 @@ public final class BaseballCardContract {
      */
     public static ContentValues getContentValues(BaseballCard card) {
         ContentValues cv = new ContentValues(7);
+        cv.put(BaseballCardContract.AUTOGRAPHED_COL_NAME, card.isAutographed());
+        cv.put(BaseballCardContract.CONDITION_COL_NAME, card.getCondition());
         cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
         cv.put(BaseballCardContract.YEAR_COL_NAME, card.getYear());
         cv.put(BaseballCardContract.NUMBER_COL_NAME, card.getNumber());
