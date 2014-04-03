@@ -75,7 +75,7 @@ public final class BaseballCardContract {
     /**
      * The column name for the autograph option.
      */
-    public static final String AUTOGRAPH_COL_NAME = "autograph";
+    public static final String AUTOGRAPHED_COL_NAME = "autographed";
 
     /**
      * The column name for the card condition.
@@ -127,7 +127,7 @@ public final class BaseballCardContract {
      * wants every column from the {@link BaseballCardProvider}.
      */
     public static final String[] PROJECTION = { ID_COL_NAME,
-            AUTOGRAPH_COL_NAME, CONDITION_COL_NAME, BRAND_COL_NAME,
+            AUTOGRAPHED_COL_NAME, CONDITION_COL_NAME, BRAND_COL_NAME,
             YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME,
             PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME };
 

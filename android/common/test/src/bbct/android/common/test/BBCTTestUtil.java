@@ -205,6 +205,20 @@ final public class BBCTTestUtil {
             Set<EditTexts> fieldFlags) throws InterruptedException {
         Log.d(TAG, "sendKeysToCardDetails()");
 
+        if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
+            solo.clickOnCheckBox(0);
+        }
+
+        if (fieldFlags.contains(EditTexts.CONDITION)) {
+            Spinner conditionSpinner = (Spinner) solo.getView(R.id.condition);
+            @SuppressWarnings("unchecked")
+            ArrayAdapter<CharSequence> conditionAdapter = (ArrayAdapter<CharSequence>) conditionSpinner
+                    .getAdapter();
+            int newIndex = conditionAdapter.getPosition(card.getCondition());
+            int currIndex = conditionSpinner.getSelectedItemPosition();
+            solo.pressSpinnerItem(0, newIndex - currIndex);
+        }
+
         AutoCompleteTextView brandText = (AutoCompleteTextView) solo
                 .getView(R.id.brand_text);
         if (fieldFlags.contains(EditTexts.BRAND)) {
@@ -268,7 +282,7 @@ final public class BBCTTestUtil {
             int newIndex = playerPositionAdapter.getPosition(card
                     .getPlayerPosition());
             int currIndex = playerPositionSpinner.getSelectedItemPosition();
-            solo.pressSpinnerItem(0, newIndex - currIndex);
+            solo.pressSpinnerItem(1, newIndex - currIndex);
         }
     }
 
@@ -310,6 +324,10 @@ final public class BBCTTestUtil {
      */
     public static void assertAllEditTextContents(Activity cardDetails,
             BaseballCard expectedCard) {
+        CheckBox autographedCheckBox = (CheckBox) cardDetails
+                .findViewById(R.id.autograph);
+        Spinner conditionSpinner = (Spinner) cardDetails
+                .findViewById(R.id.condition);
         EditText brandText = (EditText) cardDetails
                 .findViewById(R.id.brand_text);
         EditText yearText = (EditText) cardDetails.findViewById(R.id.year_text);
@@ -324,6 +342,10 @@ final public class BBCTTestUtil {
         Spinner playerPositionSpinner = (Spinner) cardDetails
                 .findViewById(R.id.player_position_text);
 
+        Assert.assertEquals(expectedCard.isAutographed(),
+                autographedCheckBox.isChecked());
+        Assert.assertEquals(expectedCard.getCondition(),
+                conditionSpinner.getSelectedItem());
         Assert.assertEquals(expectedCard.getBrand(), brandText.getText()
                 .toString());
         Assert.assertEquals(expectedCard.getYear(),
@@ -575,6 +597,14 @@ final public class BBCTTestUtil {
      * .
      */
     public enum EditTexts {
+        /**
+         * Input the autographed state.
+         */
+        AUTOGRAPHED,
+        /**
+         * Input the card condition.
+         */
+        CONDITION,
         /**
          * Input the card brand field.
          */

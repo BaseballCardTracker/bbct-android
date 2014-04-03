@@ -161,6 +161,8 @@ public class BaseballCardDetails extends ActionBarActivity {
                 R.string.player_name_input_error, R.string.team_input_error };
         boolean validInput = true;
 
+        boolean autographed = this.autographCheckBox.isChecked();
+        String condition = (String) this.conditionSpinner.getSelectedItem();
         String playerPosition = (String) this.playerPositionSpinner
                 .getSelectedItem();
 
@@ -185,8 +187,9 @@ public class BaseballCardDetails extends ActionBarActivity {
             int count = Integer.parseInt(countStr);
             String team = this.teamText.getText().toString();
             String playerName = this.playerNameText.getText().toString();
-            return new BaseballCard(brand, year, number, (int) (value * 100),
-                    count, playerName, team, playerPosition);
+            return new BaseballCard(autographed, condition, brand, year,
+                    number, (int) (value * 100), count, playerName, team,
+                    playerPosition);
         } else {
             return null;
         }
@@ -228,6 +231,7 @@ public class BaseballCardDetails extends ActionBarActivity {
     }
 
     private void resetInput() {
+        this.autographCheckBox.setChecked(false);
         this.brandText.setText("");
         this.yearText.setText("");
         this.numberText.setText("");

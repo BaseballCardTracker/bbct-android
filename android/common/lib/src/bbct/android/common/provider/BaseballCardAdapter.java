@@ -142,6 +142,10 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     public BaseballCard getSelectedCard() {
         Cursor cursor = this.getCursor();
+        boolean autographed = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
+        String condition = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.CONDITION_COL_NAME));
         String brand = cursor.getString(cursor
                 .getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
         int year = cursor.getInt(cursor
@@ -159,8 +163,8 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
         String position = cursor.getString(cursor
                 .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
 
-        return new BaseballCard(brand, year, number, value, count, name, team,
-                position);
+        return new BaseballCard(autographed, condition, brand, year, number,
+                value, count, name, team, position);
     }
 
     private boolean[] selection;

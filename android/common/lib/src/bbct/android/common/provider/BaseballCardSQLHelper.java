@@ -87,7 +87,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                 + BaseballCardContract.PLAYER_NAME_COL_NAME + " TEXT, "
                 + BaseballCardContract.TEAM_COL_NAME + " TEXT, "
                 + BaseballCardContract.PLAYER_POSITION_COL_NAME + " TEXT,"
-                + BaseballCardContract.AUTOGRAPH_COL_NAME + " INTEGER,"
+                + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
                 + BaseballCardContract.CONDITION_COL_NAME + " TEXT,"
                 + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", "
                 + BaseballCardContract.YEAR_COL_NAME + ", "
@@ -107,7 +107,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
         if (oldVersion < AUTO_AND_CONDITION_SCHEMA) {
             String sqlUpgrade = "ALTER TABLE "
-                    + BaseballCardContract.AUTOGRAPH_COL_NAME + " INTEGER,"
+                    + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
                     + BaseballCardContract.CONDITION_COL_NAME + " TEXT";
             db.execSQL(sqlUpgrade);
         }
@@ -154,6 +154,10 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      *         given {@link Cursor}.
      */
     public BaseballCard getBaseballCardFromCursor(Cursor cursor) {
+        boolean autographed = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
+        String condition = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.CONDITION_COL_NAME));
         String brand = cursor.getString(cursor
                 .getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
         int year = cursor.getInt(cursor
@@ -171,8 +175,8 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         String position = cursor.getString(cursor
                 .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
 
-        return new BaseballCard(brand, year, number, value, count, name, team,
-                position);
+        return new BaseballCard(autographed, condition, brand, year, number,
+                value, count, name, team, position);
     }
 
     /**
