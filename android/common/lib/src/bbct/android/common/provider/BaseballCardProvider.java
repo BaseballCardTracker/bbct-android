@@ -19,18 +19,40 @@
 package bbct.android.common.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.exception.SQLHelperCreationException;
+import java.util.Arrays;
 
 /**
- *
+ * {@link ContentProvider} for baseball card data.
  */
 public class BaseballCardProvider extends ContentProvider {
+
+    protected static final int ALL_CARDS = 1;
+    protected static final int CARD_ID = 2;
+    protected static final int DISTINCT = 3;
+
+    public static final UriMatcher uriMatcher = new UriMatcher(
+            UriMatcher.NO_MATCH);
+
+    static {
+        uriMatcher.addURI(BaseballCardContract.AUTHORITY,
+                BaseballCardContract.TABLE_NAME, ALL_CARDS);
+        uriMatcher.addURI(BaseballCardContract.AUTHORITY,
+                BaseballCardContract.TABLE_NAME + "/#", CARD_ID);
+        uriMatcher.addURI(BaseballCardContract.AUTHORITY,
+                BaseballCardContract.TABLE_NAME + "/distinct", DISTINCT);
+    }
 
     @Override
     public boolean onCreate() {
@@ -42,58 +64,185 @@ public class BaseballCardProvider extends ContentProvider {
             return true;
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
-            Toast.makeText(this.getContext(), R.string.database_error, Toast.LENGTH_LONG).show();
+            Toast.makeText(this.getContext(), R.string.database_error,
+                    Toast.LENGTH_LONG).show();
             Log.e(TAG, ex.getMessage(), ex);
             return false;
         }
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection,
+            String[] selectionArgs, String sortOrder) {
         Log.d(TAG, "query()");
+        Log.d(TAG, "  uri=" + uri);
+        Log.d(TAG, "  projection=" + Arrays.toString(projection));
+        Log.d(TAG, "  selection=" + selection);
+        Log.d(TAG, "  selectionArgs=" + Arrays.toString(selectionArgs));
+        Log.d(TAG, "  sortOrder=" + sortOrder);
 
-        if (uri.equals(BaseballCardContract.CONTENT_URI)) {
-            return this.sqlHelper.getReadableDatabase().query(BaseballCardContract.TABLE_NAME, projection, selection, selectionArgs, sortOrder, null, null);
-        } else {
-            String errorFormat = this.getContext().getString(R.string.invalid_uri_error);
-            String error = String.format(errorFormat, uri.toString());
-            throw new IllegalArgumentException(error);
+        Cursor cursor = null;
+        SQLiteDatabase db = this.sqlHelper.getReadableDatabase();
+
+        switch (uriMatcher.match(uri)) {
+            case DISTINCT:
+                if (projection[0] != BaseballCardContract.ID_COL_NAME) {
+                    throw new SQLException("First column in the projection must be '_id'");
+                }
+
+                // Assume projection[1] == the "distinct" column
+                cursor = db.query(true, BaseballCardContract.TABLE_NAME,
+                        projection, selection, selectionArgs, projection[1],
+                        null, sortOrder, null);
+                break;
+
+            case ALL_CARDS:
+                cursor = db.query(BaseballCardContract.TABLE_NAME, projection,
+                        selection, selectionArgs, null, null, sortOrder, null);
+                break;
+
+            case CARD_ID:
+                String where = this.getWhereWithId(selection);
+                long id = ContentUris.parseId(uri);
+                String[] whereArgs = this.getWhereArgsWithId(selectionArgs, id);
+                cursor = db.query(BaseballCardContract.TABLE_NAME, projection,
+                        where, whereArgs, null, null, sortOrder);
+                break;
+
+            default:
+                String errorFormat = this.getContext().getString(
+                        R.string.invalid_uri_error);
+                String error = String.format(errorFormat, uri.toString());
+                throw new IllegalArgumentException(error);
         }
+
+        cursor.setNotificationUri(this.getContext().getContentResolver(), uri);
+        return cursor;
     }
 
     @Override
     public String getType(Uri uri) {
-        if (uri.equals(BaseballCardContract.CONTENT_URI)) {
-            return BaseballCardContract.BASEBALL_CARD_LIST_MIME_TYPE;
-        }
+        switch (uriMatcher.match(uri)) {
+            case ALL_CARDS:
+            case DISTINCT:
+                return BaseballCardContract.BASEBALL_CARD_LIST_MIME_TYPE;
 
-        return null;
+            case CARD_ID:
+                return BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE;
+
+            default:
+                String errorFormat = this.getContext().getString(
+                        R.string.invalid_uri_error);
+                String error = String.format(errorFormat, uri.toString());
+                throw new IllegalArgumentException(error);
+        }
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
-        if (uri.equals(BaseballCardContract.CONTENT_URI)) {
-            long row = this.sqlHelper.getWritableDatabase().insert(BaseballCardContract.TABLE_NAME, null, values);
+        if (uriMatcher.match(uri) != ALL_CARDS) {
+            String errorFormat = this.getContext().getString(
+                    R.string.invalid_uri_error);
+            String error = String.format(errorFormat, uri.toString());
+            throw new IllegalArgumentException(error);
+        }
 
-            if (row != -1) {
-                return uri.buildUpon().appendPath(Long.toString(row)).build();
-            } else {
-                return null;
+        long row = this.sqlHelper.getWritableDatabase().insert(
+                BaseballCardContract.TABLE_NAME, null, values);
+
+        if (row > 0) {
+            Uri newUri = ContentUris.withAppendedId(uri, row);
+            this.getContext().getContentResolver().notifyChange(newUri, null);
+            return newUri;
+        }
+
+        throw new SQLException("Failed to insert row into " + uri);
+    }
+
+    @Override
+    public int delete(Uri uri, String selection, String[] selectionArgs) {
+        int affected = 0;
+        SQLiteDatabase db = this.sqlHelper.getWritableDatabase();
+
+        switch (uriMatcher.match(uri)) {
+            case ALL_CARDS:
+                affected = db.delete(BaseballCardContract.TABLE_NAME,
+                        selection, selectionArgs);
+                break;
+
+            case CARD_ID:
+                String where = this.getWhereWithId(selection);
+                long id = ContentUris.parseId(uri);
+                String[] whereArgs = this.getWhereArgsWithId(selectionArgs, id);
+                affected = db.delete(BaseballCardContract.TABLE_NAME, where,
+                        whereArgs);
+                break;
+
+            default:
+                String errorFormat = this.getContext().getString(
+                        R.string.invalid_uri_error);
+                String error = String.format(errorFormat, uri.toString());
+                throw new IllegalArgumentException(error);
+        }
+
+        this.getContext().getContentResolver().notifyChange(uri, null);
+        return affected;
+    }
+
+    @Override
+    public int update(Uri uri, ContentValues values, String selection,
+            String[] selectionArgs) {
+        SQLiteDatabase db = this.sqlHelper.getWritableDatabase();
+
+        int affected = 0;
+
+        switch (uriMatcher.match(uri)) {
+            case ALL_CARDS:
+                affected = db.update(BaseballCardContract.TABLE_NAME, values,
+                        selection, selectionArgs);
+                break;
+
+            case CARD_ID:
+                String where = this.getWhereWithId(selection);
+                long id = ContentUris.parseId(uri);
+                String[] whereArgs = this.getWhereArgsWithId(selectionArgs, id);
+                affected = db.update(BaseballCardContract.TABLE_NAME, values,
+                        where, whereArgs);
+                break;
+
+            default:
+                String errorFormat = this.getContext().getString(
+                        R.string.invalid_uri_error);
+                String error = String.format(errorFormat, uri.toString());
+                throw new IllegalArgumentException(error);
+        }
+
+        this.getContext().getContentResolver().notifyChange(uri, null);
+        return affected;
+    }
+
+    private String getWhereWithId(String selection) {
+        String idSelection = BaseballCardContract.ID_COL_NAME + " = ?";
+        return TextUtils.isEmpty(selection) ? idSelection : idSelection
+                + " AND (" + selection + ")";
+
+    }
+
+    private String[] getWhereArgsWithId(String[] selectionArgs, long id) {
+        int argCount = selectionArgs == null ? 1 : selectionArgs.length + 1;
+        String[] whereArgs = new String[argCount];
+        whereArgs[0] = Long.toString(id);
+
+        if (selectionArgs != null) {
+            for (int i = 0; i < selectionArgs.length; ++i) {
+                whereArgs[i + 1] = selectionArgs[i];
             }
         }
 
-        return null;
+        return whereArgs;
     }
 
-    @Override
-    public int delete(Uri uri, String string, String[] strings) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public int update(Uri uri, ContentValues cv, String string, String[] strings) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
     private BaseballCardSQLHelper sqlHelper = null;
     private static final String TAG = BaseballCardProvider.class.getName();
+
 }

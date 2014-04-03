@@ -19,13 +19,10 @@
 package bbct.android.common.provider;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Bundle;
 import android.util.Log;
-import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,28 +105,13 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Insert baseball card data into a SQLite database.
-     *
-     * @param card
-     *            The baseball card data to insert into the database.
-     * @return The row ID of the newly inserted row, or -1 if an error occurred.
-     */
-    public long insertBaseballCard(BaseballCard card) {
-        return this.getWritableDatabase().insert(
-                BaseballCardContract.TABLE_NAME, null,
-                BaseballCardContract.getContentValues(card));
-    }
-
-    /**
      * Insert data for multiple baseball cards into a SQLite database.
      *
      * @param cards
      *            The list of cards to insert into the database.
      */
-    public void insertAllBaseballCards(List<BaseballCard> cards) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        db.beginTransactionNonExclusive();
+    public void insertAllBaseballCards(SQLiteDatabase db, List<BaseballCard> cards) {
+        db.beginTransaction();
         try {
             for (BaseballCard card : cards) {
                 db.insert(BaseballCardContract.TABLE_NAME, null,
@@ -139,116 +121,6 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
         }
-    }
-
-    /**
-     * Update the database with edited card data.
-     *
-     * @param oldCard
-     *            The old card data.
-     * @param newCard
-     *            The new card data.
-     * @return The number of rows updated, either 0 or 1.
-     */
-    public int updateBaseballCard(BaseballCard oldCard, BaseballCard newCard) {
-        String[] args = { oldCard.getBrand(),
-                Integer.toString(oldCard.getYear()),
-                Integer.toString(oldCard.getNumber()) };
-        String where = BaseballCardContract.BRAND_COL_NAME + "=? AND "
-                + BaseballCardContract.YEAR_COL_NAME + "=? AND "
-                + BaseballCardContract.NUMBER_COL_NAME + "=?";
-
-        return this.getWritableDatabase().update(
-                BaseballCardContract.TABLE_NAME,
-                BaseballCardContract.getContentValues(newCard), where, args);
-    }
-
-    /**
-     * Removes data related with {@link BaseballCard} from the database.
-     *
-     * @param card
-     *            - the card to remove from database
-     * @return - see {@link SQLiteDatabase#delete}
-     */
-    public int removeBaseballCard(BaseballCard card) {
-        String[] args = { Integer.toString(card.getYear()),
-                Integer.toString(card.getNumber()), card.getPlayerName() };
-        String where = BaseballCardContract.YEAR_COL_NAME + "=? AND "
-                + BaseballCardContract.NUMBER_COL_NAME + "=? AND "
-                + BaseballCardContract.PLAYER_NAME_COL_NAME + "=?";
-
-        return this.getWritableDatabase().delete(
-                BaseballCardContract.TABLE_NAME, where, args);
-    }
-
-    /**
-     * Get the most recently opened {@link Cursor}.
-     *
-     * @return The most recently opened {@link Cursor}.
-     */
-    public Cursor getCursor() {
-        Log.d(TAG, "getCursor()");
-
-        if (this.currCursor == null) {
-            this.clearFilter();
-        }
-
-        return this.currCursor;
-    }
-
-    /**
-     * Open a {@link Cursor} with no filter.
-     */
-    public void clearFilter() {
-        Log.d(TAG, "clearFilter()");
-
-        this.currCursor = this.getWritableDatabase().query(
-                BaseballCardContract.TABLE_NAME, null, null, null, null, null,
-                null);
-    }
-
-    /**
-     * Constructs a query from multiple filter parameters and executes it,
-     * updating the {@link Cursor}.
-     * @param context - the {@link Context} from which this method was called
-     * @param params - parameters which should be added to the query
-     */
-    public void applyFilter(Context context, Bundle params) {
-        Log.d(TAG, "applyFilter()");
-
-        Resources res = context.getResources();
-        StringBuilder sb = new StringBuilder();
-        String[] args = new String[params.size()];
-
-        int numQueries = 0;
-        for (String key : params.keySet()) {
-            String value = params.getString(key);
-
-            if (key.equals(res.getString(R.string.year_extra))) {
-                sb.append(BaseballCardContract.YEAR_COL_NAME);
-            } else if (key.equals(res.getString(R.string.brand_extra))) {
-                sb.append(BaseballCardContract.BRAND_COL_NAME);
-            } else if (key.equals(res.getString(R.string.number_extra))) {
-                sb.append(BaseballCardContract.NUMBER_COL_NAME);
-            } else if (key.equals(res.getString(R.string.player_name_extra))) {
-                sb.append(BaseballCardContract.PLAYER_NAME_COL_NAME);
-            } else {
-                sb.append(BaseballCardContract.TEAM_COL_NAME);
-            }
-
-            args[numQueries] = value;
-            numQueries++;
-
-            if (numQueries < args.length) {
-                sb.append(" = ?  AND ");
-            } else {
-                sb.append(" = ?");
-            }
-        }
-
-        this.currCursor = this.getWritableDatabase().query(
-                BaseballCardContract.TABLE_NAME, null, sb.toString(), args,
-                null, null, null);
     }
 
     /**
@@ -316,27 +188,6 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         return cards;
     }
 
-    /**
-     * Get the distinct values from the given column matching the given
-     * constraint.
-     *
-     * @param colName
-     *            The name of the column to query.
-     * @param constraint
-     *            An optional {@link String} to match against. May be
-     *            {@code null}.
-     * @return A {@link Cursor} containing the queried values.
-     */
-    public Cursor getDistinctValues(String colName, String constraint) {
-        String[] cols = { BaseballCardContract.ID_COL_NAME, colName };
-        String filter = (constraint == null) ? null : colName + " LIKE ?";
-        String[] args = { constraint.trim() + '%' };
-
-        return this.getWritableDatabase().query(
-                BaseballCardContract.TABLE_NAME, cols, filter, args, colName,
-                null, null, null);
-    }
-
     private static final String TAG = BaseballCardSQLHelper.class.getName();
-    private Cursor currCursor = null;
+    private final Cursor currCursor = null;
 }

@@ -19,16 +19,10 @@
 package bbct.android.common.provider.test;
 
 import android.app.Instrumentation;
-import android.content.Context;
-import android.content.res.Resources;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
-import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
@@ -95,153 +89,6 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
         this.sqlHelper.onUpgrade(this.dbUtil.getDatabase(), oldVersion,
                 newVersion);
         Assert.fail("Check that the database is not modified.");
-    }
-
-    /**
-     * Test for {@link BaseballCardSQLHelper#insertBaseballCard}.
-     */
-    public void testInsertBaseballCard() {
-        this.sqlHelper.insertBaseballCard(this.card);
-        Assert.assertTrue(this.dbUtil.containsBaseballCard(this.card));
-    }
-
-    /**
-     * Test for {@link BaseballCardSQLHelper#updateBaseballCard}.
-     */
-    public void testUpdateBaseballCard() {
-        String brand = this.card.getBrand();
-        int year = this.card.getYear();
-        int number = this.card.getNumber();
-        int newValue = this.card.getValue() + 150;
-        int newCount = this.card.getCount() + 1;
-        String name = this.card.getPlayerName();
-        String team = this.card.getTeam();
-        String position = this.card.getPlayerPosition();
-        BaseballCard newCard = new BaseballCard(brand, year, number, newValue,
-                newCount, name, team, position);
-        this.sqlHelper.updateBaseballCard(this.card, newCard);
-
-        Assert.assertFalse(this.dbUtil.containsBaseballCard(this.card));
-        Assert.assertTrue(this.dbUtil.containsBaseballCard(newCard));
-    }
-
-    /**
-     * Test for {@link BaseballCardSQLHelper#removeBaseballCard}.
-     */
-    public void testRemoveBaseballCard() {
-        this.sqlHelper.insertBaseballCard(this.card);
-        Assert.assertTrue(this.dbUtil.containsBaseballCard(this.card));
-
-        this.sqlHelper.removeBaseballCard(this.card);
-        Assert.assertFalse(this.dbUtil.containsBaseballCard(this.card));
-    }
-
-    /**
-     * Test for {@link BaseballCardSQLHelper#getCursor}.
-     */
-    public void testGetCursor() {
-        Cursor expResult = null;
-        Cursor result = this.sqlHelper.getCursor();
-        Assert.assertNotNull(result);
-        Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to
-        // Assert.fail.
-        Assert.fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test for {@link BaseballCardSQLHelper#clearFilter}.
-     */
-    public void testClearFilter() {
-        this.testFilterCursorByYear();
-        this.sqlHelper.clearFilter();
-        // TODO review the generated test code and remove the default call to
-        // Assert.fail.
-        Assert.fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
-     * correctly filters the {@link Cursor} by year.
-     */
-    public void testFilterCursorByYear() {
-        int year = 1993;
-        Context context = this.inst.getTargetContext();
-        Resources res = context.getResources();
-
-        Bundle bundle = new Bundle();
-        bundle.putString(res.getString(R.string.year_extra), year + "");
-        this.sqlHelper.applyFilter(context, bundle);
-
-        Cursor cursor = this.sqlHelper.getCursor();
-        while (cursor.moveToNext()) {
-            Assert.assertEquals(year, cursor.getInt(cursor
-                    .getColumnIndex(BaseballCardContract.YEAR_COL_NAME)));
-        }
-    }
-
-    /**
-     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
-     * correctly filters the {@link Cursor} by number.
-     */
-    public void testFilterCursorByNumber() {
-        int number = 201;
-        Context context = this.inst.getTargetContext();
-        Resources res = context.getResources();
-
-        Bundle bundle = new Bundle();
-        bundle.putString(res.getString(R.string.number_extra), number + "");
-        this.sqlHelper.applyFilter(context, bundle);
-
-        Cursor cursor = this.sqlHelper.getCursor();
-        while (cursor.moveToNext()) {
-            Assert.assertEquals(number, cursor.getInt(cursor
-                    .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME)));
-        }
-    }
-
-    /**
-     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
-     * correctly filters the {@link Cursor} by number and year.
-     */
-    public void testFilterCursorByYearAndNumber() {
-        int year = 1985;
-        int number = 201;
-        Context context = this.inst.getTargetContext();
-        Resources res = context.getResources();
-
-        Bundle bundle = new Bundle();
-        bundle.putString(res.getString(R.string.year_extra), year + "");
-        bundle.putString(res.getString(R.string.number_extra), number + "");
-        this.sqlHelper.applyFilter(context, bundle);
-
-        Cursor cursor = this.sqlHelper.getCursor();
-        while (cursor.moveToNext()) {
-            Assert.assertEquals(year, cursor.getInt(cursor
-                    .getColumnIndex(BaseballCardContract.YEAR_COL_NAME)));
-            Assert.assertEquals(number, cursor.getInt(cursor
-                    .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME)));
-        }
-    }
-
-    /**
-     * Test that {@link BaseballCardSQLHelper#buildAndExecuteQuery}
-     * correctly filters the {@link Cursor} by player name.
-     */
-    public void testFilterCursorByPlayerName() {
-        String playerName = "Tom Browning";
-        Context context = this.inst.getTargetContext();
-        Resources res = context.getResources();
-
-        Bundle bundle = new Bundle();
-        bundle.putString(res.getString(R.string.player_name_extra), playerName);
-        this.sqlHelper.applyFilter(context, bundle);
-
-        Cursor cursor = this.sqlHelper.getCursor();
-        while (cursor.moveToNext()) {
-            Assert.assertEquals(playerName, cursor.getInt(cursor
-                    .getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME)));
-        }
     }
 
     /**

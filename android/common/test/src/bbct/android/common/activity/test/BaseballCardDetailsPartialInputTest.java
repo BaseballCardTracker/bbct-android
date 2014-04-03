@@ -29,6 +29,7 @@ import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
+import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumSet;
@@ -101,6 +102,8 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         this.valueEditText = (EditText) this.activity.findViewById(R.id.value_text);
         this.playerNameEditText = (EditText) this.activity.findViewById(R.id.player_name_text);
         this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
+
+        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -114,7 +117,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         Log.d(TAG, "testPartialInput()");
         Log.d(TAG, "inputFieldsMask=" + this.inputFieldsMask);
 
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, this.inputFieldsMask);
+        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card, this.inputFieldsMask);
         this.runTestOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -157,6 +160,8 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
 //        Assert.assertEquals(focusEditText, this.activity.getCurrentFocus());
 //        Assert.assertTrue(focusEditText.hasFocus());
     }
+
+    private Solo solo = null;
     private Activity activity = null;
     private Instrumentation inst = null;
     private Button saveButton = null;

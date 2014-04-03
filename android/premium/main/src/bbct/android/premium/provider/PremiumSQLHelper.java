@@ -16,18 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.premium;
+package bbct.android.premium.provider;
 
-import android.app.AlertDialog;
+import bbct.android.premium.R;
+import bbct.android.premium.R.string;
+
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import java.util.List;
@@ -37,17 +38,17 @@ import java.util.List;
  * {@link bbct.android.common.provider.BaseballCardSQLHelper#onConfigure(SQLiteDatabase)}
  * in order to import data from the Lite edition.
  */
-public class BaseballCardSQLHelper extends
+public class PremiumSQLHelper extends
         bbct.android.common.provider.BaseballCardSQLHelper {
 
     /**
-     * Create a {@link BaseballCardSQLHelper} with the given {@link Context}.
+     * Create a {@link PremiumSQLHelper} with the given {@link Context}.
      *
      * @param context
      *            The Android {@link Context} for this
-     *            {@link BaseballCardSQLHelper}.
+     *            {@link PremiumSQLHelper}.
      */
-    public BaseballCardSQLHelper(Context context) {
+    public PremiumSQLHelper(Context context) {
         super(context);
 
         Log.d(TAG, "ctor");
@@ -62,57 +63,37 @@ public class BaseballCardSQLHelper extends
         Log.d(TAG, "onCreate()");
 
         boolean canGetData = true;
-        String errorMessageEnding = null;
 
         try {
             PackageInfo liteInfo = this.context.getPackageManager()
                     .getPackageInfo(LITE_PACKAGE, SCHEMA_VERSION);
-            canGetData = liteInfo.versionCode >= MIN_LITE_VERSION;
-            errorMessageEnding = this.context
-                    .getString(R.string.lite_update_message);
+            if (liteInfo.versionCode < MIN_LITE_VERSION) {
+                String errorMessage = this.context
+                        .getString(R.string.lite_update_message);
+                throw new SQLException(errorMessage);
+            }
         } catch (NameNotFoundException ex) {
-            canGetData = false;
-            errorMessageEnding = this.context
-                    .getString(R.string.lite_not_installed_message);
             Log.i(TAG, LITE_PACKAGE + " package not found", ex);
         }
 
         if (canGetData) {
             ContentResolver resolver = this.context.getContentResolver();
-            Cursor results = resolver.query(BaseballCardContract.CONTENT_URI,
+            Cursor results = resolver.query(BaseballCardContract.LITE_URI,
                     BaseballCardContract.PROJECTION, null, null, null);
 
             if (results != null) {
-                Toast.makeText(this.context, R.string.import_message,
-                        Toast.LENGTH_LONG).show();
-
                 List<BaseballCard> cards = this
                         .getAllBaseballCardsFromCursor(results);
-                this.insertAllBaseballCards(cards);
+                this.insertAllBaseballCards(db, cards);
             } else {
-                canGetData = false;
-                errorMessageEnding = "";
+                String errorMessage = this.context.getString(R.string.import_error);
+                throw new SQLException(errorMessage);
             }
         }
 
-        if (!canGetData) {
-            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(
-                    this.context);
-            String errorMessage = this.context.getString(R.string.import_error,
-                    errorMessageEnding);
-            dialogBuilder.setMessage(errorMessage);
-            dialogBuilder.setPositiveButton(R.string.ok_button,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-
-            dialogBuilder.create().show();
-        }
     }
 
-    private static final String TAG = BaseballCardSQLHelper.class.getName();
+    private static final String TAG = PremiumSQLHelper.class.getName();
     private static final String LITE_PACKAGE = "bbct.android";
     private static final int MIN_LITE_VERSION = 3;
     private Context context = null;

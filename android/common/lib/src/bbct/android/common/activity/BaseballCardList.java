@@ -18,8 +18,11 @@
  */
 package bbct.android.common.activity;
 
+import android.content.ContentUris;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -35,11 +38,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.exception.SQLHelperCreationException;
+import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
-import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.android.common.provider.CheckedCursorAdapter;
-import bbct.android.common.provider.SQLHelperFactory;
 
 /**
  * Displays a list of all baseball cards stored in the database.
@@ -56,64 +56,47 @@ public class BaseballCardList extends ActionBarActivity {
         Log.d(TAG, "onCreate()");
         Log.d(TAG, "savedInstanceState=" + savedInstanceState);
 
-        try {
-            super.onCreate(savedInstanceState);
-            this.sqlHelper = SQLHelperFactory.getSQLHelper(this);
-            this.savedSelection = null;
+        super.onCreate(savedInstanceState);
+        this.savedSelection = null;
 
-            this.setContentView(R.layout.card_list);
-            this.filterActive = false;
-            if (savedInstanceState != null) {
-                this.filterActive = savedInstanceState.getBoolean(this
-                        .getString(R.string.filter_status_extra));
-                this.filterParams = savedInstanceState.getBundle(this
-                        .getString(R.string.filter_params_extra));
-                this.savedSelection = savedInstanceState.getBooleanArray(this
-                        .getString(R.string.selection_extra));
-            }
-
-            this.emptyList = (TextView) this.findViewById(android.R.id.empty);
-            if (!this.filterActive) {
-                this.emptyList.setText(R.string.start);
-            } else {
-                this.emptyList.setText(R.string.empty_list);
-            }
-
-            ListView listView = (ListView) this.findViewById(android.R.id.list);
-            this.headerView = View.inflate(this, R.layout.list_header, null);
-            ((CheckedTextView) this.headerView.findViewById(R.id.checkmark))
-                    .setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            CheckedTextView ctv = (CheckedTextView) v
-                                    .findViewById(R.id.checkmark);
-                            ctv.toggle();
-                            BaseballCardList.this.adapter.toggleAll(ctv
-                                    .isChecked());
-                        }
-                    });
-            listView.addHeaderView(this.headerView);
-            listView.setEmptyView(this.emptyList);
-            listView.setOnItemClickListener(this.onCardClick);
-
-            this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
-                    ROW_PROJECTION, ROW_TEXT_VIEWS);
-        } catch (SQLHelperCreationException ex) {
-            // TODO Show a dialog and exit app
-            Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG)
-                    .show();
-            Log.e(TAG, ex.getMessage(), ex);
+        this.setContentView(R.layout.card_list);
+        this.filterActive = false;
+        if (savedInstanceState != null) {
+            this.filterActive = savedInstanceState.getBoolean(this
+                    .getString(R.string.filter_status_extra));
+            this.filterParams = savedInstanceState.getBundle(this
+                    .getString(R.string.filter_params_extra));
+            this.savedSelection = savedInstanceState.getBooleanArray(this
+                    .getString(R.string.selection_extra));
         }
-    }
 
-    /**
-     * Close the connection to the database when the activity is destroyed.
-     */
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+        this.emptyList = (TextView) this.findViewById(android.R.id.empty);
+        if (!this.filterActive) {
+            this.emptyList.setText(R.string.start);
+        } else {
+            this.emptyList.setText(R.string.empty_list);
+        }
 
-        this.sqlHelper.close();
+        ListView listView = (ListView) this.findViewById(android.R.id.list);
+        this.headerView = View.inflate(this, R.layout.list_header, null);
+        ((CheckedTextView) this.headerView.findViewById(R.id.checkmark))
+                .setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CheckedTextView ctv = (CheckedTextView) v
+                                .findViewById(R.id.checkmark);
+                        ctv.toggle();
+                        BaseballCardList.this.adapter.toggleAll(ctv.isChecked());
+                    }
+                });
+        listView.addHeaderView(this.headerView);
+        listView.setEmptyView(this.emptyList);
+        listView.setOnItemClickListener(this.onCardClick);
+
+        this.adapter = new BaseballCardAdapter(this, R.layout.row, null,
+                ROW_PROJECTION, ROW_TEXT_VIEWS);
+
+        this.uri = BaseballCardContract.getUri(this.getPackageName());
     }
 
     /**
@@ -133,8 +116,7 @@ public class BaseballCardList extends ActionBarActivity {
     public void onResume() {
         super.onResume();
 
-        this.updateFilter();
-        this.swapCursor();
+        this.applyFilter();
 
         // restore default header state
         CheckedTextView headerCheck = (CheckedTextView) this.headerView
@@ -247,14 +229,12 @@ public class BaseballCardList extends ActionBarActivity {
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
             this.filterActive = false;
+            this.filterParams = null;
             this.emptyList.setText(R.string.start);
             this.savedSelection = null;
-            this.updateFilter();
-            this.swapCursor();
+            this.applyFilter();
 
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-                this.invalidateOptionsMenu();
-            }
+            this.invalidateOptionsMenu();
 
             return true;
         } else if (itemId == R.id.delete_menu) {
@@ -263,9 +243,9 @@ public class BaseballCardList extends ActionBarActivity {
             for (int i = 0; i < selected.length; i++) {
                 if (selected[i]) {
                     selected[i] = false;
-                    BaseballCard card = this.getBaseballCard(this.adapter
-                            .getView(i, null, null));
-                    this.sqlHelper.removeBaseballCard(card);
+                    long id = this.adapter.getItemId(i);
+                    Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
+                    this.getContentResolver().delete(deleteUri, null, null);
                 }
             }
 
@@ -273,8 +253,7 @@ public class BaseballCardList extends ActionBarActivity {
                     Toast.LENGTH_LONG).show();
 
             this.adapter.setSelection(selected);
-            this.updateFilter();
-            this.swapCursor();
+            this.applyFilter();
             return true;
 
         } else if (itemId == R.id.about_menu) {
@@ -332,8 +311,7 @@ public class BaseballCardList extends ActionBarActivity {
 
             Intent intent = new Intent(Intent.ACTION_EDIT,
                     BaseballCardDetails.DETAILS_URI);
-            BaseballCard card = BaseballCardList.this.sqlHelper
-                    .getBaseballCardFromCursor();
+            BaseballCard card = BaseballCardList.this.adapter.getSelectedCard();
 
             intent.putExtra(BaseballCardList.this
                     .getString(R.string.baseball_card_extra), card);
@@ -364,12 +342,9 @@ public class BaseballCardList extends ActionBarActivity {
                 this.filterParams = data.getExtras();
                 this.emptyList.setText(R.string.empty_list);
 
-                this.updateFilter();
-                this.swapCursor();
+                this.applyFilter();
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-                    this.invalidateOptionsMenu();
-                }
+                this.invalidateOptionsMenu();
             }
         } else {
             Log.e(TAG, "onActivityResult(): Invalid result code: "
@@ -378,47 +353,59 @@ public class BaseballCardList extends ActionBarActivity {
         }
     }
 
-    /**
-     * Obtains {@link BaseballCard} from {@link View}. The returned
-     * {@link BaseballCard} only includes partial data - data required to delete
-     * a card.
-     *
-     * @param v
-     *            - {@link View} object to obtain the card from
-     * @return the {@link BaseballCard} containing year, brand, number and
-     *         playerName.
-     */
-    private BaseballCard getBaseballCard(View v) {
-        TextView yearCol = (TextView) v.findViewById(R.id.year_text_view);
-        int year = Integer.parseInt(yearCol.getText().toString());
+    private void applyFilter() {
+        Log.d(TAG, "applyFilter()");
 
-        TextView numCol = (TextView) v.findViewById(R.id.number_text_view);
-        int number = Integer.parseInt(numCol.getText().toString());
+        Resources res = this.getResources();
+        StringBuilder sb = null;
+        String[] args = null;
 
-        TextView nameCol = (TextView) v
-                .findViewById(R.id.player_name_text_view);
-        String player = nameCol.getText().toString();
+        if (this.filterParams != null) {
+            sb = new StringBuilder();
+            args = new String[this.filterParams.size()];
 
-        return new BaseballCard("", year, number, 0, 0, player, "", "");
-    }
+            int numQueries = 0;
+            for (String key : this.filterParams.keySet()) {
+                String value = this.filterParams.getString(key);
 
-    private void updateFilter() {
-        if (this.filterActive) {
-            this.sqlHelper.applyFilter(this, this.filterParams);
-        } else {
-            this.sqlHelper.clearFilter();
+                if (key.equals(res.getString(R.string.year_extra))) {
+                    sb.append(BaseballCardContract.YEAR_SELECTION);
+                } else if (key.equals(res.getString(R.string.brand_extra))) {
+                    sb.append(BaseballCardContract.BRAND_SELECTION);
+                } else if (key.equals(res.getString(R.string.number_extra))) {
+                    sb.append(BaseballCardContract.NUMBER_SELECTION);
+                } else if (key
+                        .equals(res.getString(R.string.player_name_extra))) {
+                    sb.append(BaseballCardContract.PLAYER_NAME_SELECTION);
+                } else {
+                    sb.append(BaseballCardContract.TEAM_SELECTION);
+                }
+
+                args[numQueries] = value;
+                numQueries++;
+
+                if (numQueries < args.length) {
+                    sb.append(" AND ");
+                }
+            }
         }
+
+        Cursor cursor = this.getContentResolver().query(this.uri,
+                BaseballCardContract.PROJECTION,
+                sb == null ? null : sb.toString(), args, null);
+        this.swapCursor(cursor);
     }
 
     @SuppressWarnings("deprecation")
-    private void swapCursor() {
-        Cursor newCursor = this.sqlHelper.getCursor();
+    private void swapCursor(Cursor newCursor) {
         Cursor oldCursor = this.adapter.getCursor();
-
-        this.adapter.setSelection(new boolean[newCursor.getCount()]);
         this.stopManagingCursor(oldCursor);
-        this.startManagingCursor(newCursor);
-        this.adapter.changeCursor(newCursor);
+
+        if (newCursor != null) {
+            this.adapter.setSelection(new boolean[newCursor.getCount()]);
+            this.startManagingCursor(newCursor);
+            this.adapter.changeCursor(newCursor);
+        }
 
         if (oldCursor != null) {
             oldCursor.close();
@@ -439,8 +426,8 @@ public class BaseballCardList extends ActionBarActivity {
     private static final String TAG = BaseballCardList.class.getName();
     private boolean[] savedSelection;
     TextView emptyList = null;
-    private BaseballCardSQLHelper sqlHelper = null;
-    private CheckedCursorAdapter adapter = null;
+    private BaseballCardAdapter adapter = null;
+    private Uri uri = null;
     private boolean filterActive = false;
     private Bundle filterParams = null;
     private View headerView;

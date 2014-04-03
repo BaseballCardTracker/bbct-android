@@ -88,7 +88,7 @@ public class BaseballCardListWithoutDataTest extends
      */
     @Override
     public void tearDown() throws Exception {
-        this.dbUtil.deleteDatabase();
+        this.dbUtil.clearDatabase();
         this.cardInput.close();
         this.solo.finishOpenedActivities();
 
@@ -188,9 +188,9 @@ public class BaseballCardListWithoutDataTest extends
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
-        BBCTTestUtil.addCard(this, cardDetails, card);
+        BBCTTestUtil.addCard(this.solo, card);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        BBCTTestUtil.clickCardDetailsCancel(this.solo, cardDetails);
+        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
 
@@ -212,16 +212,16 @@ public class BaseballCardListWithoutDataTest extends
      *             thread runs.
      */
     public void testAddMultipleCards() throws IOException, Throwable {
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
-                this.activity, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, this.activity, R.id.add_menu,
+                BaseballCardDetails.class);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
 
         for (BaseballCard card : cards) {
-            BBCTTestUtil.addCard(this, cardDetails, card);
+            BBCTTestUtil.addCard(this.solo, card);
             BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
-        BBCTTestUtil.clickCardDetailsCancel(this.solo, cardDetails);
+        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
         BBCTTestUtil.assertListViewContainsItems(this.inst, cards,
                 this.listView);
     }

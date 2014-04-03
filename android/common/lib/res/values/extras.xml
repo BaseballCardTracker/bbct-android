@@ -18,6 +18,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+
     <!-- Keys for extras stored in Bundle and Intent objects -->
     <string name="baseball_card_extra">baseball_card</string>
     <string name="filter_status_extra">filter_status</string>
@@ -28,5 +29,7 @@
     <string name="player_name_extra">player_name</string>
     <string name="team_extra">team</string>
     <string name="selection_extra">selection</string>
+    <string name="card_id_extra">card_id</string>
     <string name="input_extra">input</string>
+
 </resources>

@@ -151,67 +151,14 @@ final public class BBCTTestUtil {
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public static void addCard(InstrumentationTestCase test,
-            Activity cardDetails, BaseballCard card) throws Throwable {
-        BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card);
-        BBCTTestUtil.clickCardDetailsSave(test, cardDetails);
+    public static void addCard(Solo solo, BaseballCard card) throws Throwable {
+        BBCTTestUtil.sendKeysToCardDetails(solo, card);
+        solo.clickOnButton("Save");
     }
 
     public static void waitForToast(Solo solo, String message) {
         Assert.assertTrue(solo.waitForDialogToOpen(TIME_OUT));
         Assert.assertTrue(solo.searchText(message));
-    }
-
-    /**
-     * Click the "Save" button on the given {@link BaseballCardDetails}
-     * activity. This is all wrapped into a helper method because the button
-     * click must be done on the UI thread while the assertion must not.
-     *
-     * @param test
-     *            The {@link InstrumentationTestCase} object performing the
-     *            test.
-     * @param cardDetails
-     *            The {@link BaseballCardDetails} activity being tested.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
-    public static void clickCardDetailsSave(InstrumentationTestCase test,
-            Activity cardDetails) throws Throwable {
-        final Button saveButton = (Button) cardDetails
-                .findViewById(R.id.save_button);
-
-        test.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(saveButton.performClick());
-            }
-        });
-    }
-
-    /**
-     * Click the "Done" button on the given {@link BaseballCardDetails} activity
-     * and assert that the activity is finishing. This is all wrapped into a
-     * helper method because the button click must be done on the UI thread
-     * while the assertion must not.
-     *
-     * @param test
-     *            The {@link InstrumentationTestCase} object performing the
-     *            test.
-     * @param cardDetails
-     *            The {@link BaseballCardDetails} activity being tested.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
-    public static void clickCardDetailsCancel(Solo solo, Activity cardDetails)
-            throws Throwable {
-        final Button doneButton = (Button) cardDetails
-                .findViewById(R.id.cancel_button);
-        solo.clickOnView(doneButton);
-        Assert.assertTrue(cardDetails.isFinishing());
     }
 
     /**
@@ -231,10 +178,9 @@ final public class BBCTTestUtil {
      * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      *      BaseballCard, Set)
      */
-    public static void sendKeysToCardDetails(InstrumentationTestCase test,
-            Activity cardDetails, BaseballCard card)
+    public static void sendKeysToCardDetails(Solo solo, BaseballCard card)
             throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card,
+        BBCTTestUtil.sendKeysToCardDetails(solo, card,
                 EnumSet.allOf(EditTexts.class));
     }
 
@@ -255,82 +201,74 @@ final public class BBCTTestUtil {
      * @throws InterruptedException
      *             If {@link Thread#sleep()} is interrupted.
      */
-    public static void sendKeysToCardDetails(InstrumentationTestCase test,
-            Activity cardDetails, BaseballCard card, Set<EditTexts> fieldFlags)
-            throws InterruptedException {
+    public static void sendKeysToCardDetails(Solo solo, BaseballCard card,
+            Set<EditTexts> fieldFlags) throws InterruptedException {
         Log.d(TAG, "sendKeysToCardDetails()");
 
-        Instrumentation inst = test.getInstrumentation();
-
+        AutoCompleteTextView brandText = (AutoCompleteTextView) solo
+                .getView(R.id.brand_text);
         if (fieldFlags.contains(EditTexts.BRAND)) {
-            AutoCompleteTextView brandText = (AutoCompleteTextView) cardDetails
-                    .findViewById(R.id.brand_text);
-            sendKeysToCurrFieldCardDetails(inst, brandText, card.getBrand());
+            solo.typeText(brandText, card.getBrand());
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+
+        Thread.sleep(50);
+        if (brandText.isPopupShowing()) {
+            solo.goBack();
+        }
 
         if (fieldFlags.contains(EditTexts.YEAR)) {
-            sendKeysToCurrFieldCardDetails(inst, null,
-                    Integer.toString(card.getYear()));
+            EditText yearText = (EditText) solo.getView(R.id.year_text);
+            solo.typeText(yearText, Integer.toString(card.getYear()));
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.NUMBER)) {
-            sendKeysToCurrFieldCardDetails(inst, null,
-                    Integer.toString(card.getNumber()));
+            EditText numberText = (EditText) solo.getView(R.id.number_text);
+            solo.typeText(numberText, Integer.toString(card.getNumber()));
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.VALUE)) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
-            sendKeysToCurrFieldCardDetails(inst, null, valueStr);
+            EditText valueText = (EditText) solo.getView(R.id.value_text);
+            solo.typeText(valueText, valueStr);
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.COUNT)) {
-            sendKeysToCurrFieldCardDetails(inst, null,
-                    Integer.toString(card.getCount()));
+            EditText countText = (EditText) solo.getView(R.id.count_text);
+            solo.typeText(countText, Integer.toString(card.getCount()));
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
+        AutoCompleteTextView playerNameText = (AutoCompleteTextView) solo
+                .getView(R.id.player_name_text);
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
-            AutoCompleteTextView playerNameText = (AutoCompleteTextView) cardDetails
-                    .findViewById(R.id.player_name_text);
-            sendKeysToCurrFieldCardDetails(inst, playerNameText,
-                    card.getPlayerName());
+            solo.typeText(playerNameText, card.getPlayerName());
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if (fieldFlags.contains(EditTexts.TEAM)) {
-            AutoCompleteTextView teamText = (AutoCompleteTextView) cardDetails
-                    .findViewById(R.id.team_text);
-            sendKeysToCurrFieldCardDetails(inst, teamText, card.getTeam());
+        Thread.sleep(50);
+        if (playerNameText.isPopupShowing()) {
+            solo.goBack();
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+
+        AutoCompleteTextView teamText = (AutoCompleteTextView) solo
+                .getView(R.id.team_text);
+        if (fieldFlags.contains(EditTexts.TEAM)) {
+            solo.typeText(teamText, card.getTeam());
+        }
+
+        Thread.sleep(50);
+        if (teamText.isPopupShowing()) {
+            solo.goBack();
+        }
 
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
-            Spinner playerPositionSpinner = (Spinner) cardDetails
-                    .findViewById(R.id.player_position_text);
+            Spinner playerPositionSpinner = (Spinner) solo
+                    .getView(R.id.player_position_text);
             @SuppressWarnings("unchecked")
             ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner
                     .getAdapter();
-            int newPos = playerPositionAdapter.getPosition(card
+            int newIndex = playerPositionAdapter.getPosition(card
                     .getPlayerPosition());
-            int oldPos = playerPositionSpinner.getSelectedItemPosition();
-            int move = newPos - oldPos;
-
-            Log.d(TAG, "newPos=" + newPos + ", oldPos=" + oldPos + ", move="
-                    + move);
-
-            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
-            Thread.sleep(500);
-            if (move > 0) {
-                test.sendRepeatedKeys(move, KeyEvent.KEYCODE_DPAD_DOWN);
-            } else {
-                test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
-            }
-            Thread.sleep(500);
-            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
+            int currIndex = playerPositionSpinner.getSelectedItemPosition();
+            solo.pressSpinnerItem(0, newIndex - currIndex);
         }
     }
 

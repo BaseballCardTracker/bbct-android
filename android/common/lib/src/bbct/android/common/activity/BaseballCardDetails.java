@@ -18,7 +18,11 @@
  */
 package bbct.android.common.activity;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -37,10 +41,7 @@ import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.exception.SQLHelperCreationException;
 import bbct.android.common.provider.BaseballCardContract;
-import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.android.common.provider.SQLHelperFactory;
 import bbct.android.common.provider.SingleColumnCursorAdapter;
 
 /**
@@ -111,6 +112,8 @@ public class BaseballCardDetails extends ActionBarActivity {
 
         if (this.oldCard != null) {
             this.isUpdating = true;
+            this.cardId = this.getIntent().getLongExtra(
+                    this.getString(R.string.card_id_extra), -1L);
             this.brandText.setText(this.oldCard.getBrand());
             this.yearText.setText(Integer.toString(this.oldCard.getYear()));
             this.numberText.setText(Integer.toString(this.oldCard.getNumber()));
@@ -127,6 +130,10 @@ public class BaseballCardDetails extends ActionBarActivity {
 
         ActionBar actionBar = this.getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        this.uri = BaseballCardContract.getUri(this.getPackageName());
+        Log.d(TAG, "package name=" + this.getPackageName());
+        Log.d(TAG, "uri=" + this.uri);
     }
 
     private BaseballCard getBaseballCard() {
@@ -145,8 +152,6 @@ public class BaseballCardDetails extends ActionBarActivity {
                 .getSelectedItem();
 
         for (int i = allEditTexts.length - 1; i >= 0; --i) {
-            Log.d(TAG, "i=" + i);
-
             String input = allEditTexts[i].getText().toString();
             if (input.equals("")) {
                 allEditTexts[i].requestFocus();
@@ -188,7 +193,8 @@ public class BaseballCardDetails extends ActionBarActivity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         // If the key entered is 'Enter'('next' or 'done'), then
-        // 1) move the focus to the next view if the current focus is in brand or player name view and
+        // 1) move the focus to the next view if the current focus is in brand
+        // or player name view and
         // 2) hide the keypad if the current focus is in team view.
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             if (this.brandText.hasFocus()) {
@@ -198,8 +204,9 @@ public class BaseballCardDetails extends ActionBarActivity {
                 this.teamText.requestFocus();
                 return true;
             } else if (this.teamText.hasFocus()) {
-                //hide the soft keypad
-                InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                // hide the soft keypad
+                InputMethodManager imm = (InputMethodManager) this
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(this.teamText.getWindowToken(), 0);
                 return true;
             }
@@ -221,44 +228,37 @@ public class BaseballCardDetails extends ActionBarActivity {
     private final View.OnClickListener onSave = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            BaseballCardSQLHelper sqlHelper = null;
-            try {
-                BaseballCard newCard = BaseballCardDetails.this
-                        .getBaseballCard();
-                sqlHelper = SQLHelperFactory.getSQLHelper(view.getContext());
+            ContentResolver resolver = BaseballCardDetails.this
+                    .getContentResolver();
+            BaseballCard newCard = BaseballCardDetails.this.getBaseballCard();
 
-                if (newCard != null) {
-                    if (BaseballCardDetails.this.isUpdating) {
-                        sqlHelper.updateBaseballCard(
-                                BaseballCardDetails.this.oldCard, newCard);
-                        BaseballCardDetails.this.finish();
-                    } else {
-                        long result = sqlHelper.insertBaseballCard(newCard);
+            if (newCard != null) {
+                if (BaseballCardDetails.this.isUpdating) {
+                    Uri uri = ContentUris.withAppendedId(
+                            BaseballCardDetails.this.uri,
+                            BaseballCardDetails.this.cardId);
+                    resolver.update(uri,
+                            BaseballCardContract.getContentValues(newCard),
+                            null, null);
+                    BaseballCardDetails.this.finish();
+                } else {
+                    try {
+                        ContentValues values = BaseballCardContract
+                                .getContentValues(newCard);
+                        resolver.insert(BaseballCardDetails.this.uri, values);
 
-                        if (result == -1) {
-                            DialogUtil.showErrorDialog(
-                                    BaseballCardDetails.this,
-                                    R.string.duplicate_card_title,
-                                    R.string.duplicate_card_error);
-                        } else {
-                            BaseballCardDetails.this.resetInput();
-                            BaseballCardDetails.this.brandText.requestFocus();
-                            Toast.makeText(view.getContext(),
-                                    R.string.card_added_message,
-                                    Toast.LENGTH_LONG).show();
-                        }
+                        BaseballCardDetails.this.resetInput();
+                        BaseballCardDetails.this.brandText.requestFocus();
+                        Toast.makeText(view.getContext(),
+                                R.string.card_added_message, Toast.LENGTH_LONG)
+                                .show();
+                    } catch (SQLException e) {
+                        // Is duplicate card the only reason this exception
+                        // will be thrown?
+                        DialogUtil.showErrorDialog(BaseballCardDetails.this,
+                                R.string.duplicate_card_title,
+                                R.string.duplicate_card_error);
                     }
-                    // TODO: Catch SQL exceptions and show appropriate error
-                    // messages.
-                }
-            } catch (SQLHelperCreationException ex) {
-                // TODO Show a dialog and exit app
-                Toast.makeText(view.getContext(), R.string.database_error,
-                        Toast.LENGTH_LONG).show();
-                Log.e(TAG, ex.getMessage(), ex);
-            } finally {
-                if (sqlHelper != null) {
-                    sqlHelper.close();
                 }
             }
         }
@@ -280,6 +280,9 @@ public class BaseballCardDetails extends ActionBarActivity {
     private AutoCompleteTextView playerNameText = null;
     private AutoCompleteTextView teamText = null;
     private Spinner playerPositionSpinner = null;
+    private Uri uri = null;
     private boolean isUpdating = false;
+    private long cardId = -1L;
     private static final String TAG = BaseballCardDetails.class.getName();
+
 }

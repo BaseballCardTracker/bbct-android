@@ -21,8 +21,10 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
@@ -83,7 +85,7 @@ public class BaseballCardDetailsAddCardsTest extends
     @Override
     public void tearDown() throws Exception {
         DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        dbUtil.deleteDatabase();
+        dbUtil.clearDatabase();
 
         super.tearDown();
     }
@@ -97,7 +99,7 @@ public class BaseballCardDetailsAddCardsTest extends
      *             thread runs.
      */
     public void testAddCard() throws Throwable {
-        BBCTTestUtil.addCard(this, this.activity, this.card);
+        BBCTTestUtil.addCard(this.solo, this.card);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         Assert.assertTrue("Missing card: " + this.card,
@@ -116,7 +118,7 @@ public class BaseballCardDetailsAddCardsTest extends
      */
     public void testAddMultipleCards() throws Throwable {
         for (BaseballCard nextCard : this.allCards) {
-            BBCTTestUtil.addCard(this, this.activity, nextCard);
+            BBCTTestUtil.addCard(this.solo, nextCard);
             BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
@@ -125,6 +127,32 @@ public class BaseballCardDetailsAddCardsTest extends
             Assert.assertTrue("Missing card: " + nextCard,
                     dbUtil.containsBaseballCard(nextCard));
         }
+    }
+
+    public void testBrandAutoComplete() throws Throwable {
+        AutoCompleteTextView brandText = (AutoCompleteTextView) this.activity
+                .findViewById(R.id.brand_text);
+        this.testAutoComplete(brandText, this.card.getBrand());
+    }
+
+    public void testPlayerNameAutoComplete() throws Throwable {
+        AutoCompleteTextView playerNameText = (AutoCompleteTextView) this.activity
+                .findViewById(R.id.player_name_text);
+        this.testAutoComplete(playerNameText, this.card.getPlayerName());
+    }
+
+    public void testTeamAutoComplete() throws Throwable {
+        AutoCompleteTextView teamText = (AutoCompleteTextView) this.activity
+                .findViewById(R.id.team_text);
+        this.testAutoComplete(teamText, this.card.getTeam());
+    }
+
+    private void testAutoComplete(AutoCompleteTextView textView, String text)
+            throws Throwable {
+        BBCTTestUtil.addCard(this.solo, this.card);
+        this.solo.typeText(textView, text.substring(0, 2));
+        this.solo.waitForText(text);
+        Assert.assertTrue(textView.isPopupShowing());
     }
 
     private Solo solo = null;
