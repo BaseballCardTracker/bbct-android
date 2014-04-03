@@ -74,6 +74,9 @@ public class BaseballCardDetails extends ActionBarActivity {
 
         this.conditionSpinner = this.populateSpinner(R.id.condition,
                 R.array.condition);
+        @SuppressWarnings("unchecked")
+        ArrayAdapter<CharSequence> conditionAdapter = (ArrayAdapter<CharSequence>) this.conditionSpinner
+                .getAdapter();
 
         this.brandText = (AutoCompleteTextView) this
                 .findViewById(R.id.brand_text);
@@ -117,6 +120,12 @@ public class BaseballCardDetails extends ActionBarActivity {
             this.isUpdating = true;
             this.cardId = this.getIntent().getLongExtra(
                     this.getString(R.string.card_id_extra), -1L);
+            this.autographCheckBox.setChecked(this.oldCard.isAutographed());
+
+            int selectedCondition = conditionAdapter.getPosition(this.oldCard
+                    .getCondition());
+            this.conditionSpinner.setSelection(selectedCondition);
+
             this.brandText.setText(this.oldCard.getBrand());
             this.yearText.setText(Integer.toString(this.oldCard.getYear()));
             this.numberText.setText(Integer.toString(this.oldCard.getNumber()));
