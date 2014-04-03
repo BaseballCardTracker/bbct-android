@@ -206,7 +206,9 @@ final public class BBCTTestUtil {
         Log.d(TAG, "sendKeysToCardDetails()");
 
         if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
-            solo.clickOnCheckBox(0);
+            if (card.isAutographed()) {
+                solo.clickOnCheckBox(0);
+            }
         }
 
         if (fieldFlags.contains(EditTexts.CONDITION)) {
