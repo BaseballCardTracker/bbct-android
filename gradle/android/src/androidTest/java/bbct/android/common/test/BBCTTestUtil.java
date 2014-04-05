@@ -25,7 +25,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.test.ViewAsserts;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -278,31 +277,6 @@ final public class BBCTTestUtil {
                 scrollView.arrowScroll(ScrollView.FOCUS_DOWN);
             }
         });
-    }
-
-    /**
-     * Fills in the current AutoCompleteTextView/EditText view, of the given
-     * {@link BaseballCardDetails} activity.
-     *
-     * @param inst
-     *            The {@link Instrumentation} object performing the test.
-     * @param editTextView
-     *            The {@link BaseballCardDetails} EditText object of the view to
-     *            be filled
-     * @param cardDetail
-     *            The {@link BaseballCard} string object holding the data to add
-     *            to the database.
-     */
-    public static void sendKeysToCurrFieldCardDetails(Instrumentation inst,
-            EditText editTextView, String cardDetail) {
-        Log.d(TAG, "sendKeysToCurrFieldCardDetails()");
-
-        inst.sendStringSync(cardDetail);
-        if (editTextView instanceof AutoCompleteTextView) {
-            if (((AutoCompleteTextView) editTextView).isPopupShowing()) {
-                inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-            }
-        }
     }
 
     /**
