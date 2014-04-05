@@ -52,12 +52,6 @@
     <string name="player_name_col">Player Name</string>
     <string name="player_position_col">Player Position</string>
 
-    <!-- Button text -->
-    <string name="save_button">Save</string>
-    <string name="ok_button">OK</string>
-    <string name="cancel_button">Cancel</string>
-    <string name="done_button">Done</string>
-
     <!-- Hints for TextEdit widgets -->
     <string name="brand_hint">Enter card brand name.</string>
     <string name="year_hint">Enter card year.</string>
@@ -81,6 +75,7 @@
     <string name="clear_filter_menu">Clear Filter</string>
     <string name="about_menu">About</string>
     <string name="delete_menu">Delete Cards</string>
+    <string name="save_menu">Save</string>
 
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>

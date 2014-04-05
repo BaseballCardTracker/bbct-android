@@ -21,7 +21,6 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
 import android.widget.ListView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
@@ -147,10 +146,8 @@ public class FilterCardsPartialInputTest extends
 
         BBCTTestUtil.sendKeysToFilterCards(this, this.solo, this.testCard,
                 this.inputFieldsMask);
+        this.solo.clickOnActionBarItem(R.id.save_menu);
 
-        Button filterOkButton = (Button) filterCards
-                .findViewById(R.id.ok_button);
-        this.solo.clickOnView(filterOkButton);
         this.inst.waitForIdleSync();
         Assert.assertTrue(filterCards.isFinishing());
 

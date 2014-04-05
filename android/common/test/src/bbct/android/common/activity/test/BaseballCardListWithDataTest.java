@@ -26,7 +26,6 @@ import android.test.UiThreadTest;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
@@ -309,7 +308,7 @@ public class BaseballCardListWithDataTest extends
                 BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
+        this.solo.goBack();
 
         this.allCards.add(this.newCard);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards,
@@ -327,11 +326,11 @@ public class BaseballCardListWithDataTest extends
     public void testAddCardMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
 
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
-                this.activity, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, this.activity, R.id.add_menu,
+                BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
+        this.solo.goBack();
 
         this.expectedCards.add(this.newCard);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
@@ -355,7 +354,7 @@ public class BaseballCardListWithDataTest extends
                 BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
+        this.solo.goBack();
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
                 this.listView);
     }
@@ -374,7 +373,7 @@ public class BaseballCardListWithDataTest extends
                 BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
+        this.solo.goBack();
 
         this.allCards.add(this.newCard);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards,
@@ -633,10 +632,7 @@ public class BaseballCardListWithDataTest extends
 
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.inst, this.solo,
                 checkId, input);
-
-        Button filterOkButton = (Button) filterCards
-                .findViewById(R.id.ok_button);
-        this.solo.clickOnView(filterOkButton);
+        this.solo.clickOnActionBarItem(R.id.save_menu);
         this.inst.waitForIdleSync();
         Assert.assertTrue(filterCards.isFinishing());
 
