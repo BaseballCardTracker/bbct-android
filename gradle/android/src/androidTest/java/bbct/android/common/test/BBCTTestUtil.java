@@ -532,9 +532,6 @@ final public class BBCTTestUtil {
         PLAYER_POSITION
     }
 
-    /**
-     * Asset file which contains card data as CSV values.
-     */
     public static final String ADD_MESSAGE = "Card added successfully";
     public static final String DELETE_MESSAGE = "Cards deleted successfully";
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
