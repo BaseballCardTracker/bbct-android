@@ -101,6 +101,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         this.countEditText = (EditText) this.activity.findViewById(R.id.count_text);
         this.valueEditText = (EditText) this.activity.findViewById(R.id.value_text);
         this.playerNameEditText = (EditText) this.activity.findViewById(R.id.player_name_text);
+        this.teamEditText = (EditText) this.activity.findViewById(R.id.team_text);
         this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
 
         this.solo = new Solo(this.inst, this.activity);
@@ -151,9 +152,9 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
             Assert.assertEquals(this.activity.getString(R.string.player_name_input_error), this.playerNameEditText.getError());
             focusEditText = this.playerNameEditText;
         }
-        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME)) {
-            Assert.assertEquals(this.activity.getString(R.string.player_name_input_error), this.playerNameEditText.getError());
-            focusEditText = this.playerNameEditText;
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.TEAM)) {
+            Assert.assertEquals(this.activity.getString(R.string.team_input_error), this.teamEditText.getError());
+            focusEditText = this.teamEditText;
         }
 
         // TODO Check that correct EditText has focus
@@ -171,6 +172,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     private EditText countEditText = null;
     private EditText valueEditText = null;
     private EditText playerNameEditText = null;
+    private EditText teamEditText = null;
     private BaseballCard card = null;
     private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
     private static final String TEST_NAME = "testPartialInput";
