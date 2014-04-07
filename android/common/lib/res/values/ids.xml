@@ -19,6 +19,8 @@
 -->
 <resources>
     <!-- IDs for views -->
+    <item type="id" name="autograph"/>
+    <item type="id" name="condition"/>
     <item type="id" name="brand_text"/>
     <item type="id" name="year_text"/>
     <item type="id" name="number_text"/>

@@ -40,14 +40,16 @@ public class DatabaseUtil {
     public DatabaseUtil(Context context) {
         String sqlCreate = "CREATE TABLE IF NOT EXISTS " + BaseballCardContract.TABLE_NAME + "("
                 + BaseballCardContract.ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + BaseballCardContract.BRAND_COL_NAME + " VARCHAR(10), "
+                + BaseballCardContract.BRAND_COL_NAME + " TEXT, "
                 + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
                 + BaseballCardContract.NUMBER_COL_NAME + " INTEGER, "
                 + BaseballCardContract.VALUE_COL_NAME + " INTEGER, "
                 + BaseballCardContract.COUNT_COL_NAME + " INTEGER, "
-                + BaseballCardContract.PLAYER_NAME_COL_NAME + " VARCHAR(50), "
-                + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50), "
-                + BaseballCardContract.PLAYER_POSITION_COL_NAME + " VARCHAR(20),"
+                + BaseballCardContract.PLAYER_NAME_COL_NAME + " TEXT, "
+                + BaseballCardContract.TEAM_COL_NAME + " TEXT, "
+                + BaseballCardContract.PLAYER_POSITION_COL_NAME + " TEXT,"
+                + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
+                + BaseballCardContract.CONDITION_COL_NAME + " TEXT,"
                 + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", " + BaseballCardContract.YEAR_COL_NAME + ", " + BaseballCardContract.NUMBER_COL_NAME + "))";
 
         this.context = context;
