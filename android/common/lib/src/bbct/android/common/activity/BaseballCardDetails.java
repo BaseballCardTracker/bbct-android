@@ -34,6 +34,7 @@ import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -69,6 +70,14 @@ public class BaseballCardDetails extends ActionBarActivity {
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
         this.setTitle(title);
 
+        this.autographCheckBox = (CheckBox) this.findViewById(R.id.autograph);
+
+        this.conditionSpinner = this.populateSpinner(R.id.condition,
+                R.array.condition);
+        @SuppressWarnings("unchecked")
+        ArrayAdapter<CharSequence> conditionAdapter = (ArrayAdapter<CharSequence>) this.conditionSpinner
+                .getAdapter();
+
         this.brandText = (AutoCompleteTextView) this
                 .findViewById(R.id.brand_text);
         CursorAdapter brandAdapter = new SingleColumnCursorAdapter(this,
@@ -92,14 +101,11 @@ public class BaseballCardDetails extends ActionBarActivity {
                 BaseballCardContract.TEAM_COL_NAME);
         this.teamText.setAdapter(teamAdapter);
 
-        this.playerPositionSpinner = (Spinner) this
-                .findViewById(R.id.player_position_text);
-        ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter
-                .createFromResource(this, R.array.positions,
-                        android.R.layout.simple_spinner_item);
-        positionsAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.playerPositionSpinner.setAdapter(positionsAdapter);
+        this.playerPositionSpinner = this.populateSpinner(
+                R.id.player_position_text, R.array.positions);
+        @SuppressWarnings("unchecked")
+        ArrayAdapter<CharSequence> positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner
+                .getAdapter();
 
         this.oldCard = (BaseballCard) this.getIntent().getSerializableExtra(
                 this.getString(R.string.baseball_card_extra));
@@ -108,6 +114,12 @@ public class BaseballCardDetails extends ActionBarActivity {
             this.isUpdating = true;
             this.cardId = this.getIntent().getLongExtra(
                     this.getString(R.string.card_id_extra), -1L);
+            this.autographCheckBox.setChecked(this.oldCard.isAutographed());
+
+            int selectedCondition = conditionAdapter.getPosition(this.oldCard
+                    .getCondition());
+            this.conditionSpinner.setSelection(selectedCondition);
+
             this.brandText.setText(this.oldCard.getBrand());
             this.yearText.setText(Integer.toString(this.oldCard.getYear()));
             this.numberText.setText(Integer.toString(this.oldCard.getNumber()));
@@ -149,6 +161,16 @@ public class BaseballCardDetails extends ActionBarActivity {
         return false;
     }
 
+    private Spinner populateSpinner(int spinnerId, int araryId) {
+        Spinner spinner = (Spinner) this.findViewById(spinnerId);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, araryId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
+    }
+
     private BaseballCard getBaseballCard() {
         Log.d(TAG, "getBaseballCard()");
 
@@ -161,6 +183,8 @@ public class BaseballCardDetails extends ActionBarActivity {
                 R.string.player_name_input_error, R.string.team_input_error };
         boolean validInput = true;
 
+        boolean autographed = this.autographCheckBox.isChecked();
+        String condition = (String) this.conditionSpinner.getSelectedItem();
         String playerPosition = (String) this.playerPositionSpinner
                 .getSelectedItem();
 
@@ -185,8 +209,9 @@ public class BaseballCardDetails extends ActionBarActivity {
             int count = Integer.parseInt(countStr);
             String team = this.teamText.getText().toString();
             String playerName = this.playerNameText.getText().toString();
-            return new BaseballCard(brand, year, number, (int) (value * 100),
-                    count, playerName, team, playerPosition);
+            return new BaseballCard(autographed, condition, brand, year,
+                    number, (int) (value * 100), count, playerName, team,
+                    playerPosition);
         } else {
             return null;
         }
@@ -228,6 +253,7 @@ public class BaseballCardDetails extends ActionBarActivity {
     }
 
     private void resetInput() {
+        this.autographCheckBox.setChecked(false);
         this.brandText.setText("");
         this.yearText.setText("");
         this.numberText.setText("");
@@ -271,6 +297,8 @@ public class BaseballCardDetails extends ActionBarActivity {
     }
 
     private BaseballCard oldCard = null;
+    private CheckBox autographCheckBox = null;
+    private Spinner conditionSpinner = null;
     private AutoCompleteTextView brandText = null;
     private EditText yearText = null;
     private EditText numberText = null;

@@ -178,6 +178,12 @@ public class BaseballCardDetailsEditCardTest extends
     }
 
     private BaseballCard getExpectedCard() {
+        boolean autographed = this.inputMask
+                .contains(BBCTTestUtil.EditTexts.AUTOGRAPHED) ? this.newCard
+                .isAutographed() : this.oldCard.isAutographed();
+        String condition = this.inputMask
+                .contains(BBCTTestUtil.EditTexts.CONDITION) ? this.newCard
+                .getCondition() : this.oldCard.getCondition();
         String brand = this.inputMask.contains(BBCTTestUtil.EditTexts.BRAND) ? this.newCard
                 .getBrand() : this.oldCard.getBrand();
         int year = this.inputMask.contains(BBCTTestUtil.EditTexts.YEAR) ? this.newCard
@@ -196,8 +202,8 @@ public class BaseballCardDetailsEditCardTest extends
         String position = this.inputMask
                 .contains(BBCTTestUtil.EditTexts.PLAYER_POSITION) ? this.newCard
                 .getPlayerPosition() : this.oldCard.getPlayerPosition();
-        return new BaseballCard(brand, year, number, value, count, name, team,
-                position);
+        return new BaseballCard(autographed, condition, brand, year, number,
+                value, count, name, team, position);
     }
 
     private final Set<BBCTTestUtil.EditTexts> inputMask;
