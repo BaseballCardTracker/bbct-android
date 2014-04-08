@@ -29,11 +29,11 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
@@ -107,12 +107,6 @@ public class BaseballCardDetails extends ActionBarActivity {
         ArrayAdapter<CharSequence> positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner
                 .getAdapter();
 
-        Button saveButton = (Button) this.findViewById(R.id.save_button);
-        saveButton.setOnClickListener(this.onSave);
-
-        Button cancelButton = (Button) this.findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(this.onCancel);
-
         this.oldCard = (BaseballCard) this.getIntent().getSerializableExtra(
                 this.getString(R.string.baseball_card_extra));
 
@@ -146,6 +140,25 @@ public class BaseballCardDetails extends ActionBarActivity {
         this.uri = BaseballCardContract.getUri(this.getPackageName());
         Log.d(TAG, "package name=" + this.getPackageName());
         Log.d(TAG, "uri=" + this.uri);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.save, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+
+        if (menuId == R.id.save_menu) {
+            this.onSave();
+            return true;
+        }
+
+        return false;
     }
 
     private Spinner populateSpinner(int spinnerId, int araryId) {
@@ -251,51 +264,37 @@ public class BaseballCardDetails extends ActionBarActivity {
         this.playerPositionSpinner.setSelection(-1);
     }
 
-    private final View.OnClickListener onSave = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            ContentResolver resolver = BaseballCardDetails.this
-                    .getContentResolver();
-            BaseballCard newCard = BaseballCardDetails.this.getBaseballCard();
+    private void onSave() {
+        ContentResolver resolver = this.getContentResolver();
+        BaseballCard newCard = this.getBaseballCard();
 
-            if (newCard != null) {
-                if (BaseballCardDetails.this.isUpdating) {
-                    Uri uri = ContentUris.withAppendedId(
-                            BaseballCardDetails.this.uri,
-                            BaseballCardDetails.this.cardId);
-                    resolver.update(uri,
-                            BaseballCardContract.getContentValues(newCard),
-                            null, null);
-                    BaseballCardDetails.this.finish();
-                } else {
-                    try {
-                        ContentValues values = BaseballCardContract
-                                .getContentValues(newCard);
-                        resolver.insert(BaseballCardDetails.this.uri, values);
+        if (newCard != null) {
+            if (this.isUpdating) {
+                Uri uri = ContentUris.withAppendedId(this.uri, this.cardId);
+                resolver.update(uri,
+                        BaseballCardContract.getContentValues(newCard), null,
+                        null);
+                this.finish();
+            } else {
+                try {
+                    ContentValues values = BaseballCardContract
+                            .getContentValues(newCard);
+                    resolver.insert(this.uri, values);
 
-                        BaseballCardDetails.this.resetInput();
-                        BaseballCardDetails.this.brandText.requestFocus();
-                        Toast.makeText(view.getContext(),
-                                R.string.card_added_message, Toast.LENGTH_LONG)
-                                .show();
-                    } catch (SQLException e) {
-                        // Is duplicate card the only reason this exception
-                        // will be thrown?
-                        DialogUtil.showErrorDialog(BaseballCardDetails.this,
-                                R.string.duplicate_card_title,
-                                R.string.duplicate_card_error);
-                    }
+                    this.resetInput();
+                    this.brandText.requestFocus();
+                    Toast.makeText(this, R.string.card_added_message,
+                            Toast.LENGTH_LONG).show();
+                } catch (SQLException e) {
+                    // Is duplicate card the only reason this exception
+                    // will be thrown?
+                    DialogUtil.showErrorDialog(BaseballCardDetails.this,
+                            R.string.duplicate_card_title,
+                            R.string.duplicate_card_error);
                 }
             }
         }
-    };
-
-    private final View.OnClickListener onCancel = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            BaseballCardDetails.this.finish();
-        }
-    };
+    }
 
     private BaseballCard oldCard = null;
     private CheckBox autographCheckBox = null;

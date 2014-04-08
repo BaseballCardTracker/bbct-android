@@ -153,7 +153,7 @@ final public class BBCTTestUtil {
      */
     public static void addCard(Solo solo, BaseballCard card) throws Throwable {
         BBCTTestUtil.sendKeysToCardDetails(solo, card);
-        solo.clickOnButton("Save");
+        solo.clickOnActionBarItem(R.id.save_menu);
     }
 
     public static void waitForToast(Solo solo, String message) {

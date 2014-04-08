@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -68,9 +69,6 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FilterCard
         Assert.assertNotNull(this.activity);
         Assert.assertNotNull(this.solo);
 
-        Button okButton = (Button) this.activity.findViewById(R.id.ok_button);
-        Assert.assertFalse(okButton.isEnabled());
-
         TableLayout tl = (TableLayout) this.activity.findViewById(R.id.tableLayout);
         for (int i = 0; i < tl.getChildCount(); i++) {
             TableRow row = (TableRow) tl.getChildAt(i);
@@ -80,6 +78,9 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FilterCard
             Assert.assertFalse(cb.isChecked());
             Assert.assertFalse(input.isEnabled());
         }
+
+        View menuView = this.activity.findViewById(R.id.save_menu);
+        Assert.assertNull(menuView);
     }
 
     /**
@@ -107,6 +108,9 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FilterCard
         this.getInstrumentation().waitForIdleSync();
         Assert.assertTrue(input.isEnabled());
         Assert.assertTrue(input.hasFocus());
+
+        View menuView = this.solo.getView(R.id.save_menu);
+        Assert.assertNotNull(menuView);
     }
 
     /**
@@ -150,16 +154,6 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FilterCard
     }
 
     /**
-     * Test that the "Ok" {@link Button} becomes enabled
-     * when one of {@link CheckBox} becomes checked.
-     */
-    public void testOkButton() {
-        Button okButton = (Button) this.activity.findViewById(R.id.ok_button);
-        this.testPlayerNameCheckBox();
-        Assert.assertTrue(okButton.isEnabled());
-    }
-
-    /**
      * Test that the "Ok" {@link Button} and "Number"
      * {@link EditText} elements keep their state upon
      * changing activity orientation.
@@ -171,8 +165,8 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FilterCard
         EditText numberInput = (EditText) this.activity.findViewById(R.id.number_input);
         Assert.assertTrue(numberInput.isEnabled());
 
-        Button okButton = (Button) this.activity.findViewById(R.id.ok_button);
-        Assert.assertTrue(okButton.isEnabled());
+//        Button okButton = (Button) this.activity.findViewById(R.id.ok_button);
+//        Assert.assertTrue(okButton.isEnabled());
     }
 
     public void testNavigateUp() {

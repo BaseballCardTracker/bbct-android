@@ -190,7 +190,7 @@ public class BaseballCardListWithoutDataTest extends
 
         BBCTTestUtil.addCard(this.solo, card);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
+        this.solo.goBack();
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
 
@@ -221,7 +221,7 @@ public class BaseballCardListWithoutDataTest extends
             BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
-        this.solo.clickOnButton(this.solo.getString(R.string.cancel_button));
+        this.solo.goBack();
         BBCTTestUtil.assertListViewContainsItems(this.inst, cards,
                 this.listView);
     }

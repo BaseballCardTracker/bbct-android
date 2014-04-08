@@ -21,7 +21,6 @@ package bbct.android.common.activity.util;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import bbct.android.common.R;
 
 /**
  * Static utility methods for showing common dialogs.
@@ -43,7 +42,7 @@ public class DialogUtil {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         dialogBuilder.setTitle(titleId);
         dialogBuilder.setMessage(errorId);
-        dialogBuilder.setPositiveButton(R.string.ok_button, new DialogInterface.OnClickListener() {
+        dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
             }
