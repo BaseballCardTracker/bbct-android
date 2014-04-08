@@ -641,6 +641,27 @@ public class BaseballCardListWithDataTest extends
                 this.listView);
     }
 
+    /**
+     * Test that filtering cards without entering anything into {@link EditText}
+     * fields returns an empty list of cards.
+     */
+    public void testEmptyFilterInputs() {
+
+        // no cards should be returned after filtering
+        Predicate<BaseballCard> filterPred = new Predicate<BaseballCard>() {
+            @Override
+            public boolean doTest(BaseballCard card) {
+                return false;
+            }
+        };
+
+        for (int i = 0; i < FILTER_CHECKBOXES.length; i++) {
+            this.testSingleFilter(FILTER_CHECKBOXES[i], "", filterPred);
+            BBCTTestUtil.testMenuItem(this.solo, this.activity,
+                    R.id.clear_filter_menu, null);
+        }
+    }
+
     private List<BaseballCard> allCards;
     private List<BaseballCard> expectedCards;
     private Solo solo = null;
@@ -649,6 +670,9 @@ public class BaseballCardListWithDataTest extends
     private DatabaseUtil dbUtil = null;
     private ListView listView = null;
     private BaseballCard newCard = null;
+    private static final int[] FILTER_CHECKBOXES = { R.id.brand_check,
+            R.id.year_check, R.id.number_check, R.id.player_name_check,
+            R.id.team_check };
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = BaseballCardListWithDataTest.class
             .getName();
