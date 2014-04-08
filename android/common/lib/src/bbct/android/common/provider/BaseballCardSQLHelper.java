@@ -41,7 +41,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     /**
      * Current schema version.
      */
-    public static final int SCHEMA_VERSION = 3;
+    public static final int SCHEMA_VERSION = 4;
     /**
      * Original schema version.
      */
@@ -56,7 +56,10 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      */
     public static final int TEAM_SCHEMA = 3;
 
-    public static final int AUTO_AND_CONDITION_SCHEMA = 5;
+    /**
+     * Schema version which adds Autographed and Condition fields.
+     */
+    public static final int AUTO_AND_CONDITION_SCHEMA = 4;
 
     /**
      * Create a new {@link BaseballCardSQLHelper} with the given Android
