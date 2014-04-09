@@ -25,7 +25,6 @@ import android.graphics.Rect;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.UiThreadTest;
 import android.test.ViewAsserts;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -101,8 +100,6 @@ public class BaseballCardDetailsTest extends
                 .findViewById(R.id.team_text);
         this.playerPositionSpinner = (Spinner) this.activity
                 .findViewById(R.id.player_position_text);
-        this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
-        this.cancelButton = (Button) this.activity.findViewById(R.id.cancel_button);
         this.scrollView = (ScrollView) this.activity
                 .findViewById(R.id.scroll_card_details);
 
@@ -125,8 +122,6 @@ public class BaseballCardDetailsTest extends
         Assert.assertNotNull(this.playerNameText);
         Assert.assertNotNull(this.playerTeamText);
         Assert.assertNotNull(this.playerPositionSpinner);
-        Assert.assertNotNull(this.saveButton);
-        Assert.assertNotNull(this.cancelButton);
         Assert.assertNotNull(this.scrollView);
     }
 
@@ -159,16 +154,6 @@ public class BaseballCardDetailsTest extends
         BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
         this.inst.callActivityOnRestart(this.activity);
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
-    }
-
-    /**
-     * Test that the {@link BaseballCardDetails} activity finishes when the user
-     * clicks the "Done" button.
-     */
-    @UiThreadTest
-    public void testDoneButtonOnClick() {
-        Assert.assertTrue(this.cancelButton.performClick());
-        Assert.assertTrue(this.activity.isFinishing());
     }
 
     /**
@@ -259,7 +244,7 @@ public class BaseballCardDetailsTest extends
         }
         // check if the 'save' button is already visible. If yes, then
         // the screen cannot be scrolled. Assert true and return.
-        if (BBCTTestUtil.isViewOnScreen(parentView, this.saveButton)) {
+        if (BBCTTestUtil.isViewOnScreen(parentView, this.playerPositionSpinner)) {
             assertTrue(true);
         } else {
             // scroll to the bottom and check if save button is on the screen
@@ -276,7 +261,7 @@ public class BaseballCardDetailsTest extends
             } catch (InterruptedException e) {
                 Log.e("getResult", e.getMessage());
             }
-            ViewAsserts.assertOnScreen(parentView, this.saveButton);
+            ViewAsserts.assertOnScreen(parentView, this.playerPositionSpinner);
         }
     }
 
@@ -296,8 +281,6 @@ public class BaseballCardDetailsTest extends
     private EditText playerNameText = null;
     private EditText playerTeamText = null;
     private Spinner playerPositionSpinner = null;
-    private Button saveButton = null;
-    private Button cancelButton = null;
     private ScrollView scrollView = null;
     private Instrumentation inst = null;
     private BaseballCard card = null;

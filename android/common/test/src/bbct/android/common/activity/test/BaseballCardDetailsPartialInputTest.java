@@ -102,7 +102,6 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         this.valueEditText = (EditText) this.activity.findViewById(R.id.value_text);
         this.playerNameEditText = (EditText) this.activity.findViewById(R.id.player_name_text);
         this.teamEditText = (EditText) this.activity.findViewById(R.id.team_text);
-        this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
 
         this.solo = new Solo(this.inst, this.activity);
     }
@@ -119,12 +118,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         Log.d(TAG, "inputFieldsMask=" + this.inputFieldsMask);
 
         BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card, this.inputFieldsMask);
-        this.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(BaseballCardDetailsPartialInputTest.this.saveButton.performClick());
-            }
-        });
+        this.solo.clickOnActionBarItem(R.id.save_menu);
 
         EditText focusEditText = null;
 
@@ -157,13 +151,13 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
             focusEditText = this.brandEditText;
         }
 
+        this.inst.waitForIdleSync();
         Assert.assertTrue(focusEditText.hasFocus());
     }
 
     private Solo solo = null;
     private Activity activity = null;
     private Instrumentation inst = null;
-    private Button saveButton = null;
     private EditText brandEditText = null;
     private EditText yearEditText = null;
     private EditText numberEditText = null;

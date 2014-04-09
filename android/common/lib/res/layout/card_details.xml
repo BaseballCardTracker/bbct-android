@@ -24,8 +24,28 @@
 
     <TableLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:stretchColumns="1" >
+
+        <TableRow>
+
+            <CheckBox
+                android:id="@id/autograph"
+                android:text="@string/autograph_label"
+                android:layout_span="2" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:text="@string/condition_label"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@id/condition"
+                android:hint="@string/condition_hint"
+                android:singleLine="true" />
+        </TableRow>
 
         <TableRow>
 
@@ -143,25 +163,6 @@
                 android:singleLine="true" />
         </TableRow>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@id/cancel_button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/cancel_button" />
-
-            <Button
-                android:id="@id/save_button"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/save_button" />
-        </LinearLayout>
     </TableLayout>
 
 </ScrollView>

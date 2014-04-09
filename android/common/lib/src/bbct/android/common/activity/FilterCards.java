@@ -22,11 +22,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import bbct.android.common.R;
 import java.util.ArrayList;
 
@@ -36,8 +36,6 @@ public class FilterCards extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.filter_cards);
-        this.buttonOk = (Button) this.findViewById(R.id.ok_button);
-        this.mainLayout = (LinearLayout) this.findViewById(R.id.mainLayout);
 
         // set title
         String format = this.getString(R.string.bbct_title);
@@ -56,11 +54,6 @@ public class FilterCards extends ActionBarActivity {
                 EditText et = (EditText) this.findViewById(TEXT_FIELDS[i]);
                 et.setEnabled(true);
             }
-        }
-
-        // restore "Ok" button state
-        if (this.numberChecked() > 0) {
-            this.buttonOk.setEnabled(true);
         }
     }
 
@@ -83,10 +76,45 @@ public class FilterCards extends ActionBarActivity {
                 enabledFields);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.save, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem confirm = menu.findItem(R.id.save_menu);
+
+        if (this.numberChecked() > 0) {
+            confirm.setVisible(true);
+            confirm.setEnabled(true);
+            return true;
+        } else {
+            confirm.setEnabled(false);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+
+        if (menuId == R.id.save_menu) {
+            this.onConfirm();
+            return true;
+        }
+
+        return false;
+    }
+
     /**
-     * Finds the corresponding {@link EditText} element
-     * given a {@link CheckBox} that was clicked upon.
-     * @param v - the checkbox that was clicked
+     * Finds the corresponding {@link EditText} element given a {@link CheckBox}
+     * that was clicked upon.
+     *
+     * @param v
+     *            - the checkbox that was clicked
      */
     public void onCheckBoxClick(View v) {
         EditText input = null;
@@ -97,24 +125,19 @@ public class FilterCards extends ActionBarActivity {
             }
         }
 
-        // toggle ok button
-        if (this.numberChecked() > 0) {
-            this.buttonOk.setEnabled(true);
-        } else {
-            this.buttonOk.setEnabled(false);
-        }
-
         this.toggleTextField(input);
+        this.invalidateOptionsMenu();
     }
 
     /**
      * Toggles the state of {@link EditText}.
-     * @param et - the {@link EditText} to toggle
+     *
+     * @param et
+     *            - the {@link EditText} to toggle
      */
     private void toggleTextField(EditText et) {
         if (et.isEnabled()) {
             et.setEnabled(false);
-            this.mainLayout.requestFocus();
         } else {
             et.setEnabled(true);
             et.requestFocus();
@@ -122,8 +145,8 @@ public class FilterCards extends ActionBarActivity {
     }
 
     /**
-     * Counts the number of {@link CheckBox} elements
-     * that are checked.
+     * Counts the number of {@link CheckBox} elements that are checked.
+     *
      * @return the number of checked elements
      */
     private int numberChecked() {
@@ -139,11 +162,10 @@ public class FilterCards extends ActionBarActivity {
     }
 
     /**
-     * Sets the combination of filter parameters as a result
-     * of {@link FilterCards} activity and exits.
-     * @param v - "Ok" button that was clicked
+     * Sets the combination of filter parameters as a result of
+     * {@link FilterCards} activity and exits.
      */
-    public void onConfirm(View v) {
+    private void onConfirm() {
         Intent intent = new Intent();
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
             EditText input = (EditText) this.findViewById(TEXT_FIELDS[i]);
@@ -154,16 +176,6 @@ public class FilterCards extends ActionBarActivity {
         }
 
         this.setResult(RESULT_OK, intent);
-        this.finish();
-    }
-
-    /**
-     * Finishes {@link FilterCards} activity without
-     * returning a result.
-     * @param v - "Cancel" button that was clicked
-     */
-    public void onCancel(View v) {
-        this.setResult(RESULT_CANCELED);
         this.finish();
     }
 
@@ -179,6 +191,4 @@ public class FilterCards extends ActionBarActivity {
             R.string.year_extra, R.string.number_extra,
             R.string.player_name_extra, R.string.team_extra };
 
-    private Button buttonOk;
-    private LinearLayout mainLayout;
 }
