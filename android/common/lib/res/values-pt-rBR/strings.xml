@@ -54,12 +54,6 @@
     <string name="player_name_col">Nome Jogador</string>
     <string name="player_position_col">Posição Jogador</string>
 
-    <!-- Button text -->
-    <string name="save_button">Salvar</string>
-    <string name="ok_button">OK</string>
-    <string name="cancel_button">Cancelar</string>
-    <string name="done_button">Concluído</string>
-
     <!-- Hints for TextEdit widgets -->
     <string name="condition_hint">Selecionar condição.</string>
     <string name="brand_hint">Informar marca carta.</string>
@@ -85,7 +79,7 @@
     <string name="about_menu">Sobre</string>
     <string name="delete_menu">Excluir Cartas</string>
     <string name="save_menu">Salvar</string>
-    
+
     <!-- Text in About activity -->
     <string name="version_text">Versão %1$s</string>
     <string name="copyright">Copyright 2012–14 by codeguru</string>

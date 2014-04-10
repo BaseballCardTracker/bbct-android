@@ -54,12 +54,6 @@
     <string name="player_name_col">Nom Joueur</string>
     <string name="player_position_col">Position Joueur</string>
 
-    <!-- Button text -->
-    <string name="save_button">Sauver</string>
-    <string name="ok_button">OK</string>
-    <string name="cancel_button">Annuler</string>
-    <string name="done_button">Terminé</string>
-
     <!-- Hints for TextEdit widgets -->
     <string name="condition_hint">Sélectionner condition.</string>
     <string name="brand_hint">Entrer marque carte.</string>
