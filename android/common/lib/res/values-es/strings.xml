@@ -34,6 +34,8 @@
     <string name="empty_list">Ninguna tarjeta encontrada.</string>
 
     <!-- Labels for card details -->
+    <string name="condition_label">Condición:</string>
+    <string name="autograph_label">Autografiada?</string>
     <string name="brand_label">Marca Tarjeta:</string>
     <string name="year_label">Año Tarjeta:</string>
     <string name="number_label">Número Tarjeta:</string>
@@ -59,6 +61,7 @@
     <string name="done_button">Hecho</string>
 
     <!-- Hints for TextEdit widgets -->
+    <string name="condition_hint">Seleccionar condición.</string>
     <string name="brand_hint">Informar marca tarjeta.</string>
     <string name="year_hint">Informar año tarjeta.</string>
     <string name="number_hint">Informar número tarjeta.</string>
@@ -81,6 +84,7 @@
     <string name="clear_filter_menu">Borrar Filtro</string>
     <string name="about_menu">Acerca de</string>
     <string name="delete_menu">Borrar Tarjetas</string>
+    <string name="save_menu">Guardar</string>
 
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
@@ -112,6 +116,17 @@
         <item>Jardinero Izquierdo</item>
         <item>Jardinero Central</item>
         <item>Jardinero Derecho</item>
+    </string-array>
+
+    <!-- Strings for card condition -->
+    <string-array name="condition">
+        <item>Perfecta</item>
+        <item>Nueva</item>
+        <item>Casi Nueva</item>
+        <item>Excelente</item>
+        <item>Muy buena</item>
+        <item>Buena</item>
+        <item>Pobre</item>
     </string-array>
 
     <!-- Error messages-->

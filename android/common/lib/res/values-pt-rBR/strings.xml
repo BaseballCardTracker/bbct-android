@@ -34,6 +34,8 @@
     <string name="empty_list">Nenhuma carta encontrada.</string>
 
     <!-- Labels for card details -->
+    <string name="condition_label">Condição:</string>
+    <string name="autograph_label">Autografada?</string>
     <string name="brand_label">Marca Carta:</string>
     <string name="year_label">Ano Carta:</string>
     <string name="number_label">Número Carta:</string>
@@ -59,6 +61,7 @@
     <string name="done_button">Concluído</string>
 
     <!-- Hints for TextEdit widgets -->
+    <string name="condition_hint">Selecionar condição.</string>
     <string name="brand_hint">Informar marca carta.</string>
     <string name="year_hint">Informar ano carta.</string>
     <string name="number_hint">Informar número carta.</string>
@@ -81,7 +84,8 @@
     <string name="clear_filter_menu">Limpar Filtro</string>
     <string name="about_menu">Sobre</string>
     <string name="delete_menu">Excluir Cartas</string>
-
+    <string name="save_menu">Salvar</string>
+    
     <!-- Text in About activity -->
     <string name="version_text">Versão %1$s</string>
     <string name="copyright">Copyright 2012–14 by codeguru</string>
@@ -112,6 +116,17 @@
         <item>Jardineiro Esquerdo</item>
         <item>Jardineiro Central</item>
         <item>Jardineiro Direito</item>
+    </string-array>
+
+    <!-- Strings for card condition -->
+    <string-array name="condition">
+        <item>Perfeita</item>
+        <item>Nova</item>
+        <item>Quase Nova</item>
+        <item>Excelente</item>
+        <item>Muito Boa</item>
+        <item>Boa</item>
+        <item>Pobre</item>
     </string-array>
 
     <!-- Error messages-->
