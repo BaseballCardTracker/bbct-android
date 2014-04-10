@@ -109,10 +109,14 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         }
 
         if (oldVersion < AUTO_AND_CONDITION_SCHEMA) {
-            String sqlUpgrade = "ALTER TABLE "
-                    + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
+            String addAutographed = "ALTER TABLE "
+                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
+                    + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER;";
+            String addCondition = "ALTER TABLE "
+                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
                     + BaseballCardContract.CONDITION_COL_NAME + " TEXT";
-            db.execSQL(sqlUpgrade);
+            db.execSQL(addAutographed);
+            db.execSQL(addCondition);
         }
     }
 
