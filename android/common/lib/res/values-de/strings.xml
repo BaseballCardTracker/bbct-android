@@ -52,12 +52,6 @@
     <string name="player_name_col">Spielerame</string>
     <string name="player_position_col">Spielerposition</string>
 
-    <!-- Button text -->
-    <string name="save_button">Speichern</string>
-    <string name="ok_button">OK</string>
-    <string name="cancel_button">Abbrechen</string>
-    <string name="done_button">Fertig</string>
-
     <!-- Hints for TextEdit widgets -->
     <string name="brand_hint">Gebe die Kartenmarke ein.</string>
     <string name="year_hint">Gebe das Kartenjahr ein.</string>
