@@ -18,18 +18,16 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="app_name">BBCT Common</string>
+
     <string name="provider_name">BBCT Data</string>
 
     <!-- Activity titles -->
-    <string name="bbct_title">BBCT Common - %1$s</string>
     <string name="card_details_title">Kartendetails</string>
     <string name="player_details_title">Spielerdetails</string>
     <string name="filter_cards_title">Filteroptionen</string>
     <string name="about_title">Info</string>
     <string name="input_error_title">Eingabe Error</string>
     <string name="duplicate_card_title">Doppelte Karte</string>
-
     <string name="start">Klicke auf (+), um zu Karten hinzuzufügen.</string>
     <string name="empty_list">No cards found.</string>
 
@@ -78,22 +76,10 @@
 
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
-    <string name="copyright">Copyright 2012–14 by codeguru</string>
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
-    <string name="license">
-        Diese software ist lizensensiert unter der GPL. 
-        Besuche\nhttp://www.gnu.org/licenses/, um eine Kopie der Lizens zu erwerben.</string>
-    <string name="about">
-        BBCT ist eine simple Datenbank für ihre Baseballkartenkollektion.
-        Sie können Informationen über die Karten in Ihrer Kollektion hinzufügen,
-        sich Details über die individuellen Karten ansehen, und die Karten nach
-        bestimmten Kriterien sortieren.
-        BBCT hilft Ihnen, Ihre Kollektion zu organisieren und verschafft Ihnen
-        einen guten Überblick über die Karten in Ihrer Kollektion. 
-        Falls Sie Feeback haben oder sonstige Änderungsvorschläge, können Sie 
-        uns diese jederzeit gerne unter der oben gelisteten Email mitteilen.
-    </string>
+    <string name="license">Diese software ist lizensensiert unter der GPL. \n        Besuche\nhttp://www.gnu.org/licenses/, um eine Kopie der Lizens zu erwerben.</string>
+    <string name="about">BBCT ist eine simple Datenbank für ihre Baseballkartenkollektion.\n        Sie können Informationen über die Karten in Ihrer Kollektion hinzufügen,\n        sich Details über die individuellen Karten ansehen, und die Karten nach\n        bestimmten Kriterien sortieren.\n        BBCT hilft Ihnen, Ihre Kollektion zu organisieren und verschafft Ihnen\n        einen guten Überblick über die Karten in Ihrer Kollektion. \n        Falls Sie Feeback haben oder sonstige Änderungsvorschläge, können Sie \n        uns diese jederzeit gerne unter der oben gelisteten Email mitteilen.\n    </string>
 
     <!-- Card details toasts -->
     <string name="card_added_message">Karte wurde erfolgreich hinzugefügt.</string>
@@ -112,7 +98,10 @@
         <item>Right Field</item>
     </string-array>
 
-    <!-- Error messages-->
+    <!-- Strings for card condition -->
+
+
+    <!-- Error messages -->
     <string name="no_radio_button_error">Bitte wählen Sie eine Option.</string>
     <string name="brand_input_error">Bitte geben Sie einen Markennamen ein.</string>
     <string name="year_input_error">Bitte geben Sie ein Jahr ein.</string>

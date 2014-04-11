@@ -18,18 +18,16 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="app_name">BBCT Common</string>
+
     <string name="provider_name">BBCT Datos</string>
 
     <!-- Activity titles -->
-    <string name="bbct_title">BBCT Common - %1$s</string>
     <string name="card_details_title">Detalles tarjeta</string>
     <string name="player_details_title">Detalles Jugador</string>
     <string name="filter_cards_title">Opciones Filtro</string>
     <string name="about_title">Acerca de</string>
     <string name="input_error_title">Error Entrada</string>
     <string name="duplicate_card_title">Tarjeta Duplicada</string>
-
     <string name="start">Pulse (+) para empezar.</string>
     <string name="empty_list">Ninguna tarjeta encontrada.</string>
 
@@ -82,18 +80,10 @@
 
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
-    <string name="copyright">Copyright 2012–14 by codeguru</string>
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Sítio web:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">Este software está licenciado bajo la GPL. Visita\nhttp://www.gnu.org/licenses/licenses.es.html para uma cópia de la licencia.</string>
-    <string name="about">
-        BBCT es una aplicación de base de datos simple para tu colección de tarjetas de béisbol.
-        Puedes añadir información acerca de las tarjetas en tu colección, veer
-        detalles de tarjetas individuales, y filtrar la lista de tarjetas de acuerdo
-        com un conjunto limitado de criterios. BBCT te ayuda a organizar tu colección
-        y buscar rapidamente las tarjetas que posees. No dudes en enviar email com tus
-        opiniones y comentarios, o visita el sítio web del proyecto.
-    </string>
+    <string name="about">BBCT es una aplicación de base de datos simple para tu colección de tarjetas de béisbol.\n        Puedes añadir información acerca de las tarjetas en tu colección, veer\n        detalles de tarjetas individuales, y filtrar la lista de tarjetas de acuerdo\n        com un conjunto limitado de criterios. BBCT te ayuda a organizar tu colección\n        y buscar rapidamente las tarjetas que posees. No dudes en enviar email com tus\n        opiniones y comentarios, o visita el sítio web del proyecto.\n    </string>
 
     <!-- Card details toasts -->
     <string name="card_added_message">Tarjeta añadida com éxito.</string>
@@ -123,7 +113,7 @@
         <item>Pobre</item>
     </string-array>
 
-    <!-- Error messages-->
+    <!-- Error messages -->
     <string name="no_radio_button_error">Por favor selecciona una opción.</string>
     <string name="brand_input_error">Por favor Informa un nombre de marca.</string>
     <string name="year_input_error">Por favor Informa un año.</string>
