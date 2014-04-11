@@ -83,12 +83,7 @@
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">This software is licensed under the GPL. Visit\nhttp://www.gnu.org/licenses/ for a copy of the license.</string>
-    <string name="about">BBCT is a simple database app for your baseball card collection.
-        You can add information about the cards in your collection, view
-        details about individual cards, and filter the list of cards according
-        to a limited set of criteria. BBCT helps you organize your collection
-        and quickly look up which cards you own. Feel free to email your
-        feedback and comments or visit the project website.</string>
+    <string name="about">BBCT is a simple database app for your baseball card collection. You can add information about the cards in your collection, view details about individual cards, and filter the list of cards according to a limited set of criteria. BBCT helps you organize your collection and quickly look up which cards you own. Feel free to email your feedback and comments or visit the project website.</string>
 
     <!-- Card details toasts -->
     <string name="card_added_message">Card added successfully.</string>
@@ -129,7 +124,7 @@
     <string name="team_input_error">Please enter the player\'s team.</string>
     <string name="player_position_input_error">Please enter the player\'s position.</string>
     <string name="invalid_uri_error">Invalid URI: %1$s</string>
-    <string name="database_error">Error occured while connecting to database.</string>
+    <string name="database_error">Error occurred while connecting to database.</string>
     <string name="duplicate_card_error">Baseball card already exists. Please update its count.</string>
     <string name="sponsor">Proud Sponsor of:</string>
 
