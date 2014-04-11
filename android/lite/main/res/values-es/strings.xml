@@ -19,8 +19,6 @@
 -->
 <resources>
 
-    <string name="premium">Si te gusta utilizar BBCT, obtiene la
-        &lt;a href="market://details?id=bbct.android.premium"&gt;edición premium&lt;/a&gt;
-        sin publicidad por sólo $3.00USD.</string>
+    <string name="premium">Si te gusta utilizar BBCT, obtiene la &lt;a href="market://details?id=bbct.android.premium"&gt;edición premium&lt;/a&gt; sin publicidad por sólo $3.00USD.</string>
 
 </resources>

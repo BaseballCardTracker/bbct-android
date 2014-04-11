@@ -83,7 +83,7 @@
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Site web:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">Ce logiciel est licencé sous la GPL. Visitez\nhttp://www.gnu.org/licenses/licenses.fr.html pour une copie de la licence.</string>
-    <string name="about">BBCT est une application simple de base de données pour votre collection de cartes de baseball.\n        Vous pouvez ajouter des informations sur les cartes de votre collection, voir\n        détails sur les cartes individuelles, et filtrer la liste des cartes en fonction\n        d\'un ensemble limité de critères. BBCT vous aide à organiser votre collection\n        et rechercher rapidement des cartes que vous possédez. N\'hésitez pas à envoyer un email avec votre\n        évaluations et commentaires ou visitez le site web du projet.\n    </string>
+    <string name="about">BBCT est une application simple de base de données pour votre collection de cartes de baseball. Vous pouvez ajouter des informations sur les cartes de votre collection, voir détails sur les cartes individuelles, et filtrer la liste des cartes en fonction d\'un ensemble limité de critères. BBCT vous aide à organiser votre collection et rechercher rapidement des cartes que vous possédez. N\'hésitez pas à envoyer un email avec votre évaluations et commentaires ou visitez le site web du projet.</string>
 
     <!-- Card details toasts -->
     <string name="card_added_message">Carte ajoutée avec succès.</string>
