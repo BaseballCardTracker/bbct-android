@@ -44,13 +44,13 @@
     <string name="player_position_label">Posición Jugador:</string>
 
     <!-- Column headings for card list -->
-    <string name="brand_col">Marca</string>
-    <string name="year_col">Año</string>
+    <string name="brand">Marca</string>
+    <string name="year">Año</string>
     <string name="number_col">#</string>
-    <string name="value_col">Valor</string>
-    <string name="count_col">Cantidad</string>
-    <string name="player_name_col">Nombre Jugador</string>
-    <string name="player_position_col">Posición Jugador</string>
+    <string name="value">Valor</string>
+    <string name="count">Cantidad</string>
+    <string name="player_name">Nombre Jugador</string>
+    <string name="player_position">Posición Jugador</string>
 
     <!-- Hints for TextEdit widgets -->
     <string name="condition_hint">Seleccionar condición.</string>
@@ -62,13 +62,6 @@
     <string name="player_name_hint">Informar nombre jugador.</string>
     <string name="team_hint">Informar equipo jugador.</string>
     <string name="player_position_hint">Informar posición jugador.</string>
-
-    <!-- Filter cards TextView labels -->
-    <string name="year_option">Año</string>
-    <string name="number_option">Número</string>
-    <string name="brand_option">Marca</string>
-    <string name="player_name_option">Nombre</string>
-    <string name="team_option">Equipo</string>
 
     <!-- Menu text -->
     <string name="add_menu">Añadir Tarjetas</string>

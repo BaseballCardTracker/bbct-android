@@ -41,7 +41,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/brand_option"
+                android:text="@string/brand"
                 android:textSize="@dimen/option_size" />
 
             <EditText
@@ -68,7 +68,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/year_option"
+                android:text="@string/year"
                 android:textSize="@dimen/option_size" />
 
             <EditText
@@ -95,7 +95,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/number_option"
+                android:text="@string/number"
                 android:textSize="@dimen/option_size" />
 
             <EditText
@@ -122,7 +122,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/player_name_option"
+                android:text="@string/player_name"
                 android:textSize="@dimen/option_size" />
 
             <EditText
@@ -149,7 +149,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/team_option"
+                android:text="@string/team"
                 android:textSize="@dimen/option_size" />
 
             <EditText
