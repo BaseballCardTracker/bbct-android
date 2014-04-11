@@ -18,9 +18,9 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="premium">
-        If you enjoy using BBCT, get the ad-free
-        <a href="market://details?id=bbct.android.premium">premium edition</a>
-        for only $3.00USD.
-    </string>
+
+    <string name="app_name">BBCT Lite</string>
+    <string name="bbct_title">BBCT Lite - %1$s</string>
+    <string name="version_number">0.5.8</string>
+
 </resources>

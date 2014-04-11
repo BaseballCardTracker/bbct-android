@@ -19,11 +19,9 @@
 -->
 <resources>
 
-    <string name="app_name">BBCT Common</string>
     <string name="provider_name">BBCT Data</string>
 
     <!-- Activity titles -->
-    <string name="bbct_title">BBCT Common - %1$s</string>
     <string name="card_details_title">Card Details</string>
     <string name="player_details_title">Player Details</string>
     <string name="filter_cards_title">Filter Options</string>
@@ -82,8 +80,6 @@
 
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
-    <string name="version_number">0.5.x</string>
-    <string name="copyright">Copyright 2012–14 by codeguru</string>
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">This software is licensed under the GPL. Visit\nhttp://www.gnu.org/licenses/ for a copy of the license.</string>
