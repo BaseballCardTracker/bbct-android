@@ -18,11 +18,9 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="app_name">BBCT Lite</string>
-    <string name="bbct_title">BBCT Lite - %1$s</string>
-    <string name="premium">
-        Se você gosta de usar o BBCT, obtenha a
-        <a href="market://details?id=bbct.android.premium">edição premium</a>
-        sem publicidade por apenas $3.00USD.
-    </string>
+
+    <string name="premium">Se você gosta de usar o BBCT, obtenha a
+        &lt;a href="market://details?id=bbct.android.premium"&gt;edição premium&lt;/a&gt;
+        sem publicidade por apenas $3.00USD.</string>
+
 </resources>
