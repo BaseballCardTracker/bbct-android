@@ -43,7 +43,7 @@ import bbct.android.common.provider.BaseballCardContract;
 
 /**
  * Displays a list of all baseball cards stored in the database.
- * <p/>
+ *
  * TODO: Make list fancier
  */
 public class BaseballCardList extends ListFragment {
@@ -269,7 +269,7 @@ public class BaseballCardList extends ListFragment {
             return;
         }
 
-        BaseballCard card = BaseballCardList.this.adapter.getSelectedCard();
+        BaseballCard card = BaseballCardList.this.adapter.getItem(position);
 
         Fragment details = BaseballCardDetails.getInstance(id, card);
         this.getActivity().getSupportFragmentManager()

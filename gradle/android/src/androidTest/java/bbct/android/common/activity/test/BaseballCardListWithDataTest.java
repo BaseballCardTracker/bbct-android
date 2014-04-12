@@ -283,7 +283,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity>  extends
 
         Assert.assertTrue(BBCTTestUtil.isFragmentVisible((FragmentActivity) activity,
                 BaseballCardDetails.class));
-        BaseballCard expectedCard = this.allCards.get(cardIndex - 1);
+        BaseballCard expectedCard = this.allCards.get(cardIndex);
         BBCTTestUtil.assertAllEditTextContents(this.activity, expectedCard);
     }
 

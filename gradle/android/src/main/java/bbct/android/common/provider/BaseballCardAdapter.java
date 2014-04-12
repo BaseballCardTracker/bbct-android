@@ -124,8 +124,9 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
         this.notifyDataSetChanged();
     }
 
-    public BaseballCard getSelectedCard() {
-        Cursor cursor = this.getCursor();
+    @Override
+    public BaseballCard getItem(int index) {
+        Cursor cursor = (Cursor) super.getItem(index);
         boolean autographed = cursor.getInt(cursor
                 .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
         String condition = cursor.getString(cursor
