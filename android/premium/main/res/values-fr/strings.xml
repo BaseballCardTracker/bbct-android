@@ -18,12 +18,10 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="app_name">BBCT Premium</string>
-    <string name="bbct_title">BBCT Premium - %1$s</string>
+
     <string name="import_message">Importation de données à partir de l\'Édition Lite.</string>
     <string name="import_error">Il n\'est pas possible d\'importer des données à partir de l\'Édition Lite. %1$s</string>
-    <string name="lite_update_message">
-        S\'il vous plaît, mettrez à jour <a href="market://details?id=bbct.android">l\'Édition Lite</a>.
-    </string>
+    <string name="lite_update_message">S\'il vous plaît, mettrez à jour &lt;a href="market://details?id=bbct.android"&gt;l\'Édition Lite&lt;/a&gt;.</string>
     <string name="lite_not_installed_message">L\'Édition Lite n\'est pas installée.</string>
+
 </resources>

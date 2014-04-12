@@ -18,18 +18,16 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="app_name">BBCT Common</string>
+
     <string name="provider_name">BBCT Data</string>
 
     <!-- Activity titles -->
-    <string name="bbct_title">BBCT Common - %1$s</string>
     <string name="card_details_title">Détails Carte</string>
     <string name="player_details_title">Détails Joueur</string>
     <string name="filter_cards_title">Options Filtrage</string>
     <string name="about_title">À propos</string>
     <string name="input_error_title">Erreur d\'Entrée</string>
     <string name="duplicate_card_title">Carte Dupliquée</string>
-
     <string name="start">Appuyez (+) pour commencer.</string>
     <string name="empty_list">Pas de cartes trouvées.</string>
 
@@ -46,13 +44,13 @@
     <string name="player_position_label">Position Joueur:</string>
 
     <!-- Column headings for card list -->
-    <string name="brand_col">Marque</string>
-    <string name="year_col">Anée</string>
+    <string name="brand">Marque</string>
+    <string name="year">Anée</string>
     <string name="number_col">#</string>
-    <string name="value_col">Valeur</string>
-    <string name="count_col">Nombre</string>
-    <string name="player_name_col">Nom Joueur</string>
-    <string name="player_position_col">Position Joueur</string>
+    <string name="value">Valeur</string>
+    <string name="count">Nombre</string>
+    <string name="player_name">Nom Joueur</string>
+    <string name="player_position">Position Joueur</string>
 
     <!-- Hints for TextEdit widgets -->
     <string name="condition_hint">Sélectionner condition.</string>
@@ -65,13 +63,6 @@
     <string name="team_hint">Entrer équipe joueur.</string>
     <string name="player_position_hint">Entrer position joueur.</string>
 
-    <!-- Filter cards TextView labels -->
-    <string name="year_option">Anée</string>
-    <string name="number_option">Numéro</string>
-    <string name="brand_option">Marque</string>
-    <string name="player_name_option">Nom</string>
-    <string name="team_option">Équipe</string>
-
     <!-- Menu text -->
     <string name="add_menu">Ajouter des Cartes</string>
     <string name="filter_menu">Filtrer des Cartes</string>
@@ -82,18 +73,10 @@
 
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
-    <string name="copyright">Copyright 2012–14 by codeguru</string>
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Site web:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">Ce logiciel est licencé sous la GPL. Visitez\nhttp://www.gnu.org/licenses/licenses.fr.html pour une copie de la licence.</string>
-    <string name="about">
-        BBCT est une application simple de base de données pour votre collection de cartes de baseball.
-        Vous pouvez ajouter des informations sur les cartes de votre collection, voir
-        détails sur les cartes individuelles, et filtrer la liste des cartes en fonction
-        d\'un ensemble limité de critères. BBCT vous aide à organiser votre collection
-        et rechercher rapidement des cartes que vous possédez. N\'hésitez pas à envoyer un email avec votre
-        évaluations et commentaires ou visitez le site web du projet.
-    </string>
+    <string name="about">BBCT est une application simple de base de données pour votre collection de cartes de baseball. Vous pouvez ajouter des informations sur les cartes de votre collection, voir détails sur les cartes individuelles, et filtrer la liste des cartes en fonction d\'un ensemble limité de critères. BBCT vous aide à organiser votre collection et rechercher rapidement des cartes que vous possédez. N\'hésitez pas à envoyer un email avec votre évaluations et commentaires ou visitez le site web du projet.</string>
 
     <!-- Card details toasts -->
     <string name="card_added_message">Carte ajoutée avec succès.</string>

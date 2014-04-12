@@ -19,6 +19,9 @@
 -->
 <resources>
 
-    <string name="premium">Si te gusta utilizar BBCT, obtiene la &lt;a href="market://details?id=bbct.android.premium"&gt;edición premium&lt;/a&gt; sin publicidad por sólo $3.00USD.</string>
-
+    <string name="app_name">BBCT Common</string>
+    <string name="bbct_title">BBCT Common - %1$s</string>
+    <string name="version_number">0.5.x</string>
+    <string name="copyright">Copyright 2012–14 by codeguru</string>
+    
 </resources>
