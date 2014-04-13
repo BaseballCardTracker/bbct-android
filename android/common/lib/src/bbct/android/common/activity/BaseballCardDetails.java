@@ -18,18 +18,23 @@
  */
 package bbct.android.common.activity;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -37,10 +42,7 @@ import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.exception.SQLHelperCreationException;
 import bbct.android.common.provider.BaseballCardContract;
-import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.android.common.provider.SQLHelperFactory;
 import bbct.android.common.provider.SingleColumnCursorAdapter;
 
 /**
@@ -68,6 +70,14 @@ public class BaseballCardDetails extends ActionBarActivity {
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
         this.setTitle(title);
 
+        this.autographCheckBox = (CheckBox) this.findViewById(R.id.autograph);
+
+        this.conditionSpinner = this.populateSpinner(R.id.condition,
+                R.array.condition);
+        @SuppressWarnings("unchecked")
+        ArrayAdapter<CharSequence> conditionAdapter = (ArrayAdapter<CharSequence>) this.conditionSpinner
+                .getAdapter();
+
         this.brandText = (AutoCompleteTextView) this
                 .findViewById(R.id.brand_text);
         CursorAdapter brandAdapter = new SingleColumnCursorAdapter(this,
@@ -91,26 +101,25 @@ public class BaseballCardDetails extends ActionBarActivity {
                 BaseballCardContract.TEAM_COL_NAME);
         this.teamText.setAdapter(teamAdapter);
 
-        this.playerPositionSpinner = (Spinner) this
-                .findViewById(R.id.player_position_text);
-        ArrayAdapter<CharSequence> positionsAdapter = ArrayAdapter
-                .createFromResource(this, R.array.positions,
-                        android.R.layout.simple_spinner_item);
-        positionsAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.playerPositionSpinner.setAdapter(positionsAdapter);
-
-        Button saveButton = (Button) this.findViewById(R.id.save_button);
-        saveButton.setOnClickListener(this.onSave);
-
-        Button doneButton = (Button) this.findViewById(R.id.done_button);
-        doneButton.setOnClickListener(this.onDone);
+        this.playerPositionSpinner = this.populateSpinner(
+                R.id.player_position_text, R.array.positions);
+        @SuppressWarnings("unchecked")
+        ArrayAdapter<CharSequence> positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner
+                .getAdapter();
 
         this.oldCard = (BaseballCard) this.getIntent().getSerializableExtra(
                 this.getString(R.string.baseball_card_extra));
 
         if (this.oldCard != null) {
             this.isUpdating = true;
+            this.cardId = this.getIntent().getLongExtra(
+                    this.getString(R.string.card_id_extra), -1L);
+            this.autographCheckBox.setChecked(this.oldCard.isAutographed());
+
+            int selectedCondition = conditionAdapter.getPosition(this.oldCard
+                    .getCondition());
+            this.conditionSpinner.setSelection(selectedCondition);
+
             this.brandText.setText(this.oldCard.getBrand());
             this.yearText.setText(Integer.toString(this.oldCard.getYear()));
             this.numberText.setText(Integer.toString(this.oldCard.getNumber()));
@@ -127,6 +136,39 @@ public class BaseballCardDetails extends ActionBarActivity {
 
         ActionBar actionBar = this.getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        this.uri = BaseballCardContract.getUri(this.getPackageName());
+        Log.d(TAG, "package name=" + this.getPackageName());
+        Log.d(TAG, "uri=" + this.uri);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.save, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+
+        if (menuId == R.id.save_menu) {
+            this.onSave();
+            return true;
+        }
+
+        return false;
+    }
+
+    private Spinner populateSpinner(int spinnerId, int araryId) {
+        Spinner spinner = (Spinner) this.findViewById(spinnerId);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, araryId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        return spinner;
     }
 
     private BaseballCard getBaseballCard() {
@@ -141,12 +183,12 @@ public class BaseballCardDetails extends ActionBarActivity {
                 R.string.player_name_input_error, R.string.team_input_error };
         boolean validInput = true;
 
+        boolean autographed = this.autographCheckBox.isChecked();
+        String condition = (String) this.conditionSpinner.getSelectedItem();
         String playerPosition = (String) this.playerPositionSpinner
                 .getSelectedItem();
 
         for (int i = allEditTexts.length - 1; i >= 0; --i) {
-            Log.d(TAG, "i=" + i);
-
             String input = allEditTexts[i].getText().toString();
             if (input.equals("")) {
                 allEditTexts[i].requestFocus();
@@ -167,8 +209,9 @@ public class BaseballCardDetails extends ActionBarActivity {
             int count = Integer.parseInt(countStr);
             String team = this.teamText.getText().toString();
             String playerName = this.playerNameText.getText().toString();
-            return new BaseballCard(brand, year, number, (int) (value * 100),
-                    count, playerName, team, playerPosition);
+            return new BaseballCard(autographed, condition, brand, year,
+                    number, (int) (value * 100), count, playerName, team,
+                    playerPosition);
         } else {
             return null;
         }
@@ -188,7 +231,8 @@ public class BaseballCardDetails extends ActionBarActivity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         // If the key entered is 'Enter'('next' or 'done'), then
-        // 1) move the focus to the next view if the current focus is in brand or player name view and
+        // 1) move the focus to the next view if the current focus is in brand
+        // or player name view and
         // 2) hide the keypad if the current focus is in team view.
         if (keyCode == KeyEvent.KEYCODE_ENTER) {
             if (this.brandText.hasFocus()) {
@@ -198,8 +242,9 @@ public class BaseballCardDetails extends ActionBarActivity {
                 this.teamText.requestFocus();
                 return true;
             } else if (this.teamText.hasFocus()) {
-                //hide the soft keypad
-                InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                // hide the soft keypad
+                InputMethodManager imm = (InputMethodManager) this
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(this.teamText.getWindowToken(), 0);
                 return true;
             }
@@ -208,6 +253,7 @@ public class BaseballCardDetails extends ActionBarActivity {
     }
 
     private void resetInput() {
+        this.autographCheckBox.setChecked(false);
         this.brandText.setText("");
         this.yearText.setText("");
         this.numberText.setText("");
@@ -218,60 +264,41 @@ public class BaseballCardDetails extends ActionBarActivity {
         this.playerPositionSpinner.setSelection(-1);
     }
 
-    private final View.OnClickListener onSave = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            BaseballCardSQLHelper sqlHelper = null;
-            try {
-                BaseballCard newCard = BaseballCardDetails.this
-                        .getBaseballCard();
-                sqlHelper = SQLHelperFactory.getSQLHelper(view.getContext());
+    private void onSave() {
+        ContentResolver resolver = this.getContentResolver();
+        BaseballCard newCard = this.getBaseballCard();
 
-                if (newCard != null) {
-                    if (BaseballCardDetails.this.isUpdating) {
-                        sqlHelper.updateBaseballCard(
-                                BaseballCardDetails.this.oldCard, newCard);
-                        BaseballCardDetails.this.finish();
-                    } else {
-                        long result = sqlHelper.insertBaseballCard(newCard);
+        if (newCard != null) {
+            if (this.isUpdating) {
+                Uri uri = ContentUris.withAppendedId(this.uri, this.cardId);
+                resolver.update(uri,
+                        BaseballCardContract.getContentValues(newCard), null,
+                        null);
+                this.finish();
+            } else {
+                try {
+                    ContentValues values = BaseballCardContract
+                            .getContentValues(newCard);
+                    resolver.insert(this.uri, values);
 
-                        if (result == -1) {
-                            DialogUtil.showErrorDialog(
-                                    BaseballCardDetails.this,
-                                    R.string.duplicate_card_title,
-                                    R.string.duplicate_card_error);
-                        } else {
-                            BaseballCardDetails.this.resetInput();
-                            BaseballCardDetails.this.brandText.requestFocus();
-                            Toast.makeText(view.getContext(),
-                                    R.string.card_added_message,
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    // TODO: Catch SQL exceptions and show appropriate error
-                    // messages.
-                }
-            } catch (SQLHelperCreationException ex) {
-                // TODO Show a dialog and exit app
-                Toast.makeText(view.getContext(), R.string.database_error,
-                        Toast.LENGTH_LONG).show();
-                Log.e(TAG, ex.getMessage(), ex);
-            } finally {
-                if (sqlHelper != null) {
-                    sqlHelper.close();
+                    this.resetInput();
+                    this.brandText.requestFocus();
+                    Toast.makeText(this, R.string.card_added_message,
+                            Toast.LENGTH_LONG).show();
+                } catch (SQLException e) {
+                    // Is duplicate card the only reason this exception
+                    // will be thrown?
+                    DialogUtil.showErrorDialog(BaseballCardDetails.this,
+                            R.string.duplicate_card_title,
+                            R.string.duplicate_card_error);
                 }
             }
         }
-    };
-
-    private final View.OnClickListener onDone = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            BaseballCardDetails.this.finish();
-        }
-    };
+    }
 
     private BaseballCard oldCard = null;
+    private CheckBox autographCheckBox = null;
+    private Spinner conditionSpinner = null;
     private AutoCompleteTextView brandText = null;
     private EditText yearText = null;
     private EditText numberText = null;
@@ -280,6 +307,9 @@ public class BaseballCardDetails extends ActionBarActivity {
     private AutoCompleteTextView playerNameText = null;
     private AutoCompleteTextView teamText = null;
     private Spinner playerPositionSpinner = null;
+    private Uri uri = null;
     private boolean isUpdating = false;
+    private long cardId = -1L;
     private static final String TAG = BaseballCardDetails.class.getName();
+
 }

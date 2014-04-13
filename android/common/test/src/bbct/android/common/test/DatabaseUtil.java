@@ -40,14 +40,16 @@ public class DatabaseUtil {
     public DatabaseUtil(Context context) {
         String sqlCreate = "CREATE TABLE IF NOT EXISTS " + BaseballCardContract.TABLE_NAME + "("
                 + BaseballCardContract.ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + BaseballCardContract.BRAND_COL_NAME + " VARCHAR(10), "
+                + BaseballCardContract.BRAND_COL_NAME + " TEXT, "
                 + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
                 + BaseballCardContract.NUMBER_COL_NAME + " INTEGER, "
                 + BaseballCardContract.VALUE_COL_NAME + " INTEGER, "
                 + BaseballCardContract.COUNT_COL_NAME + " INTEGER, "
-                + BaseballCardContract.PLAYER_NAME_COL_NAME + " VARCHAR(50), "
-                + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50), "
-                + BaseballCardContract.PLAYER_POSITION_COL_NAME + " VARCHAR(20),"
+                + BaseballCardContract.PLAYER_NAME_COL_NAME + " TEXT, "
+                + BaseballCardContract.TEAM_COL_NAME + " TEXT, "
+                + BaseballCardContract.PLAYER_POSITION_COL_NAME + " TEXT,"
+                + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
+                + BaseballCardContract.CONDITION_COL_NAME + " TEXT,"
                 + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", " + BaseballCardContract.YEAR_COL_NAME + ", " + BaseballCardContract.NUMBER_COL_NAME + "))";
 
         this.context = context;
@@ -74,21 +76,21 @@ public class DatabaseUtil {
     }
 
     /**
+     * Delete all rows in the database table.
+     */
+    public void clearDatabase() {
+        this.db.delete(BaseballCardContract.TABLE_NAME, null, null);
+        this.db.close();
+    }
+
+    /**
      * Insert baseball card data into the database.
      *
      * @param card The baseball card data to insert.
      * @return The row ID of the newly inserted row, or -1 if an error occurred.
      */
     public long insertBaseballCard(BaseballCard card) {
-        ContentValues cv = new ContentValues(7);
-        cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
-        cv.put(BaseballCardContract.YEAR_COL_NAME, card.getYear());
-        cv.put(BaseballCardContract.NUMBER_COL_NAME, card.getNumber());
-        cv.put(BaseballCardContract.VALUE_COL_NAME, card.getValue());
-        cv.put(BaseballCardContract.COUNT_COL_NAME, card.getCount());
-        cv.put(BaseballCardContract.PLAYER_NAME_COL_NAME, card.getPlayerName());
-        cv.put(BaseballCardContract.TEAM_COL_NAME, card.getTeam());
-        cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME, card.getPlayerPosition());
+        ContentValues cv = BaseballCardContract.getContentValues(card);
 
         return this.db.insert(TABLE_NAME, null, cv);
     }

@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -36,9 +37,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.activity.FilterCards;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import com.robotium.solo.Solo;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -72,36 +75,35 @@ final public class BBCTTestUtil {
         // for the header View
         Assert.assertEquals(expectedItems.size(), listView.getCount() - 1);
 
-        for (int i = 0; i < expectedItems.size(); ++i) {
-            // Add 1 to skip headers
-            View row = listView.getChildAt(i + 1);
-            TextView brandTextView = (TextView) row
-                    .findViewById(R.id.brand_text_view);
-            TextView yearTextView = (TextView) row
-                    .findViewById(R.id.year_text_view);
-            TextView numberTextView = (TextView) row
-                    .findViewById(R.id.number_text_view);
-            TextView playerNameTextView = (TextView) row
-                    .findViewById(R.id.player_name_text_view);
+        for (BaseballCard card : expectedItems) {
 
-            StringBuilder rowText = new StringBuilder("Row ").append(i)
-                    .append(":").append(brandTextView.getText()).append(',')
-                    .append(yearTextView.getText()).append(',')
-                    .append(numberTextView.getText()).append(',')
-                    .append(playerNameTextView.getText());
-            Log.d(TAG, rowText.toString());
+            boolean listContainsCard = false;
+            for (int i = 0; i < listView.getChildCount(); i++) {
+                // Add 1 to skip headers
+                View row = listView.getChildAt(i + 1);
+                TextView brandTextView = (TextView) row
+                        .findViewById(R.id.brand_text_view);
+                TextView yearTextView = (TextView) row
+                        .findViewById(R.id.year_text_view);
+                TextView numberTextView = (TextView) row
+                        .findViewById(R.id.number_text_view);
+                TextView playerNameTextView = (TextView) row
+                        .findViewById(R.id.player_name_text_view);
 
-            BaseballCard expectedCard = expectedItems.get(i);
-            Log.d(TAG, "Baseball Card #" + i + ":" + expectedCard);
+                String brand = brandTextView.getText().toString(), playerName = playerNameTextView
+                        .getText().toString();
+                int year = Integer.parseInt(yearTextView.getText().toString()), number = Integer
+                        .parseInt(numberTextView.getText().toString());
 
-            Assert.assertEquals(expectedCard.getBrand(), brandTextView
-                    .getText().toString());
-            Assert.assertEquals(expectedCard.getYear(),
-                    Integer.parseInt(yearTextView.getText().toString()));
-            Assert.assertEquals(expectedCard.getNumber(),
-                    Integer.parseInt(numberTextView.getText().toString()));
-            Assert.assertEquals(expectedCard.getPlayerName(),
-                    playerNameTextView.getText().toString());
+                if (card.getBrand().equals(brand) && card.getYear() == year
+                        && card.getNumber() == number
+                        && card.getPlayerName().equals(playerName)) {
+                    listContainsCard = true;
+                    break;
+                }
+            }
+
+            Assert.assertTrue(listContainsCard);
         }
     }
 
@@ -149,67 +151,14 @@ final public class BBCTTestUtil {
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public static void addCard(InstrumentationTestCase test,
-            Activity cardDetails, BaseballCard card) throws Throwable {
-        BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card);
-        BBCTTestUtil.clickCardDetailsSave(test, cardDetails);
+    public static void addCard(Solo solo, BaseballCard card) throws Throwable {
+        BBCTTestUtil.sendKeysToCardDetails(solo, card);
+        solo.clickOnActionBarItem(R.id.save_menu);
     }
 
     public static void waitForToast(Solo solo, String message) {
         Assert.assertTrue(solo.waitForDialogToOpen(TIME_OUT));
         Assert.assertTrue(solo.searchText(message));
-    }
-
-    /**
-     * Click the "Save" button on the given {@link BaseballCardDetails}
-     * activity. This is all wrapped into a helper method because the button
-     * click must be done on the UI thread while the assertion must not.
-     *
-     * @param test
-     *            The {@link InstrumentationTestCase} object performing the
-     *            test.
-     * @param cardDetails
-     *            The {@link BaseballCardDetails} activity being tested.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
-    public static void clickCardDetailsSave(InstrumentationTestCase test,
-            Activity cardDetails) throws Throwable {
-        final Button saveButton = (Button) cardDetails
-                .findViewById(R.id.save_button);
-
-        test.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(saveButton.performClick());
-            }
-        });
-    }
-
-    /**
-     * Click the "Done" button on the given {@link BaseballCardDetails} activity
-     * and assert that the activity is finishing. This is all wrapped into a
-     * helper method because the button click must be done on the UI thread
-     * while the assertion must not.
-     *
-     * @param test
-     *            The {@link InstrumentationTestCase} object performing the
-     *            test.
-     * @param cardDetails
-     *            The {@link BaseballCardDetails} activity being tested.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
-    public static void clickCardDetailsDone(Solo solo, Activity cardDetails)
-            throws Throwable {
-        final Button doneButton = (Button) cardDetails
-                .findViewById(R.id.done_button);
-        solo.clickOnView(doneButton);
-        Assert.assertTrue(cardDetails.isFinishing());
     }
 
     /**
@@ -229,10 +178,9 @@ final public class BBCTTestUtil {
      * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
      *      BaseballCard, Set)
      */
-    public static void sendKeysToCardDetails(InstrumentationTestCase test,
-            Activity cardDetails, BaseballCard card)
+    public static void sendKeysToCardDetails(Solo solo, BaseballCard card)
             throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(test, cardDetails, card,
+        BBCTTestUtil.sendKeysToCardDetails(solo, card,
                 EnumSet.allOf(EditTexts.class));
     }
 
@@ -253,82 +201,90 @@ final public class BBCTTestUtil {
      * @throws InterruptedException
      *             If {@link Thread#sleep()} is interrupted.
      */
-    public static void sendKeysToCardDetails(InstrumentationTestCase test,
-            Activity cardDetails, BaseballCard card, Set<EditTexts> fieldFlags)
-            throws InterruptedException {
+    public static void sendKeysToCardDetails(Solo solo, BaseballCard card,
+            Set<EditTexts> fieldFlags) throws InterruptedException {
         Log.d(TAG, "sendKeysToCardDetails()");
 
-        Instrumentation inst = test.getInstrumentation();
-
-        if (fieldFlags.contains(EditTexts.BRAND)) {
-            AutoCompleteTextView brandText = (AutoCompleteTextView) cardDetails
-                    .findViewById(R.id.brand_text);
-            sendKeysToCurrFieldCardDetails(inst, brandText, card.getBrand());
+        if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
+            if (card.isAutographed()) {
+                solo.clickOnCheckBox(0);
+            }
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+
+        if (fieldFlags.contains(EditTexts.CONDITION)) {
+            Spinner conditionSpinner = (Spinner) solo.getView(R.id.condition);
+            @SuppressWarnings("unchecked")
+            ArrayAdapter<CharSequence> conditionAdapter = (ArrayAdapter<CharSequence>) conditionSpinner
+                    .getAdapter();
+            int newIndex = conditionAdapter.getPosition(card.getCondition());
+            int currIndex = conditionSpinner.getSelectedItemPosition();
+            solo.pressSpinnerItem(0, newIndex - currIndex);
+        }
+
+        AutoCompleteTextView brandText = (AutoCompleteTextView) solo
+                .getView(R.id.brand_text);
+        if (fieldFlags.contains(EditTexts.BRAND)) {
+            solo.typeText(brandText, card.getBrand());
+        }
+
+        Thread.sleep(50);
+        if (brandText.isPopupShowing()) {
+            solo.goBack();
+        }
 
         if (fieldFlags.contains(EditTexts.YEAR)) {
-            sendKeysToCurrFieldCardDetails(inst, null,
-                    Integer.toString(card.getYear()));
+            EditText yearText = (EditText) solo.getView(R.id.year_text);
+            solo.typeText(yearText, Integer.toString(card.getYear()));
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.NUMBER)) {
-            sendKeysToCurrFieldCardDetails(inst, null,
-                    Integer.toString(card.getNumber()));
+            EditText numberText = (EditText) solo.getView(R.id.number_text);
+            solo.typeText(numberText, Integer.toString(card.getNumber()));
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.VALUE)) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
-            sendKeysToCurrFieldCardDetails(inst, null, valueStr);
+            EditText valueText = (EditText) solo.getView(R.id.value_text);
+            solo.typeText(valueText, valueStr);
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
         if (fieldFlags.contains(EditTexts.COUNT)) {
-            sendKeysToCurrFieldCardDetails(inst, null,
-                    Integer.toString(card.getCount()));
+            EditText countText = (EditText) solo.getView(R.id.count_text);
+            solo.typeText(countText, Integer.toString(card.getCount()));
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
+        AutoCompleteTextView playerNameText = (AutoCompleteTextView) solo
+                .getView(R.id.player_name_text);
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
-            AutoCompleteTextView playerNameText = (AutoCompleteTextView) cardDetails
-                    .findViewById(R.id.player_name_text);
-            sendKeysToCurrFieldCardDetails(inst, playerNameText,
-                    card.getPlayerName());
+            solo.typeText(playerNameText, card.getPlayerName());
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
 
-        if (fieldFlags.contains(EditTexts.TEAM)) {
-            AutoCompleteTextView teamText = (AutoCompleteTextView) cardDetails
-                    .findViewById(R.id.team_text);
-            sendKeysToCurrFieldCardDetails(inst, teamText, card.getTeam());
+        Thread.sleep(50);
+        if (playerNameText.isPopupShowing()) {
+            solo.goBack();
         }
-        inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_DOWN);
+
+        AutoCompleteTextView teamText = (AutoCompleteTextView) solo
+                .getView(R.id.team_text);
+        if (fieldFlags.contains(EditTexts.TEAM)) {
+            solo.typeText(teamText, card.getTeam());
+        }
+
+        Thread.sleep(50);
+        if (teamText.isPopupShowing()) {
+            solo.goBack();
+        }
 
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
-            Spinner playerPositionSpinner = (Spinner) cardDetails
-                    .findViewById(R.id.player_position_text);
+            Spinner playerPositionSpinner = (Spinner) solo
+                    .getView(R.id.player_position_text);
             @SuppressWarnings("unchecked")
             ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner
                     .getAdapter();
-            int newPos = playerPositionAdapter.getPosition(card
+            int newIndex = playerPositionAdapter.getPosition(card
                     .getPlayerPosition());
-            int oldPos = playerPositionSpinner.getSelectedItemPosition();
-            int move = newPos - oldPos;
-
-            Log.d(TAG, "newPos=" + newPos + ", oldPos=" + oldPos + ", move="
-                    + move);
-
-            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
-            Thread.sleep(500);
-            if (move > 0) {
-                test.sendRepeatedKeys(move, KeyEvent.KEYCODE_DPAD_DOWN);
-            } else {
-                test.sendRepeatedKeys(-move, KeyEvent.KEYCODE_DPAD_UP);
-            }
-            Thread.sleep(500);
-            inst.sendKeyDownUpSync(KeyEvent.KEYCODE_DPAD_CENTER);
+            int currIndex = playerPositionSpinner.getSelectedItemPosition();
+            solo.pressSpinnerItem(1, newIndex - currIndex);
         }
     }
 
@@ -370,6 +326,10 @@ final public class BBCTTestUtil {
      */
     public static void assertAllEditTextContents(Activity cardDetails,
             BaseballCard expectedCard) {
+        CheckBox autographedCheckBox = (CheckBox) cardDetails
+                .findViewById(R.id.autograph);
+        Spinner conditionSpinner = (Spinner) cardDetails
+                .findViewById(R.id.condition);
         EditText brandText = (EditText) cardDetails
                 .findViewById(R.id.brand_text);
         EditText yearText = (EditText) cardDetails.findViewById(R.id.year_text);
@@ -384,6 +344,10 @@ final public class BBCTTestUtil {
         Spinner playerPositionSpinner = (Spinner) cardDetails
                 .findViewById(R.id.player_position_text);
 
+        Assert.assertEquals(expectedCard.isAutographed(),
+                autographedCheckBox.isChecked());
+        Assert.assertEquals(expectedCard.getCondition(),
+                conditionSpinner.getSelectedItem());
         Assert.assertEquals(expectedCard.getBrand(), brandText.getText()
                 .toString());
         Assert.assertEquals(expectedCard.getYear(),
@@ -475,6 +439,88 @@ final public class BBCTTestUtil {
     }
 
     /**
+     * Fills in all {@link EditText} views, except the ones indicated, of the
+     * {@link FilterCards} activity.
+     *
+     * @param test
+     *            - the {@link InstrumentationTestCase} object perform in the
+     *            test.
+     * @param filterCards
+     *            - the {@link FilterCards} activity being tested.
+     * @param solo
+     *            - the {@link Solo} object to perform clicks on views.
+     * @param testCard
+     *            - the {@link BaseballCard} which is used to fill in the data.
+     * @param fieldFlags
+     *            - the {@link EditText} views to fill in.
+     */
+    public static void sendKeysToFilterCards(InstrumentationTestCase test,
+            Solo solo, BaseballCard testCard, Set<EditTexts> fieldFlags) {
+        Instrumentation inst = test.getInstrumentation();
+
+        if (fieldFlags.contains(EditTexts.BRAND)) {
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.brand_check,
+                    testCard.getBrand());
+        }
+
+        if (fieldFlags.contains(EditTexts.YEAR)) {
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.year_check,
+                    testCard.getYear() + "");
+        }
+
+        if (fieldFlags.contains(EditTexts.NUMBER)) {
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.number_check,
+                    testCard.getNumber() + "");
+        }
+
+        if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.player_name_check,
+                    testCard.getPlayerName());
+        }
+
+        if (fieldFlags.contains(EditTexts.TEAM)) {
+            sendKeysToCurrFieldFilterCards(inst, solo, R.id.team_check,
+                    testCard.getTeam());
+        }
+    }
+
+    /**
+     * Fills in the current {@link EditText} view, of the given
+     * {@link FilterCards} activity.
+     *
+     * @param inst
+     *            - the {@link Instrumentation} object perform in the test.
+     * @param filterCards
+     *            - the {@link FilterCards} activity being tested.
+     * @param solo
+     *            - the {@link Solo} object to perform clicks on view.
+     * @param checkId
+     *            - the id of {@link CheckBox} to click.
+     * @param input
+     *            - the input string.
+     */
+    public static void sendKeysToCurrFieldFilterCards(Instrumentation inst,
+            Solo solo, int checkId, String input) {
+        Activity filterCards = solo.getCurrentActivity();
+        CheckBox cb = (CheckBox) filterCards.findViewById(checkId);
+        solo.clickOnView(cb);
+        inst.sendStringSync(input);
+    }
+
+    public static List<BaseballCard> filterList(List<BaseballCard> list,
+            Predicate<BaseballCard> pred) {
+        List<BaseballCard> filteredList = new ArrayList<BaseballCard>();
+
+        for (BaseballCard obj : list) {
+            if (pred.doTest(obj)) {
+                filteredList.add(obj);
+            }
+        }
+
+        return filteredList;
+    }
+
+    /**
      * Checks if the given child view is visible in the given parent view. Logic
      * followed is same as {@link ViewAsserts.assertOnScreen()}.
      *
@@ -553,6 +599,14 @@ final public class BBCTTestUtil {
      * .
      */
     public enum EditTexts {
+        /**
+         * Input the autographed state.
+         */
+        AUTOGRAPHED,
+        /**
+         * Input the card condition.
+         */
+        CONDITION,
         /**
          * Input the card brand field.
          */

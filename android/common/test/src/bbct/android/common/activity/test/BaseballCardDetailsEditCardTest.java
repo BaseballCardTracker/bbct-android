@@ -31,6 +31,7 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
+import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.EnumSet;
 import java.util.List;
@@ -113,18 +114,24 @@ public class BaseballCardDetailsEditCardTest extends
         this.newCard.setValue(this.newCard.getValue() + 50);
         this.newCard.setCount(this.newCard.getCount() + 1);
 
+        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
+        this.cardId = this.dbUtil.insertBaseballCard(this.oldCard);
+
+        Log.d(TAG, "cardId=" + this.cardId);
+
+        if (this.cardId == -1) {
+            Log.e(TAG, this.oldCard.toString());
+        }
+
         Context target = this.inst.getTargetContext();
         Intent intent = new Intent(target, BaseballCardDetails.class);
         intent.putExtra(target.getString(R.string.baseball_card_extra),
                 this.oldCard);
+        intent.putExtra(target.getString(R.string.card_id_extra), this.cardId);
         this.setActivityIntent(intent);
-        this.activity = this.getActivity();
 
-        // Insert baseball card to make sure we are updating an existing card
-        // rather than simply inserting a new card.
-        // TODO Make sure this still works without using BaseballCardSQLHelper
-        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        this.dbUtil.insertBaseballCard(this.oldCard);
+        this.activity = this.getActivity();
+        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -136,7 +143,7 @@ public class BaseballCardDetailsEditCardTest extends
      */
     @Override
     public void tearDown() throws Exception {
-        this.dbUtil.deleteDatabase();
+        this.dbUtil.clearDatabase();
 
         super.tearDown();
 
@@ -157,17 +164,26 @@ public class BaseballCardDetailsEditCardTest extends
         Assert.assertTrue(this.dbUtil.containsBaseballCard(this.oldCard));
 
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.oldCard);
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.newCard,
+        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.newCard,
                 this.inputMask);
 
         BaseballCard expected = this.getExpectedCard();
-        BBCTTestUtil.assertAllEditTextContents(this.activity, expected);
-        BBCTTestUtil.clickCardDetailsSave(this, this.activity);
 
+        Log.d("DEBUG", "Checking cards for inputMask " + this.inputMask);
+        BBCTTestUtil.assertAllEditTextContents(this.activity, expected);
+        Log.d("DEBUG", "Success!");
+
+        this.solo.clickOnButton("Save");
         Assert.assertTrue(this.dbUtil.containsBaseballCard(expected));
     }
 
     private BaseballCard getExpectedCard() {
+        boolean autographed = this.inputMask
+                .contains(BBCTTestUtil.EditTexts.AUTOGRAPHED) ? this.newCard
+                .isAutographed() : this.oldCard.isAutographed();
+        String condition = this.inputMask
+                .contains(BBCTTestUtil.EditTexts.CONDITION) ? this.newCard
+                .getCondition() : this.oldCard.getCondition();
         String brand = this.inputMask.contains(BBCTTestUtil.EditTexts.BRAND) ? this.newCard
                 .getBrand() : this.oldCard.getBrand();
         int year = this.inputMask.contains(BBCTTestUtil.EditTexts.YEAR) ? this.newCard
@@ -186,16 +202,18 @@ public class BaseballCardDetailsEditCardTest extends
         String position = this.inputMask
                 .contains(BBCTTestUtil.EditTexts.PLAYER_POSITION) ? this.newCard
                 .getPlayerPosition() : this.oldCard.getPlayerPosition();
-        return new BaseballCard(brand, year, number, value, count, name, team,
-                position);
+        return new BaseballCard(autographed, condition, brand, year, number,
+                value, count, name, team, position);
     }
 
     private final Set<BBCTTestUtil.EditTexts> inputMask;
+    private Solo solo = null;
     private Instrumentation inst = null;
     private Activity activity = null;
     private BaseballCard oldCard = null;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil = null;
+    private long cardId = -1;
     private static final String TEST_NAME = "testEditCard";
     private static final String TAG = BaseballCardDetailsEditCardTest.class
             .getName();

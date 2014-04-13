@@ -23,4 +23,7 @@
     <dimen name="year_col_width">25dp</dimen>
     <dimen name="number_col_width">40dp</dimen>
     <dimen name="player_name_col_width">60dp</dimen>
+    
+    <!-- Text size used in filter cards activity -->
+    <dimen name="option_size">15sp</dimen>
 </resources>

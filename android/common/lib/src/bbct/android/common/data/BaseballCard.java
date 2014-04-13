@@ -52,8 +52,11 @@ public class BaseballCard implements Serializable {
      * @param playerPosition
      *            The position this player played.
      */
-    public BaseballCard(String brand, int year, int number, int value, int count,
-            String playerName, String team, String playerPosition) {
+    public BaseballCard(boolean autographed, String condition, String brand,
+            int year, int number, int value, int count, String playerName,
+            String team, String playerPosition) {
+        this.autographed = autographed;
+        this.condition = condition;
         this.brand = brand;
         this.year = year;
         this.number = number;
@@ -62,6 +65,24 @@ public class BaseballCard implements Serializable {
         this.playerName = playerName;
         this.team = team;
         this.playerPosition = playerPosition;
+    }
+
+    /**
+     * Is this {@link BaseballCard} autographed?
+     *
+     * @return Whether or not the card is autographed
+     */
+    public boolean isAutographed() {
+        return this.autographed;
+    }
+
+    /**
+     * Get the condition of the {@link BaseballCard}.
+     *
+     * @return The condition of the {@link BaseballCard}.
+     */
+    public String getCondition() {
+        return this.condition;
     }
 
     /**
@@ -170,7 +191,9 @@ public class BaseballCard implements Serializable {
         if (o instanceof BaseballCard) {
             BaseballCard c = (BaseballCard) o;
 
-            return this.brand.equals(c.getBrand())
+            return this.autographed == c.isAutographed()
+                    && this.condition.equals(c.condition)
+                    && this.brand.equals(c.getBrand())
                     && this.year == c.getYear()
                     && this.number == c.getNumber()
                     && this.value == c.getValue()
@@ -190,8 +213,11 @@ public class BaseballCard implements Serializable {
      */
     @Override
     public int hashCode() {
-        // Might throw NPE if any of this.brand, this.playerName, or this.playerPosition is null.
+        // Might throw NPE if any of this.brand, this.playerName, or
+        // this.playerPosition is null.
         int hash = 7;
+        hash = 67 * hash + Boolean.valueOf(this.autographed).hashCode();
+        hash = 67 * hash + this.condition.hashCode();
         hash = 67 * hash + this.brand.hashCode();
         hash = 67 * hash + this.year;
         hash = 67 * hash + this.number;
@@ -213,17 +239,22 @@ public class BaseballCard implements Serializable {
      */
     @Override
     public String toString() {
-        return "BaseballCard{" + "cardBrand=" + this.brand + ", cardYear=" + this.year
-                + ", cardNumber=" + this.number + ", cardValue=" + this.value
-                + ", cardCount=" + this.count + ", playerName=" + this.playerName
-                + ", team=" + this.team + ", playerPosition=" + this.playerPosition + '}';
+        return "BaseballCard{" + "autographed=" + this.autographed
+                + ", condition=" + this.condition + ", cardBrand=" + this.brand
+                + ", cardYear=" + this.year + ", cardNumber=" + this.number
+                + ", cardValue=" + this.value + ", cardCount=" + this.count
+                + ", playerName=" + this.playerName + ", team=" + this.team
+                + ", playerPosition=" + this.playerPosition + '}';
     }
-    private String brand = null;
-    private int year = 0;
-    private int number = 0;
-    private int value = 0;
-    private int count = 0;
-    private String playerName = null;
-    private String team = null;
-    private String playerPosition = null;
+
+    private final boolean autographed;
+    private final String condition;
+    private final String brand;
+    private final int year;
+    private final int number;
+    private int value;
+    private int count;
+    private final String playerName;
+    private final String team;
+    private final String playerPosition;
 }

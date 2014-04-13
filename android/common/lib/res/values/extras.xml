@@ -18,13 +18,18 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+
     <!-- Keys for extras stored in Bundle and Intent objects -->
     <string name="baseball_card_extra">baseball_card</string>
-    <string name="filter_request_extra">filter_request</string>
+    <string name="filter_status_extra">filter_status</string>
+    <string name="filter_params_extra">filter_params</string>
+    <string name="brand_extra">brand</string>
     <string name="year_extra">year</string>
     <string name="number_extra">number</string>
     <string name="player_name_extra">player_name</string>
     <string name="team_extra">team</string>
-    <string name="filter_params_extra">filter_params</string>
     <string name="selection_extra">selection</string>
+    <string name="card_id_extra">card_id</string>
+    <string name="input_extra">input</string>
+
 </resources>

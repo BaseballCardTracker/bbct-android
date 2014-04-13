@@ -29,6 +29,7 @@ import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
+import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumSet;
@@ -100,7 +101,9 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         this.countEditText = (EditText) this.activity.findViewById(R.id.count_text);
         this.valueEditText = (EditText) this.activity.findViewById(R.id.value_text);
         this.playerNameEditText = (EditText) this.activity.findViewById(R.id.player_name_text);
-        this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
+        this.teamEditText = (EditText) this.activity.findViewById(R.id.team_text);
+
+        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -114,58 +117,54 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         Log.d(TAG, "testPartialInput()");
         Log.d(TAG, "inputFieldsMask=" + this.inputFieldsMask);
 
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, this.inputFieldsMask);
-        this.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(BaseballCardDetailsPartialInputTest.this.saveButton.performClick());
-            }
-        });
+        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card, this.inputFieldsMask);
+        this.solo.clickOnActionBarItem(R.id.save_menu);
 
         EditText focusEditText = null;
 
-        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.BRAND)) {
-            Assert.assertEquals(this.activity.getString(R.string.brand_input_error), this.brandEditText.getError());
-            focusEditText = this.brandEditText;
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.TEAM)) {
+            Assert.assertEquals(this.activity.getString(R.string.team_input_error), this.teamEditText.getError());
+            focusEditText = this.teamEditText;
         }
-        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.YEAR)) {
-            Assert.assertEquals(this.activity.getString(R.string.year_input_error), this.yearEditText.getError());
-            focusEditText = this.yearEditText;
-        }
-        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.NUMBER)) {
-            Assert.assertEquals(this.activity.getString(R.string.number_input_error), this.numberEditText.getError());
-            focusEditText = this.numberEditText;
-        }
-        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.VALUE)) {
-            Assert.assertEquals(this.activity.getString(R.string.value_input_error), this.valueEditText.getError());
-            focusEditText = this.valueEditText;
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME)) {
+            Assert.assertEquals(this.activity.getString(R.string.player_name_input_error), this.playerNameEditText.getError());
+            focusEditText = this.playerNameEditText;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.COUNT)) {
             Assert.assertEquals(this.activity.getString(R.string.count_input_error), this.countEditText.getError());
             focusEditText = this.countEditText;
         }
-        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME)) {
-            Assert.assertEquals(this.activity.getString(R.string.player_name_input_error), this.playerNameEditText.getError());
-            focusEditText = this.playerNameEditText;
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.VALUE)) {
+            Assert.assertEquals(this.activity.getString(R.string.value_input_error), this.valueEditText.getError());
+            focusEditText = this.valueEditText;
         }
-        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME)) {
-            Assert.assertEquals(this.activity.getString(R.string.player_name_input_error), this.playerNameEditText.getError());
-            focusEditText = this.playerNameEditText;
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.NUMBER)) {
+            Assert.assertEquals(this.activity.getString(R.string.number_input_error), this.numberEditText.getError());
+            focusEditText = this.numberEditText;
+        }
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.YEAR)) {
+            Assert.assertEquals(this.activity.getString(R.string.year_input_error), this.yearEditText.getError());
+            focusEditText = this.yearEditText;
+        }
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.BRAND)) {
+            Assert.assertEquals(this.activity.getString(R.string.brand_input_error), this.brandEditText.getError());
+            focusEditText = this.brandEditText;
         }
 
-        // TODO Check that correct EditText has focus
-//        Assert.assertEquals(focusEditText, this.activity.getCurrentFocus());
-//        Assert.assertTrue(focusEditText.hasFocus());
+        this.inst.waitForIdleSync();
+        Assert.assertTrue(focusEditText.hasFocus());
     }
+
+    private Solo solo = null;
     private Activity activity = null;
     private Instrumentation inst = null;
-    private Button saveButton = null;
     private EditText brandEditText = null;
     private EditText yearEditText = null;
     private EditText numberEditText = null;
     private EditText countEditText = null;
     private EditText valueEditText = null;
     private EditText playerNameEditText = null;
+    private EditText teamEditText = null;
     private BaseballCard card = null;
     private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
     private static final String TEST_NAME = "testPartialInput";

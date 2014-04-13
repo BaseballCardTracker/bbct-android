@@ -19,7 +19,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="bbct.android"
-    android:versionCode="10"
+    android:versionCode="11"
     android:versionName="@string/version_number" >
 
     <uses-sdk
@@ -66,35 +66,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.lite.activity.BaseballCardList" />
         </activity>
-        <activity android:name=".common.activity.FilterOptions" >
+        <activity android:name=".common.activity.FilterCards" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.lite.activity.BaseballCardList" />
-        </activity>
-        <activity android:name=".common.activity.filter.YearFilter" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.common.activity.FilterOptions" />
-        </activity>
-        <activity android:name=".common.activity.filter.NumberFilter" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.common.activity.FilterOptions" />
-        </activity>
-        <activity android:name=".common.activity.filter.YearAndNumberFilter" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.common.activity.FilterOptions" />
-        </activity>
-        <activity android:name=".common.activity.filter.PlayerNameFilter" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.common.activity.FilterOptions" />
-        </activity>
-        <activity android:name=".common.activity.filter.TeamFilter" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.common.activity.FilterOptions" />
         </activity>
         <activity android:name=".common.activity.About" >
             <meta-data
@@ -103,7 +78,7 @@
         </activity>
 
         <provider
-            android:name="bbct.android.common.provider.BaseballCardProvider"
+            android:name="bbct.android.lite.provider.LiteProvider"
             android:authorities="@string/authorities"
             android:icon="@drawable/baseball"
             android:label="@string/provider_name"

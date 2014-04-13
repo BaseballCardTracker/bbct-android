@@ -27,7 +27,7 @@ import bbct.android.common.R;
 import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
-import bbct.android.common.activity.FilterOptions;
+import bbct.android.common.activity.FilterCards;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
@@ -88,8 +88,9 @@ public class BaseballCardListWithoutDataTest extends
      */
     @Override
     public void tearDown() throws Exception {
-        this.dbUtil.deleteDatabase();
+        this.dbUtil.clearDatabase();
         this.cardInput.close();
+        this.solo.finishOpenedActivities();
 
         super.tearDown();
     }
@@ -139,15 +140,15 @@ public class BaseballCardListWithoutDataTest extends
     }
 
     /**
-     * Test that the "Filter Cards" menu item launches a {@link FilterOptions}
+     * Test that the "Filter Cards" menu item launches a {@link FilterCards}
      * activity.
      */
     public void testFilterCardsMenuItem() {
-        Activity filterOptions = BBCTTestUtil.testMenuItem(this.solo,
-                this.activity, R.id.filter_menu, FilterOptions.class);
+        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
+                this.activity, R.id.filter_menu, FilterCards.class);
 
-        filterOptions.finish();
-        Assert.assertTrue(filterOptions.isFinishing());
+        filterCards.finish();
+        Assert.assertTrue(filterCards.isFinishing());
     }
 
     /**
@@ -187,9 +188,9 @@ public class BaseballCardListWithoutDataTest extends
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
-        BBCTTestUtil.addCard(this, cardDetails, card);
+        BBCTTestUtil.addCard(this.solo, card);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
+        this.solo.goBack();
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
 
@@ -211,16 +212,16 @@ public class BaseballCardListWithoutDataTest extends
      *             thread runs.
      */
     public void testAddMultipleCards() throws IOException, Throwable {
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
-                this.activity, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, this.activity, R.id.add_menu,
+                BaseballCardDetails.class);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
 
         for (BaseballCard card : cards) {
-            BBCTTestUtil.addCard(this, cardDetails, card);
+            BBCTTestUtil.addCard(this.solo, card);
             BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
-        BBCTTestUtil.clickCardDetailsDone(this.solo, cardDetails);
+        this.solo.goBack();
         BBCTTestUtil.assertListViewContainsItems(this.inst, cards,
                 this.listView);
     }
