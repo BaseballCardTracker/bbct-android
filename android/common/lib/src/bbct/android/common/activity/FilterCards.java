@@ -126,7 +126,7 @@ public class FilterCards extends ActionBarActivity {
         }
 
         this.toggleTextField(input);
-        this.invalidateOptionsMenu();
+        this.supportInvalidateOptionsMenu();
     }
 
     /**
