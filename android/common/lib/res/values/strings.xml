@@ -22,6 +22,7 @@
     <string name="provider_name">BBCT Data</string>
 
     <!-- Activity titles -->
+    <string name="card_details_title">Card Details</string>
     <string name="filter_cards_title">Filter Cards</string>
     <string name="about_title">About</string>
     <string name="input_error_title">Input Error</string>
