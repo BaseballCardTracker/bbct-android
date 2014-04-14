@@ -234,7 +234,7 @@ public class BaseballCardList extends ActionBarActivity {
             this.savedSelection = null;
             this.applyFilter();
 
-            this.invalidateOptionsMenu();
+            this.supportInvalidateOptionsMenu();
 
             return true;
         } else if (itemId == R.id.delete_menu) {
@@ -344,7 +344,7 @@ public class BaseballCardList extends ActionBarActivity {
 
                 this.applyFilter();
 
-                this.invalidateOptionsMenu();
+                this.supportInvalidateOptionsMenu();
             }
         } else {
             Log.e(TAG, "onActivityResult(): Invalid result code: "
