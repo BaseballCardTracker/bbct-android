@@ -18,9 +18,6 @@
  */
 package bbct.android.premium.provider;
 
-import bbct.android.premium.R;
-import bbct.android.premium.R.string;
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -31,6 +28,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
+import bbct.android.premium.R;
 import java.util.List;
 
 /**
@@ -74,6 +72,7 @@ public class PremiumSQLHelper extends
             }
         } catch (NameNotFoundException ex) {
             Log.i(TAG, LITE_PACKAGE + " package not found", ex);
+            canGetData = false;
         }
 
         if (canGetData) {
