@@ -21,6 +21,7 @@ package bbct.android.premium.provider;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -43,8 +44,7 @@ public class PremiumSQLHelper extends
      * Create a {@link PremiumSQLHelper} with the given {@link Context}.
      *
      * @param context
-     *            The Android {@link Context} for this
-     *            {@link PremiumSQLHelper}.
+     *            The Android {@link Context} for this {@link PremiumSQLHelper}.
      */
     public PremiumSQLHelper(Context context) {
         super(context);
@@ -60,22 +60,7 @@ public class PremiumSQLHelper extends
 
         Log.d(TAG, "onCreate()");
 
-        boolean canGetData = true;
-
-        try {
-            PackageInfo liteInfo = this.context.getPackageManager()
-                    .getPackageInfo(LITE_PACKAGE, SCHEMA_VERSION);
-            if (liteInfo.versionCode < MIN_LITE_VERSION) {
-                String errorMessage = this.context
-                        .getString(R.string.lite_update_message);
-                throw new SQLException(errorMessage);
-            }
-        } catch (NameNotFoundException ex) {
-            Log.i(TAG, LITE_PACKAGE + " package not found", ex);
-            canGetData = false;
-        }
-
-        if (canGetData) {
+        if (this.isLiteInstalled()) {
             ContentResolver resolver = this.context.getContentResolver();
             Cursor results = resolver.query(BaseballCardContract.LITE_URI,
                     BaseballCardContract.PROJECTION, null, null, null);
@@ -85,11 +70,30 @@ public class PremiumSQLHelper extends
                         .getAllBaseballCardsFromCursor(results);
                 this.insertAllBaseballCards(db, cards);
             } else {
-                String errorMessage = this.context.getString(R.string.import_error);
+                String errorMessage = this.context
+                        .getString(R.string.import_error);
                 throw new SQLException(errorMessage);
             }
         }
 
+    }
+
+    private boolean isLiteInstalled() {
+        try {
+            PackageInfo liteInfo = this.context
+                    .getPackageManager()
+                    .getPackageInfo(LITE_PACKAGE, PackageManager.GET_ACTIVITIES);
+            if (liteInfo.versionCode < MIN_LITE_VERSION) {
+                String errorMessage = this.context
+                        .getString(R.string.lite_update_message);
+                throw new SQLException(errorMessage);
+            }
+
+            return true;
+        } catch (NameNotFoundException ex) {
+            Log.i(TAG, LITE_PACKAGE + " package not found", ex);
+            return false;
+        }
     }
 
     private static final String TAG = PremiumSQLHelper.class.getName();
