@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  This file is part of BBCT for Android.
 
  Copyright 2012 codeguru <codeguru@users.sourceforge.net>
@@ -19,8 +18,6 @@
 -->
 <resources>
     <!-- IDs for views -->
-    <item type="id" name="ad_view"/>
+    <item name="ad_view" type="id" />
 
-    <!-- AdMob Publisher ID -->
-    <string name="admob_id">a151047824e2718</string>
 </resources>
