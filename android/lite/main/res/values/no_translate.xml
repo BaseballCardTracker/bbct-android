@@ -21,6 +21,6 @@
 
     <string name="app_name">BBCT Lite</string>
     <string name="bbct_title">BBCT Lite - %1$s</string>
-    <string name="version_number">0.5.8</string>
+    <string name="version_number">0.5.9</string>
 
 </resources>
