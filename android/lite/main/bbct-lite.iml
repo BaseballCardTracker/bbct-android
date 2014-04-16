@@ -36,6 +36,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="bbct-common-lib" exported="" />
+    <orderEntry type="library" name="amazon-ads-5.1.243" level="project" />
   </component>
 </module>
 

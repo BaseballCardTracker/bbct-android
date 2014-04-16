@@ -18,52 +18,51 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-
     <string name="provider_name">BBCT Datos</string>
 
-    <!-- Activity titles -->
-    <string name="card_details_title">Detalles tarjeta</string>
-    <string name="player_details_title">Detalles Jugador</string>
-    <string name="filter_cards_title">Opciones Filtro</string>
+    <!--Activity titles-->
+    <string name="filter_cards_title">Filtrar Tarjetas</string>
     <string name="about_title">Acerca de</string>
     <string name="input_error_title">Error Entrada</string>
     <string name="duplicate_card_title">Tarjeta Duplicada</string>
     <string name="start">Pulse (+) para empezar.</string>
     <string name="empty_list">Ninguna tarjeta encontrada.</string>
 
-    <!-- Labels for card details -->
+    <!--Labels for card details-->
     <string name="condition_label">Condición:</string>
     <string name="autograph_label">Autografiada?</string>
-    <string name="brand_label">Marca Tarjeta:</string>
-    <string name="year_label">Año Tarjeta:</string>
-    <string name="number_label">Número Tarjeta:</string>
-    <string name="value_label">Valor Tarjeta:</string>
-    <string name="count_label">Cantidad Tarjetas:</string>
-    <string name="player_name_label">Nombre Jugador:</string>
+    <string name="brand_label">Marca:</string>
+    <string name="year_label">Año:</string>
+    <string name="number_label">Número:</string>
+    <string name="value_label">Valor:</string>
+    <string name="count_label">Cantidad:</string>
+    <string name="player_name_label">Nombre del Jugador:</string>
     <string name="team_label">Equipo:</string>
-    <string name="player_position_label">Posición Jugador:</string>
+    <string name="player_position_label">Posición:</string>
 
-    <!-- Column headings for card list -->
+    <!--Column headings for card list-->
     <string name="brand">Marca</string>
     <string name="year">Año</string>
     <string name="number_col">#</string>
+    <string name="number">Número</string>
     <string name="value">Valor</string>
     <string name="count">Cantidad</string>
-    <string name="player_name">Nombre Jugador</string>
-    <string name="player_position">Posición Jugador</string>
+    <string name="player_name">Nombre del Jugador</string>
+    <string name="player_position">Posición</string>
+    <string name="team">Equipo</string>
 
-    <!-- Hints for TextEdit widgets -->
+    <!--Hints for TextEdit widgets-->
     <string name="condition_hint">Seleccionar condición.</string>
-    <string name="brand_hint">Informar marca tarjeta.</string>
-    <string name="year_hint">Informar año tarjeta.</string>
-    <string name="number_hint">Informar número tarjeta.</string>
-    <string name="value_hint">Informar valor tarjeta.</string>
-    <string name="count_hint">Informar cantidad tarjetas.</string>
-    <string name="player_name_hint">Informar nombre jugador.</string>
-    <string name="team_hint">Informar equipo jugador.</string>
-    <string name="player_position_hint">Informar posición jugador.</string>
+    <string name="brand_hint">Informar la marca.</string>
+    <string name="year_hint">Informar año.</string>
+    <string name="number_hint">Informar número.</string>
+    <string name="value_hint">Informar valor.</string>
+    <string name="count_hint">Informar cantidad.</string>
+    <string name="player_name_hint">Informar nombre del jugador.</string>
+    <string name="team_hint">Informar equipo.</string>
+    <string name="player_position_hint">Seleccionar posición.</string>
 
-    <!-- Menu text -->
+    <!--Menu text-->
     <string name="add_menu">Añadir Tarjetas</string>
     <string name="filter_menu">Filtrar Tarjetas</string>
     <string name="clear_filter_menu">Borrar Filtro</string>
@@ -71,18 +70,18 @@
     <string name="delete_menu">Borrar Tarjetas</string>
     <string name="save_menu">Guardar</string>
 
-    <!-- Text in About activity -->
-    <string name="version_text">Version %1$s</string>
+    <!--Text in About activity-->
+    <string name="version_text">Versión %1$s</string>
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Sítio web:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">Este software está licenciado bajo la GPL. Visita\nhttp://www.gnu.org/licenses/licenses.es.html para uma cópia de la licencia.</string>
     <string name="about">BBCT es una aplicación de base de datos simple para tu colección de tarjetas de béisbol. Puedes añadir información acerca de las tarjetas en tu colección, veer detalles de tarjetas individuales, y filtrar la lista de tarjetas de acuerdo com un conjunto limitado de criterios. BBCT te ayuda a organizar tu colección y buscar rapidamente las tarjetas que posees. No dudes en enviar email com tus opiniones y comentarios, o visita el sítio web del proyecto.</string>
 
-    <!-- Card details toasts -->
+    <!--Card details toasts-->
     <string name="card_added_message">Tarjeta añadida com éxito.</string>
     <string name="card_deleted_message">Tarjetas borradas com éxito.</string>
 
-    <!-- Strings for position spinner in card details activity -->
+    <!--Strings for position spinner in card details activity-->
     <string-array name="positions">
         <item>Lanzador</item>
         <item>Receptor</item>
@@ -95,7 +94,7 @@
         <item>Jardinero Derecho</item>
     </string-array>
 
-    <!-- Strings for card condition -->
+    <!--Strings for card condition-->
     <string-array name="condition">
         <item>Perfecta</item>
         <item>Nueva</item>
@@ -106,19 +105,18 @@
         <item>Pobre</item>
     </string-array>
 
-    <!-- Error messages -->
+    <!--Error messages-->
     <string name="no_radio_button_error">Por favor selecciona una opción.</string>
-    <string name="brand_input_error">Por favor Informa un nombre de marca.</string>
-    <string name="year_input_error">Por favor Informa un año.</string>
-    <string name="number_input_error">Por favor Informa un número de tarjeta.</string>
-    <string name="value_input_error">Por favor Informa el valor de la tarjeta.</string>
-    <string name="count_input_error">Por favor Informa la cantidad de tarjetas que possees.</string>
-    <string name="player_name_input_error">Por favor Informa el nombre del jugador.</string>
-    <string name="team_input_error">Por favor Informa el equipo del jugador.</string>
-    <string name="player_position_input_error">Por favor Informa la posición del jugador.</string>
+    <string name="brand_input_error">Por favor informa una marca.</string>
+    <string name="year_input_error">Por favor informa un año.</string>
+    <string name="number_input_error">Por favor informa un número de tarjeta.</string>
+    <string name="value_input_error">Por favor informa el valor de la tarjeta.</string>
+    <string name="count_input_error">Por favor informa la cantidad de tarjetas que possees.</string>
+    <string name="player_name_input_error">Por favor informa el nombre del jugador.</string>
+    <string name="team_input_error">Por favor informa el equipo del jugador.</string>
+    <string name="player_position_input_error">Por favor informa la posición del jugador.</string>
     <string name="invalid_uri_error">URI no válido: %1$s</string>
     <string name="database_error">Se produjo un error al conectar con la base de datos.</string>
     <string name="duplicate_card_error">La tarjeta de béisbol ya existe. Por favor actualice su cantidad.</string>
     <string name="sponsor">Patrocinador Orgulloso:</string>
-
 </resources>

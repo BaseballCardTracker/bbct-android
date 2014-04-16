@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  This file is part of BBCT for Android.
 
  Copyright 2012 codeguru <codeguru@users.sourceforge.net>
@@ -28,6 +27,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <permission
         android:name="bbct.android.lite.permission.READ"
@@ -43,17 +44,17 @@
     <application
         android:icon="@drawable/baseball"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".lite.activity.BaseballCardList"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".common.activity.BaseballCardDetails" >
+        <activity android:name=".common.activity.BaseballCardDetails">
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
 
@@ -66,12 +67,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.lite.activity.BaseballCardList" />
         </activity>
-        <activity android:name=".common.activity.FilterCards" >
+        <activity android:name=".common.activity.FilterCards">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.lite.activity.BaseballCardList" />
         </activity>
-        <activity android:name=".common.activity.About" >
+        <activity android:name=".common.activity.About">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.common.activity.BaseballCardList" />
@@ -88,6 +89,9 @@
         <activity
             android:name="com.google.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+        <activity
+            android:name="com.amazon.device.ads.AdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
     </application>
 
 </manifest>
