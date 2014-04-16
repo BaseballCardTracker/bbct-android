@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
  This file is part of BBCT for Android.
 
  Copyright 2012 codeguru <codeguru@users.sourceforge.net>
@@ -17,10 +18,10 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="provider_name">BBCT Data</string>
+    <string name="provider_name">BBCT Dados</string>
 
     <!--Activity titles-->
-    <string name="filter_cards_title">Opções Filtro</string>
+    <string name="filter_cards_title">Filtrar Cartas</string>
     <string name="about_title">Sobre</string>
     <string name="input_error_title">Erro Entrada</string>
     <string name="duplicate_card_title">Carta Duplicada</string>
@@ -30,14 +31,14 @@
     <!--Labels for card details-->
     <string name="condition_label">Condição:</string>
     <string name="autograph_label">Autografada?</string>
-    <string name="brand_label">Marca Carta:</string>
-    <string name="year_label">Ano Carta:</string>
-    <string name="number_label">Número Carta:</string>
-    <string name="value_label">Valor Carta:</string>
-    <string name="count_label">Quantidade Cartas:</string>
-    <string name="player_name_label">Nome Jogador:</string>
+    <string name="brand_label">Marca:</string>
+    <string name="year_label">Ano:</string>
+    <string name="number_label">Número:</string>
+    <string name="value_label">Valor:</string>
+    <string name="count_label">Quantidade:</string>
+    <string name="player_name_label">Nome do Jogador:</string>
     <string name="team_label">Equipe:</string>
-    <string name="player_position_label">Posição Jogador:</string>
+    <string name="player_position_label">Posição:</string>
 
     <!--Column headings for card list-->
     <string name="brand">Marca</string>
@@ -46,21 +47,20 @@
     <string name="number">Número</string>
     <string name="value">Valor</string>
     <string name="count">Quantidade</string>
-    <string name="player_name">Nome Jogador</string>
-    <string name="player_position">Posição Jogador</string>
+    <string name="player_name">Nome do Jogador</string>
+    <string name="player_position">Posição</string>
     <string name="team">Equipe</string>
 
     <!--Hints for TextEdit widgets-->
     <string name="condition_hint">Selecionar condição.</string>
-    <string name="brand_hint">Informar marca carta.</string>
-    <string name="year_hint">Informar ano carta.</string>
-    <string name="number_hint">Informar número carta.</string>
-    <string name="value_hint">Informar valor carta.</string>
-    <string name="count_hint">Informar quantidade cartas.</string>
-    <string name="player_name_hint">Informar nome jogador.</string>
-    <string name="team_hint">Informar equipe jogador.</string>
-    <string name="player_position_hint">Informar posição jogador.</string>
-
+    <string name="brand_hint">Informar marca.</string>
+    <string name="year_hint">Informar ano.</string>
+    <string name="number_hint">Informar número.</string>
+    <string name="value_hint">Informar valor.</string>
+    <string name="count_hint">Informar quantidade.</string>
+    <string name="player_name_hint">Informar nome do jogador.</string>
+    <string name="team_hint">Informar equipe.</string>
+    <string name="player_position_hint">Selecionar posição</string>
     <!--Menu text-->
     <string name="add_menu">Incluir Cartas</string>
     <string name="filter_menu">Filtrar Cartas</string>
@@ -74,8 +74,7 @@
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">Este software é licenciado sob a GPL. Visite\nhttp://www.gnu.org/licenses/licenses.pt-br.html para uma cópia da licença.</string>
-    <string name="about">BBCT é uma aplicação simples de banco de dados para a sua coleção de cartas de beisebol. Você pode adicionar informações sobre as cartas da sua coleção, ver detalhes das cartas individuais e filtrar a lista de cartas de acordo com um conjunto limitado de critérios. BBCT te ajuda a organizar sua coleção e pesquisar rapidamente quais cartas você possui. Sinta-se à vontade para enviar email dom opiniões e comentários ou visite o website do projeto.</string>
-
+    <string name="about">BBCT é uma aplicação simples de banco de dados para a sua coleção de cartas de beisebol. Você pode adicionar informações sobre as cartas da sua coleção, ver detalhes de cartas individuais e filtrar a lista de cartas de acordo com um conjunto limitado de critérios. BBCT te ajuda a organizar sua coleção e pesquisar rapidamente quais cartas você possui. Sinta-se à vontade para enviar email com opiniões e comentários ou visite o website do projeto.</string>
     <!--Card details toasts-->
     <string name="card_added_message">Carta adicionada com sucesso.</string>
     <string name="card_deleted_message">Cartas excluídas com sucesso.</string>
@@ -106,16 +105,16 @@
 
     <!--Error messages-->
     <string name="no_radio_button_error">Por favor selecione uma opção.</string>
-    <string name="brand_input_error">Por favor informe um nome de marca.</string>
+    <string name="brand_input_error">Por favor informe uma marca.</string>
     <string name="year_input_error">Por favor informe um ano.</string>
     <string name="number_input_error">Por favor informe um número de carta.</string>
     <string name="value_input_error">Por favor informe o valor da carta.</string>
-    <string name="count_input_error">Por favor informe a quantidade de cartas que você tem.</string>
+    <string name="count_input_error">Por favor informe a quantidade de cartas que você possui.</string>
     <string name="player_name_input_error">Por favor informe o nome do jogador.</string>
     <string name="team_input_error">Por favor informe a equipe do jogador.</string>
     <string name="player_position_input_error">Por favor informe a posição do jogador.</string>
     <string name="invalid_uri_error">URI Inválido: %1$s</string>
     <string name="database_error">Ocorreu erro ao conectar ao banco de dados.</string>
     <string name="duplicate_card_error">A carta de beisebol já existe. Por favor atualize a sua quantidade.</string>
-    <string name="sponsor">Patrocinador Orgulho:</string>
+    <string name="sponsor">Patrocinador Orgulhoso:</string>
 </resources>
