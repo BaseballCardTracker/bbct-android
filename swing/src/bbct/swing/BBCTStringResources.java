@@ -128,7 +128,7 @@ public class BBCTStringResources {
         /**
          * Version string.
          */
-        public static final String ABOUT_VERSION = "Version 0.5.3 (beta)";
+        public static final String ABOUT_VERSION = "Version 0.5.4 (beta)";
         /**
          * Copyright notice.
          */
@@ -136,7 +136,7 @@ public class BBCTStringResources {
         /**
          * Website address.
          */
-        public static final String ABOUT_WEBSITE = "Project website: http://sf.net/p/bbct";
+        public static final String ABOUT_WEBSITE = "Project website: https://github.com/BaseballCardTracker/bbct/wiki";
         /**
          * GPL license information.
          */
