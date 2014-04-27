@@ -1,7 +1,7 @@
 /swing/build/
-/swing/db/
+db/
 /swing/dist/
-/swing/log/
+log/
 private
 *.zip
 local.properties
