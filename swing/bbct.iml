@@ -19,7 +19,7 @@
     <orderEntry type="module-library">
       <library name="junit4">
         <CLASSES>
-          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.10.jar!/" />
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.11.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
