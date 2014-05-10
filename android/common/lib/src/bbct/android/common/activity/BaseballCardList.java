@@ -218,9 +218,7 @@ public class BaseballCardList extends ActionBarActivity {
         int itemId = item.getItemId();
 
         if (itemId == R.id.add_menu) {
-            Intent intent = new Intent(Intent.ACTION_EDIT,
-                    BaseballCardDetails.DETAILS_URI);
-            intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
+            Intent intent = new Intent(this, BaseballCardDetails.class);
             this.startActivity(intent);
             return true;
         } else if (itemId == R.id.filter_menu) {
