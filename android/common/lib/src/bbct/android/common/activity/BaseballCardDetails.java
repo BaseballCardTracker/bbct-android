@@ -107,29 +107,28 @@ public class BaseballCardDetails extends ActionBarActivity {
         ArrayAdapter<CharSequence> positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner
                 .getAdapter();
 
-        this.oldCard = (BaseballCard) this.getIntent().getSerializableExtra(
-                this.getString(R.string.baseball_card_extra));
+        BaseballCard oldCard = (BaseballCard) this.getIntent().getSerializableExtra(this.getString(R.string.baseball_card_extra));
 
-        if (this.oldCard != null) {
+        if (oldCard != null) {
             this.isUpdating = true;
             this.cardId = this.getIntent().getLongExtra(
                     this.getString(R.string.card_id_extra), -1L);
-            this.autographCheckBox.setChecked(this.oldCard.isAutographed());
+            this.autographCheckBox.setChecked(oldCard.isAutographed());
 
-            int selectedCondition = conditionAdapter.getPosition(this.oldCard
+            int selectedCondition = conditionAdapter.getPosition(oldCard
                     .getCondition());
             this.conditionSpinner.setSelection(selectedCondition);
 
-            this.brandText.setText(this.oldCard.getBrand());
-            this.yearText.setText(Integer.toString(this.oldCard.getYear()));
-            this.numberText.setText(Integer.toString(this.oldCard.getNumber()));
+            this.brandText.setText(oldCard.getBrand());
+            this.yearText.setText(Integer.toString(oldCard.getYear()));
+            this.numberText.setText(Integer.toString(oldCard.getNumber()));
             this.valueText
-                    .setText(Double.toString(this.oldCard.getValue() / 100.0));
-            this.countText.setText(Integer.toString(this.oldCard.getCount()));
-            this.playerNameText.setText(this.oldCard.getPlayerName());
-            this.teamText.setText(this.oldCard.getTeam());
+                    .setText(Double.toString(oldCard.getValue() / 100.0));
+            this.countText.setText(Integer.toString(oldCard.getCount()));
+            this.playerNameText.setText(oldCard.getPlayerName());
+            this.teamText.setText(oldCard.getTeam());
 
-            int selectedPosition = positionsAdapter.getPosition(this.oldCard
+            int selectedPosition = positionsAdapter.getPosition(oldCard
                     .getPlayerPosition());
             this.playerPositionSpinner.setSelection(selectedPosition);
         }
@@ -296,7 +295,6 @@ public class BaseballCardDetails extends ActionBarActivity {
         }
     }
 
-    private BaseballCard oldCard = null;
     private CheckBox autographCheckBox = null;
     private Spinner conditionSpinner = null;
     private AutoCompleteTextView brandText = null;
