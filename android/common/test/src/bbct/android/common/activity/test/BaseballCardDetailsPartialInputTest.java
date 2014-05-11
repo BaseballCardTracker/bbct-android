@@ -152,7 +152,10 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         }
 
         this.inst.waitForIdleSync();
-        Assert.assertTrue(focusEditText.hasFocus());
+
+        if (focusEditText != null) {
+            Assert.assertTrue(focusEditText.hasFocus());
+        }
     }
 
     private Solo solo = null;
