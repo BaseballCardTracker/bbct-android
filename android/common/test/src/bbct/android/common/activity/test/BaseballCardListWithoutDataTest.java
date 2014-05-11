@@ -183,8 +183,8 @@ public class BaseballCardListWithoutDataTest extends
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public void testAddCardToEmptyDatabase() throws IOException, Throwable {
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
+    public void testAddCardToEmptyDatabase() throws Throwable {
+        BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
@@ -211,7 +211,7 @@ public class BaseballCardListWithoutDataTest extends
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public void testAddMultipleCards() throws IOException, Throwable {
+    public void testAddMultipleCards() throws Throwable {
         BBCTTestUtil.testMenuItem(this.solo, this.activity, R.id.add_menu,
                 BaseballCardDetails.class);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
