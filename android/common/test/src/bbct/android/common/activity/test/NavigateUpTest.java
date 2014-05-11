@@ -50,7 +50,7 @@ public class NavigateUpTest extends
     }
 
     /**
-     * Navigating up from {@link FilterOptions} should restore
+     * Navigating up from {@link FilterCards} should restore
      * {@link BaseballCardList}.
      */
     public void testNavigateUpFromFilterCards() {

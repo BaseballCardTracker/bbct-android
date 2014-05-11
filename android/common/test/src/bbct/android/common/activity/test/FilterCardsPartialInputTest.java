@@ -116,8 +116,7 @@ public class FilterCardsPartialInputTest extends
                 boolean condition = true;
 
                 if (mask.contains(EditTexts.BRAND)) {
-                    condition = condition
-                            && card.getBrand().equals(test.getBrand());
+                    condition = card.getBrand().equals(test.getBrand());
                 }
 
                 if (mask.contains(EditTexts.YEAR)) {
@@ -151,13 +150,11 @@ public class FilterCardsPartialInputTest extends
         this.inst.waitForIdleSync();
         Assert.assertTrue(filterCards.isFinishing());
 
-        this.expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
-                this.listView);
+        List<BaseballCard> expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, expectedCards, this.listView);
     }
 
     private List<BaseballCard> allCards;
-    private List<BaseballCard> expectedCards;
     private BaseballCard testCard;
     private Solo solo = null;
     private Instrumentation inst = null;

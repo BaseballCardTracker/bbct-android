@@ -81,12 +81,12 @@ public class BaseballCardProvider extends ContentProvider {
         Log.d(TAG, "  selectionArgs=" + Arrays.toString(selectionArgs));
         Log.d(TAG, "  sortOrder=" + sortOrder);
 
-        Cursor cursor = null;
+        Cursor cursor;
         SQLiteDatabase db = this.sqlHelper.getReadableDatabase();
 
         switch (uriMatcher.match(uri)) {
             case DISTINCT:
-                if (projection[0] != BaseballCardContract.ID_COL_NAME) {
+                if (!projection[0].equals(BaseballCardContract.ID_COL_NAME)) {
                     throw new SQLException("First column in the projection must be '_id'");
                 }
 
@@ -161,7 +161,7 @@ public class BaseballCardProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        int affected = 0;
+        int affected;
         SQLiteDatabase db = this.sqlHelper.getWritableDatabase();
 
         switch (uriMatcher.match(uri)) {
@@ -194,7 +194,7 @@ public class BaseballCardProvider extends ContentProvider {
             String[] selectionArgs) {
         SQLiteDatabase db = this.sqlHelper.getWritableDatabase();
 
-        int affected = 0;
+        int affected;
 
         switch (uriMatcher.match(uri)) {
             case ALL_CARDS:
@@ -234,9 +234,7 @@ public class BaseballCardProvider extends ContentProvider {
         whereArgs[0] = Long.toString(id);
 
         if (selectionArgs != null) {
-            for (int i = 0; i < selectionArgs.length; ++i) {
-                whereArgs[i + 1] = selectionArgs[i];
-            }
+            System.arraycopy(selectionArgs, 0, whereArgs, 1, selectionArgs.length);
         }
 
         return whereArgs;
