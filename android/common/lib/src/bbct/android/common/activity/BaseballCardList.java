@@ -79,7 +79,7 @@ public class BaseballCardList extends ActionBarActivity {
 
         ListView listView = (ListView) this.findViewById(android.R.id.list);
         this.headerView = View.inflate(this, R.layout.list_header, null);
-        ((CheckedTextView) this.headerView.findViewById(R.id.checkmark))
+        this.headerView.findViewById(R.id.checkmark)
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -293,17 +293,17 @@ public class BaseballCardList extends ActionBarActivity {
          * the next delete operation. Otherwise, the app will display the card
          * data for editing in a {@link BaseballCardDetails}.
          *
-         * @param l
+         * @param list
          *            The ListView where the click happened.
-         * @param v
-         *            The view that was clicked within the ListView.
+         * @param row
+         *            The row that was clicked within the ListView.
          * @param position
          *            The position of the view in the list.
          * @param id
          *            The row id of the item that was clicked.
          */
         @Override
-        public void onItemClick(AdapterView<?> row, View v, int position,
+        public void onItemClick(AdapterView<?> list, View row, int position,
                 long id) {
             if (position == 0) {
                 return;
@@ -322,15 +322,15 @@ public class BaseballCardList extends ActionBarActivity {
 
     /**
      * Respond to the result of a child activity by applying a filter after
-     * {@link FilterOptions} returns the appropriate parameters.
+     * {@link FilterCards} returns the appropriate parameters.
      *
      * @param requestCode
      *            The integer request code originally supplied to
-     *            {@link #startActivityForResult()}, allowing you to identify
+     *            {@link #startActivityForResult(Intent, int)}, allowing you to identify
      *            who this result came from.
      * @param resultCode
      *            The integer result code returned by the child activity through
-     *            its {@link #setResult()}.
+     *            its {@link #setResult(int)}.
      * @param data
      *            An Intent with the data returned by the child activity.
      */
