@@ -18,35 +18,28 @@
  */
 package bbct.android.lite.activity;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import bbct.android.R;
-
 import com.amazon.device.ads.AdError;
 import com.amazon.device.ads.AdLayout;
 import com.amazon.device.ads.AdListener;
 import com.amazon.device.ads.AdProperties;
 import com.amazon.device.ads.AdRegistration;
 import com.amazon.device.ads.AdTargetingOptions;
-import com.google.ads.AdRequest;
 import com.google.ads.AdSize;
 import com.google.ads.AdView;
-
-import java.util.Arrays;
-import java.util.HashSet;
 
 /**
  *
  */
 public class BaseballCardList extends bbct.android.common.activity.BaseballCardList implements AdListener {
 
-    private static String AD_UNIT_ID = "a151047824e2718";
+    private static final String AD_UNIT_ID = "a151047824e2718";
 
-    private static String APP_KEY = "42d5980d355a49afb22ea8c6618591d8";
+    private static final String APP_KEY = "42d5980d355a49afb22ea8c6618591d8";
 
     private ViewGroup adViewContainer;
     private com.amazon.device.ads.AdLayout amazonAdView;
