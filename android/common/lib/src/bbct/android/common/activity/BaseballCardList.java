@@ -43,7 +43,7 @@ import bbct.android.common.provider.BaseballCardContract;
 
 /**
  * Displays a list of all baseball cards stored in the database.
- *
+ * <p/>
  * TODO: Make list fancier
  */
 public class BaseballCardList extends ActionBarActivity {
@@ -154,8 +154,7 @@ public class BaseballCardList extends ActionBarActivity {
      * Create the options menu. This is simply inflated from the
      * {@code option.xml} resource file.
      *
-     * @param menu
-     *            The options menu in which new menu items are placed.
+     * @param menu The options menu in which new menu items are placed.
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -169,8 +168,7 @@ public class BaseballCardList extends ActionBarActivity {
      * displays the "Clear Filter" menu item, otherwise displays the
      * "Filter Cards" menu item.
      *
-     * @param menu
-     *            The options menu which will be displayed.
+     * @param menu The options menu which will be displayed.
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
@@ -210,8 +208,7 @@ public class BaseballCardList extends ActionBarActivity {
     /**
      * Respond to the user selecting a menu item.
      *
-     * @param item
-     *            The menu item selected.
+     * @param item The menu item selected.
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -269,8 +266,7 @@ public class BaseballCardList extends ActionBarActivity {
      * Save the currently active filter when the system asks for it. Also save
      * the current state of marked list items.
      *
-     * @param outState
-     *            The saved state.
+     * @param outState The saved state.
      */
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -302,7 +298,7 @@ public class BaseballCardList extends ActionBarActivity {
          */
         @Override
         public void onItemClick(AdapterView<?> list, View row, int position,
-                long id) {
+                                long id) {
             if (position == 0) {
                 return;
             }
@@ -313,6 +309,8 @@ public class BaseballCardList extends ActionBarActivity {
 
             intent.putExtra(BaseballCardList.this
                     .getString(R.string.baseball_card_extra), card);
+            intent.putExtra(BaseballCardList.this
+                    .getString(R.string.card_id_extra), id);
             intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
             BaseballCardList.this.startActivity(intent);
         }
@@ -322,15 +320,12 @@ public class BaseballCardList extends ActionBarActivity {
      * Respond to the result of a child activity by applying a filter after
      * {@link FilterCards} returns the appropriate parameters.
      *
-     * @param requestCode
-     *            The integer request code originally supplied to
-     *            {@link #startActivityForResult(Intent, int)}, allowing you to identify
-     *            who this result came from.
-     * @param resultCode
-     *            The integer result code returned by the child activity through
-     *            its {@link #setResult(int)}.
-     * @param data
-     *            An Intent with the data returned by the child activity.
+     * @param requestCode The integer request code originally supplied to
+     *                    {@link #startActivityForResult(Intent, int)}, allowing you to identify
+     *                    who this result came from.
+     * @param resultCode  The integer result code returned by the child activity through
+     *                    its {@link #setResult(int)}.
+     * @param data        An Intent with the data returned by the child activity.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -414,11 +409,11 @@ public class BaseballCardList extends ActionBarActivity {
             BaseballCardContract.BRAND_COL_NAME,
             BaseballCardContract.YEAR_COL_NAME,
             BaseballCardContract.NUMBER_COL_NAME,
-            BaseballCardContract.PLAYER_NAME_COL_NAME };
+            BaseballCardContract.PLAYER_NAME_COL_NAME};
 
-    private static final int[] ROW_TEXT_VIEWS = { R.id.brand_text_view,
+    private static final int[] ROW_TEXT_VIEWS = {R.id.brand_text_view,
             R.id.year_text_view, R.id.number_text_view,
-            R.id.player_name_text_view };
+            R.id.player_name_text_view};
 
     private static final int FILTER_CARDS_REQUEST = 0x0001;
     private static final String TAG = BaseballCardList.class.getName();
