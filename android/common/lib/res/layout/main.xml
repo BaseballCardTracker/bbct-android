@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  This file is part of BBCT for Android.
 
  Copyright 2012-2014 codeguru <codeguru@users.sourceforge.net>
@@ -17,8 +16,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/list_fragment"
-    android:name="bbct.android.common.activity.BaseballCardList"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_holder"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />

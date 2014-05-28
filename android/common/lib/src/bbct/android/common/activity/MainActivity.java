@@ -30,6 +30,11 @@ public class MainActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.main);
+
+        this.getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_holder, new BaseballCardList())
+                .commit();
     }
 
 }
