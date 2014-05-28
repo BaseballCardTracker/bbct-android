@@ -23,8 +23,8 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
 import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.FilterCards;
+import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BBCTTestUtil.EditTexts;
@@ -45,7 +45,7 @@ import junit.framework.TestSuite;
  * of input in the {@link FilterCards} activity.
  */
 public class FilterCardsPartialInputTest extends
-        ActivityInstrumentationTestCase2<BaseballCardList> {
+        ActivityInstrumentationTestCase2<MainActivity> {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
@@ -68,7 +68,7 @@ public class FilterCardsPartialInputTest extends
 
     public FilterCardsPartialInputTest(
             Set<BBCTTestUtil.EditTexts> inputFieldsFlags) {
-        super(BaseballCardList.class);
+        super(MainActivity.class);
 
         this.setName(TEST_NAME);
         this.inputFieldsMask = inputFieldsFlags;

@@ -23,6 +23,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import bbct.android.R;
+import bbct.android.common.activity.MainActivity;
 import com.amazon.device.ads.AdError;
 import com.amazon.device.ads.AdLayout;
 import com.amazon.device.ads.AdListener;
@@ -35,7 +36,7 @@ import com.google.ads.AdView;
 /**
  *
  */
-public class BaseballCardList extends bbct.android.common.activity.BaseballCardList implements AdListener {
+public class LiteActivity extends MainActivity implements AdListener {
 
     private static final String AD_UNIT_ID = "a151047824e2718";
 

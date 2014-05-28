@@ -16,23 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.lite.activity.test;
+package bbct.android.common.activity;
 
-import android.test.ActivityInstrumentationTestCase2;
-import bbct.android.lite.activity.LiteActivity;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import bbct.android.common.R;
 
-/**
- * Tests for {@link LiteActivity} activity class.
- *
- * TODO: Add tests for the layout of {@link LiteActivity}
- */
-public class BaseballCardListTest extends ActivityInstrumentationTestCase2<LiteActivity> {
+public class MainActivity extends ActionBarActivity {
 
-    /**
-     * Create test cases for {@link LiteActivity}.
-     */
-    public BaseballCardListTest() {
-        super(LiteActivity.class);
+    private static String TAG = MainActivity.class.getName();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.main);
     }
 
 }
