@@ -76,7 +76,7 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
      * Reuse an existing {@link View} to display an item.
      *
      * @param view
-     *            Existing view, returned earlier by {@link newView}.
+     *            Existing view, returned earlier by {@link #newView}.
      * @param context
      *            Interface to application's global information.
      * @param cursor

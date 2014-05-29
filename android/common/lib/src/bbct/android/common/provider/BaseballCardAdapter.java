@@ -18,8 +18,6 @@
  */
 package bbct.android.common.provider;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.database.Cursor;
@@ -52,7 +50,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
      * selection made on the same element. Also adds {@link OnClickListener} to
      * {@link CheckedTextView}.
      *
-     * @see {@link SimpleCursorAdapater#getView}
+     * @see {@link SimpleCursorAdapter#getView(int, View, ViewGroup)}
      */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -69,7 +67,6 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
         // set listener
         ctv.setOnClickListener(new OnClickListener() {
 
-            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
                 CheckedTextView cview = (CheckedTextView) v
@@ -125,15 +122,6 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
      */
     private void updateDataSet() {
         this.notifyDataSetChanged();
-        final Activity curActivity = (Activity) this.context;
-        curActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ListView listView = (ListView) curActivity
-                        .findViewById(android.R.id.list);
-                listView.setAdapter(BaseballCardAdapter.this);
-            }
-        });
     }
 
     public BaseballCard getSelectedCard() {

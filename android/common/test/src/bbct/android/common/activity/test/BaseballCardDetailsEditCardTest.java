@@ -101,8 +101,8 @@ public class BaseballCardDetailsEditCardTest extends
 
         super.setUp();
 
-        this.inst = this.getInstrumentation();
-        InputStream in = this.inst.getContext().getAssets()
+        Instrumentation inst = this.getInstrumentation();
+        InputStream in = inst.getContext().getAssets()
                 .open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
                 true);
@@ -114,24 +114,24 @@ public class BaseballCardDetailsEditCardTest extends
         this.newCard.setValue(this.newCard.getValue() + 50);
         this.newCard.setCount(this.newCard.getCount() + 1);
 
-        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        this.cardId = this.dbUtil.insertBaseballCard(this.oldCard);
+        this.dbUtil = new DatabaseUtil(inst.getTargetContext());
+        long cardId = this.dbUtil.insertBaseballCard(this.oldCard);
 
-        Log.d(TAG, "cardId=" + this.cardId);
+        Log.d(TAG, "cardId=" + cardId);
 
-        if (this.cardId == -1) {
+        if (cardId == -1) {
             Log.e(TAG, this.oldCard.toString());
         }
 
-        Context target = this.inst.getTargetContext();
+        Context target = inst.getTargetContext();
         Intent intent = new Intent(target, BaseballCardDetails.class);
         intent.putExtra(target.getString(R.string.baseball_card_extra),
                 this.oldCard);
-        intent.putExtra(target.getString(R.string.card_id_extra), this.cardId);
+        intent.putExtra(target.getString(R.string.card_id_extra), cardId);
         this.setActivityIntent(intent);
 
         this.activity = this.getActivity();
-        this.solo = new Solo(this.inst, this.activity);
+        this.solo = new Solo(inst, this.activity);
     }
 
     /**
@@ -208,12 +208,10 @@ public class BaseballCardDetailsEditCardTest extends
 
     private final Set<BBCTTestUtil.EditTexts> inputMask;
     private Solo solo = null;
-    private Instrumentation inst = null;
     private Activity activity = null;
     private BaseballCard oldCard = null;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil = null;
-    private long cardId = -1;
     private static final String TEST_NAME = "testEditCard";
     private static final String TAG = BaseballCardDetailsEditCardTest.class
             .getName();

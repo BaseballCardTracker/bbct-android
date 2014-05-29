@@ -2,7 +2,7 @@
 <!--
  This file is part of BBCT for Android.
 
- Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ Copyright 2012-2014 codeguru <codeguru@users.sourceforge.net>
 
  BBCT for Android is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -17,19 +17,8 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical"
->
-    <TextView android:id="@android:id/empty"
-              android:text="@string/start"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:gravity="center"
-    />
-    <ListView android:id="@android:id/list"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-    />
-</LinearLayout>
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_fragment"
+    android:name="bbct.android.common.activity.BaseballCardList"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />

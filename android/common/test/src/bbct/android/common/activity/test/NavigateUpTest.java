@@ -6,6 +6,7 @@ import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.FilterCards;
+import bbct.android.common.activity.MainActivity;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
 
@@ -13,10 +14,10 @@ import junit.framework.Assert;
  * Tests that the Home icon navigates up to the correct activity.
  */
 public class NavigateUpTest extends
-        ActivityInstrumentationTestCase2<BaseballCardList> {
+        ActivityInstrumentationTestCase2<MainActivity> {
 
     public NavigateUpTest() {
-        super(BaseballCardList.class);
+        super(MainActivity.class);
     }
 
     @Override
@@ -46,11 +47,11 @@ public class NavigateUpTest extends
      */
     public void testNavigateUpFromDetails() {
         this.testNavigateUp(bbct.android.common.R.id.add_menu,
-                BaseballCardDetails.class);
+                MainActivity.class);
     }
 
     /**
-     * Navigating up from {@link FilterOptions} should restore
+     * Navigating up from {@link FilterCards} should restore
      * {@link BaseballCardList}.
      */
     public void testNavigateUpFromFilterCards() {
@@ -63,7 +64,7 @@ public class NavigateUpTest extends
         this.solo.clickOnActionBarItem(menuId);
         Assert.assertTrue(this.solo.waitForActivity(expectedActivity, TIMEOUT));
         this.solo.clickOnActionBarHomeButton();
-        Assert.assertTrue(this.solo.waitForActivity(BaseballCardList.class,
+        Assert.assertTrue(this.solo.waitForActivity(MainActivity.class,
                 TIMEOUT));
     }
 

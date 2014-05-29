@@ -28,6 +28,7 @@ import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.FilterCards;
+import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
@@ -40,17 +41,17 @@ import java.util.List;
 import junit.framework.Assert;
 
 /**
- * Tests for the {@link BaseballCardList} activity when the database does not
+ * Tests for the {@link MainActivity} activity when the database does not
  * contain data.
  */
 public class BaseballCardListWithoutDataTest extends
-        ActivityInstrumentationTestCase2<BaseballCardList> {
+        ActivityInstrumentationTestCase2<MainActivity> {
 
     /**
-     * Create instrumented test cases for {@link BaseballCardList}.
+     * Create instrumented test cases for {@link MainActivity}.
      */
     public BaseballCardListWithoutDataTest() {
-        super(BaseballCardList.class);
+        super(MainActivity.class);
     }
 
     /**
@@ -183,8 +184,8 @@ public class BaseballCardListWithoutDataTest extends
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public void testAddCardToEmptyDatabase() throws IOException, Throwable {
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
+    public void testAddCardToEmptyDatabase() throws Throwable {
+        BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
@@ -211,7 +212,7 @@ public class BaseballCardListWithoutDataTest extends
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
-    public void testAddMultipleCards() throws IOException, Throwable {
+    public void testAddMultipleCards() throws Throwable {
         BBCTTestUtil.testMenuItem(this.solo, this.activity, R.id.add_menu,
                 BaseballCardDetails.class);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
