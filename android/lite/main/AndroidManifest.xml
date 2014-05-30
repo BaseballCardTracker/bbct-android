@@ -72,11 +72,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.lite.activity.LiteActivity" />
         </activity>
-        <activity android:name=".common.activity.About">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.common.activity.LiteActivity" />
-        </activity>
 
         <provider
             android:name="bbct.android.lite.provider.LiteProvider"

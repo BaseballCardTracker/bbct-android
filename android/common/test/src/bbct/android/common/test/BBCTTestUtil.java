@@ -22,6 +22,8 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -131,6 +133,15 @@ final public class BBCTTestUtil {
         }
 
         return solo.getCurrentActivity();
+    }
+
+    public static void testMenuItem(Solo solo, int menuId,
+                                        Class<? extends Fragment> fragmentClass) {
+        solo.clickOnActionBarItem(menuId);
+        Fragment fragment = ((FragmentActivity) solo.getCurrentActivity())
+                .getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_holder);
+        Assert.assertEquals(fragmentClass, fragment.getClass());
     }
 
     /**

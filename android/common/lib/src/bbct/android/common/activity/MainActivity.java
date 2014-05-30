@@ -18,13 +18,20 @@
  */
 package bbct.android.common.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import bbct.android.common.R;
 
 public class MainActivity extends ActionBarActivity {
 
     private static String TAG = MainActivity.class.getName();
+
+    private static String ABOUT = "About";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,43 @@ public class MainActivity extends ActionBarActivity {
                 .beginTransaction()
                 .add(R.id.fragment_holder, new BaseballCardList())
                 .commit();
+    }
+
+    /**
+     * Create the options menu. This is simply inflated from the
+     * {@code main.xml} resource file.
+     *
+     * @param menu The options menu in which new menu items are placed.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.main, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * Respond to the user selecting a menu item.
+     *
+     * @param item The menu item selected.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.about_menu) {
+            this.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder, new About())
+                    .addToBackStack(ABOUT)
+                    .commit();
+            return true;
+        } else {
+            Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
+            // TODO Throw exception?
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

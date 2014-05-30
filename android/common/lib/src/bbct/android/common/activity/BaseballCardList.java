@@ -116,13 +116,13 @@ public class BaseballCardList extends ListFragment {
 
     /**
      * Create the options menu. This is simply inflated from the
-     * {@code option.xml} resource file.
+     * {@code list.xml} resource file.
      *
      * @param menu The options menu in which new menu items are placed.
      */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.option, menu);
+        inflater.inflate(R.menu.list, menu);
     }
 
     /**
@@ -211,10 +211,6 @@ public class BaseballCardList extends ListFragment {
 
             this.adapter.setSelection(selected);
             this.applyFilter(this.filterActive, this.filterParams);
-            return true;
-
-        } else if (itemId == R.id.about_menu) {
-            this.startActivity(new Intent(this.getActivity(), About.class));
             return true;
         } else {
             Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);

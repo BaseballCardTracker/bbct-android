@@ -163,14 +163,10 @@ public class BaseballCardListWithoutDataTest extends
     }
 
     /**
-     * Test that the "About" menu item launches a {@link About} activity.
+     * Test that the "About" menu item displays the {@link About} fragment.
      */
     public void testAboutMenuItem() {
-        Activity about = BBCTTestUtil.testMenuItem(this.solo, this.activity,
-                R.id.about_menu, About.class);
-
-        about.finish();
-        Assert.assertTrue(about.isFinishing());
+        BBCTTestUtil.testMenuItem(this.solo, R.id.about_menu, About.class);
     }
 
     /**

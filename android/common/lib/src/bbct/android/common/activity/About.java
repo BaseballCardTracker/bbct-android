@@ -20,9 +20,13 @@ package bbct.android.common.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import bbct.android.common.R;
 
@@ -30,21 +34,20 @@ import bbct.android.common.R;
  * Displays the name and version of the app, a short description, contact links,
  * and copyright information.
  */
-public class About extends ActionBarActivity {
+public class About extends Fragment {
 
-    /**
-     * Called when the {@link Activity} is first created.
-     */
+    private static final String TAG = About.class.getName();
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.about);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.about, container, false);
 
         String aboutTitle = this.getString(R.string.about_title);
         String title = this.getString(R.string.bbct_title, aboutTitle);
-        this.setTitle(title);
+        this.getActivity().setTitle(title);
 
-        TextView versionLabel = (TextView) this.findViewById(R.id.version_label);
+        TextView versionLabel = (TextView) view.findViewById(R.id.version_label);
         String versionNumber = this.getString(R.string.version_number);
         String versionString = this.getString(R.string.version_text, versionNumber);
 
@@ -53,8 +56,7 @@ public class About extends ActionBarActivity {
 
         versionLabel.setText(versionString);
 
-        ActionBar actionBar = this.getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        return view;
     }
-    private static final String TAG = About.class.getName();
+
 }
