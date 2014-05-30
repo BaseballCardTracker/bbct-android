@@ -286,8 +286,7 @@ public class BaseballCardListWithDataTest extends
                 cardInputStream, true);
         BaseballCard card = cardInput.getNextBaseballCard();
 
-        BBCTTestUtil.testMenuItem(this.solo, this.activity, R.id.add_menu,
-                BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, card);
 
         Assert.assertTrue(this.solo.waitForDialogToOpen());
@@ -304,8 +303,7 @@ public class BaseballCardListWithDataTest extends
      *             thread runs.
      */
     public void testAddCardToPopulatedDatabase() throws Throwable {
-        BBCTTestUtil.testMenuItem(this.solo, this.activity, R.id.add_menu,
-                BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         this.solo.goBack();
@@ -326,8 +324,7 @@ public class BaseballCardListWithDataTest extends
     public void testAddCardMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
 
-        BBCTTestUtil.testMenuItem(this.solo, this.activity, R.id.add_menu,
-                BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         this.solo.goBack();
@@ -350,8 +347,7 @@ public class BaseballCardListWithDataTest extends
 
         this.newCard = new BaseballCard(false, "Excellent", "Codeguru Apps",
                 1976, 1, 50000, 1, "Codeguru", "Codeguru Devs", "Catcher");
-        BBCTTestUtil.testMenuItem(this.solo, this.activity, R.id.add_menu,
-                BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         this.solo.goBack();
@@ -369,8 +365,7 @@ public class BaseballCardListWithDataTest extends
      */
     public void testAddCardAfterClearFilter() throws Throwable {
         this.testClearFilter();
-        BBCTTestUtil.testMenuItem(this.solo, this.activity, R.id.add_menu,
-                BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         this.solo.goBack();
@@ -609,8 +604,7 @@ public class BaseballCardListWithDataTest extends
      */
     public void testClearFilter() {
         this.testYearFilter();
-        BBCTTestUtil.testMenuItem(this.solo, this.activity,
-                R.id.clear_filter_menu, null);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.clear_filter_menu, null);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards,
                 this.listView);
     }
@@ -627,8 +621,7 @@ public class BaseballCardListWithDataTest extends
      */
     private void testSingleFilter(int checkId, String input,
             Predicate<BaseballCard> filterPred) {
-        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
-                this.activity, R.id.filter_menu, FilterCards.class);
+        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
 
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.inst, this.solo,
                 checkId, input);
