@@ -74,8 +74,7 @@ public class BaseballCardDetails extends ActionBarActivity {
 
         this.conditionSpinner = this.populateSpinner(R.id.condition,
                 R.array.condition);
-        @SuppressWarnings("unchecked")
-        ArrayAdapter<CharSequence> conditionAdapter = (ArrayAdapter<CharSequence>) this.conditionSpinner
+        this.conditionAdapter = (ArrayAdapter<CharSequence>) this.conditionSpinner
                 .getAdapter();
 
         this.brandText = (AutoCompleteTextView) this
@@ -103,34 +102,13 @@ public class BaseballCardDetails extends ActionBarActivity {
 
         this.playerPositionSpinner = this.populateSpinner(
                 R.id.player_position_text, R.array.positions);
-        @SuppressWarnings("unchecked")
-        ArrayAdapter<CharSequence> positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner
+        this.positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner
                 .getAdapter();
 
         BaseballCard oldCard = (BaseballCard) this.getIntent().getSerializableExtra(this.getString(R.string.baseball_card_extra));
 
         if (oldCard != null) {
-            this.isUpdating = true;
-            this.cardId = this.getIntent().getLongExtra(
-                    this.getString(R.string.card_id_extra), -1L);
-            this.autographCheckBox.setChecked(oldCard.isAutographed());
-
-            int selectedCondition = conditionAdapter.getPosition(oldCard
-                    .getCondition());
-            this.conditionSpinner.setSelection(selectedCondition);
-
-            this.brandText.setText(oldCard.getBrand());
-            this.yearText.setText(Integer.toString(oldCard.getYear()));
-            this.numberText.setText(Integer.toString(oldCard.getNumber()));
-            this.valueText
-                    .setText(Double.toString(oldCard.getValue() / 100.0));
-            this.countText.setText(Integer.toString(oldCard.getCount()));
-            this.playerNameText.setText(oldCard.getPlayerName());
-            this.teamText.setText(oldCard.getTeam());
-
-            int selectedPosition = positionsAdapter.getPosition(oldCard
-                    .getPlayerPosition());
-            this.playerPositionSpinner.setSelection(selectedPosition);
+            this.setCard(oldCard);
         }
 
         ActionBar actionBar = this.getSupportActionBar();
@@ -139,6 +117,30 @@ public class BaseballCardDetails extends ActionBarActivity {
         this.uri = BaseballCardContract.getUri(this.getPackageName());
         Log.d(TAG, "package name=" + this.getPackageName());
         Log.d(TAG, "uri=" + this.uri);
+    }
+
+    public void setCard(BaseballCard card) {
+        this.isUpdating = true;
+        this.cardId = this.getIntent().getLongExtra(
+                this.getString(R.string.card_id_extra), -1L);
+        this.autographCheckBox.setChecked(card.isAutographed());
+
+        int selectedCondition = this.conditionAdapter.getPosition(card
+                .getCondition());
+        this.conditionSpinner.setSelection(selectedCondition);
+
+        this.brandText.setText(card.getBrand());
+        this.yearText.setText(Integer.toString(card.getYear()));
+        this.numberText.setText(Integer.toString(card.getNumber()));
+        this.valueText
+                .setText(Double.toString(card.getValue() / 100.0));
+        this.countText.setText(Integer.toString(card.getCount()));
+        this.playerNameText.setText(card.getPlayerName());
+        this.teamText.setText(card.getTeam());
+
+        int selectedPosition = this.positionsAdapter.getPosition(card
+                .getPlayerPosition());
+        this.playerPositionSpinner.setSelection(selectedPosition);
     }
 
     @Override
@@ -305,6 +307,8 @@ public class BaseballCardDetails extends ActionBarActivity {
     private AutoCompleteTextView playerNameText = null;
     private AutoCompleteTextView teamText = null;
     private Spinner playerPositionSpinner = null;
+    private ArrayAdapter<CharSequence> conditionAdapter;
+    private ArrayAdapter<CharSequence> positionsAdapter;
     private Uri uri = null;
     private boolean isUpdating = false;
     private long cardId = -1L;
