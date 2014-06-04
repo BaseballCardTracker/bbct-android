@@ -66,8 +66,7 @@ public class BaseballCardListWithDataTest extends
      * {@link BaseballCardList} activity, its {@link ListView}, and a populated
      * database.
      *
-     * @throws Exception
-     *             If an error occurs while chaining to the super class.
+     * @throws Exception If an error occurs while chaining to the super class.
      */
     @Override
     public void setUp() throws Exception {
@@ -100,8 +99,7 @@ public class BaseballCardListWithDataTest extends
      * Tear down the test fixture by calling {@link Activity#finish()} and
      * deleting the database.
      *
-     * @throws Exception
-     *             If an error occurs while chaining to the super class.
+     * @throws Exception If an error occurs while chaining to the super class.
      */
     @Override
     public void tearDown() throws Exception {
@@ -158,9 +156,8 @@ public class BaseballCardListWithDataTest extends
      * Test that a {@link BaseballCardList} activity with an active filter will
      * be correctly restored after it is destroyed.
      *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws Throwable If an error occurs while the portion of the test on the UI
+     *                   thread runs.
      */
     public void testStateDestroyWithFilter() throws Throwable {
         this.testYearFilter();
@@ -179,9 +176,8 @@ public class BaseballCardListWithDataTest extends
      * {@link #testStateDestroyWithoutFilter()} because a filter is applied and
      * then cleared before the activity is destroyed.
      *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws Throwable If an error occurs while the portion of the test on the UI
+     *                   thread runs.
      */
     public void testStateDestroyClearFilter() throws Throwable {
         this.testClearFilter();
@@ -208,9 +204,8 @@ public class BaseballCardListWithDataTest extends
      * Test that a {@link BaseballCardList} activity with an active filter will
      * be correctly restored after it is paused.
      *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws Throwable If an error occurs while the portion of the test on the UI
+     *                   thread runs.
      */
     public void testStatePauseWithFilter() throws Throwable {
         this.testYearFilter();
@@ -225,9 +220,8 @@ public class BaseballCardListWithDataTest extends
      * {@link #testStatePauseWithoutFilter()} because a filter is applied and
      * then cleared before the activity is paused.
      *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws Throwable If an error occurs while the portion of the test on the UI
+     *                   thread runs.
      */
     public void testStatePauseClearFilter() throws Throwable {
         this.testClearFilter();
@@ -242,9 +236,8 @@ public class BaseballCardListWithDataTest extends
      * is launched with its {@link EditText} views populated with the correct
      * data.
      *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws Throwable If an error occurs while the portion of the test on the UI
+     *                   thread runs.
      */
     public void testOnListItemClick() throws Throwable {
         Log.d(TAG, "testOnListItemClick()");
@@ -272,12 +265,10 @@ public class BaseballCardListWithDataTest extends
      * Test that an error message is displayed when the user attempts to add
      * baseball card data which duplicates data already in the database.
      *
-     * @throws IOException
-     *             If an error occurs while reading baseball card data from an
-     *             asset file.
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws IOException If an error occurs while reading baseball card data from an
+     *                     asset file.
+     * @throws Throwable   If an error occurs while the portion of the test on the UI
+     *                     thread runs.
      */
     public void testAddDuplicateCard() throws IOException, Throwable {
         InputStream cardInputStream = this.inst.getContext().getAssets()
@@ -298,9 +289,8 @@ public class BaseballCardListWithDataTest extends
      * Test that baseball card data is correctly added to the database when it
      * already contains data for other cards.
      *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws Throwable If an error occurs while the portion of the test on the UI
+     *                   thread runs.
      */
     public void testAddCardToPopulatedDatabase() throws Throwable {
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
@@ -317,9 +307,8 @@ public class BaseballCardListWithDataTest extends
      * Test that the {@link ListView} is updated when the user adds a new card
      * which matches the current filter.
      *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws Throwable If an error occurs while the portion of the test on the UI
+     *                   thread runs.
      */
     public void testAddCardMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
@@ -338,9 +327,8 @@ public class BaseballCardListWithDataTest extends
      * Test that the {@link ListView} is not updated when the user adds a new
      * card which does not match the current filter.
      *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws Throwable If an error occurs while the portion of the test on the UI
+     *                   thread runs.
      */
     public void testAddCardNotMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
@@ -359,9 +347,8 @@ public class BaseballCardListWithDataTest extends
      * Test that the {@link ListView} is updated when the user adds a new card
      * after an active filter was cleared.
      *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws Throwable If an error occurs while the portion of the test on the UI
+     *                   thread runs.
      */
     public void testAddCardAfterClearFilter() throws Throwable {
         this.testClearFilter();
@@ -612,12 +599,9 @@ public class BaseballCardListWithDataTest extends
     /**
      * Test a filter using a single parameter.
      *
-     * @param checkId
-     *            - the id of {@link CheckBox} to activate.
-     * @param input
-     *            - the input to use for filtering.
-     * @param filterPred
-     *            - @see {@link Predicate}.
+     * @param checkId    - the id of {@link CheckBox} to activate.
+     * @param input      - the input to use for filtering.
+     * @param filterPred - @see {@link Predicate}.
      */
     private void testSingleFilter(int checkId, String input,
             Predicate<BaseballCard> filterPred) {
