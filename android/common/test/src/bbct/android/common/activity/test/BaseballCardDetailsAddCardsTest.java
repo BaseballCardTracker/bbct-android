@@ -20,12 +20,15 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.support.v4.app.Fragment;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
@@ -39,13 +42,13 @@ import junit.framework.Assert;
  * Tests for {@link BaseballCardDetails}.
  */
 public class BaseballCardDetailsAddCardsTest extends
-        ActivityInstrumentationTestCase2<BaseballCardDetails> {
+        ActivityInstrumentationTestCase2<FragmentTestActivity> {
 
     /**
      * Create instrumented test cases for {@link BaseballCardDetails}.
      */
     public BaseballCardDetailsAddCardsTest() {
-        super(BaseballCardDetails.class);
+        super(FragmentTestActivity.class);
     }
 
     /**
@@ -71,6 +74,9 @@ public class BaseballCardDetailsAddCardsTest extends
         cardInput.close();
 
         this.activity = this.getActivity();
+        Fragment fragment = new BaseballCardDetails();
+        this.activity.replaceFragment(fragment);
+        this.inst.waitForIdleSync();
 
         this.solo = new Solo(this.inst, this.activity);
     }
@@ -156,7 +162,7 @@ public class BaseballCardDetailsAddCardsTest extends
     }
 
     private Solo solo = null;
-    private Activity activity = null;
+    private FragmentTestActivity activity = null;
     private Instrumentation inst = null;
     private List<BaseballCard> allCards = null;
     private BaseballCard card = null;

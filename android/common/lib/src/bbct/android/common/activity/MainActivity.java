@@ -73,9 +73,6 @@ public class MainActivity extends ActionBarActivity {
                     .addToBackStack(ABOUT)
                     .commit();
             return true;
-        } else {
-            Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
-            // TODO Throw exception?
         }
 
         return super.onOptionsItemSelected(item);

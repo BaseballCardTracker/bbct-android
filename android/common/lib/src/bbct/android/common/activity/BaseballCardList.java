@@ -25,6 +25,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -102,7 +103,7 @@ public class BaseballCardList extends ListFragment {
                 });
         listView.addHeaderView(this.headerView);
         listView.setAdapter(this.adapter);
-        this.applyFilter(false, null);
+        this.applyFilter(this.filterActive, this.filterParams);
 
         return view;
     }
@@ -179,8 +180,12 @@ public class BaseballCardList extends ListFragment {
         int itemId = item.getItemId();
 
         if (itemId == R.id.add_menu) {
-            Intent intent = new Intent(this.getActivity(), BaseballCardDetails.class);
-            this.startActivity(intent);
+            BaseballCardDetails details = new BaseballCardDetails();
+            this.getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder, details)
+                    .addToBackStack(EDIT_CARD)
+                    .commit();
             return true;
         } else if (itemId == R.id.filter_menu) {
             Intent intent = new Intent(this.getActivity(), FilterCards.class);
@@ -286,15 +291,14 @@ public class BaseballCardList extends ListFragment {
             return;
         }
 
-        Intent intent = new Intent(Intent.ACTION_EDIT,
-                BaseballCardDetails.DETAILS_URI);
         BaseballCard card = BaseballCardList.this.adapter.getSelectedCard();
 
-        intent.putExtra(
-                BaseballCardList.this.getString(R.string.baseball_card_extra),
-                card);
-        intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
-        BaseballCardList.this.startActivity(intent);
+        Fragment details = BaseballCardDetails.getInstance(id, card);
+        this.getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_holder, details)
+                .addToBackStack(EDIT_CARD)
+                .commit();
     }
 
     protected void applyFilter(boolean filterActive, Bundle filterParams) {
@@ -378,6 +382,7 @@ public class BaseballCardList extends ListFragment {
             R.id.year_text_view, R.id.number_text_view,
             R.id.player_name_text_view};
 
+    private static final String EDIT_CARD = "Edit Card";
     private static final int FILTER_CARDS_REQUEST = 0x0001;
     private static final String TAG = BaseballCardList.class.getName();
     TextView emptyList = null;

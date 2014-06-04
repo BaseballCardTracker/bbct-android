@@ -73,9 +73,8 @@ final public class BBCTTestUtil {
             List<BaseballCard> expectedItems, ListView listView) {
         inst.waitForIdleSync();
 
-        // Subtract 1 from the number of views owned by the ListView to account
-        // for the header View
-        Assert.assertEquals(expectedItems.size(), listView.getCount() - 1);
+        // Add 1 to the number of expected cards to account for the header View
+        Assert.assertEquals(expectedItems.size() + 1, listView.getChildCount());
 
         for (BaseballCard card : expectedItems) {
 
@@ -136,12 +135,19 @@ final public class BBCTTestUtil {
     }
 
     public static void testMenuItem(Solo solo, int menuId,
-                                        Class<? extends Fragment> fragmentClass) {
+                                    final Class<? extends Fragment> fragmentClass) {
         solo.clickOnActionBarItem(menuId);
-        Fragment fragment = ((FragmentActivity) solo.getCurrentActivity())
-                .getSupportFragmentManager()
-                .findFragmentById(R.id.fragment_holder);
-        Assert.assertEquals(fragmentClass, fragment.getClass());
+        final Activity activity = solo.getCurrentActivity();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Fragment fragment = ((FragmentActivity) activity)
+                        .getSupportFragmentManager()
+                        .findFragmentById(R.id.fragment_holder);
+                Assert.assertNotNull(fragment);
+                Assert.assertEquals(fragmentClass.getName(), fragment.getClass().getName());
+            }
+        });
     }
 
     /**
