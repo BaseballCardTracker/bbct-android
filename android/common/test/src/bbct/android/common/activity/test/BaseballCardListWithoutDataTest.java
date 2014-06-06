@@ -140,11 +140,7 @@ public class BaseballCardListWithoutDataTest extends
      * activity.
      */
     public void testFilterCardsMenuItem() {
-        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
-                this.activity, R.id.filter_menu, FilterCards.class);
-
-        filterCards.finish();
-        Assert.assertTrue(filterCards.isFinishing());
+        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
     }
 
     /**

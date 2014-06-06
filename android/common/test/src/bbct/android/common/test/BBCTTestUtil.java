@@ -111,29 +111,13 @@ final public class BBCTTestUtil {
     /**
      * Test that a menu item correctly launches a child activity.
      *
-     * @param inst
-     *            The instrumentation used for this test.
-     * @param activity
-     *            The activity associated with the menu being tested.
+     * @param solo
+     *            The {@link Solo} instance used for this test.
      * @param menuId
      *            The id of the menu resource.
-     * @param childActivityClass
-     *            The Class of the child activity which should be launched.
-     * @return A reference to the child activity which is launched, if the test
-     *         succeeds.
+     * @param fragmentClass
+     *            The Class of the {@link Fragment} which should be launched.
      */
-    public static Activity testMenuItem(Solo solo, Activity activity,
-            int menuId, Class<? extends Activity> childActivityClass) {
-        solo.clickOnActionBarItem(menuId);
-
-        if (childActivityClass != null) {
-            Assert.assertTrue(solo
-                    .waitForActivity(childActivityClass, TIME_OUT));
-        }
-
-        return solo.getCurrentActivity();
-    }
-
     public static void testMenuItem(Solo solo, int menuId,
                                     final Class<? extends Fragment> fragmentClass) {
         solo.clickOnActionBarItem(menuId);
@@ -518,6 +502,7 @@ final public class BBCTTestUtil {
      */
     public static void sendKeysToCurrFieldFilterCards(Instrumentation inst,
             Solo solo, int checkId, String input) {
+        inst.waitForIdleSync();
         Activity filterCards = solo.getCurrentActivity();
         CheckBox cb = (CheckBox) filterCards.findViewById(checkId);
         solo.clickOnView(cb);

@@ -2,10 +2,10 @@ package bbct.android.common.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import bbct.android.common.R;
 
-public class FragmentTestActivity extends FragmentActivity {
+public class FragmentTestActivity extends ActionBarActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

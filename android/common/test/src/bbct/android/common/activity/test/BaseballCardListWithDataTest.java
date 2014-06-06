@@ -588,8 +588,7 @@ public class BaseballCardListWithDataTest extends
      */
     public void testClearFilter() {
         this.testYearFilter();
-        BBCTTestUtil.testMenuItem(this.solo, this.activity,
-                R.id.clear_filter_menu, null);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.clear_filter_menu, BaseballCardList.class);
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, listView);
     }
@@ -603,18 +602,18 @@ public class BaseballCardListWithDataTest extends
      */
     private void testSingleFilter(int checkId, String input,
                                   Predicate<BaseballCard> filterPred) {
-        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
-                this.activity, R.id.filter_menu, FilterCards.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
 
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.inst, this.solo,
                 checkId, input);
         this.solo.clickOnActionBarItem(R.id.save_menu);
         this.inst.waitForIdleSync();
-        Assert.assertTrue(filterCards.isFinishing());
 
         this.expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
         BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, listView);
+
+        Assert.assertTrue(this.solo.waitForView(R.id.clear_filter_menu));
     }
 
     private List<BaseballCard> allCards;
