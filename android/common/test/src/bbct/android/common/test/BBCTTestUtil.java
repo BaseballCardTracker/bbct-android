@@ -23,6 +23,7 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
+import android.test.ViewAsserts;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -110,10 +111,6 @@ final public class BBCTTestUtil {
     /**
      * Test that a menu item correctly launches a child activity.
      *
-     * @param inst
-     *            The instrumentation used for this test.
-     * @param activity
-     *            The activity associated with the menu being tested.
      * @param menuId
      *            The id of the menu resource.
      * @param childActivityClass
@@ -121,8 +118,8 @@ final public class BBCTTestUtil {
      * @return A reference to the child activity which is launched, if the test
      *         succeeds.
      */
-    public static Activity testMenuItem(Solo solo, Activity activity,
-            int menuId, Class<? extends Activity> childActivityClass) {
+    public static Activity testMenuItem(Solo solo, int menuId,
+                                        Class<? extends Activity> childActivityClass) {
         solo.clickOnActionBarItem(menuId);
 
         if (childActivityClass != null) {
@@ -138,11 +135,9 @@ final public class BBCTTestUtil {
      * given {@link BaseballCardDetails} activity and check that the save button
      * can be clicked.
      *
-     * @param test
-     *            The {@link InstrumentationTestCase} object performing the
+     * @param solo
+     *            The {@link Solo} object performing the
      *            test.
-     * @param cardDetails
-     *            The {@link BaseballCardDetails} activity being tested.
      * @param card
      *            The {@link BaseballCard} object holding the data to add to the
      *            database.
@@ -165,18 +160,15 @@ final public class BBCTTestUtil {
      * Fills in all {@link EditText} views of the given
      * {@link BaseballCardDetails} activity.
      *
-     * @param test
-     *            The {@link InstrumentationTestCase} object performing the
+     * @param solo
+     *            The {@link Solo} object performing the
      *            test.
-     * @param cardDetails
-     *            The {@link BaseballCardDetails} activity being tested.
      * @param card
      *            The {@link BaseballCard} object holding the data to add to the
      *            database.
      * @throws InterruptedException
-     *             If {@link Thread#sleep()} is interrupted.
-     * @see #sendKeysToCardDetails(InstrumentationTestCase, Activity,
-     *      BaseballCard, Set)
+     *             If {@link Thread#sleep(long)} is interrupted.
+     * @see #sendKeysToCardDetails(Solo, BaseballCard, Set)
      */
     public static void sendKeysToCardDetails(Solo solo, BaseballCard card)
             throws InterruptedException {
@@ -188,18 +180,16 @@ final public class BBCTTestUtil {
      * Fills in all EditText views, except the ones indicated, of the given
      * {@link BaseballCardDetails} activity.
      *
-     * @param test
-     *            The {@link InstrumentationTestCase} object performing the
+     * @param solo
+     *            The {@link Solo} object performing the
      *            test.
-     * @param cardDetails
-     *            The {@link BaseballCardDetails} activity being tested.
      * @param card
      *            The {@link BaseballCard} object holding the data to add to the
      *            database.
      * @param fieldFlags
      *            The {@link EditText} views to fill in.
      * @throws InterruptedException
-     *             If {@link Thread#sleep()} is interrupted.
+     *             If {@link Thread#sleep(long)} is interrupted.
      */
     public static void sendKeysToCardDetails(Solo solo, BaseballCard card,
             Set<EditTexts> fieldFlags) throws InterruptedException {
@@ -445,8 +435,6 @@ final public class BBCTTestUtil {
      * @param test
      *            - the {@link InstrumentationTestCase} object perform in the
      *            test.
-     * @param filterCards
-     *            - the {@link FilterCards} activity being tested.
      * @param solo
      *            - the {@link Solo} object to perform clicks on views.
      * @param testCard
@@ -490,8 +478,6 @@ final public class BBCTTestUtil {
      *
      * @param inst
      *            - the {@link Instrumentation} object perform in the test.
-     * @param filterCards
-     *            - the {@link FilterCards} activity being tested.
      * @param solo
      *            - the {@link Solo} object to perform clicks on view.
      * @param checkId
@@ -522,7 +508,7 @@ final public class BBCTTestUtil {
 
     /**
      * Checks if the given child view is visible in the given parent view. Logic
-     * followed is same as {@link ViewAsserts.assertOnScreen()}.
+     * followed is same as {@link ViewAsserts#assertOnScreen(View, View)}.
      *
      * @param parentView
      *            The {@link View} object containing the child view test.
@@ -540,10 +526,7 @@ final public class BBCTTestUtil {
         // view should have positive y coordinate on screen and
         // view should have y location on screen less than drawing
         // height of root view
-        if (childViewYFromRoot >= 0 && childViewYFromRoot <= rootViewHeight) {
-            return true;
-        }
-        return false;
+        return childViewYFromRoot >= 0 && childViewYFromRoot <= rootViewHeight;
     }
 
     /**
@@ -594,9 +577,7 @@ final public class BBCTTestUtil {
 
     /**
      * Enumeration for {@link android.widget.EditText} views which will be used
-     * in
-     * {@link #sendKeysToCardDetails(InstrumentationTestCase, Activity, BaseballCard, Set)}
-     * .
+     * in {@link #sendKeysToCardDetails(Solo, BaseballCard, Set)}.
      */
     public enum EditTexts {
         /**
@@ -647,7 +628,6 @@ final public class BBCTTestUtil {
     public static final String CARD_DATA = "cards.csv";
     public static String ADD_MESSAGE = "Card added successfully";
     public static String DELETE_MESSAGE = "Cards deleted successfully";
-    private static final int MENU_FLAGS = 0;
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = BBCTTestUtil.class.getName();
 }

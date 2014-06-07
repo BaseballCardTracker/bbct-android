@@ -105,8 +105,7 @@ public class FilterCardsPartialInputTest extends
     }
 
     public void testFilterCombination() {
-        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo,
-                this.activity, R.id.filter_menu, FilterCards.class);
+        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
 
         final Set<BBCTTestUtil.EditTexts> mask = this.inputFieldsMask;
         final BaseballCard test = this.testCard;
