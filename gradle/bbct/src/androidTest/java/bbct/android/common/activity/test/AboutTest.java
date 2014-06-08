@@ -22,7 +22,7 @@ import android.app.Activity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
-import bbct.android.common.R;
+import bbct.android.R;
 import bbct.android.common.activity.About;
 import junit.framework.Assert;
 

@@ -2,6 +2,7 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
+import bbct.android.R;
 import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
@@ -37,7 +38,7 @@ public class NavigateUpTest extends
      * Navigating up from {@link About} should restore {@link BaseballCardList}.
      */
     public void testNavigateUpFromAbout() {
-        this.testNavigateUp(bbct.android.common.R.id.about_menu, About.class);
+        this.testNavigateUp(R.id.about_menu, About.class);
     }
 
     /**
@@ -45,8 +46,7 @@ public class NavigateUpTest extends
      * {@link BaseballCardList}.
      */
     public void testNavigateUpFromDetails() {
-        this.testNavigateUp(bbct.android.common.R.id.add_menu,
-                BaseballCardDetails.class);
+        this.testNavigateUp(R.id.add_menu, BaseballCardDetails.class);
     }
 
     /**
@@ -54,8 +54,7 @@ public class NavigateUpTest extends
      * {@link BaseballCardList}.
      */
     public void testNavigateUpFromFilterCards() {
-        this.testNavigateUp(bbct.android.common.R.id.filter_menu,
-                FilterCards.class);
+        this.testNavigateUp(R.id.filter_menu, FilterCards.class);
     }
 
     private void testNavigateUp(int menuId,

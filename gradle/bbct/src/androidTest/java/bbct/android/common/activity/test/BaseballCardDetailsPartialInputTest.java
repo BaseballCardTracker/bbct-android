@@ -24,7 +24,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import bbct.android.common.R;
+import bbct.android.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;

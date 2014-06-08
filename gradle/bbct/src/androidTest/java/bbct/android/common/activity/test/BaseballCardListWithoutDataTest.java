@@ -23,7 +23,7 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
 import android.widget.TextView;
-import bbct.android.common.R;
+import bbct.android.R;
 import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;

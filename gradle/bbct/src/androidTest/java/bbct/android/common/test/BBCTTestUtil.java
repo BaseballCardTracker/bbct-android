@@ -36,7 +36,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import bbct.android.common.R;
+import bbct.android.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.data.BaseballCard;
