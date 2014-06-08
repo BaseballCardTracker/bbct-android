@@ -29,7 +29,7 @@ import android.view.ViewGroup;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import bbct.android.R;
+import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 
 /**

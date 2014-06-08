@@ -20,7 +20,7 @@ package bbct.android.common.provider;
 
 import android.content.Context;
 import android.util.Log;
-import bbct.android.R;
+import bbct.android.common.R;
 import bbct.android.common.exception.SQLHelperCreationException;
 import java.lang.reflect.Constructor;
 

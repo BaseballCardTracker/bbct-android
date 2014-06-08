@@ -28,7 +28,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import bbct.android.R;
+import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;

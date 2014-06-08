@@ -2,7 +2,7 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
-import bbct.android.R;
+import bbct.android.common.R;
 import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;

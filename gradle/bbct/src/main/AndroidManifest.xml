@@ -18,7 +18,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="bbct.android" >
+    package="bbct.android.common" >
 
     <application
         android:allowBackup="true"
@@ -26,7 +26,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".common.activity.BaseballCardList"
+            android:name=".activity.BaseballCardList"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".common.activity.BaseballCardDetails" >
+        <activity android:name=".activity.BaseballCardDetails" >
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
 
@@ -47,19 +47,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.common.activity.BaseballCardList" />
         </activity>
-        <activity android:name=".common.activity.FilterCards" >
+        <activity android:name=".activity.FilterCards" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.common.activity.BaseballCardList" />
         </activity>
-        <activity android:name=".common.activity.About" >
+        <activity android:name=".activity.About" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.common.activity.BaseballCardList" />
         </activity>
 
         <provider
-            android:name=".common.provider.BaseballCardProvider"
+            android:name=".provider.BaseballCardProvider"
             android:authorities="@string/authorities"
             android:icon="@drawable/baseball"
             android:label="@string/provider_name"

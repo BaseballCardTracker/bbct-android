@@ -29,7 +29,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
-import bbct.android.R;
+import bbct.android.common.R;
 import bbct.android.common.exception.SQLHelperCreationException;
 import java.util.Arrays;
 

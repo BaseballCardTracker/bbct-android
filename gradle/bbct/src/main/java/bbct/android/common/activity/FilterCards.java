@@ -27,7 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import bbct.android.R;
+import bbct.android.common.R;
 import java.util.ArrayList;
 
 public class FilterCards extends ActionBarActivity {
