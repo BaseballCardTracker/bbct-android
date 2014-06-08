@@ -1,11 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of BBCT for Android.
+
+ Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+
+ BBCT for Android is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ BBCT for Android is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="bbct.android">
+    package="bbct.android" >
 
-    <application android:allowBackup="true"
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/baseball"
         android:label="@string/app_name"
-        android:icon="@drawable/ic_launcher"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".common.activity.BaseballCardList"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".common.activity.BaseballCardDetails" >
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="vnd.android.cursor.item/baseball_card" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.BaseballCardList" />
+        </activity>
+        <activity android:name=".common.activity.FilterCards" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.BaseballCardList" />
+        </activity>
+        <activity android:name=".common.activity.About" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.BaseballCardList" />
+        </activity>
+
+        <provider
+            android:name=".common.provider.BaseballCardProvider"
+            android:authorities="@string/authorities"
+            android:icon="@drawable/baseball"
+            android:label="@string/provider_name"
+            android:readPermission="@string/read_permission"
+            android:writePermission="@string/write_permission" />
     </application>
 
 </manifest>

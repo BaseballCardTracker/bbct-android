@@ -39,7 +39,7 @@ import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import bbct.android.common.R;
+import bbct.android.R;
 import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;

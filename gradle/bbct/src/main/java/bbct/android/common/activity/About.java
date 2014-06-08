@@ -24,7 +24,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.TextView;
-import bbct.android.common.R;
+import bbct.android.R;
 
 /**
  * Displays the name and version of the app, a short description, contact links,
