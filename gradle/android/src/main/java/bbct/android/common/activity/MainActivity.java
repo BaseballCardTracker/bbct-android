@@ -18,20 +18,17 @@
  */
 package bbct.android.common.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import bbct.android.common.R;
 
 public class MainActivity extends ActionBarActivity {
 
-    private static String TAG = MainActivity.class.getName();
+    private static final String TAG = MainActivity.class.getName();
 
-    private static String ABOUT = "About";
+    private static final String ABOUT = "About";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
