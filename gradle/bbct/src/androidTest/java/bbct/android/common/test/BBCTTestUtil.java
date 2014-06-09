@@ -442,32 +442,30 @@ final public class BBCTTestUtil {
      * @param fieldFlags
      *            - the {@link EditText} views to fill in.
      */
-    public static void sendKeysToFilterCards(InstrumentationTestCase test,
-            Solo solo, BaseballCard testCard, Set<EditTexts> fieldFlags) {
-        Instrumentation inst = test.getInstrumentation();
-
+    public static void sendKeysToFilterCards(Solo solo, BaseballCard testCard,
+                                             Set<EditTexts> fieldFlags) {
         if (fieldFlags.contains(EditTexts.BRAND)) {
-            sendKeysToCurrFieldFilterCards(inst, solo, R.id.brand_check,
+            sendKeysToCurrFieldFilterCards(solo, R.id.brand_check, R.id.brand_input,
                     testCard.getBrand());
         }
 
         if (fieldFlags.contains(EditTexts.YEAR)) {
-            sendKeysToCurrFieldFilterCards(inst, solo, R.id.year_check,
+            sendKeysToCurrFieldFilterCards(solo, R.id.year_check, R.id.year_input,
                     testCard.getYear() + "");
         }
 
         if (fieldFlags.contains(EditTexts.NUMBER)) {
-            sendKeysToCurrFieldFilterCards(inst, solo, R.id.number_check,
+            sendKeysToCurrFieldFilterCards(solo, R.id.number_check, R.id.number_input,
                     testCard.getNumber() + "");
         }
 
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
-            sendKeysToCurrFieldFilterCards(inst, solo, R.id.player_name_check,
+            sendKeysToCurrFieldFilterCards(solo, R.id.player_name_check, R.id.player_name_input,
                     testCard.getPlayerName());
         }
 
         if (fieldFlags.contains(EditTexts.TEAM)) {
-            sendKeysToCurrFieldFilterCards(inst, solo, R.id.team_check,
+            sendKeysToCurrFieldFilterCards(solo, R.id.team_check, R.id.team_input,
                     testCard.getTeam());
         }
     }
@@ -476,21 +474,21 @@ final public class BBCTTestUtil {
      * Fills in the current {@link EditText} view, of the given
      * {@link FilterCards} activity.
      *
-     * @param inst
-     *            - the {@link Instrumentation} object perform in the test.
      * @param solo
      *            - the {@link Solo} object to perform clicks on view.
      * @param checkId
-     *            - the id of {@link CheckBox} to click.
+     *            - the id of the {@link CheckBox} to click.
+     * @param editTextId
+     *            - the id of the {@link EditText} to send input to.
      * @param input
      *            - the input string.
      */
-    public static void sendKeysToCurrFieldFilterCards(Instrumentation inst,
-            Solo solo, int checkId, String input) {
+    public static void sendKeysToCurrFieldFilterCards(Solo solo, int checkId, int editTextId,
+                                                      String input) {
         Activity filterCards = solo.getCurrentActivity();
         CheckBox cb = (CheckBox) filterCards.findViewById(checkId);
         solo.clickOnView(cb);
-        inst.sendStringSync(input);
+        solo.typeText((EditText)filterCards.findViewById(editTextId), input);
     }
 
     public static List<BaseballCard> filterList(List<BaseballCard> list,

@@ -142,7 +142,7 @@ public class FilterCardsPartialInputTest extends
             }
         };
 
-        BBCTTestUtil.sendKeysToFilterCards(this, this.solo, this.testCard,
+        BBCTTestUtil.sendKeysToFilterCards(this.solo, this.testCard,
                 this.inputFieldsMask);
         this.solo.clickOnActionBarItem(R.id.save_menu);
 

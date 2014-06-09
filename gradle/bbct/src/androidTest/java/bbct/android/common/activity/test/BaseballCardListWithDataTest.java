@@ -583,7 +583,7 @@ public class BaseballCardListWithDataTest extends
             }
         };
 
-        this.testSingleFilter(R.id.year_check, year + "", yearPred);
+        this.testSingleFilter(R.id.year_check, R.id.year_input, year + "", yearPred);
     }
 
     /**
@@ -603,12 +603,11 @@ public class BaseballCardListWithDataTest extends
      * @param input      - the input to use for filtering.
      * @param filterPred - @see {@link Predicate}.
      */
-    private void testSingleFilter(int checkId, String input,
+    private void testSingleFilter(int checkId, int editId, String input,
             Predicate<BaseballCard> filterPred) {
         Activity filterCards = BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
 
-        BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.inst, this.solo,
-                checkId, input);
+        BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.solo, checkId, editId, input);
         this.solo.clickOnActionBarItem(R.id.save_menu);
         this.inst.waitForIdleSync();
         Assert.assertTrue(filterCards.isFinishing());
