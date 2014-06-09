@@ -17,6 +17,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="bbct.android"
     android:versionCode="12"
     android:versionName="@string/version_number" >
@@ -65,17 +66,20 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.lite.activity.BaseballCardList" />
+                android:value="bbct.android.lite.activity.BaseballCardList"
+                tools:replace="value" />
         </activity>
         <activity android:name=".common.activity.FilterCards">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.lite.activity.BaseballCardList" />
+                android:value="bbct.android.lite.activity.BaseballCardList"
+                tools:replace="value" />
         </activity>
         <activity android:name=".common.activity.About">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.common.activity.BaseballCardList" />
+                android:value="bbct.android.common.activity.BaseballCardList"
+                tools:replace="value" />
         </activity>
 
         <provider

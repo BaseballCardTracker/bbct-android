@@ -22,7 +22,7 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import bbct.android.R;
+import bbct.android.common.R;
 import com.amazon.device.ads.AdError;
 import com.amazon.device.ads.AdLayout;
 import com.amazon.device.ads.AdListener;

@@ -8,11 +8,11 @@
     </facet>
     <facet type="android" name="Android">
       <configuration>
-        <option name="SELECTED_BUILD_VARIANT" value="debug" />
-        <option name="ASSEMBLE_TASK_NAME" value="assembleDebug" />
-        <option name="COMPILE_JAVA_TASK_NAME" value="compileDebugJava" />
-        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleDebugTest" />
-        <option name="SOURCE_GEN_TASK_NAME" value="generateDebugSources" />
+        <option name="SELECTED_BUILD_VARIANT" value="liteDebug" />
+        <option name="ASSEMBLE_TASK_NAME" value="assembleLiteDebug" />
+        <option name="COMPILE_JAVA_TASK_NAME" value="compileLiteDebugJava" />
+        <option name="ASSEMBLE_TEST_TASK_NAME" value="assembleLiteDebugTest" />
+        <option name="SOURCE_GEN_TASK_NAME" value="generateLiteDebugSources" />
         <option name="ALLOW_USER_CONFIGURATION" value="false" />
         <option name="MANIFEST_FILE_RELATIVE_PATH" value="/src/main/AndroidManifest.xml" />
         <option name="RES_FOLDER_RELATIVE_PATH" value="/src/main/res" />
@@ -22,19 +22,40 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/build/intermediates/classes/debug" />
+    <output url="file://$MODULE_DIR$/build/intermediates/classes/lite/debug" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/debug" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/debug" type="java-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/test/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/test/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/test/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/test/debug" isTestSource="true" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/test/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/lite/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/lite/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/lite/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/lite/debug" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/lite/debug" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/liteDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/liteDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/liteDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/liteDebug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/liteDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/liteDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/liteDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/test/lite/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/test/lite/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/test/lite/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/rs/test/lite/debug" isTestSource="true" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/build/generated/res/rs/test/lite/debug" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/lite/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/lite/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/lite/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/lite/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/lite/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/lite/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/lite/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/assets" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/aidl" isTestSource="false" />
@@ -62,7 +83,9 @@
     <orderEntry type="jdk" jdkName="Android API 19 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="appcompat-v7-19.1.0" level="project" />
+    <orderEntry type="library" exported="" name="GoogleAdMobAdsSdk-6.4.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
+    <orderEntry type="library" exported="" name="amazon-ads-5.1.243" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="robotium-solo-5.1" level="project" />
   </component>
 </module>
