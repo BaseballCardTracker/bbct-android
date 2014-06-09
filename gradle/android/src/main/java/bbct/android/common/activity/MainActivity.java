@@ -20,6 +20,8 @@ package bbct.android.common.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import bbct.android.common.R;
 
 public class MainActivity extends ActionBarActivity {
@@ -30,6 +32,18 @@ public class MainActivity extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.main);
+    }
+
+    /**
+     * Create the options menu. This is simply inflated from the
+     * {@code option.xml} resource file.
+     *
+     * @param menu The options menu in which new menu items are placed.
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 
 }

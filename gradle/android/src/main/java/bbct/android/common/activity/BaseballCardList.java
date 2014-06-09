@@ -122,7 +122,7 @@ public class BaseballCardList extends ListFragment {
      */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.option, menu);
+        inflater.inflate(R.menu.list, menu);
     }
 
     /**
