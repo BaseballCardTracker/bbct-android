@@ -35,6 +35,7 @@ import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.FilterCards;
+import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
@@ -48,17 +49,17 @@ import java.util.List;
 import junit.framework.Assert;
 
 /**
- * Tests for the {@link BaseballCardList} activity when the database contains
+ * Tests for the {@link MainActivity} activity when the database contains
  * data.
  */
 public class BaseballCardListWithDataTest extends
-        ActivityInstrumentationTestCase2<BaseballCardList> {
+        ActivityInstrumentationTestCase2<MainActivity> {
 
     /**
-     * Create instrumented test cases for {@link BaseballCardList}.
+     * Create instrumented test cases for {@link MainActivity}.
      */
     public BaseballCardListWithDataTest() {
-        super(BaseballCardList.class);
+        super(MainActivity.class);
     }
 
     /**
@@ -408,6 +409,7 @@ public class BaseballCardListWithDataTest extends
             }
         });
 
+        this.inst.waitForIdleSync();
         int numMarked = 0;
         for (int i = 0; i < lv.getChildCount(); i++) {
             CheckedTextView ctv = (CheckedTextView) lv.getChildAt(i)
@@ -510,7 +512,7 @@ public class BaseballCardListWithDataTest extends
     }
 
     /**
-     * Test that the state of {@link CheckedTextView} is maintained when a user
+     * Test that the state of {@link CheckedTextView} is NOT maintained when a user
      * adds a new card.
      */
     public void testSelectionAfterAddCard() throws Throwable {
@@ -540,7 +542,7 @@ public class BaseballCardListWithDataTest extends
         for (int i = 0; i < indexes.size(); i++) {
             CheckedTextView ctv = (CheckedTextView) lv.getChildAt(
                     indexes.get(i)).findViewById(R.id.checkmark);
-            Assert.assertTrue(ctv.isChecked());
+            Assert.assertFalse(ctv.isChecked());
         }
     }
 
@@ -599,7 +601,8 @@ public class BaseballCardListWithDataTest extends
     /**
      * Test a filter using a single parameter.
      *
-     * @param checkId    - the id of {@link CheckBox} to activate.
+     * @param checkId    - the id of the {@link CheckBox} to activate.
+     * @param editId     - the id of the {@link EditText} to input text into.
      * @param input      - the input to use for filtering.
      * @param filterPred - @see {@link Predicate}.
      */

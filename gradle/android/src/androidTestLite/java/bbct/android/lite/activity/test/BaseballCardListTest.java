@@ -19,20 +19,20 @@
 package bbct.android.lite.activity.test;
 
 import android.test.ActivityInstrumentationTestCase2;
-import bbct.android.lite.activity.BaseballCardList;
+import bbct.android.lite.provider.LiteActivity;
 
 /**
- * Tests for {@link BaseballCardList} activity class.
+ * Tests for {@link LiteActivity} activity class.
  *
- * TODO: Add tests for the layout of {@link BaseballCardList}
+ * TODO: Add tests for the layout of {@link LiteActivity}
  */
-public class BaseballCardListTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
+public class BaseballCardListTest extends ActivityInstrumentationTestCase2<LiteActivity> {
 
     /**
-     * Create test cases for {@link BaseballCardList}.
+     * Create test cases for {@link LiteActivity}.
      */
     public BaseballCardListTest() {
-        super(BaseballCardList.class);
+        super(LiteActivity.class);
     }
 
 }

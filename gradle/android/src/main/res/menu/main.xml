@@ -17,19 +17,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical"
->
-    <TextView android:id="@android:id/empty"
-              android:text="@string/start"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:gravity="center"
-    />
-    <ListView android:id="@android:id/list"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-    />
-</LinearLayout>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:bbct="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/add_menu"
+        android:icon="@drawable/ic_menu_add"
+        android:title="@string/add_menu"
+        bbct:showAsAction="ifRoom" />
+</menu>

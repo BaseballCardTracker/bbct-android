@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="amazon-ads-5.1.243">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/bbct/libs/amazon-ads-5.1.243.jar!/" />
+      <root url="jar://$PROJECT_DIR$/android/libs/amazon-ads-5.1.243.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

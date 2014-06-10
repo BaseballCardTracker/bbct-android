@@ -28,6 +28,7 @@ import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.FilterCards;
+import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
@@ -40,17 +41,17 @@ import java.util.List;
 import junit.framework.Assert;
 
 /**
- * Tests for the {@link BaseballCardList} activity when the database does not
+ * Tests for the {@link MainActivity} activity when the database does not
  * contain data.
  */
 public class BaseballCardListWithoutDataTest extends
-        ActivityInstrumentationTestCase2<BaseballCardList> {
+        ActivityInstrumentationTestCase2<MainActivity> {
 
     /**
-     * Create instrumented test cases for {@link BaseballCardList}.
+     * Create instrumented test cases for {@link MainActivity}.
      */
     public BaseballCardListWithoutDataTest() {
-        super(BaseballCardList.class);
+        super(MainActivity.class);
     }
 
     /**

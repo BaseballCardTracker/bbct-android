@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="GoogleAdMobAdsSdk-6.4.1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/bbct/libs/GoogleAdMobAdsSdk-6.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/android/libs/GoogleAdMobAdsSdk-6.4.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

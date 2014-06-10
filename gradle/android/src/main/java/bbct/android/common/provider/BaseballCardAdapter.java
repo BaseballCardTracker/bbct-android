@@ -18,7 +18,6 @@
  */
 package bbct.android.common.provider;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.database.Cursor;
@@ -123,15 +122,6 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
      */
     private void updateDataSet() {
         this.notifyDataSetChanged();
-        final Activity curActivity = (Activity) this.context;
-        curActivity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ListView listView = (ListView) curActivity
-                        .findViewById(android.R.id.list);
-                listView.setAdapter(BaseballCardAdapter.this);
-            }
-        });
     }
 
     public BaseballCard getSelectedCard() {
