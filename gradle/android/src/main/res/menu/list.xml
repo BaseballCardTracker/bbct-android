@@ -39,9 +39,4 @@
         android:icon="@drawable/ic_menu_delete"
         android:title="@string/delete_menu"
         bbct:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/about_menu"
-        android:icon="@drawable/ic_menu_about"
-        android:title="@string/about_menu"
-        bbct:showAsAction="ifRoom" />
 </menu>

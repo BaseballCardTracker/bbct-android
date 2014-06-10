@@ -488,6 +488,7 @@ final public class BBCTTestUtil {
     public static void sendKeysToCurrFieldFilterCards(Solo solo, int checkId, int editTextId,
                                                       String input) {
         Activity filterCards = solo.getCurrentActivity();
+        Assert.assertTrue(solo.waitForView(checkId));
         CheckBox cb = (CheckBox) filterCards.findViewById(checkId);
         solo.clickOnView(cb);
         solo.typeText((EditText)filterCards.findViewById(editTextId), input);

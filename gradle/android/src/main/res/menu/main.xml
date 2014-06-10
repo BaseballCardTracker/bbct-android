@@ -20,8 +20,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:bbct="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/add_menu"
-        android:icon="@drawable/ic_menu_add"
-        android:title="@string/add_menu"
-        bbct:showAsAction="ifRoom" />
+        android:id="@+id/about_menu"
+        android:icon="@drawable/ic_menu_about"
+        android:title="@string/about_menu"
+        bbct:showAsAction="never" />
 </menu>
