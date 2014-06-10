@@ -23,6 +23,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import bbct.android.common.R;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -39,6 +40,18 @@ public class MainActivity extends ActionBarActivity {
                 .beginTransaction()
                 .add(R.id.fragment_holder, new BaseballCardList())
                 .commit();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EasyTracker.getInstance(this).activityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EasyTracker.getInstance(this).activityStop(this);
     }
 
     /**
