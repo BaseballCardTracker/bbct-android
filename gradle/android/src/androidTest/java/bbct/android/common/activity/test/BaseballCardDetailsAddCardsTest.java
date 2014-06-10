@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.support.v4.app.Fragment;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.UiThreadTest;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;

@@ -21,7 +21,6 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.test.ActivityInstrumentationTestCase2;
-import bbct.android.common.R;
 import bbct.android.common.activity.About;
 import bbct.android.common.activity.FragmentTestActivity;
 import junit.framework.Assert;
