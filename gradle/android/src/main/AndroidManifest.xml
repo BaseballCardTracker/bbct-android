@@ -17,59 +17,37 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
     package="bbct.android.common"
-    android:versionCode="1"
-    android:versionName="1.0" >
-
-    <uses-sdk
-        android:minSdkVersion="7"
-        android:targetSdkVersion="17" />
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <permission
         android:name="bbct.android.common.permission.READ"
         android:description="@string/read_permission_desc"
         android:label="@string/read_permission_label"
-        android:protectionLevel="signature" />
+        android:protectionLevel="signature"/>
     <permission
         android:name="bbct.android.common.permission.WRITE"
         android:description="@string/write_permission_desc"
         android:label="@string/write_permission_label"
-        android:protectionLevel="signature" />
+        android:protectionLevel="signature"/>
 
     <application
+        android:allowBackup="true"
         android:icon="@drawable/baseball"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.BaseballCardDetails" >
-            <intent-filter>
-                <action android:name="android.intent.action.EDIT" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="vnd.android.cursor.item/baseball_card" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.common.activity.MainActivity" />
-        </activity>
-        <activity android:name=".activity.FilterCards" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.common.activity.MainActivity" />
-        </activity>
-
-        <activity android:name=".activity.FragmentTestActivity" />
+        <activity android:name=".activity.FragmentTestActivity"/>
 
         <provider
             android:name=".provider.BaseballCardProvider"
@@ -77,7 +55,7 @@
             android:icon="@drawable/baseball"
             android:label="@string/provider_name"
             android:readPermission="@string/read_permission"
-            android:writePermission="@string/write_permission" />
+            android:writePermission="@string/write_permission"/>
     </application>
 
 </manifest>
