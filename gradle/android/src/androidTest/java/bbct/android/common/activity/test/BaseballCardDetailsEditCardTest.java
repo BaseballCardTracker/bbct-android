@@ -18,15 +18,12 @@
  */
 package bbct.android.common.activity.test;
 
-import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.Context;
-import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.widget.EditText;
-import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
@@ -44,7 +41,7 @@ import junit.framework.TestSuite;
  * Tests editing card value and count in a {@link BaseballCardDetails} activity.
  */
 public class BaseballCardDetailsEditCardTest extends
-        ActivityInstrumentationTestCase2<BaseballCardDetails> {
+        ActivityInstrumentationTestCase2<FragmentTestActivity> {
 
     /**
      * Creates a {@link TestSuite} containing tests for every possible
@@ -78,7 +75,7 @@ public class BaseballCardDetailsEditCardTest extends
      *            The {@link EditText} views to edit.
      */
     public BaseballCardDetailsEditCardTest(Set<BBCTTestUtil.EditTexts> inputMask) {
-        super(BaseballCardDetails.class);
+        super(FragmentTestActivity.class);
 
         this.setName(TEST_NAME);
         this.inputMask = inputMask;
@@ -123,20 +120,14 @@ public class BaseballCardDetailsEditCardTest extends
             Log.e(TAG, this.oldCard.toString());
         }
 
-        Context target = inst.getTargetContext();
-        Intent intent = new Intent(target, BaseballCardDetails.class);
-        intent.putExtra(target.getString(R.string.baseball_card_extra),
-                this.oldCard);
-        intent.putExtra(target.getString(R.string.card_id_extra), cardId);
-        this.setActivityIntent(intent);
-
         this.activity = this.getActivity();
+        this.fragment = BaseballCardDetails.getInstance(cardId, this.oldCard);
+        this.activity.replaceFragment(this.fragment);
         this.solo = new Solo(inst, this.activity);
     }
 
     /**
-     * Tear down the test fixture by calling
-     * {@link BaseballCardDetails#finish()} and deleting the app's database.
+     * Tear down the test fixture by deleting the app's database.
      *
      * @throws Exception
      *             If an error occurs while chaining to the super class.
@@ -208,7 +199,8 @@ public class BaseballCardDetailsEditCardTest extends
 
     private final Set<BBCTTestUtil.EditTexts> inputMask;
     private Solo solo = null;
-    private Activity activity = null;
+    private FragmentTestActivity activity = null;
+    private BaseballCardDetails fragment;
     private BaseballCard oldCard = null;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil = null;

@@ -35,8 +35,7 @@
             <CheckBox
                 android:id="@+id/brand_check"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onCheckBoxClick" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,8 +61,7 @@
             <CheckBox
                 android:id="@+id/year_check"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onCheckBoxClick" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,8 +87,7 @@
             <CheckBox
                 android:id="@+id/number_check"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onCheckBoxClick" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -116,8 +113,7 @@
             <CheckBox
                 android:id="@+id/player_name_check"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onCheckBoxClick" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -143,8 +139,7 @@
             <CheckBox
                 android:id="@+id/team_check"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onCheckBoxClick" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="wrap_content"

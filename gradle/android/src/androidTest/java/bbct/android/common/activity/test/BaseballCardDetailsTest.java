@@ -18,12 +18,9 @@
  */
 package bbct.android.common.activity.test;
 
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.graphics.Rect;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
 import android.util.Log;
@@ -38,6 +35,7 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
@@ -51,7 +49,7 @@ import junit.framework.Assert;
  * TODO: Add tests for the layout of {@link BaseballCardDetails}
  */
 public class BaseballCardDetailsTest extends
-        ActivityInstrumentationTestCase2<BaseballCardDetails> {
+        ActivityInstrumentationTestCase2<FragmentTestActivity> {
 
     private static final int SLEEP_TIME_TO_REFRESH = 200;
     private static final int KEYPAD_HEIGHT = 100;
@@ -60,7 +58,7 @@ public class BaseballCardDetailsTest extends
      * Create instrumented test cases for {@link BaseballCardDetails}.
      */
     public BaseballCardDetailsTest() {
-        super(BaseballCardDetails.class);
+        super(FragmentTestActivity.class);
     }
 
     /**
@@ -87,6 +85,8 @@ public class BaseballCardDetailsTest extends
         // Must call getActivity() before creating a DatabaseUtil object to
         // ensure that the database is created
         this.activity = this.getActivity();
+        this.activity.replaceFragment(new BaseballCardDetails());
+        this.inst.waitForIdleSync();
         this.brandText = (AutoCompleteTextView) this.activity
                 .findViewById(R.id.brand_text);
         this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
@@ -265,14 +265,8 @@ public class BaseballCardDetailsTest extends
         }
     }
 
-    public void testNavigateUp() {
-        ActionBar actionBar = ((ActionBarActivity) this.activity)
-                .getSupportActionBar();
-        Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
-    }
-
     private Solo solo = null;
-    private Activity activity = null;
+    private FragmentTestActivity activity = null;
     private AutoCompleteTextView brandText = null;
     private EditText yearText = null;
     private EditText numberText = null;

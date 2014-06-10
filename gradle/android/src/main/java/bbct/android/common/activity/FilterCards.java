@@ -18,55 +18,66 @@
  */
 package bbct.android.common.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import bbct.android.common.R;
 import java.util.ArrayList;
 
-public class FilterCards extends ActionBarActivity {
+public class FilterCards extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.filter_cards);
+
+        this.setHasOptionsMenu(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.filter_cards, container, false);
 
         // set title
         String format = this.getString(R.string.bbct_title);
         String filterCardsTitle = this.getString(R.string.filter_cards_title);
         String title = String.format(format, filterCardsTitle);
-        this.setTitle(title);
+        this.getActivity().setTitle(title);
 
-        ActionBar actionBar = this.getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        for (int id : CHECKBOXES) {
+            View checkBox = view.findViewById(id);
+            checkBox.setOnClickListener(this.onCheckBoxClick);
+        }
 
         // restore input fields state
         if (savedInstanceState != null) {
             ArrayList<Integer> enabledFields = savedInstanceState
                     .getIntegerArrayList(this.getString(R.string.input_extra));
             for (int i : enabledFields) {
-                EditText et = (EditText) this.findViewById(TEXT_FIELDS[i]);
+                EditText et = (EditText) view.findViewById(TEXT_FIELDS[i]);
                 et.setEnabled(true);
             }
         }
+
+        return view;
     }
 
     /**
      * Save the state of all {@link EditText} elements.
      */
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         ArrayList<Integer> enabledFields = new ArrayList<Integer>();
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
-            EditText et = (EditText) this.findViewById(TEXT_FIELDS[i]);
+            EditText et = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
             if (et.isEnabled()) {
                 enabledFields.add(i);
             }
@@ -77,23 +88,20 @@ public class FilterCards extends ActionBarActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.save, menu);
-
-        return super.onCreateOptionsMenu(menu);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.save, menu);
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    public void onPrepareOptionsMenu(Menu menu) {
         MenuItem confirm = menu.findItem(R.id.save_menu);
 
         if (this.numberChecked() > 0) {
             confirm.setVisible(true);
             confirm.setEnabled(true);
-            return true;
         } else {
+            confirm.setVisible(false);
             confirm.setEnabled(false);
-            return false;
         }
     }
 
@@ -112,22 +120,22 @@ public class FilterCards extends ActionBarActivity {
     /**
      * Finds the corresponding {@link EditText} element given a {@link CheckBox}
      * that was clicked upon.
-     *
-     * @param v
-     *            - the checkbox that was clicked
      */
-    public void onCheckBoxClick(View v) {
-        EditText input = null;
+    private View.OnClickListener onCheckBoxClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            EditText input = null;
 
-        for (int i = 0; i < CHECKBOXES.length; i++) {
-            if (v.getId() == CHECKBOXES[i]) {
-                input = (EditText) this.findViewById(TEXT_FIELDS[i]);
+            for (int i = 0; i < CHECKBOXES.length; i++) {
+                if (v.getId() == CHECKBOXES[i]) {
+                    input = (EditText) FilterCards.this.getActivity().findViewById(TEXT_FIELDS[i]);
+                }
             }
-        }
 
-        this.toggleTextField(input);
-        this.supportInvalidateOptionsMenu();
-    }
+            FilterCards.this.toggleTextField(input);
+            FilterCards.this.getActivity().supportInvalidateOptionsMenu();
+        }
+    };
 
     /**
      * Toggles the state of {@link EditText}.
@@ -151,9 +159,9 @@ public class FilterCards extends ActionBarActivity {
      */
     private int numberChecked() {
         int count = 0;
-        for (int i = 0; i < CHECKBOXES.length; i++) {
-            CheckBox cb = (CheckBox) this.findViewById(CHECKBOXES[i]);
-            if (cb.isChecked()) {
+        for (int id : CHECKBOXES) {
+            CheckBox cb = (CheckBox) this.getActivity().findViewById(id);
+            if (cb != null && cb.isChecked()) {
                 count++;
             }
         }
@@ -166,18 +174,24 @@ public class FilterCards extends ActionBarActivity {
      * {@link FilterCards} activity and exits.
      */
     private void onConfirm() {
-        Intent intent = new Intent();
+        Bundle filterArgs = new Bundle();
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
-            EditText input = (EditText) this.findViewById(TEXT_FIELDS[i]);
+            EditText input = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
             if (input.isEnabled() && input.getText().toString().length() > 0) {
                 String key = this.getString(EXTRAS[i]);
-                intent.putExtra(key, input.getText().toString());
+                filterArgs.putString(key, input.getText().toString());
             }
         }
 
-        this.setResult(RESULT_OK, intent);
-        this.finish();
+        BaseballCardList cardList = BaseballCardList.getInstance(filterArgs);
+        this.getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_holder, cardList)
+                .addToBackStack(FILTERED_LIST)
+                .commit();
     }
+
+    private static final String FILTERED_LIST = "Filtered List";
 
     private static final int[] CHECKBOXES = { R.id.brand_check,
             R.id.year_check, R.id.number_check, R.id.player_name_check,

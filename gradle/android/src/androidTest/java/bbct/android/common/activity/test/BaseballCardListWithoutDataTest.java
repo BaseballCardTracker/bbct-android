@@ -69,8 +69,6 @@ public class BaseballCardListWithoutDataTest extends
         this.inst = this.getInstrumentation();
 
         this.activity = this.getActivity();
-        this.listView = (ListView) this.activity
-                .findViewById(android.R.id.list);
 
         this.solo = new Solo(this.inst, this.activity);
 
@@ -104,7 +102,6 @@ public class BaseballCardListWithoutDataTest extends
      */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        Assert.assertNotNull(this.listView);
 
         TextView emptyList = (TextView) this.activity
                 .findViewById(android.R.id.empty);
@@ -113,7 +110,9 @@ public class BaseballCardListWithoutDataTest extends
 
         // Subtract 1 from the number of views owned by the ListView to account
         // for the header View
-        Assert.assertEquals(0, this.listView.getCount() - 1);
+        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        Assert.assertNotNull(listView);
+        Assert.assertEquals(0, listView.getCount() - 1);
 
         BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.isEmpty());
@@ -133,10 +132,7 @@ public class BaseballCardListWithoutDataTest extends
      * {@link BaseballCardDetails} activity.
      */
     public void testAddCardsMenuItem() {
-        Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
-
-        cardDetails.finish();
-        Assert.assertTrue(cardDetails.isFinishing());
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
     }
 
     /**
@@ -144,10 +140,7 @@ public class BaseballCardListWithoutDataTest extends
      * activity.
      */
     public void testFilterCardsMenuItem() {
-        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
-
-        filterCards.finish();
-        Assert.assertTrue(filterCards.isFinishing());
+        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
     }
 
     /**
@@ -156,18 +149,14 @@ public class BaseballCardListWithoutDataTest extends
      * rows are marked.
      */
     public void testDeleteCardsMenuItem() {
-        Assert.assertFalse(this.inst.invokeMenuActionSync(this.activity,
-                R.id.delete_menu, 0));
+        Assert.assertFalse(this.inst.invokeMenuActionSync(this.activity, R.id.delete_menu, 0));
     }
 
     /**
-     * Test that the "About" menu item launches a {@link About} activity.
+     * Test that the "About" menu item displays the {@link About} fragment.
      */
     public void testAboutMenuItem() {
-        Activity about = BBCTTestUtil.testMenuItem(this.solo, R.id.about_menu, About.class);
-
-        about.finish();
-        Assert.assertTrue(about.isFinishing());
+        BBCTTestUtil.testMenuItem(this.solo, R.id.about_menu, About.class);
     }
 
     /**
@@ -193,8 +182,9 @@ public class BaseballCardListWithoutDataTest extends
 
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
         cards.add(card);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, cards,
-                this.listView);
+
+        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, cards, listView);
     }
 
     /**
@@ -218,8 +208,8 @@ public class BaseballCardListWithoutDataTest extends
         }
 
         this.solo.goBack();
-        BBCTTestUtil.assertListViewContainsItems(this.inst, cards,
-                this.listView);
+        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        BBCTTestUtil.assertListViewContainsItems(this.inst, cards, listView);
     }
 
     private Solo solo = null;
@@ -227,6 +217,5 @@ public class BaseballCardListWithoutDataTest extends
     private Activity activity = null;
     private BaseballCardCsvFileReader cardInput = null;
     private DatabaseUtil dbUtil = null;
-    private ListView listView = null;
     private static final String DATA_ASSET = "cards.csv";
 }

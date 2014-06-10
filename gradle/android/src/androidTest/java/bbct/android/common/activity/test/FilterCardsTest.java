@@ -19,8 +19,6 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.Button;
@@ -30,19 +28,20 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
+import bbct.android.common.activity.FragmentTestActivity;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
 
 /**
  * Tests for {@link FilterCards} activity class.
  */
-public class FilterCardsTest extends ActivityInstrumentationTestCase2<FilterCards> {
+public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTestActivity> {
 
     /**
      * Create instrumented test cases for {@link FilterCards}.
      */
     public FilterCardsTest() {
-        super(FilterCards.class);
+        super(FragmentTestActivity.class);
     }
 
     @Override
@@ -50,14 +49,9 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FilterCard
         super.setUp();
 
         this.activity = this.getActivity();
+        this.activity.replaceFragment(new FilterCards());
+        this.getInstrumentation().waitForIdleSync();
         this.solo = new Solo(this.getInstrumentation(), this.activity);
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        this.solo.finishOpenedActivities();
-
-        super.tearDown();
     }
 
     /**
@@ -109,8 +103,7 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FilterCard
         Assert.assertTrue(input.isEnabled());
         Assert.assertTrue(input.hasFocus());
 
-        View menuView = this.solo.getView(R.id.save_menu);
-        Assert.assertNotNull(menuView);
+        Assert.assertTrue(this.solo.waitForView(R.id.save_menu));
     }
 
     /**
@@ -162,21 +155,14 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FilterCard
         this.testNumberCheckBox();
         this.solo.setActivityOrientation(Solo.LANDSCAPE);
 
-        EditText numberInput = (EditText) this.activity.findViewById(R.id.number_input);
+        this.solo.waitForView(R.id.number_input);
+        EditText numberInput = (EditText) this.solo.getCurrentActivity()
+                .findViewById(R.id.number_input);
         Assert.assertTrue(numberInput.isEnabled());
-
-//        Button okButton = (Button) this.activity.findViewById(R.id.ok_button);
-//        Assert.assertTrue(okButton.isEnabled());
-    }
-
-    public void testNavigateUp() {
-        ActionBar actionBar = ((ActionBarActivity) this.activity)
-                .getSupportActionBar();
-        Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
     }
 
     private Solo solo = null;
-    private Activity activity = null;
+    private FragmentTestActivity activity = null;
 
     private static final int CHECKBOX_INDEX = 0;
     private static final int INPUT_INDEX = 2;

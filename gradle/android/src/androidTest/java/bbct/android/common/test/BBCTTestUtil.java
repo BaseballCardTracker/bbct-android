@@ -22,6 +22,8 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.test.InstrumentationTestCase;
 import android.test.ViewAsserts;
 import android.util.Log;
@@ -72,9 +74,8 @@ final public class BBCTTestUtil {
             List<BaseballCard> expectedItems, ListView listView) {
         inst.waitForIdleSync();
 
-        // Subtract 1 from the number of views owned by the ListView to account
-        // for the header View
-        Assert.assertEquals(expectedItems.size(), listView.getCount() - 1);
+        // Add 1 to the number of expected cards to account for the header View
+        Assert.assertEquals(expectedItems.size() + 1, listView.getChildCount());
 
         for (BaseballCard card : expectedItems) {
 
@@ -111,23 +112,27 @@ final public class BBCTTestUtil {
     /**
      * Test that a menu item correctly launches a child activity.
      *
+     * @param solo
+     *            The {@link Solo} instance used for this test.
      * @param menuId
      *            The id of the menu resource.
-     * @param childActivityClass
-     *            The Class of the child activity which should be launched.
-     * @return A reference to the child activity which is launched, if the test
-     *         succeeds.
+     * @param fragmentClass
+     *            The Class of the {@link Fragment} which should be launched.
      */
-    public static Activity testMenuItem(Solo solo, int menuId,
-                                        Class<? extends Activity> childActivityClass) {
+    public static void testMenuItem(Solo solo, int menuId,
+                                    final Class<? extends Fragment> fragmentClass) {
         solo.clickOnActionBarItem(menuId);
-
-        if (childActivityClass != null) {
-            Assert.assertTrue(solo
-                    .waitForActivity(childActivityClass, TIME_OUT));
-        }
-
-        return solo.getCurrentActivity();
+        final Activity activity = solo.getCurrentActivity();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Fragment fragment = ((FragmentActivity) activity)
+                        .getSupportFragmentManager()
+                        .findFragmentById(R.id.fragment_holder);
+                Assert.assertNotNull(fragment);
+                Assert.assertEquals(fragmentClass.getName(), fragment.getClass().getName());
+            }
+        });
     }
 
     /**
@@ -432,9 +437,6 @@ final public class BBCTTestUtil {
      * Fills in all {@link EditText} views, except the ones indicated, of the
      * {@link FilterCards} activity.
      *
-     * @param test
-     *            - the {@link InstrumentationTestCase} object perform in the
-     *            test.
      * @param solo
      *            - the {@link Solo} object to perform clicks on views.
      * @param testCard
@@ -486,6 +488,7 @@ final public class BBCTTestUtil {
     public static void sendKeysToCurrFieldFilterCards(Solo solo, int checkId, int editTextId,
                                                       String input) {
         Activity filterCards = solo.getCurrentActivity();
+        Assert.assertTrue(solo.waitForView(checkId));
         CheckBox cb = (CheckBox) filterCards.findViewById(checkId);
         solo.clickOnView(cb);
         solo.typeText((EditText)filterCards.findViewById(editTextId), input);

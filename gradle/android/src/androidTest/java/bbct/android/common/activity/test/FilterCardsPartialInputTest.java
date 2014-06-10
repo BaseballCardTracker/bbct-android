@@ -105,7 +105,7 @@ public class FilterCardsPartialInputTest extends
     }
 
     public void testFilterCombination() {
-        Activity filterCards = BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
 
         final Set<BBCTTestUtil.EditTexts> mask = this.inputFieldsMask;
         final BaseballCard test = this.testCard;
@@ -147,8 +147,6 @@ public class FilterCardsPartialInputTest extends
         this.solo.clickOnActionBarItem(R.id.save_menu);
 
         this.inst.waitForIdleSync();
-        Assert.assertTrue(filterCards.isFinishing());
-
         List<BaseballCard> expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
         BBCTTestUtil.assertListViewContainsItems(this.inst, expectedCards, this.listView);
     }

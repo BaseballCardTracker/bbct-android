@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  This file is part of BBCT for Android.
 
  Copyright 2012 codeguru <codeguru@users.sourceforge.net>
@@ -18,27 +17,24 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@id/ad_view"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/premium_text"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/premium"/>
+        android:text="@string/premium" />
 
-    <fragment
-        android:id="@+id/list_fragment"
-        android:name="bbct.android.common.activity.BaseballCardList"
+    <FrameLayout
+        android:id="@+id/fragment_holder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/card_list"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

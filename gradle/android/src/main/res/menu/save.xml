@@ -24,6 +24,6 @@
         android:id="@+id/save_menu"
         android:icon="@drawable/ic_menu_save"
         android:title="@string/save_menu"
-        bbct:showAsAction="ifRoom"/>
+        bbct:showAsAction="always"/>
 
 </menu>

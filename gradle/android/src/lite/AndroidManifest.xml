@@ -22,10 +22,6 @@
     android:versionCode="12"
     android:versionName="@string/version_number" >
 
-    <uses-sdk
-        android:minSdkVersion="7"
-        android:targetSdkVersion="19" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -54,32 +50,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".common.activity.BaseballCardDetails">
-            <intent-filter>
-                <action android:name="android.intent.action.EDIT" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="vnd.android.cursor.item/baseball_card" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.lite.activity.LiteActivity"
-                tools:replace="value" />
-        </activity>
-        <activity android:name=".common.activity.FilterCards">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.lite.activity.LiteActivity"
-                tools:replace="value" />
-        </activity>
-        <activity android:name=".common.activity.About">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="bbct.android.common.activity.LiteActivity"
-                tools:replace="value" />
         </activity>
 
         <provider

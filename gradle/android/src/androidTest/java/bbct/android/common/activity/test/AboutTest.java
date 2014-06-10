@@ -19,11 +19,10 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
 import android.test.ActivityInstrumentationTestCase2;
-import bbct.android.common.R;
 import bbct.android.common.activity.About;
+import bbct.android.common.activity.FragmentTestActivity;
 import junit.framework.Assert;
 
 /**
@@ -31,13 +30,13 @@ import junit.framework.Assert;
  *
  * TODO: Add tests for the layout of {@link About}
  */
-public class AboutTest extends ActivityInstrumentationTestCase2<About> {
+public class AboutTest extends ActivityInstrumentationTestCase2<FragmentTestActivity> {
 
     /**
      * Create instrumented test cases for {@link About}.
      */
     public AboutTest() {
-        super(About.class);
+        super(FragmentTestActivity.class);
     }
 
     /**
@@ -51,6 +50,8 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
         super.setUp();
 
         this.activity = this.getActivity();
+        this.aboutFragment = new About();
+        this.activity.replaceFragment(this.aboutFragment);
     }
 
     /**
@@ -60,22 +61,9 @@ public class AboutTest extends ActivityInstrumentationTestCase2<About> {
      */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
+        Assert.assertNotNull(this.aboutFragment);
     }
 
-    /**
-     * Test that the title of the {@link Activity} is correct.
-     */
-    public void testTitle() {
-        String title = this.activity.getTitle().toString();
-        String aboutTitle = this.activity.getString(R.string.about_title);
-
-        Assert.assertTrue(title.contains(aboutTitle));
-    }
-
-    public void testNavigateUp() {
-        ActionBar actionBar = ((ActionBarActivity) this.activity).getSupportActionBar();
-        Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
-    }
-
-    private Activity activity = null;
+    private FragmentTestActivity activity;
+    private Fragment aboutFragment;
 }

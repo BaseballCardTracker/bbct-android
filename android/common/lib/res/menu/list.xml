@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  This file is part of BBCT for Android.
 
  Copyright 2012 codeguru <codeguru@users.sourceforge.net>
@@ -18,7 +17,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:bbct="http://schemas.android.com/apk/res-auto">
+    xmlns:bbct="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/add_menu"
         android:icon="@drawable/ic_menu_add"

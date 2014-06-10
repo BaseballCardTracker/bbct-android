@@ -18,7 +18,6 @@
  */
 package bbct.android.common.activity.test;
 
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
@@ -26,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
@@ -42,7 +42,8 @@ import junit.framework.TestSuite;
  * A parameterized test which can test any combination of input in the
  * {@link BaseballCardDetails} activity.
  */
-public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentationTestCase2<BaseballCardDetails> {
+public class BaseballCardDetailsPartialInputTest extends
+        ActivityInstrumentationTestCase2<FragmentTestActivity> {
 
     /**
      * Creates a {@link TestSuite} containing every possible combination of
@@ -72,7 +73,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
      *
      */
     public BaseballCardDetailsPartialInputTest(Set<BBCTTestUtil.EditTexts> inputFieldsFlags) {
-        super(BaseballCardDetails.class);
+        super(FragmentTestActivity.class);
 
         this.setName(TEST_NAME);
         this.inputFieldsMask = inputFieldsFlags;
@@ -95,6 +96,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         cardInput.close();
 
         this.activity = this.getActivity();
+        this.activity.replaceFragment(new BaseballCardDetails());
         this.brandEditText = (EditText) this.activity.findViewById(R.id.brand_text);
         this.yearEditText = (EditText) this.activity.findViewById(R.id.year_text);
         this.numberEditText = (EditText) this.activity.findViewById(R.id.number_text);
@@ -159,7 +161,7 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
     }
 
     private Solo solo = null;
-    private Activity activity = null;
+    private FragmentTestActivity activity = null;
     private Instrumentation inst = null;
     private EditText brandEditText = null;
     private EditText yearEditText = null;

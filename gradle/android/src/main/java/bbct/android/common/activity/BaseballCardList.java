@@ -18,13 +18,12 @@
  */
 package bbct.android.common.activity;
 
-import android.app.Activity;
 import android.content.ContentUris;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,6 +49,16 @@ import bbct.android.common.provider.BaseballCardContract;
  */
 public class BaseballCardList extends ListFragment {
 
+    public static BaseballCardList getInstance(Bundle filterArgs) {
+        BaseballCardList cardList = new BaseballCardList();
+
+        Bundle args = new Bundle();
+        args.putBundle(FILTER_PARAMS, filterArgs);
+        cardList.setArguments(args);
+
+        return cardList;
+    }
+
     /**
      * Called when the activity is first created.
      */
@@ -68,6 +77,15 @@ public class BaseballCardList extends ListFragment {
 
         this.uri = BaseballCardContract.getUri(this.getActivity()
                 .getPackageName());
+
+        Bundle args = this.getArguments();
+
+        if (savedInstanceState != null) {
+            this.filterParams = savedInstanceState.getBundle(FILTER_PARAMS);
+        } else if (args != null) {
+            this.filterParams = args.getBundle(FILTER_PARAMS);
+        }
+
         this.setHasOptionsMenu(true);
     }
 
@@ -76,14 +94,7 @@ public class BaseballCardList extends ListFragment {
                              Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView()");
 
-        View view = inflater.inflate(R.layout.card_list, null);
-        this.filterActive = false;
-        if (savedInstanceState != null) {
-            this.filterActive = savedInstanceState.getBoolean(this
-                    .getString(R.string.filter_status_extra));
-            this.filterParams = savedInstanceState.getBundle(this
-                    .getString(R.string.filter_params_extra));
-        }
+        View view = inflater.inflate(R.layout.card_list, container, false);
 
         this.emptyList = (TextView) view.findViewById(android.R.id.empty);
 
@@ -102,7 +113,7 @@ public class BaseballCardList extends ListFragment {
                 });
         listView.addHeaderView(this.headerView);
         listView.setAdapter(this.adapter);
-        this.applyFilter(false, null);
+        this.applyFilter(this.filterParams);
 
         return view;
     }
@@ -116,7 +127,7 @@ public class BaseballCardList extends ListFragment {
 
     /**
      * Create the options menu. This is simply inflated from the
-     * {@code option.xml} resource file.
+     * {@code list.xml} resource file.
      *
      * @param menu The options menu in which new menu items are placed.
      */
@@ -138,7 +149,7 @@ public class BaseballCardList extends ListFragment {
 
         MenuItem filter = menu.findItem(R.id.filter_menu);
         MenuItem clearFilter = menu.findItem(R.id.clear_filter_menu);
-        if (!this.filterActive) {
+        if (this.filterParams == null) {
             filter.setVisible(true);
             filter.setEnabled(true);
 
@@ -179,16 +190,24 @@ public class BaseballCardList extends ListFragment {
         int itemId = item.getItemId();
 
         if (itemId == R.id.add_menu) {
-            Intent intent = new Intent(this.getActivity(), BaseballCardDetails.class);
-            this.startActivity(intent);
+            BaseballCardDetails details = new BaseballCardDetails();
+            this.getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder, details)
+                    .addToBackStack(EDIT_CARD)
+                    .commit();
             return true;
         } else if (itemId == R.id.filter_menu) {
-            Intent intent = new Intent(this.getActivity(), FilterCards.class);
-            this.startActivityForResult(intent, FILTER_CARDS_REQUEST);
+            FilterCards filterCards = new FilterCards();
+            this.getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder, filterCards)
+                    .addToBackStack(EDIT_CARD)
+                    .commit();
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
             this.emptyList.setText(R.string.start);
-            this.applyFilter(false, null);
+            this.applyFilter(null);
 
             this.getActivity().supportInvalidateOptionsMenu();
 
@@ -210,11 +229,7 @@ public class BaseballCardList extends ListFragment {
                     Toast.LENGTH_LONG).show();
 
             this.adapter.setSelection(selected);
-            this.applyFilter(this.filterActive, this.filterParams);
-            return true;
-
-        } else if (itemId == R.id.about_menu) {
-            this.startActivity(new Intent(this.getActivity(), About.class));
+            this.applyFilter(this.filterParams);
             return true;
         } else {
             Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
@@ -222,37 +237,6 @@ public class BaseballCardList extends ListFragment {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * Respond to the result of a child activity by applying a filter after
-     * {@link FilterCards} returns the appropriate parameters.
-     *
-     * @param requestCode
-     *            The integer request code originally supplied to
-     *            {@link #startActivityForResult(Intent, int)}, allowing you to identify
-     *            who this result came from.
-     * @param resultCode
-     *            The integer result code returned by the child activity through
-     *            its {@link Activity#setResult(int)}.
-     * @param data
-     *            An Intent with the data returned by the child activity.
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == FILTER_CARDS_REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                Bundle filterParams = data.getExtras();
-
-                this.applyFilter(true, filterParams);
-
-                this.getActivity().supportInvalidateOptionsMenu();
-            }
-        } else {
-            Log.e(TAG, "onActivityResult(): Invalid result code: "
-                    + requestCode);
-            // TODO Throw exception?
-        }
     }
 
     /**
@@ -265,10 +249,7 @@ public class BaseballCardList extends ListFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putBoolean(this.getString(R.string.filter_status_extra),
-                this.filterActive);
-        outState.putBundle(this.getString(R.string.filter_params_extra),
-                this.filterParams);
+        outState.putBundle(FILTER_PARAMS, this.filterParams);
         outState.putBooleanArray(this.getString(R.string.selection_extra),
                 this.adapter.getSelection());
     }
@@ -290,27 +271,25 @@ public class BaseballCardList extends ListFragment {
             return;
         }
 
-        Intent intent = new Intent(Intent.ACTION_EDIT,
-                BaseballCardDetails.DETAILS_URI);
         BaseballCard card = BaseballCardList.this.adapter.getSelectedCard();
 
-        intent.putExtra(
-                BaseballCardList.this.getString(R.string.baseball_card_extra),
-                card);
-        intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
-        BaseballCardList.this.startActivity(intent);
+        Fragment details = BaseballCardDetails.getInstance(id, card);
+        this.getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_holder, details)
+                .addToBackStack(EDIT_CARD)
+                .commit();
     }
 
-    protected void applyFilter(boolean filterActive, Bundle filterParams) {
+    protected void applyFilter(Bundle filterParams) {
         Log.d(TAG, "applyFilter()");
 
-        this.filterActive = filterActive;
         this.filterParams = filterParams;
 
-        if (this.filterActive) {
-            this.emptyList.setText(R.string.empty_list);
-        } else {
+        if (this.filterParams == null) {
             this.emptyList.setText(R.string.start);
+        } else {
+            this.emptyList.setText(R.string.empty_list);
         }
 
         Resources res = this.getResources();
@@ -382,12 +361,14 @@ public class BaseballCardList extends ListFragment {
             R.id.year_text_view, R.id.number_text_view,
             R.id.player_name_text_view};
 
+    private static final String FILTER_PARAMS = "filterParams";
+    private static final String FILTER_ACTIVE = "filterParams";
+    private static final String EDIT_CARD = "Edit Card";
     private static final int FILTER_CARDS_REQUEST = 0x0001;
     private static final String TAG = BaseballCardList.class.getName();
     TextView emptyList = null;
     private BaseballCardAdapter adapter = null;
     private Uri uri = null;
-    private boolean filterActive = false;
     private Bundle filterParams = null;
     private View headerView;
 
