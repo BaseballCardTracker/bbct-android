@@ -31,9 +31,13 @@ android {
     productFlavors {
         lite {
             applicationId "bbct.android"
+            versionCode 13
+            versionName "0.6.0"
         }
         premium {
             applicationId "bbct.android.premium"
+            versionCode 12
+            versionName "0.6.0"
         }
     }
 }

@@ -18,9 +18,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="bbct.android.premium"
-    android:versionCode="11"
-    android:versionName="@string/version_number" >
+    package="bbct.android.premium" >
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -58,8 +56,8 @@
             android:authorities="@string/authorities"
             android:icon="@drawable/baseball"
             android:label="@string/provider_name"
-            android:readPermission="@string/read_permission"
-            android:writePermission="@string/write_permission" />
+            android:readPermission="bbct.android.premium.permission.REA"
+            android:writePermission="bbct.android.premium.permission.WRITE" />
     </application>
 
 </manifest>
