@@ -20,5 +20,6 @@
 <resources>
 
     <string name="premium">Sie können auch gerne die &lt;a href="market://details?id=bbct.android.premium"&gt;Premiumversion&lt;/a&gt; für nur $3.00USD kaufen.</string>
+    <string name="provider_name">BBCT Lite Data</string>
 
 </resources>

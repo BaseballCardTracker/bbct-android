@@ -54,7 +54,7 @@
 
         <provider
             android:name="bbct.android.lite.provider.LiteProvider"
-            android:authorities="@string/authorities"
+            android:authorities="bbct.android.lite.provider"
             android:icon="@drawable/baseball"
             android:label="@string/provider_name"
             android:readPermission="@string/read_permission"

@@ -20,5 +20,6 @@
 <resources>
 
     <string name="premium">If you enjoy using BBCT, get the ad-free <a href="market://details?id=bbct.android.premium">premium edition</a> for only $3.00USD.</string>
+    <string name="provider_name">BBCT Lite Data</string>
 
 </resources>
