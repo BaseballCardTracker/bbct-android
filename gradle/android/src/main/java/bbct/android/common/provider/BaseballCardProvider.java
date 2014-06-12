@@ -35,7 +35,7 @@ import java.util.Arrays;
 /**
  * {@link ContentProvider} for baseball card data.
  */
-public abstract class BaseballCardProvider extends ContentProvider {
+public class BaseballCardProvider extends ContentProvider {
 
     protected static final int ALL_CARDS = 1;
     protected static final int CARD_ID = 2;
@@ -62,7 +62,9 @@ public abstract class BaseballCardProvider extends ContentProvider {
         return true;
     }
 
-    protected abstract BaseballCardSQLHelper getSQLHelper(Context context);
+    protected BaseballCardSQLHelper getSQLHelper(Context context) {
+        return new BaseballCardSQLHelper(context);
+    }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
