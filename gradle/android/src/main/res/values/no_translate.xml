@@ -19,9 +19,6 @@
 -->
 <resources>
 
-    <string name="app_name">BBCT Common</string>
-    <string name="bbct_title">BBCT Common - %1$s</string>
-    <string name="version_number">0.5.x</string>
     <string name="copyright">Copyright 2012–14 by codeguru</string>
-    
+
 </resources>
