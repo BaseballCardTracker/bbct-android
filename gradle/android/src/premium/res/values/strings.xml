@@ -24,4 +24,10 @@
     <string name="lite_update_message">Please update <a href="market://details?id=bbct.android">Lite Edition</a>.</string>
     <string name="lite_not_installed_message">Lite Edition not installed.</string>
 
+    <string name="provider_name">BBCT Premium Data</string>
+    <string name="read_permission_label">BBCT Read</string>
+    <string name="read_permission_desc">Baseball Card data from BBCT Premium database</string>
+    <string name="write_permission_label">BBCT Write</string>
+    <string name="write_permission_desc">Write Baseball Card data to BBCT Premium database</string>
+
 </resources>
