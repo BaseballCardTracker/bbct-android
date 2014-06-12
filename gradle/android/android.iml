@@ -37,6 +37,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/liteDebug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/liteDebug/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/liteDebug/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premiumDebug/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premiumDebug/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premiumDebug/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premiumDebug/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premiumDebug/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premiumDebug/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premiumDebug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/r/test/lite/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/aidl/test/lite/debug" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/build/generated/source/buildConfig/test/lite/debug" isTestSource="true" generated="true" />
@@ -49,6 +56,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/lite/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/lite/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/lite/rs" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premium/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premium/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premium/aidl" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premium/assets" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premium/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premium/jni" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/premium/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestLite/aidl" isTestSource="true" />
