@@ -21,6 +21,7 @@ package bbct.android.common.provider;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -28,15 +29,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 import bbct.android.common.R;
-import bbct.android.common.exception.SQLHelperCreationException;
 import java.util.Arrays;
 
 /**
  * {@link ContentProvider} for baseball card data.
  */
-public class BaseballCardProvider extends ContentProvider {
+public abstract class BaseballCardProvider extends ContentProvider {
 
     protected static final int ALL_CARDS = 1;
     protected static final int CARD_ID = 2;
@@ -58,22 +57,16 @@ public class BaseballCardProvider extends ContentProvider {
     public boolean onCreate() {
         Log.d(TAG, "onCreate()");
 
-        try {
-            this.sqlHelper = SQLHelperFactory.getSQLHelper(this.getContext());
+        this.sqlHelper = this.getSQLHelper(this.getContext());
 
-            return true;
-        } catch (SQLHelperCreationException ex) {
-            // TODO Show a dialog and exit app
-            Toast.makeText(this.getContext(), R.string.database_error,
-                    Toast.LENGTH_LONG).show();
-            Log.e(TAG, ex.getMessage(), ex);
-            return false;
-        }
+        return true;
     }
+
+    protected abstract BaseballCardSQLHelper getSQLHelper(Context context);
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
-            String[] selectionArgs, String sortOrder) {
+                        String[] selectionArgs, String sortOrder) {
         Log.d(TAG, "query()");
         Log.d(TAG, "  uri=" + uri);
         Log.d(TAG, "  projection=" + Arrays.toString(projection));
@@ -191,7 +184,7 @@ public class BaseballCardProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection,
-            String[] selectionArgs) {
+                      String[] selectionArgs) {
         SQLiteDatabase db = this.sqlHelper.getWritableDatabase();
 
         int affected;
