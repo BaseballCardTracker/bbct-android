@@ -54,11 +54,11 @@
 
         <provider
             android:name="bbct.android.lite.provider.LiteProvider"
-            android:authorities="@string/authorities"
+            android:authorities="bbct.android.lite.provider"
             android:icon="@drawable/baseball"
             android:label="@string/provider_name"
-            android:readPermission="@string/read_permission"
-            android:writePermission="@string/write_permission"/>
+            android:readPermission="bbct.android.lite.permission.READ"
+            android:writePermission="bbct.android.lite.permission.WRITE" />
 
         <activity android:name="com.google.android.gms.ads.AdActivity"
                   android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>

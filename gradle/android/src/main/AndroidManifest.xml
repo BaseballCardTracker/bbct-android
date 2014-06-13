@@ -21,20 +21,6 @@
     package="bbct.android.common"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <permission
-        android:name="bbct.android.common.permission.READ"
-        android:description="@string/read_permission_desc"
-        android:label="@string/read_permission_label"
-        android:protectionLevel="signature"/>
-    <permission
-        android:name="bbct.android.common.permission.WRITE"
-        android:description="@string/write_permission_desc"
-        android:label="@string/write_permission_label"
-        android:protectionLevel="signature"/>
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/baseball"
@@ -52,13 +38,6 @@
 
         <activity android:name=".activity.FragmentTestActivity"/>
 
-        <provider
-            android:name=".provider.BaseballCardProvider"
-            android:authorities="@string/authorities"
-            android:icon="@drawable/baseball"
-            android:label="@string/provider_name"
-            android:readPermission="@string/read_permission"
-            android:writePermission="@string/write_permission"/>
     </application>
 
 </manifest>

@@ -19,7 +19,6 @@
 package bbct.android.common.activity;
 
 import android.content.ContentUris;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -250,8 +249,7 @@ public class BaseballCardList extends ListFragment {
         super.onSaveInstanceState(outState);
 
         outState.putBundle(FILTER_PARAMS, this.filterParams);
-        outState.putBooleanArray(this.getString(R.string.selection_extra),
-                this.adapter.getSelection());
+        outState.putBooleanArray(SELECTION_EXTRA, this.adapter.getSelection());
     }
 
     /**
@@ -292,7 +290,6 @@ public class BaseballCardList extends ListFragment {
             this.emptyList.setText(R.string.empty_list);
         }
 
-        Resources res = this.getResources();
         StringBuilder sb = null;
         String[] args = null;
 
@@ -304,17 +301,18 @@ public class BaseballCardList extends ListFragment {
             for (String key : this.filterParams.keySet()) {
                 String value = this.filterParams.getString(key);
 
-                if (key.equals(res.getString(R.string.year_extra))) {
+                if (key.equals(FilterCards.YEAR_EXTRA)) {
                     sb.append(BaseballCardContract.YEAR_SELECTION);
-                } else if (key.equals(res.getString(R.string.brand_extra))) {
+                } else if (key.equals(FilterCards.BRAND_EXTRA)) {
                     sb.append(BaseballCardContract.BRAND_SELECTION);
-                } else if (key.equals(res.getString(R.string.number_extra))) {
+                } else if (key.equals(FilterCards.NUMBER_EXTRA)) {
                     sb.append(BaseballCardContract.NUMBER_SELECTION);
-                } else if (key
-                        .equals(res.getString(R.string.player_name_extra))) {
+                } else if (key.equals(FilterCards.PLAYER_NAME_EXTRA)) {
                     sb.append(BaseballCardContract.PLAYER_NAME_SELECTION);
-                } else {
+                } else if (key.equals(FilterCards.TEAM_EXTRA)) {
                     sb.append(BaseballCardContract.TEAM_SELECTION);
+                } else {
+                    Log.e(TAG, "Invalid key: " + key);
                 }
 
                 args[numQueries] = value;
@@ -362,9 +360,9 @@ public class BaseballCardList extends ListFragment {
             R.id.player_name_text_view};
 
     private static final String FILTER_PARAMS = "filterParams";
-    private static final String FILTER_ACTIVE = "filterParams";
     private static final String EDIT_CARD = "Edit Card";
-    private static final int FILTER_CARDS_REQUEST = 0x0001;
+    private static final String SELECTION_EXTRA = "selection";
+
     private static final String TAG = BaseballCardList.class.getName();
     TextView emptyList = null;
     private BaseballCardAdapter adapter = null;

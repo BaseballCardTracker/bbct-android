@@ -33,6 +33,8 @@ import java.util.ArrayList;
 
 public class FilterCards extends Fragment {
 
+    public static final String NUMBER_EXTRA = "number";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,7 @@ public class FilterCards extends Fragment {
         // restore input fields state
         if (savedInstanceState != null) {
             ArrayList<Integer> enabledFields = savedInstanceState
-                    .getIntegerArrayList(this.getString(R.string.input_extra));
+                    .getIntegerArrayList(INPUT_EXTRA);
             for (int i : enabledFields) {
                 EditText et = (EditText) view.findViewById(TEXT_FIELDS[i]);
                 et.setEnabled(true);
@@ -83,8 +85,7 @@ public class FilterCards extends Fragment {
             }
         }
 
-        outState.putIntegerArrayList(this.getString(R.string.input_extra),
-                enabledFields);
+        outState.putIntegerArrayList(INPUT_EXTRA, enabledFields);
     }
 
     @Override
@@ -178,7 +179,7 @@ public class FilterCards extends Fragment {
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
             EditText input = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
             if (input.isEnabled() && input.getText().toString().length() > 0) {
-                String key = this.getString(EXTRAS[i]);
+                String key = EXTRAS[i];
                 filterArgs.putString(key, input.getText().toString());
             }
         }
@@ -192,6 +193,11 @@ public class FilterCards extends Fragment {
     }
 
     private static final String FILTERED_LIST = "Filtered List";
+    private static final String INPUT_EXTRA = "input";
+    public static final String YEAR_EXTRA = "year";
+    public static final String BRAND_EXTRA = "brand";
+    public static final String PLAYER_NAME_EXTRA = "playerName";
+    public static final String TEAM_EXTRA = "team";
 
     private static final int[] CHECKBOXES = { R.id.brand_check,
             R.id.year_check, R.id.number_check, R.id.player_name_check,
@@ -201,8 +207,7 @@ public class FilterCards extends Fragment {
             R.id.year_input, R.id.number_input, R.id.player_name_input,
             R.id.team_input };
 
-    private static final int[] EXTRAS = { R.string.brand_extra,
-            R.string.year_extra, R.string.number_extra,
-            R.string.player_name_extra, R.string.team_extra };
+    private static final String[] EXTRAS = { BRAND_EXTRA, YEAR_EXTRA, NUMBER_EXTRA,
+            PLAYER_NAME_EXTRA, TEAM_EXTRA };
 
 }

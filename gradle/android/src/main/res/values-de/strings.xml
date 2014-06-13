@@ -23,7 +23,6 @@
 
     <!-- Activity titles -->
     <string name="card_details_title">Kartendetails</string>
-    <string name="player_details_title">Spielerdetails</string>
     <string name="filter_cards_title">Filteroptionen</string>
     <string name="about_title">Info</string>
     <string name="input_error_title">Eingabe Error</string>
@@ -69,6 +68,7 @@
 
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
+    <string name="copyright">Copyright 2012–14 by codeguru</string>
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">Diese software ist lizensensiert unter der GPL. Besuche http://www.gnu.org/licenses/, um eine Kopie der Lizens zu erwerben.</string>
