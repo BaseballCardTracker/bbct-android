@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of BBCT for Android.
+
+ Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+
+ BBCT for Android is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ BBCT for Android is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="provider_name">BBCT Dados</string>
+
+    <!--Activity titles-->
+    <string name="filter_cards_title">Filtrar Cartas</string>
+    <string name="about_title">Sobre</string>
+    <string name="input_error_title">Erro Entrada</string>
+    <string name="duplicate_card_title">Carta Duplicada</string>
+    <string name="start">Pressione (+) para iniciar.</string>
+    <string name="empty_list">Nenhuma carta encontrada.</string>
+
+    <!--Labels for card details-->
+    <string name="condition_label">Condição:</string>
+    <string name="autograph_label">Autografada?</string>
+    <string name="brand_label">Marca:</string>
+    <string name="year_label">Ano:</string>
+    <string name="number_label">Número:</string>
+    <string name="value_label">Valor:</string>
+    <string name="count_label">Quantidade:</string>
+    <string name="player_name_label">Nome do Jogador:</string>
+    <string name="team_label">Equipe:</string>
+    <string name="player_position_label">Posição:</string>
+
+    <!--Column headings for card list-->
+    <string name="brand">Marca</string>
+    <string name="year">Ano</string>
+    <string name="number_col">#</string>
+    <string name="number">Número</string>
+    <string name="value">Valor</string>
+    <string name="count">Quantidade</string>
+    <string name="player_name">Nome do Jogador</string>
+    <string name="player_position">Posição</string>
+    <string name="team">Equipe</string>
+
+    <!--Hints for TextEdit widgets-->
+    <string name="condition_hint">Selecionar condição.</string>
+    <string name="brand_hint">Informar marca.</string>
+    <string name="year_hint">Informar ano.</string>
+    <string name="number_hint">Informar número.</string>
+    <string name="value_hint">Informar valor.</string>
+    <string name="count_hint">Informar quantidade.</string>
+    <string name="player_name_hint">Informar nome do jogador.</string>
+    <string name="team_hint">Informar equipe.</string>
+    <string name="player_position_hint">Selecionar posição</string>
+    <!--Menu text-->
+    <string name="add_menu">Incluir Cartas</string>
+    <string name="filter_menu">Filtrar Cartas</string>
+    <string name="clear_filter_menu">Limpar Filtro</string>
+    <string name="about_menu">Sobre</string>
+    <string name="delete_menu">Excluir Cartas</string>
+    <string name="save_menu">Salvar</string>
+
+    <!--Text in About activity-->
+    <string name="version_text">Versão %1$s</string>
+    <string name="copyright">Copyright 2012–14 by codeguru</string>
+    <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
+    <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
+    <string name="license">Este software é licenciado sob a GPL. Visite\nhttp://www.gnu.org/licenses/licenses.pt-br.html para uma cópia da licença.</string>
+    <string name="about">BBCT é uma aplicação simples de banco de dados para a sua coleção de cartas de beisebol. Você pode adicionar informações sobre as cartas da sua coleção, ver detalhes de cartas individuais e filtrar a lista de cartas de acordo com um conjunto limitado de critérios. BBCT te ajuda a organizar sua coleção e pesquisar rapidamente quais cartas você possui. Sinta-se à vontade para enviar email com opiniões e comentários ou visite o website do projeto.</string>
+    <!--Card details toasts-->
+    <string name="card_added_message">Carta adicionada com sucesso.</string>
+    <string name="card_deleted_message">Cartas excluídas com sucesso.</string>
+
+    <!--Strings for position spinner in card details activity-->
+    <string-array name="positions">
+        <item>Arremessador</item>
+        <item>Pegador</item>
+        <item>Primeira Base</item>
+        <item>Segunda Base</item>
+        <item>Terceira Base</item>
+        <item>Interbases</item>
+        <item>Jardineiro Esquerdo</item>
+        <item>Jardineiro Central</item>
+        <item>Jardineiro Direito</item>
+    </string-array>
+
+    <!--Strings for card condition-->
+    <string-array name="condition">
+        <item>Perfeita</item>
+        <item>Nova</item>
+        <item>Quase Nova</item>
+        <item>Excelente</item>
+        <item>Muito Boa</item>
+        <item>Boa</item>
+        <item>Pobre</item>
+    </string-array>
+
+    <!--Error messages-->
+    <string name="no_radio_button_error">Por favor selecione uma opção.</string>
+    <string name="brand_input_error">Por favor informe uma marca.</string>
+    <string name="year_input_error">Por favor informe um ano.</string>
+    <string name="number_input_error">Por favor informe um número de carta.</string>
+    <string name="value_input_error">Por favor informe o valor da carta.</string>
+    <string name="count_input_error">Por favor informe a quantidade de cartas que você possui.</string>
+    <string name="player_name_input_error">Por favor informe o nome do jogador.</string>
+    <string name="team_input_error">Por favor informe a equipe do jogador.</string>
+    <string name="player_position_input_error">Por favor informe a posição do jogador.</string>
+    <string name="invalid_uri_error">URI Inválido: %1$s</string>
+    <string name="database_error">Ocorreu erro ao conectar ao banco de dados.</string>
+    <string name="duplicate_card_error">A carta de beisebol já existe. Por favor atualize a sua quantidade.</string>
+    <string name="sponsor">Patrocinador Orgulhoso:</string>
+</resources>
