@@ -30,8 +30,9 @@ import com.amazon.device.ads.AdListener;
 import com.amazon.device.ads.AdProperties;
 import com.amazon.device.ads.AdRegistration;
 import com.amazon.device.ads.AdTargetingOptions;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 
 /**
  *
@@ -44,7 +45,7 @@ public class LiteActivity extends MainActivity implements AdListener {
 
     private ViewGroup adViewContainer;
     private com.amazon.device.ads.AdLayout amazonAdView;
-    private com.google.ads.AdView admobAdView;
+    private AdView admobAdView;
     private boolean amazonAdEnabled;
 
     @Override
@@ -56,7 +57,9 @@ public class LiteActivity extends MainActivity implements AdListener {
         // Initialize ad views
         amazonAdView = new com.amazon.device.ads.AdLayout(this, com.amazon.device.ads.AdSize.SIZE_320x50);
         amazonAdView.setListener(this);
-        admobAdView = new AdView(this, AdSize.BANNER, AD_UNIT_ID);
+        admobAdView = new AdView(this);
+        admobAdView.setAdUnitId(AD_UNIT_ID);
+        admobAdView.setAdSize(AdSize.BANNER);
 
         // Initialize view container
         adViewContainer = (ViewGroup) findViewById(R.id.ad_view);
@@ -97,6 +100,9 @@ public class LiteActivity extends MainActivity implements AdListener {
             adViewContainer.addView(admobAdView);
         }
 
-        admobAdView.loadAd(new com.google.ads.AdRequest());
+        AdRequest request = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        admobAdView.loadAd(request);
     }
 }
