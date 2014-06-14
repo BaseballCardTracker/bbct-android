@@ -44,14 +44,14 @@ import junit.framework.Assert;
  * Tests for the {@link MainActivity} activity when the database does not
  * contain data.
  */
-public class BaseballCardListWithoutDataTest extends
-        ActivityInstrumentationTestCase2<MainActivity> {
+public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
+        ActivityInstrumentationTestCase2<T> {
 
     /**
      * Create instrumented test cases for {@link MainActivity}.
      */
-    public BaseballCardListWithoutDataTest() {
-        super(MainActivity.class);
+    public BaseballCardListWithoutDataTest(Class<T> activityClass) {
+        super(activityClass);
     }
 
     /**
