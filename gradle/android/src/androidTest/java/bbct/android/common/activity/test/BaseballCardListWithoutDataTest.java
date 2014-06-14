@@ -20,6 +20,7 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.support.v4.app.FragmentActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,7 +28,6 @@ import bbct.android.common.R;
 import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
-import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
@@ -59,8 +59,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      * {@link BaseballCardList} activity, its {@link ListView}, and a
      * {@link BaseballCardCsvFileReader} for sample baseball card data..
      *
-     * @throws Exception
-     *             If an error occurs while chaining to the super class.
+     * @throws Exception If an error occurs while chaining to the super class.
      */
     @Override
     public void setUp() throws Exception {
@@ -82,8 +81,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      * Tear down the test fixture by calling {@link Activity#finish()}, deleting
      * the database, and closing the {@link BaseballCardCsvFileReader}.
      *
-     * @throws Exception
-     *             If an error occurs while chaining to the super class.
+     * @throws Exception If an error occurs while chaining to the super class.
      */
     @Override
     public void tearDown() throws Exception {
@@ -102,54 +100,11 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-
-        TextView emptyList = (TextView) this.activity
-                .findViewById(android.R.id.empty);
-        Assert.assertEquals(this.activity.getString(R.string.start),
-                emptyList.getText());
-
-        // Subtract 1 from the number of views owned by the ListView to account
-        // for the header View
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        Assert.assertNotNull(listView);
-        Assert.assertEquals(0, listView.getCount() - 1);
+        Assert.assertTrue(BBCTTestUtil.isFragmentVisible((FragmentActivity) activity,
+                BaseballCardDetails.class));
 
         BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.isEmpty());
-    }
-
-    /**
-     * Test that the title of the {@link Activity} is correct.
-     */
-    public void testTitle() {
-        String expectedTitle = this.activity.getString(R.string.app_name);
-
-        Assert.assertEquals(expectedTitle, this.activity.getTitle());
-    }
-
-    /**
-     * Test that the "Add Cards" menu item launches a
-     * {@link BaseballCardDetails} activity.
-     */
-    public void testAddCardsMenuItem() {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
-    }
-
-    /**
-     * Test that the "Filter Cards" menu item launches a {@link FilterCards}
-     * activity.
-     */
-    public void testFilterCardsMenuItem() {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
-    }
-
-    /**
-     * Test that the "Delete Cards" menu item is disabled. It should be disabled
-     * because there is no data currently displayed in the list and therefore no
-     * rows are marked.
-     */
-    public void testDeleteCardsMenuItem() {
-        Assert.assertFalse(this.inst.invokeMenuActionSync(this.activity, R.id.delete_menu, 0));
     }
 
     /**
@@ -163,40 +118,37 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      * Test that the first baseball card data is added to the database and
      * updated in the {@link ListView}.
      *
-     * @throws IOException
-     *             If an error occurs while reading baseball card data from the
-     *             asset file.
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws IOException If an error occurs while reading baseball card data from the
+     *                     asset file.
+     * @throws Throwable   If an error occurs while the portion of the test on the UI
+     *                     thread runs.
      */
     public void testAddCardToEmptyDatabase() throws Throwable {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
         BBCTTestUtil.addCard(this.solo, card);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.goBack();
+        this.solo.clickOnActionBarHomeButton();
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
 
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
         cards.add(card);
 
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, cards, listView);
+        Assert.assertNotNull("ListView not found", listView);
+        BBCTTestUtil.assertListViewContainsItems(cards, listView);
     }
 
     /**
      * Test that data for multiple baseball cards is added to the database and
      * updated in the {@link ListView}.
      *
-     * @throws IOException
-     *             If an error occurs while reading baseball card data from the
-     *             asset file.
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
+     * @throws IOException If an error occurs while reading baseball card data from the
+     *                     asset file.
+     * @throws Throwable   If an error occurs while the portion of the test on the UI
+     *                     thread runs.
      */
     public void testAddMultipleCards() throws Throwable {
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
@@ -207,9 +159,10 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
             BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
-        this.solo.goBack();
+        this.solo.clickOnActionBarHomeButton();
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, cards, listView);
+        BBCTTestUtil.assertListViewContainsItems(cards, listView);
     }
 
     private Solo solo = null;

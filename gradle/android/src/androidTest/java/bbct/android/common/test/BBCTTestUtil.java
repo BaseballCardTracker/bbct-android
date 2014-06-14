@@ -70,10 +70,8 @@ final public class BBCTTestUtil {
      * @param listView
      *            The List view to check for {@link BaseballCard} data.
      */
-    public static void assertListViewContainsItems(Instrumentation inst,
-            List<BaseballCard> expectedItems, ListView listView) {
-        inst.waitForIdleSync();
-
+    public static void assertListViewContainsItems(List<BaseballCard> expectedItems,
+                                                   ListView listView) {
         // Add 1 to the number of expected cards to account for the header View
         Assert.assertEquals(expectedItems.size() + 1, listView.getChildCount());
 
@@ -126,13 +124,16 @@ final public class BBCTTestUtil {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Fragment fragment = ((FragmentActivity) activity)
-                        .getSupportFragmentManager()
-                        .findFragmentById(R.id.fragment_holder);
-                Assert.assertNotNull(fragment);
-                Assert.assertEquals(fragmentClass.getName(), fragment.getClass().getName());
+                Assert.assertTrue(isFragmentVisible((FragmentActivity) activity, fragmentClass));
             }
         });
+    }
+
+    public static boolean isFragmentVisible(FragmentActivity activity, Class<? extends Fragment> fragmentClass) {
+        Fragment fragment = activity.getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_holder);
+        Assert.assertNotNull(fragment);
+        return fragmentClass.getName().equals(fragment.getClass().getName());
     }
 
     /**
