@@ -18,20 +18,15 @@
  */
 package bbct.android.lite.activity.test;
 
-import android.test.ActivityInstrumentationTestCase2;
+import bbct.android.common.activity.test.BaseballCardListWithDataTest;
 import bbct.android.lite.provider.LiteActivity;
 
-/**
- * Tests for {@link LiteActivity} activity class.
- *
- * TODO: Add tests for the layout of {@link LiteActivity}
- */
-public class BaseballCardListTest extends ActivityInstrumentationTestCase2<LiteActivity> {
+public class LiteActivityWithDataTest extends BaseballCardListWithDataTest<LiteActivity> {
 
     /**
-     * Create test cases for {@link LiteActivity}.
+     * Create instrumented test cases for {@link LiteActivity}.
      */
-    public BaseballCardListTest() {
+    public LiteActivityWithDataTest() {
         super(LiteActivity.class);
     }
 

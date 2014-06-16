@@ -54,14 +54,14 @@ import junit.framework.Assert;
  * Tests for the {@link MainActivity} activity when the database contains
  * data.
  */
-public class BaseballCardListWithDataTest extends
-        ActivityInstrumentationTestCase2<MainActivity> {
+public class BaseballCardListWithDataTest <T extends MainActivity>  extends
+        ActivityInstrumentationTestCase2<T> {
 
     /**
      * Create instrumented test cases for {@link MainActivity}.
      */
-    public BaseballCardListWithDataTest() {
-        super(MainActivity.class);
+    public BaseballCardListWithDataTest(Class<T> activityClass) {
+        super(activityClass);
     }
 
     /**
