@@ -22,13 +22,11 @@ import android.app.Instrumentation;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
-import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import java.io.InputStream;
-import java.util.List;
 import junit.framework.Assert;
 
 /**
@@ -55,8 +53,6 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
                 .open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader reader = new BaseballCardCsvFileReader(input,
                 true);
-        this.allCards = reader.getAllBaseballCards();
-        this.card = this.allCards.get(3); // Ken Griffey, Jr.
         reader.close();
     }
 
@@ -66,7 +62,7 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
      */
     @Override
     public void tearDown() throws Exception {
-        this.dbUtil.deleteDatabase();
+        this.dbUtil.clearDatabase();
 
         super.tearDown();
     }
@@ -91,25 +87,9 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
         Assert.fail("Check that the database is not modified.");
     }
 
-    /**
-     * Test for {@link BaseballCardSQLHelper#getBaseballCardFromCursor}.
-     */
-    public void testGetBaseballCardFromCursor() {
-        System.out.println("getBaseballCardFromCursor");
-        BaseballCard expResult = null;
-        BaseballCard result = this.sqlHelper.getBaseballCardFromCursor();
-        Assert.assertNotNull(result);
-        Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to
-        // Assert.fail.
-        Assert.fail("The test case is a prototype.");
-    }
-
     private Instrumentation inst = null;
     private BaseballCardSQLHelper sqlHelper = null;
     private SQLiteDatabase db = null;
-    private List<BaseballCard> allCards = null;
-    private BaseballCard card = null;
     private DatabaseUtil dbUtil = null;
     private static final String TAG = BaseballCardSQLHelperTest.class.getName();
 }
