@@ -50,6 +50,8 @@ import bbct.android.common.provider.SingleColumnCursorAdapter;
  */
 public class BaseballCardDetails extends Fragment {
 
+    private static final String LIST_BACKSTACK = "ListBackStack";
+
     private static String ID = "id";
 
     private static String CARD = "card";
@@ -155,12 +157,25 @@ public class BaseballCardDetails extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuId = item.getItemId();
 
-        if (menuId == R.id.save_menu) {
-            this.onSave();
-            return true;
+        switch (menuId) {
+            case R.id.save_menu:
+                this.onSave();
+                return true;
+
+            case android.R.id.home:
+                this.onHome();
+                return true;
         }
 
         return false;
+    }
+
+    private void onHome() {
+        Fragment list = BaseballCardList.getInstance(null);
+        this.getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_holder, list)
+                .addToBackStack(LIST_BACKSTACK)
+                .commit();
     }
 
     private Spinner populateSpinner(View view, int spinnerId, int araryId) {
