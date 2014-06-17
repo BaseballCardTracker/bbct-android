@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.main);
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState == null) {
             Uri uri = BaseballCardContract.getUri(this.getPackageName());
             Cursor cursor = this.getContentResolver().query(uri,
                     BaseballCardContract.PROJECTION, null, null, null);
