@@ -101,9 +101,7 @@ public class BaseballCardProviderTest extends
                 BaseballCardContract.PROJECTION, null, null, null);
         Assert.assertNotNull(cursor);
 
-        BaseballCardSQLHelper sqlHelper = new BaseballCardSQLHelper(
-                this.getMockContext());
-        List<BaseballCard> actual = sqlHelper
+        List<BaseballCard> actual = BaseballCardContract
                 .getAllBaseballCardsFromCursor(cursor);
         Assert.assertTrue(BaseballCardProviderTest.CARDS.containsAll(actual));
         Assert.assertTrue(actual.containsAll(BaseballCardProviderTest.CARDS));
