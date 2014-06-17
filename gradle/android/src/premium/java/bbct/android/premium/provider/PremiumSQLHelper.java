@@ -66,7 +66,7 @@ public class PremiumSQLHelper extends
                     BaseballCardContract.PROJECTION, null, null, null);
 
             if (results != null) {
-                List<BaseballCard> cards = this
+                List<BaseballCard> cards = BaseballCardContract
                         .getAllBaseballCardsFromCursor(results);
                 this.insertAllBaseballCards(db, cards);
             } else {
@@ -93,6 +93,26 @@ public class PremiumSQLHelper extends
         } catch (NameNotFoundException ex) {
             Log.i(TAG, LITE_PACKAGE + " package not found", ex);
             return false;
+        }
+    }
+
+    /**
+     * Insert data for multiple baseball cards into a SQLite database.
+     *
+     * @param cards
+     *            The list of cards to insert into the database.
+     */
+    private void insertAllBaseballCards(SQLiteDatabase db,
+                                       List<BaseballCard> cards) {
+        db.beginTransaction();
+        try {
+            for (BaseballCard card : cards) {
+                db.insert(BaseballCardContract.TABLE_NAME, null,
+                        BaseballCardContract.getContentValues(card));
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
         }
     }
 
