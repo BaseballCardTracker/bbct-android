@@ -25,6 +25,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.provider.BaseballCardContract;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -40,31 +41,38 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.main);
 
-        Uri uri = BaseballCardContract.getUri(this.getPackageName());
-        Cursor cursor = this.getContentResolver().query(uri,
-                BaseballCardContract.PROJECTION, null, null, null);
+        if (savedInstanceState == null) {
+            Uri uri = BaseballCardContract.getUri(this.getPackageName());
+            Cursor cursor = this.getContentResolver().query(uri,
+                    BaseballCardContract.PROJECTION, null, null, null);
 
-        FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-        if (cursor == null || cursor.getCount() == 0) {
-            ft.add(R.id.fragment_holder, new BaseballCardDetails());
-        } else {
-            ft.add(R.id.fragment_holder, new BaseballCardList());
+            FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
+            if (cursor == null || cursor.getCount() == 0) {
+                ft.add(R.id.fragment_holder, new BaseballCardDetails());
+            } else {
+                ft.add(R.id.fragment_holder, new BaseballCardList());
+            }
+            ft.commit();
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        ft.commit();
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        EasyTracker.getInstance(this).activityStart(this);
+
+        if (!BuildConfig.DEBUG) {
+            EasyTracker.getInstance(this).activityStart(this);
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EasyTracker.getInstance(this).activityStop(this);
+        if (!BuildConfig.DEBUG) {
+            EasyTracker.getInstance(this).activityStop(this);
+        }
     }
 
     /**

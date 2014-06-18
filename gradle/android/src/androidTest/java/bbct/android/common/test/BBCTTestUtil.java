@@ -61,10 +61,6 @@ final public class BBCTTestUtil {
      * Assert that the given ListView contains same data as the given list of
      * {@link BaseballCard}s.
      *
-     * @param inst
-     *            The instrumentation for the running test case. Used to
-     *            synchronize this assertion with the instrumented activity
-     *            class being tested.
      * @param expectedItems
      *            A List of the expected {@link BaseballCard} data.
      * @param listView
@@ -76,7 +72,6 @@ final public class BBCTTestUtil {
         Assert.assertEquals(expectedItems.size() + 1, listView.getChildCount());
 
         for (BaseballCard card : expectedItems) {
-
             boolean listContainsCard = false;
             for (int i = 0; i < listView.getChildCount(); i++) {
                 // Add 1 to skip headers
