@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
  This file is part of BBCT for Android.
 
- Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ Copyright 2012-2014 codeguru <codeguru@users.sourceforge.net>
 
  BBCT for Android is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -17,24 +18,24 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:baselineAligned="false">
 
-    <FrameLayout
-        android:id="@id/ad_view"
-        android:layout_width="fill_parent"
-        android:layout_height="100dp" />
-
-    <TextView
-        android:id="@+id/premium_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/premium" />
+    <fragment
+        android:id="@+id/list_fragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        class="bbct.android.common.activity.BaseballCardList"
+        tools:layout="@layout/card_list"/>
 
     <FrameLayout
         android:id="@+id/fragment_holder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
 
 </LinearLayout>

@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.main);
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null && !isInTwoPaneMode()) {
             Uri uri = BaseballCardContract.getUri(this.getPackageName());
             Cursor cursor = this.getContentResolver().query(uri,
                     BaseballCardContract.PROJECTION, null, null, null);
@@ -107,6 +107,10 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean isInTwoPaneMode() {
+        return this.findViewById(R.id.list_fragment) != null;
     }
 
 }
