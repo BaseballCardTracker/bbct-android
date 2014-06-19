@@ -37,6 +37,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
+import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
@@ -112,6 +113,8 @@ public class BaseballCardList extends ListFragment {
                 });
         listView.addHeaderView(this.headerView);
         listView.setAdapter(this.adapter);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(new BaseballCardMultiChoiceModeListener());
         this.applyFilter(this.filterParams);
 
         return view;
@@ -160,22 +163,6 @@ public class BaseballCardList extends ListFragment {
 
             clearFilter.setVisible(true);
             clearFilter.setEnabled(true);
-        }
-
-        // update delete menu option
-        MenuItem deleteItem = menu.findItem(R.id.delete_menu);
-        deleteItem.setEnabled(false);
-
-        Log.d(TAG, "  adapter=" + this.adapter);
-
-        boolean[] curSelection = this.adapter.getSelection();
-        if (curSelection != null) {
-            for (boolean b : curSelection) {
-                if (b) {
-                    deleteItem.setEnabled(true);
-                    break;
-                }
-            }
         }
     }
 

@@ -20,8 +20,10 @@ package bbct.android.common.activity.util;
 
 import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AbsListView;
+import bbct.android.common.R;
 
 public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiChoiceModeListener {
 
@@ -49,7 +51,9 @@ public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiCho
      */
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        return false;
+        MenuInflater inflater = mode.getMenuInflater();
+        inflater.inflate(R.menu.context, menu);
+        return true;
     }
 
     /**
