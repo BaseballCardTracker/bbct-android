@@ -18,14 +18,35 @@
  */
 package bbct.android.common.activity.util;
 
+import android.content.ContentUris;
+import android.content.Context;
+import android.net.Uri;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AbsListView;
+import android.widget.HeaderViewListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 import bbct.android.common.R;
+import bbct.android.common.provider.BaseballCardAdapter;
+import bbct.android.common.provider.BaseballCardContract;
 
 public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiChoiceModeListener {
+
+    private Context context;
+    private ListView list;
+    private BaseballCardAdapter adapter;
+    private Uri uri;
+
+    public BaseballCardMultiChoiceModeListener(Context context, ListView list) {
+        this.context = context;
+        this.list = list;
+        this.adapter = (BaseballCardAdapter) ((HeaderViewListAdapter) list.getAdapter())
+                .getWrappedAdapter();
+        this.uri = BaseballCardContract.getUri(this.context.getPackageName());
+    }
 
     /**
      * Called when an item is checked or unchecked during selection mode.
@@ -37,7 +58,6 @@ public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiCho
      */
     @Override
     public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-
     }
 
     /**
@@ -78,7 +98,21 @@ public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiCho
      */
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-        return false;
+        switch (item.getItemId()) {
+            case R.id.delete_menu:
+                long[] ids = this.list.getCheckedItemIds();
+                for (long id : ids) {
+                    Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
+                    this.context.getContentResolver().delete(deleteUri, null, null);
+                }
+
+                Toast.makeText(this.context, R.string.card_deleted_message, Toast.LENGTH_LONG)
+                        .show();
+                return true;
+
+            default:
+                return false;
+        }
     }
 
     /**

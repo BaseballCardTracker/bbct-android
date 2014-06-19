@@ -18,7 +18,6 @@
  */
 package bbct.android.common.provider;
 
-import android.app.ListActivity;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
@@ -26,7 +25,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
-import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
@@ -71,7 +69,6 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
             public void onClick(View v) {
                 CheckedTextView cview = (CheckedTextView) v
                         .findViewById(R.id.checkmark);
-                cview.toggle();
                 BaseballCardAdapter.this.selection[position] = cview
                         .isChecked();
 
@@ -92,8 +89,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
         for (int i = 0; i < this.selection.length; i++) {
             this.selection[i] = check;
         }
-
-        this.updateDataSet();
+        this.notifyDataSetChanged();
     }
 
     /**
@@ -103,25 +99,6 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
      */
     public boolean[] getSelection() {
         return this.selection;
-    }
-
-    /**
-     * Sets the saved selection object.
-     *
-     * @param sel
-     *            - an array of marked items
-     */
-    public void setSelection(boolean[] sel) {
-        this.selection = sel;
-        this.updateDataSet();
-    }
-
-    /**
-     * Notifies {@link BaseballCardAdapter} of changed data and also updates
-     * {@link ListView} in the appropriate {@link ListActivity}
-     */
-    private void updateDataSet() {
-        this.notifyDataSetChanged();
     }
 
     @Override

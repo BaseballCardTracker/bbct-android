@@ -114,17 +114,11 @@ public class BaseballCardList extends ListFragment {
         listView.addHeaderView(this.headerView);
         listView.setAdapter(this.adapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new BaseballCardMultiChoiceModeListener());
+        listView.setMultiChoiceModeListener(
+                new BaseballCardMultiChoiceModeListener(this.getActivity(), listView));
         this.applyFilter(this.filterParams);
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        this.adapter.setSelection(new boolean[this.adapter.getCount()]);
     }
 
     /**
@@ -197,25 +191,6 @@ public class BaseballCardList extends ListFragment {
 
             this.getActivity().supportInvalidateOptionsMenu();
 
-            return true;
-        } else if (itemId == R.id.delete_menu) {
-
-            boolean[] selected = this.adapter.getSelection();
-            for (int i = 0; i < selected.length; i++) {
-                if (selected[i]) {
-                    selected[i] = false;
-                    long id = this.adapter.getItemId(i);
-                    Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
-                    this.getActivity().getContentResolver()
-                            .delete(deleteUri, null, null);
-                }
-            }
-
-            Toast.makeText(this.getActivity(), R.string.card_deleted_message,
-                    Toast.LENGTH_LONG).show();
-
-            this.adapter.setSelection(selected);
-            this.applyFilter(this.filterParams);
             return true;
         } else {
             Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
@@ -326,7 +301,6 @@ public class BaseballCardList extends ListFragment {
         this.getActivity().stopManagingCursor(oldCursor);
 
         if (newCursor != null) {
-            this.adapter.setSelection(new boolean[newCursor.getCount()]);
             this.getActivity().startManagingCursor(newCursor);
             this.adapter.changeCursor(newCursor);
         }
