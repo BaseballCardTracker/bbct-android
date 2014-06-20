@@ -25,7 +25,6 @@ import android.support.v4.app.FragmentActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
@@ -278,12 +277,15 @@ public class BaseballCardListWithDataTest <T extends MainActivity>  extends
 
         Log.d(TAG, "cardIndex=" + cardIndex);
 
-        this.sendRepeatedKeys(cardIndex, KeyEvent.KEYCODE_DPAD_DOWN, 1,
-                KeyEvent.KEYCODE_DPAD_CENTER);
+        // Add 1 for the header view.
+        this.solo.clickInList(cardIndex + 1);
 
+        this.inst.waitForIdleSync();
         Assert.assertTrue(BBCTTestUtil.isFragmentVisible((FragmentActivity) activity,
                 BaseballCardDetails.class));
-        BaseballCard expectedCard = this.allCards.get(cardIndex);
+
+        // solo.clickInList() is 1-based
+        BaseballCard expectedCard = this.allCards.get(cardIndex - 1);
         BBCTTestUtil.assertAllEditTextContents(this.activity, expectedCard);
     }
 
@@ -659,7 +661,6 @@ public class BaseballCardListWithDataTest <T extends MainActivity>  extends
     private Activity activity = null;
     private DatabaseUtil dbUtil = null;
     private BaseballCard newCard = null;
-    private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = BaseballCardListWithDataTest.class
             .getName();
 }
