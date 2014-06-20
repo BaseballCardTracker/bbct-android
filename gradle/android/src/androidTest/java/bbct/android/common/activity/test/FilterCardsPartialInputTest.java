@@ -148,7 +148,7 @@ public class FilterCardsPartialInputTest extends
 
         this.inst.waitForIdleSync();
         List<BaseballCard> expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, expectedCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards, this.listView);
     }
 
     private List<BaseballCard> allCards;

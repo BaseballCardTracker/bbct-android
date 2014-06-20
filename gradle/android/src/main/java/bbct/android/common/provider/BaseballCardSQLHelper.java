@@ -19,13 +19,9 @@
 package bbct.android.common.provider;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import bbct.android.common.data.BaseballCard;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Provides helper methods to access the underlying SQLite database.
@@ -120,95 +116,5 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         }
     }
 
-    /**
-     * Insert data for multiple baseball cards into a SQLite database.
-     *
-     * @param cards
-     *            The list of cards to insert into the database.
-     */
-    public void insertAllBaseballCards(SQLiteDatabase db,
-            List<BaseballCard> cards) {
-        db.beginTransaction();
-        try {
-            for (BaseballCard card : cards) {
-                db.insert(BaseballCardContract.TABLE_NAME, null,
-                        BaseballCardContract.getContentValues(card));
-            }
-            db.setTransactionSuccessful();
-        } finally {
-            db.endTransaction();
-        }
-    }
-
-    /**
-     * Populate a {@link BaseballCard} from the data in the current row of the
-     * current {@link Cursor}.
-     *
-     * @return A {@link BaseballCard} from the data in the current row of the
-     *         current {@link Cursor}.
-     */
-    public BaseballCard getBaseballCardFromCursor() {
-        return this.getBaseballCardFromCursor(this.currCursor);
-    }
-
-    /**
-     * Populate a {@link BaseballCard} from the data in the current row of the
-     * given {@link Cursor}.
-     *
-     * @param cursor
-     *            The {@link Cursor} to obtain data from.
-     * @return A {@link BaseballCard} from the data in the current row of the
-     *         given {@link Cursor}.
-     */
-    public BaseballCard getBaseballCardFromCursor(Cursor cursor) {
-        boolean autographed = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
-        String condition = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.CONDITION_COL_NAME));
-        String brand = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
-        int year = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.YEAR_COL_NAME));
-        int number = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
-        int value = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
-        int count = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
-        String name = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
-        String team = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.TEAM_COL_NAME));
-        String position = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
-
-        return new BaseballCard(autographed, condition, brand, year, number,
-                value, count, name, team, position);
-    }
-
-    /**
-     * Populate a {@link List} of {@link BaseballCard}s from the data in the
-     * given {@link Cursor}.
-     *
-     * @param cursor
-     *            The {@link Cursor} to obtain data from.
-     * @return A {@link List} of {@link BaseballCard}s from the data in the
-     *         given {@link Cursor}.
-     */
-    public List<BaseballCard> getAllBaseballCardsFromCursor(Cursor cursor) {
-        Log.d(TAG, "getAllBaseballCardsFromCursor()");
-        Log.d(TAG, "cursor=" + cursor);
-
-        List<BaseballCard> cards = new ArrayList<BaseballCard>();
-
-        while (cursor.moveToNext()) {
-            BaseballCard card = this.getBaseballCardFromCursor(cursor);
-            cards.add(card);
-        }
-
-        return cards;
-    }
-
     private static final String TAG = BaseballCardSQLHelper.class.getName();
-    private final Cursor currCursor = null;
 }

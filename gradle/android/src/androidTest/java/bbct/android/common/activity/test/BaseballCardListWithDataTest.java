@@ -21,12 +21,10 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CheckedTextView;
@@ -54,14 +52,14 @@ import junit.framework.Assert;
  * Tests for the {@link MainActivity} activity when the database contains
  * data.
  */
-public class BaseballCardListWithDataTest extends
-        ActivityInstrumentationTestCase2<MainActivity> {
+public class BaseballCardListWithDataTest <T extends MainActivity>  extends
+        ActivityInstrumentationTestCase2<T> {
 
     /**
      * Create instrumented test cases for {@link MainActivity}.
      */
-    public BaseballCardListWithDataTest() {
-        super(MainActivity.class);
+    public BaseballCardListWithDataTest(Class<T> activityClass) {
+        super(activityClass);
     }
 
     /**
@@ -123,9 +121,37 @@ public class BaseballCardListWithDataTest extends
         BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.containsAllBaseballCards(this.allCards));
 
+        this.inst.waitForIdleSync();
+        Assert.assertTrue(BBCTTestUtil.isFragmentVisible((FragmentActivity) activity,
+                BaseballCardList.class));
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
         Assert.assertNotNull(listView);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+    }
+
+    /**
+     * Test that the "Add Cards" menu item launches a
+     * {@link BaseballCardDetails} activity.
+     */
+    public void testAddCardsMenuItem() {
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
+    }
+
+    /**
+     * Test that the "Filter Cards" menu item launches a {@link FilterCards}
+     * activity.
+     */
+    public void testFilterCardsMenuItem() {
+        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
+    }
+
+    /**
+     * Test that the "Delete Cards" menu item is disabled. It should be disabled
+     * because there is no data currently displayed in the list and therefore no
+     * rows are marked.
+     */
+    public void testDeleteCardsMenuItem() {
+        Assert.assertFalse(this.inst.invokeMenuActionSync(this.activity, R.id.delete_menu, 0));
     }
 
     /**
@@ -149,8 +175,9 @@ public class BaseballCardListWithDataTest extends
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = this.getActivity();
 
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
     /**
@@ -166,8 +193,9 @@ public class BaseballCardListWithDataTest extends
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = this.getActivity();
 
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
     }
 
     /**
@@ -185,8 +213,9 @@ public class BaseballCardListWithDataTest extends
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = this.getActivity();
 
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
     /**
@@ -195,8 +224,9 @@ public class BaseballCardListWithDataTest extends
      */
     public void testStatePauseWithoutFilter() {
         this.inst.callActivityOnRestart(this.activity);
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
     /**
@@ -209,8 +239,9 @@ public class BaseballCardListWithDataTest extends
     public void testStatePauseWithFilter() throws Throwable {
         this.testYearFilter();
         this.inst.callActivityOnRestart(this.activity);
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
     }
 
     /**
@@ -225,8 +256,9 @@ public class BaseballCardListWithDataTest extends
     public void testStatePauseClearFilter() throws Throwable {
         this.testClearFilter();
         this.inst.callActivityOnRestart(this.activity);
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
     /**
@@ -245,14 +277,14 @@ public class BaseballCardListWithDataTest extends
 
         Log.d(TAG, "cardIndex=" + cardIndex);
 
-        this.sendRepeatedKeys(cardIndex, KeyEvent.KEYCODE_DPAD_DOWN, 1,
-                KeyEvent.KEYCODE_DPAD_CENTER);
+        // Add 1 for the header view.
+        this.solo.clickInList(cardIndex + 1);
 
-        Fragment cardDetails = ((FragmentActivity) activity)
-                .getSupportFragmentManager()
-                .findFragmentById(R.id.fragment_holder);
-        Assert.assertNotNull(cardDetails);
-        Assert.assertEquals(BaseballCardDetails.class.getName(), cardDetails.getClass().getName());
+        this.inst.waitForIdleSync();
+        Assert.assertTrue(BBCTTestUtil.isFragmentVisible((FragmentActivity) activity,
+                BaseballCardDetails.class));
+
+        // solo.clickInList() is 1-based
         BaseballCard expectedCard = this.allCards.get(cardIndex - 1);
         BBCTTestUtil.assertAllEditTextContents(this.activity, expectedCard);
     }
@@ -295,8 +327,9 @@ public class BaseballCardListWithDataTest extends
         this.solo.goBack();
 
         this.allCards.add(this.newCard);
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
     /**
@@ -315,8 +348,9 @@ public class BaseballCardListWithDataTest extends
         this.solo.goBack();
 
         this.expectedCards.add(this.newCard);
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
     }
 
     /**
@@ -335,8 +369,9 @@ public class BaseballCardListWithDataTest extends
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         this.solo.goBack();
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
     }
 
     /**
@@ -354,8 +389,9 @@ public class BaseballCardListWithDataTest extends
         this.solo.goBack();
 
         this.allCards.add(this.newCard);
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
     /**
@@ -425,6 +461,7 @@ public class BaseballCardListWithDataTest extends
     public void testDeleteCardUsingFilter() throws Throwable {
         this.testYearFilter();
 
+        this.inst.waitForIdleSync();
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int cardIndex = (int) (Math.random() * (lv.getChildCount() - 1) + 1);
         View v = lv.getChildAt(cardIndex);
@@ -440,8 +477,7 @@ public class BaseballCardListWithDataTest extends
 
         BBCTTestUtil.removeCard(this, this.activity, toDelete);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
-                lv);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
     }
 
     /**
@@ -451,6 +487,7 @@ public class BaseballCardListWithDataTest extends
     public void testDeleteCardNoFilter() throws Throwable {
         this.testClearFilter();
 
+        this.inst.waitForIdleSync();
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int cardIndex = (int) (Math.random() * (lv.getChildCount() - 1) + 1);
         View v = lv.getChildAt(cardIndex);
@@ -461,8 +498,7 @@ public class BaseballCardListWithDataTest extends
 
         BBCTTestUtil.removeCard(this, this.activity, toDelete);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards,
-                lv);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
     }
 
     /**
@@ -589,8 +625,9 @@ public class BaseballCardListWithDataTest extends
     public void testClearFilter() {
         this.testYearFilter();
         BBCTTestUtil.testMenuItem(this.solo, R.id.clear_filter_menu, BaseballCardList.class);
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
     /**
@@ -610,8 +647,9 @@ public class BaseballCardListWithDataTest extends
         this.inst.waitForIdleSync();
 
         this.expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
+        this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.inst, this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
 
         Assert.assertTrue(this.solo.waitForView(R.id.clear_filter_menu));
     }
@@ -623,7 +661,6 @@ public class BaseballCardListWithDataTest extends
     private Activity activity = null;
     private DatabaseUtil dbUtil = null;
     private BaseballCard newCard = null;
-    private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = BaseballCardListWithDataTest.class
             .getName();
 }
