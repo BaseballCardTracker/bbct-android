@@ -400,22 +400,15 @@ public class BaseballCardListWithDataTest <T extends MainActivity>  extends
      * {@link ListView} are selected.
      */
     public void testMarkAll() throws Throwable {
-        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
-        final CheckedTextView header = (CheckedTextView) lv.getChildAt(0)
-                .findViewById(R.id.checkmark);
-
-        this.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(header.performClick());
-            }
-        });
+        this.solo.clickOnCheckBox(0);
 
         this.inst.waitForIdleSync();
+        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int numMarked = 0;
         for (int i = 0; i < lv.getChildCount(); i++) {
-            CheckedTextView ctv = (CheckedTextView) lv.getChildAt(i)
-                    .findViewById(R.id.checkmark);
+            Checkable ctv = (Checkable) lv.getChildAt(i).findViewById(R.id.checkmark);
 
             if (ctv.isChecked()) {
                 numMarked++;
