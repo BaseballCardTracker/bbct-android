@@ -115,7 +115,7 @@ public class BaseballCardList extends ListFragment {
         listView.setAdapter(this.adapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(
-                new BaseballCardMultiChoiceModeListener(this.getActivity(), listView));
+                new BaseballCardMultiChoiceModeListener(this));
         this.applyFilter(this.filterParams);
 
         return view;
@@ -239,6 +239,18 @@ public class BaseballCardList extends ListFragment {
                 .replace(R.id.fragment_holder, details)
                 .addToBackStack(EDIT_CARD)
                 .commit();
+    }
+
+    public void deleteSelectedCards() {
+        long[] ids = this.getListView().getCheckedItemIds();
+        for (long id : ids) {
+            Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
+            this.getActivity().getContentResolver()
+                    .delete(deleteUri, null, null);
+        }
+
+        Toast.makeText(this.getActivity(), R.string.card_deleted_message, Toast.LENGTH_LONG)
+                .show();
     }
 
     protected void applyFilter(Bundle filterParams) {
