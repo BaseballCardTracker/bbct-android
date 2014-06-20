@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.view.ActionMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -83,6 +85,11 @@ public class BaseballCardList extends ListFragment {
 
         if (savedInstanceState != null) {
             this.filterParams = savedInstanceState.getBundle(FILTER_PARAMS);
+            boolean[] selection = savedInstanceState.getBooleanArray(SELECTION_EXTRA);
+
+            if (selection != null) {
+                this.adapter.setSelection(selection);
+            }
         } else if (args != null) {
             this.filterParams = args.getBundle(FILTER_PARAMS);
         }
@@ -100,23 +107,38 @@ public class BaseballCardList extends ListFragment {
         this.emptyList = (TextView) view.findViewById(android.R.id.empty);
 
         ListView listView = (ListView) view.findViewById(android.R.id.list);
-        this.headerView = View.inflate(this.getActivity(),
+        View headerView = View.inflate(this.getActivity(),
                 R.layout.list_header, null);
-        this.headerView.findViewById(R.id.checkmark)
+        headerView.findViewById(R.id.checkmark)
                 .setOnClickListener(new OnClickListener() {
+                    ActionMode mode;
+
                     @Override
                     public void onClick(View v) {
-                        CheckedTextView ctv = (CheckedTextView) v
-                                .findViewById(R.id.checkmark);
-                        ctv.toggle();
-                        BaseballCardList.this.adapter.toggleAll(ctv.isChecked());
+                        Checkable ctv = (Checkable) v;
+                        BaseballCardList.this.callbacks.setAllChecked(ctv.isChecked());
+
+                        if (mode == null) {
+                            mode = ((ActionBarActivity) BaseballCardList.this.getActivity())
+                                    .startSupportActionMode(BaseballCardList.this.callbacks);
+                        } else {
+                            mode.finish();
+                        }
                     }
                 });
-        listView.addHeaderView(this.headerView);
-        listView.setAdapter(this.adapter);
-        listView.setOnItemLongClickListener(new BaseballCardActionModeCallback(
-                (ActionBarActivity)this.getActivity(), this));
+        listView.addHeaderView(headerView);
+
+        this.callbacks = new BaseballCardActionModeCallback(this);
+        this.adapter.setCheckBoxListener(this.callbacks);
+        listView.setOnItemLongClickListener(this.callbacks);
         this.applyFilter(this.filterParams);
+
+        if (savedInstanceState != null) {
+            boolean actionMode = savedInstanceState.getBoolean(ACTION_MODE_EXTRA);
+            if (actionMode) {
+                ((ActionBarActivity) this.getActivity()).startSupportActionMode(this.callbacks);
+            }
+        }
 
         return view;
     }
@@ -212,6 +234,7 @@ public class BaseballCardList extends ListFragment {
 
         outState.putBundle(FILTER_PARAMS, this.filterParams);
         outState.putBooleanArray(SELECTION_EXTRA, this.adapter.getSelection());
+        outState.putBoolean(ACTION_MODE_EXTRA, this.callbacks.isStarted());
     }
 
     /**
@@ -335,12 +358,13 @@ public class BaseballCardList extends ListFragment {
     private static final String FILTER_PARAMS = "filterParams";
     private static final String EDIT_CARD = "Edit Card";
     private static final String SELECTION_EXTRA = "selection";
+    private static final String ACTION_MODE_EXTRA = "actionMode";
 
     private static final String TAG = BaseballCardList.class.getName();
     TextView emptyList = null;
     private BaseballCardAdapter adapter = null;
     private Uri uri = null;
     private Bundle filterParams = null;
-    private View headerView;
+    private BaseballCardActionModeCallback callbacks;
 
 }

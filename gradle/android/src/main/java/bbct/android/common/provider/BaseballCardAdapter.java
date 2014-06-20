@@ -24,6 +24,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.SimpleCursorAdapter;
 import bbct.android.common.R;
@@ -36,11 +37,18 @@ import bbct.android.common.data.BaseballCard;
  */
 public class BaseballCardAdapter extends SimpleCursorAdapter {
 
+    private OnClickListener checkBoxListener;
+
+    private boolean[] selection;
+
     @SuppressWarnings("deprecation")
     public BaseballCardAdapter(Context context, int layout, Cursor c,
             String[] from, int[] to) {
         super(context, layout, c, from, to);
-        this.context = context;
+    }
+
+    public void setCheckBoxListener(OnClickListener checkBoxListener) {
+        this.checkBoxListener = checkBoxListener;
     }
 
     /**
@@ -54,27 +62,15 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         View v = super.getView(position, convertView, parent);
 
-        CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
-        final ActionBarActivity curActivity = (ActionBarActivity) this.context;
+        View ctv = v.findViewById(R.id.checkmark);
 
         // restore selection
         if (this.selection != null) {
-            ctv.setChecked(this.selection[position]);
+            ((Checkable) ctv).setChecked(this.selection[position]);
         }
 
         // set listener
-        ctv.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                CheckedTextView cview = (CheckedTextView) v
-                        .findViewById(R.id.checkmark);
-                BaseballCardAdapter.this.selection[position] = cview
-                        .isChecked();
-
-                curActivity.supportInvalidateOptionsMenu();
-            }
-        });
+        ctv.setOnClickListener(this.checkBoxListener);
 
         return v;
     }
@@ -89,6 +85,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
         for (int i = 0; i < this.selection.length; i++) {
             this.selection[i] = check;
         }
+
         this.notifyDataSetChanged();
     }
 
@@ -99,6 +96,17 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
      */
     public boolean[] getSelection() {
         return this.selection;
+    }
+
+    /**
+     * Notifies the attached observers that the underlying data has been changed
+     * and any View reflecting the data set should refresh itself.
+     */
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+
+        this.selection = new boolean[this.getCount()];
     }
 
     @Override
@@ -129,6 +137,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
                 value, count, name, team, position);
     }
 
-    private boolean[] selection;
-    private final Context context;
+    public void setSelection(boolean[] selection) {
+        this.selection = selection;
+    }
 }
