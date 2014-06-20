@@ -231,7 +231,7 @@ public class BaseballCardList extends ListFragment {
             return;
         }
 
-        BaseballCard card = BaseballCardList.this.adapter.getItem(position);
+        BaseballCard card = BaseballCardList.this.adapter.getItem(position - 1);
 
         Fragment details = BaseballCardDetails.getInstance(id, card);
         this.getActivity().getSupportFragmentManager()
