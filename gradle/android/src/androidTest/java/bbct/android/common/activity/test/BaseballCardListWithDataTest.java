@@ -23,7 +23,6 @@ import android.app.Instrumentation;
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.FragmentActivity;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.UiThreadTest;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -53,7 +52,7 @@ import junit.framework.Assert;
  * Tests for the {@link MainActivity} activity when the database contains
  * data.
  */
-public class BaseballCardListWithDataTest <T extends MainActivity>  extends
+public class BaseballCardListWithDataTest<T extends MainActivity> extends
         ActivityInstrumentationTestCase2<T> {
 
     /**
@@ -449,18 +448,15 @@ public class BaseballCardListWithDataTest <T extends MainActivity>  extends
      * deletes cards without any applied filter.
      */
     public void testDeleteCardNoFilter() throws Throwable {
-        this.testClearFilter();
-
-        this.inst.waitForIdleSync();
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
-        int cardIndex = (int) (Math.random() * (lv.getChildCount() - 1) + 1);
-        View v = lv.getChildAt(cardIndex);
-        BaseballCard toDelete = this.getBaseballCardFromView(v);
+        int cardIndex = 3;
 
         this.expectedCards = new ArrayList<BaseballCard>(this.allCards);
-        this.expectedCards.remove(toDelete);
+        this.expectedCards.remove(cardIndex);
 
-        BBCTTestUtil.removeCard(this, this.activity, toDelete);
+        this.solo.clickOnCheckBox(cardIndex);
+        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+        this.solo.clickOnActionBarItem(R.id.delete_menu);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
     }
@@ -469,38 +465,24 @@ public class BaseballCardListWithDataTest <T extends MainActivity>  extends
      * Test that the state of {@link CheckedTextView} is maintained when the
      * {@link BaseballCardList} activity changes orientation.
      */
-    @UiThreadTest
     public void testSelectionAfterSaveInstanceState() throws Throwable {
         Log.d(TAG, "testSelectionAfterSaveInstanceState()");
 
-        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
-        ArrayList<Integer> indexes = new ArrayList<Integer>();
-
-        for (int i = 0; i < 3; i++) {
-            int cardIndex = (int) (Math.random() * (lv.getChildCount() - 1) + 1);
-            final CheckedTextView ctv = (CheckedTextView) lv.getChildAt(
-                    cardIndex).findViewById(R.id.checkmark);
-
-            if (!ctv.isChecked()) {
-                indexes.add(cardIndex);
-                Assert.assertTrue(ctv.performClick());
-            }
-        }
+        int index = 1;
+        this.solo.clickOnCheckBox(index);
 
         Log.d(TAG, "change orientation");
-        this.activity
-                .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        this.activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         Log.d(TAG, "assertions");
-        lv = (ListView) this.activity.findViewById(android.R.id.list);
+        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+        this.inst.waitForIdleSync();
+        ListView lv = (ListView) this.getActivity().findViewById(android.R.id.list);
         Log.d(TAG, "lv.getChildCount()=" + lv.getChildCount());
-        for (int i = 0; i < indexes.size(); i++) {
-            View row = lv.getChildAt(indexes.get(i));
-            Log.d(TAG, "row=" + row);
-            CheckedTextView ctv = (CheckedTextView) row
-                    .findViewById(R.id.checkmark);
-            Assert.assertTrue(ctv.isChecked());
-        }
+        View row = lv.getChildAt(index);
+        Log.d(TAG, "row=" + row);
+        Checkable ctv = (Checkable) row.findViewById(R.id.checkmark);
+        Assert.assertTrue(ctv.isChecked());
 
         this.activity.finish();
         Log.d(TAG, "finished");

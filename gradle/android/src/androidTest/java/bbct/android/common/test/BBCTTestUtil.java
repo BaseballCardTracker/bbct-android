@@ -33,6 +33,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -395,8 +396,7 @@ final public class BBCTTestUtil {
 
         for (int i = 1; i < lv.getChildCount(); i++) {
             View v = lv.getChildAt(i);
-            final CheckedTextView ctv = (CheckedTextView) v
-                    .findViewById(R.id.checkmark);
+            final CheckBox ctv = (CheckBox) v.findViewById(R.id.checkmark);
 
             boolean isEqualPName = playerName.equals(((TextView) v
                     .findViewById(R.id.player_name_text_view)).getText()
