@@ -27,6 +27,7 @@ import android.test.UiThreadTest;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -395,36 +396,6 @@ public class BaseballCardListWithDataTest <T extends MainActivity>  extends
     }
 
     /**
-     * Test that the "Delete Cards" menu item is disabled when no items are
-     * selected in {@link ListView}.
-     */
-    public void testEmptySelection() {
-        Assert.assertFalse(this.inst.invokeMenuActionSync(this.activity,
-                R.id.delete_menu, 0));
-    }
-
-    /**
-     * Test that the "Delete Cards" menu item is enabled once an item is
-     * selected from {@link ListView}.
-     */
-    public void testSelection() throws Throwable {
-        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
-        int index = (int) (Math.random() * (lv.getChildCount() - 1)) + 1;
-        final CheckedTextView ctv = (CheckedTextView) lv.getChildAt(index)
-                .findViewById(R.id.checkmark);
-
-        this.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(ctv.performClick());
-            }
-        });
-
-        Assert.assertTrue(this.inst.invokeMenuActionSync(this.activity,
-                R.id.delete_menu, 0));
-    }
-
-    /**
      * Test that upon clicking on header {@link View}, all items in
      * {@link ListView} are selected.
      */
@@ -542,41 +513,6 @@ public class BaseballCardListWithDataTest <T extends MainActivity>  extends
         Log.d(TAG, "finished");
     }
 
-    /**
-     * Test that the state of {@link CheckedTextView} is NOT maintained when a user
-     * adds a new card.
-     */
-    public void testSelectionAfterAddCard() throws Throwable {
-        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
-        ArrayList<Integer> indexes = new ArrayList<Integer>();
-
-        for (int i = 0; i < 3; i++) {
-            int cardIndex = (int) (Math.random() * (lv.getChildCount() - 1) + 1);
-            final CheckedTextView ctv = (CheckedTextView) lv.getChildAt(
-                    cardIndex).findViewById(R.id.checkmark);
-
-            if (!ctv.isChecked()) {
-                indexes.add(cardIndex);
-
-                this.runTestOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Assert.assertTrue(ctv.performClick());
-                    }
-                });
-            }
-        }
-
-        this.testAddCardToPopulatedDatabase();
-
-        lv = (ListView) this.activity.findViewById(android.R.id.list);
-        for (int i = 0; i < indexes.size(); i++) {
-            CheckedTextView ctv = (CheckedTextView) lv.getChildAt(
-                    indexes.get(i)).findViewById(R.id.checkmark);
-            Assert.assertFalse(ctv.isChecked());
-        }
-    }
-
     private BaseballCard getBaseballCardFromView(View v) {
         TextView playerName = (TextView) v
                 .findViewById(R.id.player_name_text_view);
@@ -652,6 +588,21 @@ public class BaseballCardListWithDataTest <T extends MainActivity>  extends
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
 
         Assert.assertTrue(this.solo.waitForView(R.id.clear_filter_menu));
+    }
+
+    public void testOnClickCheckboxStartActionMode() {
+        int index = 4;
+        this.solo.clickOnCheckBox(index);
+        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+    }
+
+    public void testOnItemLongClickStartActionMode() {
+        int index = 4;
+        ArrayList<TextView> views = this.solo.clickLongInList(index);
+        this.inst.waitForIdleSync();
+        Checkable check = (Checkable) views.get(0);
+        Assert.assertTrue(check.isChecked());
+        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
     }
 
     private List<BaseballCard> allCards;
