@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,7 +38,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
-import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
+import bbct.android.common.activity.util.BaseballCardActionModeCallback;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
@@ -113,9 +114,8 @@ public class BaseballCardList extends ListFragment {
                 });
         listView.addHeaderView(this.headerView);
         listView.setAdapter(this.adapter);
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(
-                new BaseballCardMultiChoiceModeListener(this));
+        listView.setOnItemLongClickListener(new BaseballCardActionModeCallback(
+                (ActionBarActivity)this.getActivity(), this));
         this.applyFilter(this.filterParams);
 
         return view;

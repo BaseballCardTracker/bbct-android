@@ -18,32 +18,27 @@
  */
 package bbct.android.common.activity.util;
 
-import android.view.ActionMode;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.AbsListView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.CheckedTextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
 
-public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiChoiceModeListener {
+public class BaseballCardActionModeCallback implements ActionMode.Callback,
+        AdapterView.OnItemLongClickListener {
+
+    private ActionBarActivity activity;
 
     private BaseballCardList listFragment;
 
-    public BaseballCardMultiChoiceModeListener(BaseballCardList listFragment) {
+    public BaseballCardActionModeCallback(ActionBarActivity activity, BaseballCardList listFragment) {
+        this.activity = activity;
         this.listFragment = listFragment;
-    }
-
-    /**
-     * Called when an item is checked or unchecked during selection mode.
-     *
-     * @param mode     The {@link ActionMode} providing the selection mode
-     * @param position Adapter position of the item that was checked or unchecked
-     * @param id       Adapter ID of the item that was checked or unchecked
-     * @param checked  <code>true</code> if the item is now checked, <code>false</code>
-     */
-    @Override
-    public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
     }
 
     /**
@@ -102,6 +97,29 @@ public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiCho
     @Override
     public void onDestroyActionMode(ActionMode mode) {
 
+    }
+
+    /**
+     * Callback method to be invoked when an item in this view has been
+     * clicked and held.
+     * <p/>
+     * Implementers can call getItemAtPosition(position) if they need to access
+     * the data associated with the selected item.
+     *
+     * @param parent   The AbsListView where the click happened
+     * @param view     The view within the AbsListView that was clicked
+     * @param position The position of the view in the list
+     * @param id       The row id of the item that was clicked
+     * @return true if the callback consumed the long click, false otherwise
+     */
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        CheckedTextView ctv = (CheckedTextView) view.findViewById(R.id.checkmark);
+        ctv.setChecked(true);
+
+        this.activity.startSupportActionMode(this);
+
+        return true;
     }
 
 }
