@@ -20,9 +20,9 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.content.pm.ActivityInfo;
 import android.support.v4.app.FragmentActivity;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.TouchUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -456,7 +456,11 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
 
         this.solo.clickOnCheckBox(cardIndex);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
-        this.solo.clickOnActionBarItem(R.id.delete_menu);
+
+        View deleteMenu = this.activity.findViewById(R.id.delete_menu);
+        Assert.assertNotNull(deleteMenu);
+        TouchUtils.clickView(this, deleteMenu);
+
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
     }
@@ -472,12 +476,12 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
         this.solo.clickOnCheckBox(index);
 
         Log.d(TAG, "change orientation");
-        this.activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        this.solo.setActivityOrientation(Solo.LANDSCAPE);
 
         Log.d(TAG, "assertions");
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
-        this.inst.waitForIdleSync();
-        ListView lv = (ListView) this.getActivity().findViewById(android.R.id.list);
+        Assert.assertTrue(this.solo.waitForView(android.R.id.list));
+        ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
         Log.d(TAG, "lv.getChildCount()=" + lv.getChildCount());
         View row = lv.getChildAt(index);
         Log.d(TAG, "row=" + row);
