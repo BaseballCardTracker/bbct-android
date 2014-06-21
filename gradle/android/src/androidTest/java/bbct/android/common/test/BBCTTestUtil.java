@@ -70,26 +70,22 @@ final public class BBCTTestUtil {
     public static void assertListViewContainsItems(List<BaseballCard> expectedItems,
                                                    ListView listView) {
         // Add 1 to the number of expected cards to account for the header View
-        Assert.assertEquals(expectedItems.size() + 1, listView.getChildCount());
+        Assert.assertEquals(expectedItems.size() + 1, listView.getAdapter().getCount());
 
         for (BaseballCard card : expectedItems) {
             boolean listContainsCard = false;
-            for (int i = 0; i < listView.getChildCount(); i++) {
+            for (int i = 1; i < listView.getChildCount(); i++) {
                 // Add 1 to skip headers
-                View row = listView.getChildAt(i + 1);
-                TextView brandTextView = (TextView) row
-                        .findViewById(R.id.brand_text_view);
-                TextView yearTextView = (TextView) row
-                        .findViewById(R.id.year_text_view);
-                TextView numberTextView = (TextView) row
-                        .findViewById(R.id.number_text_view);
-                TextView playerNameTextView = (TextView) row
-                        .findViewById(R.id.player_name_text_view);
+                View row = listView.getChildAt(i);
+                TextView brandText = (TextView) row.findViewById(R.id.brand_text_view);
+                TextView yearText = (TextView) row.findViewById(R.id.year_text_view);
+                TextView numberText = (TextView) row.findViewById(R.id.number_text_view);
+                TextView nameText = (TextView) row.findViewById(R.id.player_name_text_view);
 
-                String brand = brandTextView.getText().toString(), playerName = playerNameTextView
-                        .getText().toString();
-                int year = Integer.parseInt(yearTextView.getText().toString()), number = Integer
-                        .parseInt(numberTextView.getText().toString());
+                String brand = brandText.getText().toString();
+                String playerName = nameText.getText().toString();
+                int year = Integer.parseInt(yearText.getText().toString());
+                int number = Integer.parseInt(numberText.getText().toString());
 
                 if (card.getBrand().equals(brand) && card.getYear() == year
                         && card.getNumber() == number

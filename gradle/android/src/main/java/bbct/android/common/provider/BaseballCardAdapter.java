@@ -20,7 +20,6 @@ package bbct.android.common.provider;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -71,6 +70,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
 
         // set listener
         ctv.setOnClickListener(this.checkBoxListener);
+        ctv.setTag(position);
 
         return v;
     }
@@ -139,5 +139,9 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     public void setSelection(boolean[] selection) {
         this.selection = selection;
+    }
+
+    public void setSelected(int position, boolean checked) {
+        this.selection[position] = checked;
     }
 }

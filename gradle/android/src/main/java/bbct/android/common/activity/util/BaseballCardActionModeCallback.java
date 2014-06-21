@@ -92,6 +92,7 @@ public class BaseballCardActionModeCallback implements ActionMode.Callback,
         switch (item.getItemId()) {
             case R.id.delete_menu:
                 this.listFragment.deleteSelectedCards();
+                this.mode.finish();
                 return true;
 
             default:
@@ -190,7 +191,8 @@ public class BaseballCardActionModeCallback implements ActionMode.Callback,
             start();
         }
 
-        if (((Checkable)v).isChecked()) {
+        Checkable cb = (Checkable) v;
+        if (cb.isChecked()) {
             this.count++;
         } else {
             this.count--;
@@ -199,6 +201,9 @@ public class BaseballCardActionModeCallback implements ActionMode.Callback,
         if (this.count == 0) {
             this.mode.finish();
         }
+
+        int position = (Integer) v.getTag();
+        this.adapter.setSelected(position, cb.isChecked());
     }
 
     private void start() {

@@ -266,9 +266,11 @@ public class BaseballCardList extends ListFragment {
     public void deleteSelectedCards() {
         boolean[] selected = this.adapter.getSelection();
         for (int i = 0; i < selected.length; ++i) {
-            long id = this.adapter.getItemId(i);
-            Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
-            this.getActivity().getContentResolver().delete(deleteUri, null, null);
+            if (selected[i]) {
+                long id = this.adapter.getItemId(i);
+                Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
+                this.getActivity().getContentResolver().delete(deleteUri, null, null);
+            }
         }
 
         Toast.makeText(this.getActivity(), R.string.card_deleted_message, Toast.LENGTH_LONG)

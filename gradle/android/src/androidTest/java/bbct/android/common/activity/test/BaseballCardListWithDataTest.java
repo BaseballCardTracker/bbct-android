@@ -448,11 +448,11 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
      * deletes cards without any applied filter.
      */
     public void testDeleteCardNoFilter() throws Throwable {
-        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
-        int cardIndex = 3;
+        int cardIndex = 4;
 
         this.expectedCards = new ArrayList<BaseballCard>(this.allCards);
-        this.expectedCards.remove(cardIndex);
+        // Solo's indexes are 1-based
+        this.expectedCards.remove(cardIndex - 1);
 
         this.solo.clickOnCheckBox(cardIndex);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
@@ -462,6 +462,7 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
         TouchUtils.clickView(this, deleteMenu);
 
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
+        ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
     }
 
