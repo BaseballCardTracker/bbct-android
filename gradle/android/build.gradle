@@ -24,13 +24,13 @@ android {
     productFlavors {
         lite {
             applicationId "bbct.android"
-            versionCode 13
-            versionName "0.6.0"
+            versionCode 14
+            versionName "0.6.1"
         }
         premium {
             applicationId "bbct.android.premium"
-            versionCode 12
-            versionName "0.6.0"
+            versionCode 13
+            versionName "0.6.1"
         }
     }
     lintOptions {
