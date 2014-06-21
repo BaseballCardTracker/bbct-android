@@ -35,7 +35,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Checkable;
-import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,7 +73,6 @@ public class BaseballCardList extends ListFragment {
 
         this.adapter = new BaseballCardAdapter(this.getActivity(),
                 R.layout.row, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
-        this.setListAdapter(this.adapter);
 
         Log.d(TAG, "  adapter=" + this.adapter);
 
@@ -127,6 +125,7 @@ public class BaseballCardList extends ListFragment {
                     }
                 });
         listView.addHeaderView(headerView);
+        this.setListAdapter(this.adapter);
 
         this.callbacks = new BaseballCardActionModeCallback(this);
         this.adapter.setCheckBoxListener(this.callbacks);
@@ -265,11 +264,11 @@ public class BaseballCardList extends ListFragment {
     }
 
     public void deleteSelectedCards() {
-        long[] ids = this.getListView().getCheckedItemIds();
-        for (long id : ids) {
+        boolean[] selected = this.adapter.getSelection();
+        for (int i = 0; i < selected.length; ++i) {
+            long id = this.adapter.getItemId(i);
             Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
-            this.getActivity().getContentResolver()
-                    .delete(deleteUri, null, null);
+            this.getActivity().getContentResolver().delete(deleteUri, null, null);
         }
 
         Toast.makeText(this.getActivity(), R.string.card_deleted_message, Toast.LENGTH_LONG)
