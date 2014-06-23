@@ -176,7 +176,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity>  extends
         this.activity = this.getActivity();
 
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ListView listView = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
