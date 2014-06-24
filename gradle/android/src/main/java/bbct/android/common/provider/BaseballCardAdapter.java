@@ -20,14 +20,20 @@ package bbct.android.common.provider;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.v4.app.FragmentActivity;
+import android.view.ActionMode;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Checkable;
 import android.widget.CheckedTextView;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardList;
+import bbct.android.common.activity.util.BaseballCardActionModeCallback;
 import bbct.android.common.data.BaseballCard;
+import bbct.android.common.view.BaseballCardView;
 
 /**
  * This class adds click listeners to {@link CheckedTextView} in
@@ -36,18 +42,20 @@ import bbct.android.common.data.BaseballCard;
  */
 public class BaseballCardAdapter extends SimpleCursorAdapter {
 
-    private OnClickListener checkBoxListener;
+    private final FragmentActivity mActivity;
 
-    private boolean[] selection;
+    private BaseballCardList mListFragment;
 
     @SuppressWarnings("deprecation")
     public BaseballCardAdapter(Context context, int layout, Cursor c,
             String[] from, int[] to) {
         super(context, layout, c, from, to);
+
+        this.mActivity = (FragmentActivity) context;
     }
 
-    public void setCheckBoxListener(OnClickListener checkBoxListener) {
-        this.checkBoxListener = checkBoxListener;
+    public void setListFragment(BaseballCardList listFragment) {
+        mListFragment = listFragment;
     }
 
     /**
@@ -59,54 +67,32 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
      */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View v = super.getView(position, convertView, parent);
+        View row = convertView;
 
-        View ctv = v.findViewById(R.id.checkmark);
-
-        // restore selection
-        if (this.selection != null) {
-            ((Checkable) ctv).setChecked(this.selection[position]);
+        if (row == null) {
+            row = new BaseballCardView(mActivity);
         }
+
+        View ctv = row.findViewById(R.id.checkmark);
+        super.getView(position, row, parent);
 
         // set listener
-        ctv.setOnClickListener(this.checkBoxListener);
-        ctv.setTag(position);
+        ctv.setOnClickListener(new OnClickListener() {
+            private ActionMode mMode;
 
-        return v;
-    }
+            @Override
+            public void onClick(View v) {
+                if (mMode == null) {
+                    mMode = mActivity.startActionMode(new BaseballCardActionModeCallback(mListFragment));
+                }
 
-    /**
-     * Marks/unmarks all items in the {@link BaseballCardAdapter}.
-     *
-     * @param check
-     *            - a boolean indicating whether all items will be checked
-     */
-    public void toggleAll(boolean check) {
-        for (int i = 0; i < this.selection.length; i++) {
-            this.selection[i] = check;
-        }
+                ListView listView = mListFragment.getListView();
+                // Add 1 to compensate for the header view
+                listView.setItemChecked(position + 1, ((Checkable) v).isChecked());
+            }
+        });
 
-        this.notifyDataSetChanged();
-    }
-
-    /**
-     * Returns the saved selection object.
-     *
-     * @return an array of marked items
-     */
-    public boolean[] getSelection() {
-        return this.selection;
-    }
-
-    /**
-     * Notifies the attached observers that the underlying data has been changed
-     * and any View reflecting the data set should refresh itself.
-     */
-    @Override
-    public void notifyDataSetChanged() {
-        super.notifyDataSetChanged();
-
-        this.selection = new boolean[this.getCount()];
+        return row;
     }
 
     @Override
@@ -137,11 +123,4 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
                 value, count, name, team, position);
     }
 
-    public void setSelection(boolean[] selection) {
-        this.selection = selection;
-    }
-
-    public void setSelected(int position, boolean checked) {
-        this.selection[position] = checked;
-    }
 }

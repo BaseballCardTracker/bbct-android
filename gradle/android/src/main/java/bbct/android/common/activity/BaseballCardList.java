@@ -71,7 +71,7 @@ public class BaseballCardList extends ListFragment {
         super.onCreate(savedInstanceState);
 
         this.adapter = new BaseballCardAdapter(this.getActivity(),
-                R.layout.row, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
+                R.layout.baseball_card, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
 
         Log.d(TAG, "  adapter=" + this.adapter);
 
@@ -82,11 +82,6 @@ public class BaseballCardList extends ListFragment {
 
         if (savedInstanceState != null) {
             this.filterParams = savedInstanceState.getBundle(FILTER_PARAMS);
-            boolean[] selection = savedInstanceState.getBooleanArray(SELECTION_EXTRA);
-
-            if (selection != null) {
-                this.adapter.setSelection(selection);
-            }
         } else if (args != null) {
             this.filterParams = args.getBundle(FILTER_PARAMS);
         }
@@ -115,16 +110,17 @@ public class BaseballCardList extends ListFragment {
 //                        Checkable ctv = (Checkable) v;
 //                        BaseballCardList.this.callbacks.setAllChecked(ctv.isChecked());
 
-//                        if (mode == null) {
-//                            mode = (BaseballCardList.this.getActivity())
-//                                    .startActionMode(BaseballCardList.this.callbacks);
-//                        } else {
-//                            mode.finish();
-//                        }
+                        if (mode == null) {
+                            mode = BaseballCardList.this.getActivity().startActionMode(
+                                    new BaseballCardActionModeCallback(BaseballCardList.this));
+                        } else {
+                            mode.finish();
+                        }
                     }
                 });
         listView.addHeaderView(headerView);
         this.setListAdapter(this.adapter);
+        this.adapter.setListFragment(this);
 
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new BaseballCardActionModeCallback(this));
@@ -253,10 +249,10 @@ public class BaseballCardList extends ListFragment {
     }
 
     public void deleteSelectedCards() {
-        boolean[] selected = this.adapter.getSelection();
-        for (int i = 0; i < selected.length; ++i) {
-            if (selected[i]) {
-                long id = this.adapter.getItemId(i);
+        for (int i = 0; i < getListAdapter().getCount(); ++i) {
+            if (getListView().isItemChecked(i)) {
+                // Subtract one to compensate for the header view
+                long id = this.adapter.getItemId(i - 1);
                 Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
                 this.getActivity().getContentResolver().delete(deleteUri, null, null);
             }
@@ -347,7 +343,6 @@ public class BaseballCardList extends ListFragment {
 
     private static final String FILTER_PARAMS = "filterParams";
     private static final String EDIT_CARD = "Edit Card";
-    private static final String SELECTION_EXTRA = "selection";
 
     private static final String TAG = BaseballCardList.class.getName();
     TextView emptyList = null;
