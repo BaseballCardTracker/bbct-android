@@ -18,37 +18,35 @@
  */
 package bbct.android.common.activity.util;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.view.ActionMode;
-import android.util.Log;
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.view.ActionMode;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Checkable;
-import android.widget.ListView;
+import android.widget.AbsListView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
-import bbct.android.common.provider.BaseballCardAdapter;
 
-public class BaseballCardActionModeCallback implements ActionMode.Callback,
-        AdapterView.OnItemLongClickListener, View.OnClickListener, AdapterView.OnItemClickListener {
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class BaseballCardActionModeCallback implements AbsListView.MultiChoiceModeListener {
 
-    private static final String TAG = BaseballCardActionModeCallback.class.getName();
-
-    private BaseballCardAdapter adapter;
-    private ActionBarActivity activity;
-    private BaseballCardList listFragment;
-    private AdapterView.OnItemClickListener oldOnItemClick;
-    private ActionMode mode;
-    private int count;
+    private final BaseballCardList mListFragment;
 
     public BaseballCardActionModeCallback(BaseballCardList listFragment) {
-        this.activity = (ActionBarActivity) listFragment.getActivity();
-        this.listFragment = listFragment;
+        mListFragment = listFragment;
+    }
 
-        this.adapter = (BaseballCardAdapter) this.listFragment.getListAdapter();
+    /**
+     * Called when an item is checked or unchecked during selection mode.
+     *
+     * @param mode     The {@link ActionMode} providing the selection mode
+     * @param position Adapter position of the item that was checked or unchecked
+     * @param id       Adapter ID of the item that was checked or unchecked
+     * @param checked  <code>true</code> if the item is now checked, <code>false</code>
+     */
+    @Override
+    public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+
     }
 
     /**
@@ -62,8 +60,8 @@ public class BaseballCardActionModeCallback implements ActionMode.Callback,
      */
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        MenuInflater inflater = mode.getMenuInflater();
-        inflater.inflate(R.menu.context, menu);
+        mListFragment.getActivity().getMenuInflater().inflate(R.menu.context, menu);
+
         return true;
     }
 
@@ -91,13 +89,11 @@ public class BaseballCardActionModeCallback implements ActionMode.Callback,
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete_menu:
-                this.listFragment.deleteSelectedCards();
-                this.mode.finish();
+                mListFragment.deleteSelectedCards();
                 return true;
-
-            default:
-                return false;
         }
+
+        return false;
     }
 
     /**
@@ -107,124 +103,6 @@ public class BaseballCardActionModeCallback implements ActionMode.Callback,
      */
     @Override
     public void onDestroyActionMode(ActionMode mode) {
-        this.mode = null;
-        this.listFragment.getListView().setOnItemClickListener(this.oldOnItemClick);
+
     }
-
-    /**
-     * Callback method to be invoked when an item in this view has been
-     * clicked and held.
-     * <p/>
-     * Implementers can call getItemAtPosition(position) if they need to access
-     * the data associated with the selected item.
-     *
-     * @param parent   The AbsListView where the click happened
-     * @param view     The view within the AbsListView that was clicked
-     * @param position The position of the view in the list
-     * @param id       The row id of the item that was clicked
-     * @return true if the callback consumed the long click, false otherwise
-     */
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Checkable ctv = (Checkable) view.findViewById(R.id.checkmark);
-        if (this.mode == null) {
-            ctv.setChecked(true);
-            start();
-        } else {
-            ctv.toggle();
-        }
-
-        if (ctv.isChecked()) {
-            this.count++;
-        } else {
-            this.count--;
-        }
-
-        return true;
-    }
-
-    /**
-     * Callback method to be invoked when an item in this AdapterView has
-     * been clicked.
-     * <p/>
-     * Implementers can call getItemAtPosition(position) if they need
-     * to access the data associated with the selected item.
-     *
-     * @param parent   The AdapterView where the click happened.
-     * @param view     The view within the AdapterView that was clicked (this
-     *                 will be a view provided by the adapter)
-     * @param position The position of the view in the adapter.
-     * @param id       The row id of the item that was clicked.
-     */
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(TAG, "onItemClick()");
-        Log.d(TAG, "  view=" + view);
-        Log.d(TAG, "  position=" + position);
-        Log.d(TAG, "  id=" + id);
-
-        Checkable ctv = (Checkable) view.findViewById(R.id.checkmark);
-        ctv.toggle();
-
-        if (ctv.isChecked()) {
-            this.count++;
-        } else {
-            this.count--;
-        }
-
-        if (this.count == 0) {
-            this.mode.finish();
-        }
-    }
-
-    /**
-     * Called when a view has been clicked.
-     *
-     * @param v The view that was clicked.
-     */
-    @Override
-    public void onClick(View v) {
-        Log.d(TAG, "onClick()");
-        Log.d(TAG, "  v=" + v);
-
-        if (this.mode == null) {
-            start();
-        }
-
-        Checkable cb = (Checkable) v;
-        if (cb.isChecked()) {
-            this.count++;
-        } else {
-            this.count--;
-        }
-
-        if (this.count == 0) {
-            this.mode.finish();
-        }
-
-        int position = (Integer) v.getTag();
-        this.adapter.setSelected(position, cb.isChecked());
-    }
-
-    private void start() {
-        this.oldOnItemClick = this.listFragment.getListView().getOnItemClickListener();
-        this.listFragment.getListView().setOnItemClickListener(this);
-        this.mode = this.activity.startSupportActionMode(this);
-        this.count = 0;
-    }
-
-    public void setAllChecked(boolean checked) {
-        ListView listView = this.listFragment.getListView();
-
-        for(int i=1; i < listView.getChildCount(); i++){
-            View itemLayout = listView.getChildAt(i);
-            Checkable cb = (Checkable)itemLayout.findViewById(R.id.checkmark);
-            cb.setChecked(checked);
-        }
-    }
-
-    public boolean isStarted() {
-        return this.mode != null;
-    }
-
 }

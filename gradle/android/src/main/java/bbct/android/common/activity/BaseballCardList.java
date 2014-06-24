@@ -24,9 +24,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.view.ActionMode;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,7 +33,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Checkable;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -113,31 +112,23 @@ public class BaseballCardList extends ListFragment {
 
                     @Override
                     public void onClick(View v) {
-                        Checkable ctv = (Checkable) v;
-                        BaseballCardList.this.callbacks.setAllChecked(ctv.isChecked());
+//                        Checkable ctv = (Checkable) v;
+//                        BaseballCardList.this.callbacks.setAllChecked(ctv.isChecked());
 
-                        if (mode == null) {
-                            mode = ((ActionBarActivity) BaseballCardList.this.getActivity())
-                                    .startSupportActionMode(BaseballCardList.this.callbacks);
-                        } else {
-                            mode.finish();
-                        }
+//                        if (mode == null) {
+//                            mode = (BaseballCardList.this.getActivity())
+//                                    .startActionMode(BaseballCardList.this.callbacks);
+//                        } else {
+//                            mode.finish();
+//                        }
                     }
                 });
         listView.addHeaderView(headerView);
         this.setListAdapter(this.adapter);
 
-        this.callbacks = new BaseballCardActionModeCallback(this);
-        this.adapter.setCheckBoxListener(this.callbacks);
-        listView.setOnItemLongClickListener(this.callbacks);
+        listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(new BaseballCardActionModeCallback(this));
         this.applyFilter(this.filterParams);
-
-        if (savedInstanceState != null) {
-            boolean actionMode = savedInstanceState.getBoolean(ACTION_MODE_EXTRA);
-            if (actionMode) {
-                ((ActionBarActivity) this.getActivity()).startSupportActionMode(this.callbacks);
-            }
-        }
 
         return view;
     }
@@ -232,8 +223,6 @@ public class BaseballCardList extends ListFragment {
         super.onSaveInstanceState(outState);
 
         outState.putBundle(FILTER_PARAMS, this.filterParams);
-        outState.putBooleanArray(SELECTION_EXTRA, this.adapter.getSelection());
-        outState.putBoolean(ACTION_MODE_EXTRA, this.callbacks.isStarted());
     }
 
     /**
@@ -359,13 +348,11 @@ public class BaseballCardList extends ListFragment {
     private static final String FILTER_PARAMS = "filterParams";
     private static final String EDIT_CARD = "Edit Card";
     private static final String SELECTION_EXTRA = "selection";
-    private static final String ACTION_MODE_EXTRA = "actionMode";
 
     private static final String TAG = BaseballCardList.class.getName();
     TextView emptyList = null;
     private BaseballCardAdapter adapter = null;
     private Uri uri = null;
     private Bundle filterParams = null;
-    private BaseballCardActionModeCallback callbacks;
 
 }
