@@ -31,10 +31,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Checkable;
-import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -371,16 +368,6 @@ final public class BBCTTestUtil {
         // TODO How do I check that a table has the correct columns?
     }
 
-    /**
-     * Delete a card from the database by using {@link CheckedTextView} to mark
-     * a card to delete and then clicking on "Delete" {@link Button}.
-     */
-    public static void removeCard(InstrumentationTestCase test,
-            Activity cardList, BaseballCard card) throws Throwable {
-        BBCTTestUtil.markCard(test, cardList, card);
-        BBCTTestUtil.clickDeleteCardMenuItem(test, cardList);
-    }
-
     public static void markCard(InstrumentationTestCase test,
             Activity cardList, BaseballCard card) throws Throwable {
         final ListView lv = (ListView) cardList.findViewById(android.R.id.list);
@@ -417,12 +404,6 @@ final public class BBCTTestUtil {
             }
         }
 
-    }
-
-    public static void clickDeleteCardMenuItem(InstrumentationTestCase test,
-            Activity cardList) throws Throwable {
-        Assert.assertTrue(test.getInstrumentation().invokeMenuActionSync(
-                cardList, R.id.delete_menu, 0));
     }
 
     /**

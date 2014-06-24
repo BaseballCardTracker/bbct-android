@@ -401,7 +401,6 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
     public void testMarkAll() throws Throwable {
         this.solo.clickOnCheckBox(0);
 
-        this.inst.waitForIdleSync();
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
 
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
@@ -424,22 +423,28 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
     public void testDeleteCardUsingFilter() throws Throwable {
         this.testYearFilter();
 
-        this.inst.waitForIdleSync();
-        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
-        int cardIndex = (int) (Math.random() * (lv.getChildCount() - 1) + 1);
-        View v = lv.getChildAt(cardIndex);
-        BaseballCard toDelete = this.getBaseballCardFromView(v);
-
-        this.expectedCards = new ArrayList<BaseballCard>();
-        for (int i = 1; i < lv.getChildCount(); i++) {
-            BaseballCard bc = this.getBaseballCardFromView(lv.getChildAt(i));
-            if (!bc.equals(toDelete)) {
-                this.expectedCards.add(bc);
+        int cardIndex = 0;
+        final int year = 1993;
+        Predicate<BaseballCard> yearPred = new Predicate<BaseballCard>() {
+            @Override
+            public boolean doTest(BaseballCard card) {
+                return card.getYear() == year;
             }
-        }
+        };
+        this.expectedCards = BBCTTestUtil.filterList(this.allCards, yearPred);
+        this.expectedCards.remove(cardIndex);
 
-        BBCTTestUtil.removeCard(this, this.activity, toDelete);
+        Assert.assertTrue(this.solo.waitForView(R.id.checkmark));
+        // Add 1 for header view
+        this.solo.clickOnCheckBox(cardIndex + 1);
+        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+
+        View deleteMenu = this.activity.findViewById(R.id.delete_menu);
+        Assert.assertNotNull(deleteMenu);
+        TouchUtils.clickView(this, deleteMenu);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
+
+        ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
     }
 
@@ -448,13 +453,13 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
      * deletes cards without any applied filter.
      */
     public void testDeleteCardNoFilter() throws Throwable {
-        int cardIndex = 4;
+        int cardIndex = 3;
 
         this.expectedCards = new ArrayList<BaseballCard>(this.allCards);
-        // Solo's indexes are 1-based
-        this.expectedCards.remove(cardIndex - 1);
+        this.expectedCards.remove(cardIndex);
 
-        this.solo.clickOnCheckBox(cardIndex);
+        // Add 1 for header view
+        this.solo.clickOnCheckBox(cardIndex + 1);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
 
         View deleteMenu = this.activity.findViewById(R.id.delete_menu);
@@ -491,31 +496,6 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
 
         this.activity.finish();
         Log.d(TAG, "finished");
-    }
-
-    private BaseballCard getBaseballCardFromView(View v) {
-        TextView playerName = (TextView) v
-                .findViewById(R.id.player_name_text_view);
-        TextView brand = (TextView) v.findViewById(R.id.brand_text_view);
-        TextView year = (TextView) v.findViewById(R.id.year_text_view);
-        TextView number = (TextView) v.findViewById(R.id.number_text_view);
-
-        for (BaseballCard bc : this.allCards) {
-            boolean isEqualPName = bc.getPlayerName().equals(
-                    playerName.getText().toString());
-            boolean isEqualBrand = bc.getBrand().equals(
-                    brand.getText().toString());
-            boolean isEqualYear = Integer.parseInt(year.getText().toString()) == bc
-                    .getYear();
-            boolean isEqualNumber = Integer.parseInt(number.getText()
-                    .toString()) == bc.getNumber();
-
-            if (isEqualPName && isEqualBrand && isEqualYear && isEqualNumber) {
-                return bc;
-            }
-        }
-
-        return null;
     }
 
     /**
