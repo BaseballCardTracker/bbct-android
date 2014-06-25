@@ -19,6 +19,9 @@
 package bbct.android.common.layout.test;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 
@@ -28,6 +31,8 @@ public class BaseballCardDetailsLayoutTest extends ActivityInstrumentationTestCa
 
     private FragmentTestActivity mActivity;
     private BaseballCardDetails mFragment;
+    private CheckBox mAutographCheckBox;
+    private EditText mBrandEditText;
 
     public BaseballCardDetailsLayoutTest() {
         super(FragmentTestActivity.class);
@@ -41,10 +46,21 @@ public class BaseballCardDetailsLayoutTest extends ActivityInstrumentationTestCa
         mFragment = new BaseballCardDetails();
         mActivity.replaceFragment(mFragment);
         this.getInstrumentation().waitForIdleSync();
+
+        mAutographCheckBox = (CheckBox) mActivity.findViewById(R.id.autograph);
+        mBrandEditText = (EditText) mActivity.findViewById(R.id.brand_text);
     }
 
     public void testFragmentVisible() {
         assertThat(mFragment).isAdded().isVisible();
+    }
+
+    public void testAutographedCheckBox() {
+        assertThat(mAutographCheckBox).isVisible().isNotChecked();
+    }
+
+    public void testBrandEditText() {
+        assertThat(mBrandEditText).isVisible().hasFocus();
     }
 
 }
