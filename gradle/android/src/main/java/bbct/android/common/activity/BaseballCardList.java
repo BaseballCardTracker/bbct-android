@@ -111,11 +111,13 @@ public class BaseballCardList extends ListFragment {
                         if (mode == null) {
                             mode = BaseballCardList.this.getActivity().startActionMode(
                                     new BaseballCardActionModeCallback(BaseballCardList.this));
-                            Checkable ctv = (Checkable) v;
-                            BaseballCardList.this.setAllChecked(ctv.isChecked());
                         } else {
                             mode.finish();
+                            mode = null;
                         }
+
+                        Checkable ctv = (Checkable) v;
+                        BaseballCardList.this.setAllChecked(ctv.isChecked());
                     }
                 });
         listView.addHeaderView(headerView);

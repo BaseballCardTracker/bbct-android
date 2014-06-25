@@ -433,6 +433,7 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
         this.testMarkAll();
         this.solo.clickOnCheckBox(0);
 
+        this.inst.waitForIdleSync();
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int numMarked = 0;
         for (int i = 0; i < lv.getChildCount(); i++) {
