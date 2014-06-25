@@ -37,7 +37,6 @@ import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
-import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
 import com.robotium.solo.Solo;
 import java.io.IOException;
@@ -641,7 +640,6 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
     private List<BaseballCard> expectedCards;
     private Solo solo = null;
     private Activity activity = null;
-    private DatabaseUtil dbUtil = null;
     private BaseballCard newCard = null;
     private static final String TAG = BaseballCardListWithDataTest.class
             .getName();

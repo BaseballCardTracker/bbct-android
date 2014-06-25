@@ -32,7 +32,7 @@ public class WithDataTest<T extends Activity> extends ActivityInstrumentationTes
 
     protected List<BaseballCard> allCards;
     protected Instrumentation inst;
-    private DatabaseUtil dbUtil;
+    protected DatabaseUtil dbUtil;
 
     /**
      * Creates an {@link ActivityInstrumentationTestCase2}.
