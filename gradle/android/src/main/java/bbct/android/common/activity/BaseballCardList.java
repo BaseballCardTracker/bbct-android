@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Checkable;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -107,12 +108,11 @@ public class BaseballCardList extends ListFragment {
 
                     @Override
                     public void onClick(View v) {
-//                        Checkable ctv = (Checkable) v;
-//                        BaseballCardList.this.callbacks.setAllChecked(ctv.isChecked());
-
                         if (mode == null) {
                             mode = BaseballCardList.this.getActivity().startActionMode(
                                     new BaseballCardActionModeCallback(BaseballCardList.this));
+                            Checkable ctv = (Checkable) v;
+                            BaseballCardList.this.setAllChecked(ctv.isChecked());
                         } else {
                             mode.finish();
                         }
@@ -249,7 +249,7 @@ public class BaseballCardList extends ListFragment {
     }
 
     public void deleteSelectedCards() {
-        for (int i = 0; i < getListAdapter().getCount(); ++i) {
+        for (int i = 0; i < getListAdapter().getCount() + 1; ++i) {
             if (getListView().isItemChecked(i)) {
                 // Subtract one to compensate for the header view
                 long id = this.adapter.getItemId(i - 1);
@@ -260,6 +260,14 @@ public class BaseballCardList extends ListFragment {
 
         Toast.makeText(this.getActivity(), R.string.card_deleted_message, Toast.LENGTH_LONG)
                 .show();
+    }
+
+    public void setAllChecked(boolean checked) {
+        ListView listView = this.getListView();
+        // Add 1 for the header view
+        for (int i = 1; i < this.adapter.getCount() + 1; ++i) {
+            listView.setItemChecked(i, checked);
+        }
     }
 
     protected void applyFilter(Bundle filterParams) {

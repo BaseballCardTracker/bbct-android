@@ -298,7 +298,7 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
      * @throws Throwable   If an error occurs while the portion of the test on the UI
      *                     thread runs.
      */
-    public void testAddDuplicateCard() throws IOException, Throwable {
+    public void testAddDuplicateCard() throws Throwable {
         InputStream cardInputStream = this.inst.getContext().getAssets()
                 .open(BBCTTestUtil.CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
@@ -414,6 +414,36 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
         }
 
         Assert.assertEquals(lv.getChildCount(), numMarked);
+    }
+
+    public void testDeleteAll() throws Throwable {
+        this.testMarkAll();
+        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+        View deleteMenu = this.activity.findViewById(R.id.delete_menu);
+        Assert.assertNotNull(deleteMenu);
+        TouchUtils.clickView(this, deleteMenu);
+        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
+        ListView listView = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
+        Assert.assertNotNull(listView);
+        Assert.assertEquals(1, listView.getAdapter().getCount());
+        this.solo.waitForView(android.R.id.empty);
+    }
+
+    public void testUnmarkAll() throws Throwable {
+        this.testMarkAll();
+        this.solo.clickOnCheckBox(0);
+
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
+        int numMarked = 0;
+        for (int i = 0; i < lv.getChildCount(); i++) {
+            Checkable ctv = (Checkable) lv.getChildAt(i).findViewById(R.id.checkmark);
+
+            if (ctv.isChecked()) {
+                numMarked++;
+            }
+        }
+
+        Assert.assertEquals(0, numMarked);
     }
 
     /**
