@@ -19,7 +19,6 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
 import android.test.TouchUtils;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +32,7 @@ import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.FilterCards;
+import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
@@ -104,9 +104,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.containsAllBaseballCards(this.allCards));
 
-        this.inst.waitForIdleSync();
-        Assert.assertTrue(BBCTTestUtil.isFragmentVisible((FragmentActivity) activity,
-                BaseballCardList.class));
+        this.solo.waitForFragmentByTag(FragmentTags.CARD_LIST);
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
         Assert.assertNotNull(listView);
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
@@ -117,7 +115,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      * {@link BaseballCardDetails} activity.
      */
     public void testAddCardsMenuItem() {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
     }
 
     /**
@@ -125,7 +123,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      * activity.
      */
     public void testFilterCardsMenuItem() {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FragmentTags.FILTER_CARDS);
     }
 
     /**
@@ -262,10 +260,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         // Add 1 for the header view.
         this.solo.clickInList(cardIndex + 1);
-
-        this.inst.waitForIdleSync();
-        Assert.assertTrue(BBCTTestUtil.isFragmentVisible((FragmentActivity) activity,
-                BaseballCardDetails.class));
+        this.solo.waitForFragmentByTag(FragmentTags.EDIT_CARD);
 
         // solo.clickInList() is 1-based
         BaseballCard expectedCard = this.allCards.get(cardIndex - 1);
@@ -288,7 +283,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
                 cardInputStream, true);
         BaseballCard card = cardInput.getNextBaseballCard();
 
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(this.solo, card);
 
         Assert.assertTrue(this.solo.waitForDialogToOpen());
@@ -304,7 +299,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      *                   thread runs.
      */
     public void testAddCardToPopulatedDatabase() throws Throwable {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         this.solo.goBack();
@@ -325,7 +320,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
     public void testAddCardMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
 
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         this.solo.goBack();
@@ -348,7 +343,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         this.newCard = new BaseballCard(false, "Excellent", "Codeguru Apps",
                 1976, 1, 50000, 1, "Codeguru", "Codeguru Devs", "Catcher");
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         this.solo.goBack();
@@ -366,7 +361,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      */
     public void testAddCardAfterClearFilter() throws Throwable {
         this.testClearFilter();
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         this.solo.goBack();
@@ -534,7 +529,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      */
     public void testClearFilter() {
         this.testYearFilter();
-        BBCTTestUtil.testMenuItem(this.solo, R.id.clear_filter_menu, BaseballCardList.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.clear_filter_menu, FragmentTags.CARD_LIST);
         this.inst.waitForIdleSync();
         ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
@@ -550,7 +545,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      */
     private void testSingleFilter(int checkId, int editId, String input,
                                   Predicate<BaseballCard> filterPred) {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FragmentTags.FILTER_CARDS);
 
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.solo, checkId, editId, input);
         this.solo.clickOnActionBarItem(R.id.save_menu);

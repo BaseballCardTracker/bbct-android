@@ -34,8 +34,6 @@ public class MainActivity extends ActionBarActivity {
 
     private static final String TAG = MainActivity.class.getName();
 
-    private static final String ABOUT = "About";
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +46,9 @@ public class MainActivity extends ActionBarActivity {
 
             FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
             if (cursor == null || cursor.getCount() == 0) {
-                ft.add(R.id.fragment_holder, new BaseballCardDetails());
+                ft.add(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD);
             } else {
-                ft.add(R.id.fragment_holder, new BaseballCardList());
+                ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
             }
             ft.commit();
 
@@ -100,8 +98,8 @@ public class MainActivity extends ActionBarActivity {
         if (itemId == R.id.about_menu) {
             this.getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_holder, new About())
-                    .addToBackStack(ABOUT)
+                    .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
+                    .addToBackStack(FragmentTags.ABOUT)
                     .commit();
             return true;
         }

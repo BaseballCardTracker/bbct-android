@@ -183,16 +183,16 @@ public class BaseballCardList extends ListFragment {
             BaseballCardDetails details = new BaseballCardDetails();
             this.getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_holder, details)
-                    .addToBackStack(EDIT_CARD)
+                    .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
+                    .addToBackStack(FragmentTags.EDIT_CARD)
                     .commit();
             return true;
         } else if (itemId == R.id.filter_menu) {
             FilterCards filterCards = new FilterCards();
             this.getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_holder, filterCards)
-                    .addToBackStack(EDIT_CARD)
+                    .replace(R.id.fragment_holder, filterCards, FragmentTags.FILTER_CARDS)
+                    .addToBackStack(FragmentTags.FILTER_CARDS)
                     .commit();
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
@@ -245,8 +245,8 @@ public class BaseballCardList extends ListFragment {
         Fragment details = BaseballCardDetails.getInstance(id, card);
         this.getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_holder, details)
-                .addToBackStack(EDIT_CARD)
+                .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
+                .addToBackStack(FragmentTags.EDIT_CARD)
                 .commit();
     }
 
@@ -352,10 +352,9 @@ public class BaseballCardList extends ListFragment {
             R.id.player_name_text_view};
 
     private static final String FILTER_PARAMS = "filterParams";
-    private static final String EDIT_CARD = "Edit Card";
 
     private static final String TAG = BaseballCardList.class.getName();
-    TextView emptyList = null;
+    private TextView emptyList = null;
     private BaseballCardAdapter adapter = null;
     private Uri uri = null;
     private Bundle filterParams = null;

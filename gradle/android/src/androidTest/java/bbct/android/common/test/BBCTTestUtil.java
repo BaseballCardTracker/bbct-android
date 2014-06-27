@@ -23,7 +23,6 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.test.InstrumentationTestCase;
 import android.test.ViewAsserts;
 import android.util.Log;
@@ -103,26 +102,12 @@ final public class BBCTTestUtil {
      *            The {@link Solo} instance used for this test.
      * @param menuId
      *            The id of the menu resource.
-     * @param fragmentClass
-     *            The Class of the {@link Fragment} which should be launched.
+     * @param fragmentTag
+     *            The tag used when adding the {@link Fragment} to the main activity.
      */
-    public static void testMenuItem(Solo solo, int menuId,
-                                    final Class<? extends Fragment> fragmentClass) {
+    public static void testMenuItem(Solo solo, int menuId, String fragmentTag) {
         solo.clickOnActionBarItem(menuId);
-        final Activity activity = solo.getCurrentActivity();
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(isFragmentVisible((FragmentActivity) activity, fragmentClass));
-            }
-        });
-    }
-
-    public static boolean isFragmentVisible(FragmentActivity activity, Class<? extends Fragment> fragmentClass) {
-        Fragment fragment = activity.getSupportFragmentManager()
-                .findFragmentById(R.id.fragment_holder);
-        Assert.assertNotNull(fragment);
-        return fragmentClass.getName().equals(fragment.getClass().getName());
+        Assert.assertTrue(solo.waitForFragmentByTag(fragmentTag));
     }
 
     /**
