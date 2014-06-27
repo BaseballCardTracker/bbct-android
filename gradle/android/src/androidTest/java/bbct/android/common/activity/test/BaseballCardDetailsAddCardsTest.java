@@ -22,10 +22,8 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.support.v4.app.Fragment;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
@@ -72,12 +70,12 @@ public class BaseballCardDetailsAddCardsTest extends
         this.card = this.allCards.get(3); // Ken Griffey Jr.
         cardInput.close();
 
-        this.activity = this.getActivity();
+        FragmentTestActivity activity = this.getActivity();
         Fragment fragment = new BaseballCardDetails();
-        this.activity.replaceFragment(fragment);
+        activity.replaceFragment(fragment);
         this.inst.waitForIdleSync();
 
-        this.solo = new Solo(this.inst, this.activity);
+        this.solo = new Solo(this.inst, activity);
     }
 
     /**
@@ -134,34 +132,7 @@ public class BaseballCardDetailsAddCardsTest extends
         }
     }
 
-    public void testBrandAutoComplete() throws Throwable {
-        AutoCompleteTextView brandText = (AutoCompleteTextView) this.activity
-                .findViewById(R.id.brand_text);
-        this.testAutoComplete(brandText, this.card.getBrand());
-    }
-
-    public void testPlayerNameAutoComplete() throws Throwable {
-        AutoCompleteTextView playerNameText = (AutoCompleteTextView) this.activity
-                .findViewById(R.id.player_name_text);
-        this.testAutoComplete(playerNameText, this.card.getPlayerName());
-    }
-
-    public void testTeamAutoComplete() throws Throwable {
-        AutoCompleteTextView teamText = (AutoCompleteTextView) this.activity
-                .findViewById(R.id.team_text);
-        this.testAutoComplete(teamText, this.card.getTeam());
-    }
-
-    private void testAutoComplete(AutoCompleteTextView textView, String text)
-            throws Throwable {
-        BBCTTestUtil.addCard(this.solo, this.card);
-        this.solo.typeText(textView, text.substring(0, 2));
-        this.solo.waitForText(text);
-        Assert.assertTrue(textView.isPopupShowing());
-    }
-
     private Solo solo = null;
-    private FragmentTestActivity activity = null;
     private Instrumentation inst = null;
     private List<BaseballCard> allCards = null;
     private BaseballCard card = null;

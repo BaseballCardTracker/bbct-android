@@ -19,9 +19,7 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.support.v4.app.FragmentActivity;
-import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +37,6 @@ import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
-import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
 import com.robotium.solo.Solo;
 import java.io.IOException;
@@ -52,8 +49,8 @@ import junit.framework.Assert;
  * Tests for the {@link MainActivity} activity when the database contains
  * data.
  */
-public class BaseballCardListWithDataTest<T extends MainActivity> extends
-        ActivityInstrumentationTestCase2<T> {
+public class BaseballCardListWithDataTest <T extends MainActivity> extends
+        WithDataTest<T> {
 
     /**
      * Create instrumented test cases for {@link MainActivity}.
@@ -73,19 +70,6 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
     public void setUp() throws Exception {
         super.setUp();
 
-        this.inst = this.getInstrumentation();
-
-        // Create the database and populate table with test data
-        InputStream cardInputStream = this.inst.getContext().getAssets()
-                .open(BBCTTestUtil.CARD_DATA);
-        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
-                cardInputStream, true);
-        this.allCards = cardInput.getAllBaseballCards();
-        cardInput.close();
-
-        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        this.dbUtil.populateTable(this.allCards);
-
         // Start Activity
         this.activity = this.getActivity();
         this.newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
@@ -103,7 +87,6 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
     @Override
     public void tearDown() throws Exception {
         this.solo.finishOpenedActivities();
-        this.dbUtil.clearDatabase();
 
         super.tearDown();
     }
@@ -176,7 +159,7 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
         this.activity = this.getActivity();
 
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ListView listView = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
@@ -596,12 +579,9 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
     }
 
-    private List<BaseballCard> allCards;
     private List<BaseballCard> expectedCards;
     private Solo solo = null;
-    private Instrumentation inst = null;
     private Activity activity = null;
-    private DatabaseUtil dbUtil = null;
     private BaseballCard newCard = null;
     private static final String TAG = BaseballCardListWithDataTest.class
             .getName();

@@ -21,7 +21,6 @@
 
     <string name="app_name">BBCT Lite</string>
     <string name="bbct_title">BBCT Lite - %1$s</string>
-    <string name="version_number">0.5.9</string>
     <string name="premium">Sie können auch gerne die &lt;a href="market://details?id=bbct.android.premium"&gt;Premiumversion&lt;/a&gt; für nur $3.00USD kaufen.</string>
     <string name="provider_name">BBCT Lite Data</string>
 

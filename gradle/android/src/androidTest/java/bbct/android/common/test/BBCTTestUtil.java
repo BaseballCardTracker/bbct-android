@@ -190,6 +190,7 @@ final public class BBCTTestUtil {
             Set<EditTexts> fieldFlags) throws InterruptedException {
         Log.d(TAG, "sendKeysToCardDetails()");
 
+        solo.scrollToTop();
         if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
             if (card.isAutographed()) {
                 solo.clickOnCheckBox(0);
@@ -261,15 +262,17 @@ final public class BBCTTestUtil {
         }
 
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
-            Spinner playerPositionSpinner = (Spinner) solo
-                    .getView(R.id.player_position_text);
+            Spinner playerPositionSpinner = (Spinner) solo.getView(R.id.player_position_text);
             @SuppressWarnings("unchecked")
             ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner
                     .getAdapter();
             int newIndex = playerPositionAdapter.getPosition(card
                     .getPlayerPosition());
             int currIndex = playerPositionSpinner.getSelectedItemPosition();
-            solo.pressSpinnerItem(1, newIndex - currIndex);
+
+            boolean isConditionVisible = solo.searchText(solo.getString(R.string.condition_label),
+                    false);
+            solo.pressSpinnerItem(isConditionVisible ? 1 : 0, newIndex - currIndex);
         }
     }
 

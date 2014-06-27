@@ -21,7 +21,7 @@
       xmlns:bbct="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/add_menu"
-        android:icon="@drawable/ic_menu_add"
+        android:icon="@android:drawable/ic_menu_add"
         android:title="@string/add_menu"
         bbct:showAsAction="ifRoom" />
     <item

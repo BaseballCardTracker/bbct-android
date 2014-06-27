@@ -72,6 +72,16 @@ public class LiteActivity extends MainActivity implements AdListener {
         premiumText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
+    /**
+     * Destroy all fragments and loaders.
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        this.amazonAdView.destroy();
+    }
+
     @Override
     public void onAdLoaded(AdLayout adLayout, AdProperties adProperties) {
         if (!amazonAdEnabled) {
