@@ -21,7 +21,7 @@
       xmlns:bbct="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/add_menu"
-        android:icon="@drawable/ic_menu_add"
+        android:icon="@android:drawable/ic_menu_add"
         android:title="@string/add_menu"
         bbct:showAsAction="ifRoom" />
     <item
@@ -36,7 +36,7 @@
         bbct:showAsAction="ifRoom" />
     <item
         android:id="@+id/delete_menu"
-        android:icon="@drawable/ic_menu_delete"
+        android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/delete_menu"
         bbct:showAsAction="ifRoom" />
 </menu>
