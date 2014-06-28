@@ -564,6 +564,14 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
     }
 
+    public void testOnClickCheckboxStopActionMode() {
+        this.testOnClickCheckboxStartActionMode();
+
+        int index = 4;
+        this.solo.clickOnCheckBox(index);
+        Assert.assertTrue(this.solo.waitForView(R.id.add_menu));
+    }
+
     public void testOnItemLongClickStartActionMode() {
         int index = 4;
         ArrayList<TextView> views = this.solo.clickLongInList(index);
