@@ -18,10 +18,10 @@
  */
 package bbct.android.common.provider;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
-import android.view.ActionMode;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -46,6 +46,8 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     private BaseballCardList mListFragment;
 
+    private BaseballCardActionModeCallback mCallback;
+
     @SuppressWarnings("deprecation")
     public BaseballCardAdapter(Context context, int layout, Cursor c,
             String[] from, int[] to) {
@@ -56,6 +58,10 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     public void setListFragment(BaseballCardList listFragment) {
         mListFragment = listFragment;
+    }
+
+    public void setActionModeCallback(BaseballCardActionModeCallback callback) {
+        mCallback = callback;
     }
 
     /**
@@ -78,12 +84,11 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
 
         // set listener
         ctv.setOnClickListener(new OnClickListener() {
-            private ActionMode mMode;
-
+            @SuppressLint("AppCompatMethod")
             @Override
             public void onClick(View v) {
-                if (mMode == null) {
-                    mMode = mActivity.startActionMode(new BaseballCardActionModeCallback(mListFragment));
+                if (!mCallback.isStarted()) {
+                    mActivity.startActionMode(mCallback);
                 }
 
                 ListView listView = mListFragment.getListView();

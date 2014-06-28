@@ -109,8 +109,7 @@ public class BaseballCardList extends ListFragment {
                     @Override
                     public void onClick(View v) {
                         if (mode == null) {
-                            mode = BaseballCardList.this.getActivity().startActionMode(
-                                    new BaseballCardActionModeCallback(BaseballCardList.this));
+                            mode = BaseballCardList.this.getActivity().startActionMode(mCallbacks);
                         } else {
                             mode.finish();
                             mode = null;
@@ -124,8 +123,10 @@ public class BaseballCardList extends ListFragment {
         this.setListAdapter(this.adapter);
         this.adapter.setListFragment(this);
 
+        mCallbacks = new BaseballCardActionModeCallback(this);
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new BaseballCardActionModeCallback(this));
+        listView.setMultiChoiceModeListener(mCallbacks);
+        this.adapter.setActionModeCallback(mCallbacks);
         this.applyFilter(this.filterParams);
 
         return view;
@@ -358,5 +359,6 @@ public class BaseballCardList extends ListFragment {
     private BaseballCardAdapter adapter = null;
     private Uri uri = null;
     private Bundle filterParams = null;
+    private BaseballCardActionModeCallback mCallbacks;
 
 }

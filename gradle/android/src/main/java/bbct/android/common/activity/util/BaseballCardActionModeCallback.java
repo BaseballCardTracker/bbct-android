@@ -34,6 +34,8 @@ public class BaseballCardActionModeCallback implements AbsListView.MultiChoiceMo
 
     private ActionMode mMode;
 
+    private boolean mStarted;
+
     public BaseballCardActionModeCallback(BaseballCardList listFragment) {
         mListFragment = listFragment;
     }
@@ -64,6 +66,7 @@ public class BaseballCardActionModeCallback implements AbsListView.MultiChoiceMo
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         mListFragment.getActivity().getMenuInflater().inflate(R.menu.context, menu);
         mMode = mode;
+        mStarted = true;
 
         return true;
     }
@@ -107,6 +110,11 @@ public class BaseballCardActionModeCallback implements AbsListView.MultiChoiceMo
      */
     @Override
     public void onDestroyActionMode(ActionMode mode) {
-
+        mStarted = false;
     }
+
+    public boolean isStarted() {
+        return mStarted;
+    }
+
 }
