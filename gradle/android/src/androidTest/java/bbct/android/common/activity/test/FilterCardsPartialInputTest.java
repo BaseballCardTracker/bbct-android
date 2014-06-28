@@ -47,6 +47,8 @@ import junit.framework.TestSuite;
 public class FilterCardsPartialInputTest extends
         ActivityInstrumentationTestCase2<MainActivity> {
 
+    private static final String CARD_DATA = "cards.csv";
+
     public static Test suite() {
         TestSuite suite = new TestSuite();
         Set<BBCTTestUtil.EditTexts> editTexts = EnumSet
@@ -79,8 +81,7 @@ public class FilterCardsPartialInputTest extends
         super.setUp();
 
         this.inst = this.getInstrumentation();
-        InputStream cardInputStream = this.inst.getContext().getAssets()
-                .open(BBCTTestUtil.CARD_DATA);
+        InputStream cardInputStream = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
                 cardInputStream, true);
         this.allCards = cardInput.getAllBaseballCards();

@@ -167,5 +167,5 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
     private Activity activity = null;
     private BaseballCardCsvFileReader cardInput = null;
     private DatabaseUtil dbUtil = null;
-    private static final String DATA_ASSET = "cards.csv";
+    private static final String DATA_ASSET = "three_cards.csv";
 }

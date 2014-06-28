@@ -277,8 +277,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      *                     thread runs.
      */
     public void testAddDuplicateCard() throws Throwable {
-        InputStream cardInputStream = this.inst.getContext().getAssets()
-                .open(BBCTTestUtil.CARD_DATA);
+        InputStream cardInputStream = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
                 cardInputStream, true);
         BaseballCard card = cardInput.getNextBaseballCard();
@@ -462,7 +461,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      * deletes cards without any applied filter.
      */
     public void testDeleteCardNoFilter() throws Throwable {
-        int cardIndex = 3;
+        int cardIndex = 0;
 
         this.expectedCards = new ArrayList<BaseballCard>(this.allCards);
         this.expectedCards.remove(cardIndex);

@@ -53,6 +53,7 @@ public class BaseballCardDetailsTest extends
 
     private static final int SLEEP_TIME_TO_REFRESH = 200;
     private static final int KEYPAD_HEIGHT = 100;
+    private static final String CARD_DATA = "cards.csv";
 
     /**
      * Create instrumented test cases for {@link BaseballCardDetails}.
@@ -75,8 +76,7 @@ public class BaseballCardDetailsTest extends
 
         this.inst = this.getInstrumentation();
 
-        InputStream in = this.inst.getContext().getAssets()
-                .open(BBCTTestUtil.CARD_DATA);
+        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
                 true);
         this.card = cardInput.getNextBaseballCard();
