@@ -23,7 +23,6 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
-import android.test.InstrumentationTestCase;
 import android.test.ViewAsserts;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -354,44 +353,6 @@ final public class BBCTTestUtil {
 
         // TODO How do I check that a table exists in the database?
         // TODO How do I check that a table has the correct columns?
-    }
-
-    public static void markCard(InstrumentationTestCase test,
-            Activity cardList, BaseballCard card) throws Throwable {
-        final ListView lv = (ListView) cardList.findViewById(android.R.id.list);
-
-        String playerName = card.getPlayerName();
-        String brand = card.getBrand();
-        int year = card.getYear();
-        int number = card.getNumber();
-
-        for (int i = 1; i < lv.getChildCount(); i++) {
-            View v = lv.getChildAt(i);
-            final CheckBox ctv = (CheckBox) v.findViewById(R.id.checkmark);
-
-            boolean isEqualPName = playerName.equals(((TextView) v
-                    .findViewById(R.id.player_name_text_view)).getText()
-                    .toString());
-            boolean isEqualBrand = brand.equals(((TextView) v
-                    .findViewById(R.id.brand_text_view)).getText().toString());
-            boolean isEqualYear = (year == Integer.parseInt(((TextView) v
-                    .findViewById(R.id.year_text_view)).getText().toString()));
-            boolean isEqualNumber = (number == Integer.parseInt(((TextView) v
-                    .findViewById(R.id.number_text_view)).getText().toString()));
-
-            if (isEqualPName && isEqualBrand && isEqualYear && isEqualNumber) {
-
-                test.runTestOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Assert.assertTrue(ctv.performClick());
-                    }
-                });
-
-                break;
-            }
-        }
-
     }
 
     /**
