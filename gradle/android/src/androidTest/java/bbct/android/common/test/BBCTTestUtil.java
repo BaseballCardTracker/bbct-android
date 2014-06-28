@@ -32,6 +32,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import bbct.android.common.R;
@@ -174,7 +175,16 @@ final public class BBCTTestUtil {
             Set<EditTexts> fieldFlags) throws InterruptedException {
         Log.d(TAG, "sendKeysToCardDetails()");
 
-        solo.scrollToTop();
+        final ScrollView scrollView = (ScrollView) solo.getCurrentActivity()
+                .findViewById(R.id.scroll_card_details);
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
+
+        solo.waitForView(R.id.autograph);
         if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
             if (card.isAutographed()) {
                 solo.clickOnCheckBox(0);
@@ -237,6 +247,9 @@ final public class BBCTTestUtil {
         AutoCompleteTextView teamText = (AutoCompleteTextView) solo
                 .getView(R.id.team_text);
         if (fieldFlags.contains(EditTexts.TEAM)) {
+            if (!solo.searchText(solo.getString(R.string.team_label))) {
+                scrollDown(scrollView);
+            }
             solo.typeText(teamText, card.getTeam());
         }
 
@@ -254,10 +267,34 @@ final public class BBCTTestUtil {
                     .getPlayerPosition());
             int currIndex = playerPositionSpinner.getSelectedItemPosition();
 
+            scrollDown(scrollView);
+            solo.waitForView(R.id.player_position_text);
+
             boolean isConditionVisible = solo.searchText(solo.getString(R.string.condition_label),
                     false);
-            solo.pressSpinnerItem(isConditionVisible ? 1 : 0, newIndex - currIndex);
+            boolean isPositionVisible = solo.searchText(
+                    solo.getString(R.string.player_position_label), true);
+
+            int index = -1;
+            if (!isConditionVisible && isPositionVisible) {
+                index = 0;
+            }
+            if (isPositionVisible && isConditionVisible) {
+                index = 1;
+            }
+
+            Assert.assertFalse("Invalid index", index == -1);
+            solo.pressSpinnerItem(index, newIndex - currIndex);
         }
+    }
+
+    public static void scrollDown(final ScrollView scrollView) {
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.arrowScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
     }
 
     /**
