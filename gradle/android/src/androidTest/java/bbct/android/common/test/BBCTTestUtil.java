@@ -177,6 +177,7 @@ final public class BBCTTestUtil {
 
         final ScrollView scrollView = (ScrollView) solo.getCurrentActivity()
                 .findViewById(R.id.scroll_card_details);
+        Assert.assertNotNull("Scroll view not found", scrollView);
         scrollView.post(new Runnable() {
             @Override
             public void run() {

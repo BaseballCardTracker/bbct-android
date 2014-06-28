@@ -382,7 +382,13 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int numMarked = 0;
-        for (int i = 0; i < lv.getChildCount(); i++) {
+
+        Checkable selectAll = (Checkable) lv.getChildAt(0).findViewById(R.id.select_all);
+        if (selectAll.isChecked()) {
+            numMarked++;
+        }
+
+        for (int i = 1; i < lv.getChildCount(); i++) {
             Checkable ctv = (Checkable) lv.getChildAt(i).findViewById(R.id.checkmark);
 
             if (ctv.isChecked()) {
@@ -413,7 +419,13 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.inst.waitForIdleSync();
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int numMarked = 0;
-        for (int i = 0; i < lv.getChildCount(); i++) {
+
+        Checkable selectAll = (Checkable) lv.getChildAt(0).findViewById(R.id.select_all);
+        if (selectAll.isChecked()) {
+            numMarked++;
+        }
+
+        for (int i = 1; i < lv.getChildCount(); i++) {
             Checkable ctv = (Checkable) lv.getChildAt(i).findViewById(R.id.checkmark);
 
             if (ctv.isChecked()) {
@@ -442,7 +454,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.expectedCards = BBCTTestUtil.filterList(this.allCards, yearPred);
         this.expectedCards.remove(cardIndex);
 
-        Assert.assertTrue(this.solo.waitForView(R.id.checkmark));
+        Assert.assertTrue(this.solo.waitForView(R.id.select_all));
         // Add 1 for header view
         this.solo.clickOnCheckBox(cardIndex + 1);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
@@ -570,6 +582,25 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         int index = 4;
         this.solo.clickOnCheckBox(index);
         Assert.assertTrue(this.solo.waitForView(R.id.add_menu));
+    }
+
+    public void testOnClickCheckboxAll() {
+        for(int i = 1; i <= 7; ++i) {
+            this.solo.clickOnCheckBox(i);
+        }
+
+        this.inst.waitForIdleSync();
+        CheckBox selectAll = (CheckBox) this.solo.getCurrentActivity().findViewById(R.id.select_all);
+        Assert.assertTrue(selectAll.isChecked());
+    }
+
+    public void testOnCheckAllAndOnClickCheckbox() {
+        this.solo.clickOnCheckBox(0);
+        this.solo.clickOnCheckBox(1);
+
+        this.inst.waitForIdleSync();
+        CheckBox selectAll = (CheckBox) this.solo.getCurrentActivity().findViewById(R.id.select_all);
+        Assert.assertFalse(selectAll.isChecked());
     }
 
     public void testOnItemLongClickStartActionMode() {

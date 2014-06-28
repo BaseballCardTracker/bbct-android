@@ -102,7 +102,7 @@ public class BaseballCardList extends ListFragment {
         ListView listView = (ListView) view.findViewById(android.R.id.list);
         View headerView = View.inflate(this.getActivity(),
                 R.layout.list_header, null);
-        headerView.findViewById(R.id.checkmark)
+        headerView.findViewById(R.id.select_all)
                 .setOnClickListener(new OnClickListener() {
                     ActionMode mode;
 
