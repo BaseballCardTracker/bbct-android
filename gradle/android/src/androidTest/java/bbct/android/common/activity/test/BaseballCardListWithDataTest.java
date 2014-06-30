@@ -375,7 +375,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      * Test that upon clicking on header {@link View}, all items in
      * {@link ListView} are selected.
      */
-    public void testMarkAll() throws Throwable {
+    public void testMarkAll() {
         this.solo.clickOnCheckBox(0);
 
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
@@ -610,6 +610,16 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         Checkable check = (Checkable) views.get(0);
         Assert.assertTrue(check.isChecked());
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+    }
+
+    public void testOnClickDoneButton() {
+        this.testMarkAll();
+        this.solo.clickOnImage(0);
+
+        this.inst.waitForIdleSync();
+        Checkable selectAll = (Checkable) this.solo.getCurrentActivity()
+                .findViewById(R.id.select_all);
+        Assert.assertFalse(selectAll.isChecked());
     }
 
     private List<BaseballCard> expectedCards;

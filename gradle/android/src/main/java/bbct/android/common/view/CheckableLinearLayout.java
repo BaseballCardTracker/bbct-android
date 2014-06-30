@@ -20,25 +20,41 @@ package bbct.android.common.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.ViewGroup;
 import android.widget.Checkable;
-import bbct.android.common.R;
+import android.widget.LinearLayout;
 
-public class BaseballCardView extends CheckableLinearLayout {
+public class CheckableLinearLayout extends LinearLayout implements Checkable {
 
-    public BaseballCardView(Context context) {
-        this(context, null);
-    }
+    Checkable mCheckable;
 
-    public BaseballCardView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
-
-    public BaseballCardView(Context context, AttributeSet attrs, int defStyle) {
+    public CheckableLinearLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+    }
 
-        ViewGroup root = (ViewGroup) ViewGroup.inflate(context, R.layout.baseball_card, this);
-        mCheckable = (Checkable) root.findViewById(R.id.checkmark);
+    /**
+     * Change the checked state of the view
+     *
+     * @param checked The new checked state
+     */
+    @Override
+    public void setChecked(boolean checked) {
+        mCheckable.setChecked(checked);
+    }
+
+    /**
+     * @return The current checked state of the view
+     */
+    @Override
+    public boolean isChecked() {
+        return mCheckable.isChecked();
+    }
+
+    /**
+     * Change the checked state of the view to the inverse of its current state
+     */
+    @Override
+    public void toggle() {
+        mCheckable.toggle();
     }
 
 }

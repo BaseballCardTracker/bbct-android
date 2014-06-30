@@ -111,10 +111,14 @@ public class BaseballCardActionModeCallback implements AbsListView.MultiChoiceMo
     @Override
     public void onDestroyActionMode(ActionMode mode) {
         mStarted = false;
+        mMode = null;
     }
 
     public boolean isStarted() {
         return mStarted;
     }
 
+    public void finish() {
+        mMode.finish();
+    }
 }

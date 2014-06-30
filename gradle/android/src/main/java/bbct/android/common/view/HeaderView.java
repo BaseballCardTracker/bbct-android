@@ -24,21 +24,21 @@ import android.view.ViewGroup;
 import android.widget.Checkable;
 import bbct.android.common.R;
 
-public class BaseballCardView extends CheckableLinearLayout {
+public class HeaderView extends CheckableLinearLayout {
 
-    public BaseballCardView(Context context) {
+    public HeaderView(Context context) {
         this(context, null);
     }
 
-    public BaseballCardView(Context context, AttributeSet attrs) {
+    public HeaderView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public BaseballCardView(Context context, AttributeSet attrs, int defStyle) {
+    public HeaderView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        ViewGroup root = (ViewGroup) ViewGroup.inflate(context, R.layout.baseball_card, this);
-        mCheckable = (Checkable) root.findViewById(R.id.checkmark);
+        ViewGroup root = (ViewGroup) ViewGroup.inflate(context, R.layout.list_header, this);
+        mCheckable = (Checkable) root.findViewById(R.id.select_all);
     }
 
 }

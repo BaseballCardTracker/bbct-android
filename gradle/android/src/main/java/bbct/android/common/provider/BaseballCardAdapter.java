@@ -98,12 +98,11 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
                 int checkedCount = mListFragment.getListView().getCheckedItemCount();
                 int itemCount = getCount();
 
-                Checkable selectAll = (Checkable) mListFragment.getListView()
-                        .findViewById(R.id.select_all);
-                if (checkedCount == itemCount) {
-                    selectAll.setChecked(true);
+                // Add 1 for header view
+                if (checkedCount == itemCount + 1) {
+                    listView.setItemChecked(0, true);
                 } else {
-                    selectAll.setChecked(false);
+                    listView.setItemChecked(0, false);
                 }
             }
         });
