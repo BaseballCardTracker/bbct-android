@@ -24,6 +24,7 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
+import android.widget.ListView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
 
@@ -50,7 +51,20 @@ public class BaseballCardActionModeCallback implements AbsListView.MultiChoiceMo
      */
     @Override
     public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+        if (position != 0) {
+            ListView listView = mListFragment.getListView();
 
+            boolean selectAllChecked = listView.isItemChecked(0);
+            // Subtract 1 for header view, if it is checked
+            int checkedCount = listView.getCheckedItemCount() - (selectAllChecked ? 1 : 0);
+            int itemCount = listView.getAdapter().getCount() - 1;
+
+            if (checkedCount == itemCount) {
+                listView.setItemChecked(0, true);
+            } else {
+                listView.setItemChecked(0, false);
+            }
+        }
     }
 
     /**
