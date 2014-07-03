@@ -41,20 +41,24 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.main);
 
-        if (savedInstanceState == null && !isInTwoPaneMode()) {
+        if (savedInstanceState == null) {
             Uri uri = BaseballCardContract.getUri(this.getPackageName());
             Cursor cursor = this.getContentResolver().query(uri,
                     BaseballCardContract.PROJECTION, null, null, null);
 
             FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-            if (cursor == null || cursor.getCount() == 0) {
+            if (isInTwoPaneMode()) {
                 ft.add(R.id.fragment_holder, new BaseballCardDetails());
             } else {
-                ft.add(R.id.fragment_holder, new BaseballCardList());
+                if (cursor == null || cursor.getCount() == 0) {
+                    ft.add(R.id.fragment_holder, new BaseballCardDetails());
+                } else {
+                    ft.add(R.id.fragment_holder, new BaseballCardList());
+                }
+
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
             ft.commit();
-
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
