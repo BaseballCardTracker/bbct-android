@@ -21,16 +21,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "appEdition", "deviceCategory"
     productFlavors {
         lite {
+            flavorDimension "appEdition"
             applicationId "bbct.android"
             versionCode 14
             versionName "0.6.1"
         }
         premium {
+            flavorDimension "appEdition"
             applicationId "bbct.android.premium"
             versionCode 13
             versionName "0.6.1"
+        }
+        phone {
+            flavorDimension "deviceCategory"
+        }
+        tablet {
+            flavorDimension "deviceCategory"
         }
     }
     lintOptions {
