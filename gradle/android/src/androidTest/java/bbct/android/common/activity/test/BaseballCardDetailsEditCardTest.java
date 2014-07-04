@@ -100,7 +100,7 @@ public class BaseballCardDetailsEditCardTest extends
 
         Instrumentation inst = this.getInstrumentation();
         InputStream in = inst.getContext().getAssets()
-                .open(BBCTTestUtil.CARD_DATA);
+                .open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
                 true);
         List<BaseballCard> allCards = cardInput.getAllBaseballCards();
@@ -204,7 +204,9 @@ public class BaseballCardDetailsEditCardTest extends
     private BaseballCard oldCard = null;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil = null;
+
     private static final String TEST_NAME = "testEditCard";
+    private static final String CARD_DATA = "cards.csv";
     private static final String TAG = BaseballCardDetailsEditCardTest.class
             .getName();
 }

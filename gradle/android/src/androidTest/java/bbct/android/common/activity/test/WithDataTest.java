@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import java.io.InputStream;
@@ -30,6 +29,7 @@ import java.util.List;
 
 public class WithDataTest<T extends Activity> extends ActivityInstrumentationTestCase2<T> {
 
+    protected static final String CARD_DATA = "cards.csv";
     protected List<BaseballCard> allCards;
     protected Instrumentation inst;
     protected DatabaseUtil dbUtil;
@@ -51,8 +51,7 @@ public class WithDataTest<T extends Activity> extends ActivityInstrumentationTes
         this.inst = this.getInstrumentation();
 
         // Create the database and populate table with test data
-        InputStream cardInputStream = this.inst.getContext().getAssets()
-                .open(BBCTTestUtil.CARD_DATA);
+        InputStream cardInputStream = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
                 cardInputStream, true);
         this.allCards = cardInput.getAllBaseballCards();
