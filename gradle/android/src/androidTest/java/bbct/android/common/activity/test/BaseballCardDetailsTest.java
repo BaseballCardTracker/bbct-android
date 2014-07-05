@@ -147,7 +147,7 @@ public class BaseballCardDetailsTest extends
      * paused and the text is restored when the activity is restarted.
      *
      * @throws InterruptedException
-     *             If {@link BBCTTestUtil#sendKeysToCardDetails()} is
+     *             If {@link BBCTTestUtil#sendKeysToCardDetails(Solo, BaseballCard)} is
      *             interrupted.
      */
     public void testStatePause() throws InterruptedException {
@@ -242,7 +242,7 @@ public class BaseballCardDetailsTest extends
         } catch (InterruptedException e) {
             Log.e("getResult", e.getMessage());
         }
-        // check if the 'save' button is already visible. If yes, then
+        // check if the 'Player Position' spinner is already visible. If yes, then
         // the screen cannot be scrolled. Assert true and return.
         if (BBCTTestUtil.isViewOnScreen(parentView, this.playerPositionSpinner)) {
             assertTrue(true);
