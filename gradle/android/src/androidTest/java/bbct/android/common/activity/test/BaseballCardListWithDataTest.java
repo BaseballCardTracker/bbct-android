@@ -376,9 +376,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      * {@link ListView} are selected.
      */
     public void testMarkAll() {
-        this.solo.clickOnCheckBox(0);
-
-        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+        this.markAll();
 
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int numMarked = 0;
@@ -399,9 +397,13 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         Assert.assertEquals(lv.getChildCount(), numMarked);
     }
 
-    public void testDeleteAll() throws Throwable {
-        this.testMarkAll();
+    private void markAll() {
+        this.solo.clickOnCheckBox(0);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+    }
+
+    public void testDeleteAll() throws Throwable {
+        this.markAll();
         View deleteMenu = this.activity.findViewById(R.id.delete_menu);
         Assert.assertNotNull(deleteMenu);
         TouchUtils.clickView(this, deleteMenu);
@@ -413,7 +415,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
     }
 
     public void testUnmarkAll() throws Throwable {
-        this.testMarkAll();
+        this.markAll();
         this.solo.clickOnCheckBox(0);
 
         this.inst.waitForIdleSync();
