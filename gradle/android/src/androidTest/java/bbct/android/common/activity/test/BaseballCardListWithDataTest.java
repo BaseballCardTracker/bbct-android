@@ -404,10 +404,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
     public void testDeleteAll() throws Throwable {
         this.markAll();
-        View deleteMenu = this.activity.findViewById(R.id.delete_menu);
-        Assert.assertNotNull(deleteMenu);
-        TouchUtils.clickView(this, deleteMenu);
-        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
+        deleteCards();
         ListView listView = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
         Assert.assertNotNull(listView);
         Assert.assertEquals(1, listView.getAdapter().getCount());
@@ -461,13 +458,17 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.solo.clickOnCheckBox(cardIndex + 1);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
 
+        deleteCards();
+
+        ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
+    }
+
+    private void deleteCards() {
         View deleteMenu = this.activity.findViewById(R.id.delete_menu);
         Assert.assertNotNull(deleteMenu);
         TouchUtils.clickView(this, deleteMenu);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
-
-        ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
     }
 
     /**
@@ -484,11 +485,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.solo.clickOnCheckBox(cardIndex + 1);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
 
-        View deleteMenu = this.activity.findViewById(R.id.delete_menu);
-        Assert.assertNotNull(deleteMenu);
-        TouchUtils.clickView(this, deleteMenu);
-
-        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
+        deleteCards();
         ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
     }
