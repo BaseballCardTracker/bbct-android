@@ -188,6 +188,7 @@ final public class BBCTTestUtil {
         solo.waitForView(R.id.autograph);
         if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
             if (card.isAutographed()) {
+                solo.waitForView(R.id.autograph);
                 solo.clickOnCheckBox(0);
             }
         }
