@@ -62,12 +62,11 @@ public class BaseballCardDetailsAddCardsTest extends
 
         this.inst = this.getInstrumentation();
 
-        InputStream in = this.inst.getContext().getAssets()
-                .open(BBCTTestUtil.CARD_DATA);
+        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
                 true);
         this.allCards = cardInput.getAllBaseballCards();
-        this.card = this.allCards.get(3); // Ken Griffey Jr.
+        this.card = this.allCards.get(0);
         cardInput.close();
 
         FragmentTestActivity activity = this.getActivity();
@@ -131,6 +130,8 @@ public class BaseballCardDetailsAddCardsTest extends
                     dbUtil.containsBaseballCard(nextCard));
         }
     }
+
+    private static final String CARD_DATA = "three_cards.csv";
 
     private Solo solo = null;
     private Instrumentation inst = null;

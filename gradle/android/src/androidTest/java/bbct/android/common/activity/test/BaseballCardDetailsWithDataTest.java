@@ -45,7 +45,7 @@ public class BaseballCardDetailsWithDataTest extends WithDataTest<FragmentTestAc
         this.inst.waitForIdleSync();
         mSolo = new Solo(getInstrumentation(), activity);
         mSolo.getCurrentActivity();
-        mCard = allCards.get(3); // Ken Griffey Jr.
+        mCard = allCards.get(0);
     }
 
     @Override
