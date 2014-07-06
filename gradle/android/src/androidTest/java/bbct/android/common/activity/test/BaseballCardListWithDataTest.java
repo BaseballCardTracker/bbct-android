@@ -377,7 +377,11 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      */
     public void testMarkAll() {
         this.markAll();
+        this.assertAllCheckboxesChecked();
+    }
 
+    private void assertAllCheckboxesChecked() {
+        this.inst.waitForIdleSync();
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int numMarked = 0;
 
@@ -398,7 +402,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
     }
 
     private void markAll() {
-        this.solo.clickOnCheckBox(0);
+        this.solo.clickOnCheckBox(SELECT_ALL);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
     }
 
@@ -413,7 +417,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
     public void testUnmarkAll() throws Throwable {
         this.markAll();
-        this.solo.clickOnCheckBox(0);
+        this.solo.clickOnCheckBox(SELECT_ALL);
 
         this.inst.waitForIdleSync();
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
@@ -594,12 +598,18 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
     }
 
     public void testOnCheckAllAndOnClickCheckbox() {
-        this.solo.clickOnCheckBox(0);
+        this.solo.clickOnCheckBox(SELECT_ALL);
         this.solo.clickOnCheckBox(1);
 
         this.inst.waitForIdleSync();
         CheckBox selectAll = (CheckBox) this.solo.getCurrentActivity().findViewById(R.id.select_all);
         Assert.assertFalse(selectAll.isChecked());
+    }
+
+    public void testOnClickCheckboxAndOnCheckAll() {
+        this.solo.clickOnCheckBox(1);
+        this.solo.clickOnCheckBox(SELECT_ALL);
+        this.assertAllCheckboxesChecked();
     }
 
     public void testOnItemLongClickStartActionMode() {
@@ -625,6 +635,8 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
     private Solo solo = null;
     private Activity activity = null;
     private BaseballCard newCard = null;
+
+    private static final int SELECT_ALL = 0;
     private static final String TAG = BaseballCardListWithDataTest.class
             .getName();
 }
