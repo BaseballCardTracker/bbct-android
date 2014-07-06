@@ -26,14 +26,14 @@ android {
         lite {
             flavorDimension "appEdition"
             applicationId "bbct.android"
-            versionCode 14
-            versionName "0.6.1"
+            versionCode 15
+            versionName "0.6.2"
         }
         premium {
             flavorDimension "appEdition"
             applicationId "bbct.android.premium"
-            versionCode 13
-            versionName "0.6.1"
+            versionCode 14
+            versionName "0.6.2"
         }
         phone {
             flavorDimension "deviceCategory"
@@ -41,10 +41,6 @@ android {
         tablet {
             flavorDimension "deviceCategory"
         }
-    }
-    lintOptions {
-        // Check for errors in release builds, but continue the build even when errors are found:
-        abortOnError false
     }
     def Properties props = new Properties()
     def propFile = new File('signing.properties')
@@ -74,4 +70,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:4.2.42'
     liteCompile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.1'
+    androidTestCompile ('com.squareup:fest-android:1.0.8') {
+        exclude group: 'com.android.support'
+    }
 }

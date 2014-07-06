@@ -31,7 +31,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
-import bbct.android.common.activity.util.BaseballCardActionModeCallback;
+import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.view.BaseballCardView;
 
@@ -46,7 +46,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     private BaseballCardList mListFragment;
 
-    private BaseballCardActionModeCallback mCallback;
+    private BaseballCardMultiChoiceModeListener mCallback;
 
     @SuppressWarnings("deprecation")
     public BaseballCardAdapter(Context context, int layout, Cursor c,
@@ -60,7 +60,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
         mListFragment = listFragment;
     }
 
-    public void setActionModeCallback(BaseballCardActionModeCallback callback) {
+    public void setActionModeCallback(BaseballCardMultiChoiceModeListener callback) {
         mCallback = callback;
     }
 

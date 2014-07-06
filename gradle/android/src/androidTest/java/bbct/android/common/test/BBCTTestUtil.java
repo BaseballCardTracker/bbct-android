@@ -38,7 +38,6 @@ import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FilterCards;
-import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import com.robotium.solo.Solo;
@@ -180,7 +179,6 @@ final public class BBCTTestUtil {
             Set<EditTexts> fieldFlags) throws InterruptedException {
         Log.d(TAG, "sendKeysToCardDetails()");
 
-        solo.waitForView(R.id.scroll_card_details);
         final ScrollView scrollView = (ScrollView) solo.getCurrentActivity()
                 .findViewById(R.id.scroll_card_details);
         Assert.assertNotNull("Scroll view not found", scrollView);
@@ -191,10 +189,10 @@ final public class BBCTTestUtil {
             }
         });
 
+        solo.waitForView(R.id.autograph);
         if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
             if (card.isAutographed()) {
-                View autographed = solo.getView(R.id.autograph);
-                solo.clickOnView(autographed);
+                solo.clickOnCheckBox(0);
             }
         }
 
