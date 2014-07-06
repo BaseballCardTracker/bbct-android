@@ -38,7 +38,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
-import bbct.android.common.activity.util.BaseballCardActionModeCallback;
+import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
@@ -119,7 +119,7 @@ public class BaseballCardList extends ListFragment {
         this.setListAdapter(this.adapter);
         this.adapter.setListFragment(this);
 
-        mCallbacks = new BaseballCardActionModeCallback(this);
+        mCallbacks = new BaseballCardMultiChoiceModeListener(this);
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(mCallbacks);
         this.adapter.setActionModeCallback(mCallbacks);
@@ -355,6 +355,6 @@ public class BaseballCardList extends ListFragment {
     private BaseballCardAdapter adapter = null;
     private Uri uri = null;
     private Bundle filterParams = null;
-    private BaseballCardActionModeCallback mCallbacks;
+    private BaseballCardMultiChoiceModeListener mCallbacks;
 
 }

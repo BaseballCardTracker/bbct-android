@@ -29,7 +29,7 @@ import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class BaseballCardActionModeCallback implements AbsListView.MultiChoiceModeListener {
+public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiChoiceModeListener {
 
     private final BaseballCardList mListFragment;
 
@@ -37,7 +37,7 @@ public class BaseballCardActionModeCallback implements AbsListView.MultiChoiceMo
 
     private boolean mStarted;
 
-    public BaseballCardActionModeCallback(BaseballCardList listFragment) {
+    public BaseballCardMultiChoiceModeListener(BaseballCardList listFragment) {
         mListFragment = listFragment;
     }
 
