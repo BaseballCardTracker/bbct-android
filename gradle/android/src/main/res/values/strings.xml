@@ -69,12 +69,12 @@
     <string name="filter_menu">Filter Cards</string>
     <string name="clear_filter_menu">Clear Filter</string>
     <string name="about_menu">About</string>
-    <string name="delete_menu">Delete Cards</string>
+    <string name="delete_menu">Delete</string>
     <string name="save_menu">Save</string>
 
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
-    <string name="version_number">0.6.1</string>
+    <string name="version_number">0.6.2</string>
     <string name="copyright">Copyright 2012–14 by codeguru</string>
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>

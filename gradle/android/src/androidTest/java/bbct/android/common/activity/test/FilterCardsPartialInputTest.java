@@ -24,6 +24,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
+import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
@@ -36,7 +37,6 @@ import java.io.InputStream;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -46,6 +46,8 @@ import junit.framework.TestSuite;
  */
 public class FilterCardsPartialInputTest extends
         ActivityInstrumentationTestCase2<MainActivity> {
+
+    private static final String CARD_DATA = "cards.csv";
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
@@ -79,8 +81,7 @@ public class FilterCardsPartialInputTest extends
         super.setUp();
 
         this.inst = this.getInstrumentation();
-        InputStream cardInputStream = this.inst.getContext().getAssets()
-                .open(BBCTTestUtil.CARD_DATA);
+        InputStream cardInputStream = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
                 cardInputStream, true);
         this.allCards = cardInput.getAllBaseballCards();
@@ -105,7 +106,7 @@ public class FilterCardsPartialInputTest extends
     }
 
     public void testFilterCombination() {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FilterCards.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FragmentTags.FILTER_CARDS);
 
         final Set<BBCTTestUtil.EditTexts> mask = this.inputFieldsMask;
         final BaseballCard test = this.testCard;

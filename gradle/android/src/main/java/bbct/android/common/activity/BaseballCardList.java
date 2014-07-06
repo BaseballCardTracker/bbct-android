@@ -32,18 +32,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.CheckedTextView;
+import android.widget.AbsListView;
+import android.widget.Checkable;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
+import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
+import bbct.android.common.view.HeaderView;
 
 /**
  * Displays a list of all baseball cards stored in the database.
- * <p/>
+ *
  * TODO: Make list fancier
  */
 public class BaseballCardList extends ListFragment {
@@ -69,8 +72,7 @@ public class BaseballCardList extends ListFragment {
         super.onCreate(savedInstanceState);
 
         this.adapter = new BaseballCardAdapter(this.getActivity(),
-                R.layout.row, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
-        this.setListAdapter(this.adapter);
+                R.layout.baseball_card, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
 
         Log.d(TAG, "  adapter=" + this.adapter);
 
@@ -97,31 +99,33 @@ public class BaseballCardList extends ListFragment {
 
         this.emptyList = (TextView) view.findViewById(android.R.id.empty);
 
-        ListView listView = (ListView) view.findViewById(android.R.id.list);
-        this.headerView = View.inflate(this.getActivity(),
-                R.layout.list_header, null);
-        this.headerView.findViewById(R.id.checkmark)
+        final ListView listView = (ListView) view.findViewById(android.R.id.list);
+        View headerView = new HeaderView(this.getActivity());
+        headerView.findViewById(R.id.select_all)
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        CheckedTextView ctv = (CheckedTextView) v
-                                .findViewById(R.id.checkmark);
-                        ctv.toggle();
-                        BaseballCardList.this.adapter.toggleAll(ctv.isChecked());
+                        if (!mCallbacks.isStarted()) {
+                            BaseballCardList.this.getActivity().startActionMode(mCallbacks);
+                        } else {
+                            mCallbacks.finish();
+                        }
+
+                        Checkable ctv = (Checkable) v;
+                        BaseballCardList.this.setAllChecked(ctv.isChecked());
                     }
                 });
-        listView.addHeaderView(this.headerView);
-        listView.setAdapter(this.adapter);
+        listView.addHeaderView(headerView);
+        this.setListAdapter(this.adapter);
+        this.adapter.setListFragment(this);
+
+        mCallbacks = new BaseballCardMultiChoiceModeListener(this);
+        listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(mCallbacks);
+        this.adapter.setActionModeCallback(mCallbacks);
         this.applyFilter(this.filterParams);
 
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        this.adapter.setSelection(new boolean[this.adapter.getCount()]);
     }
 
     /**
@@ -161,22 +165,6 @@ public class BaseballCardList extends ListFragment {
             clearFilter.setVisible(true);
             clearFilter.setEnabled(true);
         }
-
-        // update delete menu option
-        MenuItem deleteItem = menu.findItem(R.id.delete_menu);
-        deleteItem.setEnabled(false);
-
-        Log.d(TAG, "  adapter=" + this.adapter);
-
-        boolean[] curSelection = this.adapter.getSelection();
-        if (curSelection != null) {
-            for (boolean b : curSelection) {
-                if (b) {
-                    deleteItem.setEnabled(true);
-                    break;
-                }
-            }
-        }
     }
 
     /**
@@ -192,16 +180,16 @@ public class BaseballCardList extends ListFragment {
             BaseballCardDetails details = new BaseballCardDetails();
             this.getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_holder, details)
-                    .addToBackStack(EDIT_CARD)
+                    .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
+                    .addToBackStack(FragmentTags.EDIT_CARD)
                     .commit();
             return true;
         } else if (itemId == R.id.filter_menu) {
             FilterCards filterCards = new FilterCards();
             this.getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_holder, filterCards)
-                    .addToBackStack(EDIT_CARD)
+                    .replace(R.id.fragment_holder, filterCards, FragmentTags.FILTER_CARDS)
+                    .addToBackStack(FragmentTags.FILTER_CARDS)
                     .commit();
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
@@ -210,25 +198,6 @@ public class BaseballCardList extends ListFragment {
 
             this.getActivity().supportInvalidateOptionsMenu();
 
-            return true;
-        } else if (itemId == R.id.delete_menu) {
-
-            boolean[] selected = this.adapter.getSelection();
-            for (int i = 0; i < selected.length; i++) {
-                if (selected[i]) {
-                    selected[i] = false;
-                    long id = this.adapter.getItemId(i);
-                    Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
-                    this.getActivity().getContentResolver()
-                            .delete(deleteUri, null, null);
-                }
-            }
-
-            Toast.makeText(this.getActivity(), R.string.card_deleted_message,
-                    Toast.LENGTH_LONG).show();
-
-            this.adapter.setSelection(selected);
-            this.applyFilter(this.filterParams);
             return true;
         } else {
             Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
@@ -249,7 +218,6 @@ public class BaseballCardList extends ListFragment {
         super.onSaveInstanceState(outState);
 
         outState.putBundle(FILTER_PARAMS, this.filterParams);
-        outState.putBooleanArray(SELECTION_EXTRA, this.adapter.getSelection());
     }
 
     /**
@@ -269,14 +237,36 @@ public class BaseballCardList extends ListFragment {
             return;
         }
 
-        BaseballCard card = BaseballCardList.this.adapter.getSelectedCard();
+        BaseballCard card = BaseballCardList.this.adapter.getItem(position - 1);
 
         Fragment details = BaseballCardDetails.getInstance(id, card);
         this.getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_holder, details)
-                .addToBackStack(EDIT_CARD)
+                .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
+                .addToBackStack(FragmentTags.EDIT_CARD)
                 .commit();
+    }
+
+    public void deleteSelectedCards() {
+        for (int i = 0; i < getListAdapter().getCount() + 1; ++i) {
+            if (getListView().isItemChecked(i)) {
+                // Subtract one to compensate for the header view
+                long id = this.adapter.getItemId(i - 1);
+                Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
+                this.getActivity().getContentResolver().delete(deleteUri, null, null);
+            }
+        }
+
+        Toast.makeText(this.getActivity(), R.string.card_deleted_message, Toast.LENGTH_LONG)
+                .show();
+    }
+
+    private void setAllChecked(boolean checked) {
+        ListView listView = this.getListView();
+        // Add 1 for the header view
+        for (int i = 0; i < this.adapter.getCount() + 1; ++i) {
+            listView.setItemChecked(i, checked);
+        }
     }
 
     protected void applyFilter(Bundle filterParams) {
@@ -339,7 +329,6 @@ public class BaseballCardList extends ListFragment {
         this.getActivity().stopManagingCursor(oldCursor);
 
         if (newCursor != null) {
-            this.adapter.setSelection(new boolean[newCursor.getCount()]);
             this.getActivity().startManagingCursor(newCursor);
             this.adapter.changeCursor(newCursor);
         }
@@ -360,14 +349,12 @@ public class BaseballCardList extends ListFragment {
             R.id.player_name_text_view};
 
     private static final String FILTER_PARAMS = "filterParams";
-    private static final String EDIT_CARD = "Edit Card";
-    private static final String SELECTION_EXTRA = "selection";
 
     private static final String TAG = BaseballCardList.class.getName();
-    TextView emptyList = null;
+    private TextView emptyList = null;
     private BaseballCardAdapter adapter = null;
     private Uri uri = null;
     private Bundle filterParams = null;
-    private View headerView;
+    private BaseballCardMultiChoiceModeListener mCallbacks;
 
 }

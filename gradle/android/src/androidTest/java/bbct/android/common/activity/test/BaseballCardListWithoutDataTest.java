@@ -20,14 +20,12 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.support.v4.app.FragmentActivity;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
-import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.About;
-import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
+import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
@@ -100,8 +98,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      */
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        Assert.assertTrue(BBCTTestUtil.isFragmentVisible((FragmentActivity) activity,
-                BaseballCardDetails.class));
+        this.solo.waitForFragmentByTag(FragmentTags.EDIT_CARD);
 
         BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.isEmpty());
@@ -111,7 +108,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      * Test that the "About" menu item displays the {@link About} fragment.
      */
     public void testAboutMenuItem() {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.about_menu, About.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.about_menu, FragmentTags.ABOUT);
     }
 
     /**
@@ -151,7 +148,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      *                     thread runs.
      */
     public void testAddMultipleCards() throws Throwable {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
+        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
 
         for (BaseballCard card : cards) {
@@ -170,5 +167,5 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
     private Activity activity = null;
     private BaseballCardCsvFileReader cardInput = null;
     private DatabaseUtil dbUtil = null;
-    private static final String DATA_ASSET = "cards.csv";
+    private static final String DATA_ASSET = "three_cards.csv";
 }
