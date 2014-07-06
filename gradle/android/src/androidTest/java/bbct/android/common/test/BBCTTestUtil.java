@@ -175,6 +175,7 @@ final public class BBCTTestUtil {
             Set<EditTexts> fieldFlags) throws InterruptedException {
         Log.d(TAG, "sendKeysToCardDetails()");
 
+        solo.waitForView(R.id.scroll_card_details);
         final ScrollView scrollView = (ScrollView) solo.getCurrentActivity()
                 .findViewById(R.id.scroll_card_details);
         Assert.assertNotNull("Scroll view not found", scrollView);
