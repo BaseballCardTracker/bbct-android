@@ -24,18 +24,14 @@ android {
     productFlavors {
         lite {
             applicationId "bbct.android"
-            versionCode 14
-            versionName "0.6.1"
+            versionCode 15
+            versionName "0.6.2"
         }
         premium {
             applicationId "bbct.android.premium"
-            versionCode 13
-            versionName "0.6.1"
+            versionCode 14
+            versionName "0.6.2"
         }
-    }
-    lintOptions {
-        // Check for errors in release builds, but continue the build even when errors are found:
-        abortOnError false
     }
     def Properties props = new Properties()
     def propFile = new File('signing.properties')
