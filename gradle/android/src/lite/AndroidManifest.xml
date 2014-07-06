@@ -48,13 +48,15 @@
         <provider
             android:name="bbct.android.lite.provider.LiteProvider"
             android:authorities="bbct.android.lite.provider"
+            android:exported="true"
             android:icon="@drawable/baseball"
             android:label="@string/provider_name"
             android:readPermission="bbct.android.lite.permission.READ"
-            android:writePermission="bbct.android.lite.permission.WRITE" />
+            android:writePermission="bbct.android.lite.permission.WRITE"/>
 
-        <activity android:name="com.google.android.gms.ads.AdActivity"
-                  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
