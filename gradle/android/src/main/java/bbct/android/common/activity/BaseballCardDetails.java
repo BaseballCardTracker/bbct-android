@@ -50,8 +50,6 @@ import bbct.android.common.provider.SingleColumnCursorAdapter;
  */
 public class BaseballCardDetails extends Fragment {
 
-    private static final String LIST_BACKSTACK = "ListBackStack";
-
     private static String ID = "id";
 
     private static String CARD = "card";
@@ -173,8 +171,8 @@ public class BaseballCardDetails extends Fragment {
     private void onHome() {
         Fragment list = BaseballCardList.getInstance(null);
         this.getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_holder, list)
-                .addToBackStack(LIST_BACKSTACK)
+                .replace(R.id.fragment_holder, list, FragmentTags.CARD_LIST)
+                .addToBackStack(FragmentTags.CARD_LIST)
                 .commit();
     }
 

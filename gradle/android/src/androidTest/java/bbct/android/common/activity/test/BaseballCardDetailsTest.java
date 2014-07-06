@@ -53,6 +53,7 @@ public class BaseballCardDetailsTest extends
 
     private static final int SLEEP_TIME_TO_REFRESH = 200;
     private static final int KEYPAD_HEIGHT = 100;
+    private static final String CARD_DATA = "cards.csv";
 
     /**
      * Create instrumented test cases for {@link BaseballCardDetails}.
@@ -75,8 +76,7 @@ public class BaseballCardDetailsTest extends
 
         this.inst = this.getInstrumentation();
 
-        InputStream in = this.inst.getContext().getAssets()
-                .open(BBCTTestUtil.CARD_DATA);
+        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
                 true);
         this.card = cardInput.getNextBaseballCard();
@@ -147,7 +147,7 @@ public class BaseballCardDetailsTest extends
      * paused and the text is restored when the activity is restarted.
      *
      * @throws InterruptedException
-     *             If {@link BBCTTestUtil#sendKeysToCardDetails()} is
+     *             If {@link BBCTTestUtil#sendKeysToCardDetails(Solo, BaseballCard)} is
      *             interrupted.
      */
     public void testStatePause() throws InterruptedException {
@@ -242,7 +242,7 @@ public class BaseballCardDetailsTest extends
         } catch (InterruptedException e) {
             Log.e("getResult", e.getMessage());
         }
-        // check if the 'save' button is already visible. If yes, then
+        // check if the 'Player Position' spinner is already visible. If yes, then
         // the screen cannot be scrolled. Assert true and return.
         if (BBCTTestUtil.isViewOnScreen(parentView, this.playerPositionSpinner)) {
             assertTrue(true);

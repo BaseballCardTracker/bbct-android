@@ -33,8 +33,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 public class MainActivity extends ActionBarActivity {
 
     private static final String TAG = MainActivity.class.getName();
-
-    private static final String ABOUT = "About";
+    private static final String FILTERED_LIST = "Filtered List";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,12 +47,12 @@ public class MainActivity extends ActionBarActivity {
 
             FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
             if (isInTwoPaneMode()) {
-                ft.add(R.id.fragment_holder, new BaseballCardDetails());
+                ft.add(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD);
             } else {
                 if (cursor == null || cursor.getCount() == 0) {
-                    ft.add(R.id.fragment_holder, new BaseballCardDetails());
+                    ft.add(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD);
                 } else {
-                    ft.add(R.id.fragment_holder, new BaseballCardList());
+                    ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
                 }
 
                 getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -104,13 +103,28 @@ public class MainActivity extends ActionBarActivity {
         if (itemId == R.id.about_menu) {
             this.getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_holder, new About())
-                    .addToBackStack(ABOUT)
+                    .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
+                    .addToBackStack(FragmentTags.ABOUT)
                     .commit();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setFilter(Bundle filterArgs) {
+        if (isInTwoPaneMode()) {
+            BaseballCardList cardList = (BaseballCardList) this.getSupportFragmentManager()
+                    .findFragmentById(R.id.list_fragment);
+            cardList.applyFilter(filterArgs);
+        } else {
+            BaseballCardList cardList = BaseballCardList.getInstance(filterArgs);
+            this.getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder, cardList, FragmentTags.CARD_LIST)
+                    .addToBackStack(FILTERED_LIST)
+                    .commit();
+        }
     }
 
     public boolean isInTwoPaneMode() {

@@ -69,7 +69,7 @@
     <string name="filter_menu">Filter Cards</string>
     <string name="clear_filter_menu">Clear Filter</string>
     <string name="about_menu">About</string>
-    <string name="delete_menu">Delete Cards</string>
+    <string name="delete_menu">Delete</string>
     <string name="save_menu">Save</string>
 
     <!-- Text in About activity -->

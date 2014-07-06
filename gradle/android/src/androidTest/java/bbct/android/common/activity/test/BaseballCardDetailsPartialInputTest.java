@@ -45,6 +45,8 @@ import junit.framework.TestSuite;
 public class BaseballCardDetailsPartialInputTest extends
         ActivityInstrumentationTestCase2<FragmentTestActivity> {
 
+    private static final String CARD_DATA = "cards.csv";
+
     /**
      * Creates a {@link TestSuite} containing every possible combination of
      * blank {@link EditText} views in the {@link BaseballCardDetails} activity.
@@ -90,7 +92,7 @@ public class BaseballCardDetailsPartialInputTest extends
     public void setUp() throws IOException {
         this.inst = this.getInstrumentation();
 
-        InputStream in = this.inst.getContext().getAssets().open(BBCTTestUtil.CARD_DATA);
+        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in, true);
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();

@@ -184,15 +184,10 @@ public class FilterCards extends Fragment {
             }
         }
 
-        BaseballCardList cardList = BaseballCardList.getInstance(filterArgs);
-        this.getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_holder, cardList)
-                .addToBackStack(FILTERED_LIST)
-                .commit();
+
+        ((MainActivity) this.getActivity()).setFilter(filterArgs);
     }
 
-    private static final String FILTERED_LIST = "Filtered List";
     private static final String INPUT_EXTRA = "input";
     public static final String YEAR_EXTRA = "year";
     public static final String BRAND_EXTRA = "brand";

@@ -49,8 +49,7 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
         this.db = this.sqlHelper.getWritableDatabase();
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
 
-        InputStream input = this.inst.getContext().getAssets()
-                .open(BBCTTestUtil.CARD_DATA);
+        InputStream input = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader reader = new BaseballCardCsvFileReader(input,
                 true);
         reader.close();
@@ -91,5 +90,7 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
     private BaseballCardSQLHelper sqlHelper = null;
     private SQLiteDatabase db = null;
     private DatabaseUtil dbUtil = null;
+
+    private static final String CARD_DATA = "cards.csv";
     private static final String TAG = BaseballCardSQLHelperTest.class.getName();
 }

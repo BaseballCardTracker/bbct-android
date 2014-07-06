@@ -18,18 +18,22 @@
  */
 package bbct.android.common.provider;
 
-import android.app.ListActivity;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardList;
+import bbct.android.common.activity.util.BaseballCardActionModeCallback;
 import bbct.android.common.data.BaseballCard;
+import bbct.android.common.view.BaseballCardView;
 
 /**
  * This class adds click listeners to {@link CheckedTextView} in
@@ -38,11 +42,26 @@ import bbct.android.common.data.BaseballCard;
  */
 public class BaseballCardAdapter extends SimpleCursorAdapter {
 
+    private final FragmentActivity mActivity;
+
+    private BaseballCardList mListFragment;
+
+    private BaseballCardActionModeCallback mCallback;
+
     @SuppressWarnings("deprecation")
     public BaseballCardAdapter(Context context, int layout, Cursor c,
             String[] from, int[] to) {
         super(context, layout, c, from, to);
-        this.context = context;
+
+        this.mActivity = (FragmentActivity) context;
+    }
+
+    public void setListFragment(BaseballCardList listFragment) {
+        mListFragment = listFragment;
+    }
+
+    public void setActionModeCallback(BaseballCardActionModeCallback callback) {
+        mCallback = callback;
     }
 
     /**
@@ -54,78 +73,36 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
      */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View v = super.getView(position, convertView, parent);
+        View row = convertView;
 
-        CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
-        final ActionBarActivity curActivity = (ActionBarActivity) this.context;
-
-        // restore selection
-        if (this.selection != null) {
-            ctv.setChecked(this.selection[position]);
+        if (row == null) {
+            row = new BaseballCardView(mActivity);
         }
+
+        View ctv = row.findViewById(R.id.checkmark);
+        super.getView(position, row, parent);
 
         // set listener
         ctv.setOnClickListener(new OnClickListener() {
-
+            @SuppressLint("AppCompatMethod")
             @Override
             public void onClick(View v) {
-                CheckedTextView cview = (CheckedTextView) v
-                        .findViewById(R.id.checkmark);
-                cview.toggle();
-                BaseballCardAdapter.this.selection[position] = cview
-                        .isChecked();
+                if (!mCallback.isStarted()) {
+                    mActivity.startActionMode(mCallback);
+                }
 
-                curActivity.supportInvalidateOptionsMenu();
+                ListView listView = mListFragment.getListView();
+                // Add 1 to compensate for the header view
+                listView.setItemChecked(position + 1, ((Checkable) v).isChecked());
             }
         });
 
-        return v;
+        return row;
     }
 
-    /**
-     * Marks/unmarks all items in the {@link BaseballCardAdapter}.
-     *
-     * @param check
-     *            - a boolean indicating whether all items will be checked
-     */
-    public void toggleAll(boolean check) {
-        for (int i = 0; i < this.selection.length; i++) {
-            this.selection[i] = check;
-        }
-
-        this.updateDataSet();
-    }
-
-    /**
-     * Returns the saved selection object.
-     *
-     * @return an array of marked items
-     */
-    public boolean[] getSelection() {
-        return this.selection;
-    }
-
-    /**
-     * Sets the saved selection object.
-     *
-     * @param sel
-     *            - an array of marked items
-     */
-    public void setSelection(boolean[] sel) {
-        this.selection = sel;
-        this.updateDataSet();
-    }
-
-    /**
-     * Notifies {@link BaseballCardAdapter} of changed data and also updates
-     * {@link ListView} in the appropriate {@link ListActivity}
-     */
-    private void updateDataSet() {
-        this.notifyDataSetChanged();
-    }
-
-    public BaseballCard getSelectedCard() {
-        Cursor cursor = this.getCursor();
+    @Override
+    public BaseballCard getItem(int index) {
+        Cursor cursor = (Cursor) super.getItem(index);
         boolean autographed = cursor.getInt(cursor
                 .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
         String condition = cursor.getString(cursor
@@ -151,6 +128,4 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
                 value, count, name, team, position);
     }
 
-    private boolean[] selection;
-    private final Context context;
 }
