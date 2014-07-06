@@ -376,9 +376,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      * {@link ListView} are selected.
      */
     public void testMarkAll() {
-        this.solo.clickOnCheckBox(0);
-
-        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+        this.markAll();
 
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int numMarked = 0;
@@ -399,13 +397,14 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         Assert.assertEquals(lv.getChildCount(), numMarked);
     }
 
-    public void testDeleteAll() throws Throwable {
-        this.testMarkAll();
+    private void markAll() {
+        this.solo.clickOnCheckBox(0);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
-        View deleteMenu = this.activity.findViewById(R.id.delete_menu);
-        Assert.assertNotNull(deleteMenu);
-        TouchUtils.clickView(this, deleteMenu);
-        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
+    }
+
+    public void testDeleteAll() throws Throwable {
+        this.markAll();
+        deleteCards();
         ListView listView = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
         Assert.assertNotNull(listView);
         Assert.assertEquals(1, listView.getAdapter().getCount());
@@ -413,7 +412,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
     }
 
     public void testUnmarkAll() throws Throwable {
-        this.testMarkAll();
+        this.markAll();
         this.solo.clickOnCheckBox(0);
 
         this.inst.waitForIdleSync();
@@ -459,13 +458,17 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.solo.clickOnCheckBox(cardIndex + 1);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
 
+        deleteCards();
+
+        ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
+    }
+
+    private void deleteCards() {
         View deleteMenu = this.activity.findViewById(R.id.delete_menu);
         Assert.assertNotNull(deleteMenu);
         TouchUtils.clickView(this, deleteMenu);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
-
-        ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
     }
 
     /**
@@ -482,11 +485,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.solo.clickOnCheckBox(cardIndex + 1);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
 
-        View deleteMenu = this.activity.findViewById(R.id.delete_menu);
-        Assert.assertNotNull(deleteMenu);
-        TouchUtils.clickView(this, deleteMenu);
-
-        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
+        deleteCards();
         ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
     }
