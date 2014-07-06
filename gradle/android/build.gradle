@@ -33,10 +33,6 @@ android {
             versionName "0.6.2"
         }
     }
-    lintOptions {
-        // Check for errors in release builds, but continue the build even when errors are found:
-        abortOnError false
-    }
     def Properties props = new Properties()
     def propFile = new File('signing.properties')
     if (propFile.canRead()) {
