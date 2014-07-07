@@ -27,6 +27,7 @@ import android.test.ViewAsserts;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
@@ -34,7 +35,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FilterCards;
@@ -68,30 +68,9 @@ final public class BBCTTestUtil {
         // Add 1 to the number of expected cards to account for the header View
         Assert.assertEquals(expectedItems.size() + 1, listView.getAdapter().getCount());
 
-        for (BaseballCard card : expectedItems) {
-            boolean listContainsCard = false;
-            for (int i = 1; i < listView.getChildCount(); i++) {
-                // Add 1 to skip headers
-                View row = listView.getChildAt(i);
-                TextView brandText = (TextView) row.findViewById(R.id.brand_text_view);
-                TextView yearText = (TextView) row.findViewById(R.id.year_text_view);
-                TextView numberText = (TextView) row.findViewById(R.id.number_text_view);
-                TextView nameText = (TextView) row.findViewById(R.id.player_name_text_view);
-
-                String brand = brandText.getText().toString();
-                String playerName = nameText.getText().toString();
-                int year = Integer.parseInt(yearText.getText().toString());
-                int number = Integer.parseInt(numberText.getText().toString());
-
-                if (card.getBrand().equals(brand) && card.getYear() == year
-                        && card.getNumber() == number
-                        && card.getPlayerName().equals(playerName)) {
-                    listContainsCard = true;
-                    break;
-                }
-            }
-
-            Assert.assertTrue(listContainsCard);
+        Adapter adapter = listView.getAdapter();
+        for (int i = 0; i < expectedItems.size(); ++i) {
+            Assert.assertEquals(expectedItems.get(i), adapter.getItem(i + 1));
         }
     }
 
