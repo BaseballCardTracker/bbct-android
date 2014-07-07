@@ -24,8 +24,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
@@ -62,17 +60,6 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
         Assert.assertNotNull(this.solo);
-
-        TableLayout tl = (TableLayout) this.activity.findViewById(R.id.tableLayout);
-        for (int i = 0; i < tl.getChildCount(); i++) {
-            TableRow row = (TableRow) tl.getChildAt(i);
-            CheckBox cb = (CheckBox) row.getChildAt(CHECKBOX_INDEX);
-            EditText input = (EditText) row.getChildAt(INPUT_INDEX);
-
-            Assert.assertFalse(cb.isChecked());
-            Assert.assertFalse(input.isEnabled());
-        }
-
         View menuView = this.activity.findViewById(R.id.save_menu);
         Assert.assertNull(menuView);
     }
@@ -164,6 +151,4 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
     private Solo solo = null;
     private FragmentTestActivity activity = null;
 
-    private static final int CHECKBOX_INDEX = 0;
-    private static final int INPUT_INDEX = 2;
 }
