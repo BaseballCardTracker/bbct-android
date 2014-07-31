@@ -29,7 +29,6 @@ import static org.fest.assertions.api.ANDROID.assertThat;
 
 public class BaseballCardDetailsLayoutTest extends ActivityInstrumentationTestCase2<FragmentTestActivity> {
 
-    private FragmentTestActivity mActivity;
     private BaseballCardDetails mFragment;
     private CheckBox mAutographCheckBox;
     private EditText mBrandEditText;
@@ -42,13 +41,13 @@ public class BaseballCardDetailsLayoutTest extends ActivityInstrumentationTestCa
     protected void setUp() throws Exception {
         super.setUp();
 
-        mActivity = getActivity();
+        FragmentTestActivity activity = getActivity();
         mFragment = new BaseballCardDetails();
-        mActivity.replaceFragment(mFragment);
+        activity.replaceFragment(mFragment);
         this.getInstrumentation().waitForIdleSync();
 
-        mAutographCheckBox = (CheckBox) mActivity.findViewById(R.id.autograph);
-        mBrandEditText = (EditText) mActivity.findViewById(R.id.brand_text);
+        mAutographCheckBox = (CheckBox) activity.findViewById(R.id.autograph);
+        mBrandEditText = (EditText) activity.findViewById(R.id.brand_text);
     }
 
     public void testFragmentVisible() {
