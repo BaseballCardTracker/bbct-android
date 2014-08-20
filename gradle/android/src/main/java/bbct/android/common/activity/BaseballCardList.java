@@ -269,7 +269,7 @@ public class BaseballCardList extends ListFragment {
         }
     }
 
-    protected void applyFilter(Bundle filterParams) {
+    public void applyFilter(Bundle filterParams) {
         Log.d(TAG, "applyFilter()");
 
         this.filterParams = filterParams;
@@ -320,6 +320,8 @@ public class BaseballCardList extends ListFragment {
                 .query(this.uri, BaseballCardContract.PROJECTION,
                         sb == null ? null : sb.toString(), args, null);
         this.swapCursor(cursor);
+
+        this.getActivity().invalidateOptionsMenu();
     }
 
     @SuppressWarnings("deprecation")

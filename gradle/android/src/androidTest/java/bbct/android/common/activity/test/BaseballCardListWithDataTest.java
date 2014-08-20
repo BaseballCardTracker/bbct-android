@@ -261,6 +261,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         // Add 1 for the header view.
         this.solo.clickInList(cardIndex + 1);
         this.solo.waitForFragmentByTag(FragmentTags.EDIT_CARD);
+        this.solo.waitForText(this.allCards.get(cardIndex).getCondition());
 
         // solo.clickInList() is 1-based
         BaseballCard expectedCard = this.allCards.get(cardIndex - 1);
