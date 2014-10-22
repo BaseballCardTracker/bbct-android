@@ -46,6 +46,21 @@ public class BaseballCardDetailsPartialInputTest extends
         ActivityInstrumentationTestCase2<FragmentTestActivity> {
 
     private static final String CARD_DATA = "cards.csv";
+    private static final String TEST_NAME = "testPartialInput";
+    private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
+
+    private Solo solo = null;
+    private FragmentTestActivity activity = null;
+    private Instrumentation inst = null;
+    private EditText brandEditText = null;
+    private EditText yearEditText = null;
+    private EditText numberEditText = null;
+    private EditText countEditText = null;
+    private EditText valueEditText = null;
+    private EditText playerNameEditText = null;
+    private EditText teamEditText = null;
+    private BaseballCard card = null;
+    private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
 
     /**
      * Creates a {@link TestSuite} containing every possible combination of
@@ -162,18 +177,4 @@ public class BaseballCardDetailsPartialInputTest extends
         }
     }
 
-    private Solo solo = null;
-    private FragmentTestActivity activity = null;
-    private Instrumentation inst = null;
-    private EditText brandEditText = null;
-    private EditText yearEditText = null;
-    private EditText numberEditText = null;
-    private EditText countEditText = null;
-    private EditText valueEditText = null;
-    private EditText playerNameEditText = null;
-    private EditText teamEditText = null;
-    private BaseballCard card = null;
-    private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
-    private static final String TEST_NAME = "testPartialInput";
-    private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
 }
