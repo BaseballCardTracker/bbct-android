@@ -44,6 +44,8 @@ import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.SingleColumnCursorAdapter;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Allows user to add a new card or view and edit details of an existing card.
@@ -54,16 +56,17 @@ public class BaseballCardDetails extends Fragment {
     private static final String CARD = "card";
     private static final String TAG = BaseballCardDetails.class.getName();
 
-    private CheckBox autographCheckBox = null;
-    private Spinner conditionSpinner = null;
-    private AutoCompleteTextView brandText = null;
-    private EditText yearText = null;
-    private EditText numberText = null;
-    private EditText valueText = null;
-    private EditText countText = null;
-    private AutoCompleteTextView playerNameText = null;
-    private AutoCompleteTextView teamText = null;
-    private Spinner playerPositionSpinner = null;
+    @InjectView(R.id.autograph) CheckBox autographCheckBox = null;
+    @InjectView(R.id.condition) Spinner conditionSpinner = null;
+    @InjectView(R.id.brand_text) AutoCompleteTextView brandText = null;
+    @InjectView(R.id.year_text) EditText yearText = null;
+    @InjectView(R.id.number_text) EditText numberText = null;
+    @InjectView(R.id.value_text) EditText valueText = null;
+    @InjectView(R.id.count_text) EditText countText = null;
+    @InjectView(R.id.player_name_text) AutoCompleteTextView playerNameText = null;
+    @InjectView(R.id.team_text) AutoCompleteTextView teamText = null;
+    @InjectView(R.id.player_position_text) Spinner playerPositionSpinner = null;
+
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;
     private Uri uri = null;
@@ -91,38 +94,27 @@ public class BaseballCardDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.card_details, container, false);
+        ButterKnife.inject(this, view);
 
         String cardDetailsTitle = this.getString(R.string.card_details_title);
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
         this.getActivity().setTitle(title);
 
-        this.autographCheckBox = (CheckBox) view.findViewById(R.id.autograph);
-
-        this.conditionSpinner = (Spinner) view.findViewById(R.id.condition);
         this.conditionAdapter = this.populateSpinnerAdapter(R.array.condition);
         this.conditionSpinner.setAdapter(this.conditionAdapter);
 
-        this.brandText = (AutoCompleteTextView) view.findViewById(R.id.brand_text);
         CursorAdapter brandAdapter = new SingleColumnCursorAdapter(getActivity(),
                 BaseballCardContract.BRAND_COL_NAME);
         this.brandText.setAdapter(brandAdapter);
 
-        this.yearText = (EditText) view.findViewById(R.id.year_text);
-        this.numberText = (EditText) view.findViewById(R.id.number_text);
-        this.valueText = (EditText) view.findViewById(R.id.value_text);
-        this.countText = (EditText) view.findViewById(R.id.count_text);
-
-        this.playerNameText = (AutoCompleteTextView) view.findViewById(R.id.player_name_text);
         CursorAdapter playerNameAdapter = new SingleColumnCursorAdapter(this.getActivity(),
                 BaseballCardContract.PLAYER_NAME_COL_NAME);
         this.playerNameText.setAdapter(playerNameAdapter);
 
-        this.teamText = (AutoCompleteTextView) view.findViewById(R.id.team_text);
         CursorAdapter teamAdapter = new SingleColumnCursorAdapter(this.getActivity(),
                 BaseballCardContract.TEAM_COL_NAME);
         this.teamText.setAdapter(teamAdapter);
 
-        this.playerPositionSpinner = (Spinner) view.findViewById(R.id.player_position_text);
         this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
         this.playerPositionSpinner.setAdapter(this.positionsAdapter);
 
