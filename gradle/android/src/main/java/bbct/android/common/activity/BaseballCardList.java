@@ -44,6 +44,8 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.view.HeaderView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Displays a list of all baseball cards stored in the database.
@@ -63,7 +65,9 @@ public class BaseballCardList extends ListFragment {
     private static final String FILTER_PARAMS = "filterParams";
     private static final String TAG = BaseballCardList.class.getName();
 
-    private TextView emptyList = null;
+    @InjectView(android.R.id.empty) TextView emptyList = null;
+    @InjectView(android.R.id.list) ListView listView;
+
     private BaseballCardAdapter adapter = null;
     private Uri uri = null;
     private Bundle filterParams = null;
@@ -114,10 +118,8 @@ public class BaseballCardList extends ListFragment {
         Log.d(TAG, "onCreateView()");
 
         View view = inflater.inflate(R.layout.card_list, container, false);
+        ButterKnife.inject(this, view);
 
-        this.emptyList = (TextView) view.findViewById(android.R.id.empty);
-
-        final ListView listView = (ListView) view.findViewById(android.R.id.list);
         View headerView = new HeaderView(this.getActivity());
         CheckBox selectAll = (CheckBox) headerView.findViewById(R.id.select_all);
         selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
