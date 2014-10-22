@@ -50,9 +50,25 @@ import bbct.android.common.provider.SingleColumnCursorAdapter;
  */
 public class BaseballCardDetails extends Fragment {
 
-    private static String ID = "id";
+    private static final String ID = "id";
+    private static final String CARD = "card";
+    private static final String TAG = BaseballCardDetails.class.getName();
 
-    private static String CARD = "card";
+    private CheckBox autographCheckBox = null;
+    private Spinner conditionSpinner = null;
+    private AutoCompleteTextView brandText = null;
+    private EditText yearText = null;
+    private EditText numberText = null;
+    private EditText valueText = null;
+    private EditText countText = null;
+    private AutoCompleteTextView playerNameText = null;
+    private AutoCompleteTextView teamText = null;
+    private Spinner playerPositionSpinner = null;
+    private ArrayAdapter<CharSequence> conditionAdapter;
+    private ArrayAdapter<CharSequence> positionsAdapter;
+    private Uri uri = null;
+    private boolean isUpdating = false;
+    private long cardId = -1L;
 
     public static BaseballCardDetails getInstance(long id, BaseballCard card) {
         Bundle args = new Bundle();
@@ -309,22 +325,5 @@ public class BaseballCardDetails extends Fragment {
             }
         }
     }
-
-    private CheckBox autographCheckBox = null;
-    private Spinner conditionSpinner = null;
-    private AutoCompleteTextView brandText = null;
-    private EditText yearText = null;
-    private EditText numberText = null;
-    private EditText valueText = null;
-    private EditText countText = null;
-    private AutoCompleteTextView playerNameText = null;
-    private AutoCompleteTextView teamText = null;
-    private Spinner playerPositionSpinner = null;
-    private ArrayAdapter<CharSequence> conditionAdapter;
-    private ArrayAdapter<CharSequence> positionsAdapter;
-    private Uri uri = null;
-    private boolean isUpdating = false;
-    private long cardId = -1L;
-    private static final String TAG = BaseballCardDetails.class.getName();
 
 }
