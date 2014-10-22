@@ -24,13 +24,13 @@ android {
     productFlavors {
         lite {
             applicationId "bbct.android"
-            versionCode 15
-            versionName "0.6.2"
+            versionCode 16
+            versionName "0.6.3"
         }
         premium {
             applicationId "bbct.android.premium"
-            versionCode 14
-            versionName "0.6.2"
+            versionCode 15
+            versionName "0.6.3"
         }
     }
     def Properties props = new Properties()
