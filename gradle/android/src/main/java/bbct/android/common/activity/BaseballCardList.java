@@ -52,6 +52,23 @@ import bbct.android.common.view.HeaderView;
  */
 public class BaseballCardList extends ListFragment {
 
+    private static final String[] ROW_PROJECTION = {
+            BaseballCardContract.BRAND_COL_NAME,
+            BaseballCardContract.YEAR_COL_NAME,
+            BaseballCardContract.NUMBER_COL_NAME,
+            BaseballCardContract.PLAYER_NAME_COL_NAME};
+    private static final int[] ROW_TEXT_VIEWS = {R.id.brand_text_view,
+            R.id.year_text_view, R.id.number_text_view,
+            R.id.player_name_text_view};
+    private static final String FILTER_PARAMS = "filterParams";
+    private static final String TAG = BaseballCardList.class.getName();
+
+    private TextView emptyList = null;
+    private BaseballCardAdapter adapter = null;
+    private Uri uri = null;
+    private Bundle filterParams = null;
+    private BaseballCardMultiChoiceModeListener mCallbacks;
+
     public static BaseballCardList getInstance(Bundle filterArgs) {
         BaseballCardList cardList = new BaseballCardList();
 
@@ -337,24 +354,5 @@ public class BaseballCardList extends ListFragment {
             oldCursor.close();
         }
     }
-
-    private static final String[] ROW_PROJECTION = {
-            BaseballCardContract.BRAND_COL_NAME,
-            BaseballCardContract.YEAR_COL_NAME,
-            BaseballCardContract.NUMBER_COL_NAME,
-            BaseballCardContract.PLAYER_NAME_COL_NAME};
-
-    private static final int[] ROW_TEXT_VIEWS = {R.id.brand_text_view,
-            R.id.year_text_view, R.id.number_text_view,
-            R.id.player_name_text_view};
-
-    private static final String FILTER_PARAMS = "filterParams";
-
-    private static final String TAG = BaseballCardList.class.getName();
-    private TextView emptyList = null;
-    private BaseballCardAdapter adapter = null;
-    private Uri uri = null;
-    private Bundle filterParams = null;
-    private BaseballCardMultiChoiceModeListener mCallbacks;
 
 }
