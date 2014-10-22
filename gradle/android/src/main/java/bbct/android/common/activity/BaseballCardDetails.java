@@ -98,9 +98,9 @@ public class BaseballCardDetails extends Fragment {
 
         this.autographCheckBox = (CheckBox) view.findViewById(R.id.autograph);
 
-        this.conditionSpinner = this.populateSpinner(view, R.id.condition, R.array.condition);
-        this.conditionAdapter = (ArrayAdapter<CharSequence>) this.conditionSpinner
-                .getAdapter();
+        this.conditionSpinner = (Spinner) view.findViewById(R.id.condition);
+        this.conditionAdapter = this.populateSpinnerAdapter(R.array.condition);
+        this.conditionSpinner.setAdapter(this.conditionAdapter);
 
         this.brandText = (AutoCompleteTextView) view.findViewById(R.id.brand_text);
         CursorAdapter brandAdapter = new SingleColumnCursorAdapter(getActivity(),
@@ -122,10 +122,9 @@ public class BaseballCardDetails extends Fragment {
                 BaseballCardContract.TEAM_COL_NAME);
         this.teamText.setAdapter(teamAdapter);
 
-        this.playerPositionSpinner = this.populateSpinner(view, R.id.player_position_text,
-                R.array.positions);
-        this.positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner
-                .getAdapter();
+        this.playerPositionSpinner = (Spinner) view.findViewById(R.id.player_position_text);
+        this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
+        this.playerPositionSpinner.setAdapter(this.positionsAdapter);
 
         Bundle args = this.getArguments();
         if (args != null) {
@@ -192,14 +191,12 @@ public class BaseballCardDetails extends Fragment {
                 .commit();
     }
 
-    private Spinner populateSpinner(View view, int spinnerId, int araryId) {
-        Spinner spinner = (Spinner) view.findViewById(spinnerId);
+    private ArrayAdapter<CharSequence> populateSpinnerAdapter(int arrayId) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this.getActivity(), araryId, android.R.layout.simple_spinner_item);
+                this.getActivity(), arrayId, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
-        return spinner;
+        return adapter;
     }
 
     private BaseballCard getBaseballCard() {
