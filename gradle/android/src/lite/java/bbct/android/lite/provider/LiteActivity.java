@@ -44,7 +44,7 @@ public class LiteActivity extends MainActivity implements AdListener {
     private static final String APP_KEY = "42d5980d355a49afb22ea8c6618591d8";
 
     private ViewGroup adViewContainer;
-    private com.amazon.device.ads.AdLayout amazonAdView;
+    private AdLayout amazonAdView;
     private AdView admobAdView;
     private boolean amazonAdEnabled;
 
@@ -55,7 +55,7 @@ public class LiteActivity extends MainActivity implements AdListener {
         AdRegistration.setAppKey(APP_KEY);
 
         // Initialize ad views
-        amazonAdView = new com.amazon.device.ads.AdLayout(this, com.amazon.device.ads.AdSize.SIZE_320x50);
+        amazonAdView = new AdLayout(this, com.amazon.device.ads.AdSize.SIZE_320x50);
         amazonAdView.setListener(this);
         admobAdView = new AdView(this);
         admobAdView.setAdUnitId(AD_UNIT_ID);
