@@ -24,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.MainActivity;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.amazon.device.ads.AdError;
 import com.amazon.device.ads.AdLayout;
 import com.amazon.device.ads.AdListener;
@@ -43,7 +45,7 @@ public class LiteActivity extends MainActivity implements AdListener {
 
     private static final String APP_KEY = "42d5980d355a49afb22ea8c6618591d8";
 
-    private ViewGroup adViewContainer;
+    @InjectView(R.id.ad_view) ViewGroup adViewContainer;
     private AdLayout amazonAdView;
     private AdView admobAdView;
     private boolean amazonAdEnabled;
@@ -51,6 +53,7 @@ public class LiteActivity extends MainActivity implements AdListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.inject(this);
 
         AdRegistration.setAppKey(APP_KEY);
 
@@ -62,7 +65,6 @@ public class LiteActivity extends MainActivity implements AdListener {
         admobAdView.setAdSize(AdSize.BANNER);
 
         // Initialize view container
-        adViewContainer = (ViewGroup) findViewById(R.id.ad_view);
         amazonAdEnabled = true;
         adViewContainer.addView(amazonAdView);
 
