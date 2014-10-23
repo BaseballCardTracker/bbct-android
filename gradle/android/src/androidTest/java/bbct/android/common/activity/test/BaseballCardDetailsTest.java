@@ -53,6 +53,20 @@ public class BaseballCardDetailsTest extends
     private static final int KEYPAD_HEIGHT = 100;
     private static final String CARD_DATA = "cards.csv";
 
+    private Solo solo = null;
+    private FragmentTestActivity activity = null;
+    private AutoCompleteTextView brandText = null;
+    private EditText yearText = null;
+    private EditText numberText = null;
+    private EditText valueText = null;
+    private EditText countText = null;
+    private EditText playerNameText = null;
+    private EditText playerTeamText = null;
+    private Spinner playerPositionSpinner = null;
+    private ScrollView scrollView = null;
+    private Instrumentation inst = null;
+    private BaseballCard card = null;
+
     /**
      * Create instrumented test cases for {@link BaseballCardDetails}.
      */
@@ -263,17 +277,4 @@ public class BaseballCardDetailsTest extends
         }
     }
 
-    private Solo solo = null;
-    private FragmentTestActivity activity = null;
-    private AutoCompleteTextView brandText = null;
-    private EditText yearText = null;
-    private EditText numberText = null;
-    private EditText valueText = null;
-    private EditText countText = null;
-    private EditText playerNameText = null;
-    private EditText playerTeamText = null;
-    private Spinner playerPositionSpinner = null;
-    private ScrollView scrollView = null;
-    private Instrumentation inst = null;
-    private BaseballCard card = null;
 }
