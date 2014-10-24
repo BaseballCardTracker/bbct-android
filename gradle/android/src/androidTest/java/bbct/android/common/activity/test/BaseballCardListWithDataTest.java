@@ -52,6 +52,14 @@ import junit.framework.Assert;
 public class BaseballCardListWithDataTest <T extends MainActivity> extends
         WithDataTest<T> {
 
+    private static final int SELECT_ALL = 0;
+    private static final String TAG = BaseballCardListWithDataTest.class.getName();
+
+    private List<BaseballCard> expectedCards;
+    private Solo solo = null;
+    private Activity activity = null;
+    private BaseballCard newCard = null;
+
     /**
      * Create instrumented test cases for {@link MainActivity}.
      */
@@ -631,12 +639,4 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         Assert.assertFalse(selectAll.isChecked());
     }
 
-    private List<BaseballCard> expectedCards;
-    private Solo solo = null;
-    private Activity activity = null;
-    private BaseballCard newCard = null;
-
-    private static final int SELECT_ALL = 0;
-    private static final String TAG = BaseballCardListWithDataTest.class
-            .getName();
 }
