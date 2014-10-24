@@ -97,8 +97,6 @@ public class BaseballCardDetailsTest extends
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
-        // Must call getActivity() before creating a DatabaseUtil object to
-        // ensure that the database is created
         this.activity = this.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
         this.inst.waitForIdleSync();
