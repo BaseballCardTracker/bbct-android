@@ -394,23 +394,22 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
 
     private void assertAllCheckboxesChecked() {
         this.inst.waitForIdleSync();
-        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int numMarked = 0;
 
-        Checkable selectAll = (Checkable) lv.getChildAt(0);
+        Checkable selectAll = (Checkable) listView.getChildAt(0);
         if (selectAll.isChecked()) {
             numMarked++;
         }
 
-        for (int i = 1; i < lv.getChildCount(); i++) {
-            Checkable ctv = (Checkable) lv.getChildAt(i);
+        for (int i = 1; i < listView.getChildCount(); i++) {
+            Checkable ctv = (Checkable) listView.getChildAt(i);
 
             if (ctv.isChecked()) {
                 numMarked++;
             }
         }
 
-        Assert.assertEquals(lv.getChildCount(), numMarked);
+        Assert.assertEquals(listView.getChildCount(), numMarked);
     }
 
     private void markAll() {
@@ -478,7 +477,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     }
 
     private void deleteCards() {
-        View deleteMenu = this.activity.findViewById(R.id.delete_menu);
+        View deleteMenu = ButterKnife.findById(this.activity, R.id.delete_menu);
         Assert.assertNotNull(deleteMenu);
         TouchUtils.clickView(this, deleteMenu);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);

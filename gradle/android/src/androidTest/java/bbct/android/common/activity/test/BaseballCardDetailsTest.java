@@ -191,8 +191,8 @@ public class BaseballCardDetailsTest extends
         this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
         Assert.assertTrue(this.playerTeamText.hasFocus());
 
-        View rootView = ((ViewGroup) this.activity
-                .findViewById(android.R.id.content)).getChildAt(0);
+        ViewGroup content = ButterKnife.findById(this.activity, android.R.id.content);
+        View rootView = content.getChildAt(0);
         Rect r = new Rect();
         // r will be populated with the coordinates of the view area still
         // visible.

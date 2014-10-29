@@ -40,6 +40,7 @@ import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
+import butterknife.ButterKnife;
 import com.robotium.solo.Solo;
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -155,8 +156,8 @@ final public class BBCTTestUtil {
         Log.d(TAG, "sendKeysToCardDetails()");
 
         solo.waitForView(R.id.scroll_card_details);
-        final ScrollView scrollView = (ScrollView) solo.getCurrentActivity()
-                .findViewById(R.id.scroll_card_details);
+        final ScrollView scrollView = ButterKnife.findById(solo.getCurrentActivity(),
+                R.id.scroll_card_details);
         Assert.assertNotNull("Scroll view not found", scrollView);
         scrollView.post(new Runnable() {
             @Override
@@ -317,23 +318,15 @@ final public class BBCTTestUtil {
      */
     public static void assertAllEditTextContents(Activity cardDetails,
             BaseballCard expectedCard) {
-        CheckBox autographedCheckBox = (CheckBox) cardDetails
-                .findViewById(R.id.autograph);
-        Spinner conditionSpinner = (Spinner) cardDetails
-                .findViewById(R.id.condition);
-        EditText brandText = (EditText) cardDetails
-                .findViewById(R.id.brand_text);
-        EditText yearText = (EditText) cardDetails.findViewById(R.id.year_text);
-        EditText numberText = (EditText) cardDetails
-                .findViewById(R.id.number_text);
-        EditText valueText = (EditText) cardDetails
-                .findViewById(R.id.value_text);
-        EditText countText = (EditText) cardDetails
-                .findViewById(R.id.count_text);
-        EditText playerNameText = (EditText) cardDetails
-                .findViewById(R.id.player_name_text);
-        Spinner playerPositionSpinner = (Spinner) cardDetails
-                .findViewById(R.id.player_position_text);
+        CheckBox autographedCheckBox = ButterKnife.findById(cardDetails, R.id.autograph);
+        Spinner conditionSpinner = ButterKnife.findById(cardDetails, R.id.condition);
+        EditText brandText = ButterKnife.findById(cardDetails, R.id.brand_text);
+        EditText yearText = ButterKnife.findById(cardDetails, R.id.year_text);
+        EditText numberText = ButterKnife.findById(cardDetails, R.id.number_text);
+        EditText valueText = ButterKnife.findById(cardDetails, R.id.value_text);
+        EditText countText = ButterKnife.findById(cardDetails, R.id.count_text);
+        EditText playerNameText = ButterKnife.findById(cardDetails, R.id.player_name_text);
+        Spinner playerPositionSpinner = ButterKnife.findById(cardDetails, R.id.player_position_text);
 
         Assert.assertEquals(expectedCard.isAutographed(),
                 autographedCheckBox.isChecked());
@@ -430,9 +423,10 @@ final public class BBCTTestUtil {
                                                       String input) {
         Activity filterCards = solo.getCurrentActivity();
         Assert.assertTrue(solo.waitForView(checkId));
-        CheckBox cb = (CheckBox) filterCards.findViewById(checkId);
+        CheckBox cb = ButterKnife.findById(filterCards, checkId);
         solo.clickOnView(cb);
-        solo.typeText((EditText)filterCards.findViewById(editTextId), input);
+        EditText editText = ButterKnife.findById(filterCards, editTextId);
+        solo.typeText(editText, input);
     }
 
     public static List<BaseballCard> filterList(List<BaseballCard> list,
