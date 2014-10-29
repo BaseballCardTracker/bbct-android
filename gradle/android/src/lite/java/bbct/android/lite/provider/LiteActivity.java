@@ -46,6 +46,8 @@ public class LiteActivity extends MainActivity implements AdListener {
     private static final String APP_KEY = "42d5980d355a49afb22ea8c6618591d8";
 
     @InjectView(R.id.ad_view) ViewGroup adViewContainer;
+    @InjectView(R.id.premium_text) TextView premiumText;
+
     private AdLayout amazonAdView;
     private AdView admobAdView;
     private boolean amazonAdEnabled;
@@ -70,7 +72,6 @@ public class LiteActivity extends MainActivity implements AdListener {
 
         amazonAdView.loadAd(new AdTargetingOptions());
 
-        TextView premiumText = (TextView) this.findViewById(R.id.premium_text);
         premiumText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
