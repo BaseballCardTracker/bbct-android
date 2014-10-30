@@ -121,7 +121,7 @@ public class BaseballCardList extends ListFragment {
         ButterKnife.inject(this, view);
 
         View headerView = new HeaderView(this.getActivity());
-        CheckBox selectAll = (CheckBox) headerView.findViewById(R.id.select_all);
+        CheckBox selectAll = ButterKnife.findById(headerView, R.id.select_all);
         selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
