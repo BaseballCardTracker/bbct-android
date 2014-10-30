@@ -30,10 +30,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.Checkable;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -101,20 +102,19 @@ public class BaseballCardList extends ListFragment {
 
         final ListView listView = (ListView) view.findViewById(android.R.id.list);
         View headerView = new HeaderView(this.getActivity());
-        headerView.findViewById(R.id.select_all)
-                .setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!mCallbacks.isStarted()) {
-                            BaseballCardList.this.getActivity().startActionMode(mCallbacks);
-                        } else {
-                            mCallbacks.finish();
-                        }
+        CheckBox selectAll = (CheckBox) headerView.findViewById(R.id.select_all);
+        selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!mCallbacks.isStarted()) {
+                    BaseballCardList.this.getActivity().startActionMode(mCallbacks);
+                } else {
+                    mCallbacks.finish();
+                }
 
-                        Checkable ctv = (Checkable) v;
-                        BaseballCardList.this.setAllChecked(ctv.isChecked());
-                    }
-                });
+                BaseballCardList.this.setAllChecked(isChecked);
+            }
+        });
         listView.addHeaderView(headerView);
         this.setListAdapter(this.adapter);
         this.adapter.setListFragment(this);
