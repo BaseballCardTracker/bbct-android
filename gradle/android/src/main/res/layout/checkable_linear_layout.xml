@@ -17,14 +17,21 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<bbct.android.common.view.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:padding="3dp">
 
-    <bbct.android.common.view.BaseballCardView
-        android:layout_width="match_parent"
+    <CheckBox
+        android:id="@+id/checkmark"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="3dp"/>
+        android:checkMark="@drawable/checkmark"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:paddingRight="12dp"
+        android:paddingEnd="12dp"/>
 
-</bbct.android.common.view.CheckableLinearLayout>
+</merge>

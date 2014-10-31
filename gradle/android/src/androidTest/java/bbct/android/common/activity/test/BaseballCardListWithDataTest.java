@@ -61,9 +61,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     private Solo solo = null;
     private Activity activity = null;
     private BaseballCard newCard = null;
+    private Checkable headerView;
 
     @InjectView(android.R.id.list) ListView listView;
-    @InjectView(R.id.select_all) CheckBox selectAll;
 
     /**
      * Create instrumented test cases for {@link MainActivity}.
@@ -86,6 +86,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         // Start Activity
         this.activity = this.getActivity();
         ButterKnife.inject(this, this.activity);
+        headerView = (Checkable) listView.getChildAt(0);
         this.newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
                 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
 
@@ -432,11 +433,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.inst.waitForIdleSync();
         int numMarked = 0;
 
-        if (selectAll.isChecked()) {
-            numMarked++;
-        }
-
-        for (int i = 1; i < listView.getChildCount(); i++) {
+        for (int i = 0; i < listView.getChildCount(); i++) {
             Checkable ctv = (Checkable) listView.getChildAt(i);
 
             if (ctv.isChecked()) {
@@ -465,7 +462,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.expectedCards = BBCTTestUtil.filterList(this.allCards, yearPred);
         this.expectedCards.remove(cardIndex);
 
-        Assert.assertTrue(this.solo.waitForView(R.id.select_all));
+        Assert.assertTrue(this.solo.waitForFragmentByTag(FragmentTags.CARD_LIST));
         // Add 1 for header view
         this.solo.clickOnCheckBox(cardIndex + 1);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
@@ -597,7 +594,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         }
 
         this.inst.waitForIdleSync();
-        Assert.assertTrue(selectAll.isChecked());
+        Assert.assertTrue(headerView.isChecked());
     }
 
     public void testOnCheckAllAndOnClickCheckbox() {
@@ -605,7 +602,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.solo.clickOnCheckBox(1);
 
         this.inst.waitForIdleSync();
-        Assert.assertFalse(selectAll.isChecked());
+        Assert.assertFalse(headerView.isChecked());
     }
 
     public void testOnClickCheckboxAndOnCheckAll() {
@@ -628,7 +625,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.solo.clickOnImage(0);
 
         this.inst.waitForIdleSync();
-        Assert.assertFalse(selectAll.isChecked());
+        Assert.assertFalse(headerView.isChecked());
     }
 
 }

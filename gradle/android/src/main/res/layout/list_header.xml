@@ -17,57 +17,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal">
+<bbct.android.common.view.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
 
-    <CheckBox
-        android:id="@+id/select_all"
-        android:layout_width="wrap_content"
+    <bbct.android.common.view.HeaderView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:checkMark="@drawable/checkmark"
-        android:gravity="center"
-        android:paddingRight="12dp"/>
+        android:orientation="horizontal"
+        android:padding="3dp"/>
 
-    <TextView
-        android:layout_width="@dimen/brand_col_width"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:text="@string/brand"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:layout_width="@dimen/year_col_width"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:text="@string/year"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:layout_width="@dimen/number_col_width"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:text="@string/number_col"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:layout_width="@dimen/player_name_col_width"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:text="@string/player_name"
-        android:textStyle="bold"/>
-
-</LinearLayout>
+</bbct.android.common.view.CheckableLinearLayout>

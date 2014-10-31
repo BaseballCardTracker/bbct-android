@@ -43,7 +43,6 @@ import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
-import bbct.android.common.view.HeaderView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -120,8 +119,8 @@ public class BaseballCardList extends ListFragment {
         View view = inflater.inflate(R.layout.card_list, container, false);
         ButterKnife.inject(this, view);
 
-        View headerView = new HeaderView(this.getActivity());
-        CheckBox selectAll = ButterKnife.findById(headerView, R.id.select_all);
+        View headerView = View.inflate(this.getActivity(), R.layout.list_header, null);
+        CheckBox selectAll = ButterKnife.findById(headerView, R.id.checkmark);
         selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

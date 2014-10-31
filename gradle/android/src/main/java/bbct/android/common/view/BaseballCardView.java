@@ -20,11 +20,12 @@ package bbct.android.common.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.ViewGroup;
-import android.widget.Checkable;
+import android.view.View;
+import android.widget.LinearLayout;
 import bbct.android.common.R;
+import butterknife.ButterKnife;
 
-public class BaseballCardView extends CheckableLinearLayout {
+public class BaseballCardView extends LinearLayout {
 
     public BaseballCardView(Context context) {
         this(context, null);
@@ -37,8 +38,8 @@ public class BaseballCardView extends CheckableLinearLayout {
     public BaseballCardView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        ViewGroup root = (ViewGroup) ViewGroup.inflate(context, R.layout.baseball_card, this);
-        mCheckable = (Checkable) root.findViewById(R.id.checkmark);
+        View root = View.inflate(context, R.layout.baseball_card, this);
+        ButterKnife.inject(this, root);
     }
 
 }
