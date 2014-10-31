@@ -54,7 +54,7 @@
                 android:textStyle="bold" />
 
             <AutoCompleteTextView
-                android:id="@id/brand_text"
+                android:id="@id/brand"
                 android:completionThreshold="1"
                 android:hint="@string/brand_hint"
                 android:inputType="textCapWords"
@@ -72,7 +72,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@id/year_text"
+                android:id="@id/year"
                 android:hint="@string/year_hint"
                 android:inputType="number"
                 android:selectAllOnFocus="true"
@@ -86,7 +86,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@id/number_text"
+                android:id="@id/number"
                 android:hint="@string/number_hint"
                 android:inputType="number"
                 android:selectAllOnFocus="true"
@@ -100,7 +100,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@id/value_text"
+                android:id="@id/value"
                 android:hint="@string/value_hint"
                 android:inputType="numberDecimal"
                 android:selectAllOnFocus="true"
@@ -114,7 +114,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@id/count_text"
+                android:id="@id/quantity"
                 android:hint="@string/count_hint"
                 android:inputType="number"
                 android:selectAllOnFocus="true"
@@ -128,7 +128,7 @@
                 android:textStyle="bold" />
 
             <AutoCompleteTextView
-                android:id="@id/player_name_text"
+                android:id="@id/player_name"
                 android:completionThreshold="1"
                 android:hint="@string/player_name_hint"
                 android:inputType="textCapWords"
@@ -143,7 +143,7 @@
                 android:textStyle="bold" />
 
             <AutoCompleteTextView
-                android:id="@id/team_text"
+                android:id="@id/team"
                 android:completionThreshold="1"
                 android:hint="@string/team_hint"
                 android:inputType="textCapWords"
@@ -158,7 +158,7 @@
                 android:textStyle="bold" />
 
             <Spinner
-                android:id="@id/player_position_text"
+                android:id="@id/player_position"
                 android:hint="@string/player_position_hint"
                 android:singleLine="true" />
         </TableRow>

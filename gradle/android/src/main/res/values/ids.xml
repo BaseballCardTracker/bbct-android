@@ -22,14 +22,14 @@
     <!-- IDs for views -->
     <item name="autograph" type="id"/>
     <item name="condition" type="id"/>
-    <item name="brand_text" type="id"/>
-    <item name="year_text" type="id"/>
-    <item name="number_text" type="id"/>
-    <item name="value_text" type="id"/>
-    <item name="count_text" type="id"/>
-    <item name="player_name_text" type="id"/>
-    <item name="team_text" type="id"/>
-    <item name="player_position_text" type="id"/>
+    <item name="brand" type="id"/>
+    <item name="year" type="id"/>
+    <item name="number" type="id"/>
+    <item name="value" type="id"/>
+    <item name="quantity" type="id"/>
+    <item name="player_name" type="id"/>
+    <item name="team" type="id"/>
+    <item name="player_position" type="id"/>
     <item name="scroll_card_details" type="id"/>
 
 </resources>

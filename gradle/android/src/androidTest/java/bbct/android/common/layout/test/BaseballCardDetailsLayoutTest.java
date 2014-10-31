@@ -33,7 +33,7 @@ public class BaseballCardDetailsLayoutTest extends ActivityInstrumentationTestCa
 
     private BaseballCardDetails mFragment;
     @InjectView(R.id.autograph) CheckBox mAutographCheckBox;
-    @InjectView(R.id.brand_text) EditText mBrandEditText;
+    @InjectView(R.id.brand) EditText mBrandEditText;
 
     public BaseballCardDetailsLayoutTest() {
         super(FragmentTestActivity.class);

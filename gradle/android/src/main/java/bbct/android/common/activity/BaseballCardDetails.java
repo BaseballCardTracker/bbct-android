@@ -58,14 +58,14 @@ public class BaseballCardDetails extends Fragment {
 
     @InjectView(R.id.autograph) CheckBox autographCheckBox = null;
     @InjectView(R.id.condition) Spinner conditionSpinner = null;
-    @InjectView(R.id.brand_text) AutoCompleteTextView brandText = null;
-    @InjectView(R.id.year_text) EditText yearText = null;
-    @InjectView(R.id.number_text) EditText numberText = null;
-    @InjectView(R.id.value_text) EditText valueText = null;
-    @InjectView(R.id.count_text) EditText countText = null;
-    @InjectView(R.id.player_name_text) AutoCompleteTextView playerNameText = null;
-    @InjectView(R.id.team_text) AutoCompleteTextView teamText = null;
-    @InjectView(R.id.player_position_text) Spinner playerPositionSpinner = null;
+    @InjectView(R.id.brand) AutoCompleteTextView brandText = null;
+    @InjectView(R.id.year) EditText yearText = null;
+    @InjectView(R.id.number) EditText numberText = null;
+    @InjectView(R.id.value) EditText valueText = null;
+    @InjectView(R.id.quantity) EditText countText = null;
+    @InjectView(R.id.player_name) AutoCompleteTextView playerNameText = null;
+    @InjectView(R.id.team) AutoCompleteTextView teamText = null;
+    @InjectView(R.id.player_position) Spinner playerPositionSpinner = null;
 
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;

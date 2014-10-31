@@ -185,7 +185,7 @@ final public class BBCTTestUtil {
         }
 
         AutoCompleteTextView brandText = (AutoCompleteTextView) solo
-                .getView(R.id.brand_text);
+                .getView(R.id.brand);
         if (fieldFlags.contains(EditTexts.BRAND)) {
             solo.typeText(brandText, card.getBrand());
         }
@@ -196,28 +196,28 @@ final public class BBCTTestUtil {
         }
 
         if (fieldFlags.contains(EditTexts.YEAR)) {
-            EditText yearText = (EditText) solo.getView(R.id.year_text);
+            EditText yearText = (EditText) solo.getView(R.id.year);
             solo.typeText(yearText, Integer.toString(card.getYear()));
         }
 
         if (fieldFlags.contains(EditTexts.NUMBER)) {
-            EditText numberText = (EditText) solo.getView(R.id.number_text);
+            EditText numberText = (EditText) solo.getView(R.id.number);
             solo.typeText(numberText, Integer.toString(card.getNumber()));
         }
 
         if (fieldFlags.contains(EditTexts.VALUE)) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
-            EditText valueText = (EditText) solo.getView(R.id.value_text);
+            EditText valueText = (EditText) solo.getView(R.id.value);
             solo.typeText(valueText, valueStr);
         }
 
         if (fieldFlags.contains(EditTexts.COUNT)) {
-            EditText countText = (EditText) solo.getView(R.id.count_text);
+            EditText countText = (EditText) solo.getView(R.id.quantity);
             solo.typeText(countText, Integer.toString(card.getCount()));
         }
 
         AutoCompleteTextView playerNameText = (AutoCompleteTextView) solo
-                .getView(R.id.player_name_text);
+                .getView(R.id.player_name);
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
             solo.typeText(playerNameText, card.getPlayerName());
         }
@@ -228,7 +228,7 @@ final public class BBCTTestUtil {
         }
 
         AutoCompleteTextView teamText = (AutoCompleteTextView) solo
-                .getView(R.id.team_text);
+                .getView(R.id.team);
         if (fieldFlags.contains(EditTexts.TEAM)) {
             if (!solo.searchText(solo.getString(R.string.team_label))) {
                 scrollDown(scrollView);
@@ -242,7 +242,7 @@ final public class BBCTTestUtil {
         }
 
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
-            Spinner playerPositionSpinner = (Spinner) solo.getView(R.id.player_position_text);
+            Spinner playerPositionSpinner = (Spinner) solo.getView(R.id.player_position);
             @SuppressWarnings("unchecked")
             ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner
                     .getAdapter();
@@ -251,7 +251,7 @@ final public class BBCTTestUtil {
             int currIndex = playerPositionSpinner.getSelectedItemPosition();
 
             scrollDown(scrollView);
-            solo.waitForView(R.id.player_position_text);
+            solo.waitForView(R.id.player_position);
 
             boolean isConditionVisible = solo.searchText(solo.getString(R.string.condition_label),
                     false);
@@ -320,13 +320,13 @@ final public class BBCTTestUtil {
             BaseballCard expectedCard) {
         CheckBox autographedCheckBox = ButterKnife.findById(cardDetails, R.id.autograph);
         Spinner conditionSpinner = ButterKnife.findById(cardDetails, R.id.condition);
-        EditText brandText = ButterKnife.findById(cardDetails, R.id.brand_text);
-        EditText yearText = ButterKnife.findById(cardDetails, R.id.year_text);
-        EditText numberText = ButterKnife.findById(cardDetails, R.id.number_text);
-        EditText valueText = ButterKnife.findById(cardDetails, R.id.value_text);
-        EditText countText = ButterKnife.findById(cardDetails, R.id.count_text);
-        EditText playerNameText = ButterKnife.findById(cardDetails, R.id.player_name_text);
-        Spinner playerPositionSpinner = ButterKnife.findById(cardDetails, R.id.player_position_text);
+        EditText brandText = ButterKnife.findById(cardDetails, R.id.brand);
+        EditText yearText = ButterKnife.findById(cardDetails, R.id.year);
+        EditText numberText = ButterKnife.findById(cardDetails, R.id.number);
+        EditText valueText = ButterKnife.findById(cardDetails, R.id.value);
+        EditText countText = ButterKnife.findById(cardDetails, R.id.quantity);
+        EditText playerNameText = ButterKnife.findById(cardDetails, R.id.player_name);
+        Spinner playerPositionSpinner = ButterKnife.findById(cardDetails, R.id.player_position);
 
         Assert.assertEquals(expectedCard.isAutographed(),
                 autographedCheckBox.isChecked());

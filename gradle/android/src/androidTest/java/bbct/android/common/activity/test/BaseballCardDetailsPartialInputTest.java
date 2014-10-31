@@ -57,13 +57,13 @@ public class BaseballCardDetailsPartialInputTest extends
     private BaseballCard card = null;
     private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
 
-    @InjectView(R.id.brand_text) EditText brandEditText = null;
-    @InjectView(R.id.year_text) EditText yearEditText = null;
-    @InjectView(R.id.number_text) EditText numberEditText = null;
-    @InjectView(R.id.count_text) EditText countEditText = null;
-    @InjectView(R.id.value_text) EditText valueEditText = null;
-    @InjectView(R.id.player_name_text) EditText playerNameEditText = null;
-    @InjectView(R.id.team_text) EditText teamEditText = null;
+    @InjectView(R.id.brand) EditText brandEditText = null;
+    @InjectView(R.id.year) EditText yearEditText = null;
+    @InjectView(R.id.number) EditText numberEditText = null;
+    @InjectView(R.id.quantity) EditText countEditText = null;
+    @InjectView(R.id.value) EditText valueEditText = null;
+    @InjectView(R.id.player_name) EditText playerNameEditText = null;
+    @InjectView(R.id.team) EditText teamEditText = null;
 
     /**
      * Creates a {@link TestSuite} containing every possible combination of

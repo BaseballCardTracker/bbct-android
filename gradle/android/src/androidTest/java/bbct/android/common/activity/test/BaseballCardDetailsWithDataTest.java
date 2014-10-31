@@ -57,15 +57,15 @@ public class BaseballCardDetailsWithDataTest extends WithDataTest<FragmentTestAc
     }
 
     public void testBrandAutoComplete() throws Throwable {
-        this.testAutoComplete(R.id.brand_text, mCard.getBrand());
+        this.testAutoComplete(R.id.brand, mCard.getBrand());
     }
 
     public void testPlayerNameAutoComplete() throws Throwable {
-        this.testAutoComplete(R.id.player_name_text, mCard.getPlayerName());
+        this.testAutoComplete(R.id.player_name, mCard.getPlayerName());
     }
 
     public void testTeamAutoComplete() throws Throwable {
-        this.testAutoComplete(R.id.team_text, mCard.getTeam());
+        this.testAutoComplete(R.id.team, mCard.getTeam());
     }
 
     private void testAutoComplete(int textViewId, String text)

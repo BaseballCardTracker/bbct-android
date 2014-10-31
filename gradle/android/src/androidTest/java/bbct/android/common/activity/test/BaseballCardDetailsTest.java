@@ -60,14 +60,14 @@ public class BaseballCardDetailsTest extends
     private Instrumentation inst;
     private BaseballCard card;
 
-    @InjectView(R.id.brand_text) AutoCompleteTextView brandText;
-    @InjectView(R.id.year_text) EditText yearText;
-    @InjectView(R.id.number_text) EditText numberText;
-    @InjectView(R.id.value_text) EditText valueText;
-    @InjectView(R.id.count_text) EditText countText;
-    @InjectView(R.id.player_name_text) EditText playerNameText;
-    @InjectView(R.id.team_text) EditText playerTeamText;
-    @InjectView(R.id.player_position_text) Spinner playerPositionSpinner;
+    @InjectView(R.id.brand) AutoCompleteTextView brandText;
+    @InjectView(R.id.year) EditText yearText;
+    @InjectView(R.id.number) EditText numberText;
+    @InjectView(R.id.value) EditText valueText;
+    @InjectView(R.id.quantity) EditText countText;
+    @InjectView(R.id.player_name) EditText playerNameText;
+    @InjectView(R.id.team) EditText playerTeamText;
+    @InjectView(R.id.player_position) Spinner playerPositionSpinner;
     @InjectView(R.id.scroll_card_details) ScrollView scrollView;
 
     /**
