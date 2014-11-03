@@ -18,7 +18,6 @@
  */
 package bbct.android.common.provider;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -52,11 +51,11 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
     private BaseballCardMultiChoiceModeListener mCallback;
 
     @SuppressWarnings("deprecation")
-    public BaseballCardAdapter(Context context, int layout, Cursor c,
+    public BaseballCardAdapter(FragmentActivity activity, int layout, Cursor c,
             String[] from, int[] to) {
-        super(context, layout, c, from, to);
+        super(activity, layout, c, from, to);
 
-        this.mActivity = (FragmentActivity) context;
+        this.mActivity = activity;
     }
 
     public void setListFragment(BaseballCardList listFragment) {
