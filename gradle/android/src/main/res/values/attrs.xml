@@ -18,7 +18,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <declare-styleable name="LabeledEditText">
+    <declare-styleable name="FilterOptionView">
         <attr name="label" format="string"/>
         <attr name="hint" format="string"/>
         <attr name="labelTextSize" format="dimension"/>

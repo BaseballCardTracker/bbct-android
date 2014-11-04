@@ -27,41 +27,41 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import bbct.android.common.R;
 
-public class LabeledEditText extends LinearLayout {
+public class FilterOptionView extends CheckableLinearLayout {
 
-    public LabeledEditText(Context context) {
+    public FilterOptionView(Context context) {
         this(context, null);
     }
 
-    public LabeledEditText(Context context, AttributeSet attrs) {
+    public FilterOptionView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public LabeledEditText(Context context, AttributeSet attrs, int defStyle) {
+    public FilterOptionView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         TextView label = new TextView(context);
         EditText edit = new EditText(context);
 
-        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.LabeledEditText,
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FilterOptionView,
                 0, 0);
         int[] set = {android.R.attr.inputType, android.R.attr.singleLine};
         TypedArray b = context.getTheme().obtainStyledAttributes(attrs, set, 0, 0);
 
         try {
-            int labelWeight = a.getInt(R.styleable.LabeledEditText_labelWeight, 0);
+            int labelWeight = a.getInt(R.styleable.FilterOptionView_labelWeight, 0);
             ViewGroup.LayoutParams labelParams = new LinearLayout.LayoutParams(
                     0, LayoutParams.WRAP_CONTENT, labelWeight);
             label.setLayoutParams(labelParams);
 
-            int editWeight = a.getInt(R.styleable.LabeledEditText_editWeight, 0);
+            int editWeight = a.getInt(R.styleable.FilterOptionView_editWeight, 0);
             ViewGroup.LayoutParams editParams = new LinearLayout.LayoutParams(
                     0, LayoutParams.WRAP_CONTENT, editWeight);
             edit.setLayoutParams(editParams);
 
-            label.setText(a.getString(R.styleable.LabeledEditText_label));
-            label.setTextSize(a.getFloat(R.styleable.LabeledEditText_labelTextSize, 1.0f));
-            edit.setHint(a.getString(R.styleable.LabeledEditText_hint));
+            label.setText(a.getString(R.styleable.FilterOptionView_label));
+            label.setTextSize(a.getFloat(R.styleable.FilterOptionView_labelTextSize, 1.0f));
+            edit.setHint(a.getString(R.styleable.FilterOptionView_hint));
             edit.setInputType(b.getInt(0, 0));
             edit.setSingleLine(b.getBoolean(1, true));
         } finally {
