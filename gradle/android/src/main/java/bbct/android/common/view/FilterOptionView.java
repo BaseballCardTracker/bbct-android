@@ -20,14 +20,19 @@ package bbct.android.common.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.Editable;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import bbct.android.common.R;
 
 public class FilterOptionView extends CheckableLinearLayout {
+
+    private TextView label;
+    private EditText edit;
 
     public FilterOptionView(Context context) {
         this(context, null);
@@ -40,15 +45,20 @@ public class FilterOptionView extends CheckableLinearLayout {
     public FilterOptionView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        TextView label = new TextView(context);
-        EditText edit = new EditText(context);
+        label = new TextView(context);
+        edit = new EditText(context);
 
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.FilterOptionView,
                 0, 0);
-        int[] set = {android.R.attr.inputType, android.R.attr.singleLine};
+        int[] set = {android.R.attr.enabled, android.R.attr.inputType, android.R.attr.singleLine};
         TypedArray b = context.getTheme().obtainStyledAttributes(attrs, set, 0, 0);
 
         try {
+            boolean enabled = a.getBoolean(0, true);
+            mCheckBox.setChecked(enabled);
+            label.setEnabled(enabled);
+            edit.setEnabled(enabled);
+
             int labelWeight = a.getInt(R.styleable.FilterOptionView_labelWeight, 0);
             ViewGroup.LayoutParams labelParams = new LinearLayout.LayoutParams(
                     0, LayoutParams.WRAP_CONTENT, labelWeight);
@@ -62,14 +72,27 @@ public class FilterOptionView extends CheckableLinearLayout {
             label.setText(a.getString(R.styleable.FilterOptionView_label));
             label.setTextSize(a.getFloat(R.styleable.FilterOptionView_labelTextSize, 1.0f));
             edit.setHint(a.getString(R.styleable.FilterOptionView_hint));
-            edit.setInputType(b.getInt(0, 0));
-            edit.setSingleLine(b.getBoolean(1, true));
+            edit.setInputType(b.getInt(1, 0));
+            edit.setSingleLine(b.getBoolean(2, true));
         } finally {
             a.recycle();
         }
 
         this.addView(label);
         this.addView(edit);
+
+        mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                label.setEnabled(isChecked);
+                edit.setEnabled(isChecked);
+                edit.requestFocus();
+            }
+        });
+    }
+
+    public Editable getText() {
+        return edit.getText();
     }
 
 }
