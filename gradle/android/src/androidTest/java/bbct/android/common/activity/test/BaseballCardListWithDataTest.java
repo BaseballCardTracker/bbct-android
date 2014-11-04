@@ -469,10 +469,14 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
     }
 
     private void deleteCards() {
+        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
         View deleteMenu = this.activity.findViewById(R.id.delete_menu);
         Assert.assertNotNull(deleteMenu);
         TouchUtils.clickView(this, deleteMenu);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
+        View addMenu = this.activity.findViewById(R.id.add_menu);
+        Assert.assertNotNull(addMenu);
+        Assert.assertTrue(addMenu.isShown());
     }
 
     /**
@@ -584,7 +588,9 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         int index = 4;
         this.solo.clickOnCheckBox(index);
-        Assert.assertTrue(this.solo.waitForView(R.id.add_menu));
+        View addMenu = this.activity.findViewById(R.id.add_menu);
+        Assert.assertNotNull(addMenu);
+        Assert.assertTrue(addMenu.isShown());
     }
 
     public void testOnClickCheckboxAll() {
@@ -626,6 +632,8 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.solo.clickOnImage(0);
 
         this.inst.waitForIdleSync();
+        View addMenu = this.activity.findViewById(R.id.add_menu);
+        Assert.assertTrue(addMenu.isShown());
         Checkable selectAll = (Checkable) this.solo.getCurrentActivity()
                 .findViewById(R.id.select_all);
         Assert.assertFalse(selectAll.isChecked());
