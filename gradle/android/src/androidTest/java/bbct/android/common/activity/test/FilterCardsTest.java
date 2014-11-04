@@ -27,6 +27,7 @@ import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
+import bbct.android.common.view.FilterOptionView;
 import butterknife.ButterKnife;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
@@ -76,16 +77,10 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
         Assert.assertTrue(title.contains(filterCardsTitle));
     }
 
-    /**
-     * Test individual {@link CheckBox} by clicking on it.
-     * Upon click the corresponding {@link EditText} should
-     * be enabled and should have focus.
-     * @param checkId - the id of {@link CheckBox} to click
-     * @param inputId - the id of {@link EditText} to test
-     */
-    private void testCheckBox(int checkId, int inputId) {
-        CheckBox cb = ButterKnife.findById(this.activity, checkId);
-        EditText input = ButterKnife.findById(this.activity, inputId);
+    private void testCheckBox(int filterId) {
+        FilterOptionView optionView = ButterKnife.findById(this.activity, filterId);
+        CheckBox cb = optionView.getCheckBox();
+        EditText input = optionView.getEditText();
         this.solo.clickOnView(cb);
         this.getInstrumentation().waitForIdleSync();
         Assert.assertTrue(input.isEnabled());
@@ -99,7 +94,7 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
      * has focus upon clicking on the corresponding {@link CheckBox}.
      */
     public void testBrandCheckBox() {
-        this.testCheckBox(R.id.brand_check, R.id.brand_input);
+        this.testCheckBox(R.id.brand);
     }
 
     /**
@@ -107,7 +102,7 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
      * has focus upon clicking on the corresponding {@link CheckBox}.
      */
     public void testYearCheckBox() {
-        this.testCheckBox(R.id.year_check, R.id.year_input);
+        this.testCheckBox(R.id.year);
     }
 
     /**
@@ -115,7 +110,7 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
      * has focus upon clicking on the corresponding {@link CheckBox}.
      */
     public void testNumberCheckBox() {
-        this.testCheckBox(R.id.number_check, R.id.number_input);
+        this.testCheckBox(R.id.number);
     }
 
     /**
@@ -123,7 +118,7 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
      * has focus upon clicking on the corresponding {@link CheckBox}.
      */
     public void testPlayerNameCheckBox() {
-        this.testCheckBox(R.id.player_name_check, R.id.player_name_input);
+        this.testCheckBox(R.id.player_name);
     }
 
     /**
@@ -131,7 +126,7 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
      * has focus upon clicking on the corresponding {@link CheckBox}.
      */
     public void testTeamCheckBox() {
-        this.testCheckBox(R.id.team_check, R.id.team_input);
+        this.testCheckBox(R.id.team);
     }
 
     /**
@@ -143,8 +138,10 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
         this.testNumberCheckBox();
         this.solo.setActivityOrientation(Solo.LANDSCAPE);
 
-        this.solo.waitForView(R.id.number_input);
-        EditText numberInput = ButterKnife.findById(this.solo.getCurrentActivity(), R.id.number_input);
+        this.solo.waitForView(R.id.number);
+        FilterOptionView numberOption = ButterKnife.findById(this.solo.getCurrentActivity(),
+                R.id.number);
+        EditText numberInput = numberOption.getEditText();
         Assert.assertTrue(numberInput.isEnabled());
     }
 

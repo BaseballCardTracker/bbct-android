@@ -27,9 +27,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import bbct.android.common.R;
+import bbct.android.common.view.FilterOptionView;
+import butterknife.ButterKnife;
+import butterknife.InjectViews;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FilterCards extends Fragment {
 
@@ -42,36 +45,11 @@ public class FilterCards extends Fragment {
     public static final String PLAYER_NAME_EXTRA = "playerName";
     public static final String TEAM_EXTRA = "team";
 
-    private static final int[] CHECKBOXES = { R.id.brand_check,
-            R.id.year_check, R.id.number_check, R.id.player_name_check,
-            R.id.team_check };
+    private static final String[] EXTRAS = {BRAND_EXTRA, YEAR_EXTRA, NUMBER_EXTRA,
+            PLAYER_NAME_EXTRA, TEAM_EXTRA};
 
-    private static final int[] TEXT_FIELDS = { R.id.brand_input,
-            R.id.year_input, R.id.number_input, R.id.player_name_input,
-            R.id.team_input };
-
-    private static final String[] EXTRAS = { BRAND_EXTRA, YEAR_EXTRA, NUMBER_EXTRA,
-            PLAYER_NAME_EXTRA, TEAM_EXTRA };
-
-    /**
-     * Finds the corresponding {@link EditText} element given a {@link CheckBox}
-     * that was clicked upon.
-     */
-    private View.OnClickListener onCheckBoxClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            EditText input = null;
-
-            for (int i = 0; i < CHECKBOXES.length; i++) {
-                if (v.getId() == CHECKBOXES[i]) {
-                    input = (EditText) FilterCards.this.getActivity().findViewById(TEXT_FIELDS[i]);
-                }
-            }
-
-            FilterCards.this.toggleTextField(input);
-            FilterCards.this.getActivity().supportInvalidateOptionsMenu();
-        }
-    };
+    @InjectViews({R.id.brand, R.id.year, R.id.number, R.id.player_name, R.id.team})
+    List<FilterOptionView> filterOptions;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +61,7 @@ public class FilterCards extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.filter_cards, container, false);
+        ButterKnife.inject(this, view);
 
         // set title
         String format = this.getString(R.string.bbct_title);
@@ -90,35 +69,26 @@ public class FilterCards extends Fragment {
         String title = String.format(format, filterCardsTitle);
         this.getActivity().setTitle(title);
 
-        for (int id : CHECKBOXES) {
-            View checkBox = view.findViewById(id);
-            checkBox.setOnClickListener(this.onCheckBoxClick);
-        }
-
         // restore input fields state
         if (savedInstanceState != null) {
             ArrayList<Integer> enabledFields = savedInstanceState
                     .getIntegerArrayList(INPUT_EXTRA);
             for (int i : enabledFields) {
-                EditText et = (EditText) view.findViewById(TEXT_FIELDS[i]);
-                et.setEnabled(true);
+                filterOptions.get(i).setChecked(true);
             }
         }
 
         return view;
     }
 
-    /**
-     * Save the state of all {@link EditText} elements.
-     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        // TODO: State should be saved by CheckableLinearLayout (or the Android framework)
         ArrayList<Integer> enabledFields = new ArrayList<Integer>();
-        for (int i = 0; i < TEXT_FIELDS.length; i++) {
-            EditText et = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
-            if (et.isEnabled()) {
+        for (int i = 0; i < filterOptions.size(); i++) {
+            if (filterOptions.get(i).isChecked()) {
                 enabledFields.add(i);
             }
         }
@@ -157,30 +127,14 @@ public class FilterCards extends Fragment {
     }
 
     /**
-     * Toggles the state of {@link EditText}.
-     *
-     * @param et
-     *            - the {@link EditText} to toggle
-     */
-    private void toggleTextField(EditText et) {
-        if (et.isEnabled()) {
-            et.setEnabled(false);
-        } else {
-            et.setEnabled(true);
-            et.requestFocus();
-        }
-    }
-
-    /**
      * Counts the number of {@link CheckBox} elements that are checked.
      *
      * @return the number of checked elements
      */
     private int numberChecked() {
         int count = 0;
-        for (int id : CHECKBOXES) {
-            CheckBox cb = (CheckBox) this.getActivity().findViewById(id);
-            if (cb != null && cb.isChecked()) {
+        for (FilterOptionView filterOption : filterOptions) {
+            if (filterOption.isChecked()) {
                 count++;
             }
         }
@@ -194,11 +148,11 @@ public class FilterCards extends Fragment {
      */
     private void onConfirm() {
         Bundle filterArgs = new Bundle();
-        for (int i = 0; i < TEXT_FIELDS.length; i++) {
-            EditText input = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
-            if (input.isEnabled() && input.getText().toString().length() > 0) {
-                String key = EXTRAS[i];
-                filterArgs.putString(key, input.getText().toString());
+        for (int i = 0; i < filterOptions.size(); i++) {
+            FilterOptionView view = filterOptions.get(i);
+            String filterOption = view.getText().toString();
+            if (view.isEnabled() && filterOption.length() > 0) {
+                filterArgs.putString(EXTRAS[i], filterOption);
             }
         }
 

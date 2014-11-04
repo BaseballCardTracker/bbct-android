@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.test.TouchUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
@@ -536,7 +535,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
             }
         };
 
-        this.testSingleFilter(R.id.year_check, R.id.year_input, year + "", yearPred);
+        this.testSingleFilter(R.id.year, year + "", yearPred);
     }
 
     /**
@@ -550,19 +549,10 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
-    /**
-     * Test a filter using a single parameter.
-     *
-     * @param checkId    - the id of the {@link CheckBox} to activate.
-     * @param editId     - the id of the {@link EditText} to input text into.
-     * @param input      - the input to use for filtering.
-     * @param filterPred - @see {@link Predicate}.
-     */
-    private void testSingleFilter(int checkId, int editId, String input,
-                                  Predicate<BaseballCard> filterPred) {
+    private void testSingleFilter(int filterId, String input, Predicate<BaseballCard> filterPred) {
         BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FragmentTags.FILTER_CARDS);
 
-        BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.solo, checkId, editId, input);
+        BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.solo, filterId, input);
         this.solo.clickOnActionBarItem(R.id.save_menu);
         this.inst.waitForIdleSync();
 

@@ -73,4 +73,8 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
         mCheckBox.toggle();
     }
 
+    public CheckBox getCheckBox() {
+        return mCheckBox;
+    }
+
 }

@@ -20,11 +20,10 @@ package bbct.android.common.layout.test;
 
 import android.support.v4.app.Fragment;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
+import bbct.android.common.view.FilterOptionView;
 import butterknife.ButterKnife;
 
 import static org.fest.assertions.api.ANDROID.assertThat;
@@ -52,54 +51,31 @@ public class FilterCardsLayoutTest extends ActivityInstrumentationTestCase2<Frag
         assertThat(mFragment).isAdded().isVisible();
     }
 
-    public void testBrandCheckBox() {
-        testCheckBox(R.id.brand_check);
+    public void testBrandFilterOption() {
+        testFilterOption(R.id.brand);
     }
 
-    public void testYearCheckBox() {
-        testCheckBox(R.id.year_check);
+    public void testYearFilterOption() {
+        testFilterOption(R.id.year);
     }
 
-    public void testNumberCheckBox() {
-        testCheckBox(R.id.number_check);
+    public void testNumberFilterOption() {
+        testFilterOption(R.id.number);
     }
 
-    public void testPlayerNameCheckBox() {
-        testCheckBox(R.id.player_name_check);
+    public void testPlayerNameFilterOption() {
+        testFilterOption(R.id.player_name);
     }
 
-    public void testTeamCheckBox() {
-        testCheckBox(R.id.team_check);
+    public void testTeamFilterOption() {
+        testFilterOption(R.id.team);
     }
 
-    private void testCheckBox(int id) {
-        CheckBox checkBox = ButterKnife.findById(mActivity, id);
-        assertThat(checkBox).isVisible().isNotChecked();
-    }
-
-    public void testBrandEditText() {
-        testEditText(R.id.brand_input);
-    }
-
-    public void testYearEditText() {
-        testEditText(R.id.year_input);
-    }
-
-    public void testNumberEditText() {
-        testEditText(R.id.number_input);
-    }
-
-    public void testPlayerNameEditText() {
-        testEditText(R.id.player_name_input);
-    }
-
-    public void testTeamEditText() {
-        testEditText(R.id.team_input);
-    }
-
-    private void testEditText(int id) {
-        EditText editText = ButterKnife.findById(mActivity, id);
-        assertThat(editText).isVisible().isNotActivated().isEmpty();
+    private void testFilterOption(int id) {
+        FilterOptionView filterOption = ButterKnife.findById(mActivity, id);
+        assertThat(filterOption).isVisible();
+        // TODO: Write custom assertions for FilterOptionsView, including isNotChecked() and isChecked()
+        // TODO: Also editTextIsEnabled() and editTextIsNotEnabled()
     }
 
 }

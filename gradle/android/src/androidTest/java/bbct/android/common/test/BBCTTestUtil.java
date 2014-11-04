@@ -40,6 +40,7 @@ import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
+import bbct.android.common.view.FilterOptionView;
 import butterknife.ButterKnife;
 import com.robotium.solo.Solo;
 import java.util.ArrayList;
@@ -381,52 +382,32 @@ final public class BBCTTestUtil {
     public static void sendKeysToFilterCards(Solo solo, BaseballCard testCard,
                                              Set<EditTexts> fieldFlags) {
         if (fieldFlags.contains(EditTexts.BRAND)) {
-            sendKeysToCurrFieldFilterCards(solo, R.id.brand_check, R.id.brand_input,
-                    testCard.getBrand());
+            sendKeysToCurrFieldFilterCards(solo, R.id.brand, testCard.getBrand());
         }
 
         if (fieldFlags.contains(EditTexts.YEAR)) {
-            sendKeysToCurrFieldFilterCards(solo, R.id.year_check, R.id.year_input,
-                    testCard.getYear() + "");
+            sendKeysToCurrFieldFilterCards(solo, R.id.year, testCard.getYear() + "");
         }
 
         if (fieldFlags.contains(EditTexts.NUMBER)) {
-            sendKeysToCurrFieldFilterCards(solo, R.id.number_check, R.id.number_input,
-                    testCard.getNumber() + "");
+            sendKeysToCurrFieldFilterCards(solo, R.id.number, testCard.getNumber() + "");
         }
 
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
-            sendKeysToCurrFieldFilterCards(solo, R.id.player_name_check, R.id.player_name_input,
-                    testCard.getPlayerName());
+            sendKeysToCurrFieldFilterCards(solo, R.id.player_name, testCard.getPlayerName());
         }
 
         if (fieldFlags.contains(EditTexts.TEAM)) {
-            sendKeysToCurrFieldFilterCards(solo, R.id.team_check, R.id.team_input,
-                    testCard.getTeam());
+            sendKeysToCurrFieldFilterCards(solo, R.id.team, testCard.getTeam());
         }
     }
 
-    /**
-     * Fills in the current {@link EditText} view, of the given
-     * {@link FilterCards} activity.
-     *
-     * @param solo
-     *            - the {@link Solo} object to perform clicks on view.
-     * @param checkId
-     *            - the id of the {@link CheckBox} to click.
-     * @param editTextId
-     *            - the id of the {@link EditText} to send input to.
-     * @param input
-     *            - the input string.
-     */
-    public static void sendKeysToCurrFieldFilterCards(Solo solo, int checkId, int editTextId,
-                                                      String input) {
+    public static void sendKeysToCurrFieldFilterCards(Solo solo, int filterId, String input) {
         Activity filterCards = solo.getCurrentActivity();
-        Assert.assertTrue(solo.waitForView(checkId));
-        CheckBox cb = ButterKnife.findById(filterCards, checkId);
-        solo.clickOnView(cb);
-        EditText editText = ButterKnife.findById(filterCards, editTextId);
-        solo.typeText(editText, input);
+        Assert.assertTrue(solo.waitForView(filterId));
+        FilterOptionView optionView = ButterKnife.findById(filterCards, filterId);
+        solo.clickOnView(optionView.getCheckBox());
+        solo.typeText(optionView.getEditText(), input);
     }
 
     public static List<BaseballCard> filterList(List<BaseballCard> list,

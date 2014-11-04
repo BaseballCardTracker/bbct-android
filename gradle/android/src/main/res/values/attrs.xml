@@ -25,4 +25,7 @@
         <attr name="labelWeight" format="integer"/>
         <attr name="editWeight" format="integer"/>
     </declare-styleable>
+
+    <integer name="filterLabelWeight">3</integer>
+    <integer name="filterEditWeight">7</integer>
 </resources>

@@ -20,6 +20,7 @@ package bbct.android.common.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class FilterOptionView extends CheckableLinearLayout {
         this(context, attrs, 0);
     }
 
-    public FilterOptionView(Context context, AttributeSet attrs, int defStyle) {
+    public FilterOptionView(final Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         label = new TextView(context);
@@ -70,7 +71,7 @@ public class FilterOptionView extends CheckableLinearLayout {
             edit.setLayoutParams(editParams);
 
             label.setText(a.getString(R.styleable.FilterOptionView_label));
-            label.setTextSize(a.getFloat(R.styleable.FilterOptionView_labelTextSize, 1.0f));
+            label.setTextSize(a.getDimension(R.styleable.FilterOptionView_labelTextSize, 1.0f));
             edit.setHint(a.getString(R.styleable.FilterOptionView_hint));
             edit.setInputType(b.getInt(1, 0));
             edit.setSingleLine(b.getBoolean(2, true));
@@ -87,12 +88,30 @@ public class FilterOptionView extends CheckableLinearLayout {
                 label.setEnabled(isChecked);
                 edit.setEnabled(isChecked);
                 edit.requestFocus();
+
+                // TODO: Should not be the responsibility of FilterOptionView
+                if (context instanceof ActionBarActivity) {
+                    ((ActionBarActivity) context).supportInvalidateOptionsMenu();
+                }
             }
         });
     }
 
+    @Override
+    public void setChecked(boolean checked) {
+        super.setChecked(checked);
+
+        label.setEnabled(checked);
+        edit.setEnabled(checked);
+        edit.requestFocus();
+    }
+
     public Editable getText() {
         return edit.getText();
+    }
+
+    public EditText getEditText() {
+        return edit;
     }
 
 }
