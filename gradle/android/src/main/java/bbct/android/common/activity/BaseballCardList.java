@@ -106,9 +106,9 @@ public class BaseballCardList extends ListFragment {
         selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!mCallbacks.isStarted()) {
+                if (isChecked && !mCallbacks.isStarted()) {
                     BaseballCardList.this.getActivity().startActionMode(mCallbacks);
-                } else {
+                } else if (mCallbacks.isStarted()) {
                     mCallbacks.finish();
                 }
 
