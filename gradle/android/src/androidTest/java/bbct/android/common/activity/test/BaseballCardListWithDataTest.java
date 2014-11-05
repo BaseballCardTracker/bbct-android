@@ -404,6 +404,16 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
     private void markAll() {
         this.solo.clickOnCheckBox(SELECT_ALL);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+
+        this.inst.waitForIdleSync();
+        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
+
+        Checkable selectAll = (Checkable) lv.getChildAt(0).findViewById(R.id.select_all);
+        Assert.assertTrue(selectAll.isChecked());
+
+        for (int i = 1; i < lv.getCount(); i++) {
+            Assert.assertTrue("Item #" + i + " is not checked", lv.isItemChecked(i));
+        }
     }
 
     public void testDeleteAll() throws Throwable {
@@ -421,22 +431,13 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         this.inst.waitForIdleSync();
         ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
-        int numMarked = 0;
 
         Checkable selectAll = (Checkable) lv.getChildAt(0).findViewById(R.id.select_all);
-        if (selectAll.isChecked()) {
-            numMarked++;
+        Assert.assertFalse(selectAll.isChecked());
+
+        for (int i = 1; i < lv.getCount(); i++) {
+            Assert.assertFalse("Item #" + i + " is checked", lv.isItemChecked(i));
         }
-
-        for (int i = 1; i < lv.getChildCount(); i++) {
-            Checkable ctv = (Checkable) lv.getChildAt(i).findViewById(R.id.checkmark);
-
-            if (ctv.isChecked()) {
-                numMarked++;
-            }
-        }
-
-        Assert.assertEquals(0, numMarked);
     }
 
     /**
