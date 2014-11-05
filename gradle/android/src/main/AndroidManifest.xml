@@ -35,6 +35,9 @@
         <meta-data
             android:name="android.support.UI_OPTIONS"
             android:value="splitActionBarWhenNarrow"/>
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="9cde09037367c7862dce4570593feb1a6387b087"/>
 
         <activity android:name=".activity.FragmentTestActivity"/>
 

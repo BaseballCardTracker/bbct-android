@@ -24,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.MainActivity;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.amazon.device.ads.AdError;
 import com.amazon.device.ads.AdLayout;
 import com.amazon.device.ads.AdListener;
@@ -43,32 +45,33 @@ public class LiteActivity extends MainActivity implements AdListener {
 
     private static final String APP_KEY = "42d5980d355a49afb22ea8c6618591d8";
 
-    private ViewGroup adViewContainer;
-    private com.amazon.device.ads.AdLayout amazonAdView;
+    @InjectView(R.id.ad_view) ViewGroup adViewContainer;
+    @InjectView(R.id.premium_text) TextView premiumText;
+
+    private AdLayout amazonAdView;
     private AdView admobAdView;
     private boolean amazonAdEnabled;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.inject(this);
 
         AdRegistration.setAppKey(APP_KEY);
 
         // Initialize ad views
-        amazonAdView = new com.amazon.device.ads.AdLayout(this, com.amazon.device.ads.AdSize.SIZE_320x50);
+        amazonAdView = new AdLayout(this, com.amazon.device.ads.AdSize.SIZE_320x50);
         amazonAdView.setListener(this);
         admobAdView = new AdView(this);
         admobAdView.setAdUnitId(AD_UNIT_ID);
         admobAdView.setAdSize(AdSize.BANNER);
 
         // Initialize view container
-        adViewContainer = (ViewGroup) findViewById(R.id.ad_view);
         amazonAdEnabled = true;
         adViewContainer.addView(amazonAdView);
 
         amazonAdView.loadAd(new AdTargetingOptions());
 
-        TextView premiumText = (TextView) this.findViewById(R.id.premium_text);
         premiumText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 

@@ -23,6 +23,7 @@ import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
+import butterknife.ButterKnife;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
 
@@ -56,25 +57,20 @@ public class BaseballCardDetailsWithDataTest extends WithDataTest<FragmentTestAc
     }
 
     public void testBrandAutoComplete() throws Throwable {
-        AutoCompleteTextView brandText = (AutoCompleteTextView) mSolo.getCurrentActivity()
-                .findViewById(R.id.brand_text);
-        this.testAutoComplete(brandText, mCard.getBrand());
+        this.testAutoComplete(R.id.brand_text, mCard.getBrand());
     }
 
     public void testPlayerNameAutoComplete() throws Throwable {
-        AutoCompleteTextView playerNameText = (AutoCompleteTextView) mSolo.getCurrentActivity()
-                .findViewById(R.id.player_name_text);
-        this.testAutoComplete(playerNameText, mCard.getPlayerName());
+        this.testAutoComplete(R.id.player_name_text, mCard.getPlayerName());
     }
 
     public void testTeamAutoComplete() throws Throwable {
-        AutoCompleteTextView teamText = (AutoCompleteTextView) mSolo.getCurrentActivity()
-                .findViewById(R.id.team_text);
-        this.testAutoComplete(teamText, mCard.getTeam());
+        this.testAutoComplete(R.id.team_text, mCard.getTeam());
     }
 
-    private void testAutoComplete(AutoCompleteTextView textView, String text)
+    private void testAutoComplete(int textViewId, String text)
             throws Throwable {
+        AutoCompleteTextView textView = ButterKnife.findById(mSolo.getCurrentActivity(), textViewId);
         mSolo.typeText(textView, text.substring(0, 2));
         mSolo.waitForText(text);
         Assert.assertTrue(textView.isPopupShowing());

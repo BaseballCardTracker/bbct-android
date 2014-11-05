@@ -29,6 +29,8 @@ import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,6 +48,22 @@ public class BaseballCardDetailsPartialInputTest extends
         ActivityInstrumentationTestCase2<FragmentTestActivity> {
 
     private static final String CARD_DATA = "cards.csv";
+    private static final String TEST_NAME = "testPartialInput";
+    private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
+
+    private Solo solo = null;
+    private FragmentTestActivity activity = null;
+    private Instrumentation inst = null;
+    private BaseballCard card = null;
+    private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
+
+    @InjectView(R.id.brand_text) EditText brandEditText = null;
+    @InjectView(R.id.year_text) EditText yearEditText = null;
+    @InjectView(R.id.number_text) EditText numberEditText = null;
+    @InjectView(R.id.count_text) EditText countEditText = null;
+    @InjectView(R.id.value_text) EditText valueEditText = null;
+    @InjectView(R.id.player_name_text) EditText playerNameEditText = null;
+    @InjectView(R.id.team_text) EditText teamEditText = null;
 
     /**
      * Creates a {@link TestSuite} containing every possible combination of
@@ -99,13 +117,8 @@ public class BaseballCardDetailsPartialInputTest extends
 
         this.activity = this.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
-        this.brandEditText = (EditText) this.activity.findViewById(R.id.brand_text);
-        this.yearEditText = (EditText) this.activity.findViewById(R.id.year_text);
-        this.numberEditText = (EditText) this.activity.findViewById(R.id.number_text);
-        this.countEditText = (EditText) this.activity.findViewById(R.id.count_text);
-        this.valueEditText = (EditText) this.activity.findViewById(R.id.value_text);
-        this.playerNameEditText = (EditText) this.activity.findViewById(R.id.player_name_text);
-        this.teamEditText = (EditText) this.activity.findViewById(R.id.team_text);
+        this.inst.waitForIdleSync();
+        ButterKnife.inject(this, this.activity);
 
         this.solo = new Solo(this.inst, this.activity);
     }
@@ -162,18 +175,4 @@ public class BaseballCardDetailsPartialInputTest extends
         }
     }
 
-    private Solo solo = null;
-    private FragmentTestActivity activity = null;
-    private Instrumentation inst = null;
-    private EditText brandEditText = null;
-    private EditText yearEditText = null;
-    private EditText numberEditText = null;
-    private EditText countEditText = null;
-    private EditText valueEditText = null;
-    private EditText playerNameEditText = null;
-    private EditText teamEditText = null;
-    private BaseballCard card = null;
-    private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
-    private static final String TEST_NAME = "testPartialInput";
-    private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
 }
