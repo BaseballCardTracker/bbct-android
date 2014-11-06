@@ -417,13 +417,10 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
 
         this.inst.waitForIdleSync();
-        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
-
-        Checkable selectAll = (Checkable) lv.getChildAt(0).findViewById(R.id.select_all);
         Assert.assertTrue(selectAll.isChecked());
 
-        for (int i = 1; i < lv.getCount(); i++) {
-            Assert.assertTrue("Item #" + i + " is not checked", lv.isItemChecked(i));
+        for (int i = 1; i < listView.getCount(); i++) {
+            Assert.assertTrue("Item #" + i + " is not checked", listView.isItemChecked(i));
         }
     }
 
@@ -480,7 +477,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         Assert.assertNotNull(deleteMenu);
         TouchUtils.clickView(this, deleteMenu);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
-        View addMenu = this.activity.findViewById(R.id.add_menu);
+        View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
         Assert.assertNotNull(addMenu);
         Assert.assertTrue(addMenu.isShown());
     }
@@ -590,7 +587,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
 
         int index = 4;
         this.solo.clickOnCheckBox(index);
-        View addMenu = this.activity.findViewById(R.id.add_menu);
+        View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
         Assert.assertNotNull(addMenu);
         Assert.assertTrue(addMenu.isShown());
     }
@@ -632,10 +629,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.solo.clickOnImage(0);
 
         this.inst.waitForIdleSync();
-        View addMenu = this.activity.findViewById(R.id.add_menu);
+        View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
         Assert.assertTrue(addMenu.isShown());
-        Checkable selectAll = (Checkable) this.solo.getCurrentActivity()
-                .findViewById(R.id.select_all);
         Assert.assertFalse(selectAll.isChecked());
     }
 
