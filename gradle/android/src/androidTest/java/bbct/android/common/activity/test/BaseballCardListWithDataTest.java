@@ -587,6 +587,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
 
         int index = 4;
         this.solo.clickOnCheckBox(index);
+        Assert.assertTrue(this.solo.waitForView(R.id.add_menu));
         View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
         Assert.assertNotNull(addMenu);
         Assert.assertTrue(addMenu.isShown());
@@ -628,7 +629,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.testMarkAll();
         this.solo.clickOnImage(0);
 
-        this.inst.waitForIdleSync();
+        Assert.assertTrue(this.solo.waitForView(R.id.add_menu));
         View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
         Assert.assertTrue(addMenu.isShown());
         Assert.assertFalse(selectAll.isChecked());
