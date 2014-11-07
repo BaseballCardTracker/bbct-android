@@ -38,7 +38,11 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
+
+        if (!BuildConfig.DEBUG) {
+            Crashlytics.start(this);
+        }
+
         this.setContentView(R.layout.main);
 
         if (savedInstanceState == null) {
