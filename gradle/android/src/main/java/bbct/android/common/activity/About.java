@@ -18,17 +18,15 @@
  */
 package bbct.android.common.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import bbct.android.common.R;
+import butterknife.ButterKnife;
 
 /**
  * Displays the name and version of the app, a short description, contact links,
@@ -47,7 +45,7 @@ public class About extends Fragment {
         String title = this.getString(R.string.bbct_title, aboutTitle);
         this.getActivity().setTitle(title);
 
-        TextView versionLabel = (TextView) view.findViewById(R.id.version_label);
+        TextView versionLabel = ButterKnife.findById(view, R.id.version_label);
         String versionNumber = this.getString(R.string.version_number);
         String versionString = this.getString(R.string.version_text, versionNumber);
 

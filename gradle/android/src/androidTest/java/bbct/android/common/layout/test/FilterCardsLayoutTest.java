@@ -25,6 +25,7 @@ import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
+import butterknife.ButterKnife;
 
 import static org.fest.assertions.api.ANDROID.assertThat;
 
@@ -72,7 +73,7 @@ public class FilterCardsLayoutTest extends ActivityInstrumentationTestCase2<Frag
     }
 
     private void testCheckBox(int id) {
-        CheckBox checkBox = (CheckBox) mActivity.findViewById(id);
+        CheckBox checkBox = ButterKnife.findById(mActivity, id);
         assertThat(checkBox).isVisible().isNotChecked();
     }
 
@@ -97,7 +98,7 @@ public class FilterCardsLayoutTest extends ActivityInstrumentationTestCase2<Frag
     }
 
     private void testEditText(int id) {
-        EditText editText = (EditText) mActivity.findViewById(id);
+        EditText editText = ButterKnife.findById(mActivity, id);
         assertThat(editText).isVisible().isNotActivated().isEmpty();
     }
 

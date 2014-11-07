@@ -24,14 +24,16 @@ import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import static org.fest.assertions.api.ANDROID.assertThat;
 
 public class BaseballCardDetailsLayoutTest extends ActivityInstrumentationTestCase2<FragmentTestActivity> {
 
     private BaseballCardDetails mFragment;
-    private CheckBox mAutographCheckBox;
-    private EditText mBrandEditText;
+    @InjectView(R.id.autograph) CheckBox mAutographCheckBox;
+    @InjectView(R.id.brand_text) EditText mBrandEditText;
 
     public BaseballCardDetailsLayoutTest() {
         super(FragmentTestActivity.class);
@@ -45,9 +47,7 @@ public class BaseballCardDetailsLayoutTest extends ActivityInstrumentationTestCa
         mFragment = new BaseballCardDetails();
         activity.replaceFragment(mFragment);
         this.getInstrumentation().waitForIdleSync();
-
-        mAutographCheckBox = (CheckBox) activity.findViewById(R.id.autograph);
-        mBrandEditText = (EditText) activity.findViewById(R.id.brand_text);
+        ButterKnife.inject(this, activity);
     }
 
     public void testFragmentVisible() {

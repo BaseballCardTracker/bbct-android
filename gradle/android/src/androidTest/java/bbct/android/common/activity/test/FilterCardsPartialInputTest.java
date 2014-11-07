@@ -32,6 +32,8 @@ import bbct.android.common.test.BBCTTestUtil.EditTexts;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.EnumSet;
@@ -48,6 +50,15 @@ public class FilterCardsPartialInputTest extends
         ActivityInstrumentationTestCase2<MainActivity> {
 
     private static final String CARD_DATA = "cards.csv";
+    private static final String TEST_NAME = "testFilterCombination";
+    private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
+
+    private List<BaseballCard> allCards;
+    private BaseballCard testCard;
+    private Solo solo = null;
+    private Instrumentation inst = null;
+    private DatabaseUtil dbUtil = null;
+    @InjectView(android.R.id.list) ListView listView = null;
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
@@ -85,16 +96,15 @@ public class FilterCardsPartialInputTest extends
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
                 cardInputStream, true);
         this.allCards = cardInput.getAllBaseballCards();
+        this.testCard = this.allCards.get(1);
         cardInput.close();
 
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         this.dbUtil.populateTable(this.allCards);
 
-        this.activity = this.getActivity();
-        this.solo = new Solo(this.inst, this.activity);
-        this.testCard = this.allCards.get(1);
-        this.listView = (ListView) this.activity
-                .findViewById(android.R.id.list);
+        Activity activity = this.getActivity();
+        ButterKnife.inject(this, activity);
+        this.solo = new Solo(this.inst, activity);
     }
 
     @Override
@@ -152,13 +162,4 @@ public class FilterCardsPartialInputTest extends
         BBCTTestUtil.assertListViewContainsItems(expectedCards, this.listView);
     }
 
-    private List<BaseballCard> allCards;
-    private BaseballCard testCard;
-    private Solo solo = null;
-    private Instrumentation inst = null;
-    private Activity activity = null;
-    private DatabaseUtil dbUtil = null;
-    private ListView listView = null;
-    private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
-    private static final String TEST_NAME = "testFilterCombination";
 }
