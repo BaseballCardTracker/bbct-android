@@ -415,6 +415,13 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     private void markAll() {
         this.solo.clickOnCheckBox(SELECT_ALL);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+
+        this.inst.waitForIdleSync();
+        Assert.assertTrue(selectAll.isChecked());
+
+        for (int i = 1; i < listView.getCount(); i++) {
+            Assert.assertTrue("Item #" + i + " is not checked", listView.isItemChecked(i));
+        }
     }
 
     public void testDeleteAll() throws Throwable {
@@ -430,17 +437,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.solo.clickOnCheckBox(SELECT_ALL);
 
         this.inst.waitForIdleSync();
-        int numMarked = 0;
-
-        for (int i = 0; i < listView.getChildCount(); i++) {
-            Checkable ctv = (Checkable) listView.getChildAt(i);
-
-            if (ctv.isChecked()) {
-                numMarked++;
-            }
+        for (int i = 0; i < listView.getCount(); i++) {
+            Assert.assertFalse("Item #" + i + " is checked", listView.isItemChecked(i));
         }
-
-        Assert.assertEquals(0, numMarked);
     }
 
     /**
@@ -473,10 +472,14 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     }
 
     private void deleteCards() {
+        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
         View deleteMenu = ButterKnife.findById(this.activity, R.id.delete_menu);
         Assert.assertNotNull(deleteMenu);
         TouchUtils.clickView(this, deleteMenu);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
+        View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
+        Assert.assertNotNull(addMenu);
+        Assert.assertTrue(addMenu.isShown());
     }
 
     /**
@@ -576,6 +579,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         int index = 4;
         this.solo.clickOnCheckBox(index);
         Assert.assertTrue(this.solo.waitForView(R.id.add_menu));
+        View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
+        Assert.assertNotNull(addMenu);
+        Assert.assertTrue(addMenu.isShown());
     }
 
     public void testOnClickCheckboxAll() {
@@ -615,7 +621,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.solo.clickOnImage(0);
 
         this.inst.waitForIdleSync();
-        Assert.assertFalse(headerView.isChecked());
+        Assert.assertFalse(selectAll.isChecked());
     }
 
 }

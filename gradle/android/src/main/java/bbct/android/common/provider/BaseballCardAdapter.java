@@ -89,7 +89,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
         ctv.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!mCallback.isStarted()) {
+                if (isChecked && !mCallback.isStarted()) {
                     mActivity.startActionMode(mCallback);
                 }
 
