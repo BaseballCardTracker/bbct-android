@@ -57,9 +57,9 @@ public class MainActivity extends ActionBarActivity {
                 ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
             }
             ft.commit();
-
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
