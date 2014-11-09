@@ -29,13 +29,18 @@ import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.view.FilterOptionView;
 import butterknife.ButterKnife;
+import butterknife.InjectViews;
 import com.robotium.solo.Solo;
+import java.util.List;
 import junit.framework.Assert;
 
 /**
  * Tests for {@link FilterCards} activity class.
  */
 public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTestActivity> {
+
+    @InjectViews({R.id.brand, R.id.year, R.id.number, R.id.team})
+    List<FilterOptionView> filterOptions;
 
     /**
      * Create instrumented test cases for {@link FilterCards}.
@@ -51,7 +56,14 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
         this.activity = this.getActivity();
         this.activity.replaceFragment(new FilterCards());
         this.getInstrumentation().waitForIdleSync();
+        ButterKnife.inject(this, this.activity);
         this.solo = new Solo(this.getInstrumentation(), this.activity);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        this.solo.setActivityOrientation(Solo.PORTRAIT);
+        super.tearDown();
     }
 
     /**
@@ -129,20 +141,40 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
         this.testCheckBox(R.id.team);
     }
 
-    /**
-     * Test that the "Ok" {@link Button} and "Number"
-     * {@link EditText} elements keep their state upon
-     * changing activity orientation.
-     */
-    public void testSaveInstanceState() {
-        this.testNumberCheckBox();
-        this.solo.setActivityOrientation(Solo.LANDSCAPE);
+    public void testSaveInstanceStateBrand() {
+        this.testSaveInstanceState(R.id.brand);
+    }
 
-        this.solo.waitForView(R.id.number);
-        FilterOptionView numberOption = ButterKnife.findById(this.solo.getCurrentActivity(),
-                R.id.number);
-        EditText numberInput = numberOption.getEditText();
-        Assert.assertTrue(numberInput.isEnabled());
+    public void testSaveInstanceStateYear() {
+        this.testSaveInstanceState(R.id.year);
+    }
+
+    public void testSaveInstanceStateNumber() {
+        this.testSaveInstanceState(R.id.number);
+    }
+
+    public void testSaveInstanceStateTeam() {
+        this.testSaveInstanceState(R.id.team);
+    }
+
+    private void testSaveInstanceState(int filterId) {
+        this.testCheckBox(filterId);
+        this.solo.setActivityOrientation(Solo.LANDSCAPE);
+        Assert.assertTrue(this.solo.waitForView(filterId));
+        Activity newActivity = this.solo.getCurrentActivity();
+        ButterKnife.inject(this, newActivity);
+
+        for (FilterOptionView filterOption : filterOptions) {
+            EditText filterInput = filterOption.getEditText();
+
+            if (filterOption.getId() == filterId) {
+                Assert.assertTrue(filterOption.isChecked());
+                Assert.assertTrue(filterInput.isEnabled());
+            } else {
+                Assert.assertFalse(filterOption.isChecked());
+                Assert.assertFalse(filterInput.isEnabled());
+            }
+        }
     }
 
     private Solo solo = null;
