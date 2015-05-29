@@ -20,6 +20,7 @@ package bbct.android.common.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,6 +37,7 @@ import java.util.List;
 
 public class FilterCards extends Fragment {
 
+    private static final String TAG = FilterCards.class.getName();
     private static final String FILTERED_LIST = "Filtered List";
     private static final String INPUT_EXTRA = "input";
 
@@ -60,6 +62,8 @@ public class FilterCards extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView()");
+
         View view = inflater.inflate(R.layout.filter_cards, container, false);
         ButterKnife.inject(this, view);
 
@@ -73,6 +77,9 @@ public class FilterCards extends Fragment {
         if (savedInstanceState != null) {
             ArrayList<Integer> enabledFields = savedInstanceState
                     .getIntegerArrayList(INPUT_EXTRA);
+
+            Log.d(TAG, "enabledField=" + enabledFields);
+
             for (int i : enabledFields) {
                 filterOptions.get(i).setChecked(true);
             }
@@ -84,6 +91,7 @@ public class FilterCards extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState()");
 
         // TODO: State should be saved by CheckableLinearLayout (or the Android framework)
         ArrayList<Integer> enabledFields = new ArrayList<Integer>();
@@ -92,6 +100,8 @@ public class FilterCards extends Fragment {
                 enabledFields.add(i);
             }
         }
+
+        Log.d(TAG, "enabledFields=" + enabledFields);
 
         outState.putIntegerArrayList(INPUT_EXTRA, enabledFields);
     }
