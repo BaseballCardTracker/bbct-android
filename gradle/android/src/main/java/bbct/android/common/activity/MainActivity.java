@@ -28,7 +28,6 @@ import android.view.MenuItem;
 import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.provider.BaseballCardContract;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.crashlytics.android.Crashlytics;
 
 public class MainActivity extends ActionBarActivity {
@@ -59,23 +58,6 @@ public class MainActivity extends ActionBarActivity {
             ft.commit();
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        if (!BuildConfig.DEBUG) {
-            EasyTracker.getInstance(this).activityStart(this);
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (!BuildConfig.DEBUG) {
-            EasyTracker.getInstance(this).activityStop(this);
         }
     }
 
