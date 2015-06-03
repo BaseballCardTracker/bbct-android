@@ -43,7 +43,7 @@ public class LaunchTest {
     public void setUp() throws UiObjectNotFoundException {
         inst = InstrumentationRegistry.getInstrumentation();
         device = UiDevice.getInstance(inst);
-        openActivity();
+        startApp();
     }
 
     @After
@@ -51,7 +51,7 @@ public class LaunchTest {
         device.pressHome();
     }
 
-    private void openActivity() throws UiObjectNotFoundException {
+    private void startApp() throws UiObjectNotFoundException {
         device.pressHome();
         UiObject allAppsButton = device.findObject(new UiSelector().description("Apps"));
         allAppsButton.clickAndWaitForNewWindow();
