@@ -25,6 +25,7 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,6 +40,11 @@ public class LaunchTest {
     public void setUp() throws UiObjectNotFoundException {
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         openActivity();
+    }
+
+    @After
+    public void tearDown() {
+        device.pressHome();
     }
 
     private void openActivity() throws UiObjectNotFoundException {
