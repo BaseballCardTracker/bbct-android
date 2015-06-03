@@ -19,7 +19,6 @@
 package bbct.android.common.test;
 
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
