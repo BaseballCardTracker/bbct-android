@@ -141,7 +141,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
 
-        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+        List<BaseballCard> cards = new ArrayList<>();
         cards.add(card);
 
         this.inst.waitForIdleSync();

@@ -404,7 +404,7 @@ final public class BBCTTestUtil {
 
     public static List<BaseballCard> filterList(List<BaseballCard> list,
             Predicate<BaseballCard> pred) {
-        List<BaseballCard> filteredList = new ArrayList<BaseballCard>();
+        List<BaseballCard> filteredList = new ArrayList<>();
 
         for (BaseballCard obj : list) {
             if (pred.doTest(obj)) {
@@ -449,9 +449,9 @@ final public class BBCTTestUtil {
         Log.d(TAG, "powerSet()");
         Log.d(TAG, "input=" + input);
 
-        Set<T> copy = new HashSet<T>(input);
+        Set<T> copy = new HashSet<>(input);
         if (copy.isEmpty()) {
-            Set<Set<T>> power = new HashSet<Set<T>>();
+            Set<Set<T>> power = new HashSet<>();
             power.add(new HashSet<T>());
             return power;
         }
@@ -466,10 +466,10 @@ final public class BBCTTestUtil {
 
         Log.d(TAG, "power=" + power);
 
-        Set<Set<T>> powerCopy = new HashSet<Set<T>>();
+        Set<Set<T>> powerCopy = new HashSet<>();
 
         for (Set<T> set : power) {
-            Set<T> setCopy = new HashSet<T>(set);
+            Set<T> setCopy = new HashSet<>(set);
             setCopy.add(elem);
             powerCopy.add(setCopy);
         }

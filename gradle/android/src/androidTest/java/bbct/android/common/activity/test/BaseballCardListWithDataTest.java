@@ -489,7 +489,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     public void testDeleteCardNoFilter() throws Throwable {
         int cardIndex = 0;
 
-        this.expectedCards = new ArrayList<BaseballCard>(this.allCards);
+        this.expectedCards = new ArrayList<>(this.allCards);
         this.expectedCards.remove(cardIndex);
 
         // Add 1 for header view
