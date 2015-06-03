@@ -18,52 +18,15 @@
  */
 package bbct.android.common.functional.test;
 
-import android.app.Instrumentation;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiObjectNotFoundException;
-import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
-import bbct.android.common.R;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class LaunchTest {
-
-    private UiDevice device;
-    private Instrumentation inst;
-
-    @Before
-    public void setUp() throws UiObjectNotFoundException {
-        inst = InstrumentationRegistry.getInstrumentation();
-        device = UiDevice.getInstance(inst);
-        startApp();
-    }
-
-    @After
-    public void tearDown() {
-        device.pressHome();
-    }
-
-    private void startApp() throws UiObjectNotFoundException {
-        device.pressHome();
-        UiObject allAppsButton = device.findObject(new UiSelector().description("Apps"));
-        allAppsButton.clickAndWaitForNewWindow();
-        UiObject appsTab = device.findObject(new UiSelector().text("Apps"));
-        appsTab.click();
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true));
-        appViews.setAsHorizontalList();
-        String appName = inst.getTargetContext().getString(R.string.app_name);
-        UiObject ourApp = appViews.getChildByText(
-                new UiSelector().className("android.widget.TextView"), appName);
-        ourApp.clickAndWaitForNewWindow();
-    }
+public class LaunchTest extends UiAutomatorTest {
 
     @Test
     public void testLaunch() {
