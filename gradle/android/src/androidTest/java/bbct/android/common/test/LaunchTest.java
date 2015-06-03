@@ -18,6 +18,7 @@
  */
 package bbct.android.common.test;
 
+import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
@@ -25,6 +26,7 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
+import bbct.android.common.R;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,10 +37,12 @@ import org.junit.runner.RunWith;
 public class LaunchTest {
 
     private UiDevice device;
+    private Instrumentation inst;
 
     @Before
     public void setUp() throws UiObjectNotFoundException {
-        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        inst = InstrumentationRegistry.getInstrumentation();
+        device = UiDevice.getInstance(inst);
         openActivity();
     }
 
@@ -55,15 +59,16 @@ public class LaunchTest {
         appsTab.click();
         UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true));
         appViews.setAsHorizontalList();
+        String appName = inst.getTargetContext().getString(R.string.app_name);
         UiObject ourApp = appViews.getChildByText(
-                new UiSelector().className("android.widget.TextView"), "BBCT Premium");
+                new UiSelector().className("android.widget.TextView"), appName);
         ourApp.clickAndWaitForNewWindow();
     }
 
     @Test
     public void testLaunch() {
-        UiObject appValidation = device.findObject(
-                new UiSelector().packageName("bbct.android.premium"));
+        String packageName = inst.getTargetContext().getPackageName();
+        UiObject appValidation = device.findObject(new UiSelector().packageName(packageName));
         Assert.assertTrue("Could not open test app", appValidation.exists());
     }
 
