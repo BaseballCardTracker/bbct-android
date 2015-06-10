@@ -38,6 +38,8 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.Predicate;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,8 +51,19 @@ import junit.framework.Assert;
  * Tests for the {@link MainActivity} activity when the database contains
  * data.
  */
-public class BaseballCardListWithDataTest <T extends MainActivity> extends
+abstract public class BaseballCardListWithDataTest <T extends MainActivity> extends
         WithDataTest<T> {
+
+    private static final int SELECT_ALL = 0;
+    private static final String TAG = BaseballCardListWithDataTest.class.getName();
+
+    private List<BaseballCard> expectedCards;
+    private Solo solo = null;
+    private Activity activity = null;
+    private BaseballCard newCard = null;
+
+    @InjectView(android.R.id.list) ListView listView;
+    @InjectView(R.id.select_all) CheckBox selectAll;
 
     /**
      * Create instrumented test cases for {@link MainActivity}.
@@ -72,6 +85,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         // Start Activity
         this.activity = this.getActivity();
+        ButterKnife.inject(this, this.activity);
         this.newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
                 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
 
@@ -105,7 +119,6 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         Assert.assertTrue(this.dbUtil.containsAllBaseballCards(this.allCards));
 
         this.solo.waitForFragmentByTag(FragmentTags.CARD_LIST);
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
         Assert.assertNotNull(listView);
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
@@ -139,7 +152,6 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
      * Test the header view of the {@link ListView}.
      */
     public void testHeader() {
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
         Assert.assertEquals(1, listView.getHeaderViewsCount());
         Assert.assertTrue(this.solo.searchText("Brand"));
         Assert.assertTrue(this.solo.searchText("Year"));
@@ -157,7 +169,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.activity = this.getActivity();
 
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.solo.getCurrentActivity());
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
@@ -175,7 +187,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.activity = this.getActivity();
 
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
     }
 
@@ -195,7 +207,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.activity = this.getActivity();
 
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
@@ -206,7 +218,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
     public void testStatePauseWithoutFilter() {
         this.inst.callActivityOnRestart(this.activity);
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
@@ -221,7 +233,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.testYearFilter();
         this.inst.callActivityOnRestart(this.activity);
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
     }
 
@@ -238,7 +250,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.testClearFilter();
         this.inst.callActivityOnRestart(this.activity);
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
@@ -305,7 +317,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         this.allCards.add(this.newCard);
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
@@ -326,7 +338,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         this.expectedCards.add(this.newCard);
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
     }
 
@@ -347,7 +359,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         this.solo.goBack();
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
     }
 
@@ -367,7 +379,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         this.allCards.add(this.newCard);
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
@@ -382,34 +394,39 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
     private void assertAllCheckboxesChecked() {
         this.inst.waitForIdleSync();
-        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
         int numMarked = 0;
 
-        Checkable selectAll = (Checkable) lv.getChildAt(0).findViewById(R.id.select_all);
+        Checkable selectAll = (Checkable) listView.getChildAt(0);
         if (selectAll.isChecked()) {
             numMarked++;
         }
 
-        for (int i = 1; i < lv.getChildCount(); i++) {
-            Checkable ctv = (Checkable) lv.getChildAt(i).findViewById(R.id.checkmark);
+        for (int i = 1; i < listView.getChildCount(); i++) {
+            Checkable ctv = (Checkable) listView.getChildAt(i);
 
             if (ctv.isChecked()) {
                 numMarked++;
             }
         }
 
-        Assert.assertEquals(lv.getChildCount(), numMarked);
+        Assert.assertEquals(listView.getChildCount(), numMarked);
     }
 
     private void markAll() {
         this.solo.clickOnCheckBox(SELECT_ALL);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+
+        this.inst.waitForIdleSync();
+        Assert.assertTrue(selectAll.isChecked());
+
+        for (int i = 1; i < listView.getCount(); i++) {
+            Assert.assertTrue("Item #" + i + " is not checked", listView.isItemChecked(i));
+        }
     }
 
     public void testDeleteAll() throws Throwable {
         this.markAll();
         deleteCards();
-        ListView listView = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
         Assert.assertNotNull(listView);
         Assert.assertEquals(1, listView.getAdapter().getCount());
         this.solo.waitForView(android.R.id.empty);
@@ -420,23 +437,9 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.solo.clickOnCheckBox(SELECT_ALL);
 
         this.inst.waitForIdleSync();
-        ListView lv = (ListView) this.activity.findViewById(android.R.id.list);
-        int numMarked = 0;
-
-        Checkable selectAll = (Checkable) lv.getChildAt(0).findViewById(R.id.select_all);
-        if (selectAll.isChecked()) {
-            numMarked++;
+        for (int i = 0; i < listView.getCount(); i++) {
+            Assert.assertFalse("Item #" + i + " is checked", listView.isItemChecked(i));
         }
-
-        for (int i = 1; i < lv.getChildCount(); i++) {
-            Checkable ctv = (Checkable) lv.getChildAt(i).findViewById(R.id.checkmark);
-
-            if (ctv.isChecked()) {
-                numMarked++;
-            }
-        }
-
-        Assert.assertEquals(0, numMarked);
     }
 
     /**
@@ -464,15 +467,19 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         deleteCards();
 
-        ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
+        ButterKnife.inject(this, this.activity);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
     }
 
     private void deleteCards() {
-        View deleteMenu = this.activity.findViewById(R.id.delete_menu);
+        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+        View deleteMenu = ButterKnife.findById(this.activity, R.id.delete_menu);
         Assert.assertNotNull(deleteMenu);
         TouchUtils.clickView(this, deleteMenu);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
+        View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
+        Assert.assertNotNull(addMenu);
+        Assert.assertTrue(addMenu.isShown());
     }
 
     /**
@@ -490,8 +497,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
 
         deleteCards();
-        ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, lv);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
     }
 
     /**
@@ -510,12 +516,9 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         Log.d(TAG, "assertions");
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
         Assert.assertTrue(this.solo.waitForView(android.R.id.list));
-        ListView lv = (ListView) this.solo.getCurrentActivity().findViewById(android.R.id.list);
-        Log.d(TAG, "lv.getChildCount()=" + lv.getChildCount());
-        View row = lv.getChildAt(index);
-        Log.d(TAG, "row=" + row);
-        Checkable ctv = (Checkable) row.findViewById(R.id.checkmark);
-        Assert.assertTrue(ctv.isChecked());
+        ButterKnife.inject(this, this.solo.getCurrentActivity());
+        Checkable row = (Checkable) listView.getChildAt(index);
+        Assert.assertTrue(row.isChecked());
 
         this.activity.finish();
         Log.d(TAG, "finished");
@@ -545,7 +548,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.testYearFilter();
         BBCTTestUtil.testMenuItem(this.solo, R.id.clear_filter_menu, FragmentTags.CARD_LIST);
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
     }
 
@@ -567,7 +570,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         this.expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
 
         Assert.assertTrue(this.solo.waitForView(R.id.clear_filter_menu));
@@ -585,6 +588,9 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         int index = 4;
         this.solo.clickOnCheckBox(index);
         Assert.assertTrue(this.solo.waitForView(R.id.add_menu));
+        View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
+        Assert.assertNotNull(addMenu);
+        Assert.assertTrue(addMenu.isShown());
     }
 
     public void testOnClickCheckboxAll() {
@@ -593,7 +599,6 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         }
 
         this.inst.waitForIdleSync();
-        CheckBox selectAll = (CheckBox) this.solo.getCurrentActivity().findViewById(R.id.select_all);
         Assert.assertTrue(selectAll.isChecked());
     }
 
@@ -602,7 +607,6 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.solo.clickOnCheckBox(1);
 
         this.inst.waitForIdleSync();
-        CheckBox selectAll = (CheckBox) this.solo.getCurrentActivity().findViewById(R.id.select_all);
         Assert.assertFalse(selectAll.isChecked());
     }
 
@@ -625,18 +629,10 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
         this.testMarkAll();
         this.solo.clickOnImage(0);
 
-        this.inst.waitForIdleSync();
-        Checkable selectAll = (Checkable) this.solo.getCurrentActivity()
-                .findViewById(R.id.select_all);
+        Assert.assertTrue(this.solo.waitForView(R.id.add_menu));
+        View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
+        Assert.assertTrue(addMenu.isShown());
         Assert.assertFalse(selectAll.isChecked());
     }
 
-    private List<BaseballCard> expectedCards;
-    private Solo solo = null;
-    private Activity activity = null;
-    private BaseballCard newCard = null;
-
-    private static final int SELECT_ALL = 0;
-    private static final String TAG = BaseballCardListWithDataTest.class
-            .getName();
 }

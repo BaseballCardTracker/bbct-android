@@ -39,6 +39,8 @@ import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.robotium.solo.Solo;
 import java.io.InputStream;
 import junit.framework.Assert;
@@ -52,6 +54,21 @@ public class BaseballCardDetailsTest extends
     private static final int SLEEP_TIME_TO_REFRESH = 200;
     private static final int KEYPAD_HEIGHT = 100;
     private static final String CARD_DATA = "cards.csv";
+
+    private Solo solo;
+    private FragmentTestActivity activity;
+    private Instrumentation inst;
+    private BaseballCard card;
+
+    @InjectView(R.id.brand_text) AutoCompleteTextView brandText;
+    @InjectView(R.id.year_text) EditText yearText;
+    @InjectView(R.id.number_text) EditText numberText;
+    @InjectView(R.id.value_text) EditText valueText;
+    @InjectView(R.id.count_text) EditText countText;
+    @InjectView(R.id.player_name_text) EditText playerNameText;
+    @InjectView(R.id.team_text) EditText playerTeamText;
+    @InjectView(R.id.player_position_text) Spinner playerPositionSpinner;
+    @InjectView(R.id.scroll_card_details) ScrollView scrollView;
 
     /**
      * Create instrumented test cases for {@link BaseballCardDetails}.
@@ -80,27 +97,10 @@ public class BaseballCardDetailsTest extends
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
-        // Must call getActivity() before creating a DatabaseUtil object to
-        // ensure that the database is created
         this.activity = this.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
         this.inst.waitForIdleSync();
-        this.brandText = (AutoCompleteTextView) this.activity
-                .findViewById(R.id.brand_text);
-        this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
-        this.numberText = (EditText) this.activity
-                .findViewById(R.id.number_text);
-        this.valueText = (EditText) this.activity.findViewById(R.id.value_text);
-        this.countText = (EditText) this.activity.findViewById(R.id.count_text);
-        this.playerNameText = (EditText) this.activity
-                .findViewById(R.id.player_name_text);
-        this.playerTeamText = (EditText) this.activity
-                .findViewById(R.id.team_text);
-        this.playerPositionSpinner = (Spinner) this.activity
-                .findViewById(R.id.player_position_text);
-        this.scrollView = (ScrollView) this.activity
-                .findViewById(R.id.scroll_card_details);
-
+        ButterKnife.inject(this, this.activity);
         this.solo = new Solo(this.inst, this.activity);
     }
 
@@ -191,8 +191,8 @@ public class BaseballCardDetailsTest extends
         this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
         Assert.assertTrue(this.playerTeamText.hasFocus());
 
-        View rootView = ((ViewGroup) this.activity
-                .findViewById(android.R.id.content)).getChildAt(0);
+        ViewGroup content = ButterKnife.findById(this.activity, android.R.id.content);
+        View rootView = content.getChildAt(0);
         Rect r = new Rect();
         // r will be populated with the coordinates of the view area still
         // visible.
@@ -263,17 +263,4 @@ public class BaseballCardDetailsTest extends
         }
     }
 
-    private Solo solo = null;
-    private FragmentTestActivity activity = null;
-    private AutoCompleteTextView brandText = null;
-    private EditText yearText = null;
-    private EditText numberText = null;
-    private EditText valueText = null;
-    private EditText countText = null;
-    private EditText playerNameText = null;
-    private EditText playerTeamText = null;
-    private Spinner playerPositionSpinner = null;
-    private ScrollView scrollView = null;
-    private Instrumentation inst = null;
-    private BaseballCard card = null;
 }
