@@ -40,6 +40,7 @@ public class BaseballCardDetailsWithDataTest extends WithDataTest<FragmentTestAc
     protected void setUp() throws Exception {
         super.setUp();
 
+        this.inst.setInTouchMode(true);
         FragmentTestActivity activity = this.getActivity();
         activity.replaceFragment(new BaseballCardDetails());
 

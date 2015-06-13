@@ -96,6 +96,7 @@ public class BaseballCardDetailsTest extends
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
+        this.inst.setInTouchMode(true);
         this.activity = this.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
         this.inst.waitForIdleSync();

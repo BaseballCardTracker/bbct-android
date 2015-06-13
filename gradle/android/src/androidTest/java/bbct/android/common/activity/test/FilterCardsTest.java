@@ -47,6 +47,7 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
     protected void setUp() throws Exception {
         super.setUp();
 
+        this.getInstrumentation().setInTouchMode(true);
         this.activity = this.getActivity();
         this.activity.replaceFragment(new FilterCards());
         this.getInstrumentation().waitForIdleSync();

@@ -69,6 +69,7 @@ public class BaseballCardDetailsAddCardsTest extends
         this.card = this.allCards.get(0);
         cardInput.close();
 
+        this.inst.setInTouchMode(true);
         FragmentTestActivity activity = this.getActivity();
         Fragment fragment = new BaseballCardDetails();
         activity.replaceFragment(fragment);
