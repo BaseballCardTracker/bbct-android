@@ -29,6 +29,7 @@ import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.provider.BaseballCardContract;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.crashlytics.android.Crashlytics;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -37,6 +38,11 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!BuildConfig.DEBUG) {
+            Crashlytics.start(this);
+        }
+
         this.setContentView(R.layout.main);
 
         if (savedInstanceState == null) {

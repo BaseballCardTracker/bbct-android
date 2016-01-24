@@ -24,11 +24,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
+import butterknife.ButterKnife;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
 
@@ -62,18 +61,7 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
         Assert.assertNotNull(this.solo);
-
-        TableLayout tl = (TableLayout) this.activity.findViewById(R.id.tableLayout);
-        for (int i = 0; i < tl.getChildCount(); i++) {
-            TableRow row = (TableRow) tl.getChildAt(i);
-            CheckBox cb = (CheckBox) row.getChildAt(CHECKBOX_INDEX);
-            EditText input = (EditText) row.getChildAt(INPUT_INDEX);
-
-            Assert.assertFalse(cb.isChecked());
-            Assert.assertFalse(input.isEnabled());
-        }
-
-        View menuView = this.activity.findViewById(R.id.save_menu);
+        View menuView = ButterKnife.findById(this.activity, R.id.save_menu);
         Assert.assertNull(menuView);
     }
 
@@ -96,8 +84,8 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
      * @param inputId - the id of {@link EditText} to test
      */
     private void testCheckBox(int checkId, int inputId) {
-        CheckBox cb = (CheckBox) this.activity.findViewById(checkId);
-        EditText input = (EditText) this.activity.findViewById(inputId);
+        CheckBox cb = ButterKnife.findById(this.activity, checkId);
+        EditText input = ButterKnife.findById(this.activity, inputId);
         this.solo.clickOnView(cb);
         this.getInstrumentation().waitForIdleSync();
         Assert.assertTrue(input.isEnabled());
@@ -156,14 +144,11 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
         this.solo.setActivityOrientation(Solo.LANDSCAPE);
 
         this.solo.waitForView(R.id.number_input);
-        EditText numberInput = (EditText) this.solo.getCurrentActivity()
-                .findViewById(R.id.number_input);
+        EditText numberInput = ButterKnife.findById(this.solo.getCurrentActivity(), R.id.number_input);
         Assert.assertTrue(numberInput.isEnabled());
     }
 
     private Solo solo = null;
     private FragmentTestActivity activity = null;
 
-    private static final int CHECKBOX_INDEX = 0;
-    private static final int INPUT_INDEX = 2;
 }
