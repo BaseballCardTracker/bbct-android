@@ -65,6 +65,10 @@ testdroid {
     mode 'FULL_RUN'
     projectName 'BBCT Lite'
 
+    fullRunConfig {
+        instrumentationRunner = 'android.support.test.runner.AndroidJUnitRunner'
+    }
+
     def Properties props = new Properties()
     def propFile = new File('bbct.properties')
     if (propFile.canRead()) {
