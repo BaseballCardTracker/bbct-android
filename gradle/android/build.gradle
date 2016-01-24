@@ -67,8 +67,6 @@ testdroid {
 
     fullRunConfig {
         instrumentationRunner = 'android.support.test.runner.AndroidJUnitRunner'
-        limitationType = 'CLASS'
-        limitationValue = 'bbct.android.common.functional.test.LaunchTest'
     }
 
     def Properties props = new Properties()
@@ -76,16 +74,29 @@ testdroid {
     if (propFile.canRead()) {
         props.load(new FileInputStream(propFile))
 
-        if (props!=null && props.containsKey('TESTDROID_USERNAME') && props.containsKey('TESTDROID_PASSWORD')) {
-            testdroid.username = props['TESTDROID_USERNAME']
-            testdroid.password = props['TESTDROID_PASSWORD']
-        } else {
-            println 'bbct.properties found but TESTDROID entries are missing'
-            android.buildTypes.release.signingConfig = null
+        if (props != null) {
+            if (props.containsKey('TESTDROID_USERNAME') && props.containsKey('TESTDROID_PASSWORD') )
+            {
+                testdroid.username = props['TESTDROID_USERNAME']
+                testdroid.password = props['TESTDROID_PASSWORD']
+            } else {
+                println 'bbct.properties found but TESTDROID entries are missing'
+            }
+
+            if (props.containsKey('TESTDROID_PACKAGE')) {
+                testdroid.fullRunConfig.limitationType = 'PACKAGE'
+                testdroid.fullRunConfig.limitationValue = props['TESTDROID_PACKAGE']
+                println 'Setting test package: ' + props['TESTDROID_PACKAGE']
+            }
+
+            if (props.containsKey('TESTDROID_CLASS')) {
+                testdroid.fullRunConfig.limitationType = 'CLASS'
+                testdroid.fullRunConfig.limitationValue = props['TESTDROID_CLASS']
+                println 'Setting test class: ' + props['TESTDROID_CLASS']
+            }
         }
     } else {
         println 'bbct.properties not found'
-        android.buildTypes.release.signingConfig = null
     }
 }
 
