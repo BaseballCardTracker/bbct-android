@@ -67,6 +67,8 @@ testdroid {
 
     fullRunConfig {
         instrumentationRunner = 'android.support.test.runner.AndroidJUnitRunner'
+        limitationType = 'CLASS'
+        limitationValue = 'bbct.android.common.functional.test.LaunchTest'
     }
 
     def Properties props = new Properties()
