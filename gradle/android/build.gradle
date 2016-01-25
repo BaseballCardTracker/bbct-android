@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
+apply plugin: 'testdroid'
 
 android {
     compileSdkVersion 22
@@ -38,25 +39,62 @@ android {
             versionName "0.6.2"
         }
     }
-    def Properties props = new Properties()
-    def propFile = new File('signing.properties')
-    if (propFile.canRead()) {
-        props.load(new FileInputStream(propFile))
+}
 
-        if (props!=null && props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') &&
-                props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+testdroid {
+    mode 'FULL_RUN'
+    projectName 'BBCT Lite'
+
+    fullRunConfig {
+        instrumentationRunner = 'android.support.test.runner.AndroidJUnitRunner'
+    }
+}
+
+def Properties props = new Properties()
+def propFile = new File('bbct.properties')
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+
+    if (props != null) {
+        if (props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD')
+                && props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
             android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
             android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
             android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
             android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
         } else {
-            println 'signing.properties found but some entries are missing'
+            println 'bbct.properties found but SIGNING entries are missing'
             android.buildTypes.release.signingConfig = null
         }
-    } else {
-        println 'signing.properties not found'
-        android.buildTypes.release.signingConfig = null
+
+        if (props.containsKey('TESTDROID_USERNAME') && props.containsKey('TESTDROID_PASSWORD') )
+        {
+            testdroid.username = props['TESTDROID_USERNAME']
+            testdroid.password = props['TESTDROID_PASSWORD']
+        } else {
+            println 'bbct.properties found but TESTDROID entries are missing'
+        }
+
+        if (props.containsKey('TESTDROID_PACKAGE')) {
+            testdroid.fullRunConfig.limitationType = 'PACKAGE'
+            testdroid.fullRunConfig.limitationValue = props['TESTDROID_PACKAGE']
+            println 'Setting test package: ' + props['TESTDROID_PACKAGE']
+        }
+
+        if (props.containsKey('TESTDROID_CLASS')) {
+            testdroid.fullRunConfig.limitationType = 'CLASS'
+            testdroid.fullRunConfig.limitationValue = props['TESTDROID_CLASS']
+            println 'Setting test class: ' + props['TESTDROID_CLASS']
+        }
+
+        if (props.containsKey('TESTDROID_DEVICE_GROUP')) {
+            testdroid.deviceGroup = props['TESTDROID_DEVICE_GROUP']
+        } else {
+            println '\'deviceGroup\' not specified'
+        }
     }
+} else {
+    println 'bbct.properties not found'
 }
 
 dependencies {
