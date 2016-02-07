@@ -120,6 +120,7 @@ public class BaseballCardDetailsEditCardTest extends
             Log.e(TAG, this.oldCard.toString());
         }
 
+        inst.setInTouchMode(true);
         this.activity = this.getActivity();
         this.fragment = BaseballCardDetails.getInstance(cardId, this.oldCard);
         this.activity.replaceFragment(this.fragment);

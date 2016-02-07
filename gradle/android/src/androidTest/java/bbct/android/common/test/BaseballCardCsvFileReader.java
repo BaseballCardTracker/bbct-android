@@ -103,7 +103,7 @@ public class BaseballCardCsvFileReader {
      *             If an error occurs while reading the input.
      */
     public List<BaseballCard> getAllBaseballCards() throws IOException {
-        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+        List<BaseballCard> cards = new ArrayList<>();
         while (this.hasNextBaseballCard()) {
             cards.add(this.getNextBaseballCard());
         }

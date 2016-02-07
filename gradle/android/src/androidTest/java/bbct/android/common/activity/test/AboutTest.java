@@ -49,6 +49,7 @@ public class AboutTest extends ActivityInstrumentationTestCase2<FragmentTestActi
     public void setUp() throws Exception {
         super.setUp();
 
+        this.getInstrumentation().setInTouchMode(true);
         this.activity = this.getActivity();
         this.aboutFragment = new About();
         this.activity.replaceFragment(this.aboutFragment);

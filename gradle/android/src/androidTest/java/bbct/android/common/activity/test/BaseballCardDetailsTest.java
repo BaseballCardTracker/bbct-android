@@ -24,7 +24,6 @@ import android.graphics.Rect;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -97,6 +96,7 @@ public class BaseballCardDetailsTest extends
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
+        this.inst.setInTouchMode(true);
         this.activity = this.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
         this.inst.waitForIdleSync();
@@ -161,34 +161,22 @@ public class BaseballCardDetailsTest extends
      * in the soft keyboard
      */
     public void testNextButtonOnClick() {
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.brandText,
-                this.card.getBrand());
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        this.solo.pressSoftKeyboardNextButton();
         Assert.assertTrue(this.yearText.hasFocus());
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.yearText,
-                Integer.toString(this.card.getYear()));
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        this.solo.pressSoftKeyboardNextButton();
         Assert.assertTrue(this.numberText.hasFocus());
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.numberText,
-                Integer.toString(this.card.getNumber()));
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        this.solo.pressSoftKeyboardNextButton();
         Assert.assertTrue(this.valueText.hasFocus());
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.valueText,
-                Integer.toString(this.card.getValue()));
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        this.solo.pressSoftKeyboardNextButton();
         Assert.assertTrue(this.countText.hasFocus());
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.countText,
-                Integer.toString(this.card.getCount()));
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        this.solo.pressSoftKeyboardNextButton();
         Assert.assertTrue(this.playerNameText.hasFocus());
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst,
-                this.playerNameText, this.card.getPlayerName());
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        this.solo.pressSoftKeyboardNextButton();
         Assert.assertTrue(this.playerTeamText.hasFocus());
 
         ViewGroup content = ButterKnife.findById(this.activity, android.R.id.content);
@@ -205,9 +193,7 @@ public class BaseballCardDetailsTest extends
             condnBefore = true;
         }
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst,
-                this.playerTeamText, this.card.getTeam());
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        this.solo.pressSoftKeyboardNextButton();
         // Wait for the keyboard to disappear and view to be refreshed
         try {
             Thread.sleep(SLEEP_TIME_TO_REFRESH);

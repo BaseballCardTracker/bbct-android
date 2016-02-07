@@ -19,13 +19,11 @@
 package bbct.android.common.test;
 
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.test.ViewAsserts;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -281,31 +279,6 @@ final public class BBCTTestUtil {
     }
 
     /**
-     * Fills in the current AutoCompleteTextView/EditText view, of the given
-     * {@link BaseballCardDetails} activity.
-     *
-     * @param inst
-     *            The {@link Instrumentation} object performing the test.
-     * @param editTextView
-     *            The {@link BaseballCardDetails} EditText object of the view to
-     *            be filled
-     * @param cardDetail
-     *            The {@link BaseballCard} string object holding the data to add
-     *            to the database.
-     */
-    public static void sendKeysToCurrFieldCardDetails(Instrumentation inst,
-            EditText editTextView, String cardDetail) {
-        Log.d(TAG, "sendKeysToCurrFieldCardDetails()");
-
-        inst.sendStringSync(cardDetail);
-        if (editTextView instanceof AutoCompleteTextView) {
-            if (((AutoCompleteTextView) editTextView).isPopupShowing()) {
-                inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-            }
-        }
-    }
-
-    /**
      * Assert that the {@link EditText} views in the given
      * {@link BaseballCardDetails} activity contain the same data as the given
      * {@link BaseballCard}.
@@ -431,7 +404,7 @@ final public class BBCTTestUtil {
 
     public static List<BaseballCard> filterList(List<BaseballCard> list,
             Predicate<BaseballCard> pred) {
-        List<BaseballCard> filteredList = new ArrayList<BaseballCard>();
+        List<BaseballCard> filteredList = new ArrayList<>();
 
         for (BaseballCard obj : list) {
             if (pred.doTest(obj)) {
@@ -476,9 +449,9 @@ final public class BBCTTestUtil {
         Log.d(TAG, "powerSet()");
         Log.d(TAG, "input=" + input);
 
-        Set<T> copy = new HashSet<T>(input);
+        Set<T> copy = new HashSet<>(input);
         if (copy.isEmpty()) {
-            Set<Set<T>> power = new HashSet<Set<T>>();
+            Set<Set<T>> power = new HashSet<>();
             power.add(new HashSet<T>());
             return power;
         }
@@ -493,10 +466,10 @@ final public class BBCTTestUtil {
 
         Log.d(TAG, "power=" + power);
 
-        Set<Set<T>> powerCopy = new HashSet<Set<T>>();
+        Set<Set<T>> powerCopy = new HashSet<>();
 
         for (Set<T> set : power) {
-            Set<T> setCopy = new HashSet<T>(set);
+            Set<T> setCopy = new HashSet<>(set);
             setCopy.add(elem);
             powerCopy.add(setCopy);
         }
@@ -558,9 +531,6 @@ final public class BBCTTestUtil {
         PLAYER_POSITION
     }
 
-    /**
-     * Asset file which contains card data as CSV values.
-     */
     public static final String ADD_MESSAGE = "Card added successfully";
     public static final String DELETE_MESSAGE = "Cards deleted successfully";
     private static final int TIME_OUT = 5 * 1000; // 5 seconds

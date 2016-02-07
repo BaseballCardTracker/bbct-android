@@ -102,6 +102,7 @@ public class FilterCardsPartialInputTest extends
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         this.dbUtil.populateTable(this.allCards);
 
+        this.inst.setInTouchMode(true);
         Activity activity = this.getActivity();
         ButterKnife.inject(this, activity);
         this.solo = new Solo(this.inst, activity);

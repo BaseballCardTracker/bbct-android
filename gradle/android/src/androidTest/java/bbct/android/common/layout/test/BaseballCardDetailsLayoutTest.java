@@ -43,6 +43,7 @@ public class BaseballCardDetailsLayoutTest extends ActivityInstrumentationTestCa
     protected void setUp() throws Exception {
         super.setUp();
 
+        this.getInstrumentation().setInTouchMode(true);
         FragmentTestActivity activity = getActivity();
         mFragment = new BaseballCardDetails();
         activity.replaceFragment(mFragment);

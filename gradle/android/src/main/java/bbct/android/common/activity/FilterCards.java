@@ -115,7 +115,7 @@ public class FilterCards extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        ArrayList<Integer> enabledFields = new ArrayList<Integer>();
+        ArrayList<Integer> enabledFields = new ArrayList<>();
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
             EditText et = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
             if (et.isEnabled()) {
