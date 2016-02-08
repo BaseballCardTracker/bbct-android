@@ -40,6 +40,12 @@ import junit.framework.Assert;
  */
 public class BaseballCardDetailsAddCardsTest extends
         ActivityInstrumentationTestCase2<FragmentTestActivity> {
+    private static final String CARD_DATA = "three_cards.csv";
+
+    private Solo solo = null;
+    private Instrumentation inst = null;
+    private List<BaseballCard> allCards = null;
+    private BaseballCard card = null;
 
     /**
      * Create instrumented test cases for {@link BaseballCardDetails}.
@@ -131,11 +137,4 @@ public class BaseballCardDetailsAddCardsTest extends
                     dbUtil.containsBaseballCard(nextCard));
         }
     }
-
-    private static final String CARD_DATA = "three_cards.csv";
-
-    private Solo solo = null;
-    private Instrumentation inst = null;
-    private List<BaseballCard> allCards = null;
-    private BaseballCard card = null;
 }
