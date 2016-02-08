@@ -48,6 +48,20 @@ import java.util.List;
 import java.util.Set;
 import junit.framework.Assert;
 
+import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+
 /**
  * Utility methods used for JUnit tests on classes in Android version of BBCT.
  */
@@ -109,6 +123,12 @@ final public class BBCTTestUtil {
         solo.clickOnActionBarItem(R.id.save_menu);
     }
 
+    public static void addCard(BaseballCard card) throws Throwable {
+        BBCTTestUtil.sendKeysToCardDetails(card);
+        onView(withId(R.id.save_menu))
+                .perform(click());
+    }
+
     public static void waitForToast(Solo solo, String message) {
         Assert.assertTrue(solo.waitForDialogToOpen(TIME_OUT));
         Assert.assertTrue(solo.searchText(message));
@@ -132,6 +152,11 @@ final public class BBCTTestUtil {
             throws InterruptedException {
         BBCTTestUtil.sendKeysToCardDetails(solo, card,
                 EnumSet.allOf(EditTexts.class));
+    }
+
+    public static void sendKeysToCardDetails(BaseballCard card)
+            throws InterruptedException {
+        BBCTTestUtil.sendKeysToCardDetails(card, EnumSet.allOf(EditTexts.class));
     }
 
     /**
@@ -266,6 +291,83 @@ final public class BBCTTestUtil {
 
             Assert.assertFalse("Invalid index", index == -1);
             solo.pressSpinnerItem(index, newIndex - currIndex);
+        }
+    }
+
+    public static void sendKeysToCardDetails(BaseballCard card, Set<EditTexts> fieldFlags)
+            throws InterruptedException {
+        Log.d(TAG, "sendKeysToCardDetails()");
+
+        if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
+            if (card.isAutographed()) {
+                onView(withId(R.id.autograph))
+                        .perform(scrollTo(), click())
+                        .check(matches(isChecked()));
+            }
+        }
+
+        if (fieldFlags.contains(EditTexts.CONDITION)) {
+            onView(withId(R.id.condition))
+                    .perform(scrollTo(), click());
+            onData(allOf(is(instanceOf(String.class)), is(card.getCondition())))
+                    .perform(click());
+            onView(withId(R.id.condition))
+                    .check(matches(withSpinnerText(card.getCondition())));
+        }
+
+        if (fieldFlags.contains(EditTexts.BRAND)) {
+            onView(withId(R.id.brand_text))
+                    .perform(scrollTo(), typeText(card.getBrand()))
+                    .check(matches(withText(card.getBrand())));
+        }
+
+        if (fieldFlags.contains(EditTexts.YEAR)) {
+            String yearStr = Integer.toString(card.getYear());
+            onView(withId(R.id.year_text))
+                    .perform(scrollTo(), typeText(yearStr))
+                    .check(matches(withText(yearStr)));
+        }
+
+        if (fieldFlags.contains(EditTexts.NUMBER)) {
+            String numberStr = Integer.toString(card.getNumber());
+            onView(withId(R.id.number_text))
+                    .perform(scrollTo(), typeText(numberStr))
+                    .check(matches(withText(numberStr)));
+        }
+
+        if (fieldFlags.contains(EditTexts.VALUE)) {
+            String valueStr = String.format("%.2f", card.getValue() / 100.0);
+            onView(withId(R.id.value_text))
+                    .perform(scrollTo(), typeText(valueStr))
+                    .check(matches(withText(valueStr)));
+        }
+
+        if (fieldFlags.contains(EditTexts.COUNT)) {
+            String countStr = Integer.toString(card.getCount());
+            onView(withId(R.id.count_text))
+                    .perform(scrollTo(), typeText(countStr))
+                    .check(matches(withText(countStr)));
+        }
+
+        if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
+            onView(withId(R.id.player_name_text))
+                    .perform(scrollTo(), typeText(card.getPlayerName()))
+                    .check(matches(withText(card.getPlayerName())));
+        }
+
+        if (fieldFlags.contains(EditTexts.TEAM)) {
+            onView(withId(R.id.team_text))
+                    .perform(scrollTo(), typeText(card.getTeam()))
+                    .check(matches(withText(card.getTeam())));
+        }
+
+        if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
+            onView(withId(R.id.player_position_text))
+                    .perform(scrollTo(), click());
+            onData(allOf(is(instanceOf(String.class)), is(card.getPlayerPosition())))
+                    .perform(click());
+            onView(withId(R.id.player_position_text))
+                    .check(matches(withSpinnerText(card.getPlayerPosition())));
         }
     }
 
