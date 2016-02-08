@@ -108,11 +108,10 @@ public class BaseballCardDetailsAddCardsTest {
      */
     @Test
     public void testAddCard() throws Throwable {
-        BBCTTestUtil.addCard(this.solo, this.card);
-        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        Assert.assertTrue("Missing card: " + this.card,
-                dbUtil.containsBaseballCard(this.card));
+        BBCTTestUtil.addCard(card);
+        // BBCTTestUtil.waitForToast(activityRule.getActivity(), BBCTTestUtil.ADD_MESSAGE);
+        DatabaseUtil dbUtil = new DatabaseUtil(inst.getTargetContext());
+        Assert.assertTrue("Missing card: " + card, dbUtil.containsBaseballCard(card));
     }
 
     /**
