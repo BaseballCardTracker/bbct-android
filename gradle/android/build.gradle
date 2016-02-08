@@ -39,6 +39,9 @@ android {
             versionName "0.6.2"
         }
     }
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
 }
 
 testdroid {
@@ -113,4 +116,5 @@ dependencies {
     androidTestCompile 'com.android.support.test:rules:0.4'
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     androidTestCompile 'com.android.support:support-annotations:23.1.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 }
