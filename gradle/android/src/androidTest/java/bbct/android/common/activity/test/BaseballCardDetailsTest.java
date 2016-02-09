@@ -21,6 +21,7 @@ package bbct.android.common.activity.test;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.test.uiautomator.UiDevice;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
 import android.util.Log;
@@ -44,6 +45,13 @@ import com.robotium.solo.Solo;
 import java.io.InputStream;
 import junit.framework.Assert;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.withChild;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+
 /**
  * Tests for {@link BaseballCardDetails}.
  */
@@ -53,7 +61,9 @@ public class BaseballCardDetailsTest extends
     private static final int SLEEP_TIME_TO_REFRESH = 200;
     private static final int KEYPAD_HEIGHT = 100;
     private static final String CARD_DATA = "cards.csv";
+    private static final String TAG = BaseballCardDetailsTest.class.getName();
 
+    private UiDevice device;
     private Solo solo;
     private FragmentTestActivity activity;
     private Instrumentation inst;
@@ -89,6 +99,7 @@ public class BaseballCardDetailsTest extends
         super.setUp();
 
         this.inst = this.getInstrumentation();
+        this.device = UiDevice.getInstance(this.inst);
 
         InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
@@ -161,23 +172,19 @@ public class BaseballCardDetailsTest extends
      * in the soft keyboard
      */
     public void testNextButtonOnClick() {
-        this.solo.pressSoftKeyboardNextButton();
-        Assert.assertTrue(this.yearText.hasFocus());
-
-        this.solo.pressSoftKeyboardNextButton();
-        Assert.assertTrue(this.numberText.hasFocus());
-
-        this.solo.pressSoftKeyboardNextButton();
-        Assert.assertTrue(this.valueText.hasFocus());
-
-        this.solo.pressSoftKeyboardNextButton();
-        Assert.assertTrue(this.countText.hasFocus());
-
-        this.solo.pressSoftKeyboardNextButton();
-        Assert.assertTrue(this.playerNameText.hasFocus());
-
-        this.solo.pressSoftKeyboardNextButton();
-        Assert.assertTrue(this.playerTeamText.hasFocus());
+        onView(withId(R.id.brand_text)).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.year_text)).perform(click()).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.number_text)).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.value_text)).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.count_text)).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.player_name_text)).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.team_text)).check(matches(hasFocus()));
 
         ViewGroup content = ButterKnife.findById(this.activity, android.R.id.content);
         View rootView = content.getChildAt(0);
@@ -193,12 +200,12 @@ public class BaseballCardDetailsTest extends
             condnBefore = true;
         }
 
-        this.solo.pressSoftKeyboardNextButton();
+        device.pressEnter();
         // Wait for the keyboard to disappear and view to be refreshed
         try {
             Thread.sleep(SLEEP_TIME_TO_REFRESH);
         } catch (InterruptedException e) {
-            Log.e("Click Done button in soft Keyboard", e.getMessage());
+            Log.e(TAG, "Click Done button in soft Keyboard");
         }
         rootView.getWindowVisibleDisplayFrame(r);
         int heightdiffAfter = rootView.getRootView().getHeight()
