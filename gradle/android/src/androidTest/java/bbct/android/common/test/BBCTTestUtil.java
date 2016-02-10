@@ -21,6 +21,8 @@ package bbct.android.common.test;
 import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.uiautomator.UiDevice;
 import android.support.v4.app.Fragment;
 import android.test.ViewAsserts;
 import android.util.Log;
@@ -53,8 +55,10 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -307,6 +311,8 @@ final public class BBCTTestUtil {
             throws InterruptedException {
         Log.d(TAG, "sendKeysToCardDetails()");
 
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+
         if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
             if (card.isAutographed()) {
                 onView(withId(R.id.autograph))
@@ -329,46 +335,59 @@ final public class BBCTTestUtil {
                     .perform(scrollTo(), typeText(card.getBrand()))
                     .check(matches(withText(card.getBrand())));
         }
+        device.pressEnter();
 
+        onView(withId(R.id.year_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.YEAR)) {
             String yearStr = Integer.toString(card.getYear());
             onView(withId(R.id.year_text))
                     .perform(scrollTo(), typeText(yearStr))
                     .check(matches(withText(yearStr)));
         }
+        device.pressEnter();
 
+        onView(withId(R.id.number_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.NUMBER)) {
             String numberStr = Integer.toString(card.getNumber());
             onView(withId(R.id.number_text))
                     .perform(scrollTo(), typeText(numberStr))
                     .check(matches(withText(numberStr)));
         }
+        device.pressEnter();
 
+        onView(withId(R.id.value_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.VALUE)) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
             onView(withId(R.id.value_text))
                     .perform(scrollTo(), typeText(valueStr))
                     .check(matches(withText(valueStr)));
         }
+        device.pressEnter();
 
+        onView(withId(R.id.count_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.COUNT)) {
             String countStr = Integer.toString(card.getCount());
             onView(withId(R.id.count_text))
                     .perform(scrollTo(), typeText(countStr))
                     .check(matches(withText(countStr)));
         }
+        device.pressEnter();
 
+        onView(withId(R.id.player_name_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
             onView(withId(R.id.player_name_text))
                     .perform(scrollTo(), typeText(card.getPlayerName()))
                     .check(matches(withText(card.getPlayerName())));
         }
+        device.pressEnter();
 
+        onView(withId(R.id.team_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.TEAM)) {
             onView(withId(R.id.team_text))
                     .perform(scrollTo(), typeText(card.getTeam()))
                     .check(matches(withText(card.getTeam())));
         }
+        device.pressEnter();
 
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
             onView(withId(R.id.player_position_text))
