@@ -39,6 +39,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.allOf;
+
 /**
  * Tests for {@link FilterCards} activity class.
  */
@@ -94,14 +103,9 @@ public class FilterCardsTest {
      * @param inputId - the id of {@link EditText} to test
      */
     private void testCheckBox(int checkId, int inputId) {
-        CheckBox cb = ButterKnife.findById(this.activity, checkId);
-        EditText input = ButterKnife.findById(this.activity, inputId);
-        this.solo.clickOnView(cb);
-        inst.waitForIdleSync();
-        Assert.assertTrue(input.isEnabled());
-        Assert.assertTrue(input.hasFocus());
-
-        Assert.assertTrue(this.solo.waitForView(R.id.save_menu));
+        onView(withId(checkId)).perform(click());
+        onView(withId(inputId)).check(matches(allOf(isEnabled(), hasFocus())));
+        onView(withId(R.id.save_menu)).check(matches(isDisplayed()));
     }
 
     /**
