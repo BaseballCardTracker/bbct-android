@@ -33,7 +33,6 @@ import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
 import butterknife.ButterKnife;
-import com.robotium.solo.Solo;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -58,7 +57,6 @@ public class FilterCardsTest {
     public ActivityTestRule<FragmentTestActivity> activityTestRule =
             new ActivityTestRule<>(FragmentTestActivity.class);
 
-    private Solo solo = null;
     private Instrumentation inst;
     private FragmentTestActivity activity = null;
 
@@ -68,7 +66,6 @@ public class FilterCardsTest {
         activity.replaceFragment(new FilterCards());
         inst = InstrumentationRegistry.getInstrumentation();
         inst.waitForIdleSync();
-        solo = new Solo(inst, this.activity);
     }
 
     /**
@@ -79,7 +76,6 @@ public class FilterCardsTest {
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        Assert.assertNotNull(this.solo);
         View menuView = ButterKnife.findById(this.activity, R.id.save_menu);
         Assert.assertNull(menuView);
     }
