@@ -18,11 +18,9 @@
  */
 package bbct.android.common.layout.test;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.app.Fragment;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
@@ -33,7 +31,16 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.fest.assertions.api.ANDROID.assertThat;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
 public class FilterCardsLayoutTest {
@@ -41,20 +48,11 @@ public class FilterCardsLayoutTest {
     public ActivityTestRule<FragmentTestActivity> activityTestRule =
             new ActivityTestRule<>(FragmentTestActivity.class);
 
-    private FragmentTestActivity mActivity;
-    private Fragment mFragment;
-
     @Before
     public void setUp() throws Exception {
-        mActivity = activityTestRule.getActivity();
-        mFragment = new FilterCards();
+        FragmentTestActivity mActivity = activityTestRule.getActivity();
+        Fragment mFragment = new FilterCards();
         mActivity.replaceFragment(mFragment);
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
-    }
-
-    @Test
-    public void testFragmentVisible() {
-        assertThat(mFragment).isAdded().isVisible();
     }
 
     @Test
@@ -83,8 +81,7 @@ public class FilterCardsLayoutTest {
     }
 
     private void testCheckBox(int id) {
-        CheckBox checkBox = ButterKnife.findById(mActivity, id);
-        assertThat(checkBox).isVisible().isNotChecked();
+        onView(withId(id)).check(matches(allOf(isDisplayed(), isNotChecked())));
     }
 
     @Test
@@ -113,7 +110,6 @@ public class FilterCardsLayoutTest {
     }
 
     private void testEditText(int id) {
-        EditText editText = ButterKnife.findById(mActivity, id);
-        assertThat(editText).isVisible().isNotActivated().isEmpty();
+        onView(withId(id)).check(matches(allOf(isDisplayed(), not(isEnabled()), withText(""))));
     }
 }
