@@ -20,8 +20,10 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.app.Fragment;
-import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
 import bbct.android.common.activity.BaseballCardDetails;
@@ -34,19 +36,27 @@ import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.List;
 import junit.framework.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * Tests for {@link BaseballCardDetails}.
  */
-public class BaseballCardDetailsAddCardsTest extends
-        ActivityInstrumentationTestCase2<FragmentTestActivity> {
+@RunWith(AndroidJUnit4.class)
+public class BaseballCardDetailsAddCardsTest {
+    private static final String CARD_DATA = "three_cards.csv";
 
-    /**
-     * Create instrumented test cases for {@link BaseballCardDetails}.
-     */
-    public BaseballCardDetailsAddCardsTest() {
-        super(FragmentTestActivity.class);
-    }
+    private Solo solo = null;
+    private Instrumentation inst = null;
+    private List<BaseballCard> allCards = null;
+    private BaseballCard card = null;
+
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityRule =
+            new ActivityTestRule<>(FragmentTestActivity.class);
 
     /**
      * Set up test fixture. This consists of an instance of the
@@ -56,11 +66,9 @@ public class BaseballCardDetailsAddCardsTest extends
      * @throws Exception
      *             If an error occurs while chaining to the super class.
      */
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
-
-        this.inst = this.getInstrumentation();
+        inst = InstrumentationRegistry.getInstrumentation();
 
         InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
@@ -69,8 +77,7 @@ public class BaseballCardDetailsAddCardsTest extends
         this.card = this.allCards.get(0);
         cardInput.close();
 
-        this.inst.setInTouchMode(true);
-        FragmentTestActivity activity = this.getActivity();
+        FragmentTestActivity activity = activityRule.getActivity();
         Fragment fragment = new BaseballCardDetails();
         activity.replaceFragment(fragment);
         this.inst.waitForIdleSync();
@@ -85,12 +92,10 @@ public class BaseballCardDetailsAddCardsTest extends
      * @throws Exception
      *             If an error occurs while chaining to the super class.
      */
-    @Override
+    @After
     public void tearDown() throws Exception {
         DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         dbUtil.clearDatabase();
-
-        super.tearDown();
     }
 
     /**
@@ -101,12 +106,12 @@ public class BaseballCardDetailsAddCardsTest extends
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
+    @Test
     public void testAddCard() throws Throwable {
-        BBCTTestUtil.addCard(this.solo, this.card);
-        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        Assert.assertTrue("Missing card: " + this.card,
-                dbUtil.containsBaseballCard(this.card));
+        BBCTTestUtil.addCard(card);
+        // BBCTTestUtil.waitForToast(activityRule.getActivity(), BBCTTestUtil.ADD_MESSAGE);
+        DatabaseUtil dbUtil = new DatabaseUtil(inst.getTargetContext());
+        Assert.assertTrue("Missing card: " + card, dbUtil.containsBaseballCard(card));
     }
 
     /**
@@ -119,6 +124,7 @@ public class BaseballCardDetailsAddCardsTest extends
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
+    @Test
     public void testAddMultipleCards() throws Throwable {
         for (BaseballCard nextCard : this.allCards) {
             BBCTTestUtil.addCard(this.solo, nextCard);
@@ -131,11 +137,4 @@ public class BaseballCardDetailsAddCardsTest extends
                     dbUtil.containsBaseballCard(nextCard));
         }
     }
-
-    private static final String CARD_DATA = "three_cards.csv";
-
-    private Solo solo = null;
-    private Instrumentation inst = null;
-    private List<BaseballCard> allCards = null;
-    private BaseballCard card = null;
 }
