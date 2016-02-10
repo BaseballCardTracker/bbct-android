@@ -20,6 +20,7 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -159,12 +160,11 @@ public class FilterCardsTest {
      * changing activity orientation.
      */
     @Test
-    public void testSaveInstanceState() {
+    public void testSaveInstanceState() throws RemoteException {
         this.testNumberCheckBox();
-        this.solo.setActivityOrientation(Solo.LANDSCAPE);
-
-        this.solo.waitForView(R.id.number_input);
-        EditText numberInput = ButterKnife.findById(this.solo.getCurrentActivity(), R.id.number_input);
-        Assert.assertTrue(numberInput.isEnabled());
+        UiDevice device = UiDevice.getInstance(inst);
+        device.setOrientationLeft();
+        onView(withId(R.id.number_input)).check(matches(isEnabled()));
+        device.setOrientationNatural();
     }
 }
