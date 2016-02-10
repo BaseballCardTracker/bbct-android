@@ -18,7 +18,9 @@
  */
 package bbct.android.common.layout.test;
 
-import android.test.ActivityInstrumentationTestCase2;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import bbct.android.common.R;
@@ -26,39 +28,43 @@ import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.fest.assertions.api.ANDROID.assertThat;
 
-public class BaseballCardDetailsLayoutTest extends ActivityInstrumentationTestCase2<FragmentTestActivity> {
+@RunWith(AndroidJUnit4.class)
+public class BaseballCardDetailsLayoutTest {
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityTestRule =
+            new ActivityTestRule<>(FragmentTestActivity.class);
 
     private BaseballCardDetails mFragment;
     @InjectView(R.id.autograph) CheckBox mAutographCheckBox;
     @InjectView(R.id.brand_text) EditText mBrandEditText;
 
-    public BaseballCardDetailsLayoutTest() {
-        super(FragmentTestActivity.class);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        this.getInstrumentation().setInTouchMode(true);
-        FragmentTestActivity activity = getActivity();
+    @Before
+    public void setUp() throws Exception {
+        FragmentTestActivity activity = activityTestRule.getActivity();
         mFragment = new BaseballCardDetails();
         activity.replaceFragment(mFragment);
-        this.getInstrumentation().waitForIdleSync();
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
         ButterKnife.inject(this, activity);
     }
 
+    @Test
     public void testFragmentVisible() {
         assertThat(mFragment).isAdded().isVisible();
     }
 
+    @Test
     public void testAutographedCheckBox() {
         assertThat(mAutographCheckBox).isVisible().isNotChecked();
     }
 
+    @Test
     public void testBrandEditText() {
         assertThat(mBrandEditText).isVisible().hasFocus();
     }
