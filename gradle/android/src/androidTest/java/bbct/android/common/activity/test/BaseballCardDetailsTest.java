@@ -21,8 +21,10 @@ package bbct.android.common.activity.test;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.graphics.Rect;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
-import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
 import android.util.Log;
 import android.view.View;
@@ -44,24 +46,31 @@ import butterknife.InjectView;
 import com.robotium.solo.Solo;
 import java.io.InputStream;
 import junit.framework.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
-import static android.support.test.espresso.matcher.ViewMatchers.withChild;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Tests for {@link BaseballCardDetails}.
  */
-public class BaseballCardDetailsTest extends
-        ActivityInstrumentationTestCase2<FragmentTestActivity> {
+@RunWith(AndroidJUnit4.class)
+public class BaseballCardDetailsTest {
 
     private static final int SLEEP_TIME_TO_REFRESH = 200;
     private static final int KEYPAD_HEIGHT = 100;
     private static final String CARD_DATA = "cards.csv";
     private static final String TAG = BaseballCardDetailsTest.class.getName();
+
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityTestRule
+            = new ActivityTestRule<>(FragmentTestActivity.class);
 
     private UiDevice device;
     private Solo solo;
@@ -80,13 +89,6 @@ public class BaseballCardDetailsTest extends
     @InjectView(R.id.scroll_card_details) ScrollView scrollView;
 
     /**
-     * Create instrumented test cases for {@link BaseballCardDetails}.
-     */
-    public BaseballCardDetailsTest() {
-        super(FragmentTestActivity.class);
-    }
-
-    /**
      * Set up test fixture. This consists of an instance of the
      * {@link BaseballCardDetails} activity and all of its {@link EditText} and
      * {@link Button} views and a list of {@link BaseballCard} data.
@@ -94,11 +96,9 @@ public class BaseballCardDetailsTest extends
      * @throws Exception
      *             If an error occurs while chaining to the super class.
      */
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
-
-        this.inst = this.getInstrumentation();
+        this.inst = InstrumentationRegistry.getInstrumentation();
         this.device = UiDevice.getInstance(this.inst);
 
         InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
@@ -108,7 +108,7 @@ public class BaseballCardDetailsTest extends
         cardInput.close();
 
         this.inst.setInTouchMode(true);
-        this.activity = this.getActivity();
+        this.activity = activityTestRule.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
@@ -121,6 +121,7 @@ public class BaseballCardDetailsTest extends
      * that none of its {@link EditText} views or {@link Button}s are
      * <code>null</code>.
      */
+    @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
         Assert.assertNotNull(this.brandText);
@@ -142,11 +143,12 @@ public class BaseballCardDetailsTest extends
      * @throws InterruptedException
      *             If BBCTTestUtil#sendKeysToCardDetails() is interrupted.
      */
+    @Test
     public void testStateDestroy() throws InterruptedException {
         BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
-        this.activity = this.getActivity();
+        this.activity = activityTestRule.getActivity();
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
     }
 
@@ -159,6 +161,7 @@ public class BaseballCardDetailsTest extends
      *             If {@link BBCTTestUtil#sendKeysToCardDetails(Solo, BaseballCard)} is
      *             interrupted.
      */
+    @Test
     public void testStatePause() throws InterruptedException {
         BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
         this.inst.callActivityOnRestart(this.activity);
@@ -171,6 +174,7 @@ public class BaseballCardDetailsTest extends
      * the soft keyboard. 2)keyboard is removed when the done button is clicked
      * in the soft keyboard
      */
+    @Test
     public void testNextButtonOnClick() {
         onView(withId(R.id.brand_text)).check(matches(hasFocus()));
         device.pressEnter();
@@ -221,6 +225,7 @@ public class BaseballCardDetailsTest extends
      * Test that view of {@link BaseballCardDetails} activity can be scrolled
      * when the save button is not visible on screen.
      */
+    @Test
     public void testCardDetailsScroll() {
         View parentView = this.activity.getWindow().getDecorView();
         // hide the soft keypad
@@ -236,7 +241,7 @@ public class BaseballCardDetailsTest extends
         // check if the 'Player Position' spinner is already visible. If yes, then
         // the screen cannot be scrolled. Assert true and return.
         if (BBCTTestUtil.isViewOnScreen(parentView, this.playerPositionSpinner)) {
-            assertTrue(true);
+            Assert.assertTrue(true);
         } else {
             // scroll to the bottom and check if save button is on the screen
             this.scrollView.post(new Runnable() {
@@ -250,7 +255,7 @@ public class BaseballCardDetailsTest extends
             try {
                 Thread.sleep(SLEEP_TIME_TO_REFRESH);
             } catch (InterruptedException e) {
-                Log.e("getResult", e.getMessage());
+                // left blank
             }
             ViewAsserts.assertOnScreen(parentView, this.playerPositionSpinner);
         }
