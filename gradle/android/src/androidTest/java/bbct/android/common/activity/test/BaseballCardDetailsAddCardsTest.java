@@ -32,7 +32,6 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.List;
 import junit.framework.Assert;
@@ -49,7 +48,6 @@ import org.junit.runner.RunWith;
 public class BaseballCardDetailsAddCardsTest {
     private static final String CARD_DATA = "three_cards.csv";
 
-    private Solo solo = null;
     private Instrumentation inst = null;
     private List<BaseballCard> allCards = null;
     private BaseballCard card = null;
@@ -81,8 +79,6 @@ public class BaseballCardDetailsAddCardsTest {
         Fragment fragment = new BaseballCardDetails();
         activity.replaceFragment(fragment);
         this.inst.waitForIdleSync();
-
-        this.solo = new Solo(this.inst, activity);
     }
 
     /**
@@ -127,14 +123,13 @@ public class BaseballCardDetailsAddCardsTest {
     @Test
     public void testAddMultipleCards() throws Throwable {
         for (BaseballCard nextCard : this.allCards) {
-            BBCTTestUtil.addCard(this.solo, nextCard);
-            BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
+            BBCTTestUtil.addCard(nextCard);
+            // BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
         DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         for (BaseballCard nextCard : this.allCards) {
-            Assert.assertTrue("Missing card: " + nextCard,
-                    dbUtil.containsBaseballCard(nextCard));
+            Assert.assertTrue("Missing card: " + nextCard, dbUtil.containsBaseballCard(nextCard));
         }
     }
 }
