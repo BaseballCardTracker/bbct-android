@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.ViewInteraction;
 import android.support.test.uiautomator.UiDevice;
 import android.support.v4.app.Fragment;
 import android.test.ViewAsserts;
@@ -61,6 +62,7 @@ import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -452,6 +454,36 @@ final public class BBCTTestUtil {
                 playerPositionSpinner.getSelectedItem());
     }
 
+    public static void assertAllEditTextContents(BaseballCard expectedCard) {
+        ViewInteraction autographView = onView(withId(R.id.autograph));
+
+        if (expectedCard.isAutographed()) {
+            autographView.check(matches(isChecked()));
+        } else {
+            autographView.check(matches(isNotChecked()));
+        }
+
+        onView(withId(R.id.condition))
+                .check(matches(withSpinnerText(expectedCard.getCondition())));
+        onView(withId(R.id.brand_text))
+                .check(matches(withText(expectedCard.getBrand())));
+        String yearStr = Integer.toString(expectedCard.getYear());
+        onView(withId(R.id.year_text))
+                .check(matches(withText(yearStr)));
+        String numberStr = Integer.toString(expectedCard.getNumber());
+        onView(withId(R.id.number_text))
+                .check(matches(withText(numberStr)));
+        String valueStr = String.format("%.2f", expectedCard.getValue() / 100.0);
+        onView(withId(R.id.value_text))
+                .check(matches(withText(valueStr)));
+        String countStr = Integer.toString(expectedCard.getCount());
+        onView(withId(R.id.count_text))
+                .check(matches(withText(countStr)));
+        onView(withId(R.id.player_name_text))
+                .check(matches(withText(expectedCard.getPlayerName())));
+        onView(withId(R.id.player_position_text))
+                .check(matches(withText(expectedCard.getPlayerPosition())));
+    }
     /**
      * Assert that database was created with the correct version and table and
      * that it is empty.
