@@ -25,14 +25,12 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
-import butterknife.ButterKnife;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,6 +39,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -76,8 +75,7 @@ public class FilterCardsTest {
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        View menuView = ButterKnife.findById(this.activity, R.id.save_menu);
-        Assert.assertNull(menuView);
+        onView(withId(R.id.save_menu)).check(doesNotExist());
     }
 
     /**
