@@ -18,57 +18,66 @@
  */
 package bbct.android.common.layout.test;
 
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.app.Fragment;
-import android.test.ActivityInstrumentationTestCase2;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
 import butterknife.ButterKnife;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static org.fest.assertions.api.ANDROID.assertThat;
 
-public class FilterCardsLayoutTest extends ActivityInstrumentationTestCase2<FragmentTestActivity> {
+@RunWith(AndroidJUnit4.class)
+public class FilterCardsLayoutTest {
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityTestRule =
+            new ActivityTestRule<>(FragmentTestActivity.class);
 
     private FragmentTestActivity mActivity;
     private Fragment mFragment;
 
-    public FilterCardsLayoutTest() {
-        super(FragmentTestActivity.class);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        this.getInstrumentation().setInTouchMode(true);
-        mActivity = getActivity();
+    @Before
+    public void setUp() throws Exception {
+        mActivity = activityTestRule.getActivity();
         mFragment = new FilterCards();
         mActivity.replaceFragment(mFragment);
-        this.getInstrumentation().waitForIdleSync();
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync();
     }
 
+    @Test
     public void testFragmentVisible() {
         assertThat(mFragment).isAdded().isVisible();
     }
 
+    @Test
     public void testBrandCheckBox() {
         testCheckBox(R.id.brand_check);
     }
 
+    @Test
     public void testYearCheckBox() {
         testCheckBox(R.id.year_check);
     }
 
+    @Test
     public void testNumberCheckBox() {
         testCheckBox(R.id.number_check);
     }
 
+    @Test
     public void testPlayerNameCheckBox() {
         testCheckBox(R.id.player_name_check);
     }
 
+    @Test
     public void testTeamCheckBox() {
         testCheckBox(R.id.team_check);
     }
@@ -78,22 +87,27 @@ public class FilterCardsLayoutTest extends ActivityInstrumentationTestCase2<Frag
         assertThat(checkBox).isVisible().isNotChecked();
     }
 
+    @Test
     public void testBrandEditText() {
         testEditText(R.id.brand_input);
     }
 
+    @Test
     public void testYearEditText() {
         testEditText(R.id.year_input);
     }
 
+    @Test
     public void testNumberEditText() {
         testEditText(R.id.number_input);
     }
 
+    @Test
     public void testPlayerNameEditText() {
         testEditText(R.id.player_name_input);
     }
 
+    @Test
     public void testTeamEditText() {
         testEditText(R.id.team_input);
     }
@@ -102,5 +116,4 @@ public class FilterCardsLayoutTest extends ActivityInstrumentationTestCase2<Frag
         EditText editText = ButterKnife.findById(mActivity, id);
         assertThat(editText).isVisible().isNotActivated().isEmpty();
     }
-
 }
