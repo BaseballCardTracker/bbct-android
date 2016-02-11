@@ -10,7 +10,7 @@ build_apk() {
     ./gradlew clean assembleLiteRelease assemblePremiumRelease
 }
 
-hash() {
+hash_apk() {
     local edition=$1
     local prefix=${PREFIX}-${edition}
 
@@ -31,21 +31,15 @@ pull_devel() {
     git pull upstream devel/android
 }
 
-if [ $# == 1 ]
-then {
+archive() {
     version=$1
-
-    echo Building APKs... &&
-    build_apk
 
     echo Archiving source files... &&
     git archive --format=zip --prefix=bbct/ -o ${SRC_REL}/bbct-lite-src.${version}.zip master lite common &&
-    git archive --format=tar --prefix=bbct/ master lite common | gzip > ${SRC_REL}/bbct-lite-src.${version}.tar.gz &&
+    git archive --format=tar --prefix=bbct/ master lite common | gzip > ${SRC_REL}/bbct-lite-src.${version}.tar.gz
+}
 
-    echo Generating hashes... &&
-    hash lite &&
-    hash premium &&
-
+checksum() {
     cd ${REL_DIR}/src/android &&
     md5sum *.tar.gz *.zip > $PREFIX-src.md5 &&
     echo Checking MD5... &&
@@ -53,15 +47,28 @@ then {
     sha1sum *.tar.gz *.zip > $PREFIX-src.sha1 &&
     echo Checking SHA1... &&
     sha1sum -c $PREFIX-src.sha1 &&
-    cd - &&
+    cd -
+}
 
+merge() {
     echo Merge master... &&
     git checkout master &&
-    git merge devel &&
+    git merge devel
+}
 
+tag() {
+    version=$1
     echo Tag... &&
     git tag l$version &&
     git tag p$version
+}
+
+if [ $# == 1 ]
+then {
+    version=$1
+
+    echo Building APKs... &&
+    build_apk
 }
 else {
     echo Usage: './release <version>'
