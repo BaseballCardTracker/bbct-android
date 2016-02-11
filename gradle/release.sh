@@ -7,14 +7,7 @@ SRC_REL=$REL_DIR/src/android
 PREFIX=bbct-android
 
 build_apk() {
-    local edition=$1
-    local version=$2
-    local apk_prefix=${PREFIX}-${edition}
-
-    cd ${edition}/main &&
-    ant clean release &&
-    cp bin/${apk_prefix}-release.apk ${BIN_REL}/${edition}/${apk_prefix}-$version.apk &&
-    cd -
+    ./gradlew clean assembleLiteRelease assemblePremiumRelease
 }
 
 hash() {
@@ -43,8 +36,7 @@ then {
     version=$1
 
     echo Building APKs... &&
-    build_apk lite ${version} &&
-    build_apk premium ${version} &&
+    build_apk
 
     echo Archiving source files... &&
     git archive --format=zip --prefix=bbct/ -o ${SRC_REL}/bbct-lite-src.${version}.zip master lite common &&
