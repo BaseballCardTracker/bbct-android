@@ -66,6 +66,7 @@ tag() {
 push() {
     version=$1
 
+    echo Pushing master and tags... &&
     git push origin master l${version} p${version} &&
     git push upstream master l${version} p${version}
 }
