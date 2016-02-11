@@ -20,7 +20,8 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.test.ActivityInstrumentationTestCase2;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 import android.widget.ListView;
 import bbct.android.common.R;
 import bbct.android.common.activity.About;
@@ -39,13 +40,18 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
 /**
  * Tests for the {@link MainActivity} activity when the database does not
  * contain data.
  */
-public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
-        ActivityInstrumentationTestCase2<T> {
+abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
+    @Rule
+    public ActivityTestRule<T> activityTestRule;
 
     private static final String DATA_ASSET = "three_cards.csv";
 
@@ -61,7 +67,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      * Create instrumented test cases for {@link MainActivity}.
      */
     public BaseballCardListWithoutDataTest(Class<T> activityClass) {
-        super(activityClass);
+        activityTestRule = new ActivityTestRule<>(activityClass);
     }
 
     /**
@@ -71,13 +77,11 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      *
      * @throws Exception If an error occurs while chaining to the super class.
      */
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
-
-        this.inst = this.getInstrumentation();
+        this.inst = InstrumentationRegistry.getInstrumentation();
         this.inst.setInTouchMode(true);
-        this.activity = this.getActivity();
+        this.activity = activityTestRule.getActivity();
 
         this.solo = new Solo(this.inst, this.activity);
 
@@ -93,13 +97,11 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      *
      * @throws Exception If an error occurs while chaining to the super class.
      */
-    @Override
+    @After
     public void tearDown() throws Exception {
         this.dbUtil.clearDatabase();
         this.cardInput.close();
         this.solo.finishOpenedActivities();
-
-        super.tearDown();
     }
 
     /**
@@ -108,6 +110,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      * {@link ListView} are not <code>null</code>, that the {@link ListView} is
      * empty, and that the database was created and is empty.
      */
+    @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
         this.solo.waitForFragmentByTag(FragmentTags.EDIT_CARD);
@@ -119,6 +122,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
     /**
      * Test that the "About" menu item displays the {@link About} fragment.
      */
+    @Test
     public void testAboutMenuItem() {
         BBCTTestUtil.testMenuItem(this.solo, R.id.about_menu, FragmentTags.ABOUT);
     }
@@ -132,6 +136,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      * @throws Throwable   If an error occurs while the portion of the test on the UI
      *                     thread runs.
      */
+    @Test
     public void testAddCardToEmptyDatabase() throws Throwable {
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
@@ -159,6 +164,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      * @throws Throwable   If an error occurs while the portion of the test on the UI
      *                     thread runs.
      */
+    @Test
     public void testAddMultipleCards() throws Throwable {
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
@@ -173,5 +179,4 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
         ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(cards, listView);
     }
-
 }
