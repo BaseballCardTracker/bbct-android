@@ -37,6 +37,7 @@ import butterknife.InjectView;
 import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import junit.framework.Test;
@@ -62,15 +63,15 @@ public class FilterCardsPartialInputTest extends
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        Set<BBCTTestUtil.EditTexts> editTexts = EnumSet
-                .allOf(BBCTTestUtil.EditTexts.class);
+        Set<BBCTTestUtil.EditTexts> editTexts = EnumSet.allOf(BBCTTestUtil.EditTexts.class);
         editTexts.remove(BBCTTestUtil.EditTexts.COUNT);
         editTexts.remove(BBCTTestUtil.EditTexts.PLAYER_POSITION);
         editTexts.remove(BBCTTestUtil.EditTexts.VALUE);
-        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil
-                .powerSet(editTexts);
 
-        for (Set<BBCTTestUtil.EditTexts> mask : masks) {
+        for (BBCTTestUtil.EditTexts editText : editTexts) {
+            Set<BBCTTestUtil.EditTexts> mask = new HashSet<>();
+            mask.add(editText);
+
             if (!mask.isEmpty()) {
                 suite.addTest(new FilterCardsPartialInputTest(mask));
             }
@@ -79,8 +80,7 @@ public class FilterCardsPartialInputTest extends
         return suite;
     }
 
-    public FilterCardsPartialInputTest(
-            Set<BBCTTestUtil.EditTexts> inputFieldsFlags) {
+    public FilterCardsPartialInputTest(Set<BBCTTestUtil.EditTexts> inputFieldsFlags) {
         super(MainActivity.class);
 
         this.setName(TEST_NAME);

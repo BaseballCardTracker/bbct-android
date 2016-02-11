@@ -149,6 +149,7 @@ public class BaseballCardProviderTest extends
                     .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
             Assert.assertEquals(value, newValue);
         }
+        cursor.close();
     }
 
     public void testDeleteAll() {
