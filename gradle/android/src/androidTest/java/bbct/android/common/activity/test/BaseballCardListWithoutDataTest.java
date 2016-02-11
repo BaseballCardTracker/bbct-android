@@ -23,18 +23,13 @@ import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.widget.ListView;
-import bbct.android.common.R;
-import bbct.android.common.activity.About;
 import bbct.android.common.activity.BaseballCardList;
-import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -47,10 +42,7 @@ import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.containsString;
 
 /**
@@ -63,13 +55,10 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
 
     private static final String DATA_ASSET = "three_cards.csv";
 
-    private Solo solo = null;
     private Instrumentation inst = null;
     private Activity activity = null;
     private BaseballCardCsvFileReader cardInput = null;
     private DatabaseUtil dbUtil = null;
-
-    @InjectView(android.R.id.list) ListView listView;
 
     /**
      * Create instrumented test cases for {@link MainActivity}.
