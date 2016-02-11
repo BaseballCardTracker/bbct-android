@@ -38,8 +38,8 @@ then {
 
     echo Pull devel branch... &&
     git stash save 'Stash before building release' &&
-    git checkout devel &&
-    git pull bbct devel &&
+    git checkout devel/android &&
+    git pull upstream devel/android &&
 
     echo Building APKs... &&
     build_apk lite ${lite_version} &&
