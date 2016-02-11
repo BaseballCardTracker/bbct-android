@@ -31,14 +31,16 @@ hash() {
     cd -
 }
 
-if [ $# == 1 ]
-then {
-    version=$1
-
+pull_devel() {
     echo Pull devel branch... &&
     git stash save 'Stash before building release' &&
     git checkout devel/android &&
-    git pull upstream devel/android &&
+    git pull upstream devel/android
+}
+
+if [ $# == 1 ]
+then {
+    version=$1
 
     echo Building APKs... &&
     build_apk lite ${version} &&
