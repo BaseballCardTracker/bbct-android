@@ -53,14 +53,21 @@ checksum() {
 merge() {
     echo Merge master... &&
     git checkout master &&
-    git merge devel
+    git merge devel/android
 }
 
 tag() {
     version=$1
     echo Tag... &&
-    git tag l$version &&
-    git tag p$version
+    git tag l${version} &&
+    git tag p${version}
+}
+
+push() {
+    version=$1
+
+    git push origin master l${version} p${version} &&
+    git push upstream master l${version} p${version}
 }
 
 if [ $# == 1 ]
@@ -68,7 +75,11 @@ then {
     version=$1
 
     echo Building APKs... &&
-    build_apk
+    build_apk &&
+
+    merge &&
+    tag ${version} &&
+    push ${version}
 }
 else {
     echo Usage: './release <version>'
