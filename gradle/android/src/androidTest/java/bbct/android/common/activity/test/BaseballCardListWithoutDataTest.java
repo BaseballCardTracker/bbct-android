@@ -165,17 +165,15 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
      */
     @Test
     public void testAddMultipleCards() throws Throwable {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
 
         for (BaseballCard card : cards) {
-            BBCTTestUtil.addCard(this.solo, card);
-            BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
+            BBCTTestUtil.addCard(card);
+            // BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
-        this.solo.clickOnActionBarHomeButton();
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(cards, listView);
+        onView(withContentDescription(containsString("Navigate up"))).perform(click());
+        Assert.assertTrue(dbUtil.containsAllBaseballCards(cards));
+        BBCTTestUtil.assertListViewContainsItems(cards);
     }
 }
