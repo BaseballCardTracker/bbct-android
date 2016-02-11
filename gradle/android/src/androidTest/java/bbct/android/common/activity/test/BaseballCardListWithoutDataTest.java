@@ -45,6 +45,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.containsString;
+
 /**
  * Tests for the {@link MainActivity} activity when the database does not
  * contain data.
@@ -80,10 +88,7 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
     @Before
     public void setUp() throws Exception {
         this.inst = InstrumentationRegistry.getInstrumentation();
-        this.inst.setInTouchMode(true);
         this.activity = activityTestRule.getActivity();
-
-        this.solo = new Solo(this.inst, this.activity);
 
         InputStream cardInputStream = this.inst.getContext().getAssets()
                 .open(DATA_ASSET);
@@ -101,7 +106,6 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
     public void tearDown() throws Exception {
         this.dbUtil.clearDatabase();
         this.cardInput.close();
-        this.solo.finishOpenedActivities();
     }
 
     /**
@@ -113,7 +117,6 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        this.solo.waitForFragmentByTag(FragmentTags.EDIT_CARD);
 
         BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.isEmpty());
@@ -140,19 +143,15 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
     public void testAddCardToEmptyDatabase() throws Throwable {
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
-        BBCTTestUtil.addCard(this.solo, card);
-        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.clickOnActionBarHomeButton();
+        BBCTTestUtil.addCard(card);
+        // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.ADD_MESSAGE);
+        onView(withContentDescription(containsString("Navigate up"))).perform(click());
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
 
         List<BaseballCard> cards = new ArrayList<>();
         cards.add(card);
-
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        Assert.assertNotNull("ListView not found", listView);
-        BBCTTestUtil.assertListViewContainsItems(cards, listView);
+        BBCTTestUtil.assertListViewContainsItems(cards);
     }
 
     /**
