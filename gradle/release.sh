@@ -31,10 +31,9 @@ hash() {
     cd -
 }
 
-if [ $# == 2 ]
+if [ $# == 1 ]
 then {
-    lite_version=$1
-    premium_version=$2
+    version=$1
 
     echo Pull devel branch... &&
     git stash save 'Stash before building release' &&
@@ -42,8 +41,8 @@ then {
     git pull upstream devel/android &&
 
     echo Building APKs... &&
-    build_apk lite ${lite_version} &&
-    build_apk premium ${premium_version} &&
+    build_apk lite ${version} &&
+    build_apk premium ${version} &&
 
     echo Archiving source files... &&
     git archive --format=zip --prefix=bbct/ -o ${SRC_REL}/bbct-lite-src.${lite_version}.zip master lite common &&
@@ -71,6 +70,6 @@ then {
     git tag p$premium_version
 }
 else {
-    echo Usage: './release <lite_version> <premium_version>'
+    echo Usage: './release <version>'
 }
 fi
