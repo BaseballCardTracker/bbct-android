@@ -67,6 +67,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -93,6 +94,13 @@ final public class BBCTTestUtil {
         Adapter adapter = listView.getAdapter();
         for (int i = 0; i < expectedItems.size(); ++i) {
             Assert.assertEquals(expectedItems.get(i), adapter.getItem(i + 1));
+        }
+    }
+
+    public static void assertListViewContainsItems(List<BaseballCard> expectedItems) {
+        for (BaseballCard card : expectedItems) {
+            onData(allOf(is(instanceOf(BaseballCard.class)), is(card)))
+                    .check(matches(isDisplayed()));
         }
     }
 
