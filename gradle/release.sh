@@ -47,8 +47,8 @@ then {
     build_apk premium ${version} &&
 
     echo Archiving source files... &&
-    git archive --format=zip --prefix=bbct/ -o ${SRC_REL}/bbct-lite-src.${lite_version}.zip master lite common &&
-    git archive --format=tar --prefix=bbct/ master lite common | gzip > ${SRC_REL}/bbct-lite-src.${lite_version}.tar.gz &&
+    git archive --format=zip --prefix=bbct/ -o ${SRC_REL}/bbct-lite-src.${version}.zip master lite common &&
+    git archive --format=tar --prefix=bbct/ master lite common | gzip > ${SRC_REL}/bbct-lite-src.${version}.tar.gz &&
 
     echo Generating hashes... &&
     hash lite &&
@@ -68,8 +68,8 @@ then {
     git merge devel &&
 
     echo Tag... &&
-    git tag l$lite_version &&
-    git tag p$premium_version
+    git tag l$version &&
+    git tag p$version
 }
 else {
     echo Usage: './release <version>'
