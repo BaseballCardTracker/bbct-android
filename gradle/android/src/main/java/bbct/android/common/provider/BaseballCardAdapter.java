@@ -18,15 +18,16 @@
  */
 package bbct.android.common.provider;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Checkable;
+import android.widget.CheckBox;
 import android.widget.CheckedTextView;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import bbct.android.common.R;
@@ -34,6 +35,7 @@ import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.view.BaseballCardView;
+import butterknife.ButterKnife;
 
 /**
  * This class adds click listeners to {@link CheckedTextView} in
@@ -79,21 +81,20 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
             row = new BaseballCardView(mActivity);
         }
 
-        View ctv = row.findViewById(R.id.checkmark);
+        CheckBox ctv = ButterKnife.findById(row, R.id.checkmark);
         super.getView(position, row, parent);
 
         // set listener
-        ctv.setOnClickListener(new OnClickListener() {
-            @SuppressLint("AppCompatMethod")
+        ctv.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                if (!mCallback.isStarted()) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked && !mCallback.isStarted()) {
                     mActivity.startActionMode(mCallback);
                 }
 
                 ListView listView = mListFragment.getListView();
                 // Add 1 to compensate for the header view
-                listView.setItemChecked(position + 1, ((Checkable) v).isChecked());
+                listView.setItemChecked(position + 1, isChecked);
             }
         });
 

@@ -28,7 +28,9 @@ import android.view.MenuItem;
 import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.provider.BaseballCardContract;
+import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -37,6 +39,11 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics());
+        }
+
         this.setContentView(R.layout.main);
 
         if (savedInstanceState == null) {

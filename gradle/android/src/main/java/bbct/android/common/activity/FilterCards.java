@@ -33,7 +33,45 @@ import java.util.ArrayList;
 
 public class FilterCards extends Fragment {
 
+    private static final String FILTERED_LIST = "Filtered List";
+    private static final String INPUT_EXTRA = "input";
+
+    public static final String BRAND_EXTRA = "brand";
+    public static final String YEAR_EXTRA = "year";
     public static final String NUMBER_EXTRA = "number";
+    public static final String PLAYER_NAME_EXTRA = "playerName";
+    public static final String TEAM_EXTRA = "team";
+
+    private static final int[] CHECKBOXES = { R.id.brand_check,
+            R.id.year_check, R.id.number_check, R.id.player_name_check,
+            R.id.team_check };
+
+    private static final int[] TEXT_FIELDS = { R.id.brand_input,
+            R.id.year_input, R.id.number_input, R.id.player_name_input,
+            R.id.team_input };
+
+    private static final String[] EXTRAS = { BRAND_EXTRA, YEAR_EXTRA, NUMBER_EXTRA,
+            PLAYER_NAME_EXTRA, TEAM_EXTRA };
+
+    /**
+     * Finds the corresponding {@link EditText} element given a {@link CheckBox}
+     * that was clicked upon.
+     */
+    private View.OnClickListener onCheckBoxClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            EditText input = null;
+
+            for (int i = 0; i < CHECKBOXES.length; i++) {
+                if (v.getId() == CHECKBOXES[i]) {
+                    input = (EditText) FilterCards.this.getActivity().findViewById(TEXT_FIELDS[i]);
+                }
+            }
+
+            FilterCards.this.toggleTextField(input);
+            FilterCards.this.getActivity().supportInvalidateOptionsMenu();
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +115,7 @@ public class FilterCards extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        ArrayList<Integer> enabledFields = new ArrayList<Integer>();
+        ArrayList<Integer> enabledFields = new ArrayList<>();
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
             EditText et = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
             if (et.isEnabled()) {
@@ -117,26 +155,6 @@ public class FilterCards extends Fragment {
 
         return false;
     }
-
-    /**
-     * Finds the corresponding {@link EditText} element given a {@link CheckBox}
-     * that was clicked upon.
-     */
-    private View.OnClickListener onCheckBoxClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            EditText input = null;
-
-            for (int i = 0; i < CHECKBOXES.length; i++) {
-                if (v.getId() == CHECKBOXES[i]) {
-                    input = (EditText) FilterCards.this.getActivity().findViewById(TEXT_FIELDS[i]);
-                }
-            }
-
-            FilterCards.this.toggleTextField(input);
-            FilterCards.this.getActivity().supportInvalidateOptionsMenu();
-        }
-    };
 
     /**
      * Toggles the state of {@link EditText}.
@@ -191,23 +209,5 @@ public class FilterCards extends Fragment {
                 .addToBackStack(FILTERED_LIST)
                 .commit();
     }
-
-    private static final String FILTERED_LIST = "Filtered List";
-    private static final String INPUT_EXTRA = "input";
-    public static final String YEAR_EXTRA = "year";
-    public static final String BRAND_EXTRA = "brand";
-    public static final String PLAYER_NAME_EXTRA = "playerName";
-    public static final String TEAM_EXTRA = "team";
-
-    private static final int[] CHECKBOXES = { R.id.brand_check,
-            R.id.year_check, R.id.number_check, R.id.player_name_check,
-            R.id.team_check };
-
-    private static final int[] TEXT_FIELDS = { R.id.brand_input,
-            R.id.year_input, R.id.number_input, R.id.player_name_input,
-            R.id.team_input };
-
-    private static final String[] EXTRAS = { BRAND_EXTRA, YEAR_EXTRA, NUMBER_EXTRA,
-            PLAYER_NAME_EXTRA, TEAM_EXTRA };
 
 }

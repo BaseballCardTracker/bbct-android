@@ -1,2 +1,4 @@
 /build
-signing.properties
+src/main/res/values/com_crashlytics_export_strings.xml
+src/main/assets/crashlytics-build.properties
+fabric.properties
