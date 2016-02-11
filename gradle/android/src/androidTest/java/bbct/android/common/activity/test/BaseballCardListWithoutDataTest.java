@@ -123,14 +123,6 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
     }
 
     /**
-     * Test that the "About" menu item displays the {@link About} fragment.
-     */
-    @Test
-    public void testAboutMenuItem() {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.about_menu, FragmentTags.ABOUT);
-    }
-
-    /**
      * Test that the first baseball card data is added to the database and
      * updated in the {@link ListView}.
      *
