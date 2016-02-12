@@ -18,87 +18,95 @@
  */
 package bbct.android.common.layout.test;
 
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.app.Fragment;
-import android.test.ActivityInstrumentationTestCase2;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import static org.fest.assertions.api.ANDROID.assertThat;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.not;
 
-public class FilterCardsLayoutTest extends ActivityInstrumentationTestCase2<FragmentTestActivity> {
+@RunWith(AndroidJUnit4.class)
+public class FilterCardsLayoutTest {
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityTestRule =
+            new ActivityTestRule<>(FragmentTestActivity.class);
 
-    private FragmentTestActivity mActivity;
-    private Fragment mFragment;
-
-    public FilterCardsLayoutTest() {
-        super(FragmentTestActivity.class);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        mActivity = getActivity();
-        mFragment = new FilterCards();
+    @Before
+    public void setUp() throws Exception {
+        FragmentTestActivity mActivity = activityTestRule.getActivity();
+        Fragment mFragment = new FilterCards();
         mActivity.replaceFragment(mFragment);
-        this.getInstrumentation().waitForIdleSync();
     }
 
-    public void testFragmentVisible() {
-        assertThat(mFragment).isAdded().isVisible();
-    }
-
+    @Test
     public void testBrandCheckBox() {
         testCheckBox(R.id.brand_check);
     }
 
+    @Test
     public void testYearCheckBox() {
         testCheckBox(R.id.year_check);
     }
 
+    @Test
     public void testNumberCheckBox() {
         testCheckBox(R.id.number_check);
     }
 
+    @Test
     public void testPlayerNameCheckBox() {
         testCheckBox(R.id.player_name_check);
     }
 
+    @Test
     public void testTeamCheckBox() {
         testCheckBox(R.id.team_check);
     }
 
     private void testCheckBox(int id) {
-        CheckBox checkBox = (CheckBox) mActivity.findViewById(id);
-        assertThat(checkBox).isVisible().isNotChecked();
+        onView(withId(id)).check(matches(allOf(isDisplayed(), isNotChecked())));
     }
 
+    @Test
     public void testBrandEditText() {
         testEditText(R.id.brand_input);
     }
 
+    @Test
     public void testYearEditText() {
         testEditText(R.id.year_input);
     }
 
+    @Test
     public void testNumberEditText() {
         testEditText(R.id.number_input);
     }
 
+    @Test
     public void testPlayerNameEditText() {
         testEditText(R.id.player_name_input);
     }
 
+    @Test
     public void testTeamEditText() {
         testEditText(R.id.team_input);
     }
 
     private void testEditText(int id) {
-        EditText editText = (EditText) mActivity.findViewById(id);
-        assertThat(editText).isVisible().isNotActivated().isEmpty();
+        onView(withId(id)).check(matches(allOf(isDisplayed(), not(isEnabled()), withText(""))));
     }
-
 }

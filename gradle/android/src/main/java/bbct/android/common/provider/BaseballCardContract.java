@@ -250,7 +250,7 @@ public final class BaseballCardContract {
      *         given {@link Cursor}.
      */
     public static List<BaseballCard> getAllBaseballCardsFromCursor(Cursor cursor) {
-        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+        List<BaseballCard> cards = new ArrayList<>();
 
         while (cursor.moveToNext()) {
             BaseballCard card = BaseballCardContract.getBaseballCardFromCursor(cursor);

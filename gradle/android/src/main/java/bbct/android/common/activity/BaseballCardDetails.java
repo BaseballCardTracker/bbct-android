@@ -21,17 +21,20 @@ package bbct.android.common.activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
@@ -44,15 +47,34 @@ import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.SingleColumnCursorAdapter;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Allows user to add a new card or view and edit details of an existing card.
  */
 public class BaseballCardDetails extends Fragment {
 
-    private static String ID = "id";
+    private static final String ID = "id";
+    private static final String CARD = "card";
+    private static final String TAG = BaseballCardDetails.class.getName();
 
-    private static String CARD = "card";
+    @InjectView(R.id.autograph) CheckBox autographCheckBox = null;
+    @InjectView(R.id.condition) Spinner conditionSpinner = null;
+    @InjectView(R.id.brand_text) AutoCompleteTextView brandText = null;
+    @InjectView(R.id.year_text) EditText yearText = null;
+    @InjectView(R.id.number_text) EditText numberText = null;
+    @InjectView(R.id.value_text) EditText valueText = null;
+    @InjectView(R.id.count_text) EditText countText = null;
+    @InjectView(R.id.player_name_text) AutoCompleteTextView playerNameText = null;
+    @InjectView(R.id.team_text) AutoCompleteTextView teamText = null;
+    @InjectView(R.id.player_position_text) Spinner playerPositionSpinner = null;
+
+    private ArrayAdapter<CharSequence> conditionAdapter;
+    private ArrayAdapter<CharSequence> positionsAdapter;
+    private Uri uri = null;
+    private boolean isUpdating = false;
+    private long cardId = -1L;
 
     public static BaseballCardDetails getInstance(long id, BaseballCard card) {
         Bundle args = new Bundle();
@@ -75,41 +97,79 @@ public class BaseballCardDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.card_details, container, false);
+        ButterKnife.inject(this, view);
+
+        brandText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.d(TAG, "onKey() in Brand TextView");
+                Log.d(TAG, "keyCode = " + keyCode);
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    Log.d(TAG, "focus on Year");
+                    yearText.requestFocus();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        playerNameText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.d(TAG, "onKey() in Player Name TextView");
+                Log.d(TAG, "keyCode = " + keyCode);
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    Log.d(TAG, "focus on Team");
+                    teamText.requestFocus();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        teamText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.d(TAG, "onKey() in Team TextView");
+                Log.d(TAG, "keyCode = " + keyCode);
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    Log.d(TAG, "hide keyboard");
+                    InputMethodManager imm = (InputMethodManager) getActivity()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(teamText.getWindowToken(), 0);
+                    return true;
+                }
+
+                return false;
+            }
+        });
 
         String cardDetailsTitle = this.getString(R.string.card_details_title);
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
         this.getActivity().setTitle(title);
 
-        this.autographCheckBox = (CheckBox) view.findViewById(R.id.autograph);
+        this.conditionAdapter = this.populateSpinnerAdapter(R.array.condition);
+        this.conditionSpinner.setAdapter(this.conditionAdapter);
 
-        this.conditionSpinner = this.populateSpinner(view, R.id.condition, R.array.condition);
-        this.conditionAdapter = (ArrayAdapter<CharSequence>) this.conditionSpinner
-                .getAdapter();
-
-        this.brandText = (AutoCompleteTextView) view.findViewById(R.id.brand_text);
         CursorAdapter brandAdapter = new SingleColumnCursorAdapter(getActivity(),
                 BaseballCardContract.BRAND_COL_NAME);
         this.brandText.setAdapter(brandAdapter);
 
-        this.yearText = (EditText) view.findViewById(R.id.year_text);
-        this.numberText = (EditText) view.findViewById(R.id.number_text);
-        this.valueText = (EditText) view.findViewById(R.id.value_text);
-        this.countText = (EditText) view.findViewById(R.id.count_text);
-
-        this.playerNameText = (AutoCompleteTextView) view.findViewById(R.id.player_name_text);
         CursorAdapter playerNameAdapter = new SingleColumnCursorAdapter(this.getActivity(),
                 BaseballCardContract.PLAYER_NAME_COL_NAME);
         this.playerNameText.setAdapter(playerNameAdapter);
 
-        this.teamText = (AutoCompleteTextView) view.findViewById(R.id.team_text);
         CursorAdapter teamAdapter = new SingleColumnCursorAdapter(this.getActivity(),
                 BaseballCardContract.TEAM_COL_NAME);
         this.teamText.setAdapter(teamAdapter);
 
-        this.playerPositionSpinner = this.populateSpinner(view, R.id.player_position_text,
-                R.array.positions);
-        this.positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner
-                .getAdapter();
+        this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
+        this.playerPositionSpinner.setAdapter(this.positionsAdapter);
 
         Bundle args = this.getArguments();
         if (args != null) {
@@ -176,14 +236,12 @@ public class BaseballCardDetails extends Fragment {
                 .commit();
     }
 
-    private Spinner populateSpinner(View view, int spinnerId, int araryId) {
-        Spinner spinner = (Spinner) view.findViewById(spinnerId);
+    private ArrayAdapter<CharSequence> populateSpinnerAdapter(int arrayId) {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this.getActivity(), araryId, android.R.layout.simple_spinner_item);
+                this.getActivity(), arrayId, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
-        return spinner;
+        return adapter;
     }
 
     private BaseballCard getBaseballCard() {
@@ -232,41 +290,6 @@ public class BaseballCardDetails extends Fragment {
         }
     }
 
-    /**
-     *
-     * Called when a key was released and not handled by any of the views inside
-     * of the activity.
-     *
-     * @param keyCode
-     *            The value in event.getKeyCode().
-     * @param event
-     *            Description of the key event.
-     * @return {@code true} if the event was handled, {@code false} otherwise.
-     */
-//    @Override
-//    public boolean onKeyUp(int keyCode, KeyEvent event) {
-//        // If the key entered is 'Enter'('next' or 'done'), then
-//        // 1) move the focus to the next view if the current focus is in brand
-//        // or player name view and
-//        // 2) hide the keypad if the current focus is in team view.
-//        if (keyCode == KeyEvent.KEYCODE_ENTER) {
-//            if (this.brandText.hasFocus()) {
-//                this.yearText.requestFocus();
-//                return true;
-//            } else if (this.playerNameText.hasFocus()) {
-//                this.teamText.requestFocus();
-//                return true;
-//            } else if (this.teamText.hasFocus()) {
-//                // hide the soft keypad
-//                InputMethodManager imm = (InputMethodManager) this.getActivity()
-//                        .getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(this.teamText.getWindowToken(), 0);
-//                return true;
-//            }
-//        }
-//        return super.onKeyUp(keyCode, event);
-//    }
-
     private void resetInput() {
         this.autographCheckBox.setChecked(false);
         this.brandText.setText("");
@@ -309,22 +332,5 @@ public class BaseballCardDetails extends Fragment {
             }
         }
     }
-
-    private CheckBox autographCheckBox = null;
-    private Spinner conditionSpinner = null;
-    private AutoCompleteTextView brandText = null;
-    private EditText yearText = null;
-    private EditText numberText = null;
-    private EditText valueText = null;
-    private EditText countText = null;
-    private AutoCompleteTextView playerNameText = null;
-    private AutoCompleteTextView teamText = null;
-    private Spinner playerPositionSpinner = null;
-    private ArrayAdapter<CharSequence> conditionAdapter;
-    private ArrayAdapter<CharSequence> positionsAdapter;
-    private Uri uri = null;
-    private boolean isUpdating = false;
-    private long cardId = -1L;
-    private static final String TAG = BaseballCardDetails.class.getName();
 
 }

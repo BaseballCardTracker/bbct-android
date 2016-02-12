@@ -35,6 +35,7 @@ import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.view.BaseballCardView;
+import butterknife.ButterKnife;
 
 /**
  * This class adds click listeners to {@link CheckedTextView} in
@@ -80,14 +81,14 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
             row = new BaseballCardView(mActivity);
         }
 
-        CheckBox ctv = (CheckBox) row.findViewById(R.id.checkmark);
+        CheckBox ctv = ButterKnife.findById(row, R.id.checkmark);
         super.getView(position, row, parent);
 
         // set listener
         ctv.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!mCallback.isStarted()) {
+                if (isChecked && !mCallback.isStarted()) {
                     mActivity.startActionMode(mCallback);
                 }
 

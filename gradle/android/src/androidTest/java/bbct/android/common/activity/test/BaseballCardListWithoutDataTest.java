@@ -31,6 +31,8 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +46,16 @@ import junit.framework.Assert;
  */
 public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
         ActivityInstrumentationTestCase2<T> {
+
+    private static final String DATA_ASSET = "three_cards.csv";
+
+    private Solo solo = null;
+    private Instrumentation inst = null;
+    private Activity activity = null;
+    private BaseballCardCsvFileReader cardInput = null;
+    private DatabaseUtil dbUtil = null;
+
+    @InjectView(android.R.id.list) ListView listView;
 
     /**
      * Create instrumented test cases for {@link MainActivity}.
@@ -64,7 +76,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
         super.setUp();
 
         this.inst = this.getInstrumentation();
-
+        this.inst.setInTouchMode(true);
         this.activity = this.getActivity();
 
         this.solo = new Solo(this.inst, this.activity);
@@ -129,11 +141,11 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
 
-        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+        List<BaseballCard> cards = new ArrayList<>();
         cards.add(card);
 
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         Assert.assertNotNull("ListView not found", listView);
         BBCTTestUtil.assertListViewContainsItems(cards, listView);
     }
@@ -158,14 +170,8 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
 
         this.solo.clickOnActionBarHomeButton();
         this.inst.waitForIdleSync();
-        ListView listView = (ListView) this.activity.findViewById(android.R.id.list);
+        ButterKnife.inject(this, this.activity);
         BBCTTestUtil.assertListViewContainsItems(cards, listView);
     }
 
-    private Solo solo = null;
-    private Instrumentation inst = null;
-    private Activity activity = null;
-    private BaseballCardCsvFileReader cardInput = null;
-    private DatabaseUtil dbUtil = null;
-    private static final String DATA_ASSET = "three_cards.csv";
 }

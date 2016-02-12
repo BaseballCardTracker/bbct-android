@@ -31,6 +31,7 @@ import bbct.android.common.test.DatabaseUtil;
 import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import junit.framework.Assert;
@@ -56,10 +57,11 @@ public class BaseballCardDetailsEditCardTest extends
         Log.d(TAG, "suite()");
 
         TestSuite suite = new TestSuite();
-        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(EnumSet
-                .allOf(BBCTTestUtil.EditTexts.class));
+        Set<BBCTTestUtil.EditTexts> editTexts = EnumSet.allOf(BBCTTestUtil.EditTexts.class);
 
-        for (Set<BBCTTestUtil.EditTexts> mask : masks) {
+        for (BBCTTestUtil.EditTexts editText : editTexts) {
+            Set<BBCTTestUtil.EditTexts> mask = new HashSet<>();
+            mask.add(editText);
             Log.d(TAG, "mask: " + mask);
             suite.addTest(new BaseballCardDetailsEditCardTest(mask));
         }
@@ -120,6 +122,7 @@ public class BaseballCardDetailsEditCardTest extends
             Log.e(TAG, this.oldCard.toString());
         }
 
+        inst.setInTouchMode(true);
         this.activity = this.getActivity();
         this.fragment = BaseballCardDetails.getInstance(cardId, this.oldCard);
         this.activity.replaceFragment(this.fragment);
