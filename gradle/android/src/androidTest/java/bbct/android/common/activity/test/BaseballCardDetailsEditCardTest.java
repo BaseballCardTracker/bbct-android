@@ -123,10 +123,10 @@ public class BaseballCardDetailsEditCardTest extends
         }
 
         inst.setInTouchMode(true);
-        this.activity = this.getActivity();
-        this.fragment = BaseballCardDetails.getInstance(cardId, this.oldCard);
-        this.activity.replaceFragment(this.fragment);
-        this.solo = new Solo(inst, this.activity);
+        FragmentTestActivity activity = this.getActivity();
+        BaseballCardDetails fragment = BaseballCardDetails.getInstance(cardId, this.oldCard);
+        activity.replaceFragment(fragment);
+        this.solo = new Solo(inst, activity);
     }
 
     /**
@@ -202,8 +202,6 @@ public class BaseballCardDetailsEditCardTest extends
 
     private final Set<BBCTTestUtil.EditTexts> inputMask;
     private Solo solo = null;
-    private FragmentTestActivity activity = null;
-    private BaseballCardDetails fragment;
     private BaseballCard oldCard = null;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil = null;
