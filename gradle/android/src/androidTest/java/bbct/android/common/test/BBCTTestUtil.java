@@ -117,6 +117,10 @@ final public class BBCTTestUtil {
         Assert.assertTrue(solo.waitForFragmentByTag(fragmentTag));
     }
 
+    public static void testMenuItem(int menuId, String fragmentTag) {
+        onView(withId(menuId)).perform(click());
+    }
+
     /**
      * Add a card to the database using the {@link EditText} views from the
      * given {@link BaseballCardDetails} activity and check that the save button
@@ -503,6 +507,33 @@ final public class BBCTTestUtil {
         }
     }
 
+    public static void sendKeysToFilterCards(BaseballCard testCard, Set<EditTexts> fieldFlags) {
+        if (fieldFlags.contains(EditTexts.BRAND)) {
+            sendKeysToCurrFieldFilterCards(R.id.brand_check, R.id.brand_input,
+                    testCard.getBrand());
+        }
+
+        if (fieldFlags.contains(EditTexts.YEAR)) {
+            sendKeysToCurrFieldFilterCards(R.id.year_check, R.id.year_input,
+                    Integer.toString(testCard.getYear()));
+        }
+
+        if (fieldFlags.contains(EditTexts.NUMBER)) {
+            sendKeysToCurrFieldFilterCards(R.id.number_check, R.id.number_input,
+                    Integer.toString(testCard.getNumber()));
+        }
+
+        if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
+            sendKeysToCurrFieldFilterCards(R.id.player_name_check, R.id.player_name_input,
+                    testCard.getPlayerName());
+        }
+
+        if (fieldFlags.contains(EditTexts.TEAM)) {
+            sendKeysToCurrFieldFilterCards(R.id.team_check, R.id.team_input,
+                    testCard.getTeam());
+        }
+    }
+
     /**
      * Fills in the current {@link EditText} view, of the given
      * {@link FilterCards} activity.
@@ -524,6 +555,11 @@ final public class BBCTTestUtil {
         solo.clickOnView(cb);
         EditText editText = ButterKnife.findById(filterCards, editTextId);
         solo.typeText(editText, input);
+    }
+
+    public static void sendKeysToCurrFieldFilterCards(int checkId, int editTextId, String input) {
+        onView(withId(checkId)).perform(click());
+        onView(withId(editTextId)).check(matches(isDisplayed())).perform(typeText(input));
     }
 
     public static List<BaseballCard> filterList(List<BaseballCard> list,
