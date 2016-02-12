@@ -18,6 +18,12 @@
  */
 package bbct.android.common.test;
 
+import android.app.Instrumentation;
+import android.support.test.InstrumentationRegistry;
+import bbct.android.common.data.BaseballCard;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -25,13 +31,42 @@ import org.junit.runners.model.Statement;
 public class DataRule implements TestRule {
     @Override
     public Statement apply(Statement statement, Description description) {
-        return new DataStatement();
+        return new DataStatement(statement);
     }
 
     private class DataStatement extends Statement {
+        private static final String CARD_DATA = "cards.csv";
+        private List<BaseballCard> allCards;
+        private DatabaseUtil dbUtil;
+        private final Statement statement;
+
+        public DataStatement(Statement statement) {
+            this.statement = statement;
+        }
+
         @Override
         public void evaluate() throws Throwable {
+            setUp();
+            statement.evaluate();
+            tearDown();
+        }
 
+        private void setUp() throws IOException {
+            Instrumentation inst = InstrumentationRegistry.getInstrumentation();
+
+            // Create the database and populate table with test data
+            InputStream cardInputStream = inst.getContext().getAssets().open(CARD_DATA);
+            BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
+                    cardInputStream, true);
+            allCards = cardInput.getAllBaseballCards();
+            cardInput.close();
+
+            dbUtil = new DatabaseUtil(inst.getTargetContext());
+            dbUtil.populateTable(allCards);
+        }
+
+        private void tearDown() {
+            dbUtil.clearDatabase();
         }
     }
 }
