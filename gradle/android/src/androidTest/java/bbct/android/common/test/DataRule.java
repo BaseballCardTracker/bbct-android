@@ -20,23 +20,34 @@ package bbct.android.common.test;
 
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
+import android.util.Log;
+import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import org.junit.Rule;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 public class DataRule implements TestRule {
+    private static final String TAG = DataRule.class.getName();
+
+    private List<BaseballCard> allCards;
+
     @Override
     public Statement apply(Statement statement, Description description) {
         return new DataStatement(statement);
     }
 
+    public BaseballCard getCard(int index) {
+        return allCards.get(index);
+    }
+
     private class DataStatement extends Statement {
         private static final String CARD_DATA = "cards.csv";
-        private List<BaseballCard> allCards;
         private DatabaseUtil dbUtil;
         private final Statement statement;
 
@@ -46,6 +57,7 @@ public class DataRule implements TestRule {
 
         @Override
         public void evaluate() throws Throwable {
+            Log.d(TAG, "evaluate()");
             setUp();
             statement.evaluate();
             tearDown();

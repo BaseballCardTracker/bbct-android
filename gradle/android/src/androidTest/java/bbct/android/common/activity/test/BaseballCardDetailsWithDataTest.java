@@ -18,47 +18,46 @@
  */
 package bbct.android.common.activity.test;
 
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.AutoCompleteTextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
+import bbct.android.common.test.DataRule;
 import butterknife.ButterKnife;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class BaseballCardDetailsWithDataTest extends WithDataTest<FragmentTestActivity> {
+public class BaseballCardDetailsWithDataTest {
+    @Rule
+    public DataRule dataRule = new DataRule();
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityTestRule
+            = new ActivityTestRule<>(FragmentTestActivity.class);
+
     private Solo mSolo;
     private BaseballCard mCard;
 
-    public BaseballCardDetailsWithDataTest() {
-        super(FragmentTestActivity.class);
-    }
-
     @Before
     public void setUp() throws Exception {
-        super.setUp();
-
         FragmentTestActivity activity = activityTestRule.getActivity();
         activity.replaceFragment(new BaseballCardDetails());
-
-        this.inst.waitForIdleSync();
-        mSolo = new Solo(inst, activity);
-        mSolo.getCurrentActivity();
-        mCard = allCards.get(0);
+        mSolo = new Solo(InstrumentationRegistry.getInstrumentation(), activity);
+        mCard = dataRule.getCard(0);
     }
 
     @After
     public void tearDown() throws Exception {
         mSolo.finishOpenedActivities();
-
-        super.tearDown();
     }
 
     @Test
