@@ -18,6 +18,7 @@
  */
 package bbct.android.common.activity.test;
 
+import android.support.test.runner.AndroidJUnit4;
 import android.widget.AutoCompleteTextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
@@ -26,9 +27,13 @@ import bbct.android.common.data.BaseballCard;
 import butterknife.ButterKnife;
 import com.robotium.solo.Solo;
 import junit.framework.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
+@RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsWithDataTest extends WithDataTest<FragmentTestActivity> {
-
     private Solo mSolo;
     private BaseballCard mCard;
 
@@ -36,35 +41,37 @@ public class BaseballCardDetailsWithDataTest extends WithDataTest<FragmentTestAc
         super(FragmentTestActivity.class);
     }
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         super.setUp();
 
-        this.inst.setInTouchMode(true);
-        FragmentTestActivity activity = this.getActivity();
+        FragmentTestActivity activity = activityTestRule.getActivity();
         activity.replaceFragment(new BaseballCardDetails());
 
         this.inst.waitForIdleSync();
-        mSolo = new Solo(getInstrumentation(), activity);
+        mSolo = new Solo(inst, activity);
         mSolo.getCurrentActivity();
         mCard = allCards.get(0);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         mSolo.finishOpenedActivities();
 
         super.tearDown();
     }
 
+    @Test
     public void testBrandAutoComplete() throws Throwable {
         this.testAutoComplete(R.id.brand_text, mCard.getBrand());
     }
 
+    @Test
     public void testPlayerNameAutoComplete() throws Throwable {
         this.testAutoComplete(R.id.player_name_text, mCard.getPlayerName());
     }
 
+    @Test
     public void testTeamAutoComplete() throws Throwable {
         this.testAutoComplete(R.id.team_text, mCard.getTeam());
     }
@@ -76,5 +83,4 @@ public class BaseballCardDetailsWithDataTest extends WithDataTest<FragmentTestAc
         mSolo.waitForText(text);
         Assert.assertTrue(textView.isPopupShowing());
     }
-
 }

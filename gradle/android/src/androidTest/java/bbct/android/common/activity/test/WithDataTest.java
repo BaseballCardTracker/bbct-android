@@ -20,14 +20,20 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 import android.test.ActivityInstrumentationTestCase2;
+import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import java.io.InputStream;
 import java.util.List;
+import org.junit.Rule;
 
-public class WithDataTest<T extends Activity> extends ActivityInstrumentationTestCase2<T> {
+abstract public class WithDataTest<T extends Activity> {
+    @Rule
+    public ActivityTestRule<T> activityTestRule;
 
     protected static final String CARD_DATA = "cards.csv";
     protected List<BaseballCard> allCards;
@@ -41,14 +47,11 @@ public class WithDataTest<T extends Activity> extends ActivityInstrumentationTes
      *                      targetPackage specified in the AndroidManifest.xml
      */
     public WithDataTest(Class<T> activityClass) {
-        super(activityClass);
+        activityTestRule = new ActivityTestRule<>(activityClass);
     }
 
-    @Override
     protected void setUp() throws Exception {
-        super.setUp();
-
-        this.inst = this.getInstrumentation();
+        this.inst = InstrumentationRegistry.getInstrumentation();
 
         // Create the database and populate table with test data
         InputStream cardInputStream = this.inst.getContext().getAssets().open(CARD_DATA);
@@ -62,10 +65,7 @@ public class WithDataTest<T extends Activity> extends ActivityInstrumentationTes
 
     }
 
-    @Override
     protected void tearDown() throws Exception {
         this.dbUtil.clearDatabase();
-        super.tearDown();
     }
-
 }
