@@ -29,6 +29,9 @@ import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import java.io.InputStream;
 import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 
 abstract public class WithDataTest<T extends Activity> {
@@ -50,7 +53,8 @@ abstract public class WithDataTest<T extends Activity> {
         activityTestRule = new ActivityTestRule<>(activityClass);
     }
 
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         this.inst = InstrumentationRegistry.getInstrumentation();
 
         // Create the database and populate table with test data
@@ -65,7 +69,8 @@ abstract public class WithDataTest<T extends Activity> {
 
     }
 
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         this.dbUtil.clearDatabase();
     }
 }
