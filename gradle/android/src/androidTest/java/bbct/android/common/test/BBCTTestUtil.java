@@ -418,50 +418,6 @@ final public class BBCTTestUtil {
         });
     }
 
-    /**
-     * Assert that the {@link EditText} views in the given
-     * {@link BaseballCardDetails} activity contain the same data as the given
-     * {@link BaseballCard}.
-     *
-     * @param cardDetails
-     *            The {@link BaseballCardDetails} containing the
-     *            {@link EditText} views to check.
-     * @param expectedCard
-     *            The {@link BaseballCard} containing the expected data.
-     */
-    public static void assertAllEditTextContents(Activity cardDetails,
-            BaseballCard expectedCard) {
-        CheckBox autographedCheckBox = ButterKnife.findById(cardDetails, R.id.autograph);
-        Spinner conditionSpinner = ButterKnife.findById(cardDetails, R.id.condition);
-        EditText brandText = ButterKnife.findById(cardDetails, R.id.brand_text);
-        EditText yearText = ButterKnife.findById(cardDetails, R.id.year_text);
-        EditText numberText = ButterKnife.findById(cardDetails, R.id.number_text);
-        EditText valueText = ButterKnife.findById(cardDetails, R.id.value_text);
-        EditText countText = ButterKnife.findById(cardDetails, R.id.count_text);
-        EditText playerNameText = ButterKnife.findById(cardDetails, R.id.player_name_text);
-        Spinner playerPositionSpinner = ButterKnife.findById(cardDetails, R.id.player_position_text);
-
-        Assert.assertEquals(expectedCard.isAutographed(),
-                autographedCheckBox.isChecked());
-        Assert.assertEquals(expectedCard.getCondition(),
-                conditionSpinner.getSelectedItem());
-        Assert.assertEquals(expectedCard.getBrand(), brandText.getText()
-                .toString());
-        Assert.assertEquals(expectedCard.getYear(),
-                Integer.parseInt(yearText.getText().toString()));
-        Assert.assertEquals(expectedCard.getNumber(),
-                Integer.parseInt(numberText.getText().toString()));
-        Assert.assertEquals(
-                expectedCard.getValue(),
-                (int) (Double.parseDouble(valueText.getText().toString()) * 100));
-        Assert.assertEquals(expectedCard.getCount(),
-                Integer.parseInt(countText.getText().toString()));
-        Assert.assertEquals(expectedCard.getPlayerName(), playerNameText
-                .getText().toString());
-        Assert.assertEquals(expectedCard.getPlayerPosition(),
-                playerPositionSpinner.getSelectedItem());
-    }
-
     public static void assertAllEditTextContents(BaseballCard expectedCard) {
         ViewInteraction autographView = onView(withId(R.id.autograph));
 

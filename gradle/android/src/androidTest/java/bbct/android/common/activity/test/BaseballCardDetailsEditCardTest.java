@@ -157,14 +157,14 @@ public class BaseballCardDetailsEditCardTest extends
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(this.oldCard));
 
-        BBCTTestUtil.assertAllEditTextContents(this.activity, this.oldCard);
+        BBCTTestUtil.assertAllEditTextContents(this.oldCard);
         BBCTTestUtil.sendKeysToCardDetails(this.solo, this.newCard,
                 this.inputMask);
 
         BaseballCard expected = this.getExpectedCard();
 
         Log.d("DEBUG", "Checking cards for inputMask " + this.inputMask);
-        BBCTTestUtil.assertAllEditTextContents(this.activity, expected);
+        BBCTTestUtil.assertAllEditTextContents(expected);
         Log.d("DEBUG", "Success!");
 
         this.solo.clickOnButton("Save");

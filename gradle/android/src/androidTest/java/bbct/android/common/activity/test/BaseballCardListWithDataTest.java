@@ -276,7 +276,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
 
         // solo.clickInList() is 1-based
         BaseballCard expectedCard = this.allCards.get(cardIndex - 1);
-        BBCTTestUtil.assertAllEditTextContents(this.activity, expectedCard);
+        BBCTTestUtil.assertAllEditTextContents(expectedCard);
     }
 
     /**

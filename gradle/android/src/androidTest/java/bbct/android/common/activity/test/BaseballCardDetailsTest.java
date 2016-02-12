@@ -142,7 +142,7 @@ public class BaseballCardDetailsTest {
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = activityTestRule.getActivity();
-        BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
+        BBCTTestUtil.assertAllEditTextContents(this.card);
     }
 
     /**
@@ -158,7 +158,7 @@ public class BaseballCardDetailsTest {
     public void testStatePause() throws InterruptedException {
         BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
         this.inst.callActivityOnRestart(this.activity);
-        BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
+        BBCTTestUtil.assertAllEditTextContents(this.card);
     }
 
     /**
