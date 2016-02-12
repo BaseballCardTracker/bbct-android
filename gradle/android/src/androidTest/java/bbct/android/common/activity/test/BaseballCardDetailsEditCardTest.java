@@ -22,13 +22,13 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.widget.EditText;
+import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -37,6 +37,10 @@ import java.util.Set;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Tests editing card value and count in a {@link BaseballCardDetails} activity.
@@ -126,7 +130,6 @@ public class BaseballCardDetailsEditCardTest extends
         FragmentTestActivity activity = this.getActivity();
         BaseballCardDetails fragment = BaseballCardDetails.getInstance(cardId, this.oldCard);
         activity.replaceFragment(fragment);
-        this.solo = new Solo(inst, activity);
     }
 
     /**
@@ -158,8 +161,7 @@ public class BaseballCardDetailsEditCardTest extends
         Assert.assertTrue(this.dbUtil.containsBaseballCard(this.oldCard));
 
         BBCTTestUtil.assertAllEditTextContents(this.oldCard);
-        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.newCard,
-                this.inputMask);
+        BBCTTestUtil.sendKeysToCardDetails(this.newCard, this.inputMask);
 
         BaseballCard expected = this.getExpectedCard();
 
@@ -167,7 +169,7 @@ public class BaseballCardDetailsEditCardTest extends
         BBCTTestUtil.assertAllEditTextContents(expected);
         Log.d("DEBUG", "Success!");
 
-        this.solo.clickOnButton("Save");
+        onView(withId(R.id.save_menu)).perform(click());
         Assert.assertTrue(this.dbUtil.containsBaseballCard(expected));
     }
 
@@ -201,7 +203,6 @@ public class BaseballCardDetailsEditCardTest extends
     }
 
     private final Set<BBCTTestUtil.EditTexts> inputMask;
-    private Solo solo = null;
     private BaseballCard oldCard = null;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil = null;
