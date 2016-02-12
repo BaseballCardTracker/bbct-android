@@ -56,7 +56,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
@@ -67,7 +66,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -99,7 +97,7 @@ final public class BBCTTestUtil {
 
     public static void assertListViewContainsItems(List<BaseballCard> expectedItems) {
         for (BaseballCard card : expectedItems) {
-            onData(allOf(is(instanceOf(BaseballCard.class)), is(card)))
+            onData(allOf(instanceOf(BaseballCard.class), is(card)))
                     .check(matches(isDisplayed()));
         }
     }
@@ -334,7 +332,7 @@ final public class BBCTTestUtil {
         if (fieldFlags.contains(EditTexts.CONDITION)) {
             onView(withId(R.id.condition))
                     .perform(scrollTo(), click());
-            onData(allOf(is(instanceOf(String.class)), is(card.getCondition())))
+            onData(allOf(instanceOf(String.class), is(card.getCondition())))
                     .perform(click());
             onView(withId(R.id.condition))
                     .check(matches(withSpinnerText(card.getCondition())));
@@ -402,7 +400,7 @@ final public class BBCTTestUtil {
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
             onView(withId(R.id.player_position_text))
                     .perform(scrollTo(), click());
-            onData(allOf(is(instanceOf(String.class)), is(card.getPlayerPosition())))
+            onData(allOf(instanceOf(String.class), is(card.getPlayerPosition())))
                     .perform(click());
             onView(withId(R.id.player_position_text))
                     .check(matches(withSpinnerText(card.getPlayerPosition())));
