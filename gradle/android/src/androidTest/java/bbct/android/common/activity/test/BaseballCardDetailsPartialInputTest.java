@@ -31,7 +31,6 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumSet;
@@ -40,6 +39,10 @@ import java.util.Set;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * A parameterized test which can test any combination of input in the
@@ -52,7 +55,6 @@ public class BaseballCardDetailsPartialInputTest extends
     private static final String TEST_NAME = "testPartialInput";
     private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
 
-    private Solo solo = null;
     private FragmentTestActivity activity = null;
     private Instrumentation inst = null;
     private BaseballCard card = null;
@@ -123,8 +125,6 @@ public class BaseballCardDetailsPartialInputTest extends
         this.activity.replaceFragment(new BaseballCardDetails());
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-
-        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -138,8 +138,8 @@ public class BaseballCardDetailsPartialInputTest extends
         Log.d(TAG, "testPartialInput()");
         Log.d(TAG, "inputFieldsMask=" + this.inputFieldsMask);
 
-        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card, this.inputFieldsMask);
-        this.solo.clickOnActionBarItem(R.id.save_menu);
+        BBCTTestUtil.sendKeysToCardDetails(this.card, this.inputFieldsMask);
+        onView(withId(R.id.save_menu)).perform(click());
 
         EditText focusEditText = null;
 
