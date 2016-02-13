@@ -1,6 +1,6 @@
 language: android
 
-script: "cd gradle && ./gradlew build connectedCheck"
+script: "cd gradle && ./gradlew assembleDebug connectedCheck"
 
 # Emulator Management: Create, Start and Wait
 before_script:
