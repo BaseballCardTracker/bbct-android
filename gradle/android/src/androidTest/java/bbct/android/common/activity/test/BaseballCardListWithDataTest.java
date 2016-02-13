@@ -19,7 +19,6 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
-import android.test.TouchUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;

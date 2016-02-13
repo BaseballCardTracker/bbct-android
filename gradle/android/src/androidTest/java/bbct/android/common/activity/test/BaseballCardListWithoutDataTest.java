@@ -29,7 +29,6 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import butterknife.InjectView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
