@@ -603,10 +603,11 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testOnItemLongClickStartActionMode() {
         int index = 4;
-        BaseballCard card = allCards.get(index);
-        onData(allOf(instanceOf(BaseballCard.class), is(card)))
+        onData(instanceOf(BaseballCard.class))
+                .atPosition(index)
                 .perform(longClick());
-        onData(allOf(instanceOf(BaseballCard.class), is(card)))
+        onData(instanceOf(BaseballCard.class))
+                .atPosition(index)
                 .onChildView(withId(R.id.checkmark))
                 .check(matches(isChecked()));
         onView(withId(R.id.delete_menu))
