@@ -349,17 +349,14 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      */
     @Test
     public void testAddCardNotMatchingCurrentFilter() throws Throwable {
-        this.testYearFilter();
-
-        this.newCard = new BaseballCard(false, "Excellent", "Codeguru Apps",
+        testYearFilter();
+        newCard = new BaseballCard(false, "Excellent", "Codeguru Apps",
                 1976, 1, 50000, 1, "Codeguru", "Codeguru Devs", "Catcher");
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
-        BBCTTestUtil.addCard(this.solo, this.newCard);
-        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.goBack();
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
+        BBCTTestUtil.addCard(newCard);
+        // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.ADD_MESSAGE);
+        onView(withContentDescription(containsString("Navigate up"))).perform(click());
+        BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
     /**
