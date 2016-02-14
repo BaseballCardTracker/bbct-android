@@ -379,23 +379,14 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     private void assertAllCheckboxesChecked() {
-        this.inst.waitForIdleSync();
-        int numMarked = 0;
+        onView(withId(R.id.select_all))
+                .check(matches(isChecked()));
 
-        Checkable selectAll = (Checkable) listView.getChildAt(0);
-        if (selectAll.isChecked()) {
-            numMarked++;
+        for (int i = 0; i < allCards.size(); i++) {
+            onData(instanceOf(BaseballCard.class))
+                    .atPosition(i)
+                    .check(matches(isChecked()));
         }
-
-        for (int i = 1; i < listView.getChildCount(); i++) {
-            Checkable ctv = (Checkable) listView.getChildAt(i);
-
-            if (ctv.isChecked()) {
-                numMarked++;
-            }
-        }
-
-        Assert.assertEquals(listView.getChildCount(), numMarked);
     }
 
     private void markAll() {
