@@ -18,47 +18,47 @@
  */
 package bbct.android.common.activity.test;
 
+import android.app.Activity;
+import android.database.Cursor;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.AutoCompleteTextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
-import butterknife.ButterKnife;
-import com.robotium.solo.Solo;
-import junit.framework.Assert;
-import org.junit.After;
+import bbct.android.common.test.DataRule;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
-public class BaseballCardDetailsWithDataTest extends WithDataTest<FragmentTestActivity> {
-    private Solo mSolo;
-    private BaseballCard mCard;
+import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.CursorMatchers.withRowString;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.not;
 
-    public BaseballCardDetailsWithDataTest() {
-        super(FragmentTestActivity.class);
-    }
+@RunWith(AndroidJUnit4.class)
+public class BaseballCardDetailsWithDataTest {
+    @Rule
+    public DataRule dataRule = new DataRule();
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityTestRule
+            = new ActivityTestRule<>(FragmentTestActivity.class);
+
+    private BaseballCard mCard;
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
-
         FragmentTestActivity activity = activityTestRule.getActivity();
         activity.replaceFragment(new BaseballCardDetails());
-
-        this.inst.waitForIdleSync();
-        mSolo = new Solo(inst, activity);
-        mSolo.getCurrentActivity();
-        mCard = allCards.get(0);
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        mSolo.finishOpenedActivities();
-
-        super.tearDown();
+        mCard = dataRule.getCard(0);
     }
 
     @Test
@@ -78,9 +78,10 @@ public class BaseballCardDetailsWithDataTest extends WithDataTest<FragmentTestAc
 
     private void testAutoComplete(int textViewId, String text)
             throws Throwable {
-        AutoCompleteTextView textView = ButterKnife.findById(mSolo.getCurrentActivity(), textViewId);
-        mSolo.typeText(textView, text.substring(0, 2));
-        mSolo.waitForText(text);
-        Assert.assertTrue(textView.isPopupShowing());
+        Activity activity = activityTestRule.getActivity();
+        onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
+        onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
+                .inRoot(withDecorView(not(activity.getWindow().getDecorView())))
+                .check(matches(isDisplayed()));
     }
 }
