@@ -21,7 +21,9 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
+import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -487,20 +489,24 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         Log.d(TAG, "testSelectionAfterSaveInstanceState()");
 
         int index = 1;
-        this.solo.clickOnCheckBox(index);
+        onData(instanceOf(BaseballCard.class))
+                .atPosition(index)
+                .onChildView(withId(R.id.checkmark))
+                .perform(click());
+        onView(withId(R.id.delete_menu))
+                .check(matches(isDisplayed()));
 
         Log.d(TAG, "change orientation");
-        this.solo.setActivityOrientation(Solo.LANDSCAPE);
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        device.setOrientationLeft();
 
         Log.d(TAG, "assertions");
-        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
-        Assert.assertTrue(this.solo.waitForView(android.R.id.list));
-        ButterKnife.inject(this, this.solo.getCurrentActivity());
-        Checkable row = (Checkable) listView.getChildAt(index);
-        Assert.assertTrue(row.isChecked());
+        onData(instanceOf(BaseballCard.class))
+                .atPosition(index)
+                .onChildView(withId(R.id.checkmark))
+                .check(matches(isChecked()));
 
-        this.activity.finish();
-        Log.d(TAG, "finished");
+        device.setOrientationNatural();
     }
 
     /**
