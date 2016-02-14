@@ -56,6 +56,7 @@ import org.junit.Test;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -286,13 +287,19 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testAddDuplicateCard() throws Throwable {
         BaseballCard card = dataRule.getCard(0);
-
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
-        BBCTTestUtil.addCard(this.solo, card);
-
-        Assert.assertTrue(this.solo.waitForDialogToOpen());
-        this.solo.clickOnButton("OK");
-        Assert.assertTrue(this.solo.waitForDialogToClose());
+        BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
+        BBCTTestUtil.addCard(card);
+        onView(withText(R.string.duplicate_card_title))
+                .check(matches(isDisplayed()));
+        onView(withText(R.string.duplicate_card_error))
+                .check(matches(isDisplayed()));
+        onView(withText(android.R.string.ok))
+                .check(matches(isDisplayed()))
+                .perform(click());
+        onView(withText(R.string.duplicate_card_title))
+                .check(doesNotExist());
+        onView(withText(R.string.duplicate_card_error))
+                .check(doesNotExist());
     }
 
     /**
