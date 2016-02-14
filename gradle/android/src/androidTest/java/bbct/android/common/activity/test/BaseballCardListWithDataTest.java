@@ -331,17 +331,13 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      */
     @Test
     public void testAddCardMatchingCurrentFilter() throws Throwable {
-        this.testYearFilter();
-
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
-        BBCTTestUtil.addCard(this.solo, this.newCard);
-        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        this.solo.goBack();
-
-        this.expectedCards.add(this.newCard);
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        testYearFilter();
+        BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
+        BBCTTestUtil.addCard(newCard);
+        // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.ADD_MESSAGE);
+        onView(withContentDescription(containsString("Navigate up"))).perform(click());
+        expectedCards.add(newCard);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
     /**
