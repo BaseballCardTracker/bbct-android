@@ -30,19 +30,20 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static bbct.android.common.test.Matchers.hasErrorText;
 
 /**
  * A parameterized test which can test any combination of input in the
@@ -59,14 +60,6 @@ public class BaseballCardDetailsPartialInputTest extends
     private Instrumentation inst = null;
     private BaseballCard card = null;
     private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
-
-    @InjectView(R.id.brand_text) EditText brandEditText = null;
-    @InjectView(R.id.year_text) EditText yearEditText = null;
-    @InjectView(R.id.number_text) EditText numberEditText = null;
-    @InjectView(R.id.count_text) EditText countEditText = null;
-    @InjectView(R.id.value_text) EditText valueEditText = null;
-    @InjectView(R.id.player_name_text) EditText playerNameEditText = null;
-    @InjectView(R.id.team_text) EditText teamEditText = null;
 
     /**
      * Creates a {@link TestSuite} containing every possible combination of
@@ -141,41 +134,46 @@ public class BaseballCardDetailsPartialInputTest extends
         BBCTTestUtil.sendKeysToCardDetails(this.card, this.inputFieldsMask);
         onView(withId(R.id.save_menu)).perform(click());
 
-        EditText focusEditText = null;
+        int focusId = -1;
 
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.TEAM)) {
-            Assert.assertEquals(this.activity.getString(R.string.team_input_error), this.teamEditText.getError());
-            focusEditText = this.teamEditText;
+            onView(withId(R.id.team_text))
+                    .check(matches(hasErrorText(R.string.team_input_error)));
+            focusId = R.id.team_text;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME)) {
-            Assert.assertEquals(this.activity.getString(R.string.player_name_input_error), this.playerNameEditText.getError());
-            focusEditText = this.playerNameEditText;
+            onView(withId(R.id.player_name_text))
+                    .check(matches(hasErrorText(R.string.player_name_input_error)));
+            focusId = R.id.player_name_text;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.COUNT)) {
-            Assert.assertEquals(this.activity.getString(R.string.count_input_error), this.countEditText.getError());
-            focusEditText = this.countEditText;
+            onView(withId(R.id.count_text))
+                    .check(matches(hasErrorText(R.string.count_input_error)));
+            focusId = R.id.count_text;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.VALUE)) {
-            Assert.assertEquals(this.activity.getString(R.string.value_input_error), this.valueEditText.getError());
-            focusEditText = this.valueEditText;
+            onView(withId(R.id.value_text))
+                    .check(matches(hasErrorText(R.string.value_input_error)));
+            focusId = R.id.value_text;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.NUMBER)) {
-            Assert.assertEquals(this.activity.getString(R.string.number_input_error), this.numberEditText.getError());
-            focusEditText = this.numberEditText;
+            onView(withId(R.id.number_text))
+                    .check(matches(hasErrorText(R.string.number_input_error)));
+            focusId = R.id.number_text;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.YEAR)) {
-            Assert.assertEquals(this.activity.getString(R.string.year_input_error), this.yearEditText.getError());
-            focusEditText = this.yearEditText;
+            onView(withId(R.id.year_text))
+                    .check(matches(hasErrorText(R.string.year_input_error)));
+            focusId = R.id.year_text;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.BRAND)) {
-            Assert.assertEquals(this.activity.getString(R.string.brand_input_error), this.brandEditText.getError());
-            focusEditText = this.brandEditText;
+            onView(withId(R.id.brand_text))
+                    .check(matches(hasErrorText(R.string.brand_input_error)));
+            focusId = R.id.brand_text;
         }
 
-        this.inst.waitForIdleSync();
-
-        if (focusEditText != null) {
-            Assert.assertTrue(focusEditText.hasFocus());
+        if (focusId != -1) {
+            onView(withId(focusId)).check(matches(hasFocus()));
         }
     }
 
