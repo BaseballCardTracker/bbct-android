@@ -603,11 +603,14 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     @Test
     public void testOnCheckAllAndOnClickCheckbox() {
-        this.solo.clickOnCheckBox(SELECT_ALL);
-        this.solo.clickOnCheckBox(1);
-
-        this.inst.waitForIdleSync();
-        Assert.assertFalse(selectAll.isChecked());
+        onView(withId(R.id.select_all))
+                .perform(click());
+        onData(instanceOf(BaseballCard.class))
+                .atPosition(1)
+                .onChildView(withId(R.id.checkmark))
+                .perform(click());
+        onView(withId(R.id.select_all))
+                .check(matches(isNotChecked()));
     }
 
     @Test
