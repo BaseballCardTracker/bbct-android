@@ -470,17 +470,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     private void deleteCards() {
-        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
-        View deleteMenu = ButterKnife.findById(this.activity, R.id.delete_menu);
-        Assert.assertNotNull(deleteMenu);
-
-        // TODO: Fix this!
-        //TouchUtils.clickView(this, deleteMenu);
-
-        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.DELETE_MESSAGE);
-        View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
-        Assert.assertNotNull(addMenu);
-        Assert.assertTrue(addMenu.isShown());
+        onView(withId(R.id.delete_menu)).perform(click());
+        BBCTTestUtil.waitForToast(activity, BBCTTestUtil.DELETE_MESSAGE);
+        onView(withId(R.id.add_menu)).check(matches(isDisplayed()));
     }
 
     /**
