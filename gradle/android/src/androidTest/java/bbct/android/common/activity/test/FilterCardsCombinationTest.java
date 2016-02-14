@@ -55,7 +55,6 @@ public class FilterCardsCombinationTest extends
 
     private List<BaseballCard> allCards;
     private BaseballCard testCard;
-    private Instrumentation inst = null;
     private DatabaseUtil dbUtil = null;
 
     public static Test suite() {
@@ -88,18 +87,18 @@ public class FilterCardsCombinationTest extends
     public void setUp() throws Exception {
         super.setUp();
 
-        this.inst = this.getInstrumentation();
-        InputStream cardInputStream = this.inst.getContext().getAssets().open(CARD_DATA);
+        Instrumentation inst = this.getInstrumentation();
+        InputStream cardInputStream = inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
                 cardInputStream, true);
         this.allCards = cardInput.getAllBaseballCards();
         this.testCard = this.allCards.get(1);
         cardInput.close();
 
-        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
+        this.dbUtil = new DatabaseUtil(inst.getTargetContext());
         this.dbUtil.populateTable(this.allCards);
 
-        this.inst.setInTouchMode(true);
+        inst.setInTouchMode(true);
         getActivity();
     }
 
