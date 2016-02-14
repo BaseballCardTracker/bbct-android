@@ -533,10 +533,12 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testClearFilter() {
         this.testYearFilter();
-        BBCTTestUtil.testMenuItem(this.solo, R.id.clear_filter_menu, FragmentTags.CARD_LIST);
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        onView(withId(R.id.clear_filter_menu))
+                .perform(click())
+                .check(doesNotExist());
+        onView(withId(R.id.add_menu))
+                .check(matches(isDisplayed()));
+        BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
     /**
