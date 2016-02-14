@@ -401,9 +401,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testDeleteAll() throws Throwable {
         this.markAll();
         deleteCards();
-        Assert.assertNotNull(listView);
-        Assert.assertEquals(1, listView.getAdapter().getCount());
-        this.solo.waitForView(android.R.id.empty);
+        onView(withId(android.R.id.empty)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -449,7 +447,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     private void deleteCards() {
         onView(withId(R.id.delete_menu)).perform(click());
-        BBCTTestUtil.waitForToast(activity, BBCTTestUtil.DELETE_MESSAGE);
+        // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.DELETE_MESSAGE);
         onView(withId(R.id.add_menu)).check(matches(isDisplayed()));
     }
 
