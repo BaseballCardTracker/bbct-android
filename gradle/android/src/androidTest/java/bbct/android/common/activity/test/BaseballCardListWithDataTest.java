@@ -407,11 +407,18 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testUnmarkAll() throws Throwable {
         this.markAll();
-        this.solo.clickOnCheckBox(SELECT_ALL);
+        onView(withId(R.id.select_all)).perform(click());
+        assertNoCheckboxesChecked();
+    }
 
-        this.inst.waitForIdleSync();
-        for (int i = 0; i < listView.getCount(); i++) {
-            Assert.assertFalse("Item #" + i + " is checked", listView.isItemChecked(i));
+    private void assertNoCheckboxesChecked() {
+        onView(withId(R.id.select_all))
+                .check(matches(isNotChecked()));
+
+        for (int i = 0; i < allCards.size(); i++) {
+            onData(instanceOf(BaseballCard.class))
+                    .atPosition(i)
+                    .check(matches(isNotChecked()));
         }
     }
 
