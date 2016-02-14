@@ -19,6 +19,7 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
+import android.database.Cursor;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import bbct.android.common.R;
@@ -35,12 +36,12 @@ import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.CursorMatchers.withRowString;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
@@ -79,7 +80,7 @@ public class BaseballCardDetailsWithDataTest {
             throws Throwable {
         Activity activity = activityTestRule.getActivity();
         onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
-        onData(allOf(instanceOf(String.class), is(text)))
+        onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
                 .inRoot(withDecorView(not(activity.getWindow().getDecorView())))
                 .check(matches(isDisplayed()));
     }
