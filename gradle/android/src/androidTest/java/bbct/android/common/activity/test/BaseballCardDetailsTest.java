@@ -42,7 +42,6 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.robotium.solo.Solo;
 import java.io.InputStream;
 import junit.framework.Assert;
 import org.junit.Before;
@@ -73,7 +72,6 @@ public class BaseballCardDetailsTest {
             = new ActivityTestRule<>(FragmentTestActivity.class);
 
     private UiDevice device;
-    private Solo solo;
     private FragmentTestActivity activity;
     private Instrumentation inst;
     private BaseballCard card;
@@ -105,7 +103,6 @@ public class BaseballCardDetailsTest {
         this.activity.replaceFragment(new BaseballCardDetails());
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
