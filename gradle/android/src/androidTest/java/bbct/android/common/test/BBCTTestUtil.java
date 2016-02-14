@@ -342,6 +342,7 @@ final public class BBCTTestUtil {
                     .check(matches(withSpinnerText(card.getCondition())));
         }
 
+        onView(withId(R.id.brand_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.BRAND)) {
             onView(withId(R.id.brand_text))
                     .perform(scrollTo(), typeText(card.getBrand()))
