@@ -46,7 +46,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  * A parameterized test which can test filter correctness using any combination
  * of input in the {@link FilterCards} activity.
  */
-public class FilterCardsPartialInputTest extends
+public class FilterCardsCombinationTest extends
         ActivityInstrumentationTestCase2<MainActivity> {
 
     private static final String CARD_DATA = "cards.csv";
@@ -70,14 +70,14 @@ public class FilterCardsPartialInputTest extends
             mask.add(editText);
 
             if (!mask.isEmpty()) {
-                suite.addTest(new FilterCardsPartialInputTest(mask));
+                suite.addTest(new FilterCardsCombinationTest(mask));
             }
         }
 
         return suite;
     }
 
-    public FilterCardsPartialInputTest(Set<BBCTTestUtil.EditTexts> inputFieldsFlags) {
+    public FilterCardsCombinationTest(Set<BBCTTestUtil.EditTexts> inputFieldsFlags) {
         super(MainActivity.class);
 
         this.setName(TEST_NAME);
