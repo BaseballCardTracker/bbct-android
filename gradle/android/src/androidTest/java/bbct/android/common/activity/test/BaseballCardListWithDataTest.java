@@ -142,7 +142,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      */
     @Test
     public void testAddCardsMenuItem() {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
+        BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
     }
 
     /**
@@ -151,17 +151,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      */
     @Test
     public void testFilterCardsMenuItem() {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FragmentTags.FILTER_CARDS);
-    }
-
-    /**
-     * Test that the "Delete Cards" menu item is disabled. It should be disabled
-     * because there is no data currently displayed in the list and therefore no
-     * rows are marked.
-     */
-    @Test
-    public void testDeleteCardsMenuItem() {
-        Assert.assertFalse(this.inst.invokeMenuActionSync(this.activity, R.id.delete_menu, 0));
+        BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
     }
 
     /**
