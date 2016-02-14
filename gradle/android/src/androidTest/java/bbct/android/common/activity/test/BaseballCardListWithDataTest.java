@@ -428,7 +428,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      */
     @Test
     public void testDeleteCardUsingFilter() throws Throwable {
-        this.testYearFilter();
+        testYearFilter();
 
         int cardIndex = 0;
         final int year = 1993;
@@ -438,18 +438,17 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                 return card.getYear() == year;
             }
         };
-        this.expectedCards = BBCTTestUtil.filterList(this.allCards, yearPred);
-        this.expectedCards.remove(cardIndex);
+        expectedCards = BBCTTestUtil.filterList(allCards, yearPred);
+        expectedCards.remove(cardIndex);
 
-        Assert.assertTrue(this.solo.waitForView(R.id.select_all));
-        // Add 1 for header view
-        this.solo.clickOnCheckBox(cardIndex + 1);
-        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
-
+        onData(instanceOf(BaseballCard.class))
+                .atPosition(cardIndex)
+                .onChildView(withId(R.id.checkmark))
+                .perform(click());
+        onView(withId(R.id.delete_menu))
+                .check(matches(isDisplayed()));
         deleteCards();
-
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
     private void deleteCards() {
