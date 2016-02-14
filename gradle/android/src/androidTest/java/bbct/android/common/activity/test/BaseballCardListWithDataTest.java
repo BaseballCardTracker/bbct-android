@@ -55,11 +55,13 @@ import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Tests for the {@link MainActivity} activity when the database contains
@@ -266,17 +268,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testOnListItemClick() throws Throwable {
         Log.d(TAG, "testOnListItemClick()");
-
         int cardIndex = 3;
-
-        Log.d(TAG, "cardIndex=" + cardIndex);
-
-        // Add 1 for the header view.
-        this.solo.clickInList(cardIndex + 1);
-        this.solo.waitForFragmentByTag(FragmentTags.EDIT_CARD);
-
-        // solo.clickInList() is 1-based
-        BaseballCard expectedCard = this.allCards.get(cardIndex - 1);
+        BaseballCard expectedCard = allCards.get(cardIndex);
+        onData(allOf(instanceOf(BaseballCard.class), is(expectedCard))).perform(click());
         BBCTTestUtil.assertAllEditTextContents(expectedCard);
     }
 
