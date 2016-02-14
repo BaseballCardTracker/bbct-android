@@ -19,6 +19,9 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
+import android.app.Instrumentation;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -35,31 +38,41 @@ import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
-import bbct.android.common.test.BaseballCardCsvFileReader;
+import bbct.android.common.test.DataRule;
+import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.robotium.solo.Solo;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 
 /**
  * Tests for the {@link MainActivity} activity when the database contains
  * data.
  */
-abstract public class BaseballCardListWithDataTest <T extends MainActivity> extends
-        WithDataTest<T> {
+abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
+    @Rule
+    public DataRule dataRule = new DataRule();
+    @Rule
+    public ActivityTestRule<T> activityTestRule;
 
     private static final int SELECT_ALL = 0;
     private static final String TAG = BaseballCardListWithDataTest.class.getName();
 
     private List<BaseballCard> expectedCards;
+    private Instrumentation inst;
     private Solo solo = null;
     private Activity activity = null;
+    private List<BaseballCard> allCards;
     private BaseballCard newCard = null;
+    private DatabaseUtil dbUtil;
 
     @InjectView(android.R.id.list) ListView listView;
     @InjectView(R.id.select_all) CheckBox selectAll;
@@ -68,7 +81,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Create instrumented test cases for {@link MainActivity}.
      */
     public BaseballCardListWithDataTest(Class<T> activityClass) {
-        super(activityClass);
+        activityTestRule = new ActivityTestRule<>(activityClass);
     }
 
     /**
@@ -78,16 +91,17 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      *
      * @throws Exception If an error occurs while chaining to the super class.
      */
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
-
+        inst = InstrumentationRegistry.getInstrumentation();
         this.inst.setInTouchMode(true);
         this.activity = activityTestRule.getActivity();
         ButterKnife.inject(this, this.activity);
+        allCards = dataRule.getAllCards();
         this.newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
                 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
 
+        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         this.solo = new Solo(this.inst, this.activity);
     }
 
@@ -97,11 +111,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      *
      * @throws Exception If an error occurs while chaining to the super class.
      */
-    @Override
+    @After
     public void tearDown() throws Exception {
         this.solo.finishOpenedActivities();
-
-        super.tearDown();
     }
 
     /**
@@ -111,6 +123,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * contains the expected data, and that the database was created with the
      * correct table and populated with the correct data.
      */
+    @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
 
@@ -126,6 +139,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that the "Add Cards" menu item launches a
      * {@link BaseballCardDetails} activity.
      */
+    @Test
     public void testAddCardsMenuItem() {
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
     }
@@ -134,6 +148,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that the "Filter Cards" menu item launches a {@link FilterCards}
      * activity.
      */
+    @Test
     public void testFilterCardsMenuItem() {
         BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FragmentTags.FILTER_CARDS);
     }
@@ -143,6 +158,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * because there is no data currently displayed in the list and therefore no
      * rows are marked.
      */
+    @Test
     public void testDeleteCardsMenuItem() {
         Assert.assertFalse(this.inst.invokeMenuActionSync(this.activity, R.id.delete_menu, 0));
     }
@@ -150,6 +166,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     /**
      * Test the header view of the {@link ListView}.
      */
+    @Test
     public void testHeader() {
         Assert.assertEquals(1, listView.getHeaderViewsCount());
         Assert.assertTrue(this.solo.searchText("Brand"));
@@ -162,6 +179,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that a {@link BaseballCardList} activity without an active filter
      * will be correctly restored after it is destroyed.
      */
+    @Test
     public void testStateDestroyWithoutFilter() {
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
@@ -179,6 +197,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * @throws Throwable If an error occurs while the portion of the test on the UI
      *                   thread runs.
      */
+    @Test
     public void testStateDestroyWithFilter() throws Throwable {
         this.testYearFilter();
         this.activity.finish();
@@ -199,6 +218,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * @throws Throwable If an error occurs while the portion of the test on the UI
      *                   thread runs.
      */
+    @Test
     public void testStateDestroyClearFilter() throws Throwable {
         this.testClearFilter();
         this.activity.finish();
@@ -214,6 +234,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that a {@link BaseballCardList} activity without an active filter
      * will be correctly restored after it is paused.
      */
+    @Test
     public void testStatePauseWithoutFilter() {
         this.inst.callActivityOnRestart(this.activity);
         this.inst.waitForIdleSync();
@@ -228,6 +249,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * @throws Throwable If an error occurs while the portion of the test on the UI
      *                   thread runs.
      */
+    @Test
     public void testStatePauseWithFilter() throws Throwable {
         this.testYearFilter();
         this.inst.callActivityOnRestart(this.activity);
@@ -245,6 +267,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * @throws Throwable If an error occurs while the portion of the test on the UI
      *                   thread runs.
      */
+    @Test
     public void testStatePauseClearFilter() throws Throwable {
         this.testClearFilter();
         this.inst.callActivityOnRestart(this.activity);
@@ -262,6 +285,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * @throws Throwable If an error occurs while the portion of the test on the UI
      *                   thread runs.
      */
+    @Test
     public void testOnListItemClick() throws Throwable {
         Log.d(TAG, "testOnListItemClick()");
 
@@ -287,11 +311,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * @throws Throwable   If an error occurs while the portion of the test on the UI
      *                     thread runs.
      */
+    @Test
     public void testAddDuplicateCard() throws Throwable {
-        InputStream cardInputStream = this.inst.getContext().getAssets().open(CARD_DATA);
-        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
-                cardInputStream, true);
-        BaseballCard card = cardInput.getNextBaseballCard();
+        BaseballCard card = dataRule.getCard(0);
 
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(this.solo, card);
@@ -308,6 +330,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * @throws Throwable If an error occurs while the portion of the test on the UI
      *                   thread runs.
      */
+    @Test
     public void testAddCardToPopulatedDatabase() throws Throwable {
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(this.solo, this.newCard);
@@ -327,6 +350,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * @throws Throwable If an error occurs while the portion of the test on the UI
      *                   thread runs.
      */
+    @Test
     public void testAddCardMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
 
@@ -348,6 +372,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * @throws Throwable If an error occurs while the portion of the test on the UI
      *                   thread runs.
      */
+    @Test
     public void testAddCardNotMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
 
@@ -369,6 +394,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * @throws Throwable If an error occurs while the portion of the test on the UI
      *                   thread runs.
      */
+    @Test
     public void testAddCardAfterClearFilter() throws Throwable {
         this.testClearFilter();
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
@@ -386,6 +412,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that upon clicking on header {@link View}, all items in
      * {@link ListView} are selected.
      */
+    @Test
     public void testMarkAll() {
         this.markAll();
         this.assertAllCheckboxesChecked();
@@ -423,6 +450,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         }
     }
 
+    @Test
     public void testDeleteAll() throws Throwable {
         this.markAll();
         deleteCards();
@@ -431,6 +459,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.solo.waitForView(android.R.id.empty);
     }
 
+    @Test
     public void testUnmarkAll() throws Throwable {
         this.markAll();
         this.solo.clickOnCheckBox(SELECT_ALL);
@@ -445,6 +474,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that the {@link ListView} displays updated card list, when user
      * deletes cards with applied filter.
      */
+    @Test
     public void testDeleteCardUsingFilter() throws Throwable {
         this.testYearFilter();
 
@@ -488,6 +518,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that the {@link ListView} displays updated card list, when user
      * deletes cards without any applied filter.
      */
+    @Test
     public void testDeleteCardNoFilter() throws Throwable {
         int cardIndex = 0;
 
@@ -506,6 +537,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that the state of {@link CheckedTextView} is maintained when the
      * {@link BaseballCardList} activity changes orientation.
      */
+    @Test
     public void testSelectionAfterSaveInstanceState() throws Throwable {
         Log.d(TAG, "testSelectionAfterSaveInstanceState()");
 
@@ -530,6 +562,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that the {@link ListView} displays the correct cards when filtered
      * by the card year.
      */
+    @Test
     public void testYearFilter() {
         final int year = 1993;
 
@@ -546,6 +579,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     /**
      * Test that all cards are displayed after a filter is cleared.
      */
+    @Test
     public void testClearFilter() {
         this.testYearFilter();
         BBCTTestUtil.testMenuItem(this.solo, R.id.clear_filter_menu, FragmentTags.CARD_LIST);
@@ -578,12 +612,14 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         Assert.assertTrue(this.solo.waitForView(R.id.clear_filter_menu));
     }
 
+    @Test
     public void testOnClickCheckboxStartActionMode() {
         int index = 4;
         this.solo.clickOnCheckBox(index);
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
     }
 
+    @Test
     public void testOnClickCheckboxStopActionMode() {
         this.testOnClickCheckboxStartActionMode();
 
@@ -595,6 +631,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         Assert.assertTrue(addMenu.isShown());
     }
 
+    @Test
     public void testOnClickCheckboxAll() {
         for(int i = 1; i <= 7; ++i) {
             this.solo.clickOnCheckBox(i);
@@ -604,6 +641,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         Assert.assertTrue(selectAll.isChecked());
     }
 
+    @Test
     public void testOnCheckAllAndOnClickCheckbox() {
         this.solo.clickOnCheckBox(SELECT_ALL);
         this.solo.clickOnCheckBox(1);
@@ -612,12 +650,14 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         Assert.assertFalse(selectAll.isChecked());
     }
 
+    @Test
     public void testOnClickCheckboxAndOnCheckAll() {
         this.solo.clickOnCheckBox(1);
         this.solo.clickOnCheckBox(SELECT_ALL);
         this.assertAllCheckboxesChecked();
     }
 
+    @Test
     public void testOnItemLongClickStartActionMode() {
         int index = 4;
         ArrayList<TextView> views = this.solo.clickLongInList(index);
@@ -627,6 +667,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
     }
 
+    @Test
     public void testOnClickDoneButton() {
         this.testMarkAll();
         this.solo.clickOnImage(0);
