@@ -573,14 +573,19 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     @Test
     public void testOnClickCheckboxStopActionMode() {
-        this.testOnClickCheckboxStartActionMode();
-
         int index = 4;
-        this.solo.clickOnCheckBox(index);
-        Assert.assertTrue(this.solo.waitForView(R.id.add_menu));
-        View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
-        Assert.assertNotNull(addMenu);
-        Assert.assertTrue(addMenu.isShown());
+        onData(instanceOf(BaseballCard.class))
+                .atPosition(index)
+                .onChildView(withId(R.id.checkmark))
+                .perform(click());
+        onView(withId(R.id.delete_menu))
+                .check(matches(isDisplayed()));
+        onData(instanceOf(BaseballCard.class))
+                .atPosition(index)
+                .onChildView(withId(R.id.checkmark))
+                .perform(click());
+        onView(withId(R.id.add_menu))
+                .check(matches(isDisplayed()));
     }
 
     @Test
