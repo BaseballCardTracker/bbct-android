@@ -53,6 +53,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static org.hamcrest.Matchers.instanceOf;
+
 /**
  * Tests for the {@link MainActivity} activity when the database contains
  * data.
@@ -126,13 +131,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-
         BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.containsAllBaseballCards(this.allCards));
-
-        this.solo.waitForFragmentByTag(FragmentTags.CARD_LIST);
-        Assert.assertNotNull(listView);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards);
     }
 
     /**
