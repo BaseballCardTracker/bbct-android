@@ -47,6 +47,14 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  */
 public class BaseballCardDetailsEditCardTest extends
         ActivityInstrumentationTestCase2<FragmentTestActivity> {
+    private static final String TEST_NAME = "testEditCard";
+    private static final String CARD_DATA = "cards.csv";
+    private static final String TAG = BaseballCardDetailsEditCardTest.class.getName();
+
+    private final Set<BBCTTestUtil.EditTexts> inputMask;
+    private BaseballCard oldCard = null;
+    private BaseballCard newCard = null;
+    private DatabaseUtil dbUtil = null;
 
     /**
      * Creates a {@link TestSuite} containing tests for every possible
@@ -201,14 +209,4 @@ public class BaseballCardDetailsEditCardTest extends
         return new BaseballCard(autographed, condition, brand, year, number,
                 value, count, name, team, position);
     }
-
-    private final Set<BBCTTestUtil.EditTexts> inputMask;
-    private BaseballCard oldCard = null;
-    private BaseballCard newCard = null;
-    private DatabaseUtil dbUtil = null;
-
-    private static final String TEST_NAME = "testEditCard";
-    private static final String CARD_DATA = "cards.csv";
-    private static final String TAG = BaseballCardDetailsEditCardTest.class
-            .getName();
 }
