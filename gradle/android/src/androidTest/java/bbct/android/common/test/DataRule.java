@@ -20,24 +20,18 @@ package bbct.android.common.test;
 
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
-import android.util.Log;
 import bbct.android.common.data.BaseballCard;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import org.junit.rules.TestRule;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
+import org.junit.rules.ExternalResource;
 
-public class DataRule implements TestRule {
+public class DataRule extends ExternalResource {
     private static final String TAG = DataRule.class.getName();
 
+    private static final String CARD_DATA = "cards.csv";
+    private DatabaseUtil dbUtil;
     private List<BaseballCard> allCards;
-
-    @Override
-    public Statement apply(Statement statement, Description description) {
-        return new DataStatement(statement);
-    }
 
     public BaseballCard getCard(int index) {
         return allCards.get(index);
@@ -47,42 +41,23 @@ public class DataRule implements TestRule {
         return allCards;
     }
 
-    private class DataStatement extends Statement {
-        private static final String CARD_DATA = "cards.csv";
-        private DatabaseUtil dbUtil;
-        private final Statement statement;
+    @Override
+    protected void before() throws IOException {
+        Instrumentation inst = InstrumentationRegistry.getInstrumentation();
 
-        public DataStatement(Statement statement) {
-            this.statement = statement;
-        }
+        // Create the database and populate table with test data
+        InputStream cardInputStream = inst.getContext().getAssets().open(CARD_DATA);
+        BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
+                cardInputStream, true);
+        allCards = cardInput.getAllBaseballCards();
+        cardInput.close();
 
-        @Override
-        public void evaluate() throws Throwable {
-            Log.d(TAG, "evaluate()");
-            setUp();
-            try {
-                statement.evaluate();
-            } finally {
-                tearDown();
-            }
-        }
+        dbUtil = new DatabaseUtil(inst.getTargetContext());
+        dbUtil.populateTable(allCards);
+    }
 
-        private void setUp() throws IOException {
-            Instrumentation inst = InstrumentationRegistry.getInstrumentation();
-
-            // Create the database and populate table with test data
-            InputStream cardInputStream = inst.getContext().getAssets().open(CARD_DATA);
-            BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
-                    cardInputStream, true);
-            allCards = cardInput.getAllBaseballCards();
-            cardInput.close();
-
-            dbUtil = new DatabaseUtil(inst.getTargetContext());
-            dbUtil.populateTable(allCards);
-        }
-
-        private void tearDown() {
-            dbUtil.clearDatabase();
-        }
+    @Override
+    protected void after() {
+        dbUtil.clearDatabase();
     }
 }
