@@ -46,6 +46,10 @@ public class DataRule implements TestRule {
         return allCards.get(index);
     }
 
+    public List<BaseballCard> getAllCards() {
+        return allCards;
+    }
+
     private class DataStatement extends Statement {
         private static final String CARD_DATA = "cards.csv";
         private DatabaseUtil dbUtil;
