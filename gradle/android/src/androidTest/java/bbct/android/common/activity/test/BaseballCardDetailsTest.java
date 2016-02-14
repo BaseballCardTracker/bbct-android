@@ -138,7 +138,7 @@ public class BaseballCardDetailsTest {
      */
     @Test
     public void testStateDestroy() throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
+        BBCTTestUtil.sendKeysToCardDetails(this.card);
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = activityTestRule.getActivity();
@@ -151,12 +151,12 @@ public class BaseballCardDetailsTest {
      * paused and the text is restored when the activity is restarted.
      *
      * @throws InterruptedException
-     *             If {@link BBCTTestUtil#sendKeysToCardDetails(Solo, BaseballCard)} is
+     *             If {@link BBCTTestUtil#sendKeysToCardDetails(BaseballCard)} is
      *             interrupted.
      */
     @Test
     public void testStatePause() throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
+        BBCTTestUtil.sendKeysToCardDetails(this.card);
         this.inst.callActivityOnRestart(this.activity);
         BBCTTestUtil.assertAllEditTextContents(this.card);
     }

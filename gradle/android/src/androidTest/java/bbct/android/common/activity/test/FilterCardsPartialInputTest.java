@@ -117,7 +117,7 @@ public class FilterCardsPartialInputTest extends
     }
 
     public void testFilterCombination() {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FragmentTags.FILTER_CARDS);
+        BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
 
         final Set<BBCTTestUtil.EditTexts> mask = this.inputFieldsMask;
         final BaseballCard test = this.testCard;
@@ -154,8 +154,7 @@ public class FilterCardsPartialInputTest extends
             }
         };
 
-        BBCTTestUtil.sendKeysToFilterCards(this.solo, this.testCard,
-                this.inputFieldsMask);
+        BBCTTestUtil.sendKeysToFilterCards(this.testCard, this.inputFieldsMask);
         this.solo.clickOnActionBarItem(R.id.save_menu);
 
         this.inst.waitForIdleSync();
