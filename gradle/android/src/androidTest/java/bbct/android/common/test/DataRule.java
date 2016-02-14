@@ -60,8 +60,11 @@ public class DataRule implements TestRule {
         public void evaluate() throws Throwable {
             Log.d(TAG, "evaluate()");
             setUp();
-            statement.evaluate();
-            tearDown();
+            try {
+                statement.evaluate();
+            } finally {
+                tearDown();
+            }
         }
 
         private void setUp() throws IOException {
