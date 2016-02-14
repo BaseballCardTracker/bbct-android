@@ -60,6 +60,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -611,12 +612,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testOnClickDoneButton() {
         this.testMarkAll();
-        this.solo.clickOnImage(0);
-
-        Assert.assertTrue(this.solo.waitForView(R.id.add_menu));
-        View addMenu = ButterKnife.findById(this.activity, R.id.add_menu);
-        Assert.assertTrue(addMenu.isShown());
-        Assert.assertFalse(selectAll.isChecked());
+        onView(withId(R.id.action_mode_close_button)).perform(click());
+        onView(withId(R.id.add_menu)).check(matches(isDisplayed()));
+        onView(withId(R.id.select_all)).check(matches(isNotChecked()));
     }
 
 }
