@@ -177,10 +177,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = activityTestRule.getActivity();
-
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.solo.getCurrentActivity());
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
     /**
@@ -196,10 +193,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = activityTestRule.getActivity();
-
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
     /**
@@ -217,10 +211,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = activityTestRule.getActivity();
-
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
     /**
@@ -230,9 +221,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testStatePauseWithoutFilter() {
         this.inst.callActivityOnRestart(this.activity);
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
     /**
@@ -246,9 +235,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testStatePauseWithFilter() throws Throwable {
         this.testYearFilter();
         this.inst.callActivityOnRestart(this.activity);
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
     /**
@@ -264,9 +251,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testStatePauseClearFilter() throws Throwable {
         this.testClearFilter();
         this.inst.callActivityOnRestart(this.activity);
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(this.allCards);
     }
 
     /**
