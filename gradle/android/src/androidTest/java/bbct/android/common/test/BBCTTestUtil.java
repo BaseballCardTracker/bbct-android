@@ -56,6 +56,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
@@ -345,7 +346,7 @@ final public class BBCTTestUtil {
         onView(withId(R.id.brand_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.BRAND)) {
             onView(withId(R.id.brand_text))
-                    .perform(scrollTo(), typeText(card.getBrand()))
+                    .perform(scrollTo(), typeTextIntoFocusedView(card.getBrand()))
                     .check(matches(withText(card.getBrand())));
         }
         device.pressEnter();
@@ -354,7 +355,7 @@ final public class BBCTTestUtil {
         if (fieldFlags.contains(EditTexts.YEAR)) {
             String yearStr = Integer.toString(card.getYear());
             onView(withId(R.id.year_text))
-                    .perform(scrollTo(), typeText(yearStr))
+                    .perform(scrollTo(), typeTextIntoFocusedView(yearStr))
                     .check(matches(withText(yearStr)));
         }
         device.pressEnter();
@@ -363,7 +364,7 @@ final public class BBCTTestUtil {
         if (fieldFlags.contains(EditTexts.NUMBER)) {
             String numberStr = Integer.toString(card.getNumber());
             onView(withId(R.id.number_text))
-                    .perform(scrollTo(), typeText(numberStr))
+                    .perform(scrollTo(), typeTextIntoFocusedView(numberStr))
                     .check(matches(withText(numberStr)));
         }
         device.pressEnter();
@@ -372,7 +373,7 @@ final public class BBCTTestUtil {
         if (fieldFlags.contains(EditTexts.VALUE)) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
             onView(withId(R.id.value_text))
-                    .perform(scrollTo(), typeText(valueStr))
+                    .perform(scrollTo(), typeTextIntoFocusedView(valueStr))
                     .check(matches(withText(valueStr)));
         }
         device.pressEnter();
@@ -381,7 +382,7 @@ final public class BBCTTestUtil {
         if (fieldFlags.contains(EditTexts.COUNT)) {
             String countStr = Integer.toString(card.getCount());
             onView(withId(R.id.count_text))
-                    .perform(scrollTo(), typeText(countStr))
+                    .perform(scrollTo(), typeTextIntoFocusedView(countStr))
                     .check(matches(withText(countStr)));
         }
         device.pressEnter();
@@ -389,7 +390,7 @@ final public class BBCTTestUtil {
         onView(withId(R.id.player_name_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
             onView(withId(R.id.player_name_text))
-                    .perform(scrollTo(), typeText(card.getPlayerName()))
+                    .perform(scrollTo(), typeTextIntoFocusedView(card.getPlayerName()))
                     .check(matches(withText(card.getPlayerName())));
         }
         device.pressEnter();
@@ -397,7 +398,7 @@ final public class BBCTTestUtil {
         onView(withId(R.id.team_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.TEAM)) {
             onView(withId(R.id.team_text))
-                    .perform(scrollTo(), typeText(card.getTeam()))
+                    .perform(scrollTo(), typeTextIntoFocusedView(card.getTeam()))
                     .check(matches(withText(card.getTeam())));
         }
         device.pressEnter();
