@@ -60,6 +60,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.doesNotExis
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
@@ -576,18 +577,13 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      */
     private void testSingleFilter(int checkId, int editId, String input,
                                   Predicate<BaseballCard> filterPred) {
-        BBCTTestUtil.testMenuItem(this.solo, R.id.filter_menu, FragmentTags.FILTER_CARDS);
+        BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
 
-        BBCTTestUtil.sendKeysToCurrFieldFilterCards(this.solo, checkId, editId, input);
-        this.solo.clickOnActionBarItem(R.id.save_menu);
-        this.inst.waitForIdleSync();
-
-        this.expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
-
-        Assert.assertTrue(this.solo.waitForView(R.id.clear_filter_menu));
+        BBCTTestUtil.sendKeysToCurrFieldFilterCards(checkId, editId, input);
+        onView(withId(R.id.save_menu)).perform(click());
+        expectedCards = BBCTTestUtil.filterList(allCards, filterPred);
+        BBCTTestUtil.assertListViewContainsItems(this.expectedCards);
+        onView(withId(R.id.clear_filter_menu)).check(matches(isDisplayed()));
     }
 
     @Test
