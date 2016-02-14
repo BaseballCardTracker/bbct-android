@@ -448,7 +448,7 @@ final public class BBCTTestUtil {
         onView(withId(R.id.player_name_text))
                 .check(matches(withText(expectedCard.getPlayerName())));
         onView(withId(R.id.player_position_text))
-                .check(matches(withText(expectedCard.getPlayerPosition())));
+                .check(matches(withSpinnerText(expectedCard.getPlayerPosition())));
     }
     /**
      * Assert that database was created with the correct version and table and
