@@ -109,7 +109,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Before
     public void setUp() throws Exception {
         inst = InstrumentationRegistry.getInstrumentation();
-        this.inst.setInTouchMode(true);
         this.activity = activityTestRule.getActivity();
         ButterKnife.inject(this, this.activity);
         allCards = dataRule.getAllCards();
@@ -118,17 +117,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         this.solo = new Solo(this.inst, this.activity);
-    }
-
-    /**
-     * Tear down the test fixture by calling {@link Activity#finish()} and
-     * deleting the database.
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     */
-    @After
-    public void tearDown() throws Exception {
-        this.solo.finishOpenedActivities();
     }
 
     /**
