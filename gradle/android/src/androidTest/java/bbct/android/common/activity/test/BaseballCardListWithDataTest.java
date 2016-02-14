@@ -563,8 +563,12 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testOnClickCheckboxStartActionMode() {
         int index = 4;
-        this.solo.clickOnCheckBox(index);
-        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+        onData(instanceOf(BaseballCard.class))
+                .atPosition(index)
+                .onChildView(withId(R.id.checkmark))
+                .perform(click());
+        onView(withId(R.id.delete_menu))
+                .check(matches(isDisplayed()));
     }
 
     @Test
