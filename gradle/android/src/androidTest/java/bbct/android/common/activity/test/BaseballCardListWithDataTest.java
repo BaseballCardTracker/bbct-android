@@ -56,6 +56,7 @@ import org.junit.Test;
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.longClick;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
@@ -602,11 +603,14 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testOnItemLongClickStartActionMode() {
         int index = 4;
-        ArrayList<TextView> views = this.solo.clickLongInList(index);
-        this.inst.waitForIdleSync();
-        Checkable check = (Checkable) views.get(0);
-        Assert.assertTrue(check.isChecked());
-        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
+        BaseballCard card = allCards.get(index);
+        onData(allOf(instanceOf(BaseballCard.class), is(card)))
+                .perform(longClick());
+        onData(allOf(instanceOf(BaseballCard.class), is(card)))
+                .onChildView(withId(R.id.checkmark))
+                .check(matches(isChecked()));
+        onView(withId(R.id.delete_menu))
+                .check(matches(isDisplayed()));
     }
 
     @Test
