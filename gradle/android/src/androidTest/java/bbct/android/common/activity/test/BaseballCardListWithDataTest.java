@@ -21,17 +21,14 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
@@ -44,13 +41,10 @@ import bbct.android.common.test.DataRule;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -82,19 +76,14 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Rule
     public ActivityTestRule<T> activityTestRule;
 
-    private static final int SELECT_ALL = 0;
     private static final String TAG = BaseballCardListWithDataTest.class.getName();
 
     private List<BaseballCard> expectedCards;
     private Instrumentation inst;
-    private Solo solo = null;
     private Activity activity = null;
     private List<BaseballCard> allCards;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil;
-
-    @InjectView(android.R.id.list) ListView listView;
-    @InjectView(R.id.select_all) CheckBox selectAll;
 
     /**
      * Create instrumented test cases for {@link MainActivity}.
@@ -120,7 +109,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
 
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
