@@ -27,15 +27,15 @@ import org.hamcrest.TypeSafeMatcher;
 import static android.support.test.espresso.core.deps.guava.base.Preconditions.checkNotNull;
 
 public class Matchers {
-    public static Matcher<? super View> hasErrorText(String expectedError) {
-        return new ErrorTextMatcher(expectedError);
+    public static Matcher<? super View> hasErrorText(int errorRes) {
+        return new ErrorTextMatcher(errorRes);
     }
 
     private static class ErrorTextMatcher extends TypeSafeMatcher<View> {
-        private final String expectedError;
+        private final int errorRes;
 
-        private ErrorTextMatcher(String expectedError) {
-            this.expectedError = checkNotNull(expectedError);
+        private ErrorTextMatcher(int errorRes) {
+            this.errorRes = checkNotNull(errorRes);
         }
 
         @Override
@@ -44,12 +44,13 @@ public class Matchers {
                 return false;
             }
             EditText editText = (EditText) view;
+            String expectedError = editText.getResources().getString(errorRes);
             return expectedError.equals(editText.getError());
         }
 
         @Override
         public void describeTo(Description description) {
-            description.appendText("with error: " + expectedError);
+            description.appendText("with string id: " + errorRes);
         }
     }
 }
