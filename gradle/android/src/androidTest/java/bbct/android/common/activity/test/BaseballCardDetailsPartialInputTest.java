@@ -29,7 +29,6 @@ import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
-import butterknife.ButterKnife;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumSet;
@@ -51,13 +50,10 @@ import static bbct.android.common.test.Matchers.hasErrorText;
  */
 public class BaseballCardDetailsPartialInputTest extends
         ActivityInstrumentationTestCase2<FragmentTestActivity> {
-
     private static final String CARD_DATA = "cards.csv";
     private static final String TEST_NAME = "testPartialInput";
     private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
 
-    private FragmentTestActivity activity = null;
-    private Instrumentation inst = null;
     private BaseballCard card = null;
     private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
 
@@ -106,18 +102,16 @@ public class BaseballCardDetailsPartialInputTest extends
      */
     @Override
     public void setUp() throws IOException {
-        this.inst = this.getInstrumentation();
-
-        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
+        Instrumentation inst = this.getInstrumentation();
+        InputStream in = inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in, true);
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
-        this.inst.setInTouchMode(true);
-        this.activity = this.getActivity();
-        this.activity.replaceFragment(new BaseballCardDetails());
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
+        inst.setInTouchMode(true);
+        FragmentTestActivity activity = this.getActivity();
+        activity.replaceFragment(new BaseballCardDetails());
+        inst.waitForIdleSync();
     }
 
     /**
@@ -176,5 +170,4 @@ public class BaseballCardDetailsPartialInputTest extends
             onView(withId(focusId)).check(matches(hasFocus()));
         }
     }
-
 }
