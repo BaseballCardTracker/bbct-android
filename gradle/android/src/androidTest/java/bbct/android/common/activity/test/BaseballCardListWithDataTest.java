@@ -58,6 +58,7 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -408,15 +409,11 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     private void markAll() {
-        this.solo.clickOnCheckBox(SELECT_ALL);
-        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
-
-        this.inst.waitForIdleSync();
-        Assert.assertTrue(selectAll.isChecked());
-
-        for (int i = 1; i < listView.getCount(); i++) {
-            Assert.assertTrue("Item #" + i + " is not checked", listView.isItemChecked(i));
-        }
+        onView(withId(R.id.select_all))
+                .perform(click())
+                .check(matches(isChecked()));
+        onView(withId(R.id.delete_menu))
+                .check(matches(isDisplayed()));
     }
 
     @Test
