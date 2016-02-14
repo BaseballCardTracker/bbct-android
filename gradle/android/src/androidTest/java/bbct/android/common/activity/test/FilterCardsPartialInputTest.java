@@ -18,10 +18,8 @@
  */
 package bbct.android.common.activity.test;
 
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.ListView;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTags;
@@ -32,9 +30,6 @@ import bbct.android.common.test.BBCTTestUtil.EditTexts;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -42,6 +37,10 @@ import java.util.List;
 import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * A parameterized test which can test filter correctness using any combination
@@ -56,10 +55,8 @@ public class FilterCardsPartialInputTest extends
 
     private List<BaseballCard> allCards;
     private BaseballCard testCard;
-    private Solo solo = null;
     private Instrumentation inst = null;
     private DatabaseUtil dbUtil = null;
-    @InjectView(android.R.id.list) ListView listView = null;
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
@@ -103,14 +100,11 @@ public class FilterCardsPartialInputTest extends
         this.dbUtil.populateTable(this.allCards);
 
         this.inst.setInTouchMode(true);
-        Activity activity = this.getActivity();
-        ButterKnife.inject(this, activity);
-        this.solo = new Solo(this.inst, activity);
+        getActivity();
     }
 
     @Override
     public void tearDown() throws Exception {
-        this.solo.finishOpenedActivities();
         this.dbUtil.deleteDatabase();
 
         super.tearDown();
@@ -119,8 +113,8 @@ public class FilterCardsPartialInputTest extends
     public void testFilterCombination() {
         BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
 
-        final Set<BBCTTestUtil.EditTexts> mask = this.inputFieldsMask;
-        final BaseballCard test = this.testCard;
+        final Set<BBCTTestUtil.EditTexts> mask = inputFieldsMask;
+        final BaseballCard test = testCard;
         Predicate<BaseballCard> filterPred = new Predicate<BaseballCard>() {
             @Override
             public boolean doTest(BaseballCard card) {
@@ -154,12 +148,10 @@ public class FilterCardsPartialInputTest extends
             }
         };
 
-        BBCTTestUtil.sendKeysToFilterCards(this.testCard, this.inputFieldsMask);
-        this.solo.clickOnActionBarItem(R.id.save_menu);
-
-        this.inst.waitForIdleSync();
-        List<BaseballCard> expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
-        BBCTTestUtil.assertListViewContainsItems(expectedCards, this.listView);
+        BBCTTestUtil.sendKeysToFilterCards(testCard, inputFieldsMask);
+        onView(withId(R.id.save_menu)).perform(click());
+        List<BaseballCard> expectedCards = BBCTTestUtil.filterList(allCards, filterPred);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
 }
