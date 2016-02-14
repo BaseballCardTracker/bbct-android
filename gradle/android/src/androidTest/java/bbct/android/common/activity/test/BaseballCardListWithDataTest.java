@@ -53,9 +53,12 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 
 /**
@@ -159,11 +162,10 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      */
     @Test
     public void testHeader() {
-        Assert.assertEquals(1, listView.getHeaderViewsCount());
-        Assert.assertTrue(this.solo.searchText("Brand"));
-        Assert.assertTrue(this.solo.searchText("Year"));
-        Assert.assertTrue(this.solo.searchText("#"));
-        Assert.assertTrue(this.solo.searchText("Player Name"));
+        onView(withText(R.string.brand)).check(matches(isDisplayed()));
+        onView(withText(R.string.year)).check(matches(isDisplayed()));
+        onView(withText(R.string.number_col)).check(matches(isDisplayed()));
+        onView(withText(R.string.player_name)).check(matches(isDisplayed()));
     }
 
     /**
