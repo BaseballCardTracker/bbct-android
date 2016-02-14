@@ -465,15 +465,17 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testDeleteCardNoFilter() throws Throwable {
         int cardIndex = 0;
 
-        this.expectedCards = new ArrayList<>(this.allCards);
-        this.expectedCards.remove(cardIndex);
+        expectedCards = new ArrayList<>(allCards);
+        expectedCards.remove(cardIndex);
 
-        // Add 1 for header view
-        this.solo.clickOnCheckBox(cardIndex + 1);
-        Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
-
+        onData(instanceOf(BaseballCard.class))
+                .atPosition(cardIndex)
+                .onChildView(withId(R.id.checkmark))
+                .perform(click());
+        onView(withId(R.id.delete_menu))
+                .check(matches(isDisplayed()));
         deleteCards();
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
     /**
