@@ -129,12 +129,9 @@ public class BaseballCardDetailsTest {
      * Test that all text in the {@link EditText} views of a
      * {@link BaseballCardDetails} activity is preserved when the activity is
      * destroyed and the text is restored when the activity is restarted.
-     *
-     * @throws InterruptedException
-     *             If BBCTTestUtil#sendKeysToCardDetails() is interrupted.
      */
     @Test
-    public void testStateDestroy() throws InterruptedException {
+    public void testStateDestroy() {
         BBCTTestUtil.sendKeysToCardDetails(this.card);
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());

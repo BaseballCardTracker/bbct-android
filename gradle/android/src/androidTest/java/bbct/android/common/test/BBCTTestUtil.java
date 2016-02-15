@@ -89,13 +89,11 @@ final public class BBCTTestUtil {
                 .check(matches(isDisplayed()));
     }
 
-    public static void sendKeysToCardDetails(BaseballCard card)
-            throws InterruptedException {
+    public static void sendKeysToCardDetails(BaseballCard card) {
         BBCTTestUtil.sendKeysToCardDetails(card, EnumSet.allOf(EditTexts.class));
     }
 
-    public static void sendKeysToCardDetails(BaseballCard card, Set<EditTexts> fieldFlags)
-            throws InterruptedException {
+    public static void sendKeysToCardDetails(BaseballCard card, Set<EditTexts> fieldFlags) {
         Log.d(TAG, "sendKeysToCardDetails()");
 
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
