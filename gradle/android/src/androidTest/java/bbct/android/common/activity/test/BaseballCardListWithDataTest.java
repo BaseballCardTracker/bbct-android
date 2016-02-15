@@ -40,7 +40,6 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DataRule;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
-import butterknife.ButterKnife;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +102,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void setUp() throws Exception {
         inst = InstrumentationRegistry.getInstrumentation();
         this.activity = activityTestRule.getActivity();
-        ButterKnife.inject(this, this.activity);
         allCards = dataRule.getAllCards();
         this.newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
                 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
