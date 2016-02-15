@@ -470,9 +470,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testClearFilter() {
         this.testYearFilter();
-        onView(withId(R.id.clear_filter_menu))
-                .perform(click())
-                .check(doesNotExist());
+        BBCTTestUtil.testMenuItem(R.id.clear_filter_menu, FragmentTags.CARD_LIST);
         onView(withId(R.id.add_menu))
                 .check(matches(isDisplayed()));
         BBCTTestUtil.assertListViewContainsItems(allCards);
