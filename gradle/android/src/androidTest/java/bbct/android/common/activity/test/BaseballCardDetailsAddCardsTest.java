@@ -46,15 +46,15 @@ import org.junit.runner.RunWith;
  */
 @RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsAddCardsTest {
-    private static final String CARD_DATA = "three_cards.csv";
-
-    private Instrumentation inst = null;
-    private List<BaseballCard> allCards = null;
-    private BaseballCard card = null;
-
     @Rule
     public ActivityTestRule<FragmentTestActivity> activityRule =
             new ActivityTestRule<>(FragmentTestActivity.class);
+
+    private static final String CARD_DATA = "three_cards.csv";
+
+    private List<BaseballCard> allCards = null;
+    private BaseballCard card = null;
+    private DatabaseUtil dbUtil;
 
     /**
      * Set up test fixture. This consists of an instance of the
@@ -66,9 +66,10 @@ public class BaseballCardDetailsAddCardsTest {
      */
     @Before
     public void setUp() throws Exception {
-        inst = InstrumentationRegistry.getInstrumentation();
+        Instrumentation inst = InstrumentationRegistry.getInstrumentation();
+        dbUtil = new DatabaseUtil(inst.getTargetContext());
 
-        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
+        InputStream in = inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
                 true);
         this.allCards = cardInput.getAllBaseballCards();
@@ -78,7 +79,6 @@ public class BaseballCardDetailsAddCardsTest {
         FragmentTestActivity activity = activityRule.getActivity();
         Fragment fragment = new BaseballCardDetails();
         activity.replaceFragment(fragment);
-        this.inst.waitForIdleSync();
     }
 
     /**
@@ -90,7 +90,6 @@ public class BaseballCardDetailsAddCardsTest {
      */
     @After
     public void tearDown() throws Exception {
-        DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         dbUtil.clearDatabase();
     }
 
@@ -106,7 +105,6 @@ public class BaseballCardDetailsAddCardsTest {
     public void testAddCard() throws Throwable {
         BBCTTestUtil.addCard(card);
         // BBCTTestUtil.waitForToast(activityRule.getActivity(), BBCTTestUtil.ADD_MESSAGE);
-        DatabaseUtil dbUtil = new DatabaseUtil(inst.getTargetContext());
         Assert.assertTrue("Missing card: " + card, dbUtil.containsBaseballCard(card));
     }
 
@@ -127,7 +125,6 @@ public class BaseballCardDetailsAddCardsTest {
             // BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
-        DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         for (BaseballCard nextCard : this.allCards) {
             Assert.assertTrue("Missing card: " + nextCard, dbUtil.containsBaseballCard(nextCard));
         }
