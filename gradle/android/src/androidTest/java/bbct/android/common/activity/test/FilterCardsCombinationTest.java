@@ -20,6 +20,7 @@ package bbct.android.common.activity.test;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTags;
@@ -31,6 +32,7 @@ import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
@@ -46,38 +48,42 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  * A parameterized test which can test filter correctness using any combination
  * of input in the {@link FilterCards} activity.
  */
-public class FilterCardsCombinationTest extends
-        ActivityInstrumentationTestCase2<MainActivity> {
-
+abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
+        ActivityInstrumentationTestCase2<T> {
+    private static final String TAG = FilterCardsCombinationTest.class.getName();
     private static final String CARD_DATA = "cards.csv";
-    private static final String TEST_NAME = "testFilterCombination";
+    private static final String TEST_NAME = "testFilter";
     private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
 
     private List<BaseballCard> allCards;
     private BaseballCard testCard;
     private DatabaseUtil dbUtil = null;
 
-    public static Test suite() {
+    public static <S extends FilterCardsCombinationTest> Test suite(Class<S> testClass)
+            throws ReflectiveOperationException {
         TestSuite suite = new TestSuite();
         Set<BBCTTestUtil.EditTexts> editTexts = EnumSet.allOf(BBCTTestUtil.EditTexts.class);
-        editTexts.remove(BBCTTestUtil.EditTexts.COUNT);
-        editTexts.remove(BBCTTestUtil.EditTexts.PLAYER_POSITION);
-        editTexts.remove(BBCTTestUtil.EditTexts.VALUE);
+        editTexts.remove(EditTexts.AUTOGRAPHED);
+        editTexts.remove(EditTexts.CONDITION);
+        editTexts.remove(EditTexts.COUNT);
+        editTexts.remove(EditTexts.PLAYER_POSITION);
+        editTexts.remove(EditTexts.VALUE);
 
         for (BBCTTestUtil.EditTexts editText : editTexts) {
             Set<BBCTTestUtil.EditTexts> mask = new HashSet<>();
             mask.add(editText);
 
             if (!mask.isEmpty()) {
-                suite.addTest(new FilterCardsCombinationTest(mask));
+                Constructor<S> ctor = testClass.getConstructor(Set.class);
+                suite.addTest(ctor.newInstance(mask));
             }
         }
 
         return suite;
     }
 
-    public FilterCardsCombinationTest(Set<BBCTTestUtil.EditTexts> inputFieldsFlags) {
-        super(MainActivity.class);
+    public FilterCardsCombinationTest(Class<T> activityClass, Set<EditTexts> inputFieldsFlags) {
+        super(activityClass);
 
         this.setName(TEST_NAME);
         this.inputFieldsMask = inputFieldsFlags;
@@ -109,7 +115,9 @@ public class FilterCardsCombinationTest extends
         super.tearDown();
     }
 
-    public void testFilterCombination() {
+    public void testFilter() {
+        Log.d(TAG, "inputFieldsMask=" + inputFieldsMask);
+
         BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
 
         final Set<BBCTTestUtil.EditTexts> mask = inputFieldsMask;
@@ -120,7 +128,7 @@ public class FilterCardsCombinationTest extends
                 boolean condition = true;
 
                 if (mask.contains(EditTexts.BRAND)) {
-                    condition = card.getBrand().equals(test.getBrand());
+                    condition = condition && card.getBrand().equals(test.getBrand());
                 }
 
                 if (mask.contains(EditTexts.YEAR)) {
@@ -152,5 +160,4 @@ public class FilterCardsCombinationTest extends
         List<BaseballCard> expectedCards = BBCTTestUtil.filterList(allCards, filterPred);
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
-
 }
