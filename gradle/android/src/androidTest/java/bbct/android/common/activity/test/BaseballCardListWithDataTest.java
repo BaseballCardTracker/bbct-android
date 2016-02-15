@@ -20,6 +20,7 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.uiautomator.UiDevice;
@@ -44,6 +45,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -77,6 +79,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     private static final String TAG = BaseballCardListWithDataTest.class.getName();
 
+    private UiDevice device;
     private List<BaseballCard> expectedCards;
     private Instrumentation inst;
     private Activity activity = null;
@@ -101,12 +104,18 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Before
     public void setUp() throws Exception {
         inst = InstrumentationRegistry.getInstrumentation();
-        this.activity = activityTestRule.getActivity();
+        device = UiDevice.getInstance(inst);
+        activity = activityTestRule.getActivity();
         allCards = dataRule.getAllCards();
-        this.newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
+        newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
                 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
 
-        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
+        dbUtil = new DatabaseUtil(inst.getTargetContext());
+    }
+
+    @After
+    public void tearDown() throws RemoteException {
+        device.setOrientationNatural();
     }
 
     /**
@@ -158,26 +167,19 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      * will be correctly restored after it is destroyed.
      */
     @Test
-    public void testStateDestroyWithoutFilter() {
-        this.activity.finish();
-        Assert.assertTrue(this.activity.isFinishing());
-        this.activity = activityTestRule.getActivity();
+    public void testStateDestroyWithoutFilter() throws RemoteException {
+        device.setOrientationLeft();
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
     /**
      * Test that a {@link BaseballCardList} activity with an active filter will
      * be correctly restored after it is destroyed.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
     @Test
-    public void testStateDestroyWithFilter() throws Throwable {
+    public void testStateDestroyWithFilter() throws RemoteException {
         this.testYearFilter();
-        this.activity.finish();
-        Assert.assertTrue(this.activity.isFinishing());
-        this.activity = activityTestRule.getActivity();
+        device.setOrientationLeft();
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
@@ -186,57 +188,12 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      * will be correctly restored after it is destroyed. This tests differs from
      * {@link #testStateDestroyWithoutFilter()} because a filter is applied and
      * then cleared before the activity is destroyed.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
     @Test
-    public void testStateDestroyClearFilter() throws Throwable {
+    public void testStateDestroyClearFilter() throws RemoteException {
         this.testClearFilter();
-        this.activity.finish();
-        Assert.assertTrue(this.activity.isFinishing());
-        this.activity = activityTestRule.getActivity();
+        device.setOrientationLeft();
         BBCTTestUtil.assertListViewContainsItems(allCards);
-    }
-
-    /**
-     * Test that a {@link BaseballCardList} activity without an active filter
-     * will be correctly restored after it is paused.
-     */
-    @Test
-    public void testStatePauseWithoutFilter() {
-        this.inst.callActivityOnRestart(this.activity);
-        BBCTTestUtil.assertListViewContainsItems(allCards);
-    }
-
-    /**
-     * Test that a {@link BaseballCardList} activity with an active filter will
-     * be correctly restored after it is paused.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
-     */
-    @Test
-    public void testStatePauseWithFilter() throws Throwable {
-        this.testYearFilter();
-        this.inst.callActivityOnRestart(this.activity);
-        BBCTTestUtil.assertListViewContainsItems(expectedCards);
-    }
-
-    /**
-     * Test that a {@link BaseballCardList} activity without an active filter
-     * will be correctly restored after it is destroyed. This tests differs from
-     * {@link #testStatePauseWithoutFilter()} because a filter is applied and
-     * then cleared before the activity is paused.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
-     */
-    @Test
-    public void testStatePauseClearFilter() throws Throwable {
-        this.testClearFilter();
-        this.inst.callActivityOnRestart(this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards);
     }
 
     /**
@@ -244,9 +201,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      * {@link BaseballCardList} activity, a {@link BaseballCardDetails} activity
      * is launched with its {@link EditText} views populated with the correct
      * data.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
     @Test
     public void testOnListItemClick() throws Throwable {
@@ -483,7 +437,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                 .check(matches(isDisplayed()));
 
         Log.d(TAG, "change orientation");
-        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         device.setOrientationLeft();
 
         Log.d(TAG, "assertions");
