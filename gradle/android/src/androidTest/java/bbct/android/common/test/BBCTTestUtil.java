@@ -27,8 +27,6 @@ import android.support.test.uiautomator.UiDevice;
 import android.test.ViewAsserts;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ListView;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
@@ -64,27 +62,6 @@ import static org.hamcrest.Matchers.not;
  * Utility methods used for JUnit tests on classes in Android version of BBCT.
  */
 final public class BBCTTestUtil {
-
-    /**
-     * Assert that the given ListView contains same data as the given list of
-     * {@link BaseballCard}s.
-     *
-     * @param expectedItems
-     *            A List of the expected {@link BaseballCard} data.
-     * @param listView
-     *            The List view to check for {@link BaseballCard} data.
-     */
-    public static void assertListViewContainsItems(List<BaseballCard> expectedItems,
-                                                   ListView listView) {
-        // Add 1 to the number of expected cards to account for the header View
-        Assert.assertEquals(expectedItems.size() + 1, listView.getAdapter().getCount());
-
-        Adapter adapter = listView.getAdapter();
-        for (int i = 0; i < expectedItems.size(); ++i) {
-            Assert.assertEquals(expectedItems.get(i), adapter.getItem(i + 1));
-        }
-    }
-
     public static void assertListViewContainsItems(List<BaseballCard> expectedItems) {
         for (BaseballCard card : expectedItems) {
             onData(allOf(instanceOf(BaseballCard.class), is(card)))
