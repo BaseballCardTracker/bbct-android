@@ -21,6 +21,7 @@ package bbct.android.common.activity.test;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -131,28 +132,12 @@ public class BaseballCardDetailsTest {
      * destroyed and the text is restored when the activity is restarted.
      */
     @Test
-    public void testStateDestroy() {
+    public void testStateDestroy() throws RemoteException {
         BBCTTestUtil.sendKeysToCardDetails(this.card);
-        this.activity.finish();
-        Assert.assertTrue(this.activity.isFinishing());
-        this.activity = activityTestRule.getActivity();
+        UiDevice device = UiDevice.getInstance(inst);
+        device.setOrientationLeft();
         BBCTTestUtil.assertAllEditTextContents(this.card);
-    }
-
-    /**
-     * Test that all text in the {@link EditText} views of a
-     * {@link BaseballCardDetails} activity is preserved when the activity is
-     * paused and the text is restored when the activity is restarted.
-     *
-     * @throws InterruptedException
-     *             If {@link BBCTTestUtil#sendKeysToCardDetails(BaseballCard)} is
-     *             interrupted.
-     */
-    @Test
-    public void testStatePause() throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(this.card);
-        this.inst.callActivityOnRestart(this.activity);
-        BBCTTestUtil.assertAllEditTextContents(this.card);
+        device.setOrientationNatural();
     }
 
     /**

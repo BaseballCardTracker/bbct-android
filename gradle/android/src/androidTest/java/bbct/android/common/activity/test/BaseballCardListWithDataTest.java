@@ -444,8 +444,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                 .atPosition(index)
                 .onChildView(withId(R.id.checkmark))
                 .check(matches(isChecked()));
-
-        device.setOrientationNatural();
     }
 
     /**
