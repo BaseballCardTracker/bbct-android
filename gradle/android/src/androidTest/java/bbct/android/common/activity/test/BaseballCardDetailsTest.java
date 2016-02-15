@@ -102,7 +102,6 @@ public class BaseballCardDetailsTest {
         this.inst.setInTouchMode(true);
         this.activity = activityTestRule.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
-        this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
     }
 

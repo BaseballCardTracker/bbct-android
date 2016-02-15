@@ -111,7 +111,6 @@ public class BaseballCardDetailsPartialInputTest extends
         inst.setInTouchMode(true);
         FragmentTestActivity activity = this.getActivity();
         activity.replaceFragment(new BaseballCardDetails());
-        inst.waitForIdleSync();
     }
 
     /**
