@@ -72,6 +72,7 @@ public class FilterCards extends Fragment {
             FilterCards.this.getActivity().supportInvalidateOptionsMenu();
         }
     };
+    private final ArrayList<Integer> enabledFields = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,13 +100,30 @@ public class FilterCards extends Fragment {
         if (savedInstanceState != null) {
             ArrayList<Integer> enabledFields = savedInstanceState
                     .getIntegerArrayList(INPUT_EXTRA);
-            for (int i : enabledFields) {
-                EditText et = (EditText) view.findViewById(TEXT_FIELDS[i]);
-                et.setEnabled(true);
+            if (enabledFields != null) {
+                for (int i : enabledFields) {
+                    CheckBox cb = (CheckBox) view.findViewById(CHECKBOXES[i]);
+                    cb.setChecked(true);
+                    EditText et = (EditText) view.findViewById(TEXT_FIELDS[i]);
+                    et.setEnabled(true);
+                }
             }
         }
 
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        enabledFields.clear();
+        for (int i = 0; i < TEXT_FIELDS.length; i++) {
+            EditText et = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
+            if (et.isEnabled()) {
+                enabledFields.add(i);
+            }
+        }
     }
 
     /**
@@ -114,14 +132,6 @@ public class FilterCards extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        ArrayList<Integer> enabledFields = new ArrayList<>();
-        for (int i = 0; i < TEXT_FIELDS.length; i++) {
-            EditText et = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
-            if (et.isEnabled()) {
-                enabledFields.add(i);
-            }
-        }
 
         outState.putIntegerArrayList(INPUT_EXTRA, enabledFields);
     }
