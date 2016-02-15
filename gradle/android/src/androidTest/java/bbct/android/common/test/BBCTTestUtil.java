@@ -62,6 +62,10 @@ import static org.hamcrest.Matchers.not;
  * Utility methods used for JUnit tests on classes in Android version of BBCT.
  */
 final public class BBCTTestUtil {
+    private static final String TAG = BBCTTestUtil.class.getName();
+    public static final String ADD_MESSAGE = "Card added successfully";
+    public static final String DELETE_MESSAGE = "Cards deleted successfully";
+
     public static void assertListViewContainsItems(List<BaseballCard> expectedItems) {
         for (BaseballCard card : expectedItems) {
             onData(allOf(instanceOf(BaseballCard.class), is(card)))
@@ -395,8 +399,4 @@ final public class BBCTTestUtil {
     public enum FilterOption {
         BRAND, YEAR, NUMBER, PLAYER_NAME, TEAM
     }
-
-    public static final String ADD_MESSAGE = "Card added successfully";
-    public static final String DELETE_MESSAGE = "Cards deleted successfully";
-    private static final String TAG = BBCTTestUtil.class.getName();
 }
