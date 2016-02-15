@@ -254,28 +254,28 @@ final public class BBCTTestUtil {
         // TODO How do I check that a table has the correct columns?
     }
 
-    public static void sendKeysToFilterCards(BaseballCard testCard, Set<EditTexts> fieldFlags) {
-        if (fieldFlags.contains(EditTexts.BRAND)) {
+    public static void sendKeysToFilterCards(BaseballCard testCard, Set<FilterOption> fieldFlags) {
+        if (fieldFlags.contains(FilterOption.BRAND)) {
             sendKeysToCurrFieldFilterCards(R.id.brand_check, R.id.brand_input,
                     testCard.getBrand());
         }
 
-        if (fieldFlags.contains(EditTexts.YEAR)) {
+        if (fieldFlags.contains(FilterOption.YEAR)) {
             sendKeysToCurrFieldFilterCards(R.id.year_check, R.id.year_input,
                     Integer.toString(testCard.getYear()));
         }
 
-        if (fieldFlags.contains(EditTexts.NUMBER)) {
+        if (fieldFlags.contains(FilterOption.NUMBER)) {
             sendKeysToCurrFieldFilterCards(R.id.number_check, R.id.number_input,
                     Integer.toString(testCard.getNumber()));
         }
 
-        if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
+        if (fieldFlags.contains(FilterOption.PLAYER_NAME)) {
             sendKeysToCurrFieldFilterCards(R.id.player_name_check, R.id.player_name_input,
                     testCard.getPlayerName());
         }
 
-        if (fieldFlags.contains(EditTexts.TEAM)) {
+        if (fieldFlags.contains(FilterOption.TEAM)) {
             sendKeysToCurrFieldFilterCards(R.id.team_check, R.id.team_input,
                     testCard.getTeam());
         }
@@ -413,6 +413,10 @@ final public class BBCTTestUtil {
          * Input the player position field.
          */
         PLAYER_POSITION
+    }
+
+    public enum FilterOption {
+        BRAND, YEAR, NUMBER, PLAYER_NAME, TEAM
     }
 
     public static final String ADD_MESSAGE = "Card added successfully";

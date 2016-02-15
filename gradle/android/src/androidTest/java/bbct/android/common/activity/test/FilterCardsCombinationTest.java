@@ -27,7 +27,6 @@ import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
-import bbct.android.common.test.BBCTTestUtil.EditTexts;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
@@ -53,7 +52,7 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
     private static final String TAG = FilterCardsCombinationTest.class.getName();
     private static final String CARD_DATA = "cards.csv";
     private static final String TEST_NAME = "testFilter";
-    private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
+    private final Set<BBCTTestUtil.FilterOption> inputFieldsMask;
 
     private List<BaseballCard> allCards;
     private BaseballCard testCard;
@@ -62,16 +61,11 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
     public static <S extends FilterCardsCombinationTest> Test suite(Class<S> testClass)
             throws ReflectiveOperationException {
         TestSuite suite = new TestSuite();
-        Set<BBCTTestUtil.EditTexts> editTexts = EnumSet.allOf(BBCTTestUtil.EditTexts.class);
-        editTexts.remove(EditTexts.AUTOGRAPHED);
-        editTexts.remove(EditTexts.CONDITION);
-        editTexts.remove(EditTexts.COUNT);
-        editTexts.remove(EditTexts.PLAYER_POSITION);
-        editTexts.remove(EditTexts.VALUE);
+        Set<BBCTTestUtil.FilterOption> options = EnumSet.allOf(BBCTTestUtil.FilterOption.class);
 
-        for (BBCTTestUtil.EditTexts editText : editTexts) {
-            Set<BBCTTestUtil.EditTexts> mask = new HashSet<>();
-            mask.add(editText);
+        for (BBCTTestUtil.FilterOption option : options) {
+            Set<BBCTTestUtil.FilterOption> mask = new HashSet<>();
+            mask.add(option);
 
             if (!mask.isEmpty()) {
                 Constructor<S> ctor = testClass.getConstructor(Set.class);
@@ -82,7 +76,7 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
         return suite;
     }
 
-    public FilterCardsCombinationTest(Class<T> activityClass, Set<EditTexts> inputFieldsFlags) {
+    public FilterCardsCombinationTest(Class<T> activityClass, Set<BBCTTestUtil.FilterOption> inputFieldsFlags) {
         super(activityClass);
 
         this.setName(TEST_NAME);
@@ -120,33 +114,33 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
 
         BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
 
-        final Set<BBCTTestUtil.EditTexts> mask = inputFieldsMask;
+        final Set<BBCTTestUtil.FilterOption> mask = inputFieldsMask;
         final BaseballCard test = testCard;
         Predicate<BaseballCard> filterPred = new Predicate<BaseballCard>() {
             @Override
             public boolean doTest(BaseballCard card) {
                 boolean condition = true;
 
-                if (mask.contains(EditTexts.BRAND)) {
+                if (mask.contains(BBCTTestUtil.FilterOption.BRAND)) {
                     condition = condition && card.getBrand().equals(test.getBrand());
                 }
 
-                if (mask.contains(EditTexts.YEAR)) {
+                if (mask.contains(BBCTTestUtil.FilterOption.YEAR)) {
                     condition = condition && card.getYear() == test.getYear();
                 }
 
-                if (mask.contains(EditTexts.NUMBER)) {
+                if (mask.contains(BBCTTestUtil.FilterOption.NUMBER)) {
                     condition = condition
                             && card.getNumber() == test.getNumber();
                 }
 
-                if (mask.contains(EditTexts.PLAYER_NAME)) {
+                if (mask.contains(BBCTTestUtil.FilterOption.PLAYER_NAME)) {
                     condition = condition
                             && card.getPlayerName()
                                     .equals(test.getPlayerName());
                 }
 
-                if (mask.contains(EditTexts.TEAM)) {
+                if (mask.contains(BBCTTestUtil.FilterOption.TEAM)) {
                     condition = condition
                             && card.getTeam().equals(test.getTeam());
                 }

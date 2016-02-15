@@ -25,7 +25,7 @@ import java.util.Set;
 import junit.framework.Test;
 
 public class LiteActivityFilterTest extends FilterCardsCombinationTest<LiteActivity> {
-    public LiteActivityFilterTest(Set<BBCTTestUtil.EditTexts> inputFieldsFlags) {
+    public LiteActivityFilterTest(Set<BBCTTestUtil.FilterOption> inputFieldsFlags) {
         super(LiteActivity.class, inputFieldsFlags);
     }
 

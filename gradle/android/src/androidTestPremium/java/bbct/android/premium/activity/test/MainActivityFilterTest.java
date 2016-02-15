@@ -25,7 +25,7 @@ import java.util.Set;
 import junit.framework.Test;
 
 public class MainActivityFilterTest extends FilterCardsCombinationTest<MainActivity> {
-    public MainActivityFilterTest(Set<BBCTTestUtil.EditTexts> inputFieldsFlags) {
+    public MainActivityFilterTest(Set<BBCTTestUtil.FilterOption> inputFieldsFlags) {
         super(MainActivity.class, inputFieldsFlags);
     }
 
