@@ -347,50 +347,8 @@ final public class BBCTTestUtil {
     private BBCTTestUtil() {
     }
 
-    /**
-     * Enumeration for {@link android.widget.EditText} views which will be used
-     * in {@link #sendKeysToCardDetails(BaseballCard, Set)}.
-     */
     public enum EditTexts {
-        /**
-         * Input the autographed state.
-         */
-        AUTOGRAPHED,
-        /**
-         * Input the card condition.
-         */
-        CONDITION,
-        /**
-         * Input the card brand field.
-         */
-        BRAND,
-        /**
-         * Input the card year field.
-         */
-        YEAR,
-        /**
-         * Input the card number field.
-         */
-        NUMBER,
-        /**
-         * Input the card value field.
-         */
-        VALUE,
-        /**
-         * Input the card count field.
-         */
-        COUNT,
-        /**
-         * Input the player name field.
-         */
-        PLAYER_NAME,
-        /**
-         * Input the team field.
-         */
-        TEAM,
-        /**
-         * Input the player position field.
-         */
+        AUTOGRAPHED, CONDITION, BRAND, YEAR, NUMBER, VALUE, COUNT, PLAYER_NAME, TEAM,
         PLAYER_POSITION
     }
 
