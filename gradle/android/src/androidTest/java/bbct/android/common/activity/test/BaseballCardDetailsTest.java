@@ -19,22 +19,18 @@
 package bbct.android.common.activity.test;
 
 import android.app.Instrumentation;
-import android.content.Context;
 import android.graphics.Rect;
+import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
-import android.test.ViewAsserts;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.Spinner;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
@@ -42,8 +38,6 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import com.robotium.solo.Solo;
 import java.io.InputStream;
 import junit.framework.Assert;
 import org.junit.Before;
@@ -53,8 +47,10 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
@@ -73,20 +69,9 @@ public class BaseballCardDetailsTest {
             = new ActivityTestRule<>(FragmentTestActivity.class);
 
     private UiDevice device;
-    private Solo solo;
     private FragmentTestActivity activity;
     private Instrumentation inst;
     private BaseballCard card;
-
-    @InjectView(R.id.brand_text) AutoCompleteTextView brandText;
-    @InjectView(R.id.year_text) EditText yearText;
-    @InjectView(R.id.number_text) EditText numberText;
-    @InjectView(R.id.value_text) EditText valueText;
-    @InjectView(R.id.count_text) EditText countText;
-    @InjectView(R.id.player_name_text) EditText playerNameText;
-    @InjectView(R.id.team_text) EditText playerTeamText;
-    @InjectView(R.id.player_position_text) Spinner playerPositionSpinner;
-    @InjectView(R.id.scroll_card_details) ScrollView scrollView;
 
     /**
      * Set up test fixture. This consists of an instance of the
@@ -110,9 +95,6 @@ public class BaseballCardDetailsTest {
         this.inst.setInTouchMode(true);
         this.activity = activityTestRule.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -124,48 +106,29 @@ public class BaseballCardDetailsTest {
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        Assert.assertNotNull(this.brandText);
-        Assert.assertNotNull(this.yearText);
-        Assert.assertNotNull(this.numberText);
-        Assert.assertNotNull(this.valueText);
-        Assert.assertNotNull(this.countText);
-        Assert.assertNotNull(this.playerNameText);
-        Assert.assertNotNull(this.playerTeamText);
-        Assert.assertNotNull(this.playerPositionSpinner);
-        Assert.assertNotNull(this.scrollView);
+        onView(withId(R.id.brand_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.year_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.number_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.value_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.count_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.player_name_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.team_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.player_position_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.scroll_card_details)).check(matches(isDisplayed()));
     }
 
     /**
      * Test that all text in the {@link EditText} views of a
      * {@link BaseballCardDetails} activity is preserved when the activity is
      * destroyed and the text is restored when the activity is restarted.
-     *
-     * @throws InterruptedException
-     *             If BBCTTestUtil#sendKeysToCardDetails() is interrupted.
      */
     @Test
-    public void testStateDestroy() throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
-        this.activity.finish();
-        Assert.assertTrue(this.activity.isFinishing());
-        this.activity = activityTestRule.getActivity();
-        BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
-    }
-
-    /**
-     * Test that all text in the {@link EditText} views of a
-     * {@link BaseballCardDetails} activity is preserved when the activity is
-     * paused and the text is restored when the activity is restarted.
-     *
-     * @throws InterruptedException
-     *             If {@link BBCTTestUtil#sendKeysToCardDetails(Solo, BaseballCard)} is
-     *             interrupted.
-     */
-    @Test
-    public void testStatePause() throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
-        this.inst.callActivityOnRestart(this.activity);
-        BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
+    public void testStateDestroy() throws RemoteException {
+        BBCTTestUtil.sendKeysToCardDetails(this.card);
+        UiDevice device = UiDevice.getInstance(inst);
+        device.setOrientationLeft();
+        BBCTTestUtil.assertAllEditTextContents(this.card);
+        device.setOrientationNatural();
     }
 
     /**
@@ -227,38 +190,10 @@ public class BaseballCardDetailsTest {
      */
     @Test
     public void testCardDetailsScroll() {
-        View parentView = this.activity.getWindow().getDecorView();
-        // hide the soft keypad
-        InputMethodManager imm = (InputMethodManager) this.activity
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(parentView.getWindowToken(), 0);
-        // Wait till the keypad disappears
-        try {
-            Thread.sleep(SLEEP_TIME_TO_REFRESH);
-        } catch (InterruptedException e) {
-            Log.e("getResult", e.getMessage());
-        }
-        // check if the 'Player Position' spinner is already visible. If yes, then
-        // the screen cannot be scrolled. Assert true and return.
-        if (BBCTTestUtil.isViewOnScreen(parentView, this.playerPositionSpinner)) {
-            Assert.assertTrue(true);
-        } else {
-            // scroll to the bottom and check if save button is on the screen
-            this.scrollView.post(new Runnable() {
-                @Override
-                public void run() {
-                    BaseballCardDetailsTest.this.scrollView
-                            .fullScroll(View.FOCUS_DOWN);
-                }
-            });
-            // Wait for the scroll
-            try {
-                Thread.sleep(SLEEP_TIME_TO_REFRESH);
-            } catch (InterruptedException e) {
-                // left blank
-            }
-            ViewAsserts.assertOnScreen(parentView, this.playerPositionSpinner);
-        }
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.player_position_text))
+                .perform(scrollTo())
+                .check(matches(isDisplayed()));
     }
 
 }
