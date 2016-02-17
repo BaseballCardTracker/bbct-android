@@ -35,6 +35,7 @@ import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Set;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -74,11 +75,13 @@ public class BaseballCardDetailsPartialInputTest extends
      */
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        Set<BBCTTestUtil.EditTexts> editTexts = EnumSet.allOf(BBCTTestUtil.EditTexts.class);
-        editTexts.remove(BBCTTestUtil.EditTexts.PLAYER_POSITION);
-        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(editTexts);
+        Set<BBCTTestUtil.EditTexts> editTexts =
+                EnumSet.range(BBCTTestUtil.EditTexts.BRAND, BBCTTestUtil.EditTexts.TEAM);
 
-        for (Set<BBCTTestUtil.EditTexts> mask : masks) {
+        for (BBCTTestUtil.EditTexts editText : editTexts) {
+            Set<BBCTTestUtil.EditTexts> mask = new HashSet<>();
+            mask.add(editText);
+            Log.d(TAG, "mask: " + mask);
             suite.addTest(new BaseballCardDetailsPartialInputTest(mask));
         }
 
@@ -115,6 +118,7 @@ public class BaseballCardDetailsPartialInputTest extends
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
+        this.inst.setInTouchMode(true);
         this.activity = this.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
         this.inst.waitForIdleSync();

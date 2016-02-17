@@ -76,7 +76,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
         super.setUp();
 
         this.inst = this.getInstrumentation();
-
+        this.inst.setInTouchMode(true);
         this.activity = this.getActivity();
 
         this.solo = new Solo(this.inst, this.activity);
@@ -141,7 +141,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
 
-        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+        List<BaseballCard> cards = new ArrayList<>();
         cards.add(card);
 
         this.inst.waitForIdleSync();

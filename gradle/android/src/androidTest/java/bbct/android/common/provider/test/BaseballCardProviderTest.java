@@ -39,7 +39,7 @@ public class BaseballCardProviderTest extends
             + "INSERT INTO \"baseball_cards\" VALUES(6,0,'Excellent','Upper Deck',1990,189,10000,1,'Tom Browning','Reds','Pitcher');\n"
             + "INSERT INTO \"baseball_cards\" VALUES(7,0,'Excellent','Topps',1982,121,10000,1,'Ed Lynch','Mets','Pitcher');\n"
             + "COMMIT;\n";
-    private static final List<BaseballCard> CARDS = new ArrayList<BaseballCard>();
+    private static final List<BaseballCard> CARDS = new ArrayList<>();
     static {
         CARDS.add(new BaseballCard(false, "Excellent", "Topps", 1991, 278,
                 10000, 1, "Alex Fernandez", "White Sox", "Pitcher"));
@@ -149,6 +149,7 @@ public class BaseballCardProviderTest extends
                     .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
             Assert.assertEquals(value, newValue);
         }
+        cursor.close();
     }
 
     public void testDeleteAll() {
