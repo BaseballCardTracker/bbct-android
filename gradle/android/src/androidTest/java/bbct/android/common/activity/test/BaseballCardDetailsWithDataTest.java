@@ -95,6 +95,16 @@ public class BaseballCardDetailsWithDataTest {
         testAutoCompleteDestroy(R.id.brand_text, mCard.getBrand());
     }
 
+    @Test
+    public void testPlayerNameAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.player_name_text, mCard.getPlayerName());
+    }
+
+    @Test
+    public void testTeamAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.team_text, mCard.getTeam());
+    }
+
     private void testAutoCompleteDestroy(int id, String text) throws RemoteException {
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         onView(withId(id)).perform(typeText(text));
