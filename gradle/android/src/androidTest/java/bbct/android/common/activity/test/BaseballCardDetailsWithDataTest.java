@@ -92,10 +92,14 @@ public class BaseballCardDetailsWithDataTest {
 
     @Test
     public void testBrandAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.brand_text, mCard.getBrand());
+    }
+
+    private void testAutoCompleteDestroy(int id, String text) throws RemoteException {
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        onView(withId(R.id.brand_text)).perform(typeText(mCard.getBrand()));
+        onView(withId(id)).perform(typeText(text));
         device.setOrientationLeft();
-        onView(withId(R.id.brand_text)).check(matches(withText(mCard.getBrand())));
+        onView(withId(id)).check(matches(withText(text)));
         device.setOrientationNatural();
     }
 }
