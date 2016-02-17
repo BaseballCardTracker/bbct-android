@@ -195,8 +195,7 @@ public class BaseballCardDetails extends Fragment {
         this.brandText.setText(card.getBrand());
         this.yearText.setText(Integer.toString(card.getYear()));
         this.numberText.setText(Integer.toString(card.getNumber()));
-        this.valueText
-                .setText(Double.toString(card.getValue() / 100.0));
+        this.valueText.setText(String.format("%.2f", card.getValue() / 100.0));
         this.countText.setText(Integer.toString(card.getCount()));
         this.playerNameText.setText(card.getPlayerName());
         this.teamText.setText(card.getTeam());

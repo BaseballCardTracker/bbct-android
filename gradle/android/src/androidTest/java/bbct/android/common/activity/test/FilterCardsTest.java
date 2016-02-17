@@ -19,7 +19,6 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
@@ -58,15 +57,12 @@ public class FilterCardsTest {
     public ActivityTestRule<FragmentTestActivity> activityTestRule =
             new ActivityTestRule<>(FragmentTestActivity.class);
 
-    private Instrumentation inst;
     private FragmentTestActivity activity = null;
 
     @Before
     public void setUp() throws Exception {
         activity = activityTestRule.getActivity();
         activity.replaceFragment(new FilterCards());
-        inst = InstrumentationRegistry.getInstrumentation();
-        inst.waitForIdleSync();
     }
 
     /**
@@ -155,7 +151,7 @@ public class FilterCardsTest {
     @Test
     public void testSaveInstanceState() throws RemoteException {
         this.testNumberCheckBox();
-        UiDevice device = UiDevice.getInstance(inst);
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         device.setOrientationLeft();
         onView(withId(R.id.number_input)).check(matches(isEnabled()));
         device.setOrientationNatural();
