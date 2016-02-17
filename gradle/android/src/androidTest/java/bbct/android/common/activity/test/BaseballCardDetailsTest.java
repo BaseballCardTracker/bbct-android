@@ -19,22 +19,18 @@
 package bbct.android.common.activity.test;
 
 import android.app.Instrumentation;
-import android.content.Context;
 import android.graphics.Rect;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
-import android.test.ViewAsserts;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.Spinner;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
@@ -42,7 +38,6 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import java.io.InputStream;
 import junit.framework.Assert;
 import org.junit.Before;
@@ -52,6 +47,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -77,9 +73,6 @@ public class BaseballCardDetailsTest {
     private Instrumentation inst;
     private BaseballCard card;
 
-    @InjectView(R.id.player_position_text) Spinner playerPositionSpinner;
-    @InjectView(R.id.scroll_card_details) ScrollView scrollView;
-
     /**
      * Set up test fixture. This consists of an instance of the
      * {@link BaseballCardDetails} activity and all of its {@link EditText} and
@@ -102,7 +95,6 @@ public class BaseballCardDetailsTest {
         this.inst.setInTouchMode(true);
         this.activity = activityTestRule.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
-        ButterKnife.inject(this, this.activity);
     }
 
     /**
@@ -198,38 +190,10 @@ public class BaseballCardDetailsTest {
      */
     @Test
     public void testCardDetailsScroll() {
-        View parentView = this.activity.getWindow().getDecorView();
-        // hide the soft keypad
-        InputMethodManager imm = (InputMethodManager) this.activity
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(parentView.getWindowToken(), 0);
-        // Wait till the keypad disappears
-        try {
-            Thread.sleep(SLEEP_TIME_TO_REFRESH);
-        } catch (InterruptedException e) {
-            Log.e("getResult", e.getMessage());
-        }
-        // check if the 'Player Position' spinner is already visible. If yes, then
-        // the screen cannot be scrolled. Assert true and return.
-        if (BBCTTestUtil.isViewOnScreen(parentView, this.playerPositionSpinner)) {
-            Assert.assertTrue(true);
-        } else {
-            // scroll to the bottom and check if save button is on the screen
-            this.scrollView.post(new Runnable() {
-                @Override
-                public void run() {
-                    BaseballCardDetailsTest.this.scrollView
-                            .fullScroll(View.FOCUS_DOWN);
-                }
-            });
-            // Wait for the scroll
-            try {
-                Thread.sleep(SLEEP_TIME_TO_REFRESH);
-            } catch (InterruptedException e) {
-                // left blank
-            }
-            ViewAsserts.assertOnScreen(parentView, this.playerPositionSpinner);
-        }
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.player_position_text))
+                .perform(scrollTo())
+                .check(matches(isDisplayed()));
     }
 
 }
