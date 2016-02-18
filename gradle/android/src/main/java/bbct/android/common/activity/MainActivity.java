@@ -18,11 +18,16 @@
  */
 package bbct.android.common.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import bbct.android.common.BuildConfig;
@@ -31,10 +36,13 @@ import bbct.android.common.provider.BaseballCardContract;
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
 import io.fabric.sdk.android.Fabric;
+import java.net.URISyntaxException;
 
 public class MainActivity extends ActionBarActivity {
 
     private static final String TAG = MainActivity.class.getName();
+    private static final String PREFS = "bbct.prefs";
+    private static final String SURVEY_TAKEN_PREF = "surveyTaken";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,35 @@ public class MainActivity extends ActionBarActivity {
             ft.commit();
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        showSurveyDialog();
+    }
+
+    private void showSurveyDialog() {
+        final SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+
+        if (!prefs.getBoolean(SURVEY_TAKEN_PREF, false)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.survey);
+            builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(SURVEY_TAKEN_PREF, true);
+                    editor.apply();
+
+                    Intent surveyIntent = null;
+                    try {
+                        surveyIntent = Intent.parseUri(getString(R.string.survey_uri), 0);
+                    } catch (URISyntaxException e) {
+                        Log.e(TAG, "Error parsing URI for survey", e);
+                    }
+                    startActivity(surveyIntent);
+                }
+            });
+            builder.setNegativeButton(R.string.later, null);
+            builder.create().show();
         }
     }
 
