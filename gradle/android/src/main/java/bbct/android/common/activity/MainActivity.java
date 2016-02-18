@@ -39,10 +39,10 @@ import io.fabric.sdk.android.Fabric;
 import java.net.URISyntaxException;
 
 public class MainActivity extends ActionBarActivity {
+    public static final String PREFS = "bbct.prefs";
+    public static final String SURVEY_TAKEN_PREF = "survey";
 
     private static final String TAG = MainActivity.class.getName();
-    private static final String PREFS = "bbct.prefs";
-    private static final String SURVEY_TAKEN_PREF = "surveyTaken";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -150,5 +150,4 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }
