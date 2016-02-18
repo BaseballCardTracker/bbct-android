@@ -24,9 +24,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.uiautomator.UiDevice;
-import android.test.ViewAsserts;
 import android.util.Log;
-import android.view.View;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
@@ -276,29 +274,6 @@ final public class BBCTTestUtil {
         }
 
         return filteredList;
-    }
-
-    /**
-     * Checks if the given child view is visible in the given parent view. Logic
-     * followed is same as {@link ViewAsserts#assertOnScreen(View, View)}.
-     *
-     * @param parentView
-     *            The {@link View} object containing the child view test.
-     * @param childView
-     *            The {@link View} object to be checked.
-     */
-    public static boolean isViewOnScreen(View parentView, View childView) {
-        int[] xyChild = new int[2];
-        childView.getLocationOnScreen(xyChild);
-        int[] xyParent = new int[2];
-        parentView.getLocationOnScreen(xyParent);
-        int childViewYFromRoot = xyChild[1] - xyParent[1];
-        int rootViewHeight = childView.getRootView().getHeight();
-        // If the button is visible on screen, then
-        // view should have positive y coordinate on screen and
-        // view should have y location on screen less than drawing
-        // height of root view
-        return childViewYFromRoot >= 0 && childViewYFromRoot <= rootViewHeight;
     }
 
     /**
