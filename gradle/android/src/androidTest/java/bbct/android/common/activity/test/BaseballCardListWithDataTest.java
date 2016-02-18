@@ -111,6 +111,13 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
 
         dbUtil = new DatabaseUtil(inst.getTargetContext());
+        clickLater();
+    }
+
+    private void clickLater() {
+        onView(withText(R.string.later))
+                .check(matches(isDisplayed()))
+                .perform(click());
     }
 
     @After
@@ -169,6 +176,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testStateDestroyWithoutFilter() throws RemoteException {
         device.setOrientationLeft();
+        clickLater();
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
@@ -180,6 +188,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testStateDestroyWithFilter() throws RemoteException {
         this.testYearFilter();
         device.setOrientationLeft();
+        clickLater();
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
@@ -193,6 +202,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testStateDestroyClearFilter() throws RemoteException {
         this.testClearFilter();
         device.setOrientationLeft();
+        clickLater();
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
@@ -438,6 +448,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
         Log.d(TAG, "change orientation");
         device.setOrientationLeft();
+        clickLater();
 
         Log.d(TAG, "assertions");
         onData(instanceOf(BaseballCard.class))
