@@ -29,7 +29,7 @@ import bbct.android.common.R;
 import org.junit.After;
 import org.junit.Before;
 
-public class UiAutomatorTest {
+public abstract class UiAutomatorTest {
     protected UiDevice device;
     protected Instrumentation inst;
 

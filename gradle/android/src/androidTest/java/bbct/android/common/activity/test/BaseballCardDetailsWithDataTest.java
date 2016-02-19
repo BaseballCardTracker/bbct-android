@@ -20,8 +20,12 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.database.Cursor;
+import android.os.RemoteException;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.UiDevice;
+
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
@@ -40,6 +44,7 @@ import static android.support.test.espresso.matcher.CursorMatchers.withRowString
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
@@ -83,5 +88,28 @@ public class BaseballCardDetailsWithDataTest {
         onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
                 .inRoot(withDecorView(not(activity.getWindow().getDecorView())))
                 .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testBrandAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.brand_text, mCard.getBrand());
+    }
+
+    @Test
+    public void testPlayerNameAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.player_name_text, mCard.getPlayerName());
+    }
+
+    @Test
+    public void testTeamAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.team_text, mCard.getTeam());
+    }
+
+    private void testAutoCompleteDestroy(int id, String text) throws RemoteException {
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        onView(withId(id)).perform(typeText(text));
+        device.setOrientationLeft();
+        onView(withId(id)).check(matches(withText(text)));
+        device.setOrientationNatural();
     }
 }
