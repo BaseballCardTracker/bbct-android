@@ -35,6 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import junit.framework.Assert;
+import org.hamcrest.Matcher;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -264,11 +265,11 @@ final public class BBCTTestUtil {
     }
 
     public static List<BaseballCard> filterList(List<BaseballCard> list,
-            Predicate<BaseballCard> pred) {
+            Matcher<BaseballCard> cardMatcher) {
         List<BaseballCard> filteredList = new ArrayList<>();
 
         for (BaseballCard obj : list) {
-            if (pred.doTest(obj)) {
+            if (cardMatcher.matches(obj)) {
                 filteredList.add(obj);
             }
         }
