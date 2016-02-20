@@ -18,40 +18,45 @@
  */
 package bbct.android.common.layout.test;
 
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.app.Fragment;
-import android.test.ActivityInstrumentationTestCase2;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
-import bbct.android.common.view.FilterOptionView;
-import butterknife.ButterKnife;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import static org.fest.assertions.api.ANDROID.assertThat;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.not;
 
-public class FilterCardsLayoutTest extends ActivityInstrumentationTestCase2<FragmentTestActivity> {
+@RunWith(AndroidJUnit4.class)
+public class FilterCardsLayoutTest {
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityTestRule =
+            new ActivityTestRule<>(FragmentTestActivity.class);
 
-    private FragmentTestActivity mActivity;
-    private Fragment mFragment;
-
-    public FilterCardsLayoutTest() {
-        super(FragmentTestActivity.class);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        mActivity = getActivity();
-        mFragment = new FilterCards();
+    @Before
+    public void setUp() throws Exception {
+        FragmentTestActivity mActivity = activityTestRule.getActivity();
+        Fragment mFragment = new FilterCards();
         mActivity.replaceFragment(mFragment);
-        this.getInstrumentation().waitForIdleSync();
     }
 
-    public void testFragmentVisible() {
-        assertThat(mFragment).isAdded().isVisible();
-    }
-
-    public void testBrandFilterOption() {
+    @Test
+    public void testBrandCheckBox() {
         testFilterOption(R.id.brand);
     }
 
@@ -72,10 +77,11 @@ public class FilterCardsLayoutTest extends ActivityInstrumentationTestCase2<Frag
     }
 
     private void testFilterOption(int id) {
-        FilterOptionView filterOption = ButterKnife.findById(mActivity, id);
-        assertThat(filterOption).isVisible();
-        // TODO: Write custom assertions for FilterOptionsView, including isNotChecked() and isChecked()
-        // TODO: Also editTextIsEnabled() and editTextIsNotEnabled()
+        onView(withId(id))
+                .check(matches(allOf(isDisplayed(), isNotChecked())));
+        onView(allOf(withParent(withId(id)), instanceOf(CheckBox.class)))
+                .check(matches(allOf(isDisplayed(), isNotChecked())));
+        onView(allOf(withParent(withId(id)), instanceOf(EditText.class)))
+                .check(matches(allOf(isDisplayed(), not(isEnabled()))));
     }
-
 }

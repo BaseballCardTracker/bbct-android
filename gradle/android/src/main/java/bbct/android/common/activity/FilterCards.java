@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilterCards extends Fragment {
-
     private static final String TAG = FilterCards.class.getName();
     private static final String FILTERED_LIST = "Filtered List";
     private static final String INPUT_EXTRA = "input";
@@ -52,6 +51,7 @@ public class FilterCards extends Fragment {
 
     @InjectViews({R.id.brand, R.id.year, R.id.number, R.id.player_name, R.id.team})
     List<FilterOptionView> filterOptions;
+    private ArrayList<Integer> enabledFields = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,8 +62,6 @@ public class FilterCards extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView()");
-
         View view = inflater.inflate(R.layout.filter_cards, container, false);
         ButterKnife.inject(this, view);
 
@@ -80,8 +78,10 @@ public class FilterCards extends Fragment {
 
             Log.d(TAG, "enabledField=" + enabledFields);
 
-            for (int i : enabledFields) {
-                filterOptions.get(i).setChecked(true);
+            if (enabledFields != null) {
+                for (int i : enabledFields) {
+                    filterOptions.get(i).setChecked(true);
+                }
             }
         }
 
@@ -89,19 +89,20 @@ public class FilterCards extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState()");
+    public void onPause() {
+        super.onPause();
 
-        // TODO: State should be saved by CheckableLinearLayout (or the Android framework)
-        ArrayList<Integer> enabledFields = new ArrayList<Integer>();
+        enabledFields.clear();
         for (int i = 0; i < filterOptions.size(); i++) {
-            if (filterOptions.get(i).isChecked()) {
+            if (filterOptions.get(i).isEnabled()) {
                 enabledFields.add(i);
             }
         }
+    }
 
-        Log.d(TAG, "enabledFields=" + enabledFields);
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
         outState.putIntegerArrayList(INPUT_EXTRA, enabledFields);
     }
@@ -173,5 +174,4 @@ public class FilterCards extends Fragment {
                 .addToBackStack(FILTERED_LIST)
                 .commit();
     }
-
 }

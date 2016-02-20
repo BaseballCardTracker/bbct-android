@@ -19,30 +19,17 @@
 package bbct.android.common.test;
 
 import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.app.Fragment;
-import android.test.ViewAsserts;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.ViewInteraction;
+import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.Spinner;
 import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardDetails;
-import bbct.android.common.activity.FilterCards;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.android.common.view.FilterOptionView;
-import butterknife.ButterKnife;
-import com.robotium.solo.Solo;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -51,305 +38,186 @@ import java.util.List;
 import java.util.Set;
 import junit.framework.Assert;
 
+import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static android.support.test.espresso.matcher.ViewMatchers.withSpinnerText;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+
 /**
  * Utility methods used for JUnit tests on classes in Android version of BBCT.
  */
 final public class BBCTTestUtil {
+    private static final String TAG = BBCTTestUtil.class.getName();
+    public static final String ADD_MESSAGE = "Card added successfully";
+    public static final String DELETE_MESSAGE = "Cards deleted successfully";
 
-    /**
-     * Assert that the given ListView contains same data as the given list of
-     * {@link BaseballCard}s.
-     *
-     * @param expectedItems
-     *            A List of the expected {@link BaseballCard} data.
-     * @param listView
-     *            The List view to check for {@link BaseballCard} data.
-     */
-    public static void assertListViewContainsItems(List<BaseballCard> expectedItems,
-                                                   ListView listView) {
-        // Add 1 to the number of expected cards to account for the header View
-        Assert.assertEquals(expectedItems.size() + 1, listView.getAdapter().getCount());
-
-        Adapter adapter = listView.getAdapter();
-        for (int i = 0; i < expectedItems.size(); ++i) {
-            Assert.assertEquals(expectedItems.get(i), adapter.getItem(i + 1));
+    public static void assertListViewContainsItems(List<BaseballCard> expectedItems) {
+        for (BaseballCard card : expectedItems) {
+            onData(allOf(instanceOf(BaseballCard.class), is(card)))
+                    .check(matches(isDisplayed()));
         }
     }
 
-    /**
-     * Test that a menu item correctly launches a child activity.
-     *
-     * @param solo
-     *            The {@link Solo} instance used for this test.
-     * @param menuId
-     *            The id of the menu resource.
-     * @param fragmentTag
-     *            The tag used when adding the {@link Fragment} to the main activity.
-     */
-    public static void testMenuItem(Solo solo, int menuId, String fragmentTag) {
-        solo.clickOnActionBarItem(menuId);
-        Assert.assertTrue(solo.waitForFragmentByTag(fragmentTag));
+    public static void testMenuItem(int menuId, String fragmentTag) {
+        onView(withId(menuId)).perform(click());
     }
 
-    /**
-     * Add a card to the database using the {@link EditText} views from the
-     * given {@link BaseballCardDetails} activity and check that the save button
-     * can be clicked.
-     *
-     * @param solo
-     *            The {@link Solo} object performing the
-     *            test.
-     * @param card
-     *            The {@link BaseballCard} object holding the data to add to the
-     *            database.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
-    public static void addCard(Solo solo, BaseballCard card) throws Throwable {
-        BBCTTestUtil.sendKeysToCardDetails(solo, card);
-        solo.clickOnActionBarItem(R.id.save_menu);
+    public static void addCard(BaseballCard card) throws Throwable {
+        BBCTTestUtil.sendKeysToCardDetails(card);
+        onView(withId(R.id.save_menu))
+                .perform(click());
     }
 
-    public static void waitForToast(Solo solo, String message) {
-        Assert.assertTrue(solo.waitForDialogToOpen(TIME_OUT));
-        Assert.assertTrue(solo.searchText(message));
+    public static void waitForToast(Activity activity, String message) {
+        onView(withText(message))
+                .inRoot(withDecorView(not(activity.getWindow().getDecorView())))
+                .check(matches(isDisplayed()));
     }
 
-    /**
-     * Fills in all {@link EditText} views of the given
-     * {@link BaseballCardDetails} activity.
-     *
-     * @param solo
-     *            The {@link Solo} object performing the
-     *            test.
-     * @param card
-     *            The {@link BaseballCard} object holding the data to add to the
-     *            database.
-     * @throws InterruptedException
-     *             If {@link Thread#sleep(long)} is interrupted.
-     * @see #sendKeysToCardDetails(Solo, BaseballCard, Set)
-     */
-    public static void sendKeysToCardDetails(Solo solo, BaseballCard card)
-            throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(solo, card,
-                EnumSet.allOf(EditTexts.class));
+    public static void sendKeysToCardDetails(BaseballCard card) {
+        BBCTTestUtil.sendKeysToCardDetails(card, EnumSet.allOf(EditTexts.class));
     }
 
-    /**
-     * Fills in all EditText views, except the ones indicated, of the given
-     * {@link BaseballCardDetails} activity.
-     *
-     * @param solo
-     *            The {@link Solo} object performing the
-     *            test.
-     * @param card
-     *            The {@link BaseballCard} object holding the data to add to the
-     *            database.
-     * @param fieldFlags
-     *            The {@link EditText} views to fill in.
-     * @throws InterruptedException
-     *             If {@link Thread#sleep(long)} is interrupted.
-     */
-    public static void sendKeysToCardDetails(Solo solo, BaseballCard card,
-            Set<EditTexts> fieldFlags) throws InterruptedException {
+    public static void sendKeysToCardDetails(BaseballCard card, Set<EditTexts> fieldFlags) {
         Log.d(TAG, "sendKeysToCardDetails()");
 
-        solo.waitForView(R.id.scroll_card_details);
-        final ScrollView scrollView = ButterKnife.findById(solo.getCurrentActivity(),
-                R.id.scroll_card_details);
-        Assert.assertNotNull("Scroll view not found", scrollView);
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.fullScroll(ScrollView.FOCUS_UP);
-            }
-        });
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
-        solo.waitForView(R.id.autograph);
         if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
             if (card.isAutographed()) {
-                solo.waitForView(R.id.autograph);
-                solo.clickOnCheckBox(0);
+                onView(withId(R.id.autograph))
+                        .perform(scrollTo(), click())
+                        .check(matches(isChecked()));
             }
         }
 
         if (fieldFlags.contains(EditTexts.CONDITION)) {
-            Spinner conditionSpinner = (Spinner) solo.getView(R.id.condition);
-            @SuppressWarnings("unchecked")
-            ArrayAdapter<CharSequence> conditionAdapter = (ArrayAdapter<CharSequence>) conditionSpinner
-                    .getAdapter();
-            int newIndex = conditionAdapter.getPosition(card.getCondition());
-            int currIndex = conditionSpinner.getSelectedItemPosition();
-            solo.pressSpinnerItem(0, newIndex - currIndex);
+            onView(withId(R.id.condition))
+                    .perform(scrollTo(), click());
+            onData(allOf(instanceOf(String.class), is(card.getCondition())))
+                    .perform(click());
+            onView(withId(R.id.condition))
+                    .check(matches(withSpinnerText(card.getCondition())));
         }
 
-        AutoCompleteTextView brandText = (AutoCompleteTextView) solo
-                .getView(R.id.brand);
+        onView(withId(R.id.brand)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.BRAND)) {
-            solo.typeText(brandText, card.getBrand());
+            onView(withId(R.id.brand))
+                    .perform(scrollTo(), typeTextIntoFocusedView(card.getBrand()))
+                    .check(matches(withText(card.getBrand())));
         }
+        device.pressEnter();
 
-        Thread.sleep(50);
-        if (brandText.isPopupShowing()) {
-            solo.goBack();
-        }
-
+        onView(withId(R.id.year)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.YEAR)) {
-            EditText yearText = (EditText) solo.getView(R.id.year);
-            solo.typeText(yearText, Integer.toString(card.getYear()));
+            String yearStr = Integer.toString(card.getYear());
+            onView(withId(R.id.year))
+                    .perform(scrollTo(), typeTextIntoFocusedView(yearStr))
+                    .check(matches(withText(yearStr)));
         }
+        device.pressEnter();
 
+        onView(withId(R.id.number)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.NUMBER)) {
-            EditText numberText = (EditText) solo.getView(R.id.number);
-            solo.typeText(numberText, Integer.toString(card.getNumber()));
+            String numberStr = Integer.toString(card.getNumber());
+            onView(withId(R.id.number))
+                    .perform(scrollTo(), typeTextIntoFocusedView(numberStr))
+                    .check(matches(withText(numberStr)));
         }
+        device.pressEnter();
 
+        onView(withId(R.id.value)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.VALUE)) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
-            EditText valueText = (EditText) solo.getView(R.id.value);
-            solo.typeText(valueText, valueStr);
+            onView(withId(R.id.value))
+                    .perform(scrollTo(), typeTextIntoFocusedView(valueStr))
+                    .check(matches(withText(valueStr)));
         }
+        device.pressEnter();
 
-        if (fieldFlags.contains(EditTexts.COUNT)) {
-            EditText countText = (EditText) solo.getView(R.id.quantity);
-            solo.typeText(countText, Integer.toString(card.getCount()));
+        onView(withId(R.id.quantity)).check(matches(hasFocus()));
+        if (fieldFlags.contains(EditTexts.QUANTITY)) {
+            String countStr = Integer.toString(card.getCount());
+            onView(withId(R.id.quantity))
+                    .perform(scrollTo(), typeTextIntoFocusedView(countStr))
+                    .check(matches(withText(countStr)));
         }
+        device.pressEnter();
 
-        AutoCompleteTextView playerNameText = (AutoCompleteTextView) solo
-                .getView(R.id.player_name);
+        onView(withId(R.id.player_name)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
-            solo.typeText(playerNameText, card.getPlayerName());
+            onView(withId(R.id.player_name))
+                    .perform(scrollTo(), typeTextIntoFocusedView(card.getPlayerName()))
+                    .check(matches(withText(card.getPlayerName())));
         }
+        device.pressEnter();
 
-        Thread.sleep(50);
-        if (playerNameText.isPopupShowing()) {
-            solo.goBack();
-        }
-
-        AutoCompleteTextView teamText = (AutoCompleteTextView) solo
-                .getView(R.id.team);
+        onView(withId(R.id.team)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.TEAM)) {
-            if (!solo.searchText(solo.getString(R.string.team_label))) {
-                scrollDown(scrollView);
-            }
-            solo.typeText(teamText, card.getTeam());
+            onView(withId(R.id.team))
+                    .perform(scrollTo(), typeTextIntoFocusedView(card.getTeam()))
+                    .check(matches(withText(card.getTeam())));
         }
-
-        Thread.sleep(50);
-        if (teamText.isPopupShowing()) {
-            solo.goBack();
-        }
+        device.pressEnter();
 
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
-            Spinner playerPositionSpinner = (Spinner) solo.getView(R.id.player_position);
-            @SuppressWarnings("unchecked")
-            ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner
-                    .getAdapter();
-            int newIndex = playerPositionAdapter.getPosition(card
-                    .getPlayerPosition());
-            int currIndex = playerPositionSpinner.getSelectedItemPosition();
-
-            scrollDown(scrollView);
-            solo.waitForView(R.id.player_position);
-
-            boolean isConditionVisible = solo.searchText(solo.getString(R.string.condition_label),
-                    false);
-            boolean isPositionVisible = solo.searchText(
-                    solo.getString(R.string.player_position_label), true);
-
-            int index = -1;
-            if (!isConditionVisible && isPositionVisible) {
-                index = 0;
-            }
-            if (isPositionVisible && isConditionVisible) {
-                index = 1;
-            }
-
-            Assert.assertFalse("Invalid index", index == -1);
-            solo.pressSpinnerItem(index, newIndex - currIndex);
+            onView(withId(R.id.player_position))
+                    .perform(scrollTo(), click());
+            onData(allOf(instanceOf(String.class), is(card.getPlayerPosition())))
+                    .perform(click());
+            onView(withId(R.id.player_position))
+                    .check(matches(withSpinnerText(card.getPlayerPosition())));
         }
     }
 
-    public static void scrollDown(final ScrollView scrollView) {
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.arrowScroll(ScrollView.FOCUS_DOWN);
-            }
-        });
-    }
+    public static void assertAllEditTextContents(BaseballCard expectedCard) {
+        ViewInteraction autographView = onView(withId(R.id.autograph));
 
-    /**
-     * Fills in the current AutoCompleteTextView/EditText view, of the given
-     * {@link BaseballCardDetails} activity.
-     *
-     * @param inst
-     *            The {@link Instrumentation} object performing the test.
-     * @param editTextView
-     *            The {@link BaseballCardDetails} EditText object of the view to
-     *            be filled
-     * @param cardDetail
-     *            The {@link BaseballCard} string object holding the data to add
-     *            to the database.
-     */
-    public static void sendKeysToCurrFieldCardDetails(Instrumentation inst,
-            EditText editTextView, String cardDetail) {
-        Log.d(TAG, "sendKeysToCurrFieldCardDetails()");
-
-        inst.sendStringSync(cardDetail);
-        if (editTextView instanceof AutoCompleteTextView) {
-            if (((AutoCompleteTextView) editTextView).isPopupShowing()) {
-                inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-            }
+        if (expectedCard.isAutographed()) {
+            autographView.check(matches(isChecked()));
+        } else {
+            autographView.check(matches(isNotChecked()));
         }
+
+        onView(withId(R.id.condition))
+                .check(matches(withSpinnerText(expectedCard.getCondition())));
+        onView(withId(R.id.brand))
+                .check(matches(withText(expectedCard.getBrand())));
+        String yearStr = Integer.toString(expectedCard.getYear());
+        onView(withId(R.id.year))
+                .check(matches(withText(yearStr)));
+        String numberStr = Integer.toString(expectedCard.getNumber());
+        onView(withId(R.id.number))
+                .check(matches(withText(numberStr)));
+        String valueStr = String.format("%.2f", expectedCard.getValue() / 100.0);
+        onView(withId(R.id.value))
+                .check(matches(withText(valueStr)));
+        String countStr = Integer.toString(expectedCard.getCount());
+        onView(withId(R.id.quantity))
+                .check(matches(withText(countStr)));
+        onView(withId(R.id.player_name))
+                .check(matches(withText(expectedCard.getPlayerName())));
+        onView(withId(R.id.player_position))
+                .check(matches(withSpinnerText(expectedCard.getPlayerPosition())));
     }
-
-    /**
-     * Assert that the {@link EditText} views in the given
-     * {@link BaseballCardDetails} activity contain the same data as the given
-     * {@link BaseballCard}.
-     *
-     * @param cardDetails
-     *            The {@link BaseballCardDetails} containing the
-     *            {@link EditText} views to check.
-     * @param expectedCard
-     *            The {@link BaseballCard} containing the expected data.
-     */
-    public static void assertAllEditTextContents(Activity cardDetails,
-            BaseballCard expectedCard) {
-        CheckBox autographedCheckBox = ButterKnife.findById(cardDetails, R.id.autograph);
-        Spinner conditionSpinner = ButterKnife.findById(cardDetails, R.id.condition);
-        EditText brandText = ButterKnife.findById(cardDetails, R.id.brand);
-        EditText yearText = ButterKnife.findById(cardDetails, R.id.year);
-        EditText numberText = ButterKnife.findById(cardDetails, R.id.number);
-        EditText valueText = ButterKnife.findById(cardDetails, R.id.value);
-        EditText countText = ButterKnife.findById(cardDetails, R.id.quantity);
-        EditText playerNameText = ButterKnife.findById(cardDetails, R.id.player_name);
-        Spinner playerPositionSpinner = ButterKnife.findById(cardDetails, R.id.player_position);
-
-        Assert.assertEquals(expectedCard.isAutographed(),
-                autographedCheckBox.isChecked());
-        Assert.assertEquals(expectedCard.getCondition(),
-                conditionSpinner.getSelectedItem());
-        Assert.assertEquals(expectedCard.getBrand(), brandText.getText()
-                .toString());
-        Assert.assertEquals(expectedCard.getYear(),
-                Integer.parseInt(yearText.getText().toString()));
-        Assert.assertEquals(expectedCard.getNumber(),
-                Integer.parseInt(numberText.getText().toString()));
-        Assert.assertEquals(
-                expectedCard.getValue(),
-                (int) (Double.parseDouble(valueText.getText().toString()) * 100));
-        Assert.assertEquals(expectedCard.getCount(),
-                Integer.parseInt(countText.getText().toString()));
-        Assert.assertEquals(expectedCard.getPlayerName(), playerNameText
-                .getText().toString());
-        Assert.assertEquals(expectedCard.getPlayerPosition(),
-                playerPositionSpinner.getSelectedItem());
-    }
-
+    
     /**
      * Assert that database was created with the correct version and table and
      * that it is empty.
@@ -368,51 +236,41 @@ final public class BBCTTestUtil {
         // TODO How do I check that a table has the correct columns?
     }
 
-    /**
-     * Fills in all {@link EditText} views, except the ones indicated, of the
-     * {@link FilterCards} activity.
-     *
-     * @param solo
-     *            - the {@link Solo} object to perform clicks on views.
-     * @param testCard
-     *            - the {@link BaseballCard} which is used to fill in the data.
-     * @param fieldFlags
-     *            - the {@link EditText} views to fill in.
-     */
-    public static void sendKeysToFilterCards(Solo solo, BaseballCard testCard,
-                                             Set<EditTexts> fieldFlags) {
-        if (fieldFlags.contains(EditTexts.BRAND)) {
-            sendKeysToCurrFieldFilterCards(solo, R.id.brand, testCard.getBrand());
+    public static void sendKeysToFilterCards(BaseballCard testCard, Set<FilterOption> fieldFlags) {
+        if (fieldFlags.contains(FilterOption.BRAND)) {
+            sendKeysToCurrFieldFilterCards(R.id.brand, testCard.getBrand());
         }
 
-        if (fieldFlags.contains(EditTexts.YEAR)) {
-            sendKeysToCurrFieldFilterCards(solo, R.id.year, testCard.getYear() + "");
+        if (fieldFlags.contains(FilterOption.YEAR)) {
+            sendKeysToCurrFieldFilterCards(R.id.year,
+                    Integer.toString(testCard.getYear()));
         }
 
-        if (fieldFlags.contains(EditTexts.NUMBER)) {
-            sendKeysToCurrFieldFilterCards(solo, R.id.number, testCard.getNumber() + "");
+        if (fieldFlags.contains(FilterOption.NUMBER)) {
+            sendKeysToCurrFieldFilterCards(R.id.number,
+                    Integer.toString(testCard.getNumber()));
         }
 
-        if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
-            sendKeysToCurrFieldFilterCards(solo, R.id.player_name, testCard.getPlayerName());
+        if (fieldFlags.contains(FilterOption.PLAYER_NAME)) {
+            sendKeysToCurrFieldFilterCards(R.id.player_name, testCard.getPlayerName());
         }
 
-        if (fieldFlags.contains(EditTexts.TEAM)) {
-            sendKeysToCurrFieldFilterCards(solo, R.id.team, testCard.getTeam());
+        if (fieldFlags.contains(FilterOption.TEAM)) {
+            sendKeysToCurrFieldFilterCards(R.id.team, testCard.getTeam());
         }
     }
 
-    public static void sendKeysToCurrFieldFilterCards(Solo solo, int filterId, String input) {
-        Activity filterCards = solo.getCurrentActivity();
-        Assert.assertTrue(solo.waitForView(filterId));
-        FilterOptionView optionView = ButterKnife.findById(filterCards, filterId);
-        solo.clickOnView(optionView.getCheckBox());
-        solo.typeText(optionView.getEditText(), input);
+    public static void sendKeysToCurrFieldFilterCards(int filterId, String input) {
+        onView(allOf(withParent(withId(filterId)), instanceOf(CheckBox.class)))
+                .perform(click());
+        onView(allOf(withParent(withId(filterId)), instanceOf(EditText.class)))
+                .check(matches(allOf(isEnabled(), isDisplayed())))
+                .perform(typeText(input));
     }
 
     public static List<BaseballCard> filterList(List<BaseballCard> list,
             Predicate<BaseballCard> pred) {
-        List<BaseballCard> filteredList = new ArrayList<BaseballCard>();
+        List<BaseballCard> filteredList = new ArrayList<>();
 
         for (BaseballCard obj : list) {
             if (pred.doTest(obj)) {
@@ -421,29 +279,6 @@ final public class BBCTTestUtil {
         }
 
         return filteredList;
-    }
-
-    /**
-     * Checks if the given child view is visible in the given parent view. Logic
-     * followed is same as {@link ViewAsserts#assertOnScreen(View, View)}.
-     *
-     * @param parentView
-     *            The {@link View} object containing the child view test.
-     * @param childView
-     *            The {@link View} object to be checked.
-     */
-    public static boolean isViewOnScreen(View parentView, View childView) {
-        int[] xyChild = new int[2];
-        childView.getLocationOnScreen(xyChild);
-        int[] xyParent = new int[2];
-        parentView.getLocationOnScreen(xyParent);
-        int childViewYFromRoot = xyChild[1] - xyParent[1];
-        int rootViewHeight = childView.getRootView().getHeight();
-        // If the button is visible on screen, then
-        // view should have positive y coordinate on screen and
-        // view should have y location on screen less than drawing
-        // height of root view
-        return childViewYFromRoot >= 0 && childViewYFromRoot <= rootViewHeight;
     }
 
     /**
@@ -457,9 +292,9 @@ final public class BBCTTestUtil {
         Log.d(TAG, "powerSet()");
         Log.d(TAG, "input=" + input);
 
-        Set<T> copy = new HashSet<T>(input);
+        Set<T> copy = new HashSet<>(input);
         if (copy.isEmpty()) {
-            Set<Set<T>> power = new HashSet<Set<T>>();
+            Set<Set<T>> power = new HashSet<>();
             power.add(new HashSet<T>());
             return power;
         }
@@ -474,10 +309,10 @@ final public class BBCTTestUtil {
 
         Log.d(TAG, "power=" + power);
 
-        Set<Set<T>> powerCopy = new HashSet<Set<T>>();
+        Set<Set<T>> powerCopy = new HashSet<>();
 
         for (Set<T> set : power) {
-            Set<T> setCopy = new HashSet<T>(set);
+            Set<T> setCopy = new HashSet<>(set);
             setCopy.add(elem);
             powerCopy.add(setCopy);
         }
@@ -492,58 +327,12 @@ final public class BBCTTestUtil {
     private BBCTTestUtil() {
     }
 
-    /**
-     * Enumeration for {@link android.widget.EditText} views which will be used
-     * in {@link #sendKeysToCardDetails(Solo, BaseballCard, Set)}.
-     */
     public enum EditTexts {
-        /**
-         * Input the autographed state.
-         */
-        AUTOGRAPHED,
-        /**
-         * Input the card condition.
-         */
-        CONDITION,
-        /**
-         * Input the card brand field.
-         */
-        BRAND,
-        /**
-         * Input the card year field.
-         */
-        YEAR,
-        /**
-         * Input the card number field.
-         */
-        NUMBER,
-        /**
-         * Input the card value field.
-         */
-        VALUE,
-        /**
-         * Input the card count field.
-         */
-        COUNT,
-        /**
-         * Input the player name field.
-         */
-        PLAYER_NAME,
-        /**
-         * Input the team field.
-         */
-        TEAM,
-        /**
-         * Input the player position field.
-         */
+        AUTOGRAPHED, CONDITION, BRAND, YEAR, NUMBER, VALUE, QUANTITY, PLAYER_NAME, TEAM,
         PLAYER_POSITION
     }
 
-    /**
-     * Asset file which contains card data as CSV values.
-     */
-    public static final String ADD_MESSAGE = "Card added successfully";
-    public static final String DELETE_MESSAGE = "Cards deleted successfully";
-    private static final int TIME_OUT = 5 * 1000; // 5 seconds
-    private static final String TAG = BBCTTestUtil.class.getName();
+    public enum FilterOption {
+        BRAND, YEAR, NUMBER, PLAYER_NAME, TEAM
+    }
 }

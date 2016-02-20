@@ -19,20 +19,18 @@
 package bbct.android.common.activity.test;
 
 import android.app.Instrumentation;
-import android.content.Context;
 import android.graphics.Rect;
-import android.test.ActivityInstrumentationTestCase2;
-import android.test.ViewAsserts;
+import android.os.RemoteException;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.Spinner;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
@@ -40,42 +38,40 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
-import com.robotium.solo.Solo;
 import java.io.InputStream;
 import junit.framework.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
  * Tests for {@link BaseballCardDetails}.
  */
-public class BaseballCardDetailsTest extends
-        ActivityInstrumentationTestCase2<FragmentTestActivity> {
+@RunWith(AndroidJUnit4.class)
+public class BaseballCardDetailsTest {
 
     private static final int SLEEP_TIME_TO_REFRESH = 200;
     private static final int KEYPAD_HEIGHT = 100;
     private static final String CARD_DATA = "cards.csv";
+    private static final String TAG = BaseballCardDetailsTest.class.getName();
 
-    private Solo solo;
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityTestRule
+            = new ActivityTestRule<>(FragmentTestActivity.class);
+
+    private UiDevice device;
     private FragmentTestActivity activity;
     private Instrumentation inst;
     private BaseballCard card;
-
-    @InjectView(R.id.brand) AutoCompleteTextView brandText;
-    @InjectView(R.id.year) EditText yearText;
-    @InjectView(R.id.number) EditText numberText;
-    @InjectView(R.id.value) EditText valueText;
-    @InjectView(R.id.quantity) EditText countText;
-    @InjectView(R.id.player_name) EditText playerNameText;
-    @InjectView(R.id.team) EditText playerTeamText;
-    @InjectView(R.id.player_position) Spinner playerPositionSpinner;
-    @InjectView(R.id.scroll_card_details) ScrollView scrollView;
-
-    /**
-     * Create instrumented test cases for {@link BaseballCardDetails}.
-     */
-    public BaseballCardDetailsTest() {
-        super(FragmentTestActivity.class);
-    }
 
     /**
      * Set up test fixture. This consists of an instance of the
@@ -85,11 +81,10 @@ public class BaseballCardDetailsTest extends
      * @throws Exception
      *             If an error occurs while chaining to the super class.
      */
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
-
-        this.inst = this.getInstrumentation();
+        this.inst = InstrumentationRegistry.getInstrumentation();
+        this.device = UiDevice.getInstance(this.inst);
 
         InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
@@ -97,11 +92,9 @@ public class BaseballCardDetailsTest extends
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
-        this.activity = this.getActivity();
+        this.inst.setInTouchMode(true);
+        this.activity = activityTestRule.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -110,48 +103,32 @@ public class BaseballCardDetailsTest extends
      * that none of its {@link EditText} views or {@link Button}s are
      * <code>null</code>.
      */
+    @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        Assert.assertNotNull(this.brandText);
-        Assert.assertNotNull(this.yearText);
-        Assert.assertNotNull(this.numberText);
-        Assert.assertNotNull(this.valueText);
-        Assert.assertNotNull(this.countText);
-        Assert.assertNotNull(this.playerNameText);
-        Assert.assertNotNull(this.playerTeamText);
-        Assert.assertNotNull(this.playerPositionSpinner);
-        Assert.assertNotNull(this.scrollView);
+        onView(withId(R.id.brand)).check(matches(isDisplayed()));
+        onView(withId(R.id.year)).check(matches(isDisplayed()));
+        onView(withId(R.id.number)).check(matches(isDisplayed()));
+        onView(withId(R.id.value)).check(matches(isDisplayed()));
+        onView(withId(R.id.quantity)).check(matches(isDisplayed()));
+        onView(withId(R.id.player_name)).check(matches(isDisplayed()));
+        onView(withId(R.id.team)).check(matches(isDisplayed()));
+        onView(withId(R.id.player_position)).check(matches(isDisplayed()));
+        onView(withId(R.id.scroll_card_details)).check(matches(isDisplayed()));
     }
 
     /**
      * Test that all text in the {@link EditText} views of a
      * {@link BaseballCardDetails} activity is preserved when the activity is
      * destroyed and the text is restored when the activity is restarted.
-     *
-     * @throws InterruptedException
-     *             If BBCTTestUtil#sendKeysToCardDetails() is interrupted.
      */
-    public void testStateDestroy() throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
-        this.activity.finish();
-        Assert.assertTrue(this.activity.isFinishing());
-        this.activity = this.getActivity();
-        BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
-    }
-
-    /**
-     * Test that all text in the {@link EditText} views of a
-     * {@link BaseballCardDetails} activity is preserved when the activity is
-     * paused and the text is restored when the activity is restarted.
-     *
-     * @throws InterruptedException
-     *             If {@link BBCTTestUtil#sendKeysToCardDetails(Solo, BaseballCard)} is
-     *             interrupted.
-     */
-    public void testStatePause() throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
-        this.inst.callActivityOnRestart(this.activity);
-        BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
+    @Test
+    public void testStateDestroy() throws RemoteException {
+        BBCTTestUtil.sendKeysToCardDetails(this.card);
+        UiDevice device = UiDevice.getInstance(inst);
+        device.setOrientationLeft();
+        BBCTTestUtil.assertAllEditTextContents(this.card);
+        device.setOrientationNatural();
     }
 
     /**
@@ -160,36 +137,21 @@ public class BaseballCardDetailsTest extends
      * the soft keyboard. 2)keyboard is removed when the done button is clicked
      * in the soft keyboard
      */
+    @Test
     public void testNextButtonOnClick() {
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.brandText,
-                this.card.getBrand());
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(this.yearText.hasFocus());
-
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.yearText,
-                Integer.toString(this.card.getYear()));
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(this.numberText.hasFocus());
-
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.numberText,
-                Integer.toString(this.card.getNumber()));
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(this.valueText.hasFocus());
-
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.valueText,
-                Integer.toString(this.card.getValue()));
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(this.countText.hasFocus());
-
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst, this.countText,
-                Integer.toString(this.card.getCount()));
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(this.playerNameText.hasFocus());
-
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst,
-                this.playerNameText, this.card.getPlayerName());
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
-        Assert.assertTrue(this.playerTeamText.hasFocus());
+        onView(withId(R.id.brand)).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.year)).perform(click()).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.number)).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.value)).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.quantity)).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.player_name)).check(matches(hasFocus()));
+        device.pressEnter();
+        onView(withId(R.id.team)).check(matches(hasFocus()));
 
         ViewGroup content = ButterKnife.findById(this.activity, android.R.id.content);
         View rootView = content.getChildAt(0);
@@ -205,14 +167,12 @@ public class BaseballCardDetailsTest extends
             condnBefore = true;
         }
 
-        BBCTTestUtil.sendKeysToCurrFieldCardDetails(this.inst,
-                this.playerTeamText, this.card.getTeam());
-        this.inst.sendKeyDownUpSync(KeyEvent.KEYCODE_ENTER);
+        device.pressEnter();
         // Wait for the keyboard to disappear and view to be refreshed
         try {
             Thread.sleep(SLEEP_TIME_TO_REFRESH);
         } catch (InterruptedException e) {
-            Log.e("Click Done button in soft Keyboard", e.getMessage());
+            Log.e(TAG, "Click Done button in soft Keyboard");
         }
         rootView.getWindowVisibleDisplayFrame(r);
         int heightdiffAfter = rootView.getRootView().getHeight()
@@ -228,39 +188,12 @@ public class BaseballCardDetailsTest extends
      * Test that view of {@link BaseballCardDetails} activity can be scrolled
      * when the save button is not visible on screen.
      */
+    @Test
     public void testCardDetailsScroll() {
-        View parentView = this.activity.getWindow().getDecorView();
-        // hide the soft keypad
-        InputMethodManager imm = (InputMethodManager) this.activity
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(parentView.getWindowToken(), 0);
-        // Wait till the keypad disappears
-        try {
-            Thread.sleep(SLEEP_TIME_TO_REFRESH);
-        } catch (InterruptedException e) {
-            Log.e("getResult", e.getMessage());
-        }
-        // check if the 'Player Position' spinner is already visible. If yes, then
-        // the screen cannot be scrolled. Assert true and return.
-        if (BBCTTestUtil.isViewOnScreen(parentView, this.playerPositionSpinner)) {
-            assertTrue(true);
-        } else {
-            // scroll to the bottom and check if save button is on the screen
-            this.scrollView.post(new Runnable() {
-                @Override
-                public void run() {
-                    BaseballCardDetailsTest.this.scrollView
-                            .fullScroll(View.FOCUS_DOWN);
-                }
-            });
-            // Wait for the scroll
-            try {
-                Thread.sleep(SLEEP_TIME_TO_REFRESH);
-            } catch (InterruptedException e) {
-                Log.e("getResult", e.getMessage());
-            }
-            ViewAsserts.assertOnScreen(parentView, this.playerPositionSpinner);
-        }
+        Espresso.closeSoftKeyboard();
+        onView(withId(R.id.player_position))
+                .perform(scrollTo())
+                .check(matches(isDisplayed()));
     }
 
 }

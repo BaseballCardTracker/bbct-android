@@ -22,26 +22,39 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.widget.EditText;
+import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+
 /**
  * Tests editing card value and count in a {@link BaseballCardDetails} activity.
  */
 public class BaseballCardDetailsEditCardTest extends
         ActivityInstrumentationTestCase2<FragmentTestActivity> {
+    private static final String TEST_NAME = "testEditCard";
+    private static final String CARD_DATA = "cards.csv";
+    private static final String TAG = BaseballCardDetailsEditCardTest.class.getName();
+
+    private final Set<BBCTTestUtil.EditTexts> inputMask;
+    private BaseballCard oldCard = null;
+    private BaseballCard newCard = null;
+    private DatabaseUtil dbUtil = null;
 
     /**
      * Creates a {@link TestSuite} containing tests for every possible
@@ -56,10 +69,11 @@ public class BaseballCardDetailsEditCardTest extends
         Log.d(TAG, "suite()");
 
         TestSuite suite = new TestSuite();
-        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(EnumSet
-                .allOf(BBCTTestUtil.EditTexts.class));
+        Set<BBCTTestUtil.EditTexts> editTexts = EnumSet.allOf(BBCTTestUtil.EditTexts.class);
 
-        for (Set<BBCTTestUtil.EditTexts> mask : masks) {
+        for (BBCTTestUtil.EditTexts editText : editTexts) {
+            Set<BBCTTestUtil.EditTexts> mask = new HashSet<>();
+            mask.add(editText);
             Log.d(TAG, "mask: " + mask);
             suite.addTest(new BaseballCardDetailsEditCardTest(mask));
         }
@@ -120,10 +134,10 @@ public class BaseballCardDetailsEditCardTest extends
             Log.e(TAG, this.oldCard.toString());
         }
 
-        this.activity = this.getActivity();
-        this.fragment = BaseballCardDetails.getInstance(cardId, this.oldCard);
-        this.activity.replaceFragment(this.fragment);
-        this.solo = new Solo(inst, this.activity);
+        inst.setInTouchMode(true);
+        FragmentTestActivity activity = this.getActivity();
+        BaseballCardDetails fragment = BaseballCardDetails.getInstance(cardId, this.oldCard);
+        activity.replaceFragment(fragment);
     }
 
     /**
@@ -154,17 +168,16 @@ public class BaseballCardDetailsEditCardTest extends
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(this.oldCard));
 
-        BBCTTestUtil.assertAllEditTextContents(this.activity, this.oldCard);
-        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.newCard,
-                this.inputMask);
+        BBCTTestUtil.assertAllEditTextContents(this.oldCard);
+        BBCTTestUtil.sendKeysToCardDetails(this.newCard, this.inputMask);
 
         BaseballCard expected = this.getExpectedCard();
 
         Log.d("DEBUG", "Checking cards for inputMask " + this.inputMask);
-        BBCTTestUtil.assertAllEditTextContents(this.activity, expected);
+        BBCTTestUtil.assertAllEditTextContents(expected);
         Log.d("DEBUG", "Success!");
 
-        this.solo.clickOnButton("Save");
+        onView(withId(R.id.save_menu)).perform(click());
         Assert.assertTrue(this.dbUtil.containsBaseballCard(expected));
     }
 
@@ -183,7 +196,7 @@ public class BaseballCardDetailsEditCardTest extends
                 .getNumber() : this.oldCard.getNumber();
         int value = this.inputMask.contains(BBCTTestUtil.EditTexts.VALUE) ? this.newCard
                 .getValue() : this.oldCard.getValue();
-        int count = this.inputMask.contains(BBCTTestUtil.EditTexts.COUNT) ? this.newCard
+        int count = this.inputMask.contains(BBCTTestUtil.EditTexts.QUANTITY) ? this.newCard
                 .getCount() : this.oldCard.getCount();
         String name = this.inputMask
                 .contains(BBCTTestUtil.EditTexts.PLAYER_NAME) ? this.newCard
@@ -196,17 +209,4 @@ public class BaseballCardDetailsEditCardTest extends
         return new BaseballCard(autographed, condition, brand, year, number,
                 value, count, name, team, position);
     }
-
-    private final Set<BBCTTestUtil.EditTexts> inputMask;
-    private Solo solo = null;
-    private FragmentTestActivity activity = null;
-    private BaseballCardDetails fragment;
-    private BaseballCard oldCard = null;
-    private BaseballCard newCard = null;
-    private DatabaseUtil dbUtil = null;
-
-    private static final String TEST_NAME = "testEditCard";
-    private static final String CARD_DATA = "cards.csv";
-    private static final String TAG = BaseballCardDetailsEditCardTest.class
-            .getName();
 }

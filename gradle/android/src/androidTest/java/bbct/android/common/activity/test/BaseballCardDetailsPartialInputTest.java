@@ -29,16 +29,20 @@ import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.Set;
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static bbct.android.common.test.Matchers.hasErrorText;
 
 /**
  * A parameterized test which can test any combination of input in the
@@ -46,24 +50,12 @@ import junit.framework.TestSuite;
  */
 public class BaseballCardDetailsPartialInputTest extends
         ActivityInstrumentationTestCase2<FragmentTestActivity> {
-
     private static final String CARD_DATA = "cards.csv";
     private static final String TEST_NAME = "testPartialInput";
     private static final String TAG = BaseballCardDetailsPartialInputTest.class.getName();
 
-    private Solo solo = null;
-    private FragmentTestActivity activity = null;
-    private Instrumentation inst = null;
     private BaseballCard card = null;
     private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
-
-    @InjectView(R.id.brand) EditText brandEditText = null;
-    @InjectView(R.id.year) EditText yearEditText = null;
-    @InjectView(R.id.number) EditText numberEditText = null;
-    @InjectView(R.id.quantity) EditText countEditText = null;
-    @InjectView(R.id.value) EditText valueEditText = null;
-    @InjectView(R.id.player_name) EditText playerNameEditText = null;
-    @InjectView(R.id.team) EditText teamEditText = null;
 
     /**
      * Creates a {@link TestSuite} containing every possible combination of
@@ -74,11 +66,13 @@ public class BaseballCardDetailsPartialInputTest extends
      */
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        Set<BBCTTestUtil.EditTexts> editTexts = EnumSet.allOf(BBCTTestUtil.EditTexts.class);
-        editTexts.remove(BBCTTestUtil.EditTexts.PLAYER_POSITION);
-        Set<Set<BBCTTestUtil.EditTexts>> masks = BBCTTestUtil.powerSet(editTexts);
+        Set<BBCTTestUtil.EditTexts> editTexts =
+                EnumSet.range(BBCTTestUtil.EditTexts.BRAND, BBCTTestUtil.EditTexts.TEAM);
 
-        for (Set<BBCTTestUtil.EditTexts> mask : masks) {
+        for (BBCTTestUtil.EditTexts editText : editTexts) {
+            Set<BBCTTestUtil.EditTexts> mask = new HashSet<>();
+            mask.add(editText);
+            Log.d(TAG, "mask: " + mask);
             suite.addTest(new BaseballCardDetailsPartialInputTest(mask));
         }
 
@@ -108,19 +102,15 @@ public class BaseballCardDetailsPartialInputTest extends
      */
     @Override
     public void setUp() throws IOException {
-        this.inst = this.getInstrumentation();
-
-        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
+        Instrumentation inst = this.getInstrumentation();
+        InputStream in = inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in, true);
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
-        this.activity = this.getActivity();
-        this.activity.replaceFragment(new BaseballCardDetails());
-        this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-
-        this.solo = new Solo(this.inst, this.activity);
+        inst.setInTouchMode(true);
+        FragmentTestActivity activity = this.getActivity();
+        activity.replaceFragment(new BaseballCardDetails());
     }
 
     /**
@@ -134,45 +124,49 @@ public class BaseballCardDetailsPartialInputTest extends
         Log.d(TAG, "testPartialInput()");
         Log.d(TAG, "inputFieldsMask=" + this.inputFieldsMask);
 
-        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card, this.inputFieldsMask);
-        this.solo.clickOnActionBarItem(R.id.save_menu);
+        BBCTTestUtil.sendKeysToCardDetails(this.card, this.inputFieldsMask);
+        onView(withId(R.id.save_menu)).perform(click());
 
-        EditText focusEditText = null;
+        int focusId = -1;
 
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.TEAM)) {
-            Assert.assertEquals(this.activity.getString(R.string.team_input_error), this.teamEditText.getError());
-            focusEditText = this.teamEditText;
+            onView(withId(R.id.team))
+                    .check(matches(hasErrorText(R.string.team_input_error)));
+            focusId = R.id.team;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME)) {
-            Assert.assertEquals(this.activity.getString(R.string.player_name_input_error), this.playerNameEditText.getError());
-            focusEditText = this.playerNameEditText;
+            onView(withId(R.id.player_name))
+                    .check(matches(hasErrorText(R.string.player_name_input_error)));
+            focusId = R.id.player_name;
         }
-        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.COUNT)) {
-            Assert.assertEquals(this.activity.getString(R.string.count_input_error), this.countEditText.getError());
-            focusEditText = this.countEditText;
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.QUANTITY)) {
+            onView(withId(R.id.quantity))
+                    .check(matches(hasErrorText(R.string.count_input_error)));
+            focusId = R.id.quantity;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.VALUE)) {
-            Assert.assertEquals(this.activity.getString(R.string.value_input_error), this.valueEditText.getError());
-            focusEditText = this.valueEditText;
+            onView(withId(R.id.value))
+                    .check(matches(hasErrorText(R.string.value_input_error)));
+            focusId = R.id.value;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.NUMBER)) {
-            Assert.assertEquals(this.activity.getString(R.string.number_input_error), this.numberEditText.getError());
-            focusEditText = this.numberEditText;
+            onView(withId(R.id.number))
+                    .check(matches(hasErrorText(R.string.number_input_error)));
+            focusId = R.id.number;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.YEAR)) {
-            Assert.assertEquals(this.activity.getString(R.string.year_input_error), this.yearEditText.getError());
-            focusEditText = this.yearEditText;
+            onView(withId(R.id.year))
+                    .check(matches(hasErrorText(R.string.year_input_error)));
+            focusId = R.id.year;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.BRAND)) {
-            Assert.assertEquals(this.activity.getString(R.string.brand_input_error), this.brandEditText.getError());
-            focusEditText = this.brandEditText;
+            onView(withId(R.id.brand))
+                    .check(matches(hasErrorText(R.string.brand_input_error)));
+            focusId = R.id.beginning;
         }
 
-        this.inst.waitForIdleSync();
-
-        if (focusEditText != null) {
-            Assert.assertTrue(focusEditText.hasFocus());
+        if (focusId != -1) {
+            onView(withId(focusId)).check(matches(hasFocus()));
         }
     }
-
 }

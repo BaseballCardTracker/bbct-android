@@ -22,7 +22,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 import bbct.android.common.data.BaseballCard;
 import java.util.ArrayList;
 import java.util.List;
@@ -250,7 +249,7 @@ public final class BaseballCardContract {
      *         given {@link Cursor}.
      */
     public static List<BaseballCard> getAllBaseballCardsFromCursor(Cursor cursor) {
-        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+        List<BaseballCard> cards = new ArrayList<>();
 
         while (cursor.moveToNext()) {
             BaseballCard card = BaseballCardContract.getBaseballCardFromCursor(cursor);

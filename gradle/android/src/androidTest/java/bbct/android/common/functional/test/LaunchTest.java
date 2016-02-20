@@ -16,21 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.lite.activity.test;
+package bbct.android.common.functional.test;
 
 import android.support.test.runner.AndroidJUnit4;
-import bbct.android.common.activity.test.BaseballCardListWithoutDataTest;
-import bbct.android.lite.provider.LiteActivity;
+import android.support.test.uiautomator.UiObject;
+import android.support.test.uiautomator.UiSelector;
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
-public class LiteActivityWithoutDataTest extends BaseballCardListWithoutDataTest<LiteActivity> {
+public class LaunchTest extends UiAutomatorTest {
 
-    /**
-     * Create instrumented test cases for {@link LiteActivity}.
-     */
-    public LiteActivityWithoutDataTest() {
-        super(LiteActivity.class);
+    @Test
+    public void testLaunch() {
+        String packageName = inst.getTargetContext().getPackageName();
+        UiObject appValidation = device.findObject(new UiSelector().packageName(packageName));
+        Assert.assertTrue("Could not open test app", appValidation.exists());
     }
 
 }

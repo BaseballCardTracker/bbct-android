@@ -20,8 +20,10 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.app.Fragment;
-import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.EditText;
 import bbct.android.common.activity.BaseballCardDetails;
@@ -30,23 +32,29 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import com.robotium.solo.Solo;
 import java.io.InputStream;
 import java.util.List;
 import junit.framework.Assert;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * Tests for {@link BaseballCardDetails}.
  */
-public class BaseballCardDetailsAddCardsTest extends
-        ActivityInstrumentationTestCase2<FragmentTestActivity> {
+@RunWith(AndroidJUnit4.class)
+public class BaseballCardDetailsAddCardsTest {
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityRule =
+            new ActivityTestRule<>(FragmentTestActivity.class);
 
-    /**
-     * Create instrumented test cases for {@link BaseballCardDetails}.
-     */
-    public BaseballCardDetailsAddCardsTest() {
-        super(FragmentTestActivity.class);
-    }
+    private static final String CARD_DATA = "three_cards.csv";
+
+    private List<BaseballCard> allCards = null;
+    private BaseballCard card = null;
+    private DatabaseUtil dbUtil;
 
     /**
      * Set up test fixture. This consists of an instance of the
@@ -56,25 +64,21 @@ public class BaseballCardDetailsAddCardsTest extends
      * @throws Exception
      *             If an error occurs while chaining to the super class.
      */
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
+        Instrumentation inst = InstrumentationRegistry.getInstrumentation();
+        dbUtil = new DatabaseUtil(inst.getTargetContext());
 
-        this.inst = this.getInstrumentation();
-
-        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
+        InputStream in = inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
                 true);
         this.allCards = cardInput.getAllBaseballCards();
         this.card = this.allCards.get(0);
         cardInput.close();
 
-        FragmentTestActivity activity = this.getActivity();
+        FragmentTestActivity activity = activityRule.getActivity();
         Fragment fragment = new BaseballCardDetails();
         activity.replaceFragment(fragment);
-        this.inst.waitForIdleSync();
-
-        this.solo = new Solo(this.inst, activity);
     }
 
     /**
@@ -84,12 +88,9 @@ public class BaseballCardDetailsAddCardsTest extends
      * @throws Exception
      *             If an error occurs while chaining to the super class.
      */
-    @Override
+    @After
     public void tearDown() throws Exception {
-        DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         dbUtil.clearDatabase();
-
-        super.tearDown();
     }
 
     /**
@@ -100,12 +101,11 @@ public class BaseballCardDetailsAddCardsTest extends
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
+    @Test
     public void testAddCard() throws Throwable {
-        BBCTTestUtil.addCard(this.solo, this.card);
-        BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
-        DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-        Assert.assertTrue("Missing card: " + this.card,
-                dbUtil.containsBaseballCard(this.card));
+        BBCTTestUtil.addCard(card);
+        // BBCTTestUtil.waitForToast(activityRule.getActivity(), BBCTTestUtil.ADD_MESSAGE);
+        Assert.assertTrue("Missing card: " + card, dbUtil.containsBaseballCard(card));
     }
 
     /**
@@ -118,23 +118,15 @@ public class BaseballCardDetailsAddCardsTest extends
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
      */
+    @Test
     public void testAddMultipleCards() throws Throwable {
         for (BaseballCard nextCard : this.allCards) {
-            BBCTTestUtil.addCard(this.solo, nextCard);
-            BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
+            BBCTTestUtil.addCard(nextCard);
+            // BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
         }
 
-        DatabaseUtil dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         for (BaseballCard nextCard : this.allCards) {
-            Assert.assertTrue("Missing card: " + nextCard,
-                    dbUtil.containsBaseballCard(nextCard));
+            Assert.assertTrue("Missing card: " + nextCard, dbUtil.containsBaseballCard(nextCard));
         }
     }
-
-    private static final String CARD_DATA = "three_cards.csv";
-
-    private Solo solo = null;
-    private Instrumentation inst = null;
-    private List<BaseballCard> allCards = null;
-    private BaseballCard card = null;
 }

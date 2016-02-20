@@ -18,48 +18,44 @@
  */
 package bbct.android.common.layout.test;
 
-import android.test.ActivityInstrumentationTestCase2;
-import android.widget.CheckBox;
-import android.widget.EditText;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import static org.fest.assertions.api.ANDROID.assertThat;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.allOf;
 
-public class BaseballCardDetailsLayoutTest extends ActivityInstrumentationTestCase2<FragmentTestActivity> {
+@RunWith(AndroidJUnit4.class)
+public class BaseballCardDetailsLayoutTest {
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityTestRule =
+            new ActivityTestRule<>(FragmentTestActivity.class);
 
-    private BaseballCardDetails mFragment;
-    @InjectView(R.id.autograph) CheckBox mAutographCheckBox;
-    @InjectView(R.id.brand) EditText mBrandEditText;
-
-    public BaseballCardDetailsLayoutTest() {
-        super(FragmentTestActivity.class);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        FragmentTestActivity activity = getActivity();
-        mFragment = new BaseballCardDetails();
+    @Before
+    public void setUp() throws Exception {
+        FragmentTestActivity activity = activityTestRule.getActivity();
+        BaseballCardDetails mFragment = new BaseballCardDetails();
         activity.replaceFragment(mFragment);
-        this.getInstrumentation().waitForIdleSync();
-        ButterKnife.inject(this, activity);
     }
 
-    public void testFragmentVisible() {
-        assertThat(mFragment).isAdded().isVisible();
-    }
-
+    @Test
     public void testAutographedCheckBox() {
-        assertThat(mAutographCheckBox).isVisible().isNotChecked();
+        onView(withId(R.id.autograph)).check(matches(allOf(isDisplayed(), isNotChecked())));
     }
 
+    @Test
     public void testBrandEditText() {
-        assertThat(mBrandEditText).isVisible().hasFocus();
+        onView(withId(R.id.brand)).check(matches(allOf(isDisplayed(), hasFocus())));
     }
-
 }

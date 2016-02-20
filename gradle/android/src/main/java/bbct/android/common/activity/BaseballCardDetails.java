@@ -21,17 +21,20 @@ package bbct.android.common.activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
@@ -96,6 +99,56 @@ public class BaseballCardDetails extends Fragment {
         View view = inflater.inflate(R.layout.card_details, container, false);
         ButterKnife.inject(this, view);
 
+        brandText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.d(TAG, "onKey() in Brand TextView");
+                Log.d(TAG, "keyCode = " + keyCode);
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    Log.d(TAG, "focus on Year");
+                    yearText.requestFocus();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        playerNameText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.d(TAG, "onKey() in Player Name TextView");
+                Log.d(TAG, "keyCode = " + keyCode);
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    Log.d(TAG, "focus on Team");
+                    teamText.requestFocus();
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        teamText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.d(TAG, "onKey() in Team TextView");
+                Log.d(TAG, "keyCode = " + keyCode);
+
+                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    Log.d(TAG, "hide keyboard");
+                    InputMethodManager imm = (InputMethodManager) getActivity()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(teamText.getWindowToken(), 0);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
         String cardDetailsTitle = this.getString(R.string.card_details_title);
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
         this.getActivity().setTitle(title);
@@ -142,8 +195,7 @@ public class BaseballCardDetails extends Fragment {
         this.brandText.setText(card.getBrand());
         this.yearText.setText(Integer.toString(card.getYear()));
         this.numberText.setText(Integer.toString(card.getNumber()));
-        this.valueText
-                .setText(Double.toString(card.getValue() / 100.0));
+        this.valueText.setText(String.format("%.2f", card.getValue() / 100.0));
         this.countText.setText(Integer.toString(card.getCount()));
         this.playerNameText.setText(card.getPlayerName());
         this.teamText.setText(card.getTeam());
@@ -236,41 +288,6 @@ public class BaseballCardDetails extends Fragment {
             return null;
         }
     }
-
-    /**
-     *
-     * Called when a key was released and not handled by any of the views inside
-     * of the activity.
-     *
-     * @param keyCode
-     *            The value in event.getKeyCode().
-     * @param event
-     *            Description of the key event.
-     * @return {@code true} if the event was handled, {@code false} otherwise.
-     */
-//    @Override
-//    public boolean onKeyUp(int keyCode, KeyEvent event) {
-//        // If the key entered is 'Enter'('next' or 'done'), then
-//        // 1) move the focus to the next view if the current focus is in brand
-//        // or player name view and
-//        // 2) hide the keypad if the current focus is in team view.
-//        if (keyCode == KeyEvent.KEYCODE_ENTER) {
-//            if (this.brandText.hasFocus()) {
-//                this.yearText.requestFocus();
-//                return true;
-//            } else if (this.playerNameText.hasFocus()) {
-//                this.teamText.requestFocus();
-//                return true;
-//            } else if (this.teamText.hasFocus()) {
-//                // hide the soft keypad
-//                InputMethodManager imm = (InputMethodManager) this.getActivity()
-//                        .getSystemService(Context.INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(this.teamText.getWindowToken(), 0);
-//                return true;
-//            }
-//        }
-//        return super.onKeyUp(keyCode, event);
-//    }
 
     private void resetInput() {
         this.autographCheckBox.setChecked(false);

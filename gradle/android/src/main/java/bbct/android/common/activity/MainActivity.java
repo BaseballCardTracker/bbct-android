@@ -18,20 +18,29 @@
  */
 package bbct.android.common.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.provider.BaseballCardContract;
-import com.google.analytics.tracking.android.EasyTracker;
 import com.crashlytics.android.Crashlytics;
+import com.google.analytics.tracking.android.EasyTracker;
+import io.fabric.sdk.android.Fabric;
+import java.net.URISyntaxException;
 
 public class MainActivity extends ActionBarActivity {
+    public static final String PREFS = "bbct.prefs";
+    public static final String SURVEY_TAKEN_PREF = "survey";
 
     private static final String TAG = MainActivity.class.getName();
 
@@ -40,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         if (!BuildConfig.DEBUG) {
-            Crashlytics.start(this);
+            Fabric.with(this, new Crashlytics());
         }
 
         this.setContentView(R.layout.main);
@@ -60,6 +69,34 @@ public class MainActivity extends ActionBarActivity {
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        showSurveyDialog();
+    }
+
+    private void showSurveyDialog() {
+        final SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+
+        if (!prefs.getBoolean(SURVEY_TAKEN_PREF, false)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.survey);
+            builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean(SURVEY_TAKEN_PREF, true);
+                    editor.apply();
+
+                    Intent surveyIntent = null;
+                    try {
+                        surveyIntent = Intent.parseUri(getString(R.string.survey_uri), 0);
+                    } catch (URISyntaxException e) {
+                        Log.e(TAG, "Error parsing URI for survey", e);
+                    }
+                    startActivity(surveyIntent);
+                }
+            });
+            builder.setNegativeButton(R.string.later, null);
+            builder.create().show();
+        }
     }
 
     @Override
@@ -112,5 +149,4 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

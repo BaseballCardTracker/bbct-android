@@ -19,51 +19,53 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
-import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
+import android.os.RemoteException;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.UiDevice;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
-import bbct.android.common.view.FilterOptionView;
-import butterknife.ButterKnife;
-import butterknife.InjectViews;
-import com.robotium.solo.Solo;
-import java.util.List;
 import junit.framework.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.instanceOf;
 
 /**
  * Tests for {@link FilterCards} activity class.
  */
-public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTestActivity> {
+@RunWith(AndroidJUnit4.class)
+public class FilterCardsTest {
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityTestRule =
+            new ActivityTestRule<>(FragmentTestActivity.class);
 
-    @InjectViews({R.id.brand, R.id.year, R.id.number, R.id.team})
-    List<FilterOptionView> filterOptions;
+    private FragmentTestActivity activity = null;
 
-    /**
-     * Create instrumented test cases for {@link FilterCards}.
-     */
-    public FilterCardsTest() {
-        super(FragmentTestActivity.class);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        this.activity = this.getActivity();
-        this.activity.replaceFragment(new FilterCards());
-        this.getInstrumentation().waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        this.solo = new Solo(this.getInstrumentation(), this.activity);
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        this.solo.setActivityOrientation(Solo.PORTRAIT);
-        super.tearDown();
+    @Before
+    public void setUp() throws Exception {
+        activity = activityTestRule.getActivity();
+        activity.replaceFragment(new FilterCards());
     }
 
     /**
@@ -71,40 +73,34 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
      * other tests. Assert that the Activity to test is not <code>null</code>
      * and its {@link EditText}s and "Ok" {@link Button} are disabled.
      */
+    @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        Assert.assertNotNull(this.solo);
-        View menuView = ButterKnife.findById(this.activity, R.id.save_menu);
-        Assert.assertNull(menuView);
+        onView(withId(R.id.save_menu)).check(doesNotExist());
     }
 
     /**
      * Test that the title of the {@link Activity} is correct.
      */
+    @Test
     public void testTitle() {
-        String title = this.activity.getTitle().toString();
-        String filterCardsTitle = this.activity
-                .getString(R.string.filter_cards_title);
-
-        Assert.assertTrue(title.contains(filterCardsTitle));
+        String filterCardsTitle = this.activity.getString(R.string.filter_cards_title);
+        onView(withText(containsString(filterCardsTitle))).check(matches(isDisplayed()));
     }
 
     private void testCheckBox(int filterId) {
-        FilterOptionView optionView = ButterKnife.findById(this.activity, filterId);
-        CheckBox cb = optionView.getCheckBox();
-        EditText input = optionView.getEditText();
-        this.solo.clickOnView(cb);
-        this.getInstrumentation().waitForIdleSync();
-        Assert.assertTrue(input.isEnabled());
-        Assert.assertTrue(input.hasFocus());
-
-        Assert.assertTrue(this.solo.waitForView(R.id.save_menu));
+        onView(allOf(withParent(withId(filterId)), instanceOf(CheckBox.class)))
+                .perform(click());
+        onView(allOf(withParent(withId(filterId)), instanceOf(EditText.class)))
+                .check(matches(allOf(isEnabled(), hasFocus())));
+        onView(withId(R.id.save_menu)).check(matches(isDisplayed()));
     }
 
     /**
      * Test that "Brand" {@link EditText} is enabled and
      * has focus upon clicking on the corresponding {@link CheckBox}.
      */
+    @Test
     public void testBrandCheckBox() {
         this.testCheckBox(R.id.brand);
     }
@@ -113,6 +109,7 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
      * Test that "Year" {@link EditText} is enabled and
      * has focus upon clicking on the corresponding {@link CheckBox}.
      */
+    @Test
     public void testYearCheckBox() {
         this.testCheckBox(R.id.year);
     }
@@ -121,6 +118,7 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
      * Test that "Number" {@link EditText} is enabled and
      * has focus upon clicking on the corresponding {@link CheckBox}.
      */
+    @Test
     public void testNumberCheckBox() {
         this.testCheckBox(R.id.number);
     }
@@ -129,6 +127,7 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
      * Test that "Player Name" {@link EditText} is enabled and
      * has focus upon clicking on the corresponding {@link CheckBox}.
      */
+    @Test
     public void testPlayerNameCheckBox() {
         this.testCheckBox(R.id.player_name);
     }
@@ -137,47 +136,39 @@ public class FilterCardsTest extends ActivityInstrumentationTestCase2<FragmentTe
      * Test that "Team" {@link EditText} is enabled and
      * has focus upon clicking on the corresponding {@link CheckBox}.
      */
+    @Test
     public void testTeamCheckBox() {
         this.testCheckBox(R.id.team);
     }
 
-    public void testSaveInstanceStateBrand() {
+    @Test
+    public void testSaveInstanceStateBrand() throws RemoteException {
         this.testSaveInstanceState(R.id.brand);
     }
 
-    public void testSaveInstanceStateYear() {
+    @Test
+    public void testSaveInstanceStateYear() throws RemoteException {
         this.testSaveInstanceState(R.id.year);
     }
 
-    public void testSaveInstanceStateNumber() {
+    @Test
+    public void testSaveInstanceStateNumber() throws RemoteException {
         this.testSaveInstanceState(R.id.number);
     }
 
-    public void testSaveInstanceStateTeam() {
+    @Test
+    public void testSaveInstanceStateTeam() throws RemoteException {
         this.testSaveInstanceState(R.id.team);
     }
 
-    private void testSaveInstanceState(int filterId) {
+    private void testSaveInstanceState(int filterId) throws RemoteException {
         this.testCheckBox(filterId);
-        this.solo.setActivityOrientation(Solo.LANDSCAPE);
-        Assert.assertTrue(this.solo.waitForView(filterId));
-        Activity newActivity = this.solo.getCurrentActivity();
-        ButterKnife.inject(this, newActivity);
-
-        for (FilterOptionView filterOption : filterOptions) {
-            EditText filterInput = filterOption.getEditText();
-
-            if (filterOption.getId() == filterId) {
-                Assert.assertTrue(filterOption.isChecked());
-                Assert.assertTrue(filterInput.isEnabled());
-            } else {
-                Assert.assertFalse(filterOption.isChecked());
-                Assert.assertFalse(filterInput.isEnabled());
-            }
-        }
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        device.setOrientationLeft();
+        onView(allOf(withParent(withId(filterId)), instanceOf(CheckBox.class)))
+                .check(matches(isChecked()));
+        onView(allOf(withParent(withId(filterId)), instanceOf(EditText.class)))
+                .check(matches(isEnabled()));
+        device.setOrientationNatural();
     }
-
-    private Solo solo = null;
-    private FragmentTestActivity activity = null;
-
 }
