@@ -29,10 +29,10 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import bbct.android.common.R;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.test.rule.SharedPreferencesTestRule;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
