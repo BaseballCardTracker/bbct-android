@@ -24,12 +24,12 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
-import android.support.test.espresso.intent.rule.IntentsTestRule;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import bbct.android.common.R;
 import bbct.android.common.activity.MainActivity;
+import bbct.android.common.test.rule.SharedPreferencesTestRule;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -50,6 +50,9 @@ import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class SurveyDialogTest {
+    @Rule
+    public SharedPreferencesTestRule prefsRule = new SharedPreferencesTestRule();
+
     private SharedPreferences prefs;
     private Context context;
 
@@ -58,15 +61,14 @@ public class SurveyDialogTest {
         context = InstrumentationRegistry.getTargetContext();
         startApp();
         Intents.init();
-        prefs = context.getSharedPreferences(MainActivity.PREFS, Context.MODE_PRIVATE);
+        prefs = prefsRule.getPrefs();
     }
 
     @After
     public void tearDown() {
-        prefs.edit().clear().apply();
         Intents.release();
     }
-    
+
     @Test
     public void testPreconditions() {
         Assert.assertFalse(prefs.contains(MainActivity.SURVEY_TAKEN_PREF));
