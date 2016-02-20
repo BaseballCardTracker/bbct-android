@@ -62,6 +62,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static bbct.android.common.test.BBCTTestUtil.clickLater;
 import static bbct.android.common.test.matcher.BaseballCardMatchers.withYear;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
@@ -113,12 +114,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
         dbUtil = new DatabaseUtil(inst.getTargetContext());
         clickLater();
-    }
-
-    private void clickLater() {
-        onView(withText(R.string.later))
-                .check(matches(isDisplayed()))
-                .perform(click());
     }
 
     @After

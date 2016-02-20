@@ -44,6 +44,7 @@ import org.hamcrest.Matcher;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static bbct.android.common.test.BBCTTestUtil.clickLater;
 
 /**
  * A parameterized test which can test filter correctness using any combination
@@ -102,6 +103,7 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
 
         inst.setInTouchMode(true);
         getActivity();
+        clickLater();
     }
 
     @Override

@@ -65,6 +65,9 @@ final public class BBCTTestUtil {
     public static final String ADD_MESSAGE = "Card added successfully";
     public static final String DELETE_MESSAGE = "Cards deleted successfully";
 
+    private BBCTTestUtil() {
+    }
+
     public static void assertListViewContainsItems(List<BaseballCard> expectedItems) {
         for (BaseballCard card : expectedItems) {
             onData(allOf(instanceOf(BaseballCard.class), is(card)))
@@ -320,7 +323,10 @@ final public class BBCTTestUtil {
         return power;
     }
 
-    private BBCTTestUtil() {
+    public static void clickLater() {
+        onView(withText(R.string.later))
+                .check(matches(isDisplayed()))
+                .perform(click());
     }
 
     public enum EditTexts {
