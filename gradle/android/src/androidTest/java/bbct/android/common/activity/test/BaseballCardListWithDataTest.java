@@ -37,7 +37,7 @@ import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
-import bbct.android.common.test.DataRule;
+import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.Predicate;
 import java.io.IOException;
@@ -72,7 +72,7 @@ import static org.hamcrest.Matchers.is;
  */
 abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Rule
-    public DataRule dataRule = new DataRule();
+    public DataTestRule dataTestRule = new DataTestRule();
     @Rule
     public ActivityTestRule<T> activityTestRule;
 
@@ -105,11 +105,18 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         inst = InstrumentationRegistry.getInstrumentation();
         device = UiDevice.getInstance(inst);
         activity = activityTestRule.getActivity();
-        allCards = dataRule.getAllCards();
+        allCards = dataTestRule.getAllCards();
         newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
                 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
 
         dbUtil = new DatabaseUtil(inst.getTargetContext());
+        clickLater();
+    }
+
+    private void clickLater() {
+        onView(withText(R.string.later))
+                .check(matches(isDisplayed()))
+                .perform(click());
     }
 
     @After
@@ -168,6 +175,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testStateDestroyWithoutFilter() throws RemoteException {
         device.setOrientationLeft();
+        clickLater();
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
@@ -179,6 +187,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testStateDestroyWithFilter() throws RemoteException {
         this.testYearFilter();
         device.setOrientationLeft();
+        clickLater();
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
@@ -192,6 +201,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testStateDestroyClearFilter() throws RemoteException {
         this.testClearFilter();
         device.setOrientationLeft();
+        clickLater();
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
@@ -221,7 +231,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      */
     @Test
     public void testAddDuplicateCard() throws Throwable {
-        BaseballCard card = dataRule.getCard(0);
+        BaseballCard card = dataTestRule.getCard(0);
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(card);
         onView(withText(R.string.duplicate_card_title))
@@ -438,6 +448,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
         Log.d(TAG, "change orientation");
         device.setOrientationLeft();
+        clickLater();
 
         Log.d(TAG, "assertions");
         onData(instanceOf(BaseballCard.class))

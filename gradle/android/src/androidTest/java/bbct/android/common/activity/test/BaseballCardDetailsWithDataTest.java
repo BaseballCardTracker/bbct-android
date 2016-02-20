@@ -29,7 +29,7 @@ import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.test.DataRule;
+import bbct.android.common.test.rule.DataTestRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,7 +51,7 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsWithDataTest {
     @Rule
-    public DataRule dataRule = new DataRule();
+    public DataTestRule dataTestRule = new DataTestRule();
     @Rule
     public ActivityTestRule<FragmentTestActivity> activityTestRule
             = new ActivityTestRule<>(FragmentTestActivity.class);
@@ -62,7 +62,7 @@ public class BaseballCardDetailsWithDataTest {
     public void setUp() throws Exception {
         FragmentTestActivity activity = activityTestRule.getActivity();
         activity.replaceFragment(new BaseballCardDetails());
-        mCard = dataRule.getCard(0);
+        mCard = dataTestRule.getCard(0);
     }
 
     @Test
