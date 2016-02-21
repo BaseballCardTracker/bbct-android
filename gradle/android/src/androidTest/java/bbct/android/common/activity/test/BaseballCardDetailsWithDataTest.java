@@ -18,63 +18,98 @@
  */
 package bbct.android.common.activity.test;
 
-import android.widget.AutoCompleteTextView;
+import android.app.Activity;
+import android.database.Cursor;
+import android.os.RemoteException;
+import android.support.test.InstrumentationRegistry;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.UiDevice;
+
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
-import butterknife.ButterKnife;
-import com.robotium.solo.Solo;
-import junit.framework.Assert;
+import bbct.android.common.test.rule.DataTestRule;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
-public class BaseballCardDetailsWithDataTest extends WithDataTest<FragmentTestActivity> {
+import static android.support.test.espresso.Espresso.onData;
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.CursorMatchers.withRowString;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.not;
 
-    private Solo mSolo;
+@RunWith(AndroidJUnit4.class)
+public class BaseballCardDetailsWithDataTest {
+    @Rule
+    public DataTestRule dataTestRule = new DataTestRule();
+    @Rule
+    public ActivityTestRule<FragmentTestActivity> activityTestRule
+            = new ActivityTestRule<>(FragmentTestActivity.class);
+
     private BaseballCard mCard;
 
-    public BaseballCardDetailsWithDataTest() {
-        super(FragmentTestActivity.class);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-
-        this.inst.setInTouchMode(true);
-        FragmentTestActivity activity = this.getActivity();
+    @Before
+    public void setUp() throws Exception {
+        FragmentTestActivity activity = activityTestRule.getActivity();
         activity.replaceFragment(new BaseballCardDetails());
-
-        this.inst.waitForIdleSync();
-        mSolo = new Solo(getInstrumentation(), activity);
-        mSolo.getCurrentActivity();
-        mCard = allCards.get(0);
+        mCard = dataTestRule.getCard(0);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        mSolo.finishOpenedActivities();
-
-        super.tearDown();
-    }
-
+    @Test
     public void testBrandAutoComplete() throws Throwable {
         this.testAutoComplete(R.id.brand_text, mCard.getBrand());
     }
 
+    @Test
     public void testPlayerNameAutoComplete() throws Throwable {
         this.testAutoComplete(R.id.player_name_text, mCard.getPlayerName());
     }
 
+    @Test
     public void testTeamAutoComplete() throws Throwable {
         this.testAutoComplete(R.id.team_text, mCard.getTeam());
     }
 
     private void testAutoComplete(int textViewId, String text)
             throws Throwable {
-        AutoCompleteTextView textView = ButterKnife.findById(mSolo.getCurrentActivity(), textViewId);
-        mSolo.typeText(textView, text.substring(0, 2));
-        mSolo.waitForText(text);
-        Assert.assertTrue(textView.isPopupShowing());
+        Activity activity = activityTestRule.getActivity();
+        onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
+        onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
+                .inRoot(withDecorView(not(activity.getWindow().getDecorView())))
+                .check(matches(isDisplayed()));
     }
 
+    @Test
+    public void testBrandAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.brand_text, mCard.getBrand());
+    }
+
+    @Test
+    public void testPlayerNameAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.player_name_text, mCard.getPlayerName());
+    }
+
+    @Test
+    public void testTeamAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.team_text, mCard.getTeam());
+    }
+
+    private void testAutoCompleteDestroy(int id, String text) throws RemoteException {
+        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        onView(withId(id)).perform(typeText(text));
+        device.setOrientationLeft();
+        onView(withId(id)).check(matches(withText(text)));
+        device.setOrientationNatural();
+    }
 }

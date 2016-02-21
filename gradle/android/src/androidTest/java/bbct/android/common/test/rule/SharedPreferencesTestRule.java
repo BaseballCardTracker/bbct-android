@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2016 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,21 +16,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.premium.activity.test;
+package bbct.android.common.test.rule;
 
-import android.support.test.runner.AndroidJUnit4;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.test.InstrumentationRegistry;
+
+import org.junit.rules.ExternalResource;
+
 import bbct.android.common.activity.MainActivity;
-import bbct.android.common.activity.test.BaseballCardListWithoutDataTest;
-import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
-public class MainActivityWithoutDataTest extends BaseballCardListWithoutDataTest<MainActivity> {
+public class SharedPreferencesTestRule extends ExternalResource {
+    private SharedPreferences prefs;
 
-    /**
-     * Create instrumented test cases for {@link MainActivity}.
-     */
-    public MainActivityWithoutDataTest() {
-        super(MainActivity.class);
+    @Override
+    protected void before() throws Throwable {
+        Context context = InstrumentationRegistry.getTargetContext();
+        prefs = context.getSharedPreferences(MainActivity.PREFS, Context.MODE_PRIVATE);
     }
 
+    @Override
+    protected void after() {
+        prefs.edit().clear().apply();
+    }
+
+    public SharedPreferences getPrefs() {
+        return prefs;
+    }
 }

@@ -19,21 +19,17 @@
 package bbct.android.common.provider;
 
 import android.app.Activity;
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CursorAdapter;
-import android.widget.TextView;
+import android.widget.SimpleCursorAdapter;
 import java.util.Arrays;
 
 /**
  * Provides a {@link CursorAdapter} for a single column from a database.
  */
-public class SingleColumnCursorAdapter extends CursorAdapter {
+public class SingleColumnCursorAdapter extends SimpleCursorAdapter {
 
     /**
      * Create a {@link SingleColumnCursorAdapter} for the column with the given
@@ -45,61 +41,15 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
      * @param colName
      *            The name of the column to query.
      */
+    @SuppressWarnings("deprecation")
     public SingleColumnCursorAdapter(Activity activity, String colName) {
-        super(activity, null, true);
+        super(activity, android.R.layout.simple_dropdown_item_1line, null,
+                new String[]{colName}, new int[]{android.R.id.text1});
 
         this.activity = activity;
         this.colName = colName;
         this.uri = BaseballCardContract.getUri(this.activity.getPackageName())
                 .buildUpon().appendPath("distinct").build();
-    }
-
-    /**
-     * Create a {@link TextView} in which to display an item.
-     *
-     * @param context
-     *            Interface to application's global information.
-     * @param cursor
-     *            The cursor from which to get the data. The cursor is already
-     *            moved to the correct position.
-     * @param parent
-     *            The parent to which the new view is to be attached.
-     */
-    @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        return inflater.inflate(android.R.layout.simple_dropdown_item_1line,
-                parent, false);
-    }
-
-    /**
-     * Reuse an existing {@link View} to display an item.
-     *
-     * @param view
-     *            Existing view, returned earlier by {@link #newView}.
-     * @param context
-     *            Interface to application's global information.
-     * @param cursor
-     *            The cursor from which to get the data. The cursor is already
-     *            moved to the correct position.
-     */
-    @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        ((TextView) view).setText(this.convertToString(cursor));
-    }
-
-    /**
-     * Converts the cursor into a {@link CharSequence} by getting the
-     * {@link String} from the single column in the cursor.
-     *
-     * @param cursor
-     *            The cursor to convert to a {@link CharSequence}.
-     *
-     * @return A string representation of the given cursor.
-     */
-    @Override
-    public CharSequence convertToString(Cursor cursor) {
-        return cursor.getString(cursor.getColumnIndexOrThrow(this.colName));
     }
 
     /**
@@ -132,9 +82,9 @@ public class SingleColumnCursorAdapter extends CursorAdapter {
                 projection, selection, args, null);
 
         Log.d(TAG, "  cursor=" + cursor);
-        Log.d(TAG, "    # of rows=" + cursor.getCount());
-
-        this.activity.startManagingCursor(cursor);
+        if (cursor != null) {
+            Log.d(TAG, "    # of rows=" + cursor.getCount());
+        }
 
         return cursor;
     }
