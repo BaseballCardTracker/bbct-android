@@ -45,6 +45,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -60,6 +61,9 @@ public class FilterCardsTest {
     @Rule
     public ActivityTestRule<FragmentTestActivity> activityTestRule =
             new ActivityTestRule<>(FragmentTestActivity.class);
+
+    private static final int[] IDS =
+            {R.id.brand, R.id.year, R.id.number, R.id.player_name, R.id.team};
 
     private FragmentTestActivity activity = null;
     private UiDevice device;
@@ -176,5 +180,11 @@ public class FilterCardsTest {
                 .check(matches(isChecked()));
         onView(allOf(withParent(withId(filterId)), instanceOf(EditText.class)))
                 .check(matches(isEnabled()));
+
+        for (int id : IDS) {
+            if (id != filterId) {
+                onView(withId(id)).check(matches(isNotChecked()));
+            }
+        }
     }
 }
