@@ -40,6 +40,7 @@ import bbct.android.common.test.BaseballCardCsvFileReader;
 import butterknife.ButterKnife;
 import java.io.InputStream;
 import junit.framework.Assert;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -97,6 +98,11 @@ public class BaseballCardDetailsTest {
         this.activity.replaceFragment(new BaseballCardDetails());
     }
 
+    @After
+    public void tearDown() throws RemoteException {
+        device.setOrientationNatural();
+    }
+
     /**
      * Check preconditions which must hold to guarantee the validity of all
      * other tests. Assert that the Activity to test is not <code>null</code>,
@@ -125,10 +131,8 @@ public class BaseballCardDetailsTest {
     @Test
     public void testStateDestroy() throws RemoteException {
         BBCTTestUtil.sendKeysToCardDetails(this.card);
-        UiDevice device = UiDevice.getInstance(inst);
         device.setOrientationLeft();
         BBCTTestUtil.assertAllEditTextContents(this.card);
-        device.setOrientationNatural();
     }
 
     /**
