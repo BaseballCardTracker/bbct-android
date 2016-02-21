@@ -56,16 +56,26 @@ public class Screenshots extends UiAutomatorTest {
     }
 
     @Test
-    public void takeScreenshots() throws UiObjectNotFoundException {
+    public void takeScreenshots() throws Throwable {
         UiSelector laterSelector = new UiSelector().text(context.getString(R.string.later));
         UiObject laterButton = device.findObject(laterSelector);
         laterButton.click();
+
+        UiSelector addSelector = new UiSelector().description(context.getString(R.string.add_menu));
+        UiObject addMenu = device.findObject(addSelector);
+        addMenu.click();
+        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
+        takeScreenshot("NewCard");
+
+        device.pressBack();
+        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
         takeScreenshot("CardList");
 
         UiSelector playerNameSelector = new UiSelector().text(card.getPlayerName());
         UiObject listItem = device.findObject(playerNameSelector);
         listItem.click();
         device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
+        device.pressBack();
         takeScreenshot("CardDetails");
     }
 
