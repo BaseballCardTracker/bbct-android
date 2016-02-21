@@ -24,7 +24,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
-import android.util.Log;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
@@ -58,23 +57,22 @@ public class Screenshots extends UiAutomatorTest {
 
     @Test
     public void takeScreenshots() throws UiObjectNotFoundException {
-        File screenshotFile;
-
         UiSelector laterSelector = new UiSelector().text(context.getString(R.string.later));
         UiObject laterButton = device.findObject(laterSelector);
         laterButton.click();
-
-        screenshotFile
-                = new File(screenshotDir, String.format("%02d-CardList.png", screenshotCount++));
-        Log.d(TAG, screenshotFile.getAbsolutePath());
-        device.takeScreenshot(screenshotFile);
+        takeScreenshot("CardList");
 
         UiSelector playerNameSelector = new UiSelector().text(card.getPlayerName());
         UiObject listItem = device.findObject(playerNameSelector);
         listItem.click();
         device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
-        screenshotFile
-                = new File(screenshotDir, String.format("%02d-CardDetails.png", screenshotCount++));
+        takeScreenshot("CardDetails");
+    }
+
+    private void takeScreenshot(String description) {
+        File screenshotFile
+                = new File(screenshotDir,
+                           String.format("%02d-%s.png", screenshotCount++, description));
         device.takeScreenshot(screenshotFile);
     }
 }
