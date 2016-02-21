@@ -37,6 +37,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import junit.framework.Assert;
+import org.hamcrest.Matcher;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -67,6 +68,9 @@ final public class BBCTTestUtil {
     private static final String TAG = BBCTTestUtil.class.getName();
     public static final String ADD_MESSAGE = "Card added successfully";
     public static final String DELETE_MESSAGE = "Cards deleted successfully";
+
+    private BBCTTestUtil() {
+    }
 
     public static void assertListViewContainsItems(List<BaseballCard> expectedItems) {
         for (BaseballCard card : expectedItems) {
@@ -269,11 +273,11 @@ final public class BBCTTestUtil {
     }
 
     public static List<BaseballCard> filterList(List<BaseballCard> list,
-            Predicate<BaseballCard> pred) {
+            Matcher<BaseballCard> cardMatcher) {
         List<BaseballCard> filteredList = new ArrayList<>();
 
         for (BaseballCard obj : list) {
-            if (pred.doTest(obj)) {
+            if (cardMatcher.matches(obj)) {
                 filteredList.add(obj);
             }
         }
@@ -324,7 +328,10 @@ final public class BBCTTestUtil {
         return power;
     }
 
-    private BBCTTestUtil() {
+    public static void clickLater() {
+        onView(withText(R.string.later))
+                .check(matches(isDisplayed()))
+                .perform(click());
     }
 
     public enum EditTexts {

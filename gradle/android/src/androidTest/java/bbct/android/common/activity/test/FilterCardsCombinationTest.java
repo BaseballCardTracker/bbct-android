@@ -29,7 +29,6 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import bbct.android.common.test.Predicate;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.util.EnumSet;
@@ -38,10 +37,14 @@ import java.util.List;
 import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static bbct.android.common.test.BBCTTestUtil.clickLater;
 
 /**
  * A parameterized test which can test filter correctness using any combination
@@ -100,6 +103,7 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
 
         inst.setInTouchMode(true);
         getActivity();
+        clickLater();
     }
 
     @Override
@@ -116,9 +120,15 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
 
         final Set<BBCTTestUtil.FilterOption> mask = inputFieldsMask;
         final BaseballCard test = testCard;
-        Predicate<BaseballCard> filterPred = new Predicate<BaseballCard>() {
+        Matcher<BaseballCard> cardMatcher = new BaseMatcher<BaseballCard>() {
             @Override
-            public boolean doTest(BaseballCard card) {
+            public void describeTo(Description description) {
+                description.appendText("matching card");
+            }
+
+            @Override
+            public boolean matches(Object obj) {
+                BaseballCard card = (BaseballCard)obj;
                 boolean condition = true;
 
                 if (mask.contains(BBCTTestUtil.FilterOption.BRAND)) {
@@ -151,7 +161,7 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
 
         BBCTTestUtil.sendKeysToFilterCards(testCard, inputFieldsMask);
         onView(withId(R.id.save_menu)).perform(click());
-        List<BaseballCard> expectedCards = BBCTTestUtil.filterList(allCards, filterPred);
+        List<BaseballCard> expectedCards = BBCTTestUtil.filterList(allCards, cardMatcher);
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 }
