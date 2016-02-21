@@ -71,7 +71,6 @@ public class BaseballCardDetailsTest {
 
     private UiDevice device;
     private FragmentTestActivity activity;
-    private Instrumentation inst;
     private BaseballCard card;
 
     /**
@@ -84,16 +83,15 @@ public class BaseballCardDetailsTest {
      */
     @Before
     public void setUp() throws Exception {
-        this.inst = InstrumentationRegistry.getInstrumentation();
-        this.device = UiDevice.getInstance(this.inst);
+        Instrumentation inst = InstrumentationRegistry.getInstrumentation();
+        this.device = UiDevice.getInstance(inst);
 
-        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
+        InputStream in = inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
                 true);
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
-        this.inst.setInTouchMode(true);
         this.activity = activityTestRule.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
     }
