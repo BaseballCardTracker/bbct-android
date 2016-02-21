@@ -19,11 +19,27 @@
 package bbct.android.common.functional.test;
 
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.UiObjectNotFoundException;
+import bbct.android.common.data.BaseballCard;
+import bbct.android.common.test.rule.DataTestRule;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 public class Screenshots extends UiAutomatorTest {
+    @Rule
+    public DataTestRule dataTestRule = new DataTestRule();
+
+    private BaseballCard card;
+
+    @Before
+    public void setUp() throws UiObjectNotFoundException {
+        super.setUp();
+        card = dataTestRule.getCard(0);
+    }
+
     @Test
     public void takeScreenshots() {
     }
