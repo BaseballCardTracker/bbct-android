@@ -18,10 +18,13 @@
  */
 package bbct.android.common.functional.test;
 
+import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.util.Log;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
+import java.io.File;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,15 +35,27 @@ public class Screenshots extends UiAutomatorTest {
     @Rule
     public DataTestRule dataTestRule = new DataTestRule();
 
+    private static final String TAG = Screenshots.class.getName();
+
+    private int screenshotCount;
     private BaseballCard card;
+    private File screenshotDir;
 
     @Before
     public void setUp() throws UiObjectNotFoundException {
         super.setUp();
+        screenshotCount = 1;
+        screenshotDir = InstrumentationRegistry.getTargetContext().getExternalFilesDir(null);
         card = dataTestRule.getCard(0);
     }
 
     @Test
     public void takeScreenshots() {
+        File screenshotFile;
+
+        screenshotFile
+                = new File(screenshotDir, String.format("%02d-CardList.png", screenshotCount++));
+        Log.d(TAG, screenshotFile.getAbsolutePath());
+        device.takeScreenshot(screenshotFile);
     }
 }
