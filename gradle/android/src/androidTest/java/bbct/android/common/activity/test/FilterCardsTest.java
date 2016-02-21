@@ -103,7 +103,7 @@ public class FilterCardsTest {
     private void testCheckBox(int filterId) {
         onView(allOf(withParent(withId(filterId)), instanceOf(CheckBox.class)))
                 .perform(click());
-        onView(allOf(withParent(withId(filterId)), instanceOf(EditText.class)))
+        onView(withId(filterId))
                 .check(matches(allOf(isEnabled(), hasFocus())));
         onView(withId(R.id.save_menu)).check(matches(isDisplayed()));
     }
@@ -176,7 +176,7 @@ public class FilterCardsTest {
     private void testSaveInstanceState(int filterId) throws RemoteException {
         this.testCheckBox(filterId);
         device.setOrientationLeft();
-        onView(allOf(withParent(withId(filterId)), instanceOf(CheckBox.class)))
+        onView(withId(filterId))
                 .check(matches(isChecked()));
         onView(allOf(withParent(withId(filterId)), instanceOf(EditText.class)))
                 .check(matches(isEnabled()));
