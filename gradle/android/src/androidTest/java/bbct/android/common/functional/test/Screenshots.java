@@ -40,6 +40,7 @@ public class Screenshots extends UiAutomatorTest {
     public DataTestRule dataTestRule = new DataTestRule();
 
     private static final String TAG = Screenshots.class.getName();
+    private static final long TIMEOUT = 5000;
 
     private Context context;
     private File screenshotDir;
@@ -66,6 +67,14 @@ public class Screenshots extends UiAutomatorTest {
         screenshotFile
                 = new File(screenshotDir, String.format("%02d-CardList.png", screenshotCount++));
         Log.d(TAG, screenshotFile.getAbsolutePath());
+        device.takeScreenshot(screenshotFile);
+
+        UiSelector playerNameSelector = new UiSelector().text(card.getPlayerName());
+        UiObject listItem = device.findObject(playerNameSelector);
+        listItem.click();
+        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
+        screenshotFile
+                = new File(screenshotDir, String.format("%02d-CardDetails.png", screenshotCount++));
         device.takeScreenshot(screenshotFile);
     }
 }
