@@ -29,7 +29,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class CheckableLinearLayout extends LinearLayout implements Checkable {
-
     @InjectView(R.id.checkmark) CheckBox mCheckBox;
 
     public CheckableLinearLayout(Context context) {
@@ -72,9 +71,4 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
     public void toggle() {
         mCheckBox.toggle();
     }
-
-    public CheckBox getCheckBox() {
-        return mCheckBox;
-    }
-
 }
