@@ -94,7 +94,7 @@ public class FilterCards extends Fragment {
 
         enabledFields.clear();
         for (int i = 0; i < filterOptions.size(); i++) {
-            if (filterOptions.get(i).isEnabled()) {
+            if (filterOptions.get(i).isChecked()) {
                 enabledFields.add(i);
             }
         }
