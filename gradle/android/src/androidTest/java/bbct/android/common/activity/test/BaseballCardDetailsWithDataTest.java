@@ -31,6 +31,7 @@ import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,12 +59,19 @@ public class BaseballCardDetailsWithDataTest {
             = new ActivityTestRule<>(FragmentTestActivity.class);
 
     private BaseballCard mCard;
+    private UiDevice device;
 
     @Before
     public void setUp() throws Exception {
         FragmentTestActivity activity = activityTestRule.getActivity();
         activity.replaceFragment(new BaseballCardDetails());
         mCard = dataTestRule.getCard(0);
+        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+    }
+
+    @After
+    public void tearDown() throws RemoteException {
+        device.setOrientationNatural();
     }
 
     @Test
@@ -106,10 +114,8 @@ public class BaseballCardDetailsWithDataTest {
     }
 
     private void testAutoCompleteDestroy(int id, String text) throws RemoteException {
-        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         onView(withId(id)).perform(typeText(text));
         device.setOrientationLeft();
         onView(withId(id)).check(matches(withText(text)));
-        device.setOrientationNatural();
     }
 }
