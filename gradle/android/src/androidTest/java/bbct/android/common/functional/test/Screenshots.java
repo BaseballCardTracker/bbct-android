@@ -24,6 +24,8 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
+import android.util.Log;
+
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
@@ -52,6 +54,9 @@ public class Screenshots extends UiAutomatorTest {
         screenshotCount = 1;
         context = InstrumentationRegistry.getTargetContext();
         screenshotDir = context.getExternalFilesDir(null);
+
+        Log.d(TAG, "screenshotDir: " + screenshotDir);
+
         card = dataTestRule.getCard(0);
     }
 
