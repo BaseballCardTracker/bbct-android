@@ -31,6 +31,7 @@ import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTestActivity;
 import junit.framework.Assert;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,11 +59,18 @@ public class FilterCardsTest {
             new ActivityTestRule<>(FragmentTestActivity.class);
 
     private FragmentTestActivity activity = null;
+    private UiDevice device;
 
     @Before
     public void setUp() throws Exception {
         activity = activityTestRule.getActivity();
         activity.replaceFragment(new FilterCards());
+        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+    }
+
+    @After
+    public void tearDown() throws RemoteException {
+        device.setOrientationNatural();
     }
 
     /**
@@ -151,9 +159,7 @@ public class FilterCardsTest {
     @Test
     public void testSaveInstanceState() throws RemoteException {
         this.testNumberCheckBox();
-        UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
         device.setOrientationLeft();
         onView(withId(R.id.number_input)).check(matches(isEnabled()));
-        device.setOrientationNatural();
     }
 }
