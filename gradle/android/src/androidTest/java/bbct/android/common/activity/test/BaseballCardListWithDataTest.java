@@ -38,13 +38,13 @@ import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
-import bbct.android.common.test.DataRule;
 import bbct.android.common.test.DatabaseUtil;
-import bbct.android.common.test.Predicate;
+import bbct.android.common.test.rule.DataTestRule;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;
+import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -62,6 +62,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static bbct.android.common.test.BBCTTestUtil.clickLater;
+import static bbct.android.common.test.matcher.BaseballCardMatchers.withYear;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
@@ -73,7 +75,7 @@ import static org.hamcrest.Matchers.is;
  */
 abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Rule
-    public DataRule dataRule = new DataRule();
+    public DataTestRule dataTestRule = new DataTestRule();
     @Rule
     public ActivityTestRule<T> activityTestRule;
 
@@ -106,11 +108,12 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         inst = InstrumentationRegistry.getInstrumentation();
         device = UiDevice.getInstance(inst);
         activity = activityTestRule.getActivity();
-        allCards = dataRule.getAllCards();
+        allCards = dataTestRule.getAllCards();
         newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
                 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
 
         dbUtil = new DatabaseUtil(inst.getTargetContext());
+        clickLater();
     }
 
     @After
@@ -169,6 +172,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testStateDestroyWithoutFilter() throws RemoteException {
         device.setOrientationLeft();
+        clickLater();
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
@@ -180,6 +184,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testStateDestroyWithFilter() throws RemoteException {
         this.testYearFilter();
         device.setOrientationLeft();
+        clickLater();
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
@@ -193,6 +198,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testStateDestroyClearFilter() throws RemoteException {
         this.testClearFilter();
         device.setOrientationLeft();
+        clickLater();
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
@@ -222,7 +228,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      */
     @Test
     public void testAddDuplicateCard() throws Throwable {
-        BaseballCard card = dataRule.getCard(0);
+        BaseballCard card = dataTestRule.getCard(0);
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(card);
         onView(withText(R.string.duplicate_card_title))
@@ -374,13 +380,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
         int cardIndex = 0;
         final int year = 1993;
-        Predicate<BaseballCard> yearPred = new Predicate<BaseballCard>() {
-            @Override
-            public boolean doTest(BaseballCard card) {
-                return card.getYear() == year;
-            }
-        };
-        expectedCards = BBCTTestUtil.filterList(allCards, yearPred);
+        expectedCards = BBCTTestUtil.filterList(allCards, withYear(year));
         expectedCards.remove(cardIndex);
 
         onData(instanceOf(BaseballCard.class))
@@ -438,6 +438,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
         Log.d(TAG, "change orientation");
         device.setOrientationLeft();
+        clickLater();
 
         Log.d(TAG, "assertions");
         onData(instanceOf(BaseballCard.class))
@@ -453,15 +454,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testYearFilter() {
         final int year = 1993;
-
-        Predicate<BaseballCard> yearPred = new Predicate<BaseballCard>() {
-            @Override
-            public boolean doTest(BaseballCard card) {
-                return card.getYear() == year;
-            }
-        };
-
-        this.testSingleFilter(R.id.year_check, R.id.year_input, year + "", yearPred);
+        testSingleFilter(R.id.year_check, R.id.year_input, year + "", withYear(year));
     }
 
     /**
@@ -482,15 +475,15 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
      * @param checkId    - the id of the {@link CheckBox} to activate.
      * @param editId     - the id of the {@link EditText} to input text into.
      * @param input      - the input to use for filtering.
-     * @param filterPred - @see {@link Predicate}.
+     * @param cardMatcher - predicate indicating which cards should be the result of the filter.
      */
     private void testSingleFilter(int checkId, int editId, String input,
-                                  Predicate<BaseballCard> filterPred) {
+                                  Matcher<BaseballCard> cardMatcher) {
         BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
 
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(checkId, editId, input);
         onView(withId(R.id.save_menu)).perform(click());
-        expectedCards = BBCTTestUtil.filterList(allCards, filterPred);
+        expectedCards = BBCTTestUtil.filterList(allCards, cardMatcher);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards);
         onView(withId(R.id.clear_filter_menu)).check(matches(isDisplayed()));
     }

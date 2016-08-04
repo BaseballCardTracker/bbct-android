@@ -82,9 +82,9 @@ public class SingleColumnCursorAdapter extends SimpleCursorAdapter {
                 projection, selection, args, null);
 
         Log.d(TAG, "  cursor=" + cursor);
-        Log.d(TAG, "    # of rows=" + cursor.getCount());
-
-        this.activity.startManagingCursor(cursor);
+        if (cursor != null) {
+            Log.d(TAG, "    # of rows=" + cursor.getCount());
+        }
 
         return cursor;
     }

@@ -40,6 +40,7 @@ import bbct.android.common.test.BaseballCardCsvFileReader;
 import butterknife.ButterKnife;
 import java.io.InputStream;
 import junit.framework.Assert;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -70,7 +71,6 @@ public class BaseballCardDetailsTest {
 
     private UiDevice device;
     private FragmentTestActivity activity;
-    private Instrumentation inst;
     private BaseballCard card;
 
     /**
@@ -83,18 +83,22 @@ public class BaseballCardDetailsTest {
      */
     @Before
     public void setUp() throws Exception {
-        this.inst = InstrumentationRegistry.getInstrumentation();
-        this.device = UiDevice.getInstance(this.inst);
+        Instrumentation inst = InstrumentationRegistry.getInstrumentation();
+        this.device = UiDevice.getInstance(inst);
 
-        InputStream in = this.inst.getContext().getAssets().open(CARD_DATA);
+        InputStream in = inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(in,
                 true);
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
-        this.inst.setInTouchMode(true);
         this.activity = activityTestRule.getActivity();
         this.activity.replaceFragment(new BaseballCardDetails());
+    }
+
+    @After
+    public void tearDown() throws RemoteException {
+        device.setOrientationNatural();
     }
 
     /**
@@ -125,10 +129,8 @@ public class BaseballCardDetailsTest {
     @Test
     public void testStateDestroy() throws RemoteException {
         BBCTTestUtil.sendKeysToCardDetails(this.card);
-        UiDevice device = UiDevice.getInstance(inst);
         device.setOrientationLeft();
         BBCTTestUtil.assertAllEditTextContents(this.card);
-        device.setOrientationNatural();
     }
 
     /**

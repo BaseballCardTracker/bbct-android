@@ -23,6 +23,8 @@ import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.widget.ListView;
+
+import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
@@ -41,7 +43,10 @@ import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.containsString;
 
 /**
@@ -82,6 +87,10 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
                 .open(DATA_ASSET);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
+
+        onView(withText(R.string.later))
+                .check(matches(isDisplayed()))
+                .perform(click());
     }
 
     /**

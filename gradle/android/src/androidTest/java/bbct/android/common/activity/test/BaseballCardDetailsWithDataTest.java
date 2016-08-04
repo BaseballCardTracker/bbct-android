@@ -20,13 +20,18 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.database.Cursor;
+import android.os.RemoteException;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.UiDevice;
+
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.test.DataRule;
+import bbct.android.common.test.rule.DataTestRule;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,6 +45,7 @@ import static android.support.test.espresso.matcher.CursorMatchers.withRowString
 import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
@@ -47,18 +53,25 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsWithDataTest {
     @Rule
-    public DataRule dataRule = new DataRule();
+    public DataTestRule dataTestRule = new DataTestRule();
     @Rule
     public ActivityTestRule<FragmentTestActivity> activityTestRule
             = new ActivityTestRule<>(FragmentTestActivity.class);
 
     private BaseballCard mCard;
+    private UiDevice device;
 
     @Before
     public void setUp() throws Exception {
         FragmentTestActivity activity = activityTestRule.getActivity();
         activity.replaceFragment(new BaseballCardDetails());
-        mCard = dataRule.getCard(0);
+        mCard = dataTestRule.getCard(0);
+        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+    }
+
+    @After
+    public void tearDown() throws RemoteException {
+        device.setOrientationNatural();
     }
 
     @Test
@@ -83,5 +96,26 @@ public class BaseballCardDetailsWithDataTest {
         onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
                 .inRoot(withDecorView(not(activity.getWindow().getDecorView())))
                 .check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void testBrandAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.brand_text, mCard.getBrand());
+    }
+
+    @Test
+    public void testPlayerNameAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.player_name_text, mCard.getPlayerName());
+    }
+
+    @Test
+    public void testTeamAutoCompleteDestroy() throws RemoteException {
+        testAutoCompleteDestroy(R.id.team_text, mCard.getTeam());
+    }
+
+    private void testAutoCompleteDestroy(int id, String text) throws RemoteException {
+        onView(withId(id)).perform(typeText(text));
+        device.setOrientationLeft();
+        onView(withId(id)).check(matches(withText(text)));
     }
 }

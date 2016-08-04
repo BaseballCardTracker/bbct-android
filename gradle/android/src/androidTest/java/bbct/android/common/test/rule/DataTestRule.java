@@ -16,18 +16,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.test;
+package bbct.android.common.test.rule;
 
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
 import bbct.android.common.data.BaseballCard;
+import bbct.android.common.test.BaseballCardCsvFileReader;
+import bbct.android.common.test.DatabaseUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import org.junit.rules.ExternalResource;
 
-public class DataRule extends ExternalResource {
-    private static final String TAG = DataRule.class.getName();
+public class DataTestRule extends ExternalResource {
+    private static final String TAG = DataTestRule.class.getName();
 
     private static final String CARD_DATA = "cards.csv";
     private DatabaseUtil dbUtil;

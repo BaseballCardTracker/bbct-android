@@ -32,7 +32,7 @@ import org.junit.Before;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-public class UiAutomatorTest {
+public abstract class UiAutomatorTest {
     private static final long LAUNCH_TIMEOUT = 5000L;
     protected UiDevice device;
     protected Instrumentation inst;
@@ -49,7 +49,7 @@ public class UiAutomatorTest {
         device.pressHome();
     }
 
-    public void startApp() throws UiObjectNotFoundException {
+    private void startApp() throws UiObjectNotFoundException {
         device.pressHome();
         // Wait for launcher
         final String launcherPackage = device.getLauncherPackageName();

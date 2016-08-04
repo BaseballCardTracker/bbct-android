@@ -24,9 +24,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.uiautomator.UiDevice;
-import android.test.ViewAsserts;
 import android.util.Log;
-import android.view.View;
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
@@ -37,6 +35,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import junit.framework.Assert;
+import org.hamcrest.Matcher;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -65,6 +64,9 @@ final public class BBCTTestUtil {
     private static final String TAG = BBCTTestUtil.class.getName();
     public static final String ADD_MESSAGE = "Card added successfully";
     public static final String DELETE_MESSAGE = "Cards deleted successfully";
+
+    private BBCTTestUtil() {
+    }
 
     public static void assertListViewContainsItems(List<BaseballCard> expectedItems) {
         for (BaseballCard card : expectedItems) {
@@ -266,39 +268,16 @@ final public class BBCTTestUtil {
     }
 
     public static List<BaseballCard> filterList(List<BaseballCard> list,
-            Predicate<BaseballCard> pred) {
+            Matcher<BaseballCard> cardMatcher) {
         List<BaseballCard> filteredList = new ArrayList<>();
 
         for (BaseballCard obj : list) {
-            if (pred.doTest(obj)) {
+            if (cardMatcher.matches(obj)) {
                 filteredList.add(obj);
             }
         }
 
         return filteredList;
-    }
-
-    /**
-     * Checks if the given child view is visible in the given parent view. Logic
-     * followed is same as {@link ViewAsserts#assertOnScreen(View, View)}.
-     *
-     * @param parentView
-     *            The {@link View} object containing the child view test.
-     * @param childView
-     *            The {@link View} object to be checked.
-     */
-    public static boolean isViewOnScreen(View parentView, View childView) {
-        int[] xyChild = new int[2];
-        childView.getLocationOnScreen(xyChild);
-        int[] xyParent = new int[2];
-        parentView.getLocationOnScreen(xyParent);
-        int childViewYFromRoot = xyChild[1] - xyParent[1];
-        int rootViewHeight = childView.getRootView().getHeight();
-        // If the button is visible on screen, then
-        // view should have positive y coordinate on screen and
-        // view should have y location on screen less than drawing
-        // height of root view
-        return childViewYFromRoot >= 0 && childViewYFromRoot <= rootViewHeight;
     }
 
     /**
@@ -344,7 +323,10 @@ final public class BBCTTestUtil {
         return power;
     }
 
-    private BBCTTestUtil() {
+    public static void clickLater() {
+        onView(withText(R.string.later))
+                .check(matches(isDisplayed()))
+                .perform(click());
     }
 
     public enum EditTexts {
