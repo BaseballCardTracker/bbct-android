@@ -35,6 +35,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static junit.framework.Assert.assertTrue;
+
 @RunWith(AndroidJUnit4.class)
 public class Screenshots extends UiAutomatorTest {
     @Rule
@@ -53,7 +55,11 @@ public class Screenshots extends UiAutomatorTest {
         super.setUp();
         screenshotCount = 1;
         context = InstrumentationRegistry.getTargetContext();
-        screenshotDir = context.getExternalFilesDir(null);
+        screenshotDir = new File(context.getFilesDir(), "screenshots");
+
+        if (!screenshotDir.exists()) {
+            assertTrue("Unable to create directory: " + screenshotDir.getName(), screenshotDir.mkdir());
+        }
 
         Log.d(TAG, "screenshotDir: " + screenshotDir);
 
