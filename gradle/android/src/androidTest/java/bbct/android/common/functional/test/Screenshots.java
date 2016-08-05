@@ -44,6 +44,7 @@ public class Screenshots extends UiAutomatorTest {
 
     private static final String TAG = Screenshots.class.getName();
     private static final long TIMEOUT = 5000;
+    private static final String YEAR_STRING = "1993";
 
     private Context context;
     private File screenshotDir;
@@ -88,6 +89,25 @@ public class Screenshots extends UiAutomatorTest {
         device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
         device.pressBack();
         takeScreenshot("CardDetails");
+
+        device.pressBack();
+        UiSelector filterSelector = new UiSelector().description(context.getString(R.string.filter_menu));
+        UiObject filterMenu = device.findObject(filterSelector);
+        filterMenu.click();
+        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
+        UiSelector yearCheckBoxSelector = new UiSelector().resourceId("" + R.id.year_check);
+        UiObject yearCheckBox = device.findObject(yearCheckBoxSelector);
+        yearCheckBox.click();
+        UiSelector yearTextViewSelector = new UiSelector().resourceId("" + R.id.year_input);
+        UiObject yearTextView = device.findObject(yearTextViewSelector);
+        yearTextView.setText(YEAR_STRING);
+        takeScreenshot("FilterCards");
+
+        UiSelector saveSelector = new UiSelector().description(context.getString(R.string.save_menu));
+        UiObject saveMenu = device.findObject(saveSelector);
+        saveMenu.click();
+        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
+        takeScreenshot("FilteredList");
     }
 
     private void takeScreenshot(String description) {
