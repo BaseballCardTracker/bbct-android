@@ -37,6 +37,7 @@ public class BaseballCardDetailsSleepTest extends UiAutomatorTest {
 
         String expectedBrand = "Topps";
         brandUiObject.setText(expectedBrand);
+        device.waitForIdle();
         device.sleep();
         device.wakeUp();
         String actualBrand = brandUiObject.getText();
