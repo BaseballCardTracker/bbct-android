@@ -112,6 +112,16 @@ public class Screenshots extends UiAutomatorTest {
         saveMenu.click();
         device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
         takeScreenshot("FilteredList");
+
+        UiSelector overflowSelector = new UiSelector().description("More options");
+        UiObject overflowMenu = device.findObject(overflowSelector);
+        overflowMenu.click();
+        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
+        UiSelector aboutSelector = new UiSelector().text(context.getString(R.string.about_menu));
+        UiObject aboutMenu = device.findObject(aboutSelector);
+        aboutMenu.click();
+        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
+        takeScreenshot("About");
     }
 
     private void takeScreenshot(String description) {
