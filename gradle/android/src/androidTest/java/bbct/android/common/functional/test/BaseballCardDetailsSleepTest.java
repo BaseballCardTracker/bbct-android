@@ -30,6 +30,7 @@ import org.junit.Test;
 public class BaseballCardDetailsSleepTest extends UiAutomatorTest {
     @Test
     public void testSleep() throws UiObjectNotFoundException, RemoteException {
+        clickLaterButton();
         String brandHint = inst.getTargetContext().getString(R.string.brand_hint);
         UiSelector brandSelector = new UiSelector().className(EditText.class).text(brandHint);
         UiObject brandUiObject = device.findObject(brandSelector);
