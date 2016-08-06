@@ -19,6 +19,7 @@
 package bbct.android.common.functional.test;
 
 import android.app.Instrumentation;
+import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
@@ -32,11 +33,14 @@ import org.junit.Before;
 public abstract class UiAutomatorTest {
     protected UiDevice device;
     protected Instrumentation inst;
+    protected Context context;
+
 
     @Before
     public void setUp() throws UiObjectNotFoundException {
         inst = InstrumentationRegistry.getInstrumentation();
         device = UiDevice.getInstance(inst);
+        context = InstrumentationRegistry.getTargetContext();
         startApp();
     }
 
@@ -57,5 +61,11 @@ public abstract class UiAutomatorTest {
         UiObject ourApp = appViews.getChildByText(
                 new UiSelector().className("android.widget.TextView"), appName);
         ourApp.clickAndWaitForNewWindow();
+    }
+
+    protected void clickLaterButton() throws UiObjectNotFoundException {
+        UiSelector laterSelector = new UiSelector().text(context.getString(R.string.later));
+        UiObject laterButton = device.findObject(laterSelector);
+        laterButton.click();
     }
 }
