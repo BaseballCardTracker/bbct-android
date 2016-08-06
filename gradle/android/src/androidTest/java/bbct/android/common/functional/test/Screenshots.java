@@ -25,6 +25,8 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import bbct.android.common.R;
 import bbct.android.common.data.BaseballCard;
@@ -45,6 +47,7 @@ public class Screenshots extends UiAutomatorTest {
     private static final String TAG = Screenshots.class.getName();
     private static final long TIMEOUT = 5000;
     private static final String YEAR_STRING = "1993";
+    public static final int YEAR_INSTANCE = 1;
 
     private Context context;
     private File screenshotDir;
@@ -95,12 +98,13 @@ public class Screenshots extends UiAutomatorTest {
         UiObject filterMenu = device.findObject(filterSelector);
         filterMenu.click();
         device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
-        UiSelector yearCheckBoxSelector = new UiSelector().resourceId("" + R.id.year_check);
+        UiSelector yearCheckBoxSelector = new UiSelector().className(CheckBox.class).instance(YEAR_INSTANCE);
         UiObject yearCheckBox = device.findObject(yearCheckBoxSelector);
         yearCheckBox.click();
-        UiSelector yearTextViewSelector = new UiSelector().resourceId("" + R.id.year_input);
+        UiSelector yearTextViewSelector = new UiSelector().className(EditText.class).instance(YEAR_INSTANCE);
         UiObject yearTextView = device.findObject(yearTextViewSelector);
         yearTextView.setText(YEAR_STRING);
+        device.waitForIdle();
         takeScreenshot("FilterCards");
 
         UiSelector saveSelector = new UiSelector().description(context.getString(R.string.save_menu));
