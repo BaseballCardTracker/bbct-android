@@ -61,7 +61,6 @@ public class SingleColumnCursorAdapter extends SimpleCursorAdapter {
      *
      * @return A cursor with the requested items. May be empty.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public Cursor runQueryOnBackgroundThread(CharSequence constraint) {
         Log.d(TAG, "runQueryOnBackgroundThread()");
