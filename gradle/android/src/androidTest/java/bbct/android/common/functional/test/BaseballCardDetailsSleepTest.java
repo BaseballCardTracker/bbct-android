@@ -32,14 +32,16 @@ public class BaseballCardDetailsSleepTest extends UiAutomatorTest {
     public void testSleep() throws UiObjectNotFoundException, RemoteException {
         clickLaterButton();
         String brandHint = inst.getTargetContext().getString(R.string.brand_hint);
-        UiSelector brandSelector = new UiSelector().className(EditText.class).text(brandHint);
-        UiObject brandUiObject = device.findObject(brandSelector);
+        UiSelector brandHintSelector = new UiSelector().className(EditText.class).text(brandHint);
+        UiObject brandUiObject = device.findObject(brandHintSelector);
 
         String expectedBrand = "Topps";
         brandUiObject.setText(expectedBrand);
         device.waitForIdle();
         device.sleep();
         device.wakeUp();
+        UiSelector brandSelector = new UiSelector().className(EditText.class).text(expectedBrand);
+        brandUiObject = device.findObject(brandSelector);
         String actualBrand = brandUiObject.getText();
         Assert.assertEquals(expectedBrand, actualBrand);
     }
