@@ -18,5 +18,5 @@
  */
 package bbct.android.common.activity.test;
 
-public class DetailsTest {
+public class DetailsLayoutTest {
 }
