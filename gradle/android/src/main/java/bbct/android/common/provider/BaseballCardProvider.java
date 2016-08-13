@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import bbct.android.common.R;
@@ -70,7 +71,7 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection,
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         Log.d(TAG, "query()");
         Log.d(TAG, "  uri=" + uri);
@@ -119,7 +120,7 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         switch (uriMatcher.match(uri)) {
             case ALL_CARDS:
             case DISTINCT:
@@ -137,7 +138,7 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         if (uriMatcher.match(uri) != ALL_CARDS) {
             String errorFormat = this.getContext().getString(
                     R.string.invalid_uri_error);
@@ -158,7 +159,7 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         int affected;
         SQLiteDatabase db = this.sqlHelper.getWritableDatabase();
 
@@ -188,7 +189,7 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection,
+    public int update(@NonNull Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
         SQLiteDatabase db = this.sqlHelper.getWritableDatabase();
 
