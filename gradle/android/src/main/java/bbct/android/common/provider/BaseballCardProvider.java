@@ -27,6 +27,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import bbct.android.common.R;
@@ -40,6 +41,10 @@ public class BaseballCardProvider extends ContentProvider {
     protected static final int ALL_CARDS = 1;
     protected static final int CARD_ID = 2;
     protected static final int DISTINCT = 3;
+
+    private Context context;
+    private BaseballCardSQLHelper sqlHelper = null;
+    private static final String TAG = BaseballCardProvider.class.getName();
 
     public static final UriMatcher uriMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);
@@ -57,7 +62,8 @@ public class BaseballCardProvider extends ContentProvider {
     public boolean onCreate() {
         Log.d(TAG, "onCreate()");
 
-        this.sqlHelper = this.getSQLHelper(this.getContext());
+        context = this.getContext();
+        this.sqlHelper = this.getSQLHelper(context);
 
         return true;
     }
@@ -67,7 +73,7 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection,
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
         Log.d(TAG, "query()");
         Log.d(TAG, "  uri=" + uri);
@@ -105,18 +111,17 @@ public class BaseballCardProvider extends ContentProvider {
                 break;
 
             default:
-                String errorFormat = this.getContext().getString(
-                        R.string.invalid_uri_error);
+                String errorFormat = context.getString(R.string.invalid_uri_error);
                 String error = String.format(errorFormat, uri.toString());
                 throw new IllegalArgumentException(error);
         }
 
-        cursor.setNotificationUri(this.getContext().getContentResolver(), uri);
+        cursor.setNotificationUri(context.getContentResolver(), uri);
         return cursor;
     }
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         switch (uriMatcher.match(uri)) {
             case ALL_CARDS:
             case DISTINCT:
@@ -126,7 +131,7 @@ public class BaseballCardProvider extends ContentProvider {
                 return BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE;
 
             default:
-                String errorFormat = this.getContext().getString(
+                String errorFormat = context.getString(
                         R.string.invalid_uri_error);
                 String error = String.format(errorFormat, uri.toString());
                 throw new IllegalArgumentException(error);
@@ -134,9 +139,9 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         if (uriMatcher.match(uri) != ALL_CARDS) {
-            String errorFormat = this.getContext().getString(
+            String errorFormat = context.getString(
                     R.string.invalid_uri_error);
             String error = String.format(errorFormat, uri.toString());
             throw new IllegalArgumentException(error);
@@ -147,7 +152,7 @@ public class BaseballCardProvider extends ContentProvider {
 
         if (row > 0) {
             Uri newUri = ContentUris.withAppendedId(uri, row);
-            this.getContext().getContentResolver().notifyChange(newUri, null);
+            context.getContentResolver().notifyChange(newUri, null);
             return newUri;
         }
 
@@ -155,7 +160,7 @@ public class BaseballCardProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         int affected;
         SQLiteDatabase db = this.sqlHelper.getWritableDatabase();
 
@@ -174,18 +179,18 @@ public class BaseballCardProvider extends ContentProvider {
                 break;
 
             default:
-                String errorFormat = this.getContext().getString(
+                String errorFormat = context.getString(
                         R.string.invalid_uri_error);
                 String error = String.format(errorFormat, uri.toString());
                 throw new IllegalArgumentException(error);
         }
 
-        this.getContext().getContentResolver().notifyChange(uri, null);
+        context.getContentResolver().notifyChange(uri, null);
         return affected;
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection,
+    public int update(@NonNull Uri uri, ContentValues values, String selection,
                       String[] selectionArgs) {
         SQLiteDatabase db = this.sqlHelper.getWritableDatabase();
 
@@ -206,13 +211,13 @@ public class BaseballCardProvider extends ContentProvider {
                 break;
 
             default:
-                String errorFormat = this.getContext().getString(
+                String errorFormat = context.getString(
                         R.string.invalid_uri_error);
                 String error = String.format(errorFormat, uri.toString());
                 throw new IllegalArgumentException(error);
         }
 
-        this.getContext().getContentResolver().notifyChange(uri, null);
+        context.getContentResolver().notifyChange(uri, null);
         return affected;
     }
 
@@ -234,8 +239,4 @@ public class BaseballCardProvider extends ContentProvider {
 
         return whereArgs;
     }
-
-    private BaseballCardSQLHelper sqlHelper = null;
-    private static final String TAG = BaseballCardProvider.class.getName();
-
 }
