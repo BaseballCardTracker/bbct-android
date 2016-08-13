@@ -221,6 +221,11 @@ public class BaseballCardProvider extends ContentProvider {
         return affected;
     }
 
+    @Override
+    public void shutdown() {
+        sqlHelper.close();
+    }
+
     private String getWhereWithId(String selection) {
         String idSelection = BaseballCardContract.ID_COL_NAME + " = ?";
         return TextUtils.isEmpty(selection) ? idSelection : idSelection
