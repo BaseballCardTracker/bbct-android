@@ -41,6 +41,9 @@ public class BaseballCardProvider extends ContentProvider {
     protected static final int CARD_ID = 2;
     protected static final int DISTINCT = 3;
 
+    private BaseballCardSQLHelper sqlHelper = null;
+    private static final String TAG = BaseballCardProvider.class.getName();
+
     public static final UriMatcher uriMatcher = new UriMatcher(
             UriMatcher.NO_MATCH);
 
@@ -234,8 +237,4 @@ public class BaseballCardProvider extends ContentProvider {
 
         return whereArgs;
     }
-
-    private BaseballCardSQLHelper sqlHelper = null;
-    private static final String TAG = BaseballCardProvider.class.getName();
-
 }
