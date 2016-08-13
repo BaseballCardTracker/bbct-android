@@ -42,6 +42,7 @@ public class BaseballCardProvider extends ContentProvider {
     protected static final int CARD_ID = 2;
     protected static final int DISTINCT = 3;
 
+    private Context context;
     private BaseballCardSQLHelper sqlHelper = null;
     private static final String TAG = BaseballCardProvider.class.getName();
 
@@ -61,7 +62,8 @@ public class BaseballCardProvider extends ContentProvider {
     public boolean onCreate() {
         Log.d(TAG, "onCreate()");
 
-        this.sqlHelper = this.getSQLHelper(this.getContext());
+        context = this.getContext();
+        this.sqlHelper = this.getSQLHelper(context);
 
         return true;
     }
@@ -109,13 +111,12 @@ public class BaseballCardProvider extends ContentProvider {
                 break;
 
             default:
-                String errorFormat = this.getContext().getString(
-                        R.string.invalid_uri_error);
+                String errorFormat = context.getString(R.string.invalid_uri_error);
                 String error = String.format(errorFormat, uri.toString());
                 throw new IllegalArgumentException(error);
         }
 
-        cursor.setNotificationUri(this.getContext().getContentResolver(), uri);
+        cursor.setNotificationUri(context.getContentResolver(), uri);
         return cursor;
     }
 
@@ -130,7 +131,7 @@ public class BaseballCardProvider extends ContentProvider {
                 return BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE;
 
             default:
-                String errorFormat = this.getContext().getString(
+                String errorFormat = context.getString(
                         R.string.invalid_uri_error);
                 String error = String.format(errorFormat, uri.toString());
                 throw new IllegalArgumentException(error);
@@ -140,7 +141,7 @@ public class BaseballCardProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         if (uriMatcher.match(uri) != ALL_CARDS) {
-            String errorFormat = this.getContext().getString(
+            String errorFormat = context.getString(
                     R.string.invalid_uri_error);
             String error = String.format(errorFormat, uri.toString());
             throw new IllegalArgumentException(error);
@@ -151,7 +152,7 @@ public class BaseballCardProvider extends ContentProvider {
 
         if (row > 0) {
             Uri newUri = ContentUris.withAppendedId(uri, row);
-            this.getContext().getContentResolver().notifyChange(newUri, null);
+            context.getContentResolver().notifyChange(newUri, null);
             return newUri;
         }
 
@@ -178,13 +179,13 @@ public class BaseballCardProvider extends ContentProvider {
                 break;
 
             default:
-                String errorFormat = this.getContext().getString(
+                String errorFormat = context.getString(
                         R.string.invalid_uri_error);
                 String error = String.format(errorFormat, uri.toString());
                 throw new IllegalArgumentException(error);
         }
 
-        this.getContext().getContentResolver().notifyChange(uri, null);
+        context.getContentResolver().notifyChange(uri, null);
         return affected;
     }
 
@@ -210,13 +211,13 @@ public class BaseballCardProvider extends ContentProvider {
                 break;
 
             default:
-                String errorFormat = this.getContext().getString(
+                String errorFormat = context.getString(
                         R.string.invalid_uri_error);
                 String error = String.format(errorFormat, uri.toString());
                 throw new IllegalArgumentException(error);
         }
 
-        this.getContext().getContentResolver().notifyChange(uri, null);
+        context.getContentResolver().notifyChange(uri, null);
         return affected;
     }
 
