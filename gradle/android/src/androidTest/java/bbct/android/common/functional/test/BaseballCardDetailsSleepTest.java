@@ -22,26 +22,37 @@ import android.os.RemoteException;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
+import android.util.Log;
 import android.widget.EditText;
 import bbct.android.common.R;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class BaseballCardDetailsSleepTest extends UiAutomatorTest {
+    private static final String TAG = BaseballCardDetailsSleepTest.class.getName();
+
     @Test
     public void testSleep() throws UiObjectNotFoundException, RemoteException {
+        Log.d(TAG, "testSleep()");
         clickLaterButton();
         String brandHint = inst.getTargetContext().getString(R.string.brand_hint);
         UiSelector brandHintSelector = new UiSelector().className(EditText.class).text(brandHint);
         UiObject brandUiObject = device.findObject(brandHintSelector);
 
+        Log.d(TAG, "Type brand name...");
         String expectedBrand = "Topps";
         brandUiObject.setText(expectedBrand);
+
+        Log.d(TAG, "Sleep...");
         device.waitForIdle();
         device.sleep();
+
+        Log.d(TAG, "Wake up...");
         device.wakeUp();
         UiSelector brandSelector = new UiSelector().className(EditText.class).text(expectedBrand);
         brandUiObject = device.findObject(brandSelector);
+
+        Log.d(TAG, "Assertion...");
         String actualBrand = brandUiObject.getText();
         Assert.assertEquals(expectedBrand, actualBrand);
     }
