@@ -1,4 +1,3 @@
-/swing/build/
 db/
 /swing/dist/
 log/
@@ -15,3 +14,9 @@ screenshots
 *~
 *.class
 .idea/workspace.xml
+.gradle
+.DS_Store
+build
+*.iml
+.idea
+bbct.properties
