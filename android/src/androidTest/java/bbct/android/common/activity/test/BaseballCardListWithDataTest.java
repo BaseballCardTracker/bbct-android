@@ -36,7 +36,7 @@ import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
-import bbct.android.common.data.BaseballCard;
+import bbct.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.DataTestRule;
