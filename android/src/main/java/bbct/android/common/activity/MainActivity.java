@@ -69,7 +69,10 @@ public class MainActivity extends ActionBarActivity {
             }
             ft.commit();
 
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         }
 
         showSurveyDialog();
