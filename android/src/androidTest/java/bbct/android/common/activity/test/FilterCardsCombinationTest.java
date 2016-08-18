@@ -132,7 +132,7 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
                 boolean condition = true;
 
                 if (mask.contains(BBCTTestUtil.FilterOption.BRAND)) {
-                    condition = condition && card.getBrand().equals(test.getBrand());
+                    condition = card.getBrand().equals(test.getBrand());
                 }
 
                 if (mask.contains(BBCTTestUtil.FilterOption.YEAR)) {
