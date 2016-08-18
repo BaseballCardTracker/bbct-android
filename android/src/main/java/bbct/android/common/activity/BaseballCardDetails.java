@@ -42,6 +42,9 @@ import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.Locale;
+
 import bbct.android.common.R;
 import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.data.BaseballCard;
@@ -193,10 +196,10 @@ public class BaseballCardDetails extends Fragment {
         this.conditionSpinner.setSelection(selectedCondition);
 
         this.brandText.setText(card.getBrand());
-        this.yearText.setText(Integer.toString(card.getYear()));
-        this.numberText.setText(Integer.toString(card.getNumber()));
-        this.valueText.setText(String.format("%.2f", card.getValue() / 100.0));
-        this.countText.setText(Integer.toString(card.getCount()));
+        this.yearText.setText(String.format(Locale.getDefault(), "%d", card.getYear()));
+        this.numberText.setText(String.format(Locale.getDefault(), "%d", card.getNumber()));
+        this.valueText.setText(String.format(Locale.getDefault(), "%.2f", card.getValue() / 100.0));
+        this.countText.setText(String.format(Locale.getDefault(), "%d", card.getCount()));
         this.playerNameText.setText(card.getPlayerName());
         this.teamText.setText(card.getTeam());
 
