@@ -22,7 +22,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 import bbct.android.common.data.BaseballCard;
 import java.util.ArrayList;
 import java.util.List;
