@@ -144,12 +144,14 @@ public class BaseballCardProviderTest extends
         Cursor cursor = this.resolver.query(BaseballCardContract.CONTENT_URI,
                 BaseballCardContract.PROJECTION, null, null, null);
 
-        while (!cursor.moveToNext()) {
-            int value = cursor.getInt(cursor
-                    .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
-            Assert.assertEquals(value, newValue);
+        if (cursor != null) {
+            while (!cursor.moveToNext()) {
+                int value = cursor.getInt(cursor
+                        .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
+                Assert.assertEquals(value, newValue);
+            }
+            cursor.close();
         }
-        cursor.close();
     }
 
     public void testDeleteAll() {
