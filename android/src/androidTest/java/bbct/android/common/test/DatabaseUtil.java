@@ -67,7 +67,7 @@ public class DatabaseUtil {
     }
 
     /**
-     * Delete the database being tested. Should return the app to its inital
+     * Delete the database being tested. Should return the app to its initial
      * state after installation.
      */
     public void deleteDatabase() {

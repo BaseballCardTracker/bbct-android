@@ -54,7 +54,7 @@ public class BaseballCardCsvFileReader {
     }
 
     /**
-     * Reads baseball card data from the next line of comma-spearated values.
+     * Reads baseball card data from the next line of comma-separated values.
      *
      * @return A {@link BaseballCard} containing the data from the input stream.
      * @throws IOException
