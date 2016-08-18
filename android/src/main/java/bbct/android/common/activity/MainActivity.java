@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -64,6 +65,7 @@ public class MainActivity extends ActionBarActivity {
                 ft.add(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD);
             } else {
                 ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
+                cursor.close();
             }
             ft.commit();
 
