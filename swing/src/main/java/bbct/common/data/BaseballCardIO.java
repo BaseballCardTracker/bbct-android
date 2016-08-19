@@ -35,7 +35,7 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If an error occurs while closing the underlying
      * storage mechanism.
      */
-    public void close() throws BBCTIOException;
+    void close() throws BBCTIOException;
 
     /**
      * Insert a {@link BaseballCard} to the underlying persistent storage.
@@ -43,7 +43,7 @@ public interface BaseballCardIO {
      * @param card The {@link BaseballCard} to insert.
      * @throws BBCTIOException If any I/O errors occur while inserting.
      */
-    public void insertBaseballCard(BaseballCard card) throws BBCTIOException;
+    void insertBaseballCard(BaseballCard card) throws BBCTIOException;
 
     /**
      * Insert a batch of {@link BaseballCard}s to the underlying persistent
@@ -52,7 +52,7 @@ public interface BaseballCardIO {
      * @param cards The {@link BaseballCard}s to insert.
      * @throws BBCTIOException If any I/O errors occur while inserting.
      */
-    public void insertBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
+    void insertBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
 
     /**
      * Search for {@link BaseballCard}s matching the specified year.
@@ -62,7 +62,7 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If any I/O errors occur while reading the
      * underlying storage mechanism.
      */
-    public List<BaseballCard> getBaseballCardsByYear(int year) throws BBCTIOException;
+    List<BaseballCard> getBaseballCardsByYear(int year) throws BBCTIOException;
 
     /**
      * Search for {@link BaseballCard}s matching the specified number.
@@ -72,7 +72,7 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If any I/O errors occur while reading the
      * underlying storage mechanism.
      */
-    public List<BaseballCard> getBaseballCardsByNumber(int number) throws BBCTIOException;
+    List<BaseballCard> getBaseballCardsByNumber(int number) throws BBCTIOException;
 
     /**
      * Search for {@link BaseballCard}s matching the specified number.
@@ -84,7 +84,7 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If any I/O errors occur while reading the
      * underlying storage mechanism.
      */
-    public List<BaseballCard> getBaseballCardsByYearAndNumber(int year, int number) throws BBCTIOException;
+    List<BaseballCard> getBaseballCardsByYearAndNumber(int year, int number) throws BBCTIOException;
 
     /**
      * Search for {@link BaseballCard}s matching the specified player's name.
@@ -96,7 +96,7 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If any I/O errors occur while reading the
      * underlying storage mechanism.
      */
-    public List<BaseballCard> getBaseballCardsByPlayerName(String playerName) throws BBCTIOException;
+    List<BaseballCard> getBaseballCardsByPlayerName(String playerName) throws BBCTIOException;
 
     /**
      * Updates data in the underlying persistent storage for the given card.
@@ -105,7 +105,7 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If any I/O errors occur while writing to the
      * underlying storage mechanism.
      */
-    public void updateBaseballCard(BaseballCard card) throws BBCTIOException;
+    void updateBaseballCard(BaseballCard card) throws BBCTIOException;
 
     /**
      * Updates data in the underlying persistent storage for all the cards in
@@ -115,7 +115,7 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If any I/O errors occur while writing to the
      * underlying storage mechanism.
      */
-    public void updateBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
+    void updateBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
 
     /**
      * Removes data in the underlying persistent storage for the given card.
@@ -124,7 +124,7 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If any I/O errors occur while writing to the
      * underlying storage mechanism.
      */
-    public void removeBaseballCard(BaseballCard card) throws BBCTIOException;
+    void removeBaseballCard(BaseballCard card) throws BBCTIOException;
 
     /**
      * Removes data in the underlying persistent storage for all the cards in
@@ -134,5 +134,5 @@ public interface BaseballCardIO {
      * @throws BBCTIOException If any I/O errors occur while writing to the
      * underlying storage mechanism.
      */
-    public void removeBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
+    void removeBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
 }
