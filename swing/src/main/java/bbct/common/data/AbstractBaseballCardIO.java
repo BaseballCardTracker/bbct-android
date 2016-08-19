@@ -26,7 +26,7 @@ import java.util.List;
  * interface. It provides a default implementation of
  * {@link BaseballCardIO#updateBaseballCards(java.util.List)} and
  * {@link BaseballCardIO#insertBaseballCards(java.util.List)} which iterate
- * through the list of cards and calls {@link #updateCard(BaseballCard)} or
+ * through the list of cards and calls {@link #updateBaseballCard(BaseballCard)} or
  * {@link #insertBaseballCard(BaseballCard)} respectively on each card.
  */
 public abstract class AbstractBaseballCardIO implements BaseballCardIO {
@@ -73,7 +73,7 @@ public abstract class AbstractBaseballCardIO implements BaseballCardIO {
      *
      * @param cards The list of cards to remove.
      * @throws BBCTIOException If any I/O errors occur while writing to the
-     * underlying storage mechanism.
+     *                         underlying storage mechanism.
      */
     @Override
     public void removeBaseballCards(List<BaseballCard> cards) throws BBCTIOException {

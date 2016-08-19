@@ -270,7 +270,7 @@ public class JDBCBaseballCardIONominalTest {
 
     /**
      * Test for
-     * {@link JDBCBaseballCardIO#removeupdateBaseballCard(BaseballCard)}. Actual
+     * {@link JDBCBaseballCardIO#removeBaseballCard(BaseballCard)}. Actual
      * result is a boolean indicating whether the current pointer in ResultSet
      * is positioned after the last row (false value if it is). Expected result
      * is therefore a boolean value of false, which indicates that no rows were

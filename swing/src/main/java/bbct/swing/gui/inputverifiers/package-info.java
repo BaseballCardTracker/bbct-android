@@ -17,6 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * {@link InputVerifiers} for the Swing version of BBCT.
+ * {@link javax.swing.InputVerifier}s for the Swing version of BBCT.
  */
 package bbct.swing.gui.inputverifiers;

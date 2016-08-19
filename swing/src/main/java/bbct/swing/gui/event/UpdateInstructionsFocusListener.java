@@ -26,16 +26,16 @@ import javax.swing.JComponent;
 
 /**
  * {@link UpdateInstructionsFocusListener} changes the text of the instruction
- * label in {@link bbct.gui.BBCTFrame} when a Swing component gains focus. This
+ * label in {@link BBCTFrame} when a Swing component gains focus. This
  * is typically used for {@link javax.swing.JTextField}s.
  *
- * @see bbct.gui.BBCTFrame#setInstructions(java.lang.String)
+ * @see BBCTFrame#setInstructions(java.lang.String)
  */
 public class UpdateInstructionsFocusListener extends FocusAdapter {
 
     /**
      * Creates a new {@link UpdateInstructionsFocusListener} that will update
-     * the instruction label in {@link bbct.gui.BBCTFrame} to the given text.
+     * the instruction label in {@link BBCTFrame} to the given text.
      *
      * @param instr The instruction text to use.
      */
@@ -44,7 +44,7 @@ public class UpdateInstructionsFocusListener extends FocusAdapter {
     }
 
     /**
-     * Updates the instruction label in {@link bbct.gui.BBCTFrame} when a
+     * Updates the instruction label in {@link BBCTFrame} when a
      * focusGained event occurs.
      *
      * @param fe The {@link java.awt.event.FocusEvent} which triggered this

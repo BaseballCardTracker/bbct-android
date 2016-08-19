@@ -58,7 +58,7 @@ import javax.swing.event.AncestorListener;
  * {@link #CardDetailsPanel()} or {@link #CardDetailsPanel(boolean)} with a
  * value of {@code true}, allows editing of all of the text fields. The second
  * mode, set with {@link #CardDetailsPanel(boolean)} or
- * {@link #CardDetailsPanel(bbct.data.BaseballCard, boolean)} with a value of
+ * {@link #CardDetailsPanel(BaseballCard, boolean)} with a value of
  * {@code false} for the {@code boolean } parameter, only allows editing of the
  * value and count text fields.
  *

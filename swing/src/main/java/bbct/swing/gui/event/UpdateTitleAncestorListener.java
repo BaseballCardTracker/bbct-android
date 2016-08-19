@@ -18,35 +18,40 @@
  */
 package bbct.swing.gui.event;
 
+import bbct.swing.gui.BBCTFrame;
+import bbct.swing.gui.FindCardsByNumberPanel;
+import bbct.swing.gui.FindCardsByPlayerNamePanel;
+import bbct.swing.gui.FindCardsByYearAndNumberPanel;
+import bbct.swing.gui.FindCardsByYearPanel;
 import javax.swing.JFrame;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 /**
  * {@link UpdateTitleAncestorListener} changes the title of
- * {@link bbct.gui.BBCTFrame} when a component is added to the component tree.
+ * {@link BBCTFrame} when a component is added to the component tree.
  * This is typically used for the {@link javax.swing.JPanel} subclasses in the
- * {@link bbct.gui} package.
+ * {@link bbct.swing.gui} package.
  *
- * @see bbct.gui.FindCardsByYearPanel
- * @see bbct.gui.FindCardsByNumberPanel
- * @see bbct.gui.FindCardsByYearAndNumberPanel
- * @see bbct.gui.FindCardsByPlayerNamePanel
+ * @see FindCardsByYearPanel
+ * @see FindCardsByNumberPanel
+ * @see FindCardsByYearAndNumberPanel
+ * @see FindCardsByPlayerNamePanel
  */
 public class UpdateTitleAncestorListener implements AncestorListener {
 
     /**
      * Creates a new {@link UpdateTitleAncestorListener} which will change the
-     * title of {@link bbct.gui.BBCTFrame} to the given text.
+     * title of {@link BBCTFrame} to the given text.
      *
-     * @param title The text to set in the title of {@link bbct.gui.BBCTFrame}.
+     * @param title The text to set in the title of {@link BBCTFrame}.
      */
     public UpdateTitleAncestorListener(String title) {
         this.title = title;
     }
 
     /**
-     * Changes the title of {@link bbct.gui.BBCTFrame} when a component is added
+     * Changes the title of {@link BBCTFrame} when a component is added
      * tot he component tree.
      *
      * @param ae The {@link javax.swing.event.AncestorEvent} which triggered

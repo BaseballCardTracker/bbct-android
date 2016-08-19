@@ -25,16 +25,16 @@ import javax.swing.event.AncestorListener;
 
 /**
  * {@link UpdateInstructionsAncestorListener} changes the text of the
- * instruction label in {@link bbct.gui.BBCTFrame} when a Swing component is
+ * instruction label in {@link BBCTFrame} when a Swing component is
  * added to the component tree.
  *
- * @see bbct.gui.BBCTFrame#setInstructions(java.lang.String)
+ * @see BBCTFrame#setInstructions(java.lang.String)
  */
 public class UpdateInstructionsAncestorListener implements AncestorListener {
 
     /**
      * Creates a new {@link UpdateInstructionsAncestorListener} that will update
-     * the instruction label in {@link bbct.gui.BBCTFrame} to the given text.
+     * the instruction label in {@link BBCTFrame} to the given text.
      *
      * @param instr The instruction text to use.
      */
