@@ -19,4 +19,4 @@
 /**
  * Model classes in the Model-View-Controller for BBCT for Android.
  */
-package bbct.android.common.data;
+package bbct.data;

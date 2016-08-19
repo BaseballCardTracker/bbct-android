@@ -1,6 +1,6 @@
 package bbct.android.common.test.matcher;
 
-import bbct.android.common.data.BaseballCard;
+import bbct.data.BaseballCard;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
