@@ -173,7 +173,7 @@ public class BBCTFrame extends JFrame {
     }
 
     private static List<BaseballCard> readCards(String fileName) throws IOException {
-        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+        List<BaseballCard> cards = new ArrayList<>();
         BufferedReader in = null;
 
         try {

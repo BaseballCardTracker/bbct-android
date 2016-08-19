@@ -320,7 +320,7 @@ public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
     }
 
     private List<BaseballCard> getBaseballCards(ResultSet rs) throws SQLException {
-        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+        List<BaseballCard> cards = new ArrayList<>();
 
         while (rs.next()) {
             String brand = rs.getString(BRAND_COL_NAME);

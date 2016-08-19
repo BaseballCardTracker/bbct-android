@@ -170,7 +170,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByYear() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
+        List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 
         List<BaseballCard> result = instance.getBaseballCardsByYear(this.card
@@ -188,7 +188,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByNumber() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
+        List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 
         List<BaseballCard> result = instance.getBaseballCardsByNumber(this.card
@@ -207,7 +207,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByYearAndNumber() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
+        List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 
         List<BaseballCard> result = instance.getBaseballCardsByYearAndNumber(
@@ -225,7 +225,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByPlayerName() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
+        List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 
         List<BaseballCard> result = instance

@@ -94,7 +94,7 @@ public class EditCardsPanel extends JPanel {
         JButton deleteButton = new JButton(BBCTStringResources.ButtonResources.DELETE_BUTTON);
         deleteButton.addActionListener(evt -> {
             try {
-                List<CardDetailsPanel> toRemove = new ArrayList<CardDetailsPanel>();
+                List<CardDetailsPanel> toRemove = new ArrayList<>();
                 int numMarked = 0, numCards = 0;
                 CardDetailsPanel activePanel = null;
 
@@ -167,7 +167,7 @@ public class EditCardsPanel extends JPanel {
         final JButton doneButton = new JButton(BBCTStringResources.ButtonResources.DONE_BUTTON);
         doneButton.addActionListener(evt -> {
             try {
-                List<BaseballCard> cards = new ArrayList<BaseballCard>();
+                List<BaseballCard> cards = new ArrayList<>();
 
                 synchronized (EditCardsPanel.this.getTreeLock()) {
                     Component[] panels = EditCardsPanel.this.allCardDetailsPanel.getComponents();
