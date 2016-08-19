@@ -28,8 +28,6 @@ import bbct.swing.gui.event.SetDefaultButtonAncestorListener;
 import bbct.swing.gui.event.ShowCardActionListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -70,26 +68,23 @@ public class AddCardsPanel extends JPanel {
 
         final JButton addCardButton = new JButton(BBCTStringResources.ButtonResources.ADD_CARD_BUTTON);
         addCardButton.setFont(FontResources.BUTTON_FONT);
-        addCardButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                try {
-                    BaseballCard card = AddCardsPanel.this.cardDetailsPanel.getBaseballCard();
-                    AddCardsPanel.this.bcio.insertBaseballCard(card);
-                    AddCardsPanel.this.cardDetailsPanel.reset();
+        addCardButton.addActionListener(evt -> {
+            try {
+                BaseballCard card = AddCardsPanel.this.cardDetailsPanel.getBaseballCard();
+                AddCardsPanel.this.bcio.insertBaseballCard(card);
+                AddCardsPanel.this.cardDetailsPanel.reset();
 
-                    BBCTFrame frame = (BBCTFrame) AddCardsPanel.this.getTopLevelAncestor();
-                    frame.setInstructions(BBCTStringResources.InstructionResources.CARD_ADDED_INSTRUCTIONS);
-                } catch (BBCTIOException ex) {
-                    Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Storage I/O error.", ex);
-                    JOptionPane.showMessageDialog(AddCardsPanel.this, ex.getMessage(), ex.getMessage(), JOptionPane.ERROR_MESSAGE);
-                } catch (InputException ex) {
-                    Logger.getLogger(AddCardsPanel.class.getName()).log(Level.INFO, "Invalid input", ex);
-                    JOptionPane.showMessageDialog(AddCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.INPUT_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
-                } catch (Exception ex) {
-                    Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Unexpected exception", ex);
-                    JOptionPane.showMessageDialog(AddCardsPanel.this, ex, BBCTStringResources.ErrorResources.UNEXPECTED_EXCEPTION_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
-                }
+                BBCTFrame frame = (BBCTFrame) AddCardsPanel.this.getTopLevelAncestor();
+                frame.setInstructions(BBCTStringResources.InstructionResources.CARD_ADDED_INSTRUCTIONS);
+            } catch (BBCTIOException ex) {
+                Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Storage I/O error.", ex);
+                JOptionPane.showMessageDialog(AddCardsPanel.this, ex.getMessage(), ex.getMessage(), JOptionPane.ERROR_MESSAGE);
+            } catch (InputException ex) {
+                Logger.getLogger(AddCardsPanel.class.getName()).log(Level.INFO, "Invalid input", ex);
+                JOptionPane.showMessageDialog(AddCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.INPUT_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Unexpected exception", ex);
+                JOptionPane.showMessageDialog(AddCardsPanel.this, ex, BBCTStringResources.ErrorResources.UNEXPECTED_EXCEPTION_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
             }
         });
         buttonsPanel.add(addCardButton);

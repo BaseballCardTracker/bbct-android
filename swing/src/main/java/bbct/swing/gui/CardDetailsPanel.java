@@ -33,8 +33,6 @@ import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -460,29 +458,21 @@ public class CardDetailsPanel extends JPanel {
         JPanel buttonPanel = new JPanel();
         JButton nextButton = new JButton("Next");
 
-        nextButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                cl.next(cardPanel);
-            }
-        });
+        nextButton.addActionListener(ae -> cl.next(cardPanel));
 
         buttonPanel.add(nextButton);
 
         JButton getCardButton = new JButton("Get Card");
 
-        getCardButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                try {
-                    // TODO: How do I get the currently visible CardDetailsPanel?
+        getCardButton.addActionListener(ae -> {
+            try {
+                // TODO: How do I get the currently visible CardDetailsPanel?
 //                    CardDetailsPanel panel = (CardDetailsPanel)cl.
-                    BaseballCard card = editablePanel.getBaseballCard();
+                BaseballCard card = editablePanel.getBaseballCard();
 
-                    JOptionPane.showMessageDialog(frame, card, "Baseball Card", JOptionPane.INFORMATION_MESSAGE);
-                } catch (InputException ex) {
-                    JOptionPane.showMessageDialog(frame, ex, "Input Error", JOptionPane.ERROR_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(frame, card, "Baseball Card", JOptionPane.INFORMATION_MESSAGE);
+            } catch (InputException ex) {
+                JOptionPane.showMessageDialog(frame, ex, "Input Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 

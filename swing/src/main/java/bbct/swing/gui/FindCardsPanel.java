@@ -71,29 +71,26 @@ public class FindCardsPanel extends JPanel {
 
         final JButton findButton = new JButton(BBCTStringResources.ButtonResources.FIND_BUTTON);
         findButton.setFont(FontResources.BUTTON_FONT);
-        findButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    List<BaseballCard> cards = FindCardsPanel.this.inputPanel.getBaseballCards();
+        findButton.addActionListener(evt -> {
+            try {
+                List<BaseballCard> cards = FindCardsPanel.this.inputPanel.getBaseballCards();
 
-                    if (cards.isEmpty()) {
-                        JOptionPane.showMessageDialog(FindCardsPanel.this, BBCTStringResources.ErrorResources.NO_CARDS_FOUND_ERROR, BBCTStringResources.ErrorResources.NO_CARDS_FOUND_ERROR_TITLE, JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JPanel editCardsPanel = new EditCardsPanel(cards, FindCardsPanel.this.bcio);
-                        Container parent = FindCardsPanel.this.getParent();
-                        CardLayout cl = (CardLayout) parent.getLayout();
+                if (cards.isEmpty()) {
+                    JOptionPane.showMessageDialog(FindCardsPanel.this, BBCTStringResources.ErrorResources.NO_CARDS_FOUND_ERROR, BBCTStringResources.ErrorResources.NO_CARDS_FOUND_ERROR_TITLE, JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JPanel editCardsPanel = new EditCardsPanel(cards, FindCardsPanel.this.bcio);
+                    Container parent1 = FindCardsPanel.this.getParent();
+                    CardLayout cl = (CardLayout) parent1.getLayout();
 
-                        parent.add(editCardsPanel, BBCTFrame.EDIT_CARDS_PANEL_NAME);
-                        cl.show(parent, BBCTFrame.EDIT_CARDS_PANEL_NAME);
-                    }
-                } catch (InputException ex) {
-                    JOptionPane.showMessageDialog(FindCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.INPUT_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
-                    Logger.getLogger(FindCardsPanel.class.getName()).log(Level.INFO, null, ex);
-                } catch (BBCTIOException ex) {
-                    Logger.getLogger(FindCardsPanel.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-                    JOptionPane.showMessageDialog(FindCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.IO_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+                    parent1.add(editCardsPanel, BBCTFrame.EDIT_CARDS_PANEL_NAME);
+                    cl.show(parent1, BBCTFrame.EDIT_CARDS_PANEL_NAME);
                 }
+            } catch (InputException ex) {
+                JOptionPane.showMessageDialog(FindCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.INPUT_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(FindCardsPanel.class.getName()).log(Level.INFO, null, ex);
+            } catch (BBCTIOException ex) {
+                Logger.getLogger(FindCardsPanel.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+                JOptionPane.showMessageDialog(FindCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.IO_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
             }
         });
         buttonsPanel.add(findButton);

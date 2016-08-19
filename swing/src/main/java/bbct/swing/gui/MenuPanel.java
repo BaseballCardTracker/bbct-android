@@ -25,8 +25,6 @@ import bbct.swing.gui.event.ShowCardActionListener;
 import bbct.swing.gui.event.UpdateInstructionsAncestorListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -72,12 +70,7 @@ public class MenuPanel extends JPanel {
 
         JButton exitButton = new JButton(BBCTStringResources.ButtonResources.EXIT_BUTTON);
         exitButton.setFont(FontResources.MENU_BUTTON_FONT);
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                System.exit(0);
-            }
-        });
+        exitButton.addActionListener(evt -> System.exit(0));
         this.add(exitButton);
 
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.MAIN_PANEL_TITLE));
