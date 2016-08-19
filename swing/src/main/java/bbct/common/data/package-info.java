@@ -17,6 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * Classes to access the underlaying data store in the Swing version of BBCT.
+ * Classes to access the underlying data store in the Swing version of BBCT.
  */
 package bbct.common.data;
