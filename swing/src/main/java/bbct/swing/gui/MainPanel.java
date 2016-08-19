@@ -20,6 +20,7 @@ package bbct.swing.gui;
 
 import bbct.common.data.BaseballCardIO;
 import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 /**
  * {@link MainPanel} contains all the other {@link javax.swing.JPanel}s used in
@@ -37,7 +38,7 @@ import java.awt.CardLayout;
  * @see AboutPanel
  */
 @SuppressWarnings("serial")
-public class MainPanel extends javax.swing.JPanel {
+public class MainPanel extends JPanel {
 
     /**
      * Creates a new {@link MainPanel}.
