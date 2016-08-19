@@ -164,11 +164,11 @@ public class BBCTFrame extends JFrame {
     public static void main(String[] args) throws BBCTIOException, IOException {
         final String db_url = "jdbc:hsqldb:mem:db/bbct.db";
         final String fileName = "util/cards.csv";
-        BaseballCardIO bbcio = new JDBCBaseballCardIO(db_url);
-        bbcio.insertBaseballCards(BBCTFrame.readCards(fileName));
+        BaseballCardIO bcio = new JDBCBaseballCardIO(db_url);
+        bcio.insertBaseballCards(BBCTFrame.readCards(fileName));
 
         // TODO: Figure out how to give some indication that this is a test, possibly in the title.
-        JFrame f = new BBCTFrame(bbcio);
+        JFrame f = new BBCTFrame(bcio);
         f.setVisible(true);
     }
 
