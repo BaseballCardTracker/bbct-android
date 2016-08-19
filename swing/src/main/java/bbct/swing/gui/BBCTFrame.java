@@ -133,7 +133,7 @@ public class BBCTFrame extends JFrame {
             }
         });
 
-        this.mainPanel = new MainPanel(this.bcio);
+        MainPanel mainPanel = new MainPanel(this.bcio);
         this.getContentPane().add(mainPanel, BorderLayout.CENTER);
 
         JPanel instructionPanel = new JPanel();
@@ -154,7 +154,6 @@ public class BBCTFrame extends JFrame {
     }
     private static final String ICON_PATH = "res/baseball.png";
     private JLabel instructionLabel;
-    private MainPanel mainPanel;
     private BaseballCardIO bcio = null;
     /**
      * Tests for {@link BBCTFrame}. Creates a
