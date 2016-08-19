@@ -20,54 +20,13 @@ package bbct.common.data;
 
 import bbct.common.exceptions.BBCTIOException;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  *
  */
 public class AbstractBaseballCardIONominalTest {
-
-    /**
-     *
-     */
-    public AbstractBaseballCardIONominalTest() {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    /**
-     *
-     */
-    @Before
-    public void setUp() {
-    }
-
-    /**
-     *
-     */
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test for {@link AbstractBaseballCardIO#updateBaseballCards}.
      *
