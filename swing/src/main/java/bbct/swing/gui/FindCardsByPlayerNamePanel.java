@@ -47,6 +47,9 @@ import javax.swing.JTextField;
  */
 @SuppressWarnings("serial")
 public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
+    private JTextField playerNameTextField;
+    private BaseballCardIO bcio = null;
+    private InputVerifier notEmptyVerifier = new NotEmptyInputVerifier();
 
     /**
      * Creates a new {@link FindCardsByPlayerNamePanel}.
@@ -110,9 +113,6 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
         this.add(inputPanel, BorderLayout.PAGE_START);
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_BY_PLAYER_NAME_PANEL_TITLE));
     }
-    private JTextField playerNameTextField;
-    private BaseballCardIO bcio = null;
-    private InputVerifier notEmptyVerifier = new NotEmptyInputVerifier();
 
     /**
      * This is a test function for {@link FindCardsByPlayerNamePanel}. It simply

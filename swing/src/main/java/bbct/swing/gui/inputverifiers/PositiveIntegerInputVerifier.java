@@ -28,6 +28,7 @@ import javax.swing.JFormattedTextField;
  * typically used for text fields that hold a baseball card number.
  */
 public class PositiveIntegerInputVerifier extends InputVerifier {
+    private InputVerifier notEmpty = new NotEmptyInputVerifier();
 
     /**
      * Verify that a {@link javax.swing.JFormattedTextField} contains a positive
@@ -51,5 +52,4 @@ public class PositiveIntegerInputVerifier extends InputVerifier {
 
         return false;
     }
-    private InputVerifier notEmpty = new NotEmptyInputVerifier();
 }

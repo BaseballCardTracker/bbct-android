@@ -28,6 +28,7 @@ import javax.swing.JTextField;
  * integer that can represent a year.
  */
 public class YearInputVerifier extends InputVerifier {
+    private InputVerifier isNumber = new PositiveIntegerInputVerifier();
 
     /**
      * Verify that a {@link javax.swing.JFormattedTextField} contains a positive
@@ -48,5 +49,4 @@ public class YearInputVerifier extends InputVerifier {
 
         return false;
     }
-    private InputVerifier isNumber = new PositiveIntegerInputVerifier();
 }

@@ -41,7 +41,6 @@ import org.junit.Test;
  * cards
  */
 public class JDBCBaseballCardIONominalTest {
-
     private String url = "jdbc:hsqldb:mem:baseball_cards.db";
     private JDBCBaseballCardIO instance = null;
     private Connection conn = null;

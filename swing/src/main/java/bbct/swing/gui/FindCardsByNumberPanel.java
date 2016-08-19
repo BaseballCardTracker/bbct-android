@@ -49,6 +49,9 @@ import javax.swing.text.NumberFormatter;
  */
 @SuppressWarnings("serial")
 public class FindCardsByNumberPanel extends FindCardsByPanel {
+    private JFormattedTextField numberTextField;
+    private BaseballCardIO bcio = null;
+    private InputVerifier numberVerifier = new PositiveIntegerInputVerifier();
 
     /**
      * Creates a new {@link FindCardsByNumberPanel}.
@@ -130,9 +133,6 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
         this.add(inputPanel, BorderLayout.PAGE_START);
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_BY_NUMBER_PANEL_TITLE));
     }
-    private JFormattedTextField numberTextField;
-    private BaseballCardIO bcio = null;
-    private InputVerifier numberVerifier = new PositiveIntegerInputVerifier();
 
     /**
      * This is a test function for {@link FindCardsByNumberPanel}. It simply

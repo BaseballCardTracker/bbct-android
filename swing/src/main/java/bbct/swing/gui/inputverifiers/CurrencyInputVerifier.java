@@ -27,6 +27,7 @@ import javax.swing.JFormattedTextField;
  * {@link javax.swing.JFormattedTextField} contains a positive dollar amount.
  */
 public class CurrencyInputVerifier extends InputVerifier {
+    private InputVerifier notEmptyVerifier = new NotEmptyInputVerifier();
 
     /**
      * Verify that a {@link javax.swing.JFormattedTextField} contains a positive
@@ -51,5 +52,4 @@ public class CurrencyInputVerifier extends InputVerifier {
 
         return false;
     }
-    private InputVerifier notEmptyVerifier = new NotEmptyInputVerifier();
 }

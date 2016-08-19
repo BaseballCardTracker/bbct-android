@@ -50,6 +50,11 @@ import javax.swing.text.NumberFormatter;
  */
 @SuppressWarnings("serial")
 public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
+    private JFormattedTextField numberTextField;
+    private JFormattedTextField yearTextField;
+    private BaseballCardIO bcio = null;
+    private InputVerifier yearVerifier = new YearInputVerifier();
+    private InputVerifier numberVerifier = new PositiveIntegerInputVerifier();
 
     /**
      * Creates a new {@link FindCardsByYearAndNumberPanel} with two JLabels and
@@ -173,11 +178,6 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         this.add(inputPanel, BorderLayout.PAGE_START);
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_BY_YEAR_AND_NUMBER_PANEL_TITLE));
     }
-    private JFormattedTextField numberTextField;
-    private JFormattedTextField yearTextField;
-    private BaseballCardIO bcio = null;
-    private InputVerifier yearVerifier = new YearInputVerifier();
-    private InputVerifier numberVerifier = new PositiveIntegerInputVerifier();
 
     /**
      * This is a test function for {@link FindCardsByYearAndNumberPanel}. It
