@@ -51,6 +51,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 /**
  * {@link CardDetailsPanel} contains labels and text fields for the data stored
  * in a {@link bbct.data.BaseballCard} model object. This panel can be used in
@@ -444,7 +446,7 @@ public class CardDetailsPanel extends JPanel {
         // TODO: Add a way to test getBaseballCard()
 
         final JFrame frame = new JFrame("CardDetailsPanel Test");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         final JPanel cardPanel = new JPanel();
         final CardLayout cl = new CardLayout();

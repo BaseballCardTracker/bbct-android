@@ -30,6 +30,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 /**
  * {@link MenuPanel} contains buttons that specify the primary actions a user
  * can take in the BBCT application. These are Add Cards, Find Cards, About
@@ -86,7 +88,7 @@ public class MenuPanel extends JPanel {
      */
     public static void main(String[] args) {
         JFrame f = new JFrame("MenuPanel Test");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(EXIT_ON_CLOSE);
         f.add(new MenuPanel());
         f.pack();
         f.setVisible(true);

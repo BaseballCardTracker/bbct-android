@@ -35,6 +35,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 /**
  * This panel contains controls which allow the user to add data for baseball
  * cards to the underlying storage. The labels and text fields are delegated to
@@ -110,7 +112,7 @@ public class AddCardsPanel extends JPanel {
      */
     public static void main(String[] args) {
         JFrame f = new JFrame("AddCardsPanel Test");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(EXIT_ON_CLOSE);
         f.add(new AddCardsPanel(null));
         f.pack();
         f.setVisible(true);

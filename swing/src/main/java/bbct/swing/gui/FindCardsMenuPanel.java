@@ -30,6 +30,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 /**
  * {@link FindCardsMenuPanel} has four buttons which allow the user to choose
  * which criteria to use when searching for baseball card data. The four options
@@ -93,7 +95,7 @@ public class FindCardsMenuPanel extends JPanel {
      */
     public static void main(String[] args) {
         JFrame f = new JFrame("FindCardsMenuPanel Test");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(EXIT_ON_CLOSE);
         f.add(new FindCardsMenuPanel());
         f.pack();
         f.setVisible(true);

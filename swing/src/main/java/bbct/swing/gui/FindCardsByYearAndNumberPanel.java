@@ -43,6 +43,8 @@ import javax.swing.JPanel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 /**
  * {@link FindCardsByYearAndNumberPanel} allows the user to input a card number
  * and year. These values are used as the parameters when searching the
@@ -189,7 +191,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
     public static void main(String[] args) {
         JFrame frame = new JFrame("FindCardsByNumberPanel Test");
         frame.add(new FindCardsByYearAndNumberPanel(null));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setSize(400, 425);
         frame.setVisible(true);
     }
