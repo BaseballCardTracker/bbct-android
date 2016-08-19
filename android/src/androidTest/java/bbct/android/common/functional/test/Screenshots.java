@@ -29,7 +29,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import bbct.android.common.R;
-import bbct.android.common.data.BaseballCard;
+import bbct.data.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
 import java.io.File;
 import org.junit.Before;

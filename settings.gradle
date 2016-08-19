@@ -1,2 +1,2 @@
-include ':swing'
+include ':swing', ':lib'
 include 'android'

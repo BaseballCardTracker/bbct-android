@@ -22,7 +22,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import bbct.android.common.data.BaseballCard;
+import bbct.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import java.util.List;
