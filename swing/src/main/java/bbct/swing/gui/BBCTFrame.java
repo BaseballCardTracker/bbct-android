@@ -31,7 +31,6 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -162,7 +161,7 @@ public class BBCTFrame extends JFrame {
      *
      * @param args Command-line arguments. (ignored)
      */
-    public static void main(String[] args) throws BBCTIOException, FileNotFoundException, IOException {
+    public static void main(String[] args) throws BBCTIOException, IOException {
         final String db_url = "jdbc:hsqldb:mem:db/bbct.db";
         final String fileName = "util/cards.csv";
         BaseballCardIO bbcio = new JDBCBaseballCardIO(db_url);
@@ -173,7 +172,7 @@ public class BBCTFrame extends JFrame {
         f.setVisible(true);
     }
 
-    private static List<BaseballCard> readCards(String fileName) throws FileNotFoundException, IOException {
+    private static List<BaseballCard> readCards(String fileName) throws IOException {
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
         BufferedReader in = null;
 
