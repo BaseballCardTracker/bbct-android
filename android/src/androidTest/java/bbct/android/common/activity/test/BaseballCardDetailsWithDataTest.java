@@ -29,7 +29,7 @@ import android.support.test.uiautomator.UiDevice;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
-import bbct.android.common.data.BaseballCard;
+import bbct.data.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
 import org.junit.After;
 import org.junit.Before;
