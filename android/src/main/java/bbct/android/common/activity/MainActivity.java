@@ -26,7 +26,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,7 +39,7 @@ import com.google.analytics.tracking.android.EasyTracker;
 import io.fabric.sdk.android.Fabric;
 import java.net.URISyntaxException;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
     public static final String PREFS = "bbct.prefs";
     public static final String SURVEY_TAKEN_PREF = "survey";
 
@@ -64,10 +65,14 @@ public class MainActivity extends ActionBarActivity {
                 ft.add(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD);
             } else {
                 ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
+                cursor.close();
             }
             ft.commit();
 
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
         }
 
         showSurveyDialog();
