@@ -132,6 +132,7 @@ dependencies {
         transitive = true;
     }
     compile 'com.jakewharton:butterknife:5.1.2'
+    compile project(':lib')
     liteCompile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile 'com.android.support.test:runner:0.4'
     androidTestCompile 'com.android.support.test:rules:0.4'

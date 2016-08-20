@@ -22,7 +22,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import bbct.android.common.data.BaseballCard;
+import bbct.data.BaseballCard;
 import java.util.ArrayList;
 import java.util.List;
 

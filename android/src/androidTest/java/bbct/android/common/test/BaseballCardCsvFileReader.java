@@ -18,7 +18,7 @@
  */
 package bbct.android.common.test;
 
-import bbct.android.common.data.BaseballCard;
+import bbct.data.BaseballCard;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

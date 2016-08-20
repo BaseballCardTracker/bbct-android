@@ -20,7 +20,7 @@ package bbct.android.common.test.rule;
 
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
-import bbct.android.common.data.BaseballCard;
+import bbct.data.BaseballCard;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 
