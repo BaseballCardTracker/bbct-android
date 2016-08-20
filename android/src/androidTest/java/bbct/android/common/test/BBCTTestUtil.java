@@ -26,7 +26,7 @@ import android.support.test.espresso.ViewInteraction;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
 import bbct.android.common.R;
-import bbct.android.common.data.BaseballCard;
+import bbct.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import java.util.ArrayList;
 import java.util.EnumSet;

@@ -25,17 +25,14 @@ import android.support.test.uiautomator.UiSelector;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
+import bbct.android.common.R;
+import bbct.android.common.test.rule.DataTestRule;
+import bbct.data.BaseballCard;
+import java.io.File;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.io.File;
-
-import bbct.android.common.R;
-import bbct.android.common.data.BaseballCard;
-import bbct.android.common.test.rule.DataTestRule;
 
 import static junit.framework.Assert.assertTrue;
 
