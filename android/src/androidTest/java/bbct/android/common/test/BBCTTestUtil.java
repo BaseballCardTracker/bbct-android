@@ -28,7 +28,7 @@ import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import bbct.android.common.R;
-import bbct.android.common.data.BaseballCard;
+import bbct.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import java.util.ArrayList;
 import java.util.EnumSet;
