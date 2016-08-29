@@ -308,18 +308,25 @@ public class BaseballCardList extends ListFragment {
             for (String key : this.filterParams.keySet()) {
                 String value = this.filterParams.getString(key);
 
-                if (key.equals(FilterCards.YEAR_EXTRA)) {
-                    sb.append(BaseballCardContract.YEAR_SELECTION);
-                } else if (key.equals(FilterCards.BRAND_EXTRA)) {
-                    sb.append(BaseballCardContract.BRAND_SELECTION);
-                } else if (key.equals(FilterCards.NUMBER_EXTRA)) {
-                    sb.append(BaseballCardContract.NUMBER_SELECTION);
-                } else if (key.equals(FilterCards.PLAYER_NAME_EXTRA)) {
-                    sb.append(BaseballCardContract.PLAYER_NAME_SELECTION);
-                } else if (key.equals(FilterCards.TEAM_EXTRA)) {
-                    sb.append(BaseballCardContract.TEAM_SELECTION);
-                } else {
-                    Log.e(TAG, "Invalid key: " + key);
+                switch (key) {
+                    case FilterCards.YEAR_EXTRA:
+                        sb.append(BaseballCardContract.YEAR_SELECTION);
+                        break;
+                    case FilterCards.BRAND_EXTRA:
+                        sb.append(BaseballCardContract.BRAND_SELECTION);
+                        break;
+                    case FilterCards.NUMBER_EXTRA:
+                        sb.append(BaseballCardContract.NUMBER_SELECTION);
+                        break;
+                    case FilterCards.PLAYER_NAME_EXTRA:
+                        sb.append(BaseballCardContract.PLAYER_NAME_SELECTION);
+                        break;
+                    case FilterCards.TEAM_EXTRA:
+                        sb.append(BaseballCardContract.TEAM_SELECTION);
+                        break;
+                    default:
+                        Log.e(TAG, "Invalid key: " + key);
+                        break;
                 }
 
                 args[numQueries] = value;
