@@ -35,7 +35,7 @@ public class DatabaseUtil {
     /**
      * Create a {@link DatabaseUtil} object for the given Android package.
      *
-     * @param packageName Name of the Android package being tested.
+     * @param context Context the app being tested.
      */
     public DatabaseUtil(Context context) {
         String sqlCreate = "CREATE TABLE IF NOT EXISTS " + BaseballCardContract.TABLE_NAME + "("
@@ -67,7 +67,7 @@ public class DatabaseUtil {
     }
 
     /**
-     * Delete the database being tested. Should return the app to its inital
+     * Delete the database being tested. Should return the app to its initial
      * state after installation.
      */
     public void deleteDatabase() {

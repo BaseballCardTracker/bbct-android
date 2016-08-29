@@ -36,7 +36,7 @@ import java.util.Arrays;
 /**
  * {@link ContentProvider} for baseball card data.
  */
-public class BaseballCardProvider extends ContentProvider {
+public abstract class BaseballCardProvider extends ContentProvider {
 
     protected static final int ALL_CARDS = 1;
     protected static final int CARD_ID = 2;
