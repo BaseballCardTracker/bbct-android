@@ -38,8 +38,7 @@ import junit.framework.Assert;
 /**
  * Tests for {@link BaseballCardProvider}.
  */
-public class BaseballCardProviderTest extends
-        ProviderTestCase2<BaseballCardProvider> {
+public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> extends ProviderTestCase2<T> {
     private static final String CREATE_TABLE = "CREATE TABLE baseball_cards"
             + "  (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
             + "    autographed INTEGER, condition       TEXT,"
@@ -77,8 +76,8 @@ public class BaseballCardProviderTest extends
 
     private ContentResolver resolver = null;
 
-    public BaseballCardProviderTest() {
-        super(BaseballCardProvider.class, BaseballCardContract.AUTHORITY);
+    public BaseballCardProviderTest(Class<T> providerClass) {
+        super(providerClass, BaseballCardContract.AUTHORITY);
     }
 
     @Override
