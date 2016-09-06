@@ -34,8 +34,8 @@ android {
         applicationId "bbct.android.common"
         minSdkVersion 18
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 18
+        versionName "0.6.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -54,13 +54,9 @@ android {
     productFlavors {
         lite {
             applicationId "bbct.android"
-            versionCode 17
-            versionName "0.6.4"
         }
         premium {
             applicationId "bbct.android.premium"
-            versionCode 16
-            versionName "0.6.4"
         }
     }
     packagingOptions {
