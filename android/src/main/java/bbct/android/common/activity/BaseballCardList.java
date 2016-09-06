@@ -352,15 +352,15 @@ public class BaseballCardList extends ListFragment {
     private void swapCursor(Cursor newCursor) {
         Log.d(TAG, "swapCursor()");
         Cursor oldCursor = this.adapter.getCursor();
-        this.getActivity().stopManagingCursor(oldCursor);
+
+        if (oldCursor != null) {
+            oldCursor.close();
+            this.getActivity().stopManagingCursor(oldCursor);
+        }
 
         if (newCursor != null) {
             this.getActivity().startManagingCursor(newCursor);
             this.adapter.changeCursor(newCursor);
-        }
-
-        if (oldCursor != null) {
-            oldCursor.close();
         }
     }
 
