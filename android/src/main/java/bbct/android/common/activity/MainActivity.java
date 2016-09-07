@@ -38,12 +38,18 @@ import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
 import io.fabric.sdk.android.Fabric;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     public static final String PREFS = "bbct.prefs";
     public static final String SURVEY_TAKEN_PREF = "survey";
+    public static final String INSTALL_DATE = "install_date";
 
     private static final String TAG = MainActivity.class.getName();
+    private static final int SURVEY_DELAY = 7;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,27 +87,45 @@ public class MainActivity extends AppCompatActivity {
     private void showSurveyDialog() {
         final SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
 
-        if (!prefs.contains(SURVEY_TAKEN_PREF)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.survey);
-            builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putBoolean(SURVEY_TAKEN_PREF, true);
-                    editor.apply();
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        Date today = new Date();
+        if (!prefs.contains(INSTALL_DATE)) {
+            prefs.edit().putString(INSTALL_DATE, dateFormat.format(today)).apply();
+        }
 
-                    Intent surveyIntent = null;
-                    try {
-                        surveyIntent = Intent.parseUri(getString(R.string.survey_uri), 0);
-                    } catch (URISyntaxException e) {
-                        Log.e(TAG, "Error parsing URI for survey", e);
-                    }
-                    startActivity(surveyIntent);
+        if (!prefs.contains(SURVEY_TAKEN_PREF)) {
+            String installDate = prefs.getString(INSTALL_DATE, today.toString());
+
+            try {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(dateFormat.parse(installDate));
+                cal.add(Calendar.DATE, SURVEY_DELAY);
+                if (today.after(cal.getTime())) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(R.string.survey);
+                    builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putBoolean(SURVEY_TAKEN_PREF, true);
+                            editor.apply();
+
+                            Intent surveyIntent = null;
+                            try {
+                                surveyIntent = Intent.parseUri(getString(R.string.survey_uri), 0);
+                            } catch (URISyntaxException e) {
+                                Log.e(TAG, "Error parsing URI for survey", e);
+                            }
+                            startActivity(surveyIntent);
+                        }
+                    });
+                    builder.setNegativeButton(R.string.later, null);
+                    builder.create().show();
                 }
-            });
-            builder.setNegativeButton(R.string.later, null);
-            builder.create().show();
+            } catch (ParseException e) {
+                Log.d(TAG, "Error parsing install date");
+                e.printStackTrace();
+            }
         }
     }
 
