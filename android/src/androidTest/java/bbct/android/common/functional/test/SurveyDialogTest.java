@@ -27,7 +27,7 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import bbct.android.common.R;
-import bbct.android.common.activity.MainActivity;
+import bbct.android.common.SharedPreferenceKeys;
 import bbct.android.common.test.rule.SharedPreferencesTestRule;
 
 import org.junit.After;
@@ -71,7 +71,7 @@ public class SurveyDialogTest {
 
     @Test
     public void testPreconditions() {
-        Assert.assertFalse(prefs.contains(MainActivity.SURVEY_TAKEN_PREF));
+        Assert.assertFalse(prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF));
     }
 
     @Test
@@ -84,8 +84,8 @@ public class SurveyDialogTest {
         Uri surveyUri = Uri.parse(context.getString(R.string.survey_uri));
         intended(allOf(hasAction(Intent.ACTION_VIEW), hasData(surveyUri)));
         startApp();
-        Assert.assertTrue(prefs.contains(MainActivity.SURVEY_TAKEN_PREF));
-        Assert.assertTrue(prefs.getBoolean(MainActivity.SURVEY_TAKEN_PREF, false));
+        Assert.assertTrue(prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF));
+        Assert.assertTrue(prefs.getBoolean(SharedPreferenceKeys.SURVEY_TAKEN_PREF, false));
         onView(withText(R.string.survey))
                 .check(doesNotExist());
     }
@@ -98,7 +98,7 @@ public class SurveyDialogTest {
                 .check(matches(isDisplayed()))
                 .perform(click());
         startApp();
-        Assert.assertFalse(prefs.contains(MainActivity.SURVEY_TAKEN_PREF));
+        Assert.assertFalse(prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF));
         onView(withText(R.string.survey))
                 .check(matches(isDisplayed()));
     }

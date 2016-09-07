@@ -33,6 +33,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
+import bbct.android.common.SharedPreferenceKeys;
 import bbct.android.common.provider.BaseballCardContract;
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
@@ -44,9 +45,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String PREFS = "bbct.prefs";
-    public static final String SURVEY_TAKEN_PREF = "survey";
-    public static final String INSTALL_DATE = "install_date";
 
     private static final String TAG = MainActivity.class.getName();
     private static final int SURVEY_DELAY = 7;
@@ -85,16 +83,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showSurveyDialog() {
-        final SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+        final SharedPreferences prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
 
         DateFormat dateFormat = DateFormat.getDateInstance();
         Date today = new Date();
-        if (!prefs.contains(INSTALL_DATE)) {
-            prefs.edit().putString(INSTALL_DATE, dateFormat.format(today)).apply();
+        if (!prefs.contains(SharedPreferenceKeys.INSTALL_DATE)) {
+            prefs.edit().putString(SharedPreferenceKeys.INSTALL_DATE, dateFormat.format(today)).apply();
         }
 
-        if (!prefs.contains(SURVEY_TAKEN_PREF)) {
-            String installDate = prefs.getString(INSTALL_DATE, today.toString());
+        if (!prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF)) {
+            String installDate = prefs.getString(SharedPreferenceKeys.INSTALL_DATE, today.toString());
 
             try {
                 Calendar cal = Calendar.getInstance();
@@ -107,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             SharedPreferences.Editor editor = prefs.edit();
-                            editor.putBoolean(SURVEY_TAKEN_PREF, true);
+                            editor.putBoolean(SharedPreferenceKeys.SURVEY_TAKEN_PREF, true);
                             editor.apply();
 
                             Intent surveyIntent = null;

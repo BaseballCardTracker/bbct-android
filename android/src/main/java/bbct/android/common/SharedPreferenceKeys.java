@@ -16,30 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.test.rule;
+package bbct.android.common;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.support.test.InstrumentationRegistry;
-
-import bbct.android.common.SharedPreferenceKeys;
-import org.junit.rules.ExternalResource;
-
-public class SharedPreferencesTestRule extends ExternalResource {
-    private SharedPreferences prefs;
-
-    @Override
-    protected void before() throws Throwable {
-        Context context = InstrumentationRegistry.getTargetContext();
-        prefs = context.getSharedPreferences(SharedPreferenceKeys.PREFS, Context.MODE_PRIVATE);
-    }
-
-    @Override
-    protected void after() {
-        prefs.edit().clear().apply();
-    }
-
-    public SharedPreferences getPrefs() {
-        return prefs;
-    }
+public interface SharedPreferenceKeys {
+    String PREFS = "bbct.prefs";
+    String SURVEY_TAKEN_PREF = "survey";
+    String INSTALL_DATE = "install_date";
 }
