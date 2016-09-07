@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     private void showSurveyDialog() {
         final SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
 
-        if (!prefs.getBoolean(SURVEY_TAKEN_PREF, false)) {
+        if (!prefs.contains(SURVEY_TAKEN_PREF)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.survey);
             builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
