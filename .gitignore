@@ -1,7 +1,6 @@
-/swing/build/
-/swing/db/
+db/
 /swing/dist/
-/swing/log/
+log/
 private
 *.zip
 local.properties
@@ -15,3 +14,9 @@ screenshots
 *~
 *.class
 .idea/workspace.xml
+.gradle
+.DS_Store
+build
+*.iml
+.idea
+bbct.properties
