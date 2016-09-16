@@ -2,7 +2,6 @@ db/
 /swing/dist/
 log/
 private
-*.zip
 local.properties
 bin
 gen
@@ -12,10 +11,7 @@ javadoc/
 /release
 screenshots
 *~
-*.class
-.idea/workspace.xml
 .gradle
-.DS_Store
 build
 *.iml
 .idea
