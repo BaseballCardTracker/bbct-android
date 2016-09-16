@@ -34,8 +34,8 @@ android {
         applicationId "bbct.android.common"
         minSdkVersion 18
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 18
+        versionName "0.6.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -54,13 +54,9 @@ android {
     productFlavors {
         lite {
             applicationId "bbct.android"
-            versionCode 17
-            versionName "0.6.4"
         }
         premium {
             applicationId "bbct.android.premium"
-            versionCode 16
-            versionName "0.6.4"
         }
     }
     packagingOptions {
@@ -124,9 +120,9 @@ if (propFile.canRead()) {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:support-v4:24.1.1'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:support-v4:24.2.0'
     compile 'com.google.android.gms:play-services:6.1.71'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
@@ -137,7 +133,7 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.4'
     androidTestCompile 'com.android.support.test:rules:0.4'
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
-    androidTestCompile 'com.android.support:support-annotations:24.1.1'
+    androidTestCompile 'com.android.support:support-annotations:24.2.0'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.1'
 }

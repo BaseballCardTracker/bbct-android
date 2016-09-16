@@ -20,9 +20,9 @@ package bbct.android.common.activity;
 
 public interface FragmentTags {
 
-    public static final String EDIT_CARD = "Edit Card";
-    public static final String FILTER_CARDS = "Filter Cards";
-    public static final String CARD_LIST = "Card List";
-    public static final String ABOUT = "About";
+    String EDIT_CARD = "Edit Card";
+    String FILTER_CARDS = "Filter Cards";
+    String CARD_LIST = "Card List";
+    String ABOUT = "About";
 
 }
