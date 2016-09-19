@@ -45,9 +45,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+    public static final int SURVEY_DELAY = 7;
 
     private static final String TAG = MainActivity.class.getName();
-    private static final int SURVEY_DELAY = 7;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
