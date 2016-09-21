@@ -30,25 +30,29 @@ import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import junit.framework.Assert;
+
+import org.hamcrest.Matcher;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
-import bbct.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.DataTestRule;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import junit.framework.Assert;
-import org.hamcrest.Matcher;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import bbct.data.BaseballCard;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -62,7 +66,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static bbct.android.common.test.BBCTTestUtil.clickLater;
 import static bbct.android.common.test.matcher.BaseballCardMatchers.withYear;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
@@ -113,7 +116,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
 
         dbUtil = new DatabaseUtil(inst.getTargetContext());
-        clickLater();
     }
 
     @After
@@ -172,7 +174,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testStateDestroyWithoutFilter() throws RemoteException {
         device.setOrientationLeft();
-        clickLater();
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
@@ -184,7 +185,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testStateDestroyWithFilter() throws RemoteException {
         this.testYearFilter();
         device.setOrientationLeft();
-        clickLater();
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
@@ -198,7 +198,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     public void testStateDestroyClearFilter() throws RemoteException {
         this.testClearFilter();
         device.setOrientationLeft();
-        clickLater();
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
@@ -438,7 +437,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
         Log.d(TAG, "change orientation");
         device.setOrientationLeft();
-        clickLater();
 
         Log.d(TAG, "assertions");
         onData(instanceOf(BaseballCard.class))

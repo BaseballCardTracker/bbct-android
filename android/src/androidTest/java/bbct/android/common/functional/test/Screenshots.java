@@ -72,10 +72,6 @@ public class Screenshots extends UiAutomatorTest {
 
     @Test
     public void takeScreenshots() throws Throwable {
-        UiSelector laterSelector = new UiSelector().text(context.getString(R.string.later));
-        UiObject laterButton = device.findObject(laterSelector);
-        laterButton.click();
-
         UiSelector addSelector = new UiSelector().description(context.getString(R.string.add_menu));
         UiObject addMenu = device.findObject(addSelector);
         addMenu.click();
