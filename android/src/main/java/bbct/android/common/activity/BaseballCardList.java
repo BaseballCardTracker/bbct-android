@@ -24,6 +24,7 @@ import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
@@ -65,6 +66,8 @@ public class BaseballCardList extends ListFragment {
     TextView emptyList = null;
     @BindView(android.R.id.list)
     ListView listView;
+    @BindView(R.id.add_button)
+    FloatingActionButton addButton;
 
     private BaseballCardAdapter adapter = null;
     private Bundle filterParams = null;
@@ -107,7 +110,19 @@ public class BaseballCardList extends ListFragment {
         View view = inflater.inflate(R.layout.card_list, container, false);
         ButterKnife.bind(this, view);
 
-        final Activity activity = Objects.requireNonNull(getActivity());
+        final FragmentActivity activity = Objects.requireNonNull(getActivity());
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BaseballCardDetails details = new BaseballCardDetails();
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
+                        .addToBackStack(FragmentTags.EDIT_CARD)
+                        .commit();
+            }
+        });
+
         View headerView = new HeaderView(this.getActivity());
         CheckBox selectAll = headerView.findViewById(R.id.select_all);
         selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
