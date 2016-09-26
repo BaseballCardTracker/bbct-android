@@ -175,21 +175,13 @@ public class BaseballCardList extends ListFragment {
 
         FragmentActivity activity = Objects.requireNonNull(getActivity());
         switch (itemId) {
-            case R.id.add_menu:
-                BaseballCardDetails details = new BaseballCardDetails();
-                activity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
-                    .addToBackStack(FragmentTags.EDIT_CARD)
-                    .commit();
-                return true;
             case R.id.filter_menu:
                 FilterCards filterCards = new FilterCards();
                 activity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder, filterCards, FragmentTags.FILTER_CARDS)
-                    .addToBackStack(FragmentTags.FILTER_CARDS)
-                    .commit();
+                        .beginTransaction()
+                        .replace(R.id.fragment_holder, filterCards, FragmentTags.FILTER_CARDS)
+                        .addToBackStack(FragmentTags.FILTER_CARDS)
+                        .commit();
                 return true;
             case R.id.clear_filter_menu:
                 this.emptyList.setText(R.string.start);
