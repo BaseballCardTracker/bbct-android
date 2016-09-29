@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
 
+    private SharedPreferences prefs;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,12 +81,12 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
         showSurvey1Dialog();
         showSurvey2Dialog();
     }
 
     private void showSurvey1Dialog() {
-        final SharedPreferences prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
         DateFormat dateFormat = DateFormat.getDateInstance();
         Date today = new Date();
         final String todayStr = dateFormat.format(today);
@@ -130,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showSurvey2Dialog() {
-        final SharedPreferences prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
         DateFormat dateFormat = DateFormat.getDateInstance();
         Date today = new Date();
         final String todayStr = dateFormat.format(today);
