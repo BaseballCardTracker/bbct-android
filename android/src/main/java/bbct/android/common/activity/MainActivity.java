@@ -103,26 +103,8 @@ public class MainActivity extends AppCompatActivity {
                 cal.setTime(dateFormat.parse(installDate));
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(R.string.survey1);
-                    builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putString(SharedPreferenceKeys.SURVEY1_DATE, todayStr);
-                            editor.apply();
-
-                            Intent surveyIntent = null;
-                            try {
-                                surveyIntent = Intent.parseUri(getString(R.string.survey1_uri), 0);
-                            } catch (URISyntaxException e) {
-                                Log.e(TAG, "Error parsing URI for survey1", e);
-                            }
-                            startActivity(surveyIntent);
-                        }
-                    });
-                    builder.setNegativeButton(R.string.later, null);
-                    builder.create().show();
+                    showSurveyDialog(todayStr, R.string.survey1, SharedPreferenceKeys.SURVEY1_DATE,
+                            R.string.survey1_uri);
                 }
             } catch (ParseException e) {
                 Log.d(TAG, "Error parsing install date");
@@ -145,26 +127,8 @@ public class MainActivity extends AppCompatActivity {
                 cal.setTime(dateFormat.parse(survey1Date));
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(R.string.survey2);
-                    builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            SharedPreferences.Editor editor = prefs.edit();
-                            editor.putString(SharedPreferenceKeys.SURVEY2_DATE, todayStr);
-                            editor.apply();
-
-                            Intent surveyIntent = null;
-                            try {
-                                surveyIntent = Intent.parseUri(getString(R.string.survey2_uri), 0);
-                            } catch (URISyntaxException e) {
-                                Log.e(TAG, "Error parsing URI for survey2", e);
-                            }
-                            startActivity(surveyIntent);
-                        }
-                    });
-                    builder.setNegativeButton(R.string.later, null);
-                    builder.create().show();
+                    showSurveyDialog(todayStr, R.string.survey2, SharedPreferenceKeys.SURVEY2_DATE,
+                            R.string.survey2_uri);
                 }
             } catch (ParseException e) {
                 Log.d(TAG, "Error parsing install date");
@@ -173,6 +137,30 @@ public class MainActivity extends AppCompatActivity {
         } else if (prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF)) {
             prefs.edit().putString(SharedPreferenceKeys.SURVEY1_DATE, todayStr).apply();
         }
+    }
+
+    private void showSurveyDialog(final String todayStr, int surveyMessage,
+                                  final String surveyDateKey, final int surveyUri) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(surveyMessage);
+        builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(surveyDateKey, todayStr);
+                editor.apply();
+
+                Intent surveyIntent = null;
+                try {
+                    surveyIntent = Intent.parseUri(getString(surveyUri), 0);
+                } catch (URISyntaxException e) {
+                    Log.e(TAG, "Error parsing URI for survey1", e);
+                }
+                startActivity(surveyIntent);
+            }
+        });
+        builder.setNegativeButton(R.string.later, null);
+        builder.show();
     }
 
     @Override
