@@ -18,5 +18,27 @@
  */
 package bbct.android.common.test.rule;
 
-public class Survey2SharedPreferencesTestRule {
+import android.annotation.SuppressLint;
+
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import bbct.android.common.SharedPreferenceKeys;
+
+import static bbct.android.common.activity.MainActivity.SURVEY_DELAY;
+
+public class Survey2SharedPreferencesTestRule extends SharedPreferencesTestRule {
+    @SuppressLint("CommitPrefEdits")
+    @Override
+    protected void before() throws Throwable {
+        super.before();
+
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+        cal.add(Calendar.DATE, -SURVEY_DELAY);
+        prefs.edit().putString(SharedPreferenceKeys.SURVEY1_DATE, dateFormat.format(cal.getTime())).commit();
+    }
 }
