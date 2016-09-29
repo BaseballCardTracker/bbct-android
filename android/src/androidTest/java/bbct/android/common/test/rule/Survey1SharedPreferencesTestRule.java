@@ -28,7 +28,7 @@ import bbct.android.common.SharedPreferenceKeys;
 
 import static bbct.android.common.activity.MainActivity.SURVEY_DELAY;
 
-public class SurveySharedPreferencesTestRule extends SharedPreferencesTestRule {
+public class Survey1SharedPreferencesTestRule extends SharedPreferencesTestRule {
     @SuppressLint("CommitPrefEdits")
     @Override
     protected void before() throws Throwable {

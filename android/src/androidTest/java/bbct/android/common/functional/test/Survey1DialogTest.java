@@ -36,7 +36,7 @@ import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
 import bbct.android.common.SharedPreferenceKeys;
-import bbct.android.common.test.rule.SurveySharedPreferencesTestRule;
+import bbct.android.common.test.rule.Survey1SharedPreferencesTestRule;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -51,9 +51,9 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.startsWith;
 
 @RunWith(AndroidJUnit4.class)
-public class SurveyDialogTest {
+public class Survey1DialogTest {
     @Rule
-    public SurveySharedPreferencesTestRule prefsRule = new SurveySharedPreferencesTestRule();
+    public Survey1SharedPreferencesTestRule prefsRule = new Survey1SharedPreferencesTestRule();
 
     private SharedPreferences prefs;
     private Context context;
