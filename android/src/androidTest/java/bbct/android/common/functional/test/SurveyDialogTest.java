@@ -78,30 +78,30 @@ public class SurveyDialogTest {
 
     @Test
     public void testTakeSurveyNow() throws UiObjectNotFoundException {
-        onView(withText(R.string.survey))
+        onView(withText(R.string.survey1))
                 .check(matches(isDisplayed()));
         onView(withText(R.string.now))
                 .check(matches(isDisplayed()))
                 .perform(click());
-        Uri surveyUri = Uri.parse(context.getString(R.string.survey_uri));
+        Uri surveyUri = Uri.parse(context.getString(R.string.survey1_uri));
         intended(allOf(hasAction(Intent.ACTION_VIEW), hasData(surveyUri)));
         startApp();
         Assert.assertTrue(prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF));
         Assert.assertTrue(prefs.getBoolean(SharedPreferenceKeys.SURVEY_TAKEN_PREF, false));
-        onView(withText(R.string.survey))
+        onView(withText(R.string.survey1))
                 .check(doesNotExist());
     }
 
     @Test
     public void testTakeSurveyLater() throws UiObjectNotFoundException {
-        onView(withText(R.string.survey))
+        onView(withText(R.string.survey1))
                 .check(matches(isDisplayed()));
         onView(withText(R.string.later))
                 .check(matches(isDisplayed()))
                 .perform(click());
         startApp();
         Assert.assertFalse(prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF));
-        onView(withText(R.string.survey))
+        onView(withText(R.string.survey1))
                 .check(matches(isDisplayed()));
     }
 

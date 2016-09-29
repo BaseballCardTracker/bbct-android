@@ -79,19 +79,21 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        showSurveyDialog();
+        showSurvey1Dialog();
+        showSurvey2Dialog();
     }
 
-    private void showSurveyDialog() {
+    private void showSurvey1Dialog() {
         final SharedPreferences prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
-
         DateFormat dateFormat = DateFormat.getDateInstance();
         Date today = new Date();
+        final String todayStr = dateFormat.format(today);
+
         if (!prefs.contains(SharedPreferenceKeys.INSTALL_DATE)) {
-            prefs.edit().putString(SharedPreferenceKeys.INSTALL_DATE, dateFormat.format(today)).apply();
+            prefs.edit().putString(SharedPreferenceKeys.INSTALL_DATE, todayStr).apply();
         }
 
-        if (!prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF)) {
+        if (!prefs.contains(SharedPreferenceKeys.SURVEY1_DATE)) {
             String installDate = prefs.getString(SharedPreferenceKeys.INSTALL_DATE, today.toString());
 
             try {
@@ -100,19 +102,19 @@ public class MainActivity extends AppCompatActivity {
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setMessage(R.string.survey);
+                    builder.setMessage(R.string.survey1);
                     builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             SharedPreferences.Editor editor = prefs.edit();
-                            editor.putBoolean(SharedPreferenceKeys.SURVEY_TAKEN_PREF, true);
+                            editor.putString(SharedPreferenceKeys.SURVEY1_DATE, todayStr);
                             editor.apply();
 
                             Intent surveyIntent = null;
                             try {
-                                surveyIntent = Intent.parseUri(getString(R.string.survey_uri), 0);
+                                surveyIntent = Intent.parseUri(getString(R.string.survey1_uri), 0);
                             } catch (URISyntaxException e) {
-                                Log.e(TAG, "Error parsing URI for survey", e);
+                                Log.e(TAG, "Error parsing URI for survey1", e);
                             }
                             startActivity(surveyIntent);
                         }
@@ -124,6 +126,51 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Error parsing install date");
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void showSurvey2Dialog() {
+        final SharedPreferences prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        Date today = new Date();
+        final String todayStr = dateFormat.format(today);
+
+        if (prefs.contains(SharedPreferenceKeys.SURVEY1_DATE)
+                && !prefs.contains(SharedPreferenceKeys.SURVEY2_DATE)) {
+            String survey1Date = prefs.getString(SharedPreferenceKeys.SURVEY1_DATE, today.toString());
+
+            try {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(dateFormat.parse(survey1Date));
+                cal.add(Calendar.DATE, SURVEY_DELAY);
+                if (today.after(cal.getTime())) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(R.string.survey2);
+                    builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString(SharedPreferenceKeys.SURVEY2_DATE, todayStr);
+                            editor.apply();
+
+                            Intent surveyIntent = null;
+                            try {
+                                surveyIntent = Intent.parseUri(getString(R.string.survey2_uri), 0);
+                            } catch (URISyntaxException e) {
+                                Log.e(TAG, "Error parsing URI for survey2", e);
+                            }
+                            startActivity(surveyIntent);
+                        }
+                    });
+                    builder.setNegativeButton(R.string.later, null);
+                    builder.create().show();
+                }
+            } catch (ParseException e) {
+                Log.d(TAG, "Error parsing install date");
+                e.printStackTrace();
+            }
+        } else if (prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF)) {
+            prefs.edit().putString(SharedPreferenceKeys.SURVEY1_DATE, todayStr).apply();
         }
     }
 
