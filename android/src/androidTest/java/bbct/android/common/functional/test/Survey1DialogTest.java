@@ -74,6 +74,7 @@ public class Survey1DialogTest {
     @Test
     public void testPreconditions() {
         Assert.assertFalse(prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF));
+        Assert.assertFalse(prefs.contains(SharedPreferenceKeys.SURVEY1_DATE));
         Assert.assertTrue(prefs.contains(SharedPreferenceKeys.INSTALL_DATE));
     }
 
