@@ -48,6 +48,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasDat
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.startsWith;
 
 @RunWith(AndroidJUnit4.class)
 public class SurveyDialogTest {
@@ -87,6 +88,8 @@ public class SurveyDialogTest {
         intended(allOf(hasAction(Intent.ACTION_VIEW), hasData(surveyUri)));
         startApp();
         Assert.assertTrue(prefs.contains(SharedPreferenceKeys.SURVEY1_DATE));
+        onView(withText(startsWith("BBCT")))
+                .check(matches(isDisplayed()));
         onView(withText(R.string.survey1))
                 .check(doesNotExist());
     }
