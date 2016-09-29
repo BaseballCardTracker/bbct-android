@@ -86,8 +86,7 @@ public class SurveyDialogTest {
         Uri surveyUri = Uri.parse(context.getString(R.string.survey1_uri));
         intended(allOf(hasAction(Intent.ACTION_VIEW), hasData(surveyUri)));
         startApp();
-        Assert.assertTrue(prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF));
-        Assert.assertTrue(prefs.getBoolean(SharedPreferenceKeys.SURVEY_TAKEN_PREF, false));
+        Assert.assertTrue(prefs.contains(SharedPreferenceKeys.SURVEY1_DATE));
         onView(withText(R.string.survey1))
                 .check(doesNotExist());
     }
