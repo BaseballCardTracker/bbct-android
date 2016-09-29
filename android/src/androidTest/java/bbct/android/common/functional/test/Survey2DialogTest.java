@@ -97,14 +97,14 @@ public class Survey2DialogTest {
 
     @Test
     public void testTakeSurveyLater() throws UiObjectNotFoundException {
-        onView(withText(R.string.survey1))
+        onView(withText(R.string.survey2))
                 .check(matches(isDisplayed()));
         onView(withText(R.string.later))
                 .check(matches(isDisplayed()))
                 .perform(click());
         startApp();
         Assert.assertFalse(prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF));
-        onView(withText(R.string.survey1))
+        onView(withText(R.string.survey2))
                 .check(matches(isDisplayed()));
     }
 
