@@ -121,7 +121,7 @@ if (propFile.canRead()) {
 
 ext {
     espressoVersion = '2.2.1'
-    testSupportLibVersion = '0.4'
+    testSupportLibVersion = '0.5'
 }
 
 dependencies {
