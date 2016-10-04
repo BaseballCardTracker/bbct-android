@@ -119,6 +119,11 @@ if (propFile.canRead()) {
     println 'bbct.properties not found'
 }
 
+ext {
+    espressoVersion = '2.2.1'
+    testSupportLibVersion = '0.5'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:24.2.0'
@@ -130,12 +135,12 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.2'
     compile project(':lib')
     liteCompile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile 'com.android.support.test:runner:0.4'
-    androidTestCompile 'com.android.support.test:rules:0.4'
+    androidTestCompile "com.android.support.test:runner:${testSupportLibVersion}"
+    androidTestCompile "com.android.support.test:rules:${testSupportLibVersion}"
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     androidTestCompile 'com.android.support:support-annotations:24.2.0'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
-    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.1'
+    androidTestCompile "com.android.support.test.espresso:espresso-core:${espressoVersion}"
+    androidTestCompile "com.android.support.test.espresso:espresso-intents:${espressoVersion}"
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
 }
