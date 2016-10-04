@@ -121,6 +121,7 @@ if (propFile.canRead()) {
 
 ext {
     espressoVersion = '2.2.1'
+    testSupportLibVersion = '0.4'
 }
 
 dependencies {
@@ -134,8 +135,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:5.1.2'
     compile project(':lib')
     liteCompile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile 'com.android.support.test:runner:0.4'
-    androidTestCompile 'com.android.support.test:rules:0.4'
+    androidTestCompile "com.android.support.test:runner:${testSupportLibVersion}"
+    androidTestCompile "com.android.support.test:rules:${testSupportLibVersion}"
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     androidTestCompile 'com.android.support:support-annotations:24.2.0'
     androidTestCompile "com.android.support.test.espresso:espresso-core:${espressoVersion}"
