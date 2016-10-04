@@ -36,7 +36,6 @@ import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
 import bbct.android.common.SharedPreferenceKeys;
-import bbct.android.common.test.rule.Survey1SharedPreferencesTestRule;
 import bbct.android.common.test.rule.Survey2SharedPreferencesTestRule;
 
 import static android.support.test.espresso.Espresso.onView;
