@@ -87,10 +87,6 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
                 .open(DATA_ASSET);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
-
-        onView(withText(R.string.later))
-                .check(matches(isDisplayed()))
-                .perform(click());
     }
 
     /**
