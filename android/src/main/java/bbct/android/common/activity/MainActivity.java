@@ -19,6 +19,7 @@
 package bbct.android.common.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -139,24 +140,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private static void showSurveyDialog(final MainActivity mainActivity, final String todayStr, int surveyMessage,
+    private static void showSurveyDialog(final Context context, final String todayStr, int surveyMessage,
                                          final String surveyDateKey, final int surveyUri) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(surveyMessage);
         builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                SharedPreferences.Editor editor = mainActivity.prefs.edit();
+                SharedPreferences prefs = context.getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
                 editor.putString(surveyDateKey, todayStr);
                 editor.apply();
 
                 Intent surveyIntent = null;
                 try {
-                    surveyIntent = Intent.parseUri(mainActivity.getString(surveyUri), 0);
+                    surveyIntent = Intent.parseUri(context.getString(surveyUri), 0);
                 } catch (URISyntaxException e) {
                     Log.e(TAG, "Error parsing URI for survey1", e);
                 }
-                mainActivity.startActivity(surveyIntent);
+                context.startActivity(surveyIntent);
             }
         });
         builder.setNegativeButton(R.string.later, null);
