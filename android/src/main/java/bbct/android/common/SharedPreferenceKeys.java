@@ -22,4 +22,6 @@ public interface SharedPreferenceKeys {
     String PREFS = "bbct.prefs";
     String SURVEY_TAKEN_PREF = "survey";
     String INSTALL_DATE = "install_date";
+    String SURVEY1_DATE = "survey1_date";
+    String SURVEY2_DATE = "survey2_date";
 }

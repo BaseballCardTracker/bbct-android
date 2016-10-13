@@ -28,7 +28,7 @@ import bbct.android.common.SharedPreferenceKeys;
 
 import static bbct.android.common.activity.MainActivity.SURVEY_DELAY;
 
-public class SurveySharedPreferencesTestRule extends SharedPreferencesTestRule {
+public class Survey2SharedPreferencesTestRule extends SharedPreferencesTestRule {
     @SuppressLint("CommitPrefEdits")
     @Override
     protected void before() throws Throwable {
@@ -39,6 +39,6 @@ public class SurveySharedPreferencesTestRule extends SharedPreferencesTestRule {
         Calendar cal = Calendar.getInstance();
         cal.setTime(today);
         cal.add(Calendar.DATE, -SURVEY_DELAY);
-        prefs.edit().putString(SharedPreferenceKeys.INSTALL_DATE, dateFormat.format(cal.getTime())).commit();
+        prefs.edit().putString(SharedPreferenceKeys.SURVEY1_DATE, dateFormat.format(cal.getTime())).commit();
     }
 }
