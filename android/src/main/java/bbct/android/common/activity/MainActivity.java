@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                 cal.setTime(dateFormat.parse(installDate));
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
-                    showSurveyDialog(todayStr, R.string.survey1, SharedPreferenceKeys.SURVEY1_DATE,
+                    showSurveyDialog(this, todayStr, R.string.survey1, SharedPreferenceKeys.SURVEY1_DATE,
                             R.string.survey1_uri);
                 }
             } catch (ParseException e) {
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 cal.setTime(dateFormat.parse(survey1Date));
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
-                    showSurveyDialog(todayStr, R.string.survey2, SharedPreferenceKeys.SURVEY2_DATE,
+                    showSurveyDialog(this, todayStr, R.string.survey2, SharedPreferenceKeys.SURVEY2_DATE,
                             R.string.survey2_uri);
                 }
             } catch (ParseException e) {
@@ -139,24 +139,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void showSurveyDialog(final String todayStr, int surveyMessage,
-                                  final String surveyDateKey, final int surveyUri) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    private static void showSurveyDialog(final MainActivity mainActivity, final String todayStr, int surveyMessage,
+                                         final String surveyDateKey, final int surveyUri) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mainActivity);
         builder.setMessage(surveyMessage);
         builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                SharedPreferences.Editor editor = prefs.edit();
+                SharedPreferences.Editor editor = mainActivity.prefs.edit();
                 editor.putString(surveyDateKey, todayStr);
                 editor.apply();
 
                 Intent surveyIntent = null;
                 try {
-                    surveyIntent = Intent.parseUri(getString(surveyUri), 0);
+                    surveyIntent = Intent.parseUri(mainActivity.getString(surveyUri), 0);
                 } catch (URISyntaxException e) {
                     Log.e(TAG, "Error parsing URI for survey1", e);
                 }
-                startActivity(surveyIntent);
+                mainActivity.startActivity(surveyIntent);
             }
         });
         builder.setNegativeButton(R.string.later, null);
