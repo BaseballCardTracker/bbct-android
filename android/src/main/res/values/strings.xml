@@ -123,12 +123,10 @@
     <string name="duplicate_card_error">Baseball card already exists. Please update its count.</string>
     <string name="sponsor">Proud Sponsor of:</string>
     <string name="survey1">Help me improve BBCT by answering a short survey with seven questions.</string>
-    <string name="survey1_uri">https://docs.google.com/forms/d/1wj3d3SiZ7U81_ZRp0zwgH0l2b2Az3A9XkYJbgQFdO9I/viewform</string>
     <string name="survey2">
         Thanks for your feedback in the first BBCT survey. Please take a moment to answer 6
         more questions about upcoming features.
     </string>
-    <string name="survey2_uri">https://docs.google.com/forms/d/e/1FAIpQLSfg0TPyKcWlGSOlhhDd_4qIjYG9htOjJ5pwjRYtc71zxPw-ag/viewform</string>
     <string name="now">Now</string>
     <string name="later">Later</string>
 

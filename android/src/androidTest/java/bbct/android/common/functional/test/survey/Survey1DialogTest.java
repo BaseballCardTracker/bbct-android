@@ -36,6 +36,7 @@ import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
 import bbct.android.common.SharedPreferenceKeys;
+import bbct.android.common.activity.MainActivity;
 import bbct.android.common.test.rule.Survey1SharedPreferencesTestRule;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -85,7 +86,7 @@ public class Survey1DialogTest {
         onView(withText(R.string.now))
                 .check(matches(isDisplayed()))
                 .perform(click());
-        Uri surveyUri = Uri.parse(context.getString(R.string.survey1_uri));
+        Uri surveyUri = Uri.parse(MainActivity.SURVEY1_URI);
         intended(allOf(hasAction(Intent.ACTION_VIEW), hasData(surveyUri)));
         startApp();
         Assert.assertTrue(prefs.contains(SharedPreferenceKeys.SURVEY1_DATE));

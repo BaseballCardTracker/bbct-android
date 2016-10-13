@@ -44,6 +44,8 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     public static final int SURVEY_DELAY = 7;
+    public static final String SURVEY1_URI = "https://docs.google.com/forms/d/1wj3d3SiZ7U81_ZRp0zwgH0l2b2Az3A9XkYJbgQFdO9I/viewform";
+    public static final String SURVEY2_URI = "https://docs.google.com/forms/d/e/1FAIpQLSfg0TPyKcWlGSOlhhDd_4qIjYG9htOjJ5pwjRYtc71zxPw-ag/viewform";
 
     private static final String TAG = MainActivity.class.getName();
 
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
                     DialogUtil.showSurveyDialog(this, todayStr, R.string.survey1,
-                            SharedPreferenceKeys.SURVEY1_DATE, getString(R.string.survey1_uri));
+                            SharedPreferenceKeys.SURVEY1_DATE, SURVEY1_URI);
                 }
             } catch (ParseException e) {
                 Log.d(TAG, "Error parsing install date");
@@ -126,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
                     DialogUtil.showSurveyDialog(this, todayStr, R.string.survey2,
-                            SharedPreferenceKeys.SURVEY2_DATE, getString(R.string.survey2_uri));
+                            SharedPreferenceKeys.SURVEY2_DATE, SURVEY2_URI);
                 }
             } catch (ParseException e) {
                 Log.d(TAG, "Error parsing install date");
