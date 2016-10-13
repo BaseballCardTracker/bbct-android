@@ -18,10 +18,6 @@
  */
 package bbct.android.common.activity;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -35,11 +31,12 @@ import android.view.MenuItem;
 import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.SharedPreferenceKeys;
+import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.provider.BaseballCardContract;
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
 import io.fabric.sdk.android.Fabric;
-import java.net.URISyntaxException;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -104,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
                 cal.setTime(dateFormat.parse(installDate));
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
-                    showSurveyDialog(this, todayStr, R.string.survey1, SharedPreferenceKeys.SURVEY1_DATE,
-                            R.string.survey1_uri);
+                    DialogUtil.showSurveyDialog(this, todayStr, R.string.survey1,
+                            SharedPreferenceKeys.SURVEY1_DATE, R.string.survey1_uri);
                 }
             } catch (ParseException e) {
                 Log.d(TAG, "Error parsing install date");
@@ -128,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 cal.setTime(dateFormat.parse(survey1Date));
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
-                    showSurveyDialog(this, todayStr, R.string.survey2, SharedPreferenceKeys.SURVEY2_DATE,
-                            R.string.survey2_uri);
+                    DialogUtil.showSurveyDialog(this, todayStr, R.string.survey2,
+                            SharedPreferenceKeys.SURVEY2_DATE, R.string.survey2_uri);
                 }
             } catch (ParseException e) {
                 Log.d(TAG, "Error parsing install date");
@@ -138,31 +135,6 @@ public class MainActivity extends AppCompatActivity {
         } else if (prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF)) {
             prefs.edit().putString(SharedPreferenceKeys.SURVEY1_DATE, todayStr).apply();
         }
-    }
-
-    private static void showSurveyDialog(final Context context, final String todayStr, int surveyMessage,
-                                         final String surveyDateKey, final int surveyUri) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setMessage(surveyMessage);
-        builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                SharedPreferences prefs = context.getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(surveyDateKey, todayStr);
-                editor.apply();
-
-                Intent surveyIntent = null;
-                try {
-                    surveyIntent = Intent.parseUri(context.getString(surveyUri), 0);
-                } catch (URISyntaxException e) {
-                    Log.e(TAG, "Error parsing URI for survey1", e);
-                }
-                context.startActivity(surveyIntent);
-            }
-        });
-        builder.setNegativeButton(R.string.later, null);
-        builder.show();
     }
 
     @Override
