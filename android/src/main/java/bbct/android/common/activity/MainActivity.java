@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
                     DialogUtil.showSurveyDialog(this, todayStr, R.string.survey1,
-                            SharedPreferenceKeys.SURVEY1_DATE, R.string.survey1_uri);
+                            SharedPreferenceKeys.SURVEY1_DATE, getString(R.string.survey1_uri));
                 }
             } catch (ParseException e) {
                 Log.d(TAG, "Error parsing install date");
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
                     DialogUtil.showSurveyDialog(this, todayStr, R.string.survey2,
-                            SharedPreferenceKeys.SURVEY2_DATE, R.string.survey2_uri);
+                            SharedPreferenceKeys.SURVEY2_DATE, getString(R.string.survey2_uri));
                 }
             } catch (ParseException e) {
                 Log.d(TAG, "Error parsing install date");

@@ -60,7 +60,7 @@ public class DialogUtil {
     }
 
     public static void showSurveyDialog(final Context context, final String todayStr, int surveyMessage,
-                                        final String surveyDateKey, final int surveyUri) {
+                                        final String surveyDateKey, final String surveyUri) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(surveyMessage);
         builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
@@ -72,7 +72,7 @@ public class DialogUtil {
                 editor.apply();
 
                 try {
-                    Intent surveyIntent = Intent.parseUri(context.getString(surveyUri), 0);
+                    Intent surveyIntent = Intent.parseUri(surveyUri, 0);
                     context.startActivity(surveyIntent);
                 } catch (URISyntaxException e) {
                     Log.e(TAG, "Error parsing URI for survey", e);
