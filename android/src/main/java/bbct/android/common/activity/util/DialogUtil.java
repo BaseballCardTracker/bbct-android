@@ -71,13 +71,12 @@ public class DialogUtil {
                 editor.putString(surveyDateKey, todayStr);
                 editor.apply();
 
-                Intent surveyIntent = null;
                 try {
-                    surveyIntent = Intent.parseUri(context.getString(surveyUri), 0);
+                    Intent surveyIntent = Intent.parseUri(context.getString(surveyUri), 0);
+                    context.startActivity(surveyIntent);
                 } catch (URISyntaxException e) {
                     Log.e(TAG, "Error parsing URI for survey", e);
                 }
-                context.startActivity(surveyIntent);
             }
         });
         builder.setNegativeButton(R.string.later, null);
