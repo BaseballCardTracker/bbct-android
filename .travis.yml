@@ -1,6 +1,6 @@
 language: android
 
-script: "cd gradle && ./gradlew assembleDebug connectedCheck"
+script: "./gradlew assembleDebug"
 
 # Emulator Management: Create, Start and Wait
 before_script:
@@ -9,15 +9,22 @@ before_script:
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
 
+jdk:
+    - oraclejdk8
+
 android:
     components:
         - platform-tools
         - tools
-        - build-tools-23.0.2
-        - android-23
+        - build-tools-24.0.3
+        - android-24
         - extra-android-m2repository
         - extra-android-support
         - extra-google-m2repository
         - extra-google-google_play_services
-        - sys-img-armeabi-v7a-android-19
-        - sys-img-x86-android-17
+        - sys-img-armeabi-v7a-android-18
+        - sys-img-x86-android-18
+
+notifications:
+    slack:
+        secure: adVFUCFWI7SufxT76vDi94qWZz3c2Lk9DtJJA+JGXiL7lkNUELKA1ySkSINMtGy+UXKEQBwV6Ay2Iu65YkSYX9hvHsvAq8ohCyPecIgOtEPPGppZJUm6GKrx3monu47hb/I47SEN9DRkYUGT168jiLZVgIHhpVL45OsbpOhopw8=

@@ -21,30 +21,33 @@ package bbct.android.common.activity.test;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
-import bbct.android.common.R;
-import bbct.android.common.activity.FilterCards;
-import bbct.android.common.activity.FragmentTags;
-import bbct.android.common.activity.MainActivity;
-import bbct.data.BaseballCard;
-import bbct.android.common.test.BBCTTestUtil;
-import bbct.android.common.test.BaseballCardCsvFileReader;
-import bbct.android.common.test.DatabaseUtil;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
+
+import bbct.android.common.R;
+import bbct.android.common.activity.FilterCards;
+import bbct.android.common.activity.FragmentTags;
+import bbct.android.common.activity.MainActivity;
+import bbct.android.common.test.BBCTTestUtil;
+import bbct.android.common.test.BaseballCardCsvFileReader;
+import bbct.android.common.test.DatabaseUtil;
+import bbct.data.BaseballCard;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static bbct.android.common.test.BBCTTestUtil.clickLater;
 
 /**
  * A parameterized test which can test filter correctness using any combination
@@ -103,7 +106,6 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
 
         inst.setInTouchMode(true);
         getActivity();
-        clickLater();
     }
 
     @Override

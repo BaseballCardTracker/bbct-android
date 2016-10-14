@@ -7,7 +7,7 @@ SRC_REL=$REL_DIR/src/android
 PREFIX=bbct-android
 
 build_apk() {
-    ./gradlew clean assembleLiteRelease assemblePremiumRelease
+    ./gradlew clean assembleRelease
 }
 
 hash_apk() {

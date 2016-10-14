@@ -324,12 +324,6 @@ final public class BBCTTestUtil {
         return power;
     }
 
-    public static void clickLater() {
-        onView(withText(R.string.later))
-                .check(matches(isDisplayed()))
-                .perform(click());
-    }
-
     public enum EditTexts {
         AUTOGRAPHED, CONDITION, BRAND, YEAR, NUMBER, VALUE, COUNT, PLAYER_NAME, TEAM,
         PLAYER_POSITION

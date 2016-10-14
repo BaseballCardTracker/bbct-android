@@ -21,11 +21,20 @@ package bbct.android.common.activity.util;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
+
+import java.net.URISyntaxException;
+
+import bbct.android.common.R;
+import bbct.android.common.SharedPreferenceKeys;
 
 /**
  * Static utility methods for showing common dialogs.
  */
 public class DialogUtil {
+    private static final String TAG = DialogUtil.class.getName();
 
     /**
      * Show an error message in a dialog box. The dialog box is displayed using
@@ -48,5 +57,29 @@ public class DialogUtil {
             }
         });
         dialogBuilder.show();
+    }
+
+    public static void showSurveyDialog(final Context context, final String todayStr, int surveyMessage,
+                                        final String surveyDateKey, final String surveyUri) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(surveyMessage);
+        builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                SharedPreferences prefs = context.getSharedPreferences(SharedPreferenceKeys.PREFS, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString(surveyDateKey, todayStr);
+                editor.apply();
+
+                try {
+                    Intent surveyIntent = Intent.parseUri(surveyUri, 0);
+                    context.startActivity(surveyIntent);
+                } catch (URISyntaxException e) {
+                    Log.e(TAG, "Error parsing URI for survey", e);
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.later, null);
+        builder.show();
     }
 }

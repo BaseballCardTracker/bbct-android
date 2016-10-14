@@ -74,7 +74,7 @@
 
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
-    <string name="version_number">0.6.5</string>
+    <string name="version_number">0.6.6</string>
     <string name="copyright">Copyright 2012–14 by codeguru</string>
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
@@ -122,9 +122,12 @@
     <string name="database_error">Error occurred while connecting to database.</string>
     <string name="duplicate_card_error">Baseball card already exists. Please update its count.</string>
     <string name="sponsor">Proud Sponsor of:</string>
-    <string name="survey">Help me improve BBCT by answering a short survey with seven questions.</string>
+    <string name="survey1">Help me improve BBCT by answering a short survey with seven questions.</string>
+    <string name="survey2">
+        Thanks for your feedback in the first BBCT survey. Please take a moment to answer 6
+        more questions about upcoming features.
+    </string>
     <string name="now">Now</string>
     <string name="later">Later</string>
-    <string name="survey_uri">https://docs.google.com/forms/d/1wj3d3SiZ7U81_ZRp0zwgH0l2b2Az3A9XkYJbgQFdO9I/viewform</string>
 
 </resources>
