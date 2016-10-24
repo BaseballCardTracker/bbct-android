@@ -1,0 +1,4 @@
+#Sun Oct 23 19:21:38 EDT 2016
+base.0=C\:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\transforms\\dex\\lite\\debug\\folders\\1000\\1f\\main
+renamed.0=classes.dex
+file.0=C\:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\transforms\\dex\\lite\\debug\\folders\\1000\\1f\\main\\classes.dex

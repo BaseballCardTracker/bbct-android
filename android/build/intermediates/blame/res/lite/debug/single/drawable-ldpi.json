@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\res\\merged\\lite\\debug\\drawable-ldpi\\ic_menu_about.png",
+        "source": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\src\\main\\res\\drawable-ldpi\\ic_menu_about.png"
+    },
+    {
+        "merged": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\res\\merged\\lite\\debug\\drawable-ldpi\\baseball.png",
+        "source": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\src\\main\\res\\drawable-ldpi\\baseball.png"
+    },
+    {
+        "merged": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\res\\merged\\lite\\debug\\drawable-ldpi\\ic_menu_save.png",
+        "source": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\src\\main\\res\\drawable-ldpi\\ic_menu_save.png"
+    },
+    {
+        "merged": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\res\\merged\\lite\\debug\\drawable-ldpi\\ic_menu_block.png",
+        "source": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\src\\main\\res\\drawable-ldpi\\ic_menu_block.png"
+    }
+]

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\io.fabric.sdk.android\fabric\1.3.10\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="a5db9a2dd46d84285ef737f65030b74b6e8ee2a4">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\io.fabric.sdk.android-fabric-1.3.10_97e7432d8f2e0baf7693dc02d82f4a17a5ad8502.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="6e02e34594ebe9c0501ffda8dd48497f81b82977">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\internal_impl-24.2.0_6c0b61c76d9199add24a7d2318182e15a8bc4340.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="0f6d5c1ef2e982c3b7858408e3df389cf5d202da">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.google.android.gms-play-services-6.1.71_4979a735b89ce1a2531e0e448ef0b8801e8f2ee4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.0\support-annotations-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="6be858a75633b1f0a2d24cad740db57775cb6871">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\support-annotations-24.2.0_4a7ab835e5c5b3c4d3411d988af8edcb99be8eee.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\.gradle\caches\modules-2\files-2.1\com.jakewharton\butterknife\5.1.2\daf5472b0df6dabaceb6ad755b3812535863965a\butterknife-5.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="daf5472b0df6dabaceb6ad755b3812535863965a">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\butterknife-5.1.2_3440a7997988c218e7b115979e11dc2b324af537.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="6eb9107eb34d2fe2b020662b7fbbec991dcba846">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.android.support-support-media-compat-24.2.0_ffbb6c15d2f5fb266eefd1e721219243ed96b333.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\libs\amazon-ads-5.1.243.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="155506176cb1a87885f0da4c850fc72370c414cc">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\amazon-ads-5.1.243_c85f7b48e352feb796176f7637e7f1ea1b0cb88d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="771b3cc0e597b54da25f8086ba73180c59c6bc71">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\internal_impl-24.2.0_22698a6ea5d768b6a1367dbff153cce329903be6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="f9b41622897665678d31d78e57a361cb0cebcb0d">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.android.support-support-compat-24.2.0_7205fb195bf84627686f25d6f77819e1d937e974.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\incremental-runtime-classes\lite\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="ae3f5c3a90a85c0be0fc60ac68ced34850217476">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\instant-run_b7b85192cfdaa89de10c57dcb41a02aa76e9c6c4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\incremental-classes\lite\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="3e9bbbdb7350df033dd6a240b3255271d892b8c8">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\instant-run-bootstrap_6a0faaef5e1960812cd684c16587f8830af34c9a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="60d7b23621d31e6f42f4f76f16af467e57a20cda">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\internal_impl-24.2.0_b8364666b14fc49b291ebd94659e0bccbf12f3a4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="d8bd2268fdcbfd52c76ade65d9900cd8def93a44">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.android.support-support-fragment-24.2.0_fe33d22f3c05c3f9c917499508d17107f52a7614.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="c84e216d9bf618464d6b9564d71d9a656433e7c4">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.android.support-support-core-ui-24.2.0_ffe688128df9b5d82478b448fccedb5bc52e7374.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics\2.5.5\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="611605b6b640c1558f9bdea41de8ff837ab68ca8">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.crashlytics.sdk.android-crashlytics-2.5.5_c2ae83d77ba31fe9adf22234ba0f8f6c6b1f7d0a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="032a4b53def5e2ceedfc2e793b126c0163cfa1dd">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\internal_impl-24.2.0_c2850d87be09dbdfac14c00b43f1065bc6d2e440.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.0\jars\libs\internal_impl-24.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="045be695d968dd707691cc55d23746dbf8cf569a">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\internal_impl-24.2.0_1462560db7d090eb7de2ee745d779dee80b21b80.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="beac40bcc8a320a896dd15f5109cfcaea5e1e0e3">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.android.support-support-vector-drawable-24.2.0_b2d2508cb733b470e72672e43491a7c6026c6321.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="f3ee23ef25c9a8fe3d40246d0b7097267963a612">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.android.support-animated-vector-drawable-24.2.0_48d5eeb787528b76055fa8486ea3e0e064d88284.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="c3c638be6e650b165ab9ae144857b64e82787fad">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.android.support-appcompat-v7-24.2.0_c83e75df16061bd7aee8fac1a0225f2f418a4dc3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="45f5eda279825ff470e3f51019d374d1ef61e000">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.android.support-support-v4-24.2.0_86b935053875966c9bd635ba5f30b3be2b58d229.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="fcc945a86ebcbf527429acb8216ec7dae2c06417">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.android.support-support-core-utils-24.2.0_938133e4d71060579efc5bf86648d1ec267b5c6b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics-core\2.3.8\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="c9ef45dcbd082cd63aac09a5e2cd443adb5df837">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.crashlytics.sdk.android-crashlytics-core-2.3.8_81214663fcf049cce8e89cf507e00584cfd8ab7b.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\beta\1.1.4\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="ad5bb101ced4d3939225c9b57e5a3d81547c1fbb">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.crashlytics.sdk.android-beta-1.1.4_c0a44b09bcbcc63e61ee616a2fc66d913049c431.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\libs\libGoogleAnalyticsServices.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="db1e65d9e3ee616f871cb23120fbea8f18ad3e4c">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\libGoogleAnalyticsServices_f285fb1ee19e592f1018a372c8104ebd555306f9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\answers\1.3.6\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.3"
+        sha1="9af3b9b8114e685291aa00e6572b0a9131244956">
+        <dex dex="C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\pre-dexed\lite\debug\com.crashlytics.sdk.android-answers-1.3.6_db14dcef1167caee12a69296c2440157b6610b18.jar" />
+    </item>
+
+</items>

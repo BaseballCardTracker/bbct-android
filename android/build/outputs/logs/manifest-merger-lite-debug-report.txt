@@ -1,0 +1,106 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:20:1-46:12
+	package
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:21:5-34
+		INJECTED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:21:5-34
+		INJECTED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\lite\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:20:1-46:12
+		INJECTED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\lite\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:22:5-63
+	android:versionCode
+		INJECTED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:20:1-46:12
+		INJECTED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\lite\AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:24:5-66
+MERGED from [com.crashlytics.sdk.android:crashlytics:2.5.5] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics\2.5.5\AndroidManifest.xml:9:5-67
+MERGED from [com.crashlytics.sdk.android:answers:1.3.6] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\answers\1.3.6\AndroidManifest.xml:9:5-67
+MERGED from [io.fabric.sdk.android:fabric:1.3.10] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\io.fabric.sdk.android\fabric\1.3.10\AndroidManifest.xml:25:5-67
+MERGED from [com.crashlytics.sdk.android:crashlytics-core:2.3.8] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics-core\2.3.8\AndroidManifest.xml:9:5-67
+MERGED from [com.crashlytics.sdk.android:beta:1.1.4] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\beta\1.1.4\AndroidManifest.xml:9:5-67
+	android:name
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:24:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:25:5-78
+	android:name
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:25:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:26:5-75
+	android:name
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:26:22-73
+application
+ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:28:5-44:19
+MERGED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:28:5-44:19
+MERGED from [com.android.support:appcompat-v7:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-vector-drawable:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.0\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-compat:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.0\AndroidManifest.xml:25:5-20
+MERGED from [com.google.android.gms:play-services:6.1.71] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\AndroidManifest.xml:16:5-19
+MERGED from [com.crashlytics.sdk.android:crashlytics:2.5.5] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics\2.5.5\AndroidManifest.xml:11:5-20
+MERGED from [com.crashlytics.sdk.android:answers:1.3.6] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\answers\1.3.6\AndroidManifest.xml:11:5-20
+MERGED from [io.fabric.sdk.android:fabric:1.3.10] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\io.fabric.sdk.android\fabric\1.3.10\AndroidManifest.xml:27:5-20
+MERGED from [com.crashlytics.sdk.android:crashlytics-core:2.3.8] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics-core\2.3.8\AndroidManifest.xml:11:5-20
+MERGED from [com.crashlytics.sdk.android:beta:1.1.4] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\beta\1.1.4\AndroidManifest.xml:11:5-20
+	android:label
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:31:9-41
+	android:uiOptions
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:33:9-53
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:33:9-53
+	android:allowBackup
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:29:9-35
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:29:9-35
+	android:icon
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:30:9-42
+	android:theme
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:32:9-40
+meta-data#android.support.UI_OPTIONS
+ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:35:9-37:55
+	android:value
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:37:13-53
+	android:name
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:36:13-54
+meta-data#com.crashlytics.ApiKey
+ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:38:9-40:71
+	android:value
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:40:13-69
+	android:name
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:39:13-50
+activity#bbct.android.common.activity.FragmentTestActivity
+ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:42:9-66
+	android:name
+		ADDED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml:42:19-64
+uses-sdk
+INJECTED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.0\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-vector-drawable:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.0\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-compat:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.0\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:animated-vector-drawable:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.0\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-core-utils:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.0\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-media-compat:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.0\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.0\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-fragment:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.0\AndroidManifest.xml:21:5-23:60
+MERGED from [com.google.android.gms:play-services:6.1.71] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.google.android.gms\play-services\6.1.71\AndroidManifest.xml:15:5-42
+MERGED from [com.crashlytics.sdk.android:crashlytics:2.5.5] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics\2.5.5\AndroidManifest.xml:7:5-43
+MERGED from [com.crashlytics.sdk.android:answers:1.3.6] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\answers\1.3.6\AndroidManifest.xml:7:5-43
+MERGED from [io.fabric.sdk.android:fabric:1.3.10] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\io.fabric.sdk.android\fabric\1.3.10\AndroidManifest.xml:23:5-43
+MERGED from [com.crashlytics.sdk.android:crashlytics-core:2.3.8] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\crashlytics-core\2.3.8\AndroidManifest.xml:7:5-43
+MERGED from [com.crashlytics.sdk.android:beta:1.1.4] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.crashlytics.sdk.android\beta\1.1.4\AndroidManifest.xml:7:5-43
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:24.2.0] C:\Users\Anujan\Desktop\BBCT\bbct\android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.0\AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\lite\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Anujan\Desktop\BBCT\bbct\android\src\lite\AndroidManifest.xml
