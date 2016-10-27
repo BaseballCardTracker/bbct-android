@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of BBCT for Android.
+
+ Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+
+ BBCT for Android is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ BBCT for Android is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="bbct.android"
+    android:versionCode="19"
+    android:versionName="0.6.6" >
+
+    <uses-sdk
+        android:minSdkVersion="18"
+        android:targetSdkVersion="24" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <permission
+        android:name="bbct.android.lite.permission.READ"
+        android:description="@string/read_permission_desc"
+        android:label="@string/read_permission_label"
+        android:protectionLevel="signature" />
+    <permission
+        android:name="bbct.android.lite.permission.WRITE"
+        android:description="@string/write_permission_desc"
+        android:label="@string/write_permission_label"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application
+        android:name="com.android.tools.fd.runtime.BootstrapApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/baseball"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:uiOptions="splitActionBarWhenNarrow" >
+        <activity
+            android:name="bbct.android.lite.provider.LiteActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <provider
+            android:name="bbct.android.lite.provider.LiteProvider"
+            android:authorities="bbct.android.lite.provider"
+            android:exported="true"
+            android:icon="@drawable/baseball"
+            android:label="@string/provider_name"
+            android:readPermission="bbct.android.lite.permission.READ"
+            android:writePermission="bbct.android.lite.permission.WRITE" />
+
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name="com.amazon.device.ads.AdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <meta-data
+            android:name="android.support.UI_OPTIONS"
+            android:value="splitActionBarWhenNarrow" />
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="9cde09037367c7862dce4570593feb1a6387b087" />
+
+        <activity android:name="bbct.android.common.activity.FragmentTestActivity" />
+    </application>
+
+</manifest>

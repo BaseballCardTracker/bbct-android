@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\res\\merged\\lite\\debug\\menu\\main.xml",
+        "source": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\src\\main\\res\\menu\\main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\res\\merged\\lite\\debug\\menu\\context.xml",
+        "source": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\src\\main\\res\\menu\\context.xml"
+    },
+    {
+        "merged": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\res\\merged\\lite\\debug\\menu\\list.xml",
+        "source": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\src\\main\\res\\menu\\list.xml"
+    },
+    {
+        "merged": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\res\\merged\\lite\\debug\\menu\\save.xml",
+        "source": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\src\\main\\res\\menu\\save.xml"
+    }
+]

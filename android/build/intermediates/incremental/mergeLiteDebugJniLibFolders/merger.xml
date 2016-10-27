@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="C:\Users\Anujan\Desktop\BBCT\bbct\android\src\main\jniLibs"/></dataSet><dataSet config="lite"><source path="C:\Users\Anujan\Desktop\BBCT\bbct\android\src\lite\jniLibs"/></dataSet><dataSet config="debug"><source path="C:\Users\Anujan\Desktop\BBCT\bbct\android\src\debug\jniLibs"/></dataSet><dataSet config="liteDebug"><source path="C:\Users\Anujan\Desktop\BBCT\bbct\android\src\liteDebug\jniLibs"/></dataSet></merger>

@@ -1,0 +1,938 @@
+[
+    {
+        "outputFile": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\incremental\\mergeLiteDebugResources\\merged.dir\\values-it\\values-it.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 105,
+                    "endColumn": 108,
+                    "endOffset": 209
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 108,
+                        "endOffset": 159
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 214,
+                    "endColumn": 107,
+                    "endOffset": 317
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 164,
+                        "endColumn": 107,
+                        "endOffset": 267
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 322,
+                    "endColumn": 122,
+                    "endOffset": 440
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 272,
+                        "endColumn": 122,
+                        "endOffset": 390
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 445,
+                    "endColumn": 99,
+                    "endOffset": 540
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 395,
+                        "endColumn": 99,
+                        "endOffset": 490
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 545,
+                    "endColumn": 108,
+                    "endOffset": 649
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 495,
+                        "endColumn": 108,
+                        "endOffset": 599
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 654,
+                    "endColumn": 83,
+                    "endOffset": 733
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 604,
+                        "endColumn": 83,
+                        "endOffset": 683
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 738,
+                    "endColumn": 108,
+                    "endOffset": 842
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 688,
+                        "endColumn": 108,
+                        "endOffset": 792
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 847,
+                    "endColumn": 124,
+                    "endOffset": 967
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 797,
+                        "endColumn": 124,
+                        "endOffset": 917
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 972,
+                    "endColumn": 76,
+                    "endOffset": 1044
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 922,
+                        "endColumn": 76,
+                        "endOffset": 994
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 1049,
+                    "endColumn": 75,
+                    "endOffset": 1120
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 999,
+                        "endColumn": 75,
+                        "endOffset": 1070
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 1125,
+                    "endColumn": 80,
+                    "endOffset": 1201
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 1075,
+                        "endColumn": 80,
+                        "endOffset": 1151
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 1206,
+                    "endColumn": 105,
+                    "endOffset": 1307
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 1156,
+                        "endColumn": 105,
+                        "endOffset": 1257
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 1312,
+                    "endColumn": 107,
+                    "endOffset": 1415
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 1262,
+                        "endColumn": 107,
+                        "endOffset": 1365
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 1420,
+                    "endColumn": 97,
+                    "endOffset": 1513
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 1370,
+                        "endColumn": 97,
+                        "endOffset": 1463
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 1518,
+                    "endColumn": 103,
+                    "endOffset": 1617
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 1468,
+                        "endColumn": 103,
+                        "endOffset": 1567
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 17,
+                    "startColumn": 4,
+                    "startOffset": 1622,
+                    "endColumn": 104,
+                    "endOffset": 1722
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 1572,
+                        "endColumn": 104,
+                        "endOffset": 1672
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 18,
+                    "startColumn": 4,
+                    "startOffset": 1727,
+                    "endColumn": 106,
+                    "endOffset": 1829
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 18,
+                        "startColumn": 4,
+                        "startOffset": 1677,
+                        "endColumn": 106,
+                        "endOffset": 1779
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 19,
+                    "startColumn": 4,
+                    "startOffset": 1834,
+                    "endColumn": 121,
+                    "endOffset": 1951
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 1784,
+                        "endColumn": 121,
+                        "endOffset": 1901
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 20,
+                    "startColumn": 4,
+                    "startOffset": 1956,
+                    "endColumn": 99,
+                    "endOffset": 2051
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 1906,
+                        "endColumn": 99,
+                        "endOffset": 2001
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 21,
+                    "startColumn": 4,
+                    "startOffset": 2056,
+                    "endColumn": 174,
+                    "endOffset": 2226
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 682,
+                        "endColumn": 174,
+                        "endOffset": 852
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 22,
+                    "startColumn": 4,
+                    "startOffset": 2231,
+                    "endColumn": 152,
+                    "endOffset": 2379
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 2642,
+                        "endColumn": 152,
+                        "endOffset": 2790
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 23,
+                    "startColumn": 4,
+                    "startOffset": 2384,
+                    "endColumn": 112,
+                    "endOffset": 2492
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 17,
+                        "startColumn": 4,
+                        "startOffset": 2372,
+                        "endColumn": 112,
+                        "endOffset": 2480
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 24,
+                    "startColumn": 4,
+                    "startOffset": 2497,
+                    "endColumn": 127,
+                    "endOffset": 2620
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 15,
+                        "startColumn": 4,
+                        "startOffset": 2115,
+                        "endColumn": 127,
+                        "endOffset": 2238
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 25,
+                    "startColumn": 4,
+                    "startOffset": 2625,
+                    "endColumn": 155,
+                    "endOffset": 2776
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 14,
+                        "startColumn": 4,
+                        "startOffset": 1959,
+                        "endColumn": 155,
+                        "endOffset": 2110
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 26,
+                    "startColumn": 4,
+                    "startOffset": 2781,
+                    "endColumn": 125,
+                    "endOffset": 2902
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 1833,
+                        "endColumn": 125,
+                        "endOffset": 1954
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 27,
+                    "startColumn": 4,
+                    "startOffset": 2907,
+                    "endColumn": 168,
+                    "endOffset": 3071
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 1030,
+                        "endColumn": 172,
+                        "endOffset": 1198
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 28,
+                    "startColumn": 4,
+                    "startOffset": 3076,
+                    "endColumn": 130,
+                    "endOffset": 3202
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 1702,
+                        "endColumn": 130,
+                        "endOffset": 1828
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 29,
+                    "startColumn": 4,
+                    "startOffset": 3207,
+                    "endColumn": 185,
+                    "endOffset": 3388
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 1331,
+                        "endColumn": 185,
+                        "endOffset": 1512
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 30,
+                    "startColumn": 4,
+                    "startOffset": 3393,
+                    "endColumn": 184,
+                    "endOffset": 3573
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 1517,
+                        "endColumn": 184,
+                        "endOffset": 1697
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 31,
+                    "startColumn": 4,
+                    "startOffset": 3578,
+                    "endColumn": 127,
+                    "endOffset": 3701
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 1203,
+                        "endColumn": 127,
+                        "endOffset": 1326
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 32,
+                    "startColumn": 4,
+                    "startOffset": 3706,
+                    "endColumn": 188,
+                    "endOffset": 3890
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 23,
+                        "startColumn": 4,
+                        "startOffset": 3222,
+                        "endColumn": 188,
+                        "endOffset": 3406
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 33,
+                    "startColumn": 4,
+                    "startOffset": 3895,
+                    "endColumn": 126,
+                    "endOffset": 4017
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 22,
+                        "startColumn": 4,
+                        "startOffset": 3095,
+                        "endColumn": 126,
+                        "endOffset": 3217
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 34,
+                    "startColumn": 4,
+                    "startOffset": 4022,
+                    "endColumn": 172,
+                    "endOffset": 4190
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 857,
+                        "endColumn": 172,
+                        "endOffset": 1025
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 35,
+                    "startColumn": 4,
+                    "startOffset": 4195,
+                    "endColumn": 178,
+                    "endOffset": 4369
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 21,
+                        "startColumn": 4,
+                        "startOffset": 2916,
+                        "endColumn": 178,
+                        "endOffset": 3090
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 36,
+                    "startColumn": 4,
+                    "startOffset": 4374,
+                    "endColumn": 120,
+                    "endOffset": 4490
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 2795,
+                        "endColumn": 120,
+                        "endOffset": 2911
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 37,
+                    "startColumn": 4,
+                    "startOffset": 4495,
+                    "endColumn": 191,
+                    "endOffset": 4682
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 304,
+                        "endColumn": 191,
+                        "endOffset": 491
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 38,
+                    "startColumn": 4,
+                    "startOffset": 4687,
+                    "endColumn": 185,
+                    "endOffset": 4868
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 496,
+                        "endColumn": 185,
+                        "endOffset": 677
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 39,
+                    "startColumn": 4,
+                    "startOffset": 4873,
+                    "endColumn": 133,
+                    "endOffset": 5002
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 170,
+                        "endColumn": 133,
+                        "endOffset": 299
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 40,
+                    "startColumn": 4,
+                    "startOffset": 5007,
+                    "endColumn": 146,
+                    "endOffset": 5149
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 24,
+                        "startColumn": 4,
+                        "startOffset": 3411,
+                        "endColumn": 146,
+                        "endOffset": 3553
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 41,
+                    "startColumn": 4,
+                    "startOffset": 5154,
+                    "endColumn": 270,
+                    "endOffset": 5420
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 26,
+                        "startColumn": 4,
+                        "startOffset": 3683,
+                        "endColumn": 270,
+                        "endOffset": 3949
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 42,
+                    "startColumn": 4,
+                    "startOffset": 5425,
+                    "endColumn": 124,
+                    "endOffset": 5545
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 25,
+                        "startColumn": 4,
+                        "startOffset": 3558,
+                        "endColumn": 124,
+                        "endOffset": 3678
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 43,
+                    "startColumn": 4,
+                    "startOffset": 5550,
+                    "endColumn": 108,
+                    "endOffset": 5654
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 27,
+                        "startColumn": 4,
+                        "startOffset": 3954,
+                        "endColumn": 108,
+                        "endOffset": 4058
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 44,
+                    "startColumn": 4,
+                    "startOffset": 5659,
+                    "endColumn": 156,
+                    "endOffset": 5811
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 18,
+                        "startColumn": 4,
+                        "startOffset": 2485,
+                        "endColumn": 156,
+                        "endOffset": 2637
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 45,
+                    "startColumn": 4,
+                    "startOffset": 5816,
+                    "endColumn": 128,
+                    "endOffset": 5940
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 16,
+                        "startColumn": 4,
+                        "startOffset": 2243,
+                        "endColumn": 128,
+                        "endOffset": 2367
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 46,
+                    "startColumn": 4,
+                    "startOffset": 5945,
+                    "endColumn": 95,
+                    "endOffset": 6036
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 30,
+                        "startColumn": 4,
+                        "startOffset": 4261,
+                        "endColumn": 95,
+                        "endOffset": 4352
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 47,
+                    "startColumn": 4,
+                    "startOffset": 6041,
+                    "endColumn": 90,
+                    "endOffset": 6127
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 28,
+                        "startColumn": 4,
+                        "startOffset": 4063,
+                        "endColumn": 90,
+                        "endOffset": 4149
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 48,
+                    "startColumn": 4,
+                    "startOffset": 6132,
+                    "endColumn": 106,
+                    "endOffset": 6234
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services\\6.1.71\\res\\values-it\\common_strings.xml",
+                    "position": {
+                        "startLine": 29,
+                        "startColumn": 4,
+                        "startOffset": 4154,
+                        "endColumn": 106,
+                        "endOffset": 4256
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 49,
+                    "startColumn": 4,
+                    "startOffset": 6239,
+                    "endColumn": 82,
+                    "endOffset": 6317
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 21,
+                        "startColumn": 4,
+                        "startOffset": 2006,
+                        "endColumn": 82,
+                        "endOffset": 2084
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 50,
+                    "startColumn": 4,
+                    "startOffset": 6322,
+                    "endColumn": 100,
+                    "endOffset": 6418
+                },
+                "from": {
+                    "file": "C:\\Users\\Anujan\\Desktop\\BBCT\\bbct\\android\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\values-it\\values-it.xml",
+                    "position": {
+                        "startLine": 22,
+                        "startColumn": 4,
+                        "startOffset": 2089,
+                        "endColumn": 100,
+                        "endOffset": 2185
+                    }
+                }
+            }
+        ]
+    }
+]

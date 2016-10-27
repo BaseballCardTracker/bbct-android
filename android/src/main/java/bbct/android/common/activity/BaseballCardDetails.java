@@ -266,8 +266,9 @@ public class BaseballCardDetails extends Fragment {
         for (int i = allEditTexts.length - 1; i >= 0; --i) {
             String input = allEditTexts[i].getText().toString();
             if (input.equals("")) {
-                allEditTexts[i].requestFocus();
-                allEditTexts[i].setError(this.getString(errorIds[i]));
+                //error message do not show now
+                //allEditTexts[i].requestFocus();
+                //allEditTexts[i].setError(this.getString(errorIds[i]));
                 validInput = false;
             }
         }
@@ -287,8 +288,34 @@ public class BaseballCardDetails extends Fragment {
             return new BaseballCard(autographed, condition, brand, year,
                     number, (int) (value * 100), count, playerName, team,
                     playerPosition);
+
         } else {
-            return null;
+            String brand = this.brandText.getText().toString();
+            int year = 0;
+            int number = 0;
+            int count = 0;
+            double value = 0.0;
+            if(!this.yearText.getText().toString().equals("")) {
+                String yearStr = this.yearText.getText().toString();
+                year = Integer.parseInt(yearStr);
+            }
+            if(!this.numberText.getText().toString().equals("")){
+                String numberStr = this.numberText.getText().toString();
+                number = Integer.parseInt(numberStr);
+            }
+            if(!this.valueText.getText().toString().equals("")){
+                String valueStr = this.valueText.getText().toString();
+                value = Double.parseDouble(valueStr);
+            }
+            if(!this.teamText.getText().toString().equals("")){
+                String countStr = this.countText.getText().toString();
+                count = Integer.parseInt(countStr);
+            }
+            String team = this.teamText.getText().toString();
+            String playerName = this.playerNameText.getText().toString();
+            return new BaseballCard(autographed, condition, brand, 0,
+                    0, 0, 0, playerName, team,
+                    playerPosition);
         }
     }
 
