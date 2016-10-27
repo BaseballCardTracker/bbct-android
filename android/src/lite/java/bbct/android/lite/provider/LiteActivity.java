@@ -39,7 +39,7 @@ import com.google.android.gms.ads.AdView;
 /**
  *
  */
-public class LiteActivity extends MainActivity implements AdListener {
+public class sLiteActivity extends MainActivity implements AdListener {
 
     private static final String AD_UNIT_ID = "a151047824e2718";
 
