@@ -27,13 +27,13 @@ allprojects {
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         applicationId "bbct.android.common"
         minSdkVersion 18
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 18
         versionName "0.6.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -120,7 +120,7 @@ if (propFile.canRead()) {
 }
 
 ext {
-    supportLibVersion = '24.2.0'
+    supportLibVersion = '25.0.1'
     espressoVersion = '2.2.1'
     testSupportLibVersion = '0.5'
 }
