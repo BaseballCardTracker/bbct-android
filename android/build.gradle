@@ -120,14 +120,15 @@ if (propFile.canRead()) {
 }
 
 ext {
+    supportLibVersion = '24.2.0'
     espressoVersion = '2.2.1'
     testSupportLibVersion = '0.5'
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:support-v4:24.2.0'
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:support-v4:${supportLibVersion}"
     compile 'com.google.android.gms:play-services:6.1.71'
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
@@ -138,7 +139,7 @@ dependencies {
     androidTestCompile "com.android.support.test:runner:${testSupportLibVersion}"
     androidTestCompile "com.android.support.test:rules:${testSupportLibVersion}"
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
-    androidTestCompile 'com.android.support:support-annotations:24.2.0'
+    androidTestCompile "com.android.support:support-annotations:${supportLibVersion}"
     androidTestCompile "com.android.support.test.espresso:espresso-core:${espressoVersion}"
     androidTestCompile "com.android.support.test.espresso:espresso-intents:${espressoVersion}"
     testCompile 'junit:junit:4.12'
