@@ -21,7 +21,6 @@ package bbct.android.common.test.rule;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
-
 import bbct.android.common.SharedPreferenceKeys;
 import org.junit.rules.ExternalResource;
 

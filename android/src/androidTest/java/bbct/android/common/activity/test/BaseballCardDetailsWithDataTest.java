@@ -25,12 +25,11 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
-
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
-import bbct.data.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
+import bbct.data.BaseballCard;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;

@@ -19,12 +19,10 @@
 package bbct.android.common.test.rule;
 
 import android.annotation.SuppressLint;
-
+import bbct.android.common.SharedPreferenceKeys;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import bbct.android.common.SharedPreferenceKeys;
 
 import static bbct.android.common.activity.MainActivity.SURVEY_DELAY;
 
