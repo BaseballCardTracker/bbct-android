@@ -18,53 +18,19 @@
  */
 package bbct.data.test;
 
-import bbct.data.BaseballCard;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- * TODO: JavaDoc
- */
+import bbct.data.BaseballCard;
+
 public class BaseballCardNominalTest {
-    /**
-     * Creates a new {@link BaseballCardNominalTest}.
-     */
-    public BaseballCardNominalTest() {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
     /**
      *
      */
     @Before
     public void setUp() {
         this.instance = new BaseballCard(autographed, condition, brand, year, num, value, count, playerName, team, playerPosition);
-    }
-
-    /**
-     *
-     */
-    @After
-    public void tearDown() {
     }
 
     /**
