@@ -133,12 +133,9 @@ public class BaseballCardNominalTest {
      */
     @Test
     public void testHashCode() {
-        System.out.println("hashCode");
-        int expResult = 0;
-        int result = this.instance.hashCode();
-        Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
+        BaseballCard card1 = new BaseballCard(autographed, condition, brand, year, num, value, count, playerName, team, playerPosition);
+        BaseballCard card2 = new BaseballCard(autographed, condition, brand, year, num, value, count, playerName, team, playerPosition);
+        Assert.assertTrue(card1.hashCode() == card2.hashCode());
     }
 
     /**
