@@ -143,10 +143,14 @@ public class BaseballCardNominalTest {
      */
     @Test
     public void testToString() {
-        String expResult = "BaseballCard{" + "cardBrand=" + this.brand
+        String expResult = "BaseballCard{"
+                + "autographed=" + this.autographed
+                + ", condition=" + this.condition
+                + ", cardBrand=" + this.brand
                 + ", cardYear=" + this.year + ", cardNumber=" + this.num
                 + ", cardValue=" + this.value + ", cardCount=" + this.count
                 + ", playerName=" + this.playerName
+                + ", team=" + this.team
                 + ", playerPosition=" + this.playerPosition + '}';
         String result = this.instance.toString();
         Assert.assertEquals(expResult, result);
