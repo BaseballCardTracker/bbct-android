@@ -25,9 +25,18 @@ import org.junit.Test;
 import bbct.data.BaseballCard;
 
 public class BaseballCardNominalTest {
-    /**
-     *
-     */
+    private BaseballCard instance = null;
+    private boolean autographed = true;
+    private String condition = "Excellent";
+    private String brand = "Topps";
+    private int year = 1991;
+    private int num = 278;
+    private int value = 10100;
+    private int count = 1;
+    private String playerName = "Alex Fernandez";
+    private String team = "Dodgers";
+    private String playerPosition = "Pitcher";
+
     @Before
     public void setUp() {
         this.instance = new BaseballCard(autographed, condition, brand, year, num, value, count, playerName, team, playerPosition);
@@ -149,15 +158,4 @@ public class BaseballCardNominalTest {
         String result = this.instance.toString();
         Assert.assertEquals(expResult, result);
     }
-    private BaseballCard instance = null;
-    private boolean autographed = true;
-    private String condition = "Excellent";
-    private String brand = "Topps";
-    private int year = 1991;
-    private int num = 278;
-    private int value = 10100;
-    private int count = 1;
-    private String playerName = "Alex Fernandez";
-    private String team = "Dodgers";
-    private String playerPosition = "Pitcher";
 }
