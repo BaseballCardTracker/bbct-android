@@ -123,13 +123,9 @@ public class BaseballCardNominalTest {
      */
     @Test
     public void testEquals() {
-        System.out.println("equals");
-        Object o = null;
-        boolean expResult = false;
-        boolean result = this.instance.equals(o);
-        Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
+        BaseballCard card1 = new BaseballCard(autographed, condition, brand, year, num, value, count, playerName, team, playerPosition);
+        BaseballCard card2 = new BaseballCard(autographed, condition, brand, year, num, value, count, playerName, team, playerPosition);
+        Assert.assertTrue(card1.equals(card2));
     }
 
     /**
