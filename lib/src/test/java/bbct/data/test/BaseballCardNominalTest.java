@@ -18,53 +18,28 @@
  */
 package bbct.data.test;
 
-import bbct.data.BaseballCard;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-/**
- * TODO: JavaDoc
- */
+import bbct.data.BaseballCard;
+
 public class BaseballCardNominalTest {
-    /**
-     * Creates a new {@link BaseballCardNominalTest}.
-     */
-    public BaseballCardNominalTest() {
-    }
+    private BaseballCard instance = null;
+    private boolean autographed = true;
+    private String condition = "Excellent";
+    private String brand = "Topps";
+    private int year = 1991;
+    private int num = 278;
+    private int value = 10100;
+    private int count = 1;
+    private String playerName = "Alex Fernandez";
+    private String team = "Dodgers";
+    private String playerPosition = "Pitcher";
 
-    /**
-     *
-     * @throws Exception
-     */
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    /**
-     *
-     * @throws Exception
-     */
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    /**
-     *
-     */
     @Before
     public void setUp() {
         this.instance = new BaseballCard(autographed, condition, brand, year, num, value, count, playerName, team, playerPosition);
-    }
-
-    /**
-     *
-     */
-    @After
-    public void tearDown() {
     }
 
     /**
@@ -148,13 +123,9 @@ public class BaseballCardNominalTest {
      */
     @Test
     public void testEquals() {
-        System.out.println("equals");
-        Object o = null;
-        boolean expResult = false;
-        boolean result = this.instance.equals(o);
-        Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
+        BaseballCard card1 = new BaseballCard(autographed, condition, brand, year, num, value, count, playerName, team, playerPosition);
+        BaseballCard card2 = new BaseballCard(autographed, condition, brand, year, num, value, count, playerName, team, playerPosition);
+        Assert.assertTrue(card1.equals(card2));
     }
 
     /**
@@ -162,12 +133,9 @@ public class BaseballCardNominalTest {
      */
     @Test
     public void testHashCode() {
-        System.out.println("hashCode");
-        int expResult = 0;
-        int result = this.instance.hashCode();
-        Assert.assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        Assert.fail("The test case is a prototype.");
+        BaseballCard card1 = new BaseballCard(autographed, condition, brand, year, num, value, count, playerName, team, playerPosition);
+        BaseballCard card2 = new BaseballCard(autographed, condition, brand, year, num, value, count, playerName, team, playerPosition);
+        Assert.assertTrue(card1.hashCode() == card2.hashCode());
     }
 
     /**
@@ -175,23 +143,16 @@ public class BaseballCardNominalTest {
      */
     @Test
     public void testToString() {
-        String expResult = "BaseballCard{" + "cardBrand=" + this.brand
+        String expResult = "BaseballCard{"
+                + "autographed=" + this.autographed
+                + ", condition=" + this.condition
+                + ", cardBrand=" + this.brand
                 + ", cardYear=" + this.year + ", cardNumber=" + this.num
                 + ", cardValue=" + this.value + ", cardCount=" + this.count
                 + ", playerName=" + this.playerName
+                + ", team=" + this.team
                 + ", playerPosition=" + this.playerPosition + '}';
         String result = this.instance.toString();
         Assert.assertEquals(expResult, result);
     }
-    private BaseballCard instance = null;
-    private boolean autographed = true;
-    private String condition = "Excellent";
-    private String brand = "Topps";
-    private int year = 1991;
-    private int num = 278;
-    private int value = 10100;
-    private int count = 1;
-    private String playerName = "Alex Fernandez";
-    private String team = "Dodgers";
-    private String playerPosition = "Pitcher";
 }
