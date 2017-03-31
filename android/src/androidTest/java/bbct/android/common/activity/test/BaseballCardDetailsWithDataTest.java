@@ -74,21 +74,21 @@ public class BaseballCardDetailsWithDataTest {
     }
 
     @Test
-    public void testBrandAutoComplete() throws Throwable {
-        this.testAutoComplete(R.id.brand_text, mCard.getBrand());
+    public void testBrandAutoCompletePopup() throws Throwable {
+        this.testAutoCompletePopup(R.id.brand_text, mCard.getBrand());
     }
 
     @Test
-    public void testPlayerNameAutoComplete() throws Throwable {
-        this.testAutoComplete(R.id.player_name_text, mCard.getPlayerName());
+    public void testPlayerNameAutoCompletePopup() throws Throwable {
+        this.testAutoCompletePopup(R.id.player_name_text, mCard.getPlayerName());
     }
 
     @Test
-    public void testTeamAutoComplete() throws Throwable {
-        this.testAutoComplete(R.id.team_text, mCard.getTeam());
+    public void testTeamAutoCompletePopup() throws Throwable {
+        this.testAutoCompletePopup(R.id.team_text, mCard.getTeam());
     }
 
-    private void testAutoComplete(int textViewId, String text)
+    private void testAutoCompletePopup(int textViewId, String text)
             throws Throwable {
         Activity activity = activityTestRule.getActivity();
         onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
