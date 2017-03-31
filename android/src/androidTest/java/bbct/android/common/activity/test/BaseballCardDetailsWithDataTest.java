@@ -38,6 +38,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.CursorMatchers.withRowString;
@@ -116,5 +117,29 @@ public class BaseballCardDetailsWithDataTest {
         onView(withId(id)).perform(typeText(text));
         device.setOrientationLeft();
         onView(withId(id)).check(matches(withText(text)));
+    }
+
+    @Test
+    public void testBrandAutoCompleteSelect() throws RemoteException {
+        testAutoCompleteSelect(R.id.brand_text, mCard.getBrand());
+    }
+
+    @Test
+    public void testPlayerNameAutoCompleteSelect() throws RemoteException {
+        testAutoCompleteSelect(R.id.player_name_text, mCard.getPlayerName());
+    }
+
+    @Test
+    public void testTeamAutoCompleteSelect() throws RemoteException {
+        testAutoCompleteSelect(R.id.team_text, mCard.getTeam());
+    }
+
+    private void testAutoCompleteSelect(int textViewId, String text) throws RemoteException {
+        Activity activity = activityTestRule.getActivity();
+        onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
+        onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
+                .inRoot(withDecorView(not(activity.getWindow().getDecorView())))
+                .perform(click());
+        onView(withId(textViewId)).check(matches(withText(text)));
     }
 }
