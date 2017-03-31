@@ -22,6 +22,8 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.activity.MainActivity;
 import butterknife.ButterKnife;
@@ -73,6 +75,11 @@ public class LiteActivity extends MainActivity implements AdListener {
         amazonAdView.loadAd(new AdTargetingOptions());
 
         premiumText.setMovementMethod(LinkMovementMethod.getInstance());
+
+        if (BuildConfig.DEBUG) {
+            AdRegistration.enableTesting(true);
+            AdRegistration.enableLogging(true);
+        }
     }
 
     /**

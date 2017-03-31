@@ -19,24 +19,39 @@
 package bbct.android.common.functional.test;
 
 import android.app.Instrumentation;
+import android.content.Context;
+import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
-import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
-import bbct.android.common.R;
+import android.support.test.uiautomator.Until;
+
 import org.junit.After;
 import org.junit.Before;
 
+import bbct.android.common.R;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsNull.notNullValue;
+
 public abstract class UiAutomatorTest {
+    private static final int LAUNCH_TIMEOUT = 5000;
+
     protected UiDevice device;
     protected Instrumentation inst;
+    protected Context context;
+
+    private String targetPackage;
 
     @Before
     public void setUp() throws UiObjectNotFoundException {
         inst = InstrumentationRegistry.getInstrumentation();
         device = UiDevice.getInstance(inst);
+        context = InstrumentationRegistry.getTargetContext();
+        targetPackage = context.getPackageName();
         startApp();
     }
 
@@ -46,16 +61,29 @@ public abstract class UiAutomatorTest {
     }
 
     private void startApp() throws UiObjectNotFoundException {
+        // Start from the home screen
         device.pressHome();
-        UiObject allAppsButton = device.findObject(new UiSelector().description("Apps"));
-        allAppsButton.clickAndWaitForNewWindow();
-        UiObject appsTab = device.findObject(new UiSelector().text("Apps"));
-        appsTab.click();
-        UiScrollable appViews = new UiScrollable(new UiSelector().scrollable(true));
-        appViews.setAsHorizontalList();
-        String appName = inst.getTargetContext().getString(R.string.app_name);
-        UiObject ourApp = appViews.getChildByText(
-                new UiSelector().className("android.widget.TextView"), appName);
-        ourApp.clickAndWaitForNewWindow();
+
+        // Wait for launcher
+        final String launcherPackage = device.getLauncherPackageName();
+        assertThat(launcherPackage, notNullValue());
+        device.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)), LAUNCH_TIMEOUT);
+
+        // Launch the app
+        Context context = InstrumentationRegistry.getContext();
+        final Intent intent = context.getPackageManager()
+                .getLaunchIntentForPackage(targetPackage);
+        // Clear out any previous instances
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
+
+        // Wait for the app to appear
+        device.wait(Until.hasObject(By.pkg(targetPackage).depth(0)), LAUNCH_TIMEOUT);
+    }
+
+    protected void clickLaterButton() throws UiObjectNotFoundException {
+        UiSelector laterSelector = new UiSelector().text(context.getString(R.string.later));
+        UiObject laterButton = device.findObject(laterSelector);
+        laterButton.click();
     }
 }

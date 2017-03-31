@@ -22,9 +22,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import bbct.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
+import bbct.data.BaseballCard;
 import java.util.List;
 
 /**
@@ -125,8 +125,9 @@ public class DatabaseUtil {
         String[] selectionArgs = {card.getBrand(), Integer.toString(card.getYear()), Integer.toString(card.getNumber()),
             Integer.toString(card.getValue()), Integer.toString(card.getCount()), card.getPlayerName(), card.getPlayerPosition()};
         Cursor cursor = this.db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
-
-        return cursor.getCount() == 1;
+        boolean result = cursor.getCount() == 1;
+        cursor.close();
+        return result;
     }
 
     /**
@@ -155,8 +156,9 @@ public class DatabaseUtil {
     public boolean isEmpty() {
         String[] columns = {BaseballCardContract.ID_COL_NAME};
         Cursor cursor = this.db.query(TABLE_NAME, columns, null, null, null, null, null);
-
-        return cursor.getCount() == 0;
+        boolean result = cursor.getCount() == 0;
+        cursor.close();
+        return result;
     }
     private SQLiteDatabase db = null;
     private Context context = null;

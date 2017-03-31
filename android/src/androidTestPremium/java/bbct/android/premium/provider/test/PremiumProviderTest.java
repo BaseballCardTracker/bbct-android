@@ -16,29 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.test.rule;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.support.test.InstrumentationRegistry;
-import bbct.android.common.SharedPreferenceKeys;
-import org.junit.rules.ExternalResource;
+package bbct.android.premium.provider.test;
 
-public class SharedPreferencesTestRule extends ExternalResource {
-    SharedPreferences prefs;
+import bbct.android.common.provider.test.BaseballCardProviderTest;
+import bbct.android.premium.provider.PremiumProvider;
 
-    @Override
-    protected void before() throws Throwable {
-        Context context = InstrumentationRegistry.getTargetContext();
-        prefs = context.getSharedPreferences(SharedPreferenceKeys.PREFS, Context.MODE_PRIVATE);
-    }
-
-    @Override
-    protected void after() {
-        prefs.edit().clear().apply();
-    }
-
-    public SharedPreferences getPrefs() {
-        return prefs;
+public class PremiumProviderTest extends BaseballCardProviderTest<PremiumProvider> {
+    public PremiumProviderTest() {
+        super(PremiumProvider.class);
     }
 }

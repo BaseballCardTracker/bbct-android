@@ -145,6 +145,7 @@ public class BaseballCardDetails extends Fragment {
                     InputMethodManager imm = (InputMethodManager) getActivity()
                             .getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(teamText.getWindowToken(), 0);
+                    playerPositionSpinner.requestFocus();
                     return true;
                 }
 

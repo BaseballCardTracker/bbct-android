@@ -26,8 +26,8 @@ import android.support.test.espresso.ViewInteraction;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
 import bbct.android.common.R;
-import bbct.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
+import bbct.data.BaseballCard;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -39,6 +39,7 @@ import org.hamcrest.Matcher;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -120,7 +121,7 @@ final public class BBCTTestUtil {
         onView(withId(R.id.brand_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.BRAND)) {
             onView(withId(R.id.brand_text))
-                    .perform(scrollTo(), typeTextIntoFocusedView(card.getBrand()))
+                    .perform(scrollTo(), clearText(), typeTextIntoFocusedView(card.getBrand()))
                     .check(matches(withText(card.getBrand())));
         }
         device.pressEnter();

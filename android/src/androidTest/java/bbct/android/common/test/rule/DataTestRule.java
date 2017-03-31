@@ -20,10 +20,9 @@ package bbct.android.common.test.rule;
 
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
-import bbct.data.BaseballCard;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-
+import bbct.data.BaseballCard;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
