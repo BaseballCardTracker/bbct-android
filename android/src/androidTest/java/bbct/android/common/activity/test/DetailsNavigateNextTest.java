@@ -37,6 +37,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static bbct.android.common.test.ViewActions.requestFocus;
+import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class DetailsNavigateNextTest {
@@ -49,7 +50,7 @@ public class DetailsNavigateNextTest {
         FragmentTestActivity activity = activityTestRule.getActivity();
         activity.replaceFragment(new BaseballCardDetails());
         onView(withId(R.id.brand_text))
-                .check(matches(hasFocus()))
+                .check(matches(allOf(isDisplayed(), hasFocus())))
                 .perform(pressKey(KeyEvent.KEYCODE_ENTER));
         onView(withId(R.id.year_text))
                 .check(matches(hasFocus()));
