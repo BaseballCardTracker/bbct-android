@@ -34,7 +34,9 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.pressKey;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static bbct.android.common.test.ViewActions.requestFocus;
 
 @RunWith(AndroidJUnit4.class)
 public class DetailsNavigateNextTest {
@@ -50,6 +52,19 @@ public class DetailsNavigateNextTest {
                 .check(matches(hasFocus()))
                 .perform(pressKey(KeyEvent.KEYCODE_ENTER));
         onView(withId(R.id.year_text))
+                .check(matches(hasFocus()));
+    }
+
+    @Test
+    public void yearNext() throws Exception {
+        FragmentTestActivity activity = activityTestRule.getActivity();
+        activity.replaceFragment(new BaseballCardDetails());
+        onView(withId(R.id.year_text))
+                .check(matches(isDisplayed()))
+                .perform(requestFocus())
+                .check(matches(hasFocus()))
+                .perform(pressKey(KeyEvent.KEYCODE_ENTER));
+        onView(withId(R.id.number_text))
                 .check(matches(hasFocus()));
     }
 }
