@@ -19,16 +19,18 @@
 package bbct.android.common.activity.test;
 
 import android.app.Activity;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.v4.app.Fragment;
-import bbct.android.common.activity.About;
-import bbct.android.common.activity.FragmentTestActivity;
+
 import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import bbct.android.common.activity.About;
+import bbct.android.common.test.rule.SupportFragmentTestRule;
 
 /**
  * Tests for {@link About} activity class.
@@ -38,10 +40,9 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class AboutTest {
     @Rule
-    public ActivityTestRule<FragmentTestActivity> activityTestRule =
-            new ActivityTestRule<>(FragmentTestActivity.class);
+    public SupportFragmentTestRule fragmentTestRule = new SupportFragmentTestRule(new About());
 
-    private FragmentTestActivity activity;
+    private Activity activity;
     private Fragment aboutFragment;
 
     /**
@@ -52,9 +53,8 @@ public class AboutTest {
      */
     @Before
     public void setUp() throws Exception {
-        this.activity = activityTestRule.getActivity();
-        this.aboutFragment = new About();
-        this.activity.replaceFragment(this.aboutFragment);
+        this.activity = fragmentTestRule.getActivity();
+        this.aboutFragment = fragmentTestRule.getFragment();
     }
 
     /**
