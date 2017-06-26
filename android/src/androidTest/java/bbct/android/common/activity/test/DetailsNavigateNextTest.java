@@ -18,6 +18,7 @@
  */
 package bbct.android.common.activity.test;
 
+import android.support.annotation.IdRes;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.KeyEvent;
 
@@ -36,7 +37,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static bbct.android.common.test.ViewActions.requestFocus;
-import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class DetailsNavigateNextTest {
@@ -46,21 +46,21 @@ public class DetailsNavigateNextTest {
 
     @Test
     public void brandNext() throws Exception {
-        onView(withId(R.id.brand_text))
-                .check(matches(allOf(isDisplayed(), hasFocus())))
-                .perform(pressKey(KeyEvent.KEYCODE_ENTER));
-        onView(withId(R.id.year_text))
-                .check(matches(hasFocus()));
+        testNext(R.id.brand_text, R.id.year_text);
     }
 
     @Test
     public void yearNext() throws Exception {
-        onView(withId(R.id.year_text))
+        testNext(R.id.year_text, R.id.number_text);
+    }
+
+    private void testNext(@IdRes int startingTextView, @IdRes int nextTextView) throws Exception {
+        onView(withId(startingTextView))
                 .check(matches(isDisplayed()))
                 .perform(requestFocus())
                 .check(matches(hasFocus()))
                 .perform(pressKey(KeyEvent.KEYCODE_ENTER));
-        onView(withId(R.id.number_text))
+        onView(withId(nextTextView))
                 .check(matches(hasFocus()));
     }
 }
