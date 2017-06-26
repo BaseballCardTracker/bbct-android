@@ -18,12 +18,12 @@
  */
 package bbct.android.common.activity.test;
 
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.graphics.Rect;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
@@ -33,9 +33,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
-import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
+import bbct.android.common.test.rule.SupportFragmentTestRule;
 import bbct.data.BaseballCard;
 import butterknife.ButterKnife;
 import java.io.InputStream;
@@ -66,11 +66,11 @@ public class BaseballCardDetailsTest {
     private static final String TAG = BaseballCardDetailsTest.class.getName();
 
     @Rule
-    public ActivityTestRule<FragmentTestActivity> activityTestRule
-            = new ActivityTestRule<>(FragmentTestActivity.class);
+    public SupportFragmentTestRule fragmentTestRule
+            = new SupportFragmentTestRule(new BaseballCardDetails());
 
     private UiDevice device;
-    private FragmentTestActivity activity;
+    private Activity activity;
     private BaseballCard card;
 
     /**
@@ -92,8 +92,7 @@ public class BaseballCardDetailsTest {
         this.card = cardInput.getNextBaseballCard();
         cardInput.close();
 
-        this.activity = activityTestRule.getActivity();
-        this.activity.replaceFragment(new BaseballCardDetails());
+        this.activity = fragmentTestRule.getActivity();
     }
 
     @After
