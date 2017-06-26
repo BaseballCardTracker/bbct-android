@@ -54,6 +54,26 @@ public class DetailsNavigateNextTest {
         testNext(R.id.year_text, R.id.number_text);
     }
 
+    @Test
+    public void numberNext() throws Exception {
+        testNext(R.id.number_text, R.id.value_text);
+    }
+
+    @Test
+    public void valueNext() throws Exception {
+        testNext(R.id.value_text, R.id.count_text);
+    }
+
+    @Test
+    public void countNext() throws Exception {
+        testNext(R.id.count_text, R.id.player_name_text);
+    }
+
+    @Test
+    public void playerNameNext() throws Exception {
+        testNext(R.id.player_name_text, R.id.team_text);
+    }
+
     private void testNext(@IdRes int startingTextView, @IdRes int nextTextView) throws Exception {
         onView(withId(startingTextView))
                 .check(matches(isDisplayed()))
