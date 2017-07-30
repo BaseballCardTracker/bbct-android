@@ -18,15 +18,15 @@
  */
 package bbct.android.common.layout.test;
 
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardDetails;
-import bbct.android.common.activity.FragmentTestActivity;
-import org.junit.Before;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.test.rule.SupportFragmentTestRule;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -39,15 +39,8 @@ import static org.hamcrest.Matchers.allOf;
 @RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsLayoutTest {
     @Rule
-    public ActivityTestRule<FragmentTestActivity> activityTestRule =
-            new ActivityTestRule<>(FragmentTestActivity.class);
-
-    @Before
-    public void setUp() throws Exception {
-        FragmentTestActivity activity = activityTestRule.getActivity();
-        BaseballCardDetails mFragment = new BaseballCardDetails();
-        activity.replaceFragment(mFragment);
-    }
+    public SupportFragmentTestRule fragmentTestRule
+            = new SupportFragmentTestRule(new BaseballCardDetails());
 
     @Test
     public void testAutographedCheckBox() {

@@ -22,19 +22,20 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
-import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardDetails;
-import bbct.android.common.activity.FragmentTestActivity;
-import bbct.android.common.test.rule.DataTestRule;
-import bbct.data.BaseballCard;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.test.rule.DataTestRule;
+import bbct.android.common.test.rule.SupportFragmentTestRule;
+import bbct.data.BaseballCard;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -55,16 +56,14 @@ public class BaseballCardDetailsWithDataTest {
     @Rule
     public DataTestRule dataTestRule = new DataTestRule();
     @Rule
-    public ActivityTestRule<FragmentTestActivity> activityTestRule
-            = new ActivityTestRule<>(FragmentTestActivity.class);
+    public SupportFragmentTestRule fragmentTestRule
+            = new SupportFragmentTestRule(new BaseballCardDetails());
 
     private BaseballCard mCard;
     private UiDevice device;
 
     @Before
     public void setUp() throws Exception {
-        FragmentTestActivity activity = activityTestRule.getActivity();
-        activity.replaceFragment(new BaseballCardDetails());
         mCard = dataTestRule.getCard(0);
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
     }
@@ -91,7 +90,7 @@ public class BaseballCardDetailsWithDataTest {
 
     private void testAutoCompletePopup(int textViewId, String text)
             throws Throwable {
-        Activity activity = activityTestRule.getActivity();
+        Activity activity = fragmentTestRule.getActivity();
         onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
         onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
                 .inRoot(withDecorView(not(activity.getWindow().getDecorView())))

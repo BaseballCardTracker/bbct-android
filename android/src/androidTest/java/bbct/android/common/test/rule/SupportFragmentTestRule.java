@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2014 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2017 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,26 +16,29 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.activity;
+package bbct.android.common.test.rule;
 
-import android.os.Bundle;
+import android.support.test.rule.ActivityTestRule;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import bbct.android.common.R;
 
-public class FragmentTestActivity extends AppCompatActivity {
+import bbct.android.common.activity.FragmentTestActivity;
+
+public class SupportFragmentTestRule extends ActivityTestRule<FragmentTestActivity> {
+    private final Fragment fragment;
+
+    public SupportFragmentTestRule(Fragment fragment) {
+        super(FragmentTestActivity.class);
+        this.fragment = fragment;
+    }
+
+    public Fragment getFragment() {
+        return fragment;
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_activity);
-    }
+    protected void afterActivityLaunched() {
+        super.afterActivityLaunched();
 
-    public void replaceFragment(Fragment fragment) {
-        this.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit();
+        getActivity().replaceFragment(fragment);
     }
-
 }
