@@ -73,4 +73,9 @@ public class SingleColumnCursorAdapter extends SimpleCursorAdapter {
 
         return cursor;
     }
+
+    @Override
+    public CharSequence convertToString(Cursor cursor) {
+        return cursor.getString(cursor.getColumnIndex(colName));
+    }
 }
