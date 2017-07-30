@@ -25,6 +25,7 @@ import android.content.Context;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -160,16 +161,13 @@ public class BaseballCardDetails extends Fragment {
         this.conditionAdapter = this.populateSpinnerAdapter(R.array.condition);
         this.conditionSpinner.setAdapter(this.conditionAdapter);
 
-        CursorAdapter brandAdapter = new SingleColumnCursorAdapter(getActivity(),
-                BaseballCardContract.BRAND_COL_NAME);
+        CursorAdapter brandAdapter = getSingleColumnCursorAdapter(BaseballCardContract.BRAND_COL_NAME);
         this.brandText.setAdapter(brandAdapter);
 
-        CursorAdapter playerNameAdapter = new SingleColumnCursorAdapter(this.getActivity(),
-                BaseballCardContract.PLAYER_NAME_COL_NAME);
+        CursorAdapter playerNameAdapter = getSingleColumnCursorAdapter(BaseballCardContract.PLAYER_NAME_COL_NAME);
         this.playerNameText.setAdapter(playerNameAdapter);
 
-        CursorAdapter teamAdapter = new SingleColumnCursorAdapter(this.getActivity(),
-                BaseballCardContract.TEAM_COL_NAME);
+        CursorAdapter teamAdapter = getSingleColumnCursorAdapter(BaseballCardContract.TEAM_COL_NAME);
         this.teamText.setAdapter(teamAdapter);
 
         this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
@@ -185,6 +183,11 @@ public class BaseballCardDetails extends Fragment {
         this.uri = BaseballCardContract.getUri(this.getActivity().getPackageName());
 
         return view;
+    }
+
+    @NonNull
+    private CursorAdapter getSingleColumnCursorAdapter(String colName) {
+        return new SingleColumnCursorAdapter(getActivity(), colName);
     }
 
     private void setCard(long cardId, BaseballCard card) {
