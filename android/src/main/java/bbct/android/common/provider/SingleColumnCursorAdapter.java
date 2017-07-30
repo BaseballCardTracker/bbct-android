@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.CursorAdapter;
 import android.widget.SimpleCursorAdapter;
+
 import java.util.Arrays;
 
 /**
