@@ -31,6 +31,10 @@ import java.util.Arrays;
  * Provides a {@link CursorAdapter} for a single column from a database.
  */
 public class SingleColumnCursorAdapter extends SimpleCursorAdapter {
+    private String colName = null;
+    private Activity activity = null;
+    private final Uri uri;
+    private static final String TAG = SingleColumnCursorAdapter.class.getName();
 
     /**
      * Create a {@link SingleColumnCursorAdapter} for the column with the given
@@ -88,9 +92,4 @@ public class SingleColumnCursorAdapter extends SimpleCursorAdapter {
 
         return cursor;
     }
-
-    private String colName = null;
-    private Activity activity = null;
-    private final Uri uri;
-    private static final String TAG = SingleColumnCursorAdapter.class.getName();
 }
