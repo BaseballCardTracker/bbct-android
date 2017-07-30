@@ -48,9 +48,9 @@ import java.util.Locale;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.util.DialogUtil;
-import bbct.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.SingleColumnCursorAdapter;
+import bbct.data.BaseballCard;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
