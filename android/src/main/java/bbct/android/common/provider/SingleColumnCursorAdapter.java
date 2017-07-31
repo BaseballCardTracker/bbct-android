@@ -24,23 +24,18 @@ import android.net.Uri;
 import android.util.Log;
 import android.widget.CursorAdapter;
 import android.widget.SimpleCursorAdapter;
+
 import java.util.Arrays;
 
 /**
  * Provides a {@link CursorAdapter} for a single column from a database.
  */
 public class SingleColumnCursorAdapter extends SimpleCursorAdapter {
+    private String colName = null;
+    private Activity activity = null;
+    private final Uri uri;
+    private static final String TAG = SingleColumnCursorAdapter.class.getName();
 
-    /**
-     * Create a {@link SingleColumnCursorAdapter} for the column with the given
-     * name.
-     *
-     * @param activity
-     *            The {@link Activity} responsible for managing the
-     *            {@link Cursor} underlying this [@link Adapter}.
-     * @param colName
-     *            The name of the column to query.
-     */
     @SuppressWarnings("deprecation")
     public SingleColumnCursorAdapter(Activity activity, String colName) {
         super(activity, android.R.layout.simple_dropdown_item_1line, null,
@@ -52,15 +47,6 @@ public class SingleColumnCursorAdapter extends SimpleCursorAdapter {
                 .buildUpon().appendPath("distinct").build();
     }
 
-    /**
-     * Run a query for the given constraint and return a {@link Cursor} with the
-     * results.
-     *
-     * @param constraint
-     *            The constraint for the query.
-     *
-     * @return A cursor with the requested items. May be empty.
-     */
     @Override
     public Cursor runQueryOnBackgroundThread(CharSequence constraint) {
         Log.d(TAG, "runQueryOnBackgroundThread()");
@@ -88,8 +74,8 @@ public class SingleColumnCursorAdapter extends SimpleCursorAdapter {
         return cursor;
     }
 
-    private String colName = null;
-    private Activity activity = null;
-    private final Uri uri;
-    private static final String TAG = SingleColumnCursorAdapter.class.getName();
+    @Override
+    public CharSequence convertToString(Cursor cursor) {
+        return cursor.getString(cursor.getColumnIndex(colName));
+    }
 }
