@@ -23,17 +23,20 @@ allprojects {
         maven {
             url 'https://maven.fabric.io/public'
         }
+        maven {
+            url "https://maven.google.com"
+        }
     }
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
 
     defaultConfig {
         applicationId "bbct.android.common"
         minSdkVersion 18
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 19
         versionName "0.6.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -121,7 +124,7 @@ if (propFile.canRead()) {
 }
 
 ext {
-    supportLibVersion = '25.3.1'
+    supportLibVersion = '26.0.0'
     espressoVersion = '2.2.1'
     testSupportLibVersion = '0.5'
 }
