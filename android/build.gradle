@@ -37,8 +37,8 @@ android {
         applicationId "bbct.android.common"
         minSdkVersion 18
         targetSdkVersion 26
-        versionCode 19
-        versionName "0.6.6"
+        versionCode 20
+        versionName "0.6.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
