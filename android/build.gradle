@@ -127,7 +127,7 @@ if (propFile.canRead()) {
 }
 
 ext {
-    supportLibVersion = '26.0.0'
+    supportLibVersion = '26.1.0'
     espressoVersion = '2.2.1'
     testSupportLibVersion = '0.5'
 }
