@@ -32,6 +32,7 @@ allprojects {
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
+    flavorDimensions "tier"
 
     defaultConfig {
         applicationId "bbct.android.common"
@@ -57,9 +58,11 @@ android {
     }
     productFlavors {
         lite {
+            dimension "tier"
             applicationId "bbct.android"
         }
         premium {
+            dimension "tier"
             applicationId "bbct.android.premium"
         }
     }
