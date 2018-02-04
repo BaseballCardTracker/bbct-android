@@ -130,7 +130,7 @@ ext {
     supportLibVersion = '26.1.0'
     espressoVersion = '2.2.1'
     testSupportLibVersion = '0.5'
-    butterknifeVersion = '5.1.2'
+    butterknifeVersion = '8.8.1'
 }
 
 dependencies {
