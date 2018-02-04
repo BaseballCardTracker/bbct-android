@@ -51,8 +51,8 @@ import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.SingleColumnCursorAdapter;
 import bbct.data.BaseballCard;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Allows user to add a new card or view and edit details of an existing card.
@@ -63,16 +63,16 @@ public class BaseballCardDetails extends Fragment {
     private static final String CARD = "card";
     private static final String TAG = BaseballCardDetails.class.getName();
 
-    @InjectView(R.id.autograph) CheckBox autographCheckBox = null;
-    @InjectView(R.id.condition) Spinner conditionSpinner = null;
-    @InjectView(R.id.brand_text) AutoCompleteTextView brandText = null;
-    @InjectView(R.id.year_text) EditText yearText = null;
-    @InjectView(R.id.number_text) EditText numberText = null;
-    @InjectView(R.id.value_text) EditText valueText = null;
-    @InjectView(R.id.count_text) EditText countText = null;
-    @InjectView(R.id.player_name_text) AutoCompleteTextView playerNameText = null;
-    @InjectView(R.id.team_text) AutoCompleteTextView teamText = null;
-    @InjectView(R.id.player_position_text) Spinner playerPositionSpinner = null;
+    @BindView(R.id.autograph) CheckBox autographCheckBox = null;
+    @BindView(R.id.condition) Spinner conditionSpinner = null;
+    @BindView(R.id.brand_text) AutoCompleteTextView brandText = null;
+    @BindView(R.id.year_text) EditText yearText = null;
+    @BindView(R.id.number_text) EditText numberText = null;
+    @BindView(R.id.value_text) EditText valueText = null;
+    @BindView(R.id.count_text) EditText countText = null;
+    @BindView(R.id.player_name_text) AutoCompleteTextView playerNameText = null;
+    @BindView(R.id.team_text) AutoCompleteTextView teamText = null;
+    @BindView(R.id.player_position_text) Spinner playerPositionSpinner = null;
 
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;
@@ -101,7 +101,7 @@ public class BaseballCardDetails extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.card_details, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         brandText.setOnKeyListener(new View.OnKeyListener() {
             @Override
