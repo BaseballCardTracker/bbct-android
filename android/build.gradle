@@ -130,6 +130,7 @@ ext {
     supportLibVersion = '26.1.0'
     espressoVersion = '2.2.1'
     testSupportLibVersion = '0.5'
+    butterknifeVersion = '5.1.2'
 }
 
 dependencies {
@@ -140,8 +141,10 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true
     }
-    compile 'com.jakewharton:butterknife:5.1.2'
+    compile "com.jakewharton:butterknife:${butterknifeVersion}"
     compile project(':lib')
+
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
 
     androidTestCompile "com.android.support.test:runner:${testSupportLibVersion}"
     androidTestCompile "com.android.support.test:rules:${testSupportLibVersion}"
