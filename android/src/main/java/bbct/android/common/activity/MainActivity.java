@@ -28,19 +28,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import bbct.android.common.BuildConfig;
-import bbct.android.common.R;
-import bbct.android.common.SharedPreferenceKeys;
-import bbct.android.common.activity.util.DialogUtil;
-import bbct.android.common.provider.BaseballCardContract;
+
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
-import io.fabric.sdk.android.Fabric;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+
+import bbct.android.common.BuildConfig;
+import bbct.android.common.R;
+import bbct.android.common.SharedPreferenceKeys;
+import bbct.android.common.activity.util.DialogUtil;
+import bbct.android.common.provider.BaseballCardContract;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
     public static final int SURVEY_DELAY = 7;
@@ -188,5 +190,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getFragmentManager().popBackStack();
+        }
+
     }
 }
