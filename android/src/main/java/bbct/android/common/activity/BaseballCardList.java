@@ -295,8 +295,14 @@ public class BaseballCardList extends ListFragment {
 
         if (this.filterParams == null) {
             this.emptyList.setText(R.string.start);
+            String emptyListTitle = this.getString(R.string.start);
+            String title = this.getString(R.string.bbct_title, emptyListTitle);
+            this.getActivity().setTitle(title);
         } else {
             this.emptyList.setText(R.string.empty_list);
+            String emptyListTitle = this.getString(R.string.empty_list);
+            String title = this.getString(R.string.bbct_title, emptyListTitle);
+            this.getActivity().setTitle(title);
         }
 
         StringBuilder sb = null;

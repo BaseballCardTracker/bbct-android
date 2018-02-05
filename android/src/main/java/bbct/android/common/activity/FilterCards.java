@@ -28,8 +28,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import bbct.android.common.R;
+
 import java.util.ArrayList;
+
+import bbct.android.common.R;
 
 public class FilterCards extends Fragment {
 
@@ -161,6 +163,9 @@ public class FilterCards extends Fragment {
         if (menuId == R.id.save_menu) {
             this.onConfirm();
             return true;
+        }
+        else if (menuId == android.R.id.home) {
+            this.getActivity().onBackPressed();
         }
 
         return false;
