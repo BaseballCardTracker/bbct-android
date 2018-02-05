@@ -134,7 +134,7 @@ public class BaseballCardDetailsWithDataTest {
     }
 
     private void testAutoCompleteSelect(int textViewId, String text) throws RemoteException {
-        Activity activity = activityTestRule.getActivity();
+        Activity activity = fragmentTestRule.getActivity();
         onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
         onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
                 .inRoot(withDecorView(not(activity.getWindow().getDecorView())))
