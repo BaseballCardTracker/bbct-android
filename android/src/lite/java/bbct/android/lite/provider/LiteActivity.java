@@ -23,11 +23,6 @@ import android.text.method.LinkMovementMethod;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import bbct.android.common.BuildConfig;
-import bbct.android.common.R;
-import bbct.android.common.activity.MainActivity;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
 import com.amazon.device.ads.AdError;
 import com.amazon.device.ads.AdLayout;
 import com.amazon.device.ads.AdListener;
@@ -38,6 +33,12 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
+import bbct.android.common.BuildConfig;
+import bbct.android.common.R;
+import bbct.android.common.activity.MainActivity;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  *
  */
@@ -47,8 +48,8 @@ public class LiteActivity extends MainActivity implements AdListener {
 
     private static final String APP_KEY = "42d5980d355a49afb22ea8c6618591d8";
 
-    @InjectView(R.id.ad_view) ViewGroup adViewContainer;
-    @InjectView(R.id.premium_text) TextView premiumText;
+    @BindView(R.id.ad_view) ViewGroup adViewContainer;
+    @BindView(R.id.premium_text) TextView premiumText;
 
     private AdLayout amazonAdView;
     private AdView admobAdView;
@@ -57,7 +58,7 @@ public class LiteActivity extends MainActivity implements AdListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         AdRegistration.setAppKey(APP_KEY);
 
