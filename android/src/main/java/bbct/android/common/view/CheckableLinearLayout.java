@@ -24,12 +24,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
+
 import bbct.android.common.R;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 public class CheckableLinearLayout extends LinearLayout implements Checkable {
-    @InjectView(R.id.checkmark) CheckBox mCheckBox;
+    @BindView(R.id.checkmark) CheckBox mCheckBox;
 
     public CheckableLinearLayout(Context context) {
         this(context, null);
@@ -43,7 +44,7 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
         super(context, attrs, defStyle);
 
         View root = View.inflate(context, R.layout.checkable_linear_layout, this);
-        ButterKnife.inject(this, root);
+        ButterKnife.bind(this, root);
     }
 
     /**

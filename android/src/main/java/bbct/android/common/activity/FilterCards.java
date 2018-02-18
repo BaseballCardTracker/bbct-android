@@ -28,12 +28,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import bbct.android.common.R;
-import bbct.android.common.view.FilterOptionView;
-import butterknife.ButterKnife;
-import butterknife.InjectViews;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import bbct.android.common.R;
+import bbct.android.common.view.FilterOptionView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
 
 public class FilterCards extends Fragment {
     private static final String TAG = FilterCards.class.getName();
@@ -49,7 +51,7 @@ public class FilterCards extends Fragment {
     private static final String[] EXTRAS = {BRAND_EXTRA, YEAR_EXTRA, NUMBER_EXTRA,
             PLAYER_NAME_EXTRA, TEAM_EXTRA};
 
-    @InjectViews({R.id.brand, R.id.year, R.id.number, R.id.player_name, R.id.team})
+    @BindViews({R.id.brand, R.id.year, R.id.number, R.id.player_name, R.id.team})
     List<FilterOptionView> filterOptions;
     private ArrayList<Integer> enabledFields = new ArrayList<>();
 
@@ -63,7 +65,7 @@ public class FilterCards extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.filter_cards, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
         // set title
         String format = this.getString(R.string.bbct_title);

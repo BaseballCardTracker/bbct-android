@@ -46,32 +46,32 @@ public class DetailsNavigateNextTest {
 
     @Test
     public void brandNext() throws Exception {
-        testNext(R.id.brand_text, R.id.year_text);
+        testNext(R.id.brand, R.id.year);
     }
 
     @Test
     public void yearNext() throws Exception {
-        testNext(R.id.year_text, R.id.number_text);
+        testNext(R.id.year, R.id.number);
     }
 
     @Test
     public void numberNext() throws Exception {
-        testNext(R.id.number_text, R.id.value_text);
+        testNext(R.id.number, R.id.value);
     }
 
     @Test
     public void valueNext() throws Exception {
-        testNext(R.id.value_text, R.id.count_text);
+        testNext(R.id.value, R.id.quantity);
     }
 
     @Test
     public void countNext() throws Exception {
-        testNext(R.id.count_text, R.id.player_name_text);
+        testNext(R.id.quantity, R.id.player_name);
     }
 
     @Test
     public void playerNameNext() throws Exception {
-        testNext(R.id.player_name_text, R.id.team_text);
+        testNext(R.id.player_name, R.id.team);
     }
 
     private void testNext(@IdRes int startingTextView, @IdRes int nextTextView) throws Exception {

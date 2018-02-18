@@ -20,7 +20,7 @@ package bbct.android.common.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
@@ -28,6 +28,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import bbct.android.common.R;
 
 public class FilterOptionView extends CheckableLinearLayout {
@@ -90,8 +91,8 @@ public class FilterOptionView extends CheckableLinearLayout {
                 edit.requestFocus();
 
                 // TODO: Should not be the responsibility of FilterOptionView
-                if (context instanceof ActionBarActivity) {
-                    ((ActionBarActivity) context).supportInvalidateOptionsMenu();
+                if (context instanceof AppCompatActivity) {
+                    ((AppCompatActivity) context).supportInvalidateOptionsMenu();
                 }
             }
         });

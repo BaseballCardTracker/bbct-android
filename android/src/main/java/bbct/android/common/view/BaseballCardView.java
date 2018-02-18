@@ -22,6 +22,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+
 import bbct.android.common.R;
 import butterknife.ButterKnife;
 
@@ -39,7 +40,7 @@ public class BaseballCardView extends LinearLayout {
         super(context, attrs, defStyle);
 
         View root = View.inflate(context, R.layout.baseball_card, this);
-        ButterKnife.inject(this, root);
+        ButterKnife.bind(this, root);
     }
 
 }

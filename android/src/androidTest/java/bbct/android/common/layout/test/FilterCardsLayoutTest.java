@@ -19,6 +19,8 @@
 package bbct.android.common.layout.test;
 
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import org.junit.Rule;
 import org.junit.Test;
