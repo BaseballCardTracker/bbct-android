@@ -22,14 +22,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.List;
+
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.data.BaseballCard;
-import java.util.List;
 
-/**
- * Utility class for accessing a SQLite database during tests.
- */
 public class DatabaseUtil {
     private SQLiteDatabase db = null;
     private Context context = null;
@@ -37,11 +36,6 @@ public class DatabaseUtil {
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
     private static final String TAG = DatabaseUtil.class.getName();
 
-    /**
-     * Create a {@link DatabaseUtil} object for the given Android package.
-     *
-     * @param context Context the app being tested.
-     */
     public DatabaseUtil(Context context) {
         String sqlCreate = "CREATE TABLE IF NOT EXISTS " + BaseballCardContract.TABLE_NAME + "("
                 + BaseballCardContract.ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -62,62 +56,32 @@ public class DatabaseUtil {
         this.db.execSQL(sqlCreate);
     }
 
-    /**
-     * Get the database being tested.
-     *
-     * @return The database being tested.
-     */
     public SQLiteDatabase getDatabase() {
         return this.db;
     }
 
-    /**
-     * Delete the database being tested. Should return the app to its initial
-     * state after installation.
-     */
     public void deleteDatabase() {
         this.db.close();
         this.context.deleteDatabase(DB_NAME);
     }
 
-    /**
-     * Delete all rows in the database table.
-     */
     public void clearDatabase() {
         this.db.delete(BaseballCardContract.TABLE_NAME, null, null);
         this.db.close();
     }
 
-    /**
-     * Insert baseball card data into the database.
-     *
-     * @param card The baseball card data to insert.
-     * @return The row ID of the newly inserted row, or -1 if an error occurred.
-     */
     public long insertBaseballCard(BaseballCard card) {
         ContentValues cv = BaseballCardContract.getContentValues(card);
 
         return this.db.insert(TABLE_NAME, null, cv);
     }
 
-    /**
-     * Insert all the baseball card data from the given List.
-     *
-     * @param cards The list of baseball card data to insert into the database.
-     */
     public void populateTable(List<BaseballCard> cards) {
         for (BaseballCard card : cards) {
             this.insertBaseballCard(card);
         }
     }
 
-    /**
-     * Check if the database contains the given baseball card.
-     *
-     * @param card The baseball card data to find.
-     * @return <code>true</code> if the baseball card data is
-     * found. <code>false</code> otherwise.
-     */
     public boolean containsBaseballCard(BaseballCard card) {
         String[] columns = {BaseballCardContract.ID_COL_NAME};
         String selection = BaseballCardContract.BRAND_COL_NAME + " = ?"
@@ -135,13 +99,6 @@ public class DatabaseUtil {
         return result;
     }
 
-    /**
-     * Check if the database contains all of the cards in the given list.
-     *
-     * @param cards The list of baseball cards to find.
-     * @return <code>true</code> if all the baseball card data is
-     * found. <code>false</code> otherwise.
-     */
     public boolean containsAllBaseballCards(List<BaseballCard> cards) {
         for (BaseballCard card : cards) {
             if (!this.containsBaseballCard(card)) {
@@ -152,12 +109,6 @@ public class DatabaseUtil {
         return true;
     }
 
-    /**
-     * Check that the database is empty.
-     *
-     * @return <code>true</code> if the database is empty. <code>false</code>
-     * otherwise.
-     */
     public boolean isEmpty() {
         String[] columns = {BaseballCardContract.ID_COL_NAME};
         Cursor cursor = this.db.query(TABLE_NAME, columns, null, null, null, null, null);

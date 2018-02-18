@@ -22,32 +22,29 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
-import android.widget.ListView;
-import bbct.android.common.activity.BaseballCardList;
+
+import junit.framework.Assert;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.data.BaseballCard;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import junit.framework.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static org.hamcrest.Matchers.containsString;
 
-/**
- * Tests for the {@link MainActivity} activity when the database does not
- * contain data.
- */
 abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
     @Rule
     public ActivityTestRule<T> activityTestRule;
@@ -59,20 +56,10 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
     private BaseballCardCsvFileReader cardInput = null;
     private DatabaseUtil dbUtil = null;
 
-    /**
-     * Create instrumented test cases for {@link MainActivity}.
-     */
     public BaseballCardListWithoutDataTest(Class<T> activityClass) {
         activityTestRule = new ActivityTestRule<>(activityClass);
     }
 
-    /**
-     * Set up test fixture. This consists of an instance of the
-     * {@link BaseballCardList} activity, its {@link ListView}, and a
-     * {@link BaseballCardCsvFileReader} for sample baseball card data..
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     */
     @Before
     public void setUp() throws Exception {
         this.inst = InstrumentationRegistry.getInstrumentation();
@@ -84,24 +71,12 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
     }
 
-    /**
-     * Tear down the test fixture by calling {@link Activity#finish()}, deleting
-     * the database, and closing the {@link BaseballCardCsvFileReader}.
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     */
     @After
     public void tearDown() throws Exception {
         this.dbUtil.clearDatabase();
         this.cardInput.close();
     }
 
-    /**
-     * Check preconditions which must hold to guarantee the validity of all
-     * other tests. Assert that the {@link Activity} to test and its
-     * {@link ListView} are not <code>null</code>, that the {@link ListView} is
-     * empty, and that the database was created and is empty.
-     */
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
@@ -110,15 +85,6 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
         Assert.assertTrue(this.dbUtil.isEmpty());
     }
 
-    /**
-     * Test that the first baseball card data is added to the database and
-     * updated in the {@link ListView}.
-     *
-     * @throws IOException If an error occurs while reading baseball card data from the
-     *                     asset file.
-     * @throws Throwable   If an error occurs while the portion of the test on the UI
-     *                     thread runs.
-     */
     @Test
     public void testAddCardToEmptyDatabase() throws Throwable {
         BaseballCard card = this.cardInput.getNextBaseballCard();
@@ -134,15 +100,6 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
         BBCTTestUtil.assertListViewContainsItems(cards);
     }
 
-    /**
-     * Test that data for multiple baseball cards is added to the database and
-     * updated in the {@link ListView}.
-     *
-     * @throws IOException If an error occurs while reading baseball card data from the
-     *                     asset file.
-     * @throws Throwable   If an error occurs while the portion of the test on the UI
-     *                     thread runs.
-     */
     @Test
     public void testAddMultipleCards() throws Throwable {
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();

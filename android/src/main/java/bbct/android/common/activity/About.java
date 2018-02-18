@@ -31,10 +31,6 @@ import android.widget.TextView;
 import bbct.android.common.R;
 import butterknife.ButterKnife;
 
-/**
- * Displays the name and version of the app, a short description, contact links,
- * and copyright information.
- */
 public class About extends Fragment {
 
     private static final String TAG = About.class.getName();

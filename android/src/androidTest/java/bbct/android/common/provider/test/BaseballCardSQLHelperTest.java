@@ -22,22 +22,18 @@ import android.app.Instrumentation;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
+
+import junit.framework.Assert;
+
+import java.io.InputStream;
+
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import java.io.InputStream;
-import junit.framework.Assert;
 
-/**
- * Tests for {@link BaseballCardSQLHelper}.
- */
 public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
 
-    /**
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     */
     @Override
     public void setUp() throws Exception {
         Log.d(TAG, this.getName());
@@ -55,10 +51,6 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
         reader.close();
     }
 
-    /**
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     */
     @Override
     public void tearDown() throws Exception {
         this.dbUtil.clearDatabase();
@@ -66,18 +58,12 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
         super.tearDown();
     }
 
-    /**
-     * Test for {@link BaseballCardSQLHelper#onCreate}.
-     */
     public void testOnCreate() {
         Assert.assertNotNull(this.db);
         BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.isEmpty());
     }
 
-    /**
-     * Test for {@link BaseballCardSQLHelper#onUpgrade}.
-     */
     public void testOnUpgrade() {
         int oldVersion = 0;
         int newVersion = 1;
