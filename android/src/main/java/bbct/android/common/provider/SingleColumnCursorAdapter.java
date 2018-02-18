@@ -22,14 +22,10 @@ import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.CursorAdapter;
 import android.widget.SimpleCursorAdapter;
 
 import java.util.Arrays;
 
-/**
- * Provides a {@link CursorAdapter} for a single column from a database.
- */
 public class SingleColumnCursorAdapter extends SimpleCursorAdapter {
     private String colName = null;
     private Activity activity = null;

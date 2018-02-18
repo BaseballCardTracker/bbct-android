@@ -19,18 +19,15 @@
 package bbct.android.lite.activity.test;
 
 import android.support.test.runner.AndroidJUnit4;
+
+import org.junit.runner.RunWith;
+
 import bbct.android.common.activity.test.BaseballCardListWithDataTest;
 import bbct.android.lite.provider.LiteActivity;
-import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 public class LiteActivityWithDataTest extends BaseballCardListWithDataTest<LiteActivity> {
-
-    /**
-     * Create instrumented test cases for {@link LiteActivity}.
-     */
     public LiteActivityWithDataTest() {
         super(LiteActivity.class);
     }
-
 }

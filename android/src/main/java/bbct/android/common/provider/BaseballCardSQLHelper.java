@@ -23,17 +23,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-/**
- * Provides helper methods to access the underlying SQLite database.
- *
- * TODO: Write JUnit tests.
- */
+// TODO: Write JUnit tests.
 public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
-    /**
-     * Name of the SQLite database.
-     */
     public static final String DATABASE_NAME = "bbct.db";
+
     /**
      * Current schema version.
      */
@@ -57,13 +51,6 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      */
     public static final int AUTO_AND_CONDITION_SCHEMA = 4;
 
-    /**
-     * Create a new {@link BaseballCardSQLHelper} with the given Android
-     * {@link Context}.
-     *
-     * @param context
-     *            The Android {@link Context} for this {@link SQLiteOpenHelper}.
-     */
     public BaseballCardSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
 

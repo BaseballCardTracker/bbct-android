@@ -30,12 +30,11 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
-import bbct.android.common.R;
+
 import java.util.Arrays;
 
-/**
- * {@link ContentProvider} for baseball card data.
- */
+import bbct.android.common.R;
+
 public abstract class BaseballCardProvider extends ContentProvider {
 
     protected static final int ALL_CARDS = 1;

@@ -39,9 +39,6 @@ import bbct.android.common.activity.MainActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- *
- */
 public class LiteActivity extends MainActivity implements AdListener {
 
     private static final String AD_UNIT_ID = "a151047824e2718";
@@ -83,9 +80,6 @@ public class LiteActivity extends MainActivity implements AdListener {
         }
     }
 
-    /**
-     * Destroy all fragments and loaders.
-     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
