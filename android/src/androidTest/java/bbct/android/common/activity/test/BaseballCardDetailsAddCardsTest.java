@@ -21,25 +21,27 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.v4.app.Fragment;
 import android.widget.Button;
 import android.widget.EditText;
-import bbct.android.common.activity.BaseballCardDetails;
-import bbct.android.common.activity.FragmentTestActivity;
-import bbct.data.BaseballCard;
-import bbct.android.common.test.BBCTTestUtil;
-import bbct.android.common.test.BaseballCardCsvFileReader;
-import bbct.android.common.test.DatabaseUtil;
-import java.io.InputStream;
-import java.util.List;
+
 import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.io.InputStream;
+import java.util.List;
+
+import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.test.BBCTTestUtil;
+import bbct.android.common.test.BaseballCardCsvFileReader;
+import bbct.android.common.test.DatabaseUtil;
+import bbct.android.common.test.rule.SupportFragmentTestRule;
+import bbct.data.BaseballCard;
 
 /**
  * Tests for {@link BaseballCardDetails}.
@@ -47,8 +49,8 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsAddCardsTest {
     @Rule
-    public ActivityTestRule<FragmentTestActivity> activityRule =
-            new ActivityTestRule<>(FragmentTestActivity.class);
+    public SupportFragmentTestRule fragmentTestRule =
+            new SupportFragmentTestRule(new BaseballCardDetails());
 
     private static final String CARD_DATA = "three_cards.csv";
 
@@ -75,10 +77,6 @@ public class BaseballCardDetailsAddCardsTest {
         this.allCards = cardInput.getAllBaseballCards();
         this.card = this.allCards.get(0);
         cardInput.close();
-
-        FragmentTestActivity activity = activityRule.getActivity();
-        Fragment fragment = new BaseballCardDetails();
-        activity.replaceFragment(fragment);
     }
 
     /**
@@ -104,7 +102,7 @@ public class BaseballCardDetailsAddCardsTest {
     @Test
     public void testAddCard() throws Throwable {
         BBCTTestUtil.addCard(card);
-        // BBCTTestUtil.waitForToast(activityRule.getActivity(), BBCTTestUtil.ADD_MESSAGE);
+        // BBCTTestUtil.waitForToast(fragmentTestRule.getActivity(), BBCTTestUtil.ADD_MESSAGE);
         Assert.assertTrue("Missing card: " + card, dbUtil.containsBaseballCard(card));
     }
 

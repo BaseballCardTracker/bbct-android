@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.functional.test;
+package bbct.android.common.functional.test.survey;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,8 +27,9 @@ import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import bbct.android.common.R;
+import bbct.android.common.SharedPreferenceKeys;
 import bbct.android.common.activity.MainActivity;
-import bbct.android.common.test.rule.SharedPreferencesTestRule;
+import bbct.android.common.test.rule.Survey1SharedPreferencesTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,11 +47,12 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasDat
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.startsWith;
 
 @RunWith(AndroidJUnit4.class)
-public class SurveyDialogTest {
+public class Survey1DialogTest {
     @Rule
-    public SharedPreferencesTestRule prefsRule = new SharedPreferencesTestRule();
+    public Survey1SharedPreferencesTestRule prefsRule = new Survey1SharedPreferencesTestRule();
 
     private SharedPreferences prefs;
     private Context context;
@@ -70,35 +72,38 @@ public class SurveyDialogTest {
 
     @Test
     public void testPreconditions() {
-        Assert.assertFalse(prefs.contains(MainActivity.SURVEY_TAKEN_PREF));
+        Assert.assertFalse(prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF));
+        Assert.assertFalse(prefs.contains(SharedPreferenceKeys.SURVEY1_DATE));
+        Assert.assertTrue(prefs.contains(SharedPreferenceKeys.INSTALL_DATE));
     }
 
     @Test
     public void testTakeSurveyNow() throws UiObjectNotFoundException {
-        onView(withText(R.string.survey))
+        onView(withText(R.string.survey1))
                 .check(matches(isDisplayed()));
         onView(withText(R.string.now))
                 .check(matches(isDisplayed()))
                 .perform(click());
-        Uri surveyUri = Uri.parse(context.getString(R.string.survey_uri));
+        Uri surveyUri = Uri.parse(MainActivity.SURVEY1_URI);
         intended(allOf(hasAction(Intent.ACTION_VIEW), hasData(surveyUri)));
         startApp();
-        Assert.assertTrue(prefs.contains(MainActivity.SURVEY_TAKEN_PREF));
-        Assert.assertTrue(prefs.getBoolean(MainActivity.SURVEY_TAKEN_PREF, false));
-        onView(withText(R.string.survey))
+        Assert.assertTrue(prefs.contains(SharedPreferenceKeys.SURVEY1_DATE));
+        onView(withText(startsWith("BBCT")))
+                .check(matches(isDisplayed()));
+        onView(withText(R.string.survey1))
                 .check(doesNotExist());
     }
 
     @Test
     public void testTakeSurveyLater() throws UiObjectNotFoundException {
-        onView(withText(R.string.survey))
+        onView(withText(R.string.survey1))
                 .check(matches(isDisplayed()));
         onView(withText(R.string.later))
                 .check(matches(isDisplayed()))
                 .perform(click());
         startApp();
-        Assert.assertFalse(prefs.contains(MainActivity.SURVEY_TAKEN_PREF));
-        onView(withText(R.string.survey))
+        Assert.assertFalse(prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF));
+        onView(withText(R.string.survey1))
                 .check(matches(isDisplayed()));
     }
 

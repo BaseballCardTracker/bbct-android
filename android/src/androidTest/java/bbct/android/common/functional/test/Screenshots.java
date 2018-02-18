@@ -18,8 +18,6 @@
  */
 package bbct.android.common.functional.test;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
@@ -27,10 +25,9 @@ import android.support.test.uiautomator.UiSelector;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
 import bbct.android.common.R;
-import bbct.data.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
+import bbct.data.BaseballCard;
 import java.io.File;
 import org.junit.Before;
 import org.junit.Rule;
@@ -49,7 +46,6 @@ public class Screenshots extends UiAutomatorTest {
     private static final String YEAR_STRING = "1993";
     public static final int YEAR_INSTANCE = 1;
 
-    private Context context;
     private File screenshotDir;
     private int screenshotCount;
     private BaseballCard card;
@@ -58,7 +54,6 @@ public class Screenshots extends UiAutomatorTest {
     public void setUp() throws UiObjectNotFoundException {
         super.setUp();
         screenshotCount = 1;
-        context = InstrumentationRegistry.getTargetContext();
         screenshotDir = new File(context.getFilesDir(), "screenshots");
 
         if (!screenshotDir.exists()) {
@@ -72,10 +67,6 @@ public class Screenshots extends UiAutomatorTest {
 
     @Test
     public void takeScreenshots() throws Throwable {
-        UiSelector laterSelector = new UiSelector().text(context.getString(R.string.later));
-        UiObject laterButton = device.findObject(laterSelector);
-        laterButton.click();
-
         UiSelector addSelector = new UiSelector().description(context.getString(R.string.add_menu));
         UiObject addMenu = device.findObject(addSelector);
         addMenu.click();

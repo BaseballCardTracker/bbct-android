@@ -28,8 +28,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import bbct.android.common.R;
-import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
+import bbct.data.BaseballCard;
 import java.util.List;
 
 /**

@@ -18,9 +18,6 @@
  */
 package bbct.android.common.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -33,17 +30,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
+import bbct.android.common.SharedPreferenceKeys;
+import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.provider.BaseballCardContract;
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
 import io.fabric.sdk.android.Fabric;
-import java.net.URISyntaxException;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String PREFS = "bbct.prefs";
-    public static final String SURVEY_TAKEN_PREF = "survey";
+    public static final int SURVEY_DELAY = 7;
+    public static final String SURVEY1_URI = "https://docs.google.com/forms/d/1wj3d3SiZ7U81_ZRp0zwgH0l2b2Az3A9XkYJbgQFdO9I/viewform";
+    public static final String SURVEY2_URI = "https://docs.google.com/forms/d/e/1FAIpQLSfg0TPyKcWlGSOlhhDd_4qIjYG9htOjJ5pwjRYtc71zxPw-ag/viewform";
 
     private static final String TAG = MainActivity.class.getName();
+
+    private SharedPreferences prefs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,33 +81,61 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        showSurveyDialog();
+        prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
+        showSurvey1Dialog();
+        showSurvey2Dialog();
     }
 
-    private void showSurveyDialog() {
-        final SharedPreferences prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+    private void showSurvey1Dialog() {
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        Date today = new Date();
+        final String todayStr = dateFormat.format(today);
 
-        if (!prefs.getBoolean(SURVEY_TAKEN_PREF, false)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(R.string.survey);
-            builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putBoolean(SURVEY_TAKEN_PREF, true);
-                    editor.apply();
+        if (!prefs.contains(SharedPreferenceKeys.INSTALL_DATE)) {
+            prefs.edit().putString(SharedPreferenceKeys.INSTALL_DATE, todayStr).apply();
+        }
 
-                    Intent surveyIntent = null;
-                    try {
-                        surveyIntent = Intent.parseUri(getString(R.string.survey_uri), 0);
-                    } catch (URISyntaxException e) {
-                        Log.e(TAG, "Error parsing URI for survey", e);
-                    }
-                    startActivity(surveyIntent);
+        if (!prefs.contains(SharedPreferenceKeys.SURVEY1_DATE)) {
+            String installDate = prefs.getString(SharedPreferenceKeys.INSTALL_DATE, today.toString());
+
+            try {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(dateFormat.parse(installDate));
+                cal.add(Calendar.DATE, SURVEY_DELAY);
+                if (today.after(cal.getTime())) {
+                    DialogUtil.showSurveyDialog(this, todayStr, R.string.survey1,
+                            SharedPreferenceKeys.SURVEY1_DATE, SURVEY1_URI);
                 }
-            });
-            builder.setNegativeButton(R.string.later, null);
-            builder.create().show();
+            } catch (ParseException e) {
+                Log.d(TAG, "Error parsing install date");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void showSurvey2Dialog() {
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        Date today = new Date();
+        final String todayStr = dateFormat.format(today);
+
+        if (prefs.contains(SharedPreferenceKeys.SURVEY1_DATE)
+                && !prefs.contains(SharedPreferenceKeys.SURVEY2_DATE)) {
+            String survey1Date = prefs.getString(SharedPreferenceKeys.SURVEY1_DATE, today.toString());
+
+            try {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(dateFormat.parse(survey1Date));
+                cal.add(Calendar.DATE, SURVEY_DELAY);
+                if (today.after(cal.getTime())) {
+                    DialogUtil.showSurveyDialog(this, todayStr, R.string.survey2,
+                            SharedPreferenceKeys.SURVEY2_DATE, SURVEY2_URI);
+                }
+            } catch (ParseException e) {
+                Log.d(TAG, "Error parsing install date");
+                e.printStackTrace();
+            }
+        } else if (prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF)) {
+            prefs.edit().putString(SharedPreferenceKeys.SURVEY1_DATE, todayStr).apply();
         }
     }
 

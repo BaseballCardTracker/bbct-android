@@ -21,7 +21,6 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
 import android.widget.Button;
@@ -29,7 +28,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import bbct.android.common.R;
 import bbct.android.common.activity.FilterCards;
-import bbct.android.common.activity.FragmentTestActivity;
+import bbct.android.common.test.rule.SupportFragmentTestRule;
+
 import junit.framework.Assert;
 import org.junit.After;
 import org.junit.Before;
@@ -59,19 +59,18 @@ import static org.hamcrest.Matchers.instanceOf;
 @RunWith(AndroidJUnit4.class)
 public class FilterCardsTest {
     @Rule
-    public ActivityTestRule<FragmentTestActivity> activityTestRule =
-            new ActivityTestRule<>(FragmentTestActivity.class);
+    public SupportFragmentTestRule fragmentTestRule
+            = new SupportFragmentTestRule(new FilterCards());
 
     private static final int[] IDS =
             {R.id.brand, R.id.year, R.id.number, R.id.player_name, R.id.team};
 
-    private FragmentTestActivity activity = null;
+    private Activity activity = null;
     private UiDevice device;
 
     @Before
     public void setUp() throws Exception {
-        activity = activityTestRule.getActivity();
-        activity.replaceFragment(new FilterCards());
+        activity = fragmentTestRule.getActivity();
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
     }
 

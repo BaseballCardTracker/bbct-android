@@ -38,13 +38,15 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import bbct.android.common.R;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
-import bbct.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
+import bbct.android.common.view.HeaderView;
+import bbct.data.BaseballCard;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 /**
  * Displays a list of all baseball cards stored in the database.
@@ -63,8 +65,8 @@ public class BaseballCardList extends ListFragment {
     private static final String FILTER_PARAMS = "filterParams";
     private static final String TAG = BaseballCardList.class.getName();
 
-    @InjectView(android.R.id.empty) TextView emptyList = null;
-    @InjectView(android.R.id.list) ListView listView;
+    @BindView(android.R.id.empty) TextView emptyList = null;
+    @BindView(android.R.id.list) ListView listView;
 
     private BaseballCardAdapter adapter = null;
     private Uri uri = null;
@@ -116,9 +118,9 @@ public class BaseballCardList extends ListFragment {
         Log.d(TAG, "onCreateView()");
 
         View view = inflater.inflate(R.layout.card_list, container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
 
-        View headerView = View.inflate(this.getActivity(), R.layout.list_header, null);
+        View headerView = new HeaderView(this.getActivity());
         CheckBox selectAll = ButterKnife.findById(headerView, R.id.checkmark);
         selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -350,15 +352,15 @@ public class BaseballCardList extends ListFragment {
     private void swapCursor(Cursor newCursor) {
         Log.d(TAG, "swapCursor()");
         Cursor oldCursor = this.adapter.getCursor();
-        this.getActivity().stopManagingCursor(oldCursor);
+
+        if (oldCursor != null) {
+            oldCursor.close();
+            this.getActivity().stopManagingCursor(oldCursor);
+        }
 
         if (newCursor != null) {
             this.getActivity().startManagingCursor(newCursor);
             this.adapter.changeCursor(newCursor);
-        }
-
-        if (oldCursor != null) {
-            oldCursor.close();
         }
     }
 

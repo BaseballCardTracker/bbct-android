@@ -28,8 +28,8 @@ import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import bbct.android.common.R;
-import bbct.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
+import bbct.data.BaseballCard;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -41,6 +41,7 @@ import org.hamcrest.Matcher;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
@@ -124,7 +125,7 @@ final public class BBCTTestUtil {
         onView(withId(R.id.brand)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.BRAND)) {
             onView(withId(R.id.brand))
-                    .perform(scrollTo(), typeTextIntoFocusedView(card.getBrand()))
+                    .perform(scrollTo(), clearText(), typeTextIntoFocusedView(card.getBrand()))
                     .check(matches(withText(card.getBrand())));
         }
         device.pressEnter();
@@ -221,7 +222,7 @@ final public class BBCTTestUtil {
         onView(withId(R.id.player_position))
                 .check(matches(withSpinnerText(expectedCard.getPlayerPosition())));
     }
-    
+
     /**
      * Assert that database was created with the correct version and table and
      * that it is empty.
@@ -326,12 +327,6 @@ final public class BBCTTestUtil {
         Log.d(TAG, "power=" + power);
 
         return power;
-    }
-
-    public static void clickLater() {
-        onView(withText(R.string.later))
-                .check(matches(isDisplayed()))
-                .perform(click());
     }
 
     public enum EditTexts {
