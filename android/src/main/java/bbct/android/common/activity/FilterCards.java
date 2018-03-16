@@ -164,9 +164,6 @@ public class FilterCards extends Fragment {
             this.onConfirm();
             return true;
         }
-        else if (menuId == android.R.id.home) {
-            this.getActivity().onBackPressed();
-        }
 
         return false;
     }
