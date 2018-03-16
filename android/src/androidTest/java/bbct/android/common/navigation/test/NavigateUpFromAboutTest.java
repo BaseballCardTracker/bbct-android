@@ -43,8 +43,8 @@ public class NavigateUpFromAboutTest {
         String aboutTitle = getInstrumentation().getTargetContext().getString(R.string.about_title);
         onView(allOf(withText(aboutTitle), isDisplayed())).perform(click());
 
-        String title = getInstrumentation().getTargetContext().getString(R.string.bbct_title, aboutTitle);
-        onView(withText(title)).check(matches(isDisplayed()));
+        String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.bbct_title, aboutTitle);
+        onView(withText(expectedTitle)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -55,8 +55,8 @@ public class NavigateUpFromAboutTest {
         String aboutTitle = getInstrumentation().getTargetContext().getString(R.string.about_title);
 
         onView(allOf(withText(aboutTitle), isDisplayed())).perform(click());
-        String title = getInstrumentation().getTargetContext().getString(R.string.bbct_title, aboutTitle);
-        onView(withText(title)).check(matches(isDisplayed()));
+        String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.bbct_title, aboutTitle);
+        onView(withText(expectedTitle)).check(matches(isDisplayed()));
 
         onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
         onView(withText(initialTitle)).check(matches(isDisplayed()));
