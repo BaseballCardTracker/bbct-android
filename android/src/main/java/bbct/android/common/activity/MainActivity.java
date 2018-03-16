@@ -167,15 +167,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
+        int menuId = item.getItemId();
 
-        if (itemId == R.id.about_menu) {
-            this.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
-                    .addToBackStack(FragmentTags.ABOUT)
-                    .commit();
-            return true;
+        switch (menuId) {
+            case R.id.about_menu:
+                this.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
+                        .addToBackStack(FragmentTags.ABOUT)
+                        .commit();
+                return true;
+            case android.R.id.home:
+                this.onBackPressed();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
