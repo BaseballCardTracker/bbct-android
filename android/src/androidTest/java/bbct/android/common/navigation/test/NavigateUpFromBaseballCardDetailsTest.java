@@ -70,11 +70,11 @@ public class NavigateUpFromBaseballCardDetailsTest {
         onView(withText(initialTitle)).check(matches(isDisplayed()));
     }
 
-//    @Test
-//    public void testNoDataNavigateUp() {
-//
-//        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
+    @Test
+    public void testNoDataNavigateUp() {
+
+        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
 //        Assert.assertTrue(activityActivityTestRule.getActivity() == null);
-//    }
+    }
 
 }
