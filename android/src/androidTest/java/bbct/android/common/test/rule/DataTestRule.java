@@ -46,10 +46,6 @@ public class DataTestRule extends ExternalResource {
         return allCards;
     }
 
-    public void clearCards() {
-        dbUtil.clearDatabase();
-    }
-
     @Override
     protected void before() throws IOException {
         Instrumentation inst = InstrumentationRegistry.getInstrumentation();
