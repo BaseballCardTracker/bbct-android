@@ -49,7 +49,6 @@ public class NavigateUpFromBaseballCardDetailsTest {
 
     @Test
     public void testDefaultNavigateUpWithNoData() {
-        dataTestRule.clearCards();
         String cardDetailsTitle = getInstrumentation().getTargetContext().getString(R.string.card_details_title);
         String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.bbct_title, cardDetailsTitle);
 
