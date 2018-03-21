@@ -30,14 +30,10 @@ public class NavigateUpFromFilterCardsTest {
     @Rule
     public ActivityTestRule<LiteActivity> activityActivityTestRule = new ActivityTestRule<LiteActivity>(LiteActivity.class);
 
-    private List<BaseballCard> allCards;
-
     @Before
     public void setUp() throws Exception {
         activityActivityTestRule.getActivity()
                 .getSupportFragmentManager().beginTransaction();
-
-        allCards = dataTestRule.getAllCards();
     }
 
     @Test
