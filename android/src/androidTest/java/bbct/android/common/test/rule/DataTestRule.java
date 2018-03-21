@@ -20,13 +20,16 @@ package bbct.android.common.test.rule;
 
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
-import bbct.android.common.test.BaseballCardCsvFileReader;
-import bbct.android.common.test.DatabaseUtil;
-import bbct.data.BaseballCard;
+
+import org.junit.rules.ExternalResource;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import org.junit.rules.ExternalResource;
+
+import bbct.android.common.test.BaseballCardCsvFileReader;
+import bbct.android.common.test.DatabaseUtil;
+import bbct.data.BaseballCard;
 
 public class DataTestRule extends ExternalResource {
     private static final String TAG = DataTestRule.class.getName();
@@ -41,6 +44,10 @@ public class DataTestRule extends ExternalResource {
 
     public List<BaseballCard> getAllCards() {
         return allCards;
+    }
+
+    public void clearCards() {
+        dbUtil.clearDatabase();
     }
 
     @Override

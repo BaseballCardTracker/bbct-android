@@ -41,12 +41,21 @@ public class NavigateUpFromBaseballCardDetailsTest {
     @Rule
     public ActivityTestRule<LiteActivity> activityActivityTestRule = new ActivityTestRule<LiteActivity>(LiteActivity.class);
 
-
-
     @Before
     public void setUp() throws Exception {
         activityActivityTestRule.getActivity()
                 .getSupportFragmentManager().beginTransaction();
+    }
+
+    @Test
+    public void testDefaultNavigateUpWithNoData() {
+        dataTestRule.clearCards();
+        String cardDetailsTitle = getInstrumentation().getTargetContext().getString(R.string.card_details_title);
+        String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.bbct_title, cardDetailsTitle);
+
+        onView(withText(expectedTitle)).check(matches(isDisplayed()));
+        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
+        onView(withText(R.string.app_name)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -70,11 +79,5 @@ public class NavigateUpFromBaseballCardDetailsTest {
         onView(withText(initialTitle)).check(matches(isDisplayed()));
     }
 
-    @Test
-    public void testNoDataNavigateUp() {
-
-        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
-//        Assert.assertTrue(activityActivityTestRule.getActivity() == null);
-    }
 
 }
