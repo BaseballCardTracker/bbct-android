@@ -22,12 +22,10 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import java.util.List;
-
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.data.BaseballCard;
+import java.util.List;
 
 public class DatabaseUtil {
     private SQLiteDatabase db = null;
@@ -66,9 +64,7 @@ public class DatabaseUtil {
     }
 
     public void clearDatabase() {
-        if (!db.isOpen()) {
-            this.db.delete(BaseballCardContract.TABLE_NAME, null, null);
-        }
+        this.db.delete(BaseballCardContract.TABLE_NAME, null, null);
         this.db.close();
     }
 
