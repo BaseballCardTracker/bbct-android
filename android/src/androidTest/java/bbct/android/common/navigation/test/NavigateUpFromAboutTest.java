@@ -48,7 +48,7 @@ public class NavigateUpFromAboutTest {
     }
 
     @Test
-    public void testNavigateWithHomeIcon() {
+    public void testNavigateUp() {
         String initialTitle = (String) activityActivityTestRule.getActivity().getTitle();
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
 
