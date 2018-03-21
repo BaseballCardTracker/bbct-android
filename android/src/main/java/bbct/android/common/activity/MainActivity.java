@@ -69,13 +69,17 @@ public class MainActivity extends AppCompatActivity {
                     BaseballCardContract.PROJECTION, null, null, null);
 
             FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-            if (cursor == null || cursor.getCount() == 0) {
-                ft.add(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD);
-            } else {
-                ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
-                cursor.close();
-            }
+            ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
+            ft.addToBackStack(null);
             ft.commit();
+
+            if (cursor == null || cursor.getCount() == 0) {
+                this.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD)
+                        .addToBackStack(FragmentTags.EDIT_CARD).commit();
+            }
+            cursor.close();
+
 
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
