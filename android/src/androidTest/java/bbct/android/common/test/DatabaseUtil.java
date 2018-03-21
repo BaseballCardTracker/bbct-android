@@ -66,7 +66,9 @@ public class DatabaseUtil {
     }
 
     public void clearDatabase() {
-        this.db.delete(BaseballCardContract.TABLE_NAME, null, null);
+        if (!db.isOpen()) {
+            this.db.delete(BaseballCardContract.TABLE_NAME, null, null);
+        }
         this.db.close();
     }
 
