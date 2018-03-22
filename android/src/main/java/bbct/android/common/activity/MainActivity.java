@@ -158,12 +158,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         }
     }
 
-    /**
-     * Create the options menu. This is simply inflated from the
-     * {@code main.xml} resource file.
-     *
-     * @param menu The options menu in which new menu items are placed.
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.main, menu);
@@ -171,11 +165,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         return super.onCreateOptionsMenu(menu);
     }
 
-    /**
-     * Respond to the user selecting a menu item.
-     *
-     * @param item The menu item selected.
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuId = item.getItemId();

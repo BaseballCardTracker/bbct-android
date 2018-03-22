@@ -55,10 +55,6 @@ public class FilterCards extends Fragment {
     private static final String[] EXTRAS = { BRAND_EXTRA, YEAR_EXTRA, NUMBER_EXTRA,
             PLAYER_NAME_EXTRA, TEAM_EXTRA };
 
-    /**
-     * Finds the corresponding {@link EditText} element given a {@link CheckBox}
-     * that was clicked upon.
-     */
     private View.OnClickListener onCheckBoxClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -128,9 +124,6 @@ public class FilterCards extends Fragment {
         }
     }
 
-    /**
-     * Save the state of all {@link EditText} elements.
-     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -168,12 +161,6 @@ public class FilterCards extends Fragment {
         return false;
     }
 
-    /**
-     * Toggles the state of {@link EditText}.
-     *
-     * @param et
-     *            - the {@link EditText} to toggle
-     */
     private void toggleTextField(EditText et) {
         if (et.isEnabled()) {
             et.setEnabled(false);
@@ -183,11 +170,6 @@ public class FilterCards extends Fragment {
         }
     }
 
-    /**
-     * Counts the number of {@link CheckBox} elements that are checked.
-     *
-     * @return the number of checked elements
-     */
     private int numberChecked() {
         int count = 0;
         for (int id : CHECKBOXES) {
@@ -200,10 +182,6 @@ public class FilterCards extends Fragment {
         return count;
     }
 
-    /**
-     * Sets the combination of filter parameters as a result of
-     * {@link FilterCards} activity and exits.
-     */
     private void onConfirm() {
         Bundle filterArgs = new Bundle();
         for (int i = 0; i < TEXT_FIELDS.length; i++) {

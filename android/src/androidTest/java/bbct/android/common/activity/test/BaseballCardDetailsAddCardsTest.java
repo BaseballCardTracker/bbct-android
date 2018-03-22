@@ -18,12 +18,9 @@
  */
 package bbct.android.common.activity.test;
 
-import android.app.Activity;
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.Button;
-import android.widget.EditText;
 
 import junit.framework.Assert;
 
@@ -43,9 +40,6 @@ import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 import bbct.data.BaseballCard;
 
-/**
- * Tests for {@link BaseballCardDetails}.
- */
 @RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsAddCardsTest {
     @Rule
@@ -58,14 +52,6 @@ public class BaseballCardDetailsAddCardsTest {
     private BaseballCard card = null;
     private DatabaseUtil dbUtil;
 
-    /**
-     * Set up test fixture. This consists of an instance of the
-     * {@link BaseballCardDetails} activity and all of its {@link EditText} and
-     * {@link Button} views and a list of {@link BaseballCard} data.
-     *
-     * @throws Exception
-     *             If an error occurs while chaining to the super class.
-     */
     @Before
     public void setUp() throws Exception {
         Instrumentation inst = InstrumentationRegistry.getInstrumentation();
@@ -79,26 +65,11 @@ public class BaseballCardDetailsAddCardsTest {
         cardInput.close();
     }
 
-    /**
-     * Tear down the test fixture by calling {@link Activity#finish()} and
-     * deleting the app's database.
-     *
-     * @throws Exception
-     *             If an error occurs while chaining to the super class.
-     */
     @After
     public void tearDown() throws Exception {
         dbUtil.clearDatabase();
     }
 
-    /**
-     * Test that baseball card data is correctly added to the database when it
-     * is entered into the {@link BaseballCardDetails} activity.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
     @Test
     public void testAddCard() throws Throwable {
         BBCTTestUtil.addCard(card);
@@ -106,16 +77,6 @@ public class BaseballCardDetailsAddCardsTest {
         Assert.assertTrue("Missing card: " + card, dbUtil.containsBaseballCard(card));
     }
 
-    /**
-     * Test that baseball card data for multiple cards is correctly added to the
-     * database when it is entered into the {@link BaseballCardDetails}
-     * activity. This test enters all data using a single invocation of the
-     * {@link BaseballCardDetails} activity.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
     @Test
     public void testAddMultipleCards() throws Throwable {
         for (BaseballCard nextCard : this.allCards) {
