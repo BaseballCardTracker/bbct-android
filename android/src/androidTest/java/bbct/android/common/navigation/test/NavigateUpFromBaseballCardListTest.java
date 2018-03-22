@@ -14,6 +14,7 @@ import bbct.android.common.R;
 import bbct.android.lite.provider.LiteActivity;
 import bbct.data.BaseballCard;
 
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -42,7 +43,7 @@ public class NavigateUpFromBaseballCardListTest {
 
     @Test
     public void testNoDataNavigateUp() {
-        String expectedTitle = (String) activityActivityTestRule.getActivity().getTitle();
+        String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.app_name);
         onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
         onView(withText(expectedTitle)).check(matches(isDisplayed()));
     }

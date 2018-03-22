@@ -6,17 +6,15 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import java.util.List;
-
 import bbct.android.common.R;
-import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.lite.provider.LiteActivity;
-import bbct.data.BaseballCard;
 
+import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
 /**
@@ -24,9 +22,6 @@ import static org.hamcrest.Matchers.allOf;
  */
 
 public class NavigateUpFromFilterCardsTest {
-    @Rule
-    public DataTestRule dataTestRule = new DataTestRule();
-
     @Rule
     public ActivityTestRule<LiteActivity> activityActivityTestRule = new ActivityTestRule<LiteActivity>(LiteActivity.class);
 
@@ -37,8 +32,13 @@ public class NavigateUpFromFilterCardsTest {
     }
 
     @Test
-    public void testNoDataNavigateUp() {
+    public void testNavigateUp() {
 
+        String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.app_name);
         onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
+        onView(allOf(withContentDescription(R.string.filter_cards_title), isDisplayed())).perform(click());
+        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
+        onView(allOf(withText(expectedTitle), isDisplayed()));
+
     }
 }
