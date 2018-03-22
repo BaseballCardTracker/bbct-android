@@ -25,17 +25,21 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
-import bbct.android.common.R;
-import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.data.BaseballCard;
+
+import junit.framework.Assert;
+
+import org.hamcrest.Matcher;
+
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import junit.framework.Assert;
-import org.hamcrest.Matcher;
+
+import bbct.android.common.R;
+import bbct.android.common.provider.BaseballCardSQLHelper;
+import bbct.data.BaseballCard;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -58,9 +62,6 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-/**
- * Utility methods used for JUnit tests on classes in Android version of BBCT.
- */
 final public class BBCTTestUtil {
     private static final String TAG = BBCTTestUtil.class.getName();
     public static final String ADD_MESSAGE = "Card added successfully";
@@ -218,13 +219,7 @@ final public class BBCTTestUtil {
         onView(withId(R.id.player_position_text))
                 .check(matches(withSpinnerText(expectedCard.getPlayerPosition())));
     }
-    /**
-     * Assert that database was created with the correct version and table and
-     * that it is empty.
-     *
-     * @param targetContext
-     *            The target context.
-     */
+
     public static void assertDatabaseCreated(Context targetContext) {
         DatabaseUtil dbUtil = new DatabaseUtil(targetContext);
         SQLiteDatabase db = dbUtil.getDatabase();
@@ -281,13 +276,6 @@ final public class BBCTTestUtil {
         return filteredList;
     }
 
-    /**
-     * Generate the power set of a given {@link Set}.
-     *
-     * @param input
-     *            A set of elements
-     * @return The power set of the given {@link Set}
-     */
     public static <T> Set<Set<T>> powerSet(Set<T> input) {
         Log.d(TAG, "powerSet()");
         Log.d(TAG, "input=" + input);

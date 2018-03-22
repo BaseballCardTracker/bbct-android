@@ -54,9 +54,6 @@ import bbct.data.BaseballCard;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Allows user to add a new card or view and edit details of an existing card.
- */
 public class BaseballCardDetails extends Fragment {
 
     private static final String ID = "id";

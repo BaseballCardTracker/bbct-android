@@ -27,10 +27,12 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import java.util.List;
+
 import bbct.android.common.R;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.data.BaseballCard;
-import java.util.List;
 
 /**
  * Overrides
@@ -39,13 +41,6 @@ import java.util.List;
  */
 public class PremiumSQLHelper extends
         bbct.android.common.provider.BaseballCardSQLHelper {
-
-    /**
-     * Create a {@link PremiumSQLHelper} with the given {@link Context}.
-     *
-     * @param context
-     *            The Android {@link Context} for this {@link PremiumSQLHelper}.
-     */
     public PremiumSQLHelper(Context context) {
         super(context);
 
@@ -96,12 +91,6 @@ public class PremiumSQLHelper extends
         }
     }
 
-    /**
-     * Insert data for multiple baseball cards into a SQLite database.
-     *
-     * @param cards
-     *            The list of cards to insert into the database.
-     */
     private void insertAllBaseballCards(SQLiteDatabase db,
                                        List<BaseballCard> cards) {
         db.beginTransaction();

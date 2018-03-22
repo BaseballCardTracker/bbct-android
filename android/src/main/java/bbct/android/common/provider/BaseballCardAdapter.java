@@ -22,26 +22,20 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
-import bbct.data.BaseballCard;
 import bbct.android.common.view.BaseballCardView;
+import bbct.data.BaseballCard;
 import butterknife.ButterKnife;
 
-/**
- * This class adds click listeners to {@link CheckedTextView} in
- * {@link SimpleCursorAdapter}. It enables {@link CheckedTextView} to toggle
- * its' state.
- */
 public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     private final FragmentActivity mActivity;
@@ -66,13 +60,6 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
         mCallback = callback;
     }
 
-    /**
-     * Restores selection of {@link CheckedTextView} if there was a previous
-     * selection made on the same element. Also adds {@link OnClickListener} to
-     * {@link CheckedTextView}.
-     *
-     * @see {@link SimpleCursorAdapter#getView(int, View, ViewGroup)}
-     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View row = convertView;

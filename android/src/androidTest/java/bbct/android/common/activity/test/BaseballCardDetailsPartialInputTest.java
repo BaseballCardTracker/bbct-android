@@ -21,21 +21,22 @@ package bbct.android.common.activity.test;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
+
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.data.BaseballCard;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.Set;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -44,10 +45,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static bbct.android.common.test.matcher.Matchers.hasErrorText;
 
-/**
- * A parameterized test which can test any combination of input in the
- * {@link BaseballCardDetails} activity.
- */
 public class BaseballCardDetailsPartialInputTest extends
         ActivityInstrumentationTestCase2<FragmentTestActivity> {
     private static final String CARD_DATA = "cards.csv";
@@ -57,13 +54,6 @@ public class BaseballCardDetailsPartialInputTest extends
     private BaseballCard card = null;
     private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
 
-    /**
-     * Creates a {@link TestSuite} containing every possible combination of
-     * blank {@link EditText} views in the {@link BaseballCardDetails} activity.
-     *
-     * @return A {@link TestSuite} containing every possible combination of
-     * blank {@link EditText} views in the {@link BaseballCardDetails} activity.
-     */
     public static Test suite() {
         TestSuite suite = new TestSuite();
         Set<BBCTTestUtil.EditTexts> editTexts =
@@ -79,13 +69,6 @@ public class BaseballCardDetailsPartialInputTest extends
         return suite;
     }
 
-    /**
-     * Creates a test which will input data to the {@link EditText} views
-     * indicated by the given flags.<code>|</code>).
-     *
-     * @param inputFieldsFlags The {@link EditText} views to receive input.
-     *
-     */
     public BaseballCardDetailsPartialInputTest(Set<BBCTTestUtil.EditTexts> inputFieldsFlags) {
         super(FragmentTestActivity.class);
 
@@ -93,13 +76,6 @@ public class BaseballCardDetailsPartialInputTest extends
         this.inputFieldsMask = inputFieldsFlags;
     }
 
-    /**
-     * Set up the test fixture for this test. Reads an input CSV file for
-     * baseball card data to use as input. Finds the {@link EditText} and
-     * {@link Button} views which will be used during testing.
-     *
-     * @throws IOException If an error occurs while reading the CSV file.
-     */
     @Override
     public void setUp() throws IOException {
         Instrumentation inst = this.getInstrumentation();
@@ -113,13 +89,6 @@ public class BaseballCardDetailsPartialInputTest extends
         activity.replaceFragment(new BaseballCardDetails());
     }
 
-    /**
-     * Validates that {@link BaseballCardDetails} correctly handles missing
-     * input by setting the error messages of any blank {@link EditText} views.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the
-     * UI thread runs.
-     */
     public void testPartialInput() throws Throwable {
         Log.d(TAG, "testPartialInput()");
         Log.d(TAG, "inputFieldsMask=" + this.inputFieldsMask);

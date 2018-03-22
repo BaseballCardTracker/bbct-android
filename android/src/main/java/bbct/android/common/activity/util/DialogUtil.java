@@ -30,23 +30,9 @@ import java.net.URISyntaxException;
 import bbct.android.common.R;
 import bbct.android.common.SharedPreferenceKeys;
 
-/**
- * Static utility methods for showing common dialogs.
- */
 public class DialogUtil {
     private static final String TAG = DialogUtil.class.getName();
 
-    /**
-     * Show an error message in a dialog box. The dialog box is displayed using
-     * the string resources with the given ids for the title and error message.
-     *
-     * @param context
-     *            The Android context.
-     * @param titleId
-     *            The string resource for the title.
-     * @param errorId
-     *            The string resource for the error message.
-     */
     public static void showErrorDialog(Context context, int titleId, int errorId) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         dialogBuilder.setTitle(titleId);
