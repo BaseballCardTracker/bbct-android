@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +45,7 @@ import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.provider.BaseballCardContract;
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
     public static final int SURVEY_DELAY = 7;
     public static final String SURVEY1_URI = "https://docs.google.com/forms/d/1wj3d3SiZ7U81_ZRp0zwgH0l2b2Az3A9XkYJbgQFdO9I/viewform";
     public static final String SURVEY2_URI = "https://docs.google.com/forms/d/e/1FAIpQLSfg0TPyKcWlGSOlhhDd_4qIjYG9htOjJ5pwjRYtc71zxPw-ag/viewform";
@@ -80,11 +81,7 @@ public class MainActivity extends AppCompatActivity {
             }
             cursor.close();
 
-
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
+            this.getSupportFragmentManager().addOnBackStackChangedListener(this);
         }
 
         prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
@@ -187,5 +184,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0);
+        }
     }
 }
