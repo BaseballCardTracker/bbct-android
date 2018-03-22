@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
             FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
             ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
-            ft.addToBackStack(null);
             ft.commit();
 
             if (cursor == null || cursor.getCount() == 0) {
