@@ -119,11 +119,6 @@ public class BaseballCardList extends ListFragment {
     public void onResume() {
         super.onResume();
         getActivity().setTitle(R.string.app_name);
-
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(false);
-        }
     }
 
     @Override
