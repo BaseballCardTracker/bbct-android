@@ -1,5 +1,6 @@
 package bbct.android.common.navigation.test;
 
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -37,7 +38,7 @@ public class NavigateBackPressFromAboutTest {
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
 
         String aboutTitle = getInstrumentation().getTargetContext().getString(R.string.about_title);
-        activityActivityTestRule.getActivity().onBackPressed();
+        Espresso.pressBack();
 
         String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.bbct_title, aboutTitle);
         onView(withText(expectedTitle)).check(matches(isDisplayed()));
@@ -50,11 +51,12 @@ public class NavigateBackPressFromAboutTest {
 
         String aboutTitle = getInstrumentation().getTargetContext().getString(R.string.about_title);
 
-        activityActivityTestRule.getActivity().onBackPressed();
+        onView(allOf(withText(aboutTitle), isDisplayed())).perform(click());
         String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.bbct_title, aboutTitle);
         onView(withText(expectedTitle)).check(matches(isDisplayed()));
 
-        activityActivityTestRule.getActivity().onBackPressed();
+        Espresso.closeSoftKeyboard();
+        Espresso.pressBack();
         onView(withText(initialTitle)).check(matches(isDisplayed()));
     }
 }
