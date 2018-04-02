@@ -70,8 +70,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                     BaseballCardContract.PROJECTION, null, null, null);
 
             FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
-            ft.commit();
+            ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST)
+                    .addToBackStack(FragmentTags.CARD_LIST)
+                    .commit();
 
             if (cursor == null || cursor.getCount() == 0) {
                 this.getSupportFragmentManager().beginTransaction()
@@ -189,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public void onBackStackChanged() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0);
+            actionBar.setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 1);
         }
     }
 }
