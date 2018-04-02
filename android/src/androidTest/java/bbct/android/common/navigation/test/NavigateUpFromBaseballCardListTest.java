@@ -21,19 +21,13 @@ package bbct.android.common.navigation.test;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
-
 import bbct.android.common.R;
-import bbct.android.common.test.DatabaseUtil;
-import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.lite.provider.LiteActivity;
-import bbct.data.BaseballCard;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
