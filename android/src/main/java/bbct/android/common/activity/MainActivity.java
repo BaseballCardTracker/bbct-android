@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -69,18 +70,16 @@ public class MainActivity extends AppCompatActivity {
                     BaseballCardContract.PROJECTION, null, null, null);
 
             FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-            if (cursor == null || cursor.getCount() == 0) {
-                ft.add(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD);
-            } else {
-                ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
-                cursor.close();
-            }
-            ft.commit();
+            ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST)
+                    .addToBackStack(null)
+                    .commit();
 
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
+            if (cursor == null || cursor.getCount() == 0) {
+                this.getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD)
+                        .addToBackStack(FragmentTags.EDIT_CARD).commit();
             }
+            cursor.close();
         }
 
         prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
@@ -167,15 +166,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
+        int menuId = item.getItemId();
 
-        if (itemId == R.id.about_menu) {
-            this.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
-                    .addToBackStack(FragmentTags.ABOUT)
-                    .commit();
-            return true;
+        switch (menuId) {
+            case R.id.about_menu:
+                this.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
+                        .addToBackStack(FragmentTags.ABOUT)
+                        .commit();
+                return true;
+            case android.R.id.home:
+                this.onBackPressed();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
