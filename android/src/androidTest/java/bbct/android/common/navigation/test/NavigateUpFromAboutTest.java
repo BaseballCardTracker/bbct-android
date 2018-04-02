@@ -18,6 +18,7 @@
  */
 package bbct.android.common.navigation.test;
 
+import android.content.Context;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -44,16 +45,18 @@ import static org.hamcrest.Matchers.allOf;
 public class NavigateUpFromAboutTest {
     @Rule
     public ActivityTestRule<LiteActivity> activityActivityTestRule = new ActivityTestRule<LiteActivity>(LiteActivity.class);
+    Context context = null;
 
     @Before
     public void setUp() throws Exception {
         activityActivityTestRule.getActivity()
                 .getSupportFragmentManager().beginTransaction();
+        context = getInstrumentation().getTargetContext();
     }
 
     @Test
     public void testNavigateToAboutFragment() {
-        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        openActionBarOverflowOrOptionsMenu(context);
 
         String aboutTitle = getInstrumentation().getTargetContext().getString(R.string.about_title);
         onView(allOf(withText(aboutTitle), isDisplayed())).perform(click());
@@ -65,7 +68,7 @@ public class NavigateUpFromAboutTest {
     @Test
     public void testNavigateUp() {
         String initialTitle = (String) activityActivityTestRule.getActivity().getTitle();
-        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        openActionBarOverflowOrOptionsMenu(context);
 
         String aboutTitle = getInstrumentation().getTargetContext().getString(R.string.about_title);
 
