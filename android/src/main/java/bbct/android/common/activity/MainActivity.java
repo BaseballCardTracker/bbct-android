@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -69,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
                     BaseballCardContract.PROJECTION, null, null, null);
 
             FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
-            ft.addToBackStack(null);
-            ft.commit();
+            ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST)
+                    .addToBackStack(null)
+                    .commit();
 
             if (cursor == null || cursor.getCount() == 0) {
                 this.getSupportFragmentManager().beginTransaction()
@@ -79,12 +80,6 @@ public class MainActivity extends AppCompatActivity {
                         .addToBackStack(FragmentTags.EDIT_CARD).commit();
             }
             cursor.close();
-
-
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
         }
 
         prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
