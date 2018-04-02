@@ -79,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
                         .addToBackStack(FragmentTags.EDIT_CARD).commit();
             }
             cursor.close();
-
-            this.getSupportFragmentManager().addOnBackStackChangedListener(this);
         }
 
         prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
