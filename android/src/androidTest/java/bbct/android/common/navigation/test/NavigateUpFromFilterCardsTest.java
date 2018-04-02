@@ -18,6 +18,7 @@
  */
 package bbct.android.common.navigation.test;
 
+import android.content.Context;
 import android.support.test.rule.ActivityTestRule;
 
 import org.junit.Before;
@@ -39,17 +40,19 @@ import static org.hamcrest.Matchers.allOf;
 public class NavigateUpFromFilterCardsTest {
     @Rule
     public ActivityTestRule<LiteActivity> activityActivityTestRule = new ActivityTestRule<LiteActivity>(LiteActivity.class);
+    Context context = null;
 
     @Before
     public void setUp() throws Exception {
         activityActivityTestRule.getActivity()
                 .getSupportFragmentManager().beginTransaction();
+        context = getInstrumentation().getTargetContext();
     }
 
     @Test
     public void testNavigateUp() {
 
-        String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.app_name);
+        String expectedTitle = context.getString(R.string.app_name);
         onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
         onView(allOf(withContentDescription(R.string.filter_cards_title), isDisplayed())).perform(click());
         onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
