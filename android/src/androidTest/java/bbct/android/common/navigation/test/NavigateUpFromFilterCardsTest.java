@@ -35,9 +35,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withContentDesc
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
-/**
- * Created by Joselito Narte Jr. on 16/03/2018.
- */
 
 public class NavigateUpFromFilterCardsTest {
     @Rule
