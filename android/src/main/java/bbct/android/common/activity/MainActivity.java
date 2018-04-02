@@ -45,7 +45,7 @@ import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.provider.BaseballCardContract;
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
+public class MainActivity extends AppCompatActivity {
     public static final int SURVEY_DELAY = 7;
     public static final String SURVEY1_URI = "https://docs.google.com/forms/d/1wj3d3SiZ7U81_ZRp0zwgH0l2b2Az3A9XkYJbgQFdO9I/viewform";
     public static final String SURVEY2_URI = "https://docs.google.com/forms/d/e/1FAIpQLSfg0TPyKcWlGSOlhhDd_4qIjYG9htOjJ5pwjRYtc71zxPw-ag/viewform";
@@ -183,13 +183,5 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackStackChanged() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 0);
-        }
     }
 }
