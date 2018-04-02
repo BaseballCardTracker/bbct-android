@@ -44,9 +44,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withContentDesc
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
-/**
- * Created by Joselito Narte Jr. on 16/03/2018.
- */
 @RunWith(AndroidJUnit4.class)
 public class NavigateUpFromBaseballCardListTest {
 
