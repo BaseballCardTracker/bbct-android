@@ -43,7 +43,7 @@ import static org.hamcrest.Matchers.allOf;
 public class NavigateUpFromBaseballCardListTest {
     @Rule
     public ActivityTestRule<LiteActivity> activityActivityTestRule = new ActivityTestRule<LiteActivity>(LiteActivity.class);
-    Context context = null;
+    private Context context = null;
 
     @Before
     public void setUp() throws Exception {
