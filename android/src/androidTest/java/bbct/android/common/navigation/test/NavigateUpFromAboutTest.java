@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
+import bbct.android.common.test.DatabaseUtil;
 import bbct.android.lite.provider.LiteActivity;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
@@ -46,34 +47,80 @@ public class NavigateUpFromAboutTest {
     @Rule
     public ActivityTestRule<LiteActivity> activityActivityTestRule = new ActivityTestRule<LiteActivity>(LiteActivity.class);
     Context context = null;
+    private DatabaseUtil dbUtil = null;
 
     @Before
     public void setUp() throws Exception {
         activityActivityTestRule.getActivity()
                 .getSupportFragmentManager().beginTransaction();
         context = getInstrumentation().getTargetContext();
+        this.dbUtil = new DatabaseUtil(context);
+    }
+
+    @Test
+    public void testNavigateToBaseballCardDetailsThenAboutFragment() {
+        String expectedTitle = context.getString(R.string.app_name);
+
+        // pop to BaseballCardList first if db is empty
+        if (this.dbUtil.isEmpty()) {
+            onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
+        }
+        // navigate to BaseballCardDetails
+        onView(allOf(withContentDescription(R.string.add_menu), isDisplayed())).perform(click());
+
+        // navigate to About
+        openActionBarOverflowOrOptionsMenu(context);
+        String aboutTitle = context.getString(R.string.about_title);
+        onView(allOf(withText(aboutTitle), isDisplayed())).perform(click());
+
+        // Navigate Up
+        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
+        onView(allOf(withText(expectedTitle), isDisplayed()));
+    }
+
+    @Test
+    public void testNavigateToFilterThenAboutFragment() {
+
+        String expectedTitle = context.getString(R.string.app_name);
+
+        // pop to BaseballCardList first if db is empty
+        if (this.dbUtil.isEmpty()) {
+            onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
+        }
+
+        // navigate to FilterCards
+        onView(allOf(withContentDescription(R.string.filter_cards_title), isDisplayed())).perform(click());
+
+        // navigate to About
+        openActionBarOverflowOrOptionsMenu(context);
+        String aboutTitle = context.getString(R.string.about_title);
+        onView(allOf(withText(aboutTitle), isDisplayed())).perform(click());
+
+        // Navigate Up
+        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
+        onView(allOf(withText(expectedTitle), isDisplayed()));
     }
 
     @Test
     public void testNavigateToAboutFragment() {
         openActionBarOverflowOrOptionsMenu(context);
 
-        String aboutTitle = getInstrumentation().getTargetContext().getString(R.string.about_title);
+        String aboutTitle = context.getString(R.string.about_title);
         onView(allOf(withText(aboutTitle), isDisplayed())).perform(click());
 
-        String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.bbct_title, aboutTitle);
+        String expectedTitle = context.getString(R.string.app_name, aboutTitle);
         onView(withText(expectedTitle)).check(matches(isDisplayed()));
     }
 
     @Test
     public void testNavigateUp() {
-        String initialTitle = (String) activityActivityTestRule.getActivity().getTitle();
+        String initialTitle = context.getString(R.string.app_name);
         openActionBarOverflowOrOptionsMenu(context);
 
-        String aboutTitle = getInstrumentation().getTargetContext().getString(R.string.about_title);
+        String aboutTitle = context.getString(R.string.about_title);
 
         onView(allOf(withText(aboutTitle), isDisplayed())).perform(click());
-        String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.bbct_title, aboutTitle);
+        String expectedTitle = context.getString(R.string.bbct_title, aboutTitle);
         onView(withText(expectedTitle)).check(matches(isDisplayed()));
 
         onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());

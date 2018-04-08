@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -192,5 +193,17 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 1);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment currentFragment = fm
+                .findFragmentById(R.id.fragment_holder);
+        if (currentFragment instanceof About) {
+            fm.popBackStack(FragmentTags.CARD_LIST, 0);
+            return;
+        }
+        super.onBackPressed();
     }
 }
