@@ -29,13 +29,13 @@ allprojects {
 }
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     flavorDimensions "tier"
 
     defaultConfig {
         applicationId "bbct.android.common"
         minSdkVersion 18
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 20
         versionName "0.6.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -125,7 +125,7 @@ if (propFile.canRead()) {
 }
 
 ext {
-    supportLibVersion = '26.1.0'
+    supportLibVersion = '27.1.1'
     espressoVersion = '2.2.1'
     testSupportLibVersion = '0.5'
     butterknifeVersion = '8.8.1'
