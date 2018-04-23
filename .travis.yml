@@ -11,10 +11,6 @@ android:
         - tools
         - build-tools-27.0.3
         - android-27
-        - extra-android-m2repository
-        - extra-android-support
-        - extra-google-m2repository
-        - extra-google-google_play_services
 
 notifications:
     slack:
