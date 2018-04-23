@@ -168,9 +168,14 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        this.onBackPressed();
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuId = item.getItemId();
-
         switch (menuId) {
             case R.id.about_menu:
                 this.getSupportFragmentManager()
@@ -179,11 +184,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                         .addToBackStack(FragmentTags.ABOUT)
                         .commit();
                 return true;
-            case android.R.id.home:
-                this.onBackPressed();
-                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
