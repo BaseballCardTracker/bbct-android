@@ -19,6 +19,7 @@
 package bbct.android.common.navigation.test;
 
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -50,8 +51,20 @@ public class NavigateBackPressFromBaseballCardDetailsTest {
                 .getSupportFragmentManager().beginTransaction();
     }
 
+    private void skipSurvey() {
+        try {
+            onView(withText(R.string.survey1)).check(matches(isDisplayed()));
+            onView(withText(R.string.later))
+                    .check(matches(isDisplayed()))
+                    .perform(click());
+        } catch (NoMatchingViewException e) {
+            //view not displayed logic
+        }
+    }
+
     @Test
     public void testDefaultNavigateUpWithNoData() {
+        skipSurvey();
         String cardDetailsTitle = getInstrumentation().getTargetContext().getString(R.string.card_details_title);
         String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.bbct_title, cardDetailsTitle);
         Espresso.closeSoftKeyboard();

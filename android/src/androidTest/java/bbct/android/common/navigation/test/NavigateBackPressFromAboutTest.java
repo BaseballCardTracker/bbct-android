@@ -19,6 +19,7 @@
 package bbct.android.common.navigation.test;
 
 import android.support.test.espresso.Espresso;
+import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -51,19 +52,20 @@ public class NavigateBackPressFromAboutTest {
                 .getSupportFragmentManager().beginTransaction();
     }
 
-    @Test
-    public void testNavigateToAboutFragment() {
-        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
-
-        String aboutTitle = getInstrumentation().getTargetContext().getString(R.string.about_title);
-        Espresso.pressBack();
-
-        String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.bbct_title, aboutTitle);
-        onView(withText(expectedTitle)).check(matches(isDisplayed()));
+    private void skipSurvey() {
+        try {
+            onView(withText(R.string.survey1)).check(matches(isDisplayed()));
+            onView(withText(R.string.later))
+                    .check(matches(isDisplayed()))
+                    .perform(click());
+        } catch (NoMatchingViewException e) {
+            //view not displayed logic
+        }
     }
 
     @Test
     public void testNavigateBack() {
+        skipSurvey();
         String initialTitle = (String) activityActivityTestRule.getActivity().getTitle();
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
 
