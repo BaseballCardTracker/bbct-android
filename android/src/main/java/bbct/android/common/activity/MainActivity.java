@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private static final String TAG = MainActivity.class.getName();
 
     private SharedPreferences prefs;
+    private FragmentManager fragmentManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,25 +65,24 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         }
 
         this.setContentView(R.layout.main);
+        fragmentManager = getSupportFragmentManager();
 
         if (savedInstanceState == null) {
             Uri uri = BaseballCardContract.getUri(this.getPackageName());
             Cursor cursor = this.getContentResolver().query(uri,
                     BaseballCardContract.PROJECTION, null, null, null);
-
-            FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST)
+            fragmentManager.beginTransaction().add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST)
                     .addToBackStack(FragmentTags.CARD_LIST)
                     .commit();
 
             if (cursor == null || cursor.getCount() == 0) {
-                this.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD)
-                        .addToBackStack(FragmentTags.EDIT_CARD).commit();
+                fragmentManager.beginTransaction().replace(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD)
+                        .addToBackStack(FragmentTags.EDIT_CARD)
+                        .commit();
             }
             cursor.close();
 
-            this.getSupportFragmentManager().addOnBackStackChangedListener(this);
+            fragmentManager.addOnBackStackChangedListener(this);
         }
 
         prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         int menuId = item.getItemId();
         switch (menuId) {
             case R.id.about_menu:
-                this.getSupportFragmentManager()
+                fragmentManager
                         .beginTransaction()
                         .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
                         .addToBackStack(FragmentTags.ABOUT)
@@ -189,20 +189,29 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        this.updateUpButtonVisibility();
+    }
+
+    @Override
     public void onBackStackChanged() {
+        this.updateUpButtonVisibility();
+    }
+
+    public void updateUpButtonVisibility() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(getSupportFragmentManager().getBackStackEntryCount() > 1);
+            actionBar.setDisplayHomeAsUpEnabled(fragmentManager.getBackStackEntryCount() > 1);
         }
     }
 
     @Override
     public void onBackPressed() {
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment currentFragment = fm
+        Fragment currentFragment = fragmentManager
                 .findFragmentById(R.id.fragment_holder);
         if (currentFragment instanceof About) {
-            fm.popBackStack(FragmentTags.CARD_LIST, 0);
+            fragmentManager.popBackStack(FragmentTags.CARD_LIST, 0);
             return;
         }
         super.onBackPressed();
