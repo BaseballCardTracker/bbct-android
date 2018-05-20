@@ -25,6 +25,8 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import junit.framework.Assert;
 

@@ -23,6 +23,8 @@ import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import junit.framework.Assert;
 

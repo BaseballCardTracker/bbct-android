@@ -59,22 +59,6 @@ public class FilterCards extends Fragment {
 
     private ArrayList<Integer> enabledFields = new ArrayList<>();
 
-    private View.OnClickListener onCheckBoxClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            EditText input = null;
-
-            for (int i = 0; i < CHECKBOXES.length; i++) {
-                if (v.getId() == CHECKBOXES[i]) {
-                    input = (EditText) FilterCards.this.getActivity().findViewById(TEXT_FIELDS[i]);
-                }
-            }
-
-            FilterCards.this.toggleTextField(input);
-            FilterCards.this.getActivity().supportInvalidateOptionsMenu();
-        }
-    };
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
