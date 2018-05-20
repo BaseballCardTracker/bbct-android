@@ -21,7 +21,17 @@ package bbct.android.common.activity.test;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
-import android.widget.EditText;
+
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import java.io.InputStream;
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
@@ -29,22 +39,11 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.data.BaseballCard;
-import java.io.InputStream;
-import java.util.EnumSet;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-/**
- * Tests editing card value and count in a {@link BaseballCardDetails} activity.
- */
 public class BaseballCardDetailsEditCardTest extends
         ActivityInstrumentationTestCase2<FragmentTestActivity> {
     private static final String TEST_NAME = "testEditCard";
@@ -56,15 +55,6 @@ public class BaseballCardDetailsEditCardTest extends
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil = null;
 
-    /**
-     * Creates a {@link TestSuite} containing tests for every possible
-     * combination of {@link EditText} views in the {@link BaseballCardDetails}
-     * activity.
-     *
-     * @return A {@link TestSuite} containing tests for every possible
-     *         combination of {@link EditText} views in the
-     *         {@link BaseballCardDetails} activity.
-     */
     public static Test suite() {
         Log.d(TAG, "suite()");
 
@@ -81,13 +71,6 @@ public class BaseballCardDetailsEditCardTest extends
         return suite;
     }
 
-    /**
-     * Creates a test which will edit data in the {@link EditText} views
-     * indicated by the given mask.
-     *
-     * @param inputMask
-     *            The {@link EditText} views to edit.
-     */
     public BaseballCardDetailsEditCardTest(Set<BBCTTestUtil.EditTexts> inputMask) {
         super(FragmentTestActivity.class);
 
@@ -95,16 +78,6 @@ public class BaseballCardDetailsEditCardTest extends
         this.inputMask = inputMask;
     }
 
-    /**
-     * Set up test fixture. This consists of an instance of the
-     * {@link BaseballCardDetails} activity and two {@link BaseballCard} objects
-     * with the original data when first launching the activity and the new data
-     * when editing.
-     *
-     * @throws Exception
-     *             If an error occurs while chaining to the super class or while
-     *             reading data from the baseball card data asset file.
-     */
     @Override
     public void setUp() throws Exception {
         Log.d(TAG, "setUp()");
@@ -140,12 +113,6 @@ public class BaseballCardDetailsEditCardTest extends
         activity.replaceFragment(fragment);
     }
 
-    /**
-     * Tear down the test fixture by deleting the app's database.
-     *
-     * @throws Exception
-     *             If an error occurs while chaining to the super class.
-     */
     @Override
     public void tearDown() throws Exception {
         this.dbUtil.clearDatabase();
@@ -155,14 +122,6 @@ public class BaseballCardDetailsEditCardTest extends
         Log.d(TAG, "tearDown()");
     }
 
-    /**
-     * Test that the value and count field can be edited in the
-     * {@link BaseballCardDetails} activity.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
-     */
     public void testEditCard() throws Throwable {
         Log.d(TAG, "testEditCard()");
 

@@ -28,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,8 @@ import bbct.android.common.R;
 import bbct.android.common.view.FilterOptionView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+
+import bbct.android.common.R;
 
 public class FilterCards extends Fragment {
     private static final String TAG = FilterCards.class.getName();
@@ -53,7 +56,24 @@ public class FilterCards extends Fragment {
 
     @BindViews({R.id.brand, R.id.year, R.id.number, R.id.player_name, R.id.team})
     List<FilterOptionView> filterOptions;
+
     private ArrayList<Integer> enabledFields = new ArrayList<>();
+
+    private View.OnClickListener onCheckBoxClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            EditText input = null;
+
+            for (int i = 0; i < CHECKBOXES.length; i++) {
+                if (v.getId() == CHECKBOXES[i]) {
+                    input = (EditText) FilterCards.this.getActivity().findViewById(TEXT_FIELDS[i]);
+                }
+            }
+
+            FilterCards.this.toggleTextField(input);
+            FilterCards.this.getActivity().supportInvalidateOptionsMenu();
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,11 +159,15 @@ public class FilterCards extends Fragment {
         return false;
     }
 
-    /**
-     * Counts the number of {@link CheckBox} elements that are checked.
-     *
-     * @return the number of checked elements
-     */
+    private void toggleTextField(EditText et) {
+        if (et.isEnabled()) {
+            et.setEnabled(false);
+        } else {
+            et.setEnabled(true);
+            et.requestFocus();
+        }
+    }
+
     private int numberChecked() {
         int count = 0;
         for (FilterOptionView filterOption : filterOptions) {
@@ -155,10 +179,6 @@ public class FilterCards extends Fragment {
         return count;
     }
 
-    /**
-     * Sets the combination of filter parameters as a result of
-     * {@link FilterCards} activity and exits.
-     */
     private void onConfirm() {
         Bundle filterArgs = new Bundle();
         for (int i = 0; i < filterOptions.size(); i++) {

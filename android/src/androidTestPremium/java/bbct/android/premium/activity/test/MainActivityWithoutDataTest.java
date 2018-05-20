@@ -19,16 +19,15 @@
 package bbct.android.premium.activity.test;
 
 import android.support.test.runner.AndroidJUnit4;
+
+import org.junit.runner.RunWith;
+
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.activity.test.BaseballCardListWithoutDataTest;
-import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityWithoutDataTest extends BaseballCardListWithoutDataTest<MainActivity> {
 
-    /**
-     * Create instrumented test cases for {@link MainActivity}.
-     */
     public MainActivityWithoutDataTest() {
         super(MainActivity.class);
     }

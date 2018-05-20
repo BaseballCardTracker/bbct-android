@@ -25,29 +25,25 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
-import android.view.View;
-import android.widget.CheckedTextView;
-import android.widget.EditText;
-import android.widget.ListView;
+
+import junit.framework.Assert;
+
+import org.hamcrest.Matcher;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardDetails;
-import bbct.android.common.activity.BaseballCardList;
-import bbct.android.common.activity.FilterCards;
 import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.data.BaseballCard;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import junit.framework.Assert;
-import org.hamcrest.Matcher;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -67,10 +63,6 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
-/**
- * Tests for the {@link MainActivity} activity when the database contains
- * data.
- */
 abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Rule
     public DataTestRule dataTestRule = new DataTestRule();
@@ -87,20 +79,10 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil;
 
-    /**
-     * Create instrumented test cases for {@link MainActivity}.
-     */
     public BaseballCardListWithDataTest(Class<T> activityClass) {
         activityTestRule = new ActivityTestRule<>(activityClass);
     }
 
-    /**
-     * Set up test fixture. This consists of an instance of the
-     * {@link BaseballCardList} activity, its {@link ListView}, and a populated
-     * database.
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     */
     @Before
     public void setUp() throws Exception {
         inst = InstrumentationRegistry.getInstrumentation();
@@ -118,13 +100,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         device.setOrientationNatural();
     }
 
-    /**
-     * Check preconditions which must hold to guarantee the validity of all
-     * other tests. Assert that the {@link Activity} to test and its
-     * {@link ListView} are not <code>null</code>, that the {@link ListView}
-     * contains the expected data, and that the database was created with the
-     * correct table and populated with the correct data.
-     */
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
@@ -133,27 +108,16 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         BBCTTestUtil.assertListViewContainsItems(this.allCards);
     }
 
-    /**
-     * Test that the "Add Cards" menu item launches a
-     * {@link BaseballCardDetails} activity.
-     */
     @Test
     public void testAddCardsMenuItem() {
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
     }
 
-    /**
-     * Test that the "Filter Cards" menu item launches a {@link FilterCards}
-     * activity.
-     */
     @Test
     public void testFilterCardsMenuItem() {
         BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
     }
 
-    /**
-     * Test the header view of the {@link ListView}.
-     */
     @Test
     public void testHeader() {
         onView(withText(R.string.brand)).check(matches(isDisplayed()));
@@ -162,20 +126,12 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         onView(withText(R.string.player_name)).check(matches(isDisplayed()));
     }
 
-    /**
-     * Test that a {@link BaseballCardList} activity without an active filter
-     * will be correctly restored after it is destroyed.
-     */
     @Test
     public void testStateDestroyWithoutFilter() throws RemoteException {
         device.setOrientationLeft();
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
-    /**
-     * Test that a {@link BaseballCardList} activity with an active filter will
-     * be correctly restored after it is destroyed.
-     */
     @Test
     public void testStateDestroyWithFilter() throws RemoteException {
         this.testYearFilter();
@@ -183,12 +139,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
-    /**
-     * Test that a {@link BaseballCardList} activity without an active filter
-     * will be correctly restored after it is destroyed. This tests differs from
-     * {@link #testStateDestroyWithoutFilter()} because a filter is applied and
-     * then cleared before the activity is destroyed.
-     */
     @Test
     public void testStateDestroyClearFilter() throws RemoteException {
         this.testClearFilter();
@@ -196,12 +146,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
-    /**
-     * Test that, when the user clicks on an item in the {@link ListView} of the
-     * {@link BaseballCardList} activity, a {@link BaseballCardDetails} activity
-     * is launched with its {@link EditText} views populated with the correct
-     * data.
-     */
     @Test
     public void testOnListItemClick() throws Throwable {
         Log.d(TAG, "testOnListItemClick()");
@@ -211,15 +155,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         BBCTTestUtil.assertAllEditTextContents(expectedCard);
     }
 
-    /**
-     * Test that an error message is displayed when the user attempts to add
-     * baseball card data which duplicates data already in the database.
-     *
-     * @throws IOException If an error occurs while reading baseball card data from an
-     *                     asset file.
-     * @throws Throwable   If an error occurs while the portion of the test on the UI
-     *                     thread runs.
-     */
     @Test
     public void testAddDuplicateCard() throws Throwable {
         BaseballCard card = dataTestRule.getCard(0);
@@ -238,13 +173,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                 .check(doesNotExist());
     }
 
-    /**
-     * Test that baseball card data is correctly added to the database when it
-     * already contains data for other cards.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
-     */
     @Test
     public void testAddCardToPopulatedDatabase() throws Throwable {
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
@@ -255,13 +183,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
-    /**
-     * Test that the {@link ListView} is updated when the user adds a new card
-     * which matches the current filter.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
-     */
     @Test
     public void testAddCardMatchingCurrentFilter() throws Throwable {
         testYearFilter();
@@ -273,13 +194,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
-    /**
-     * Test that the {@link ListView} is not updated when the user adds a new
-     * card which does not match the current filter.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
-     */
     @Test
     public void testAddCardNotMatchingCurrentFilter() throws Throwable {
         testYearFilter();
@@ -292,13 +206,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
-    /**
-     * Test that the {@link ListView} is updated when the user adds a new card
-     * after an active filter was cleared.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
-     */
     @Test
     public void testAddCardAfterClearFilter() throws Throwable {
         testClearFilter();
@@ -310,10 +217,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
-    /**
-     * Test that upon clicking on header {@link View}, all items in
-     * {@link ListView} are selected.
-     */
     @Test
     public void testMarkAll() {
         this.markAll();
@@ -365,10 +268,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         }
     }
 
-    /**
-     * Test that the {@link ListView} displays updated card list, when user
-     * deletes cards with applied filter.
-     */
     @Test
     public void testDeleteCardUsingFilter() throws Throwable {
         testYearFilter();
@@ -394,10 +293,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         onView(withId(R.id.add_menu)).check(matches(isDisplayed()));
     }
 
-    /**
-     * Test that the {@link ListView} displays updated card list, when user
-     * deletes cards without any applied filter.
-     */
     @Test
     public void testDeleteCardNoFilter() throws Throwable {
         int cardIndex = 0;
@@ -415,10 +310,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
 
-    /**
-     * Test that the state of {@link CheckedTextView} is maintained when the
-     * {@link BaseballCardList} activity changes orientation.
-     */
     @Test
     public void testSelectionAfterSaveInstanceState() throws Throwable {
         Log.d(TAG, "testSelectionAfterSaveInstanceState()");
@@ -441,19 +332,12 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                 .check(matches(isChecked()));
     }
 
-    /**
-     * Test that the {@link ListView} displays the correct cards when filtered
-     * by the card year.
-     */
     @Test
     public void testYearFilter() {
         final int year = 1993;
         testSingleFilter(R.id.year, Integer.toString(year), withYear(year));
     }
 
-    /**
-     * Test that all cards are displayed after a filter is cleared.
-     */
     @Test
     public void testClearFilter() {
         this.testYearFilter();

@@ -22,12 +22,7 @@ import bbct.android.common.activity.MainActivity;
 import bbct.android.common.activity.test.BaseballCardListWithDataTest;
 
 public class MainActivityWithDataTest extends BaseballCardListWithDataTest<MainActivity> {
-
-    /**
-     * Create instrumented test cases for {@link MainActivity}.
-     */
     public MainActivityWithDataTest() {
         super(MainActivity.class);
     }
-
 }

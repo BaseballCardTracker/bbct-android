@@ -22,33 +22,22 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import bbct.data.BaseballCard;
+
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This class contains constant values which are necessary to interact correctly
- * with {@link BaseballCardProvider}.
- */
+import bbct.data.BaseballCard;
+
 public final class BaseballCardContract {
 
-    /**
-     * The table name to use in the underlying database.
-     */
     public static final String TABLE_NAME = "baseball_cards";
 
-    /**
-     * Authority used to access data with {@link BaseballCardProvider}.
-     */
     public static final String AUTHORITY = "bbct.android.common.provider";
 
     public static final String LITE_AUTHORITY = "bbct.android.lite.provider";
 
     public static final String PREMIUM_AUTHORITY = "bbct.android.premium.provider";
 
-    /**
-     * URI used to access data with {@link BaseballCardProvider}.
-     */
     public static final Uri CONTENT_URI = new Uri.Builder().scheme("content")
             .authority(AUTHORITY).path(TABLE_NAME).build();
 
@@ -58,77 +47,34 @@ public final class BaseballCardContract {
     public static final Uri PREMIUM_URI = new Uri.Builder().scheme("content")
             .authority(PREMIUM_AUTHORITY).path(TABLE_NAME).build();
 
-    /**
-     * MIME type for a list of baseball card data.
-     */
     public static final String BASEBALL_CARD_LIST_MIME_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
             + "/baseball_card";
 
-    /**
-     * MIME type for data about a single baseball card.
-     */
     public static final String BASEBALL_CARD_ITEM_MIME_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
             + "/baseball_card";
 
-    /**
-     * The column name for the primary key.
-     */
     public static final String ID_COL_NAME = "_id";
 
-    /**
-     * The column name for the autograph option.
-     */
     public static final String AUTOGRAPHED_COL_NAME = "autographed";
 
-    /**
-     * The column name for the card condition.
-     */
     public static final String CONDITION_COL_NAME = "condition";
 
-    /**
-     * The column name for the card brand.
-     */
     public static final String BRAND_COL_NAME = "brand";
 
-    /**
-     * The column name for the card year.
-     */
     public static final String YEAR_COL_NAME = "year";
 
-    /**
-     * The column name for the card number.
-     */
     public static final String NUMBER_COL_NAME = "number";
 
-    /**
-     * The column name for the card value.
-     */
     public static final String VALUE_COL_NAME = "value";
 
-    /**
-     * The column name for the card count.
-     */
     public static final String COUNT_COL_NAME = "card_count";
 
-    /**
-     * The column name for the player's name.
-     */
     public static final String PLAYER_NAME_COL_NAME = "player_name";
 
-    /**
-     * The column name for the player's team.
-     */
     public static final String TEAM_COL_NAME = "team";
 
-    /**
-     * The column name for the player's position.
-     */
     public static final String PLAYER_POSITION_COL_NAME = "player_position";
 
-    /**
-     * Convenience variable that can be used when the {@link ContentResolver}
-     * wants every column from the {@link BaseballCardProvider}.
-     */
     public static final String[] PROJECTION = { ID_COL_NAME,
             AUTOGRAPHED_COL_NAME, CONDITION_COL_NAME, BRAND_COL_NAME,
             YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME,
@@ -136,48 +82,23 @@ public final class BaseballCardContract {
 
     public static final String INT_SELECTION_FORMAT = "%s = ?";
 
-    /**
-     * Convenience variable to select cards with a given year.
-     */
     public static final String YEAR_SELECTION = String.format(
             INT_SELECTION_FORMAT, YEAR_COL_NAME);
 
-    /**
-     * Convenience variable to select cards with a given number.
-     */
     public static final String NUMBER_SELECTION = String.format(
             INT_SELECTION_FORMAT, NUMBER_COL_NAME);
 
     public static final String STRING_SELECTION_FORMAT = "%s LIKE ?";
 
-    /**
-     * Convenience variable to select cards with a given brand.
-     */
     public static final Object BRAND_SELECTION = String.format(
             STRING_SELECTION_FORMAT, BRAND_COL_NAME);
 
-    /**
-     * Convenience variable to select cards for a given player.
-     */
     public static final String PLAYER_NAME_SELECTION = String.format(
             STRING_SELECTION_FORMAT, PLAYER_NAME_COL_NAME);
 
-    /**
-     * Convenience variable to select cards with a given team.
-     */
     public static final String TEAM_SELECTION = String.format(
             STRING_SELECTION_FORMAT, TEAM_COL_NAME);
 
-    /**
-     * Convenience method to create a {@link ContentValues} map for the data
-     * from the given {@link BaseballCard} object. The returned
-     * {@link ContentValues} can be used with the appropriate methods of a
-     * {@link ContentResolver} to access data from {@link BaseballCardProvider}.
-     *
-     * @param card
-     *            The baseball card data.
-     * @return The mapping of data.
-     */
     public static ContentValues getContentValues(BaseballCard card) {
         ContentValues cv = new ContentValues(7);
         cv.put(BaseballCardContract.AUTOGRAPHED_COL_NAME, card.isAutographed());
@@ -204,15 +125,6 @@ public final class BaseballCardContract {
         return CONTENT_URI;
     }
 
-    /**
-     * Populate a {@link BaseballCard} from the data in the current row of the
-     * given {@link Cursor}.
-     *
-     * @param cursor
-     *            The {@link Cursor} to obtain data from.
-     * @return A {@link BaseballCard} from the data in the current row of the
-     *         given {@link Cursor}.
-     */
     public static BaseballCard getBaseballCardFromCursor(Cursor cursor) {
         boolean autographed = cursor.getInt(cursor
                 .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
@@ -239,15 +151,6 @@ public final class BaseballCardContract {
                 value, count, name, team, position);
     }
 
-    /**
-     * Populate a {@link List} of {@link BaseballCard}s from the data in the
-     * given {@link Cursor}.
-     *
-     * @param cursor
-     *            The {@link Cursor} to obtain data from.
-     * @return A {@link List} of {@link BaseballCard}s from the data in the
-     *         given {@link Cursor}.
-     */
     public static List<BaseballCard> getAllBaseballCardsFromCursor(Cursor cursor) {
         List<BaseballCard> cards = new ArrayList<>();
 

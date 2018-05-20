@@ -18,7 +18,6 @@
  */
 package bbct.android.common.provider.test;
 
-import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -26,18 +25,18 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.test.ProviderTestCase2;
+
+import junit.framework.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardProvider;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.data.BaseballCard;
-import java.util.ArrayList;
-import java.util.List;
-import junit.framework.Assert;
 
-/**
- * Tests for {@link BaseballCardProvider}.
- */
 public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> extends ProviderTestCase2<T> {
     private static final String CREATE_TABLE = "CREATE TABLE baseball_cards"
             + "  (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -98,21 +97,12 @@ public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> e
         super.tearDown();
     }
 
-    /**
-     * Assert that the database contains the expected initial baseball card
-     * data.
-     */
     public void testPreConditions() {
         DatabaseUtil dbUtil = new DatabaseUtil(this.getMockContext());
         Assert.assertTrue(dbUtil
                 .containsAllBaseballCards(BaseballCardProviderTest.CARDS));
     }
 
-    /**
-     * Test for
-     * {@link BaseballCardProvider#query(android.net.Uri, String[], String, String[], String)}
-     * . Query the {@link ContentProvider} without any selection arguments.
-     */
     public void testQueryAll() {
         Cursor cursor = this.resolver.query(BaseballCardContract.CONTENT_URI,
                 BaseballCardContract.PROJECTION, null, null, null);
@@ -124,11 +114,6 @@ public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> e
         Assert.assertTrue(actual.containsAll(BaseballCardProviderTest.CARDS));
     }
 
-    /**
-     * Test for
-     * {@link BaseballCardProvider#query(android.net.Uri, String[], String, String[], String)}
-     * . Query the {@link ContentProvider} without any selection arguments.
-     */
     public void testQueryId() {
         Uri uri = ContentUris.withAppendedId(BaseballCardContract.CONTENT_URI,
                 1);
@@ -138,10 +123,6 @@ public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> e
         Assert.assertEquals(1, cursor.getCount());
     }
 
-    /**
-     * Test for
-     * {@link BaseballCardProvider#insert(Uri, android.content.ContentValues)}.
-     */
     public void testInsert() {
         BaseballCard newCard = new BaseballCard(true, "Mint", "Code Guru Apps",
                 2013, 1, 25, 1, "Code Guru", "Code Guru Devs", "Pitcher");

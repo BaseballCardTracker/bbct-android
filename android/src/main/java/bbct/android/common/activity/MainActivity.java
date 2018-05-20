@@ -28,19 +28,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import bbct.android.common.BuildConfig;
-import bbct.android.common.R;
-import bbct.android.common.SharedPreferenceKeys;
-import bbct.android.common.activity.util.DialogUtil;
-import bbct.android.common.provider.BaseballCardContract;
+
 import com.crashlytics.android.Crashlytics;
 import com.google.analytics.tracking.android.EasyTracker;
-import io.fabric.sdk.android.Fabric;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+
+import bbct.android.common.BuildConfig;
+import bbct.android.common.R;
+import bbct.android.common.SharedPreferenceKeys;
+import bbct.android.common.activity.util.DialogUtil;
+import bbct.android.common.provider.BaseballCardContract;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
     public static final int SURVEY_DELAY = 7;
@@ -156,12 +158,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Create the options menu. This is simply inflated from the
-     * {@code main.xml} resource file.
-     *
-     * @param menu The options menu in which new menu items are placed.
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getMenuInflater().inflate(R.menu.main, menu);
@@ -169,11 +165,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    /**
-     * Respond to the user selecting a menu item.
-     *
-     * @param item The menu item selected.
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();

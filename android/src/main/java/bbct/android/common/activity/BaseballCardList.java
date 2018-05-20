@@ -48,11 +48,7 @@ import bbct.data.BaseballCard;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Displays a list of all baseball cards stored in the database.
- *
- * TODO: Make list fancier
- */
+//TODO: Make list fancier
 public class BaseballCardList extends ListFragment {
 
     private static final String[] ROW_PROJECTION = {
@@ -83,9 +79,6 @@ public class BaseballCardList extends ListFragment {
         return cardList;
     }
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
@@ -147,24 +140,11 @@ public class BaseballCardList extends ListFragment {
         return view;
     }
 
-    /**
-     * Create the options menu. This is simply inflated from the
-     * {@code list.xml} resource file.
-     *
-     * @param menu The options menu in which new menu items are placed.
-     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.list, menu);
     }
 
-    /**
-     * Prepare the options menu to be displayed. If a filter is active and
-     * displays the "Clear Filter" menu item, otherwise displays the
-     * "Filter Cards" menu item.
-     *
-     * @param menu The options menu which will be displayed.
-     */
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         Log.d(TAG, "onPrepareOptionsMenu()");
@@ -186,11 +166,6 @@ public class BaseballCardList extends ListFragment {
         }
     }
 
-    /**
-     * Respond to the user selecting a menu item.
-     *
-     * @param item The menu item selected.
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
@@ -226,12 +201,6 @@ public class BaseballCardList extends ListFragment {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Save the currently active filter when the system asks for it. Also save
-     * the current state of marked list items.
-     *
-     * @param outState The saved state.
-     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -239,17 +208,6 @@ public class BaseballCardList extends ListFragment {
         outState.putBundle(FILTER_PARAMS, this.filterParams);
     }
 
-    /**
-     * Respond to the user clicking on an item in the list. If the user clicks
-     * on a checkbox, then the corresponding row will be marked for the next
-     * delete operation. Otherwise, the app will display the card data for
-     * editing in a {@link BaseballCardDetails}.
-     *
-     * @param l        The ListView where the click happened.
-     * @param v        The view that was clicked within the ListView.
-     * @param position The position of the view in the list.
-     * @param id       The row id of the item that was clicked.
-     */
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         if (position == 0) {

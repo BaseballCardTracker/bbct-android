@@ -32,11 +32,7 @@ import org.junit.runner.RunWith;
 import bbct.android.common.activity.About;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 
-/**
- * Tests for {@link About} activity class.
- *
- * TODO: Add tests for the layout of {@link About}
- */
+// TODO: Add tests for the layout of {@link About}
 @RunWith(AndroidJUnit4.class)
 public class AboutTest {
     @Rule
@@ -45,23 +41,12 @@ public class AboutTest {
     private Activity activity;
     private Fragment aboutFragment;
 
-    /**
-     * Set up test fixture. This consists of an instance of the {@link About}
-     * activity.
-     *
-     * @throws Exception If an error occurs while chaining to the super class.
-     */
     @Before
     public void setUp() throws Exception {
         this.activity = fragmentTestRule.getActivity();
         this.aboutFragment = fragmentTestRule.getFragment();
     }
 
-    /**
-     * Check preconditions which must hold to guarantee the validity of all
-     * other tests. Assert that the {@link Activity} to test is not
-     * <code>null</code>
-     */
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);

@@ -23,19 +23,18 @@ import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import bbct.android.common.R;
-import bbct.android.common.activity.FilterCards;
-import bbct.android.common.test.rule.SupportFragmentTestRule;
 
 import junit.framework.Assert;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import bbct.android.common.R;
+import bbct.android.common.activity.FilterCards;
+import bbct.android.common.test.rule.SupportFragmentTestRule;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -53,9 +52,6 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 
-/**
- * Tests for {@link FilterCards} activity class.
- */
 @RunWith(AndroidJUnit4.class)
 public class FilterCardsTest {
     @Rule
@@ -79,20 +75,12 @@ public class FilterCardsTest {
         device.setOrientationNatural();
     }
 
-    /**
-     * Check preconditions which must hold to guarantee the validity of all
-     * other tests. Assert that the Activity to test is not <code>null</code>
-     * and its {@link EditText}s and "Ok" {@link Button} are disabled.
-     */
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
         onView(withId(R.id.save_menu)).check(doesNotExist());
     }
 
-    /**
-     * Test that the title of the {@link Activity} is correct.
-     */
     @Test
     public void testTitle() {
         String filterCardsTitle = this.activity.getString(R.string.filter_cards_title);
@@ -107,46 +95,26 @@ public class FilterCardsTest {
         onView(withId(R.id.save_menu)).check(matches(isDisplayed()));
     }
 
-    /**
-     * Test that "Brand" {@link EditText} is enabled and
-     * has focus upon clicking on the corresponding {@link CheckBox}.
-     */
     @Test
     public void testBrandCheckBox() {
         this.testCheckBox(R.id.brand);
     }
 
-    /**
-     * Test that "Year" {@link EditText} is enabled and
-     * has focus upon clicking on the corresponding {@link CheckBox}.
-     */
     @Test
     public void testYearCheckBox() {
         this.testCheckBox(R.id.year);
     }
 
-    /**
-     * Test that "Number" {@link EditText} is enabled and
-     * has focus upon clicking on the corresponding {@link CheckBox}.
-     */
     @Test
     public void testNumberCheckBox() {
         this.testCheckBox(R.id.number);
     }
 
-    /**
-     * Test that "Player Name" {@link EditText} is enabled and
-     * has focus upon clicking on the corresponding {@link CheckBox}.
-     */
     @Test
     public void testPlayerNameCheckBox() {
         this.testCheckBox(R.id.player_name);
     }
 
-    /**
-     * Test that "Team" {@link EditText} is enabled and
-     * has focus upon clicking on the corresponding {@link CheckBox}.
-     */
     @Test
     public void testTeamCheckBox() {
         this.testCheckBox(R.id.team);

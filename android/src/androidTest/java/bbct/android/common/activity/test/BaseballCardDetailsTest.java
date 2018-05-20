@@ -29,8 +29,17 @@ import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+
+import junit.framework.Assert;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import java.io.InputStream;
+
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.test.BBCTTestUtil;
@@ -38,13 +47,6 @@ import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 import bbct.data.BaseballCard;
 import butterknife.ButterKnife;
-import java.io.InputStream;
-import junit.framework.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -54,9 +56,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-/**
- * Tests for {@link BaseballCardDetails}.
- */
 @RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsTest {
 
@@ -73,14 +72,6 @@ public class BaseballCardDetailsTest {
     private Activity activity;
     private BaseballCard card;
 
-    /**
-     * Set up test fixture. This consists of an instance of the
-     * {@link BaseballCardDetails} activity and all of its {@link EditText} and
-     * {@link Button} views and a list of {@link BaseballCard} data.
-     *
-     * @throws Exception
-     *             If an error occurs while chaining to the super class.
-     */
     @Before
     public void setUp() throws Exception {
         Instrumentation inst = InstrumentationRegistry.getInstrumentation();
@@ -100,12 +91,6 @@ public class BaseballCardDetailsTest {
         device.setOrientationNatural();
     }
 
-    /**
-     * Check preconditions which must hold to guarantee the validity of all
-     * other tests. Assert that the Activity to test is not <code>null</code>,
-     * that none of its {@link EditText} views or {@link Button}s are
-     * <code>null</code>.
-     */
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
@@ -120,11 +105,6 @@ public class BaseballCardDetailsTest {
         onView(withId(R.id.scroll_card_details)).check(matches(isDisplayed()));
     }
 
-    /**
-     * Test that all text in the {@link EditText} views of a
-     * {@link BaseballCardDetails} activity is preserved when the activity is
-     * destroyed and the text is restored when the activity is restarted.
-     */
     @Test
     public void testStateDestroy() throws RemoteException {
         BBCTTestUtil.sendKeysToCardDetails(this.card);
@@ -132,12 +112,6 @@ public class BaseballCardDetailsTest {
         BBCTTestUtil.assertAllEditTextContents(this.card);
     }
 
-    /**
-     * Test that 1)the focus moves to the next control {@link EditText} in the
-     * {@link BaseballCardDetails} activity when the next button is clicked in
-     * the soft keyboard. 2)keyboard is removed when the done button is clicked
-     * in the soft keyboard
-     */
     @Test
     public void testNextButtonOnClick() {
         onView(withId(R.id.brand)).check(matches(hasFocus()));
@@ -185,10 +159,6 @@ public class BaseballCardDetailsTest {
         Assert.assertTrue(condnBefore && condnAfter);
     }
 
-    /**
-     * Test that view of {@link BaseballCardDetails} activity can be scrolled
-     * when the save button is not visible on screen.
-     */
     @Test
     public void testCardDetailsScroll() {
         Espresso.closeSoftKeyboard();

@@ -47,27 +47,16 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
         ButterKnife.bind(this, root);
     }
 
-    /**
-     * Change the checked state of the view
-     *
-     * @param checked The new checked state
-     */
     @Override
     public void setChecked(boolean checked) {
         mCheckBox.setChecked(checked);
     }
 
-    /**
-     * @return The current checked state of the view
-     */
     @Override
     public boolean isChecked() {
         return mCheckBox.isChecked();
     }
 
-    /**
-     * Change the checked state of the view to the inverse of its current state
-     */
     @Override
     public void toggle() {
         mCheckBox.toggle();
