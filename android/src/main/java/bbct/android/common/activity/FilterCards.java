@@ -20,6 +20,7 @@ package bbct.android.common.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,11 +31,17 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import bbct.android.common.R;
+import bbct.android.common.view.FilterOptionView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
 
 import bbct.android.common.R;
 
 public class FilterCards extends Fragment {
-
+    private static final String TAG = FilterCards.class.getName();
     private static final String FILTERED_LIST = "Filtered List";
     private static final String INPUT_EXTRA = "input";
 
@@ -44,33 +51,13 @@ public class FilterCards extends Fragment {
     public static final String PLAYER_NAME_EXTRA = "playerName";
     public static final String TEAM_EXTRA = "team";
 
-    private static final int[] CHECKBOXES = { R.id.brand_check,
-            R.id.year_check, R.id.number_check, R.id.player_name_check,
-            R.id.team_check };
+    private static final String[] EXTRAS = {BRAND_EXTRA, YEAR_EXTRA, NUMBER_EXTRA,
+            PLAYER_NAME_EXTRA, TEAM_EXTRA};
 
-    private static final int[] TEXT_FIELDS = { R.id.brand_input,
-            R.id.year_input, R.id.number_input, R.id.player_name_input,
-            R.id.team_input };
+    @BindViews({R.id.brand, R.id.year, R.id.number, R.id.player_name, R.id.team})
+    List<FilterOptionView> filterOptions;
 
-    private static final String[] EXTRAS = { BRAND_EXTRA, YEAR_EXTRA, NUMBER_EXTRA,
-            PLAYER_NAME_EXTRA, TEAM_EXTRA };
-
-    private View.OnClickListener onCheckBoxClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            EditText input = null;
-
-            for (int i = 0; i < CHECKBOXES.length; i++) {
-                if (v.getId() == CHECKBOXES[i]) {
-                    input = (EditText) FilterCards.this.getActivity().findViewById(TEXT_FIELDS[i]);
-                }
-            }
-
-            FilterCards.this.toggleTextField(input);
-            FilterCards.this.getActivity().supportInvalidateOptionsMenu();
-        }
-    };
-    private final ArrayList<Integer> enabledFields = new ArrayList<>();
+    private ArrayList<Integer> enabledFields = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +69,7 @@ public class FilterCards extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.filter_cards, container, false);
+        ButterKnife.bind(this, view);
 
         // set title
         String format = this.getString(R.string.bbct_title);
@@ -89,21 +77,16 @@ public class FilterCards extends Fragment {
         String title = String.format(format, filterCardsTitle);
         this.getActivity().setTitle(title);
 
-        for (int id : CHECKBOXES) {
-            View checkBox = view.findViewById(id);
-            checkBox.setOnClickListener(this.onCheckBoxClick);
-        }
-
         // restore input fields state
         if (savedInstanceState != null) {
             ArrayList<Integer> enabledFields = savedInstanceState
                     .getIntegerArrayList(INPUT_EXTRA);
+
+            Log.d(TAG, "enabledField=" + enabledFields);
+
             if (enabledFields != null) {
                 for (int i : enabledFields) {
-                    CheckBox cb = (CheckBox) view.findViewById(CHECKBOXES[i]);
-                    cb.setChecked(true);
-                    EditText et = (EditText) view.findViewById(TEXT_FIELDS[i]);
-                    et.setEnabled(true);
+                    filterOptions.get(i).setChecked(true);
                 }
             }
         }
@@ -116,9 +99,8 @@ public class FilterCards extends Fragment {
         super.onPause();
 
         enabledFields.clear();
-        for (int i = 0; i < TEXT_FIELDS.length; i++) {
-            EditText et = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
-            if (et.isEnabled()) {
+        for (int i = 0; i < filterOptions.size(); i++) {
+            if (filterOptions.get(i).isChecked()) {
                 enabledFields.add(i);
             }
         }
@@ -172,9 +154,8 @@ public class FilterCards extends Fragment {
 
     private int numberChecked() {
         int count = 0;
-        for (int id : CHECKBOXES) {
-            CheckBox cb = (CheckBox) this.getActivity().findViewById(id);
-            if (cb != null && cb.isChecked()) {
+        for (FilterOptionView filterOption : filterOptions) {
+            if (filterOption.isChecked()) {
                 count++;
             }
         }
@@ -184,11 +165,11 @@ public class FilterCards extends Fragment {
 
     private void onConfirm() {
         Bundle filterArgs = new Bundle();
-        for (int i = 0; i < TEXT_FIELDS.length; i++) {
-            EditText input = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
-            if (input.isEnabled() && input.getText().toString().length() > 0) {
-                String key = EXTRAS[i];
-                filterArgs.putString(key, input.getText().toString());
+        for (int i = 0; i < filterOptions.size(); i++) {
+            FilterOptionView view = filterOptions.get(i);
+            String filterOption = view.getText().toString();
+            if (view.isEnabled() && filterOption.length() > 0) {
+                filterArgs.putString(EXTRAS[i], filterOption);
             }
         }
 
@@ -199,5 +180,4 @@ public class FilterCards extends Fragment {
                 .addToBackStack(FILTERED_LIST)
                 .commit();
     }
-
 }

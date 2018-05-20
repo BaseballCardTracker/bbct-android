@@ -20,30 +20,45 @@ package bbct.android.common.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
 
-public class CheckableLinearLayout extends LinearLayout implements Checkable {
+import bbct.android.common.R;
+import butterknife.ButterKnife;
+import butterknife.BindView;
 
-    Checkable mCheckable;
+public class CheckableLinearLayout extends LinearLayout implements Checkable {
+    @BindView(R.id.checkmark) CheckBox mCheckBox;
+
+    public CheckableLinearLayout(Context context) {
+        this(context, null);
+    }
+
+    public CheckableLinearLayout(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
     public CheckableLinearLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
+        View root = View.inflate(context, R.layout.checkable_linear_layout, this);
+        ButterKnife.bind(this, root);
     }
 
     @Override
     public void setChecked(boolean checked) {
-        mCheckable.setChecked(checked);
+        mCheckBox.setChecked(checked);
     }
 
     @Override
     public boolean isChecked() {
-        return mCheckable.isChecked();
+        return mCheckBox.isChecked();
     }
 
     @Override
     public void toggle() {
-        mCheckable.toggle();
+        mCheckBox.toggle();
     }
-
 }

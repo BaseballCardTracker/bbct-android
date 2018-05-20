@@ -18,18 +18,14 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <declare-styleable name="FilterOptionView">
+        <attr name="label" format="string"/>
+        <attr name="hint" format="string"/>
+        <attr name="labelTextSize" format="dimension"/>
+        <attr name="labelWeight" format="integer"/>
+        <attr name="editWeight" format="integer"/>
+    </declare-styleable>
 
-    <!-- IDs for views -->
-    <item name="autograph" type="id"/>
-    <item name="condition" type="id"/>
-    <item name="brand" type="id"/>
-    <item name="year" type="id"/>
-    <item name="number" type="id"/>
-    <item name="value" type="id"/>
-    <item name="quantity" type="id"/>
-    <item name="player_name" type="id"/>
-    <item name="team" type="id"/>
-    <item name="player_position" type="id"/>
-    <item name="scroll_card_details" type="id"/>
-
+    <integer name="filterLabelWeight">5</integer>
+    <integer name="filterEditWeight">8</integer>
 </resources>

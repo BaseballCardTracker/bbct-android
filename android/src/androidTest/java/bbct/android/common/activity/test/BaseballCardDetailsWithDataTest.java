@@ -75,17 +75,17 @@ public class BaseballCardDetailsWithDataTest {
 
     @Test
     public void testBrandAutoCompletePopup() throws Throwable {
-        this.testAutoCompletePopup(R.id.brand_text, mCard.getBrand());
+        this.testAutoCompletePopup(R.id.brand, mCard.getBrand());
     }
 
     @Test
     public void testPlayerNameAutoCompletePopup() throws Throwable {
-        this.testAutoCompletePopup(R.id.player_name_text, mCard.getPlayerName());
+        this.testAutoCompletePopup(R.id.player_name, mCard.getPlayerName());
     }
 
     @Test
     public void testTeamAutoCompletePopup() throws Throwable {
-        this.testAutoCompletePopup(R.id.team_text, mCard.getTeam());
+        this.testAutoCompletePopup(R.id.team, mCard.getTeam());
     }
 
     private void testAutoCompletePopup(int textViewId, String text)
@@ -99,17 +99,17 @@ public class BaseballCardDetailsWithDataTest {
 
     @Test
     public void testBrandAutoCompleteDestroy() throws RemoteException {
-        testAutoCompleteDestroy(R.id.brand_text, mCard.getBrand());
+        testAutoCompleteDestroy(R.id.brand, mCard.getBrand());
     }
 
     @Test
     public void testPlayerNameAutoCompleteDestroy() throws RemoteException {
-        testAutoCompleteDestroy(R.id.player_name_text, mCard.getPlayerName());
+        testAutoCompleteDestroy(R.id.player_name, mCard.getPlayerName());
     }
 
     @Test
     public void testTeamAutoCompleteDestroy() throws RemoteException {
-        testAutoCompleteDestroy(R.id.team_text, mCard.getTeam());
+        testAutoCompleteDestroy(R.id.team, mCard.getTeam());
     }
 
     private void testAutoCompleteDestroy(int id, String text) throws RemoteException {
@@ -120,17 +120,17 @@ public class BaseballCardDetailsWithDataTest {
 
     @Test
     public void testBrandAutoCompleteSelect() throws RemoteException {
-        testAutoCompleteSelect(R.id.brand_text, mCard.getBrand());
+        testAutoCompleteSelect(R.id.brand, mCard.getBrand());
     }
 
     @Test
     public void testPlayerNameAutoCompleteSelect() throws RemoteException {
-        testAutoCompleteSelect(R.id.player_name_text, mCard.getPlayerName());
+        testAutoCompleteSelect(R.id.player_name, mCard.getPlayerName());
     }
 
     @Test
     public void testTeamAutoCompleteSelect() throws RemoteException {
-        testAutoCompleteSelect(R.id.team_text, mCard.getTeam());
+        testAutoCompleteSelect(R.id.team, mCard.getTeam());
     }
 
     private void testAutoCompleteSelect(int textViewId, String text) throws RemoteException {

@@ -56,9 +56,8 @@ public class BaseballCardList extends ListFragment {
             BaseballCardContract.YEAR_COL_NAME,
             BaseballCardContract.NUMBER_COL_NAME,
             BaseballCardContract.PLAYER_NAME_COL_NAME};
-    private static final int[] ROW_TEXT_VIEWS = {R.id.brand_text_view,
-            R.id.year_text_view, R.id.number_text_view,
-            R.id.player_name_text_view};
+    private static final int[] ROW_TEXT_VIEWS = {R.id.brand, R.id.year, R.id.number,
+            R.id.player_name};
     private static final String FILTER_PARAMS = "filterParams";
     private static final String TAG = BaseballCardList.class.getName();
 
@@ -115,7 +114,7 @@ public class BaseballCardList extends ListFragment {
         ButterKnife.bind(this, view);
 
         View headerView = new HeaderView(this.getActivity());
-        CheckBox selectAll = ButterKnife.findById(headerView, R.id.select_all);
+        CheckBox selectAll = ButterKnife.findById(headerView, R.id.checkmark);
         selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

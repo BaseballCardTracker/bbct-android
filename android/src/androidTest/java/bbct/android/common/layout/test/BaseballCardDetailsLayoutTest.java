@@ -49,7 +49,6 @@ public class BaseballCardDetailsLayoutTest {
 
     @Test
     public void testBrandEditText() {
-        onView(withId(R.id.brand_text)).check(matches(allOf(isDisplayed(), hasFocus())));
+        onView(withId(R.id.brand)).check(matches(allOf(isDisplayed(), hasFocus())));
     }
-
 }

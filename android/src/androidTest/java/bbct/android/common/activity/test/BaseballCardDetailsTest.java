@@ -94,14 +94,14 @@ public class BaseballCardDetailsTest {
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        onView(withId(R.id.brand_text)).check(matches(isDisplayed()));
-        onView(withId(R.id.year_text)).check(matches(isDisplayed()));
-        onView(withId(R.id.number_text)).check(matches(isDisplayed()));
-        onView(withId(R.id.value_text)).check(matches(isDisplayed()));
-        onView(withId(R.id.count_text)).check(matches(isDisplayed()));
-        onView(withId(R.id.player_name_text)).check(matches(isDisplayed()));
-        onView(withId(R.id.team_text)).check(matches(isDisplayed()));
-        onView(withId(R.id.player_position_text)).check(matches(isDisplayed()));
+        onView(withId(R.id.brand)).check(matches(isDisplayed()));
+        onView(withId(R.id.year)).check(matches(isDisplayed()));
+        onView(withId(R.id.number)).check(matches(isDisplayed()));
+        onView(withId(R.id.value)).check(matches(isDisplayed()));
+        onView(withId(R.id.quantity)).check(matches(isDisplayed()));
+        onView(withId(R.id.player_name)).check(matches(isDisplayed()));
+        onView(withId(R.id.team)).check(matches(isDisplayed()));
+        onView(withId(R.id.player_position)).check(matches(isDisplayed()));
         onView(withId(R.id.scroll_card_details)).check(matches(isDisplayed()));
     }
 
@@ -114,19 +114,19 @@ public class BaseballCardDetailsTest {
 
     @Test
     public void testNextButtonOnClick() {
-        onView(withId(R.id.brand_text)).check(matches(hasFocus()));
+        onView(withId(R.id.brand)).check(matches(hasFocus()));
         device.pressEnter();
-        onView(withId(R.id.year_text)).perform(click()).check(matches(hasFocus()));
+        onView(withId(R.id.year)).perform(click()).check(matches(hasFocus()));
         device.pressEnter();
-        onView(withId(R.id.number_text)).check(matches(hasFocus()));
+        onView(withId(R.id.number)).check(matches(hasFocus()));
         device.pressEnter();
-        onView(withId(R.id.value_text)).check(matches(hasFocus()));
+        onView(withId(R.id.value)).check(matches(hasFocus()));
         device.pressEnter();
-        onView(withId(R.id.count_text)).check(matches(hasFocus()));
+        onView(withId(R.id.quantity)).check(matches(hasFocus()));
         device.pressEnter();
-        onView(withId(R.id.player_name_text)).check(matches(hasFocus()));
+        onView(withId(R.id.player_name)).check(matches(hasFocus()));
         device.pressEnter();
-        onView(withId(R.id.team_text)).check(matches(hasFocus()));
+        onView(withId(R.id.team)).check(matches(hasFocus()));
 
         ViewGroup content = ButterKnife.findById(this.activity, android.R.id.content);
         View rootView = content.getChildAt(0);
@@ -162,7 +162,7 @@ public class BaseballCardDetailsTest {
     @Test
     public void testCardDetailsScroll() {
         Espresso.closeSoftKeyboard();
-        onView(withId(R.id.player_position_text))
+        onView(withId(R.id.player_position))
                 .perform(scrollTo())
                 .check(matches(isDisplayed()));
     }

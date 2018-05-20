@@ -23,6 +23,8 @@ import android.os.RemoteException;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import junit.framework.Assert;
 
@@ -41,18 +43,25 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
+import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.instanceOf;
 
 @RunWith(AndroidJUnit4.class)
 public class FilterCardsTest {
     @Rule
     public SupportFragmentTestRule fragmentTestRule
             = new SupportFragmentTestRule(new FilterCards());
+
+    private static final int[] IDS =
+            {R.id.brand, R.id.year, R.id.number, R.id.player_name, R.id.team};
 
     private Activity activity = null;
     private UiDevice device;
@@ -80,41 +89,71 @@ public class FilterCardsTest {
         onView(withText(containsString(filterCardsTitle))).check(matches(isDisplayed()));
     }
 
-    private void testCheckBox(int checkId, int inputId) {
-        onView(withId(checkId)).perform(click());
-        onView(withId(inputId)).check(matches(allOf(isEnabled(), hasFocus())));
+    private void testCheckBox(int filterId) {
+        onView(allOf(withParent(withId(filterId)), instanceOf(CheckBox.class)))
+                .perform(click());
+        onView(withId(filterId))
+                .check(matches(allOf(isEnabled(), hasFocus())));
         onView(withId(R.id.save_menu)).check(matches(isDisplayed()));
     }
 
     @Test
     public void testBrandCheckBox() {
-        this.testCheckBox(R.id.brand_check, R.id.brand_input);
+        this.testCheckBox(R.id.brand);
     }
 
     @Test
     public void testYearCheckBox() {
-        this.testCheckBox(R.id.year_check, R.id.year_input);
+        this.testCheckBox(R.id.year);
     }
 
     @Test
     public void testNumberCheckBox() {
-        this.testCheckBox(R.id.number_check, R.id.number_input);
+        this.testCheckBox(R.id.number);
     }
 
     @Test
     public void testPlayerNameCheckBox() {
-        this.testCheckBox(R.id.player_name_check, R.id.player_name_input);
+        this.testCheckBox(R.id.player_name);
     }
 
     @Test
     public void testTeamCheckBox() {
-        this.testCheckBox(R.id.team_check, R.id.team_input);
+        this.testCheckBox(R.id.team);
     }
 
     @Test
-    public void testSaveInstanceState() throws RemoteException {
-        this.testNumberCheckBox();
+    public void testSaveInstanceStateBrand() throws RemoteException {
+        this.testSaveInstanceState(R.id.brand);
+    }
+
+    @Test
+    public void testSaveInstanceStateYear() throws RemoteException {
+        this.testSaveInstanceState(R.id.year);
+    }
+
+    @Test
+    public void testSaveInstanceStateNumber() throws RemoteException {
+        this.testSaveInstanceState(R.id.number);
+    }
+
+    @Test
+    public void testSaveInstanceStateTeam() throws RemoteException {
+        this.testSaveInstanceState(R.id.team);
+    }
+
+    private void testSaveInstanceState(int filterId) throws RemoteException {
+        this.testCheckBox(filterId);
         device.setOrientationLeft();
-        onView(withId(R.id.number_input)).check(matches(isEnabled()));
+        onView(withId(filterId))
+                .check(matches(isChecked()));
+        onView(allOf(withParent(withId(filterId)), instanceOf(EditText.class)))
+                .check(matches(isEnabled()));
+
+        for (int id : IDS) {
+            if (id != filterId) {
+                onView(withId(id)).check(matches(isNotChecked()));
+            }
+        }
     }
 }

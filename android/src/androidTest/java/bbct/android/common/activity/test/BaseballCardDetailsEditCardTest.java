@@ -155,7 +155,7 @@ public class BaseballCardDetailsEditCardTest extends
                 .getNumber() : this.oldCard.getNumber();
         int value = this.inputMask.contains(BBCTTestUtil.EditTexts.VALUE) ? this.newCard
                 .getValue() : this.oldCard.getValue();
-        int count = this.inputMask.contains(BBCTTestUtil.EditTexts.COUNT) ? this.newCard
+        int count = this.inputMask.contains(BBCTTestUtil.EditTexts.QUANTITY) ? this.newCard
                 .getCount() : this.oldCard.getCount();
         String name = this.inputMask
                 .contains(BBCTTestUtil.EditTexts.PLAYER_NAME) ? this.newCard

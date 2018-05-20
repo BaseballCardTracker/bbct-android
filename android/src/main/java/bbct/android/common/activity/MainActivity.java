@@ -76,11 +76,11 @@ public class MainActivity extends AppCompatActivity {
                 cursor.close();
             }
             ft.commit();
+        }
 
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);

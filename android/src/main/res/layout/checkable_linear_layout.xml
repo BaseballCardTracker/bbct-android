@@ -17,19 +17,21 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<resources>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:padding="3dp">
 
-    <!-- IDs for views -->
-    <item name="autograph" type="id"/>
-    <item name="condition" type="id"/>
-    <item name="brand" type="id"/>
-    <item name="year" type="id"/>
-    <item name="number" type="id"/>
-    <item name="value" type="id"/>
-    <item name="quantity" type="id"/>
-    <item name="player_name" type="id"/>
-    <item name="team" type="id"/>
-    <item name="player_position" type="id"/>
-    <item name="scroll_card_details" type="id"/>
+    <CheckBox
+        android:id="@+id/checkmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkMark="@drawable/checkmark"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
+        android:paddingRight="12dp"
+        android:paddingEnd="12dp"/>
 
-</resources>
+</merge>

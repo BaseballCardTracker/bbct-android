@@ -62,14 +62,14 @@ public class BaseballCardDetails extends Fragment {
 
     @BindView(R.id.autograph) CheckBox autographCheckBox = null;
     @BindView(R.id.condition) Spinner conditionSpinner = null;
-    @BindView(R.id.brand_text) AutoCompleteTextView brandText = null;
-    @BindView(R.id.year_text) EditText yearText = null;
-    @BindView(R.id.number_text) EditText numberText = null;
-    @BindView(R.id.value_text) EditText valueText = null;
-    @BindView(R.id.count_text) EditText countText = null;
-    @BindView(R.id.player_name_text) AutoCompleteTextView playerNameText = null;
-    @BindView(R.id.team_text) AutoCompleteTextView teamText = null;
-    @BindView(R.id.player_position_text) Spinner playerPositionSpinner = null;
+    @BindView(R.id.brand) AutoCompleteTextView brandText = null;
+    @BindView(R.id.year) EditText yearText = null;
+    @BindView(R.id.number) EditText numberText = null;
+    @BindView(R.id.value) EditText valueText = null;
+    @BindView(R.id.quantity) EditText countText = null;
+    @BindView(R.id.player_name) AutoCompleteTextView playerNameText = null;
+    @BindView(R.id.team) AutoCompleteTextView teamText = null;
+    @BindView(R.id.player_position) Spinner playerPositionSpinner = null;
 
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;
@@ -158,13 +158,16 @@ public class BaseballCardDetails extends Fragment {
         this.conditionAdapter = this.populateSpinnerAdapter(R.array.condition);
         this.conditionSpinner.setAdapter(this.conditionAdapter);
 
-        CursorAdapter brandAdapter = getSingleColumnCursorAdapter(BaseballCardContract.BRAND_COL_NAME);
+        CursorAdapter brandAdapter = new SingleColumnCursorAdapter(getActivity(),
+                BaseballCardContract.BRAND_COL_NAME);
         this.brandText.setAdapter(brandAdapter);
 
-        CursorAdapter playerNameAdapter = getSingleColumnCursorAdapter(BaseballCardContract.PLAYER_NAME_COL_NAME);
+        CursorAdapter playerNameAdapter = new SingleColumnCursorAdapter(this.getActivity(),
+                BaseballCardContract.PLAYER_NAME_COL_NAME);
         this.playerNameText.setAdapter(playerNameAdapter);
 
-        CursorAdapter teamAdapter = getSingleColumnCursorAdapter(BaseballCardContract.TEAM_COL_NAME);
+        CursorAdapter teamAdapter = new SingleColumnCursorAdapter(this.getActivity(),
+                BaseballCardContract.TEAM_COL_NAME);
         this.teamText.setAdapter(teamAdapter);
 
         this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);

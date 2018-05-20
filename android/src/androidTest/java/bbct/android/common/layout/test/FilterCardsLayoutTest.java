@@ -19,6 +19,8 @@
 package bbct.android.common.layout.test;
 
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,8 +36,9 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isEnabled;
 import static android.support.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
@@ -46,59 +49,31 @@ public class FilterCardsLayoutTest {
 
     @Test
     public void testBrandCheckBox() {
-        testCheckBox(R.id.brand_check);
+        testFilterOption(R.id.brand);
     }
 
-    @Test
-    public void testYearCheckBox() {
-        testCheckBox(R.id.year_check);
+    public void testYearFilterOption() {
+        testFilterOption(R.id.year);
     }
 
-    @Test
-    public void testNumberCheckBox() {
-        testCheckBox(R.id.number_check);
+    public void testNumberFilterOption() {
+        testFilterOption(R.id.number);
     }
 
-    @Test
-    public void testPlayerNameCheckBox() {
-        testCheckBox(R.id.player_name_check);
+    public void testPlayerNameFilterOption() {
+        testFilterOption(R.id.player_name);
     }
 
-    @Test
-    public void testTeamCheckBox() {
-        testCheckBox(R.id.team_check);
+    public void testTeamFilterOption() {
+        testFilterOption(R.id.team);
     }
 
-    private void testCheckBox(int id) {
-        onView(withId(id)).check(matches(allOf(isDisplayed(), isNotChecked())));
-    }
-
-    @Test
-    public void testBrandEditText() {
-        testEditText(R.id.brand_input);
-    }
-
-    @Test
-    public void testYearEditText() {
-        testEditText(R.id.year_input);
-    }
-
-    @Test
-    public void testNumberEditText() {
-        testEditText(R.id.number_input);
-    }
-
-    @Test
-    public void testPlayerNameEditText() {
-        testEditText(R.id.player_name_input);
-    }
-
-    @Test
-    public void testTeamEditText() {
-        testEditText(R.id.team_input);
-    }
-
-    private void testEditText(int id) {
-        onView(withId(id)).check(matches(allOf(isDisplayed(), not(isEnabled()), withText(""))));
+    private void testFilterOption(int id) {
+        onView(withId(id))
+                .check(matches(allOf(isDisplayed(), isNotChecked())));
+        onView(allOf(withParent(withId(id)), instanceOf(CheckBox.class)))
+                .check(matches(allOf(isDisplayed(), isNotChecked())));
+        onView(allOf(withParent(withId(id)), instanceOf(EditText.class)))
+                .check(matches(allOf(isDisplayed(), not(isEnabled()))));
     }
 }

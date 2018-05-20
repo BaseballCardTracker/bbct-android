@@ -224,7 +224,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     private void assertAllCheckboxesChecked() {
-        onView(withId(R.id.select_all))
+        onView(withId(R.id.checkmark))
                 .check(matches(isChecked()));
 
         for (int i = 0; i < allCards.size(); i++) {
@@ -235,11 +235,12 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     private void markAll() {
-        onView(withId(R.id.select_all))
+        onView(withId(R.id.checkmark))
                 .perform(click())
                 .check(matches(isChecked()));
         onView(withId(R.id.delete_menu))
                 .check(matches(isDisplayed()));
+        assertAllCheckboxesChecked();
     }
 
     @Test
@@ -252,12 +253,12 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testUnmarkAll() throws Throwable {
         this.markAll();
-        onView(withId(R.id.select_all)).perform(click());
+        onView(withId(R.id.checkmark)).perform(click());
         assertNoCheckboxesChecked();
     }
 
     private void assertNoCheckboxesChecked() {
-        onView(withId(R.id.select_all))
+        onView(withId(R.id.checkmark))
                 .check(matches(isNotChecked()));
 
         for (int i = 0; i < allCards.size(); i++) {
@@ -334,7 +335,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testYearFilter() {
         final int year = 1993;
-        testSingleFilter(R.id.year_check, R.id.year_input, year + "", withYear(year));
+        testSingleFilter(R.id.year, Integer.toString(year), withYear(year));
     }
 
     @Test
@@ -346,11 +347,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         BBCTTestUtil.assertListViewContainsItems(allCards);
     }
 
-    private void testSingleFilter(int checkId, int editId, String input,
-                                  Matcher<BaseballCard> cardMatcher) {
+    private void testSingleFilter(int filterId, String input, Matcher<BaseballCard> cardMatcher) {
         BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
-
-        BBCTTestUtil.sendKeysToCurrFieldFilterCards(checkId, editId, input);
+        BBCTTestUtil.sendKeysToCurrFieldFilterCards(filterId, input);
         onView(withId(R.id.save_menu)).perform(click());
         expectedCards = BBCTTestUtil.filterList(allCards, cardMatcher);
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards);
@@ -394,19 +393,19 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                     .perform(click());
         }
 
-        onView(withId(R.id.select_all))
+        onView(withId(R.id.checkmark))
                 .check(matches(isChecked()));
     }
 
     @Test
     public void testOnCheckAllAndOnClickCheckbox() {
-        onView(withId(R.id.select_all))
+        onView(withId(R.id.checkmark))
                 .perform(click());
         onData(instanceOf(BaseballCard.class))
                 .atPosition(1)
                 .onChildView(withId(R.id.checkmark))
                 .perform(click());
-        onView(withId(R.id.select_all))
+        onView(withId(R.id.checkmark))
                 .check(matches(isNotChecked()));
     }
 
@@ -416,7 +415,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                 .atPosition(1)
                 .onChildView(withId(R.id.checkmark))
                 .perform(click());
-        onView(withId(R.id.select_all))
+        onView(withId(R.id.checkmark))
                 .perform(click());
         this.assertAllCheckboxesChecked();
     }
@@ -440,7 +439,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         this.testMarkAll();
         onView(withId(R.id.action_mode_close_button)).perform(click());
         onView(withId(R.id.add_menu)).check(matches(isDisplayed()));
-        onView(withId(R.id.select_all)).check(matches(isNotChecked()));
+        onView(withId(R.id.checkmark)).check(matches(isNotChecked()));
+        assertAllCheckboxesChecked();
     }
 
 }

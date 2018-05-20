@@ -99,39 +99,39 @@ public class BaseballCardDetailsPartialInputTest extends
         int focusId = -1;
 
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.TEAM)) {
-            onView(withId(R.id.team_text))
+            onView(withId(R.id.team))
                     .check(matches(hasErrorText(R.string.team_input_error)));
-            focusId = R.id.team_text;
+            focusId = R.id.team;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME)) {
-            onView(withId(R.id.player_name_text))
+            onView(withId(R.id.player_name))
                     .check(matches(hasErrorText(R.string.player_name_input_error)));
-            focusId = R.id.player_name_text;
+            focusId = R.id.player_name;
         }
-        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.COUNT)) {
-            onView(withId(R.id.count_text))
+        if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.QUANTITY)) {
+            onView(withId(R.id.quantity))
                     .check(matches(hasErrorText(R.string.count_input_error)));
-            focusId = R.id.count_text;
+            focusId = R.id.quantity;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.VALUE)) {
-            onView(withId(R.id.value_text))
+            onView(withId(R.id.value))
                     .check(matches(hasErrorText(R.string.value_input_error)));
-            focusId = R.id.value_text;
+            focusId = R.id.value;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.NUMBER)) {
-            onView(withId(R.id.number_text))
+            onView(withId(R.id.number))
                     .check(matches(hasErrorText(R.string.number_input_error)));
-            focusId = R.id.number_text;
+            focusId = R.id.number;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.YEAR)) {
-            onView(withId(R.id.year_text))
+            onView(withId(R.id.year))
                     .check(matches(hasErrorText(R.string.year_input_error)));
-            focusId = R.id.year_text;
+            focusId = R.id.year;
         }
         if (!this.inputFieldsMask.contains(BBCTTestUtil.EditTexts.BRAND)) {
-            onView(withId(R.id.brand_text))
+            onView(withId(R.id.brand))
                     .check(matches(hasErrorText(R.string.brand_input_error)));
-            focusId = R.id.brand_text;
+            focusId = R.id.beginning;
         }
 
         if (focusId != -1) {

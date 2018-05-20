@@ -18,9 +18,10 @@
  */
 package bbct.android.common.provider;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -38,18 +39,18 @@ import butterknife.ButterKnife;
 
 public class BaseballCardAdapter extends SimpleCursorAdapter {
 
+    private static final String TAG = BaseballCardAdapter.class.getName();
+
     private final FragmentActivity mActivity;
-
     private BaseballCardList mListFragment;
-
     private BaseballCardMultiChoiceModeListener mCallback;
 
     @SuppressWarnings("deprecation")
-    public BaseballCardAdapter(Context context, int layout, Cursor c,
+    public BaseballCardAdapter(FragmentActivity activity, int layout, Cursor c,
             String[] from, int[] to) {
-        super(context, layout, c, from, to);
+        super(activity, layout, c, from, to);
 
-        this.mActivity = (FragmentActivity) context;
+        this.mActivity = activity;
     }
 
     public void setListFragment(BaseballCardList listFragment) {
@@ -62,10 +63,11 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        Log.d(TAG, "getView");
         View row = convertView;
 
         if (row == null) {
-            row = new BaseballCardView(mActivity);
+            row = LayoutInflater.from(mActivity).inflate(R.layout.row, parent, false);
         }
 
         CheckBox ctv = ButterKnife.findById(row, R.id.checkmark);
@@ -90,6 +92,8 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
 
     @Override
     public BaseballCard getItem(int index) {
+        Log.d(TAG, "getItem()");
+        Log.d(TAG, "  index=" + index);
         Cursor cursor = (Cursor) super.getItem(index);
         boolean autographed = cursor.getInt(cursor
                 .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
