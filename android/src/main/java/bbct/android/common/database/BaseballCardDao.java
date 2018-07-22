@@ -1,6 +1,7 @@
 package bbct.android.common.database;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
@@ -20,6 +21,12 @@ public interface BaseballCardDao {
 
     @Update
     int updateBaseballCards(List<BaseballCard> cards);
+
+    @Delete
+    int deleteBaseballCard(BaseballCard card);
+
+    @Delete
+    int deleteBaseballCards(List<BaseballCard> cards);
 
     @Query("SELECT * FROM baseball_cards")
     List<BaseballCard> getBaseballCards();
