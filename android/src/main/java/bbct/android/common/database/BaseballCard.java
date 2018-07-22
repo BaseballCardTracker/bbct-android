@@ -18,11 +18,13 @@
  */
 package bbct.android.common.database;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity(indices = {@Index(value = {"brand", "year", "number"}, unique = true)})
+@Entity(tableName = "baseball_cards",
+        indices = {@Index(value = {"brand", "year", "number"}, unique = true)})
 public class BaseballCard {
     @PrimaryKey
     int id;
@@ -33,6 +35,7 @@ public class BaseballCard {
     int number;
     int value;
     int quantity;
+    @ColumnInfo(name = "player_name")
     String playerName;
     String team;
     String position;
