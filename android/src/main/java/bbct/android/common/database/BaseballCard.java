@@ -27,18 +27,33 @@ import android.arch.persistence.room.PrimaryKey;
         indices = {@Index(value = {"brand", "year", "number"}, unique = true)})
 public class BaseballCard {
     @PrimaryKey
-    int id;
-    boolean autographed;
-    String condition;
-    String brand;
-    int year;
-    int number;
-    int value;
-    int quantity;
+    public int id;
+    public boolean autographed;
+    public String condition;
+    public String brand;
+    public int year;
+    public int number;
+    public int value;
+    public int quantity;
     @ColumnInfo(name = "player_name")
-    String playerName;
-    String team;
-    String position;
+    public String playerName;
+    public String team;
+    public String position;
+
+    public BaseballCard(boolean autographed, String condition, String brand,
+                        int year, int number, int value, int quantity,
+                        String playerName, String team, String position) {
+        this.autographed = autographed;
+        this.condition = condition;
+        this.brand = brand;
+        this.year = year;
+        this.number = number;
+        this.quantity = quantity;
+        this.value = value;
+        this.playerName = playerName;
+        this.team = team;
+        this.position= position;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -62,8 +77,8 @@ public class BaseballCard {
 
     @Override
     public int hashCode() {
-        // Might throw NPE if any of this.condition, this.brand, this.playerName, this.team, or
-        // this.position is null.
+        // Might throw NPE if any of this.condition, this.brand,
+        // this.playerName, this.team, or this.position is null.
         int hash = 7;
         hash = 67 * hash + Boolean.valueOf(this.autographed).hashCode();
         hash = 67 * hash + this.condition.hashCode();
