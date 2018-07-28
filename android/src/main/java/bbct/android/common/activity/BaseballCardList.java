@@ -217,7 +217,7 @@ public class BaseballCardList extends ListFragment {
 
         BaseballCard card = BaseballCardList.this.adapter.getItem(position - 1);
 
-        Fragment details = BaseballCardDetails.getInstance(id, card);
+        Fragment details = BaseballCardDetails.getInstance(id);
         this.getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)

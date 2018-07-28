@@ -18,12 +18,8 @@
  */
 package bbct.android.common.activity;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.SQLException;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -48,16 +44,17 @@ import java.util.Locale;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.util.DialogUtil;
+import bbct.android.common.database.BaseballCard;
+import bbct.android.common.database.BaseballCardDao;
+import bbct.android.common.database.BaseballCardDatabase;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.SingleColumnCursorAdapter;
-import bbct.data.BaseballCard;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BaseballCardDetails extends Fragment {
 
     private static final String ID = "id";
-    private static final String CARD = "card";
     private static final String TAG = BaseballCardDetails.class.getName();
 
     @BindView(R.id.autograph)
@@ -83,15 +80,11 @@ public class BaseballCardDetails extends Fragment {
 
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;
-    private Uri uri = null;
     private boolean isUpdating = false;
-    private long cardId = -1L;
 
-    public static BaseballCardDetails getInstance(long id, BaseballCard card) {
+    public static BaseballCardDetails getInstance(long id) {
         Bundle args = new Bundle();
         args.putLong(ID, id);
-        args.putSerializable(CARD, card);
-
         BaseballCardDetails details = new BaseballCardDetails();
         details.setArguments(args);
 
@@ -185,12 +178,12 @@ public class BaseballCardDetails extends Fragment {
 
         Bundle args = this.getArguments();
         if (args != null) {
+            BaseballCardDatabase database = BaseballCardDatabase.getInstance(this.getActivity());
+            BaseballCardDao dao = database.getBaseballCardDao();
             long id = args.getLong(ID);
-            BaseballCard card = (BaseballCard) args.getSerializable(CARD);
-            this.setCard(id, card);
+            BaseballCard card = dao.getBaseballCard(id);
+            this.setCard(card);
         }
-
-        this.uri = BaseballCardContract.getUri(this.getActivity().getPackageName());
 
         return view;
     }
@@ -200,25 +193,22 @@ public class BaseballCardDetails extends Fragment {
         return new SingleColumnCursorAdapter(getActivity(), colName);
     }
 
-    private void setCard(long cardId, BaseballCard card) {
+    private void setCard(BaseballCard card) {
         this.isUpdating = true;
-        this.cardId = cardId;
-        this.autographCheckBox.setChecked(card.isAutographed());
+        this.autographCheckBox.setChecked(card.autographed);
 
-        int selectedCondition = this.conditionAdapter.getPosition(card
-                .getCondition());
+        int selectedCondition = this.conditionAdapter.getPosition(card.condition);
         this.conditionSpinner.setSelection(selectedCondition);
 
-        this.brandText.setText(card.getBrand());
-        this.yearText.setText(String.format(Locale.getDefault(), "%d", card.getYear()));
-        this.numberText.setText(String.format(Locale.getDefault(), "%d", card.getNumber()));
-        this.valueText.setText(String.format(Locale.getDefault(), "%.2f", card.getValue() / 100.0));
-        this.countText.setText(String.format(Locale.getDefault(), "%d", card.getCount()));
-        this.playerNameText.setText(card.getPlayerName());
-        this.teamText.setText(card.getTeam());
+        this.brandText.setText(card.brand);
+        this.yearText.setText(String.format(Locale.getDefault(), "%d", card.year));
+        this.numberText.setText(String.format(Locale.getDefault(), "%d", card.number));
+        this.valueText.setText(String.format(Locale.getDefault(), "%.2f", card.value / 100.0));
+        this.countText.setText(String.format(Locale.getDefault(), "%d", card.quantity));
+        this.playerNameText.setText(card.playerName);
+        this.teamText.setText(card.team);
 
-        int selectedPosition = this.positionsAdapter.getPosition(card
-                .getPlayerPosition());
+        int selectedPosition = this.positionsAdapter.getPosition(card.position);
         this.playerPositionSpinner.setSelection(selectedPosition);
     }
 
@@ -319,21 +309,21 @@ public class BaseballCardDetails extends Fragment {
     }
 
     private void onSave() {
-        ContentResolver resolver = this.getActivity().getContentResolver();
-        BaseballCard newCard = this.getBaseballCard();
+        final BaseballCard newCard = this.getBaseballCard();
+        BaseballCardDatabase database = BaseballCardDatabase.getInstance(this.getActivity());
+        final BaseballCardDao dao = database.getBaseballCardDao();
 
         if (newCard != null) {
             if (this.isUpdating) {
-                Uri uri = ContentUris.withAppendedId(this.uri, this.cardId);
-                resolver.update(uri,
-                        BaseballCardContract.getContentValues(newCard), null,
-                        null);
+                dao.updateBaseballCard(newCard);
             } else {
                 try {
-                    ContentValues values = BaseballCardContract
-                            .getContentValues(newCard);
-                    resolver.insert(this.uri, values);
-
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            dao.insertBaseballCard(newCard);
+                        }
+                    }.start();
                     this.resetInput();
                     this.brandText.requestFocus();
                     Toast.makeText(this.getActivity(), R.string.card_added_message,
