@@ -62,5 +62,4 @@ public class NavigateUpFromBaseballCardDetailsTest {
         onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
         onView(withText(R.string.app_name)).check(matches(isDisplayed()));
     }
-
 }
