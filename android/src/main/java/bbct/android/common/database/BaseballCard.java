@@ -20,24 +20,24 @@ package bbct.android.common.database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity(tableName = "baseball_cards",
-        indices = {@Index(value = {"brand", "year", "number"}, unique = true)})
+@Entity(tableName = "baseball_cards")
 public class BaseballCard {
     @PrimaryKey
-    public int id;
-    public boolean autographed;
+    public Long _id;
+    public Boolean autographed;
     public String condition;
     public String brand;
-    public int year;
-    public int number;
-    public int value;
-    public int quantity;
+    public Integer year;
+    public Integer number;
+    public Integer value;
+    @ColumnInfo(name = "card_count")
+    public Integer quantity;
     @ColumnInfo(name = "player_name")
     public String playerName;
     public String team;
+    @ColumnInfo(name = "player_position")
     public String position;
 
     public BaseballCard(boolean autographed, String condition, String brand,
@@ -60,13 +60,13 @@ public class BaseballCard {
         if (o instanceof BaseballCard) {
             BaseballCard c = (BaseballCard) o;
 
-            return this.autographed == c.autographed
+            return this.autographed.equals(c.autographed)
                     && this.condition.equals(c.condition)
                     && this.brand.equals(c.brand)
-                    && this.year == c.year
-                    && this.number == c.number
-                    && this.value == c.value
-                    && this.quantity == c.quantity
+                    && this.year.equals(c.year)
+                    && this.number.equals(c.number)
+                    && this.value.equals(c.value)
+                    && this.quantity.equals(c.quantity)
                     && this.playerName.equals(c.playerName)
                     && this.team.equals(c.team)
                     && this.position.equals(c.playerName);
@@ -80,7 +80,7 @@ public class BaseballCard {
         // Might throw NPE if any of this.condition, this.brand,
         // this.playerName, this.team, or this.position is null.
         int hash = 7;
-        hash = 67 * hash + Boolean.valueOf(this.autographed).hashCode();
+        hash = 67 * hash + this.autographed.hashCode();
         hash = 67 * hash + this.condition.hashCode();
         hash = 67 * hash + this.brand.hashCode();
         hash = 67 * hash + this.year;
