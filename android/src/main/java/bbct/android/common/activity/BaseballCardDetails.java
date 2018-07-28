@@ -60,16 +60,26 @@ public class BaseballCardDetails extends Fragment {
     private static final String CARD = "card";
     private static final String TAG = BaseballCardDetails.class.getName();
 
-    @BindView(R.id.autograph) CheckBox autographCheckBox = null;
-    @BindView(R.id.condition) Spinner conditionSpinner = null;
-    @BindView(R.id.brand_text) AutoCompleteTextView brandText = null;
-    @BindView(R.id.year_text) EditText yearText = null;
-    @BindView(R.id.number_text) EditText numberText = null;
-    @BindView(R.id.value_text) EditText valueText = null;
-    @BindView(R.id.count_text) EditText countText = null;
-    @BindView(R.id.player_name_text) AutoCompleteTextView playerNameText = null;
-    @BindView(R.id.team_text) AutoCompleteTextView teamText = null;
-    @BindView(R.id.player_position_text) Spinner playerPositionSpinner = null;
+    @BindView(R.id.autograph)
+    CheckBox autographCheckBox = null;
+    @BindView(R.id.condition)
+    Spinner conditionSpinner = null;
+    @BindView(R.id.brand_text)
+    AutoCompleteTextView brandText = null;
+    @BindView(R.id.year_text)
+    EditText yearText = null;
+    @BindView(R.id.number_text)
+    EditText numberText = null;
+    @BindView(R.id.value_text)
+    EditText valueText = null;
+    @BindView(R.id.count_text)
+    EditText countText = null;
+    @BindView(R.id.player_name_text)
+    AutoCompleteTextView playerNameText = null;
+    @BindView(R.id.team_text)
+    AutoCompleteTextView teamText = null;
+    @BindView(R.id.player_position_text)
+    Spinner playerPositionSpinner = null;
 
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;
@@ -96,7 +106,10 @@ public class BaseballCardDetails extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.card_details, container, false);
         ButterKnife.bind(this, view);
 
@@ -250,13 +263,13 @@ public class BaseballCardDetails extends Fragment {
     private BaseballCard getBaseballCard() {
         Log.d(TAG, "getBaseballCard()");
 
-        EditText[] allEditTexts = { this.brandText, this.yearText,
+        EditText[] allEditTexts = {this.brandText, this.yearText,
                 this.numberText, this.valueText, this.countText,
-                this.playerNameText, this.teamText };
-        int[] errorIds = { R.string.brand_input_error,
+                this.playerNameText, this.teamText};
+        int[] errorIds = {R.string.brand_input_error,
                 R.string.year_input_error, R.string.number_input_error,
                 R.string.value_input_error, R.string.count_input_error,
-                R.string.player_name_input_error, R.string.team_input_error };
+                R.string.player_name_input_error, R.string.team_input_error};
         boolean validInput = true;
 
         boolean autographed = this.autographCheckBox.isChecked();
