@@ -19,7 +19,6 @@
 package bbct.android.common.navigation.test;
 
 import android.content.Context;
-import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -58,20 +57,8 @@ public class NavigateUpFromAboutTest {
         this.dbUtil = new DatabaseUtil(context);
     }
 
-    private void skipSurvey() {
-        try {
-            onView(withText(R.string.survey1)).check(matches(isDisplayed()));
-            onView(withText(R.string.later))
-                    .check(matches(isDisplayed()))
-                    .perform(click());
-        } catch (NoMatchingViewException e) {
-            //view not displayed logic
-        }
-    }
-
     @Test
     public void testNavigateToBaseballCardDetailsThenAboutFragment() {
-        skipSurvey();
         String expectedTitle = context.getString(R.string.app_name);
 
         // pop to BaseballCardList first if db is empty
@@ -93,7 +80,6 @@ public class NavigateUpFromAboutTest {
 
     @Test
     public void testNavigateToFilterThenAboutFragment() {
-        skipSurvey();
         String expectedTitle = context.getString(R.string.app_name);
 
         // pop to BaseballCardList first if db is empty
@@ -116,7 +102,6 @@ public class NavigateUpFromAboutTest {
 
     @Test
     public void testNavigateToAboutFragment() {
-        skipSurvey();
         openActionBarOverflowOrOptionsMenu(context);
 
         String aboutTitle = context.getString(R.string.about_title);
@@ -128,7 +113,6 @@ public class NavigateUpFromAboutTest {
 
     @Test
     public void testNavigateUp() {
-        skipSurvey();
         String initialTitle = context.getString(R.string.app_name);
         openActionBarOverflowOrOptionsMenu(context);
 
