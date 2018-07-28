@@ -31,6 +31,6 @@ public interface BaseballCardDao {
     @Query("SELECT * FROM baseball_cards")
     List<BaseballCard> getBaseballCards();
 
-    @Query("SELECT * FROM baseball_cards WHERE id = :id")
-    BaseballCard getBaseballCard(int id);
+    @Query("SELECT * FROM baseball_cards WHERE _id = :id")
+    BaseballCard getBaseballCard(long id);
 }
