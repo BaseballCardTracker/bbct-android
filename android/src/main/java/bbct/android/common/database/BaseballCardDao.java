@@ -1,5 +1,6 @@
 package bbct.android.common.database;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -29,7 +30,7 @@ public interface BaseballCardDao {
     int deleteBaseballCards(List<BaseballCard> cards);
 
     @Query("SELECT * FROM baseball_cards")
-    List<BaseballCard> getBaseballCards();
+    LiveData<List<BaseballCard>> getBaseballCards();
 
     @Query("SELECT * FROM baseball_cards WHERE _id = :id")
     BaseballCard getBaseballCard(long id);

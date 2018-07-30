@@ -19,8 +19,6 @@
 package bbct.android.common.activity;
 
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -41,7 +39,6 @@ import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.SharedPreferenceKeys;
 import bbct.android.common.activity.util.DialogUtil;
-import bbct.android.common.provider.BaseballCardContract;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,17 +61,8 @@ public class MainActivity extends AppCompatActivity {
         this.setContentView(R.layout.main);
 
         if (savedInstanceState == null) {
-            Uri uri = BaseballCardContract.getUri(this.getPackageName());
-            Cursor cursor = this.getContentResolver().query(uri,
-                    BaseballCardContract.PROJECTION, null, null, null);
-
-            FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
-            if (cursor == null || cursor.getCount() == 0) {
-                ft.add(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD);
-            } else {
-                ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
-                cursor.close();
-            }
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
             ft.commit();
 
             ActionBar actionBar = getSupportActionBar();

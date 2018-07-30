@@ -19,35 +19,34 @@
 package bbct.android.common.provider;
 
 import android.content.Context;
-import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
+
+import java.util.List;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.view.BaseballCardView;
-import bbct.data.BaseballCard;
 import butterknife.ButterKnife;
 
-public class BaseballCardAdapter extends SimpleCursorAdapter {
+public class BaseballCardAdapter extends ArrayAdapter<BaseballCard> {
 
     private final FragmentActivity mActivity;
-
     private BaseballCardList mListFragment;
-
     private BaseballCardMultiChoiceModeListener mCallback;
 
     @SuppressWarnings("deprecation")
-    public BaseballCardAdapter(Context context, int layout, Cursor c,
-            String[] from, int[] to) {
-        super(context, layout, c, from, to);
+    public BaseballCardAdapter(Context context, int layout, List<BaseballCard> cards) {
+        super(context, layout, cards);
 
         this.mActivity = (FragmentActivity) context;
     }
@@ -60,16 +59,16 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
         mCallback = callback;
     }
 
+    @NonNull
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        View row = convertView;
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
+        BaseballCardView row = (BaseballCardView) convertView;
 
         if (row == null) {
             row = new BaseballCardView(mActivity);
         }
 
         CheckBox ctv = ButterKnife.findById(row, R.id.checkmark);
-        super.getView(position, row, parent);
 
         // set listener
         ctv.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -85,35 +84,9 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
             }
         });
 
+        BaseballCard card = getItem(position);
+        row.setBaseballCard(card);
+
         return row;
     }
-
-    @Override
-    public BaseballCard getItem(int index) {
-        Cursor cursor = (Cursor) super.getItem(index);
-        boolean autographed = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
-        String condition = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.CONDITION_COL_NAME));
-        String brand = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
-        int year = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.YEAR_COL_NAME));
-        int number = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
-        int value = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
-        int count = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
-        String name = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
-        String team = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.TEAM_COL_NAME));
-        String position = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
-
-        return new BaseballCard(autographed, condition, brand, year, number,
-                value, count, name, team, position);
-    }
-
 }
