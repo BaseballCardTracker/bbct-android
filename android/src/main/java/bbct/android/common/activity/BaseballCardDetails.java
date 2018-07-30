@@ -23,6 +23,7 @@ import android.database.SQLException;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -182,7 +183,7 @@ public class BaseballCardDetails extends Fragment {
             BaseballCardDao dao = database.getBaseballCardDao();
             long id = args.getLong(ID);
             BaseballCard card = dao.getBaseballCard(id);
-            this.setCard(card);
+            setCard(card);
         }
 
         return view;
@@ -315,7 +316,16 @@ public class BaseballCardDetails extends Fragment {
 
         if (newCard != null) {
             if (this.isUpdating) {
-                dao.updateBaseballCard(newCard);
+                new Thread() {
+                    @Override
+                    public void run() {
+                        dao.updateBaseballCard(newCard);
+                        FragmentActivity activity = getActivity();
+                        if (activity != null) {
+                            activity.getSupportFragmentManager().popBackStack();
+                        }
+                    }
+                }.start();
             } else {
                 try {
                     new Thread() {
