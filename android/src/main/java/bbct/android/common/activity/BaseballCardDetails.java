@@ -44,6 +44,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Locale;
 
@@ -193,43 +194,22 @@ public class BaseballCardDetails extends Fragment {
                     BaseballCardDatabase.getInstance(activity);
                 BaseballCardDao dao = database.getBaseballCardDao();
                 LiveData<List<String>> brands = dao.getBrands();
-                brands.observe(BaseballCardDetails.this,
-                    new Observer<List<String>>() {
-                        @Override
-                        public void onChanged(@Nullable List<String> brands) {
-                            if (brands != null) {
-                                brandAdapter.clear();
-                                brandAdapter.addAll(brands);
-                                brandAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    });
+                brands.observe(
+                    BaseballCardDetails.this,
+                    new ListObserver(brandAdapter)
+                );
 
                 LiveData<List<String>> playerNames = dao.getPlayerNames();
-                playerNames.observe(BaseballCardDetails.this,
-                    new Observer<List<String>>() {
-                        @Override
-                        public void onChanged(@Nullable List<String> playerNames) {
-                            if (playerNames != null) {
-                                playerNameAdapter.clear();
-                                playerNameAdapter.addAll(playerNames);
-                                playerNameAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    });
+                playerNames.observe(
+                    BaseballCardDetails.this,
+                    new ListObserver(playerNameAdapter)
+                );
 
                 LiveData<List<String>> teams = dao.getTeams();
-                teams.observe(BaseballCardDetails.this,
-                    new Observer<List<String>>() {
-                        @Override
-                        public void onChanged(@Nullable List<String> teams) {
-                            if (teams != null) {
-                                teamAdapter.clear();
-                                teamAdapter.addAll(teams);
-                                teamAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    });
+                teams.observe(
+                    BaseballCardDetails.this,
+                    new ListObserver(teamAdapter)
+                );
             }
         }).start();
 
@@ -403,4 +383,21 @@ public class BaseballCardDetails extends Fragment {
         }
     }
 
+}
+
+class ListObserver implements Observer<List<String>> {
+    private ArrayAdapter<String> adapter;
+
+    ListObserver(ArrayAdapter<String> adapter) {
+        this.adapter = adapter;
+    }
+
+    @Override
+    public void onChanged(@Nullable List<String> strings) {
+        if (strings != null) {
+            adapter.clear();
+            adapter.addAll(strings);
+            adapter.notifyDataSetChanged();
+        }
+    }
 }
