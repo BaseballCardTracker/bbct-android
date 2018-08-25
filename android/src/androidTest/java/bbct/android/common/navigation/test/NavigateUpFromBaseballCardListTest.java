@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
-import bbct.android.lite.provider.LiteActivity;
+import bbct.android.common.activity.MainActivity;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
@@ -40,10 +40,14 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class NavigateUpFromBaseballCardListTest {
+abstract public class NavigateUpFromBaseballCardListTest<T extends MainActivity> {
     @Rule
-    public ActivityTestRule<LiteActivity> activityActivityTestRule = new ActivityTestRule<LiteActivity>(LiteActivity.class);
+    public ActivityTestRule<T> activityActivityTestRule;
     private Context context = null;
+
+    public NavigateUpFromBaseballCardListTest(Class<T> activityClass) {
+        this.activityActivityTestRule = new ActivityTestRule<>(activityClass);
+    }
 
     @Before
     public void setUp() throws Exception {

@@ -28,8 +28,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
+import bbct.android.common.activity.MainActivity;
 import bbct.android.common.test.DatabaseUtil;
-import bbct.android.lite.provider.LiteActivity;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
@@ -43,11 +43,15 @@ import static org.hamcrest.Matchers.allOf;
 
 
 @RunWith(AndroidJUnit4.class)
-public class NavigateUpFromAboutTest {
+abstract public class NavigateUpFromAboutTest<T extends MainActivity> {
     @Rule
-    public ActivityTestRule<LiteActivity> activityActivityTestRule = new ActivityTestRule<LiteActivity>(LiteActivity.class);
+    public ActivityTestRule<T> activityActivityTestRule;
     private Context context = null;
     private DatabaseUtil dbUtil = null;
+
+    public NavigateUpFromAboutTest(Class<T> activityClass) {
+        this.activityActivityTestRule = new ActivityTestRule<>(activityClass);
+    }
 
     @Before
     public void setUp() throws Exception {
