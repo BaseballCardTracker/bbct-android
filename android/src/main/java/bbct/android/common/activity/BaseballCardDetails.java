@@ -18,6 +18,7 @@
  */
 package bbct.android.common.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.SQLException;
 import android.os.Bundle;
@@ -36,11 +37,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Locale;
 
 import bbct.android.common.R;
@@ -48,8 +49,6 @@ import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.database.BaseballCardDao;
 import bbct.android.common.database.BaseballCardDatabase;
-import bbct.android.common.provider.BaseballCardContract;
-import bbct.android.common.provider.SingleColumnCursorAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -160,19 +159,49 @@ public class BaseballCardDetails extends Fragment {
 
         String cardDetailsTitle = this.getString(R.string.card_details_title);
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
-        this.getActivity().setTitle(title);
+        final Activity activity = getActivity();
+        activity.setTitle(title);
 
         this.conditionAdapter = this.populateSpinnerAdapter(R.array.condition);
         this.conditionSpinner.setAdapter(this.conditionAdapter);
 
-        CursorAdapter brandAdapter = getSingleColumnCursorAdapter(BaseballCardContract.BRAND_COL_NAME);
+        final ArrayAdapter<String> brandAdapter = new ArrayAdapter<>(
+                activity,
+                android.R.layout.simple_list_item_1
+        );
         this.brandText.setAdapter(brandAdapter);
 
-        CursorAdapter playerNameAdapter = getSingleColumnCursorAdapter(BaseballCardContract.PLAYER_NAME_COL_NAME);
+        final ArrayAdapter<String> playerNameAdapter = new ArrayAdapter<>(
+                activity,
+                android.R.layout.simple_list_item_1
+        );
         this.playerNameText.setAdapter(playerNameAdapter);
 
-        CursorAdapter teamAdapter = getSingleColumnCursorAdapter(BaseballCardContract.TEAM_COL_NAME);
+        final ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(
+                activity,
+                android.R.layout.simple_list_item_1
+        );
         this.teamText.setAdapter(teamAdapter);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BaseballCardDatabase database =
+                        BaseballCardDatabase.getInstance(activity);
+                BaseballCardDao dao = database.getBaseballCardDao();
+                List<String> brands = dao.getBrands();
+                brandAdapter.addAll(brands);
+                brandAdapter.notifyDataSetChanged();
+
+                List<String> playerNames = dao.getPlayerNames();
+                playerNameAdapter.addAll(playerNames);
+                playerNameAdapter.notifyDataSetChanged();
+
+                List<String> teams = dao.getTeams();
+                teamAdapter.addAll(teams);
+                teamAdapter.notifyDataSetChanged();
+            }
+        }).start();
 
         this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
         this.playerPositionSpinner.setAdapter(this.positionsAdapter);
@@ -187,11 +216,6 @@ public class BaseballCardDetails extends Fragment {
         }
 
         return view;
-    }
-
-    @NonNull
-    private CursorAdapter getSingleColumnCursorAdapter(String colName) {
-        return new SingleColumnCursorAdapter(getActivity(), colName);
     }
 
     private void setCard(BaseballCard card) {
