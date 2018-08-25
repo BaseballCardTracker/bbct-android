@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,11 +44,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.database.BaseballCard;
+import bbct.android.common.database.BaseballCardDao;
 import bbct.android.common.database.BaseballCardDatabase;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
@@ -221,17 +224,29 @@ public class BaseballCardList extends ListFragment {
     }
 
     public void deleteSelectedCards() {
+        final Activity activity = getActivity();
+        final List<BaseballCard> cards = new ArrayList<>();
         for (int i = 0; i < getListAdapter().getCount() + 1; ++i) {
             if (getListView().isItemChecked(i)) {
-                // Subtract one to compensate for the header view
-                long id = this.adapter.getItemId(i - 1);
-                Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
-                this.getActivity().getContentResolver().delete(deleteUri, null, null);
+                BaseballCard card = this.adapter.getItem(i - 1);
+                cards.add(card);
             }
         }
 
-        Toast.makeText(this.getActivity(), R.string.card_deleted_message, Toast.LENGTH_LONG)
-                .show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BaseballCardDatabase database =
+                        BaseballCardDatabase.getInstance(activity);
+                database.getBaseballCardDao().deleteBaseballCards(cards);
+            }
+        }).start();
+
+        Toast.makeText(
+                activity,
+                R.string.card_deleted_message,
+                Toast.LENGTH_LONG
+        ).show();
     }
 
     private void setAllChecked(boolean checked) {

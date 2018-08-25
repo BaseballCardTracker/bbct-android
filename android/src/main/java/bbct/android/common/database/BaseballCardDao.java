@@ -24,9 +24,6 @@ public interface BaseballCardDao {
     int updateBaseballCards(List<BaseballCard> cards);
 
     @Delete
-    int deleteBaseballCard(BaseballCard card);
-
-    @Delete
     int deleteBaseballCards(List<BaseballCard> cards);
 
     @Query("SELECT * FROM baseball_cards")
