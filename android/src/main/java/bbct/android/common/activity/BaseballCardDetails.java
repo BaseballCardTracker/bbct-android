@@ -19,10 +19,13 @@
 package bbct.android.common.activity;
 
 import android.app.Activity;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -178,8 +181,8 @@ public class BaseballCardDetails extends Fragment {
         this.playerNameText.setAdapter(playerNameAdapter);
 
         final ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(
-                activity,
-                android.R.layout.simple_list_item_1
+            activity,
+            android.R.layout.simple_list_item_1
         );
         this.teamText.setAdapter(teamAdapter);
 
@@ -187,19 +190,46 @@ public class BaseballCardDetails extends Fragment {
             @Override
             public void run() {
                 BaseballCardDatabase database =
-                        BaseballCardDatabase.getInstance(activity);
+                    BaseballCardDatabase.getInstance(activity);
                 BaseballCardDao dao = database.getBaseballCardDao();
-                List<String> brands = dao.getBrands();
-                brandAdapter.addAll(brands);
-                brandAdapter.notifyDataSetChanged();
+                LiveData<List<String>> brands = dao.getBrands();
+                brands.observe(BaseballCardDetails.this,
+                    new Observer<List<String>>() {
+                        @Override
+                        public void onChanged(@Nullable List<String> brands) {
+                            if (brands != null) {
+                                brandAdapter.clear();
+                                brandAdapter.addAll(brands);
+                                brandAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
 
-                List<String> playerNames = dao.getPlayerNames();
-                playerNameAdapter.addAll(playerNames);
-                playerNameAdapter.notifyDataSetChanged();
+                LiveData<List<String>> playerNames = dao.getPlayerNames();
+                playerNames.observe(BaseballCardDetails.this,
+                    new Observer<List<String>>() {
+                        @Override
+                        public void onChanged(@Nullable List<String> playerNames) {
+                            if (playerNames != null) {
+                                playerNameAdapter.clear();
+                                playerNameAdapter.addAll(playerNames);
+                                playerNameAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
 
-                List<String> teams = dao.getTeams();
-                teamAdapter.addAll(teams);
-                teamAdapter.notifyDataSetChanged();
+                LiveData<List<String>> teams = dao.getTeams();
+                teams.observe(BaseballCardDetails.this,
+                    new Observer<List<String>>() {
+                        @Override
+                        public void onChanged(@Nullable List<String> teams) {
+                            if (teams != null) {
+                                teamAdapter.clear();
+                                teamAdapter.addAll(teams);
+                                teamAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
             }
         }).start();
 

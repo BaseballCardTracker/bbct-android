@@ -33,11 +33,11 @@ public interface BaseballCardDao {
     BaseballCard getBaseballCard(long id);
 
     @Query("SELECT DISTINCT(brand) FROM baseball_cards")
-    List<String> getBrands();
+    LiveData<List<String>> getBrands();
 
     @Query("SELECT DISTINCT(player_name) FROM baseball_cards")
-    List<String> getPlayerNames();
+    LiveData<List<String>> getPlayerNames();
 
     @Query("SELECT DISTINCT(team) FROM baseball_cards")
-    List<String> getTeams();
+    LiveData<List<String>> getTeams();
 }
