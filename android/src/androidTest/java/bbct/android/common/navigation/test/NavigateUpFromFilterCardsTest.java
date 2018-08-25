@@ -56,6 +56,5 @@ public class NavigateUpFromFilterCardsTest {
         onView(allOf(withContentDescription(R.string.filter_cards_title), isDisplayed())).perform(click());
         onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
         onView(allOf(withText(expectedTitle), isDisplayed()));
-
     }
 }
