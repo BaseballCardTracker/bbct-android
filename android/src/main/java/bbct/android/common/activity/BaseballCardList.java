@@ -47,9 +47,9 @@ import java.util.List;
 import bbct.android.common.R;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.database.BaseballCard;
+import bbct.android.common.database.BaseballCardDao;
 import bbct.android.common.database.BaseballCardDatabase;
 import bbct.android.common.provider.BaseballCardAdapter;
-import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.view.HeaderView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -113,25 +113,7 @@ public class BaseballCardList extends ListFragment {
             }
         });
         listView.addHeaderView(headerView);
-
-        BaseballCardDatabase database = BaseballCardDatabase.getInstance(this.getActivity());
-        LiveData<List<BaseballCard>> cards = database.getBaseballCardDao().getBaseballCards();
-        cards.observe(this, new Observer<List<BaseballCard>>() {
-            @Override
-            public void onChanged(@Nullable List<BaseballCard> cards) {
-                Activity activity = getActivity();
-                adapter = new BaseballCardAdapter(
-                        activity, R.layout.baseball_card, cards);
-                setListAdapter(adapter);
-                adapter.setListFragment(BaseballCardList.this);
-
-                mCallbacks = new BaseballCardMultiChoiceModeListener(BaseballCardList.this);
-                listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-                listView.setMultiChoiceModeListener(mCallbacks);
-                applyFilter(filterParams);
-                adapter.setActionModeCallback(mCallbacks);
-            }
-        });
+        applyFilter(filterParams);
 
         return view;
     }
@@ -184,6 +166,7 @@ public class BaseballCardList extends ListFragment {
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
             this.emptyList.setText(R.string.start);
+            this.filterParams = null;
             this.applyFilter(null);
 
             this.getActivity().supportInvalidateOptionsMenu();
@@ -253,57 +236,58 @@ public class BaseballCardList extends ListFragment {
     }
 
     protected void applyFilter(Bundle filterParams) {
-        Log.d(TAG, "applyFilter()");
+        LiveData<List<BaseballCard>> cards;
+        BaseballCardDatabase database =
+            BaseballCardDatabase.getInstance(getActivity());
+        BaseballCardDao dao = database.getBaseballCardDao();
 
-        this.filterParams = filterParams;
-
-        if (this.filterParams == null) {
-            this.emptyList.setText(R.string.start);
+        if (filterParams == null) {
+            cards = dao.getBaseballCards();
         } else {
-            this.emptyList.setText(R.string.empty_list);
-        }
+            String format = "%%%s%%";
+            String brand = filterParams.getString(
+                FilterCards.BRAND_EXTRA, "");
+            String year = filterParams.getString(
+                FilterCards.YEAR_EXTRA);
+            String number = filterParams.getString(
+                FilterCards.NUMBER_EXTRA, "");
+            String playerName = filterParams.getString(
+                FilterCards.PLAYER_NAME_EXTRA, "");
+            String team = filterParams.getString(
+                FilterCards.TEAM_EXTRA, "");
 
-        StringBuilder sb;
-        String[] args;
-
-        if (this.filterParams != null) {
-            sb = new StringBuilder();
-            args = new String[this.filterParams.size()];
-
-            int numQueries = 0;
-            for (String key : this.filterParams.keySet()) {
-                String value = this.filterParams.getString(key);
-
-                switch (key) {
-                    case FilterCards.YEAR_EXTRA:
-                        sb.append(BaseballCardContract.YEAR_SELECTION);
-                        break;
-                    case FilterCards.BRAND_EXTRA:
-                        sb.append(BaseballCardContract.BRAND_SELECTION);
-                        break;
-                    case FilterCards.NUMBER_EXTRA:
-                        sb.append(BaseballCardContract.NUMBER_SELECTION);
-                        break;
-                    case FilterCards.PLAYER_NAME_EXTRA:
-                        sb.append(BaseballCardContract.PLAYER_NAME_SELECTION);
-                        break;
-                    case FilterCards.TEAM_EXTRA:
-                        sb.append(BaseballCardContract.TEAM_SELECTION);
-                        break;
-                    default:
-                        Log.e(TAG, "Invalid key: " + key);
-                        break;
-                }
-
-                args[numQueries] = value;
-                numQueries++;
-
-                if (numQueries < args.length) {
-                    sb.append(" AND ");
-                }
+            if (year == null) {
+                cards = dao.getBaseballCards(
+                    String.format(format, brand),
+                    String.format(format, number),
+                    String.format(format, playerName),
+                    String.format(format, team)
+                );
+            } else {
+                cards = dao.getBaseballCards(
+                    String.format(format, brand),
+                    Integer.valueOf(year),
+                    String.format(format, number),
+                    String.format(format, playerName),
+                    String.format(format, team)
+                );
             }
         }
 
-        // TODO: Update list with correct data
+        cards.observe(this, new Observer<List<BaseballCard>>() {
+            @Override
+            public void onChanged(@Nullable List<BaseballCard> cards) {
+                Activity activity = getActivity();
+                adapter = new BaseballCardAdapter(
+                    activity, R.layout.baseball_card, cards);
+                setListAdapter(adapter);
+                adapter.setListFragment(BaseballCardList.this);
+
+                mCallbacks = new BaseballCardMultiChoiceModeListener(BaseballCardList.this);
+                listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+                listView.setMultiChoiceModeListener(mCallbacks);
+                adapter.setActionModeCallback(mCallbacks);
+            }
+        });
     }
 }

@@ -29,6 +29,29 @@ public interface BaseballCardDao {
     @Query("SELECT * FROM baseball_cards")
     LiveData<List<BaseballCard>> getBaseballCards();
 
+    @Query(
+        "SELECT * FROM baseball_cards " +
+        "WHERE brand LIKE :brand " +
+        "  AND year = :year " +
+        "  AND number LIKE :number " +
+        "  AND player_name LIKE :playerName " +
+        "  AND team LIKE :team"
+    )
+    LiveData<List<BaseballCard>> getBaseballCards(
+        String brand, int year, String number, String playerName, String team
+    );
+
+    @Query(
+        "SELECT * FROM baseball_cards " +
+        "WHERE brand LIKE :brand " +
+        "  AND number LIKE :number " +
+        "  AND player_name LIKE :playerName " +
+        "  AND team LIKE :team"
+    )
+    LiveData<List<BaseballCard>> getBaseballCards(
+        String brand, String number, String playerName, String team
+    );
+
     @Query("SELECT * FROM baseball_cards WHERE _id = :id")
     BaseballCard getBaseballCard(long id);
 
