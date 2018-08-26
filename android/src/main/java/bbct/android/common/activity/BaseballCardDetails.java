@@ -18,6 +18,7 @@
  */
 package bbct.android.common.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
@@ -166,6 +167,13 @@ public class BaseballCardDetails extends Fragment {
         final Activity activity = getActivity();
         activity.setTitle(title);
 
+        createAdapters(activity);
+        populateTextEdits();
+
+        return view;
+    }
+
+    private void createAdapters(final Activity activity) {
         this.conditionAdapter = this.populateSpinnerAdapter(R.array.condition);
         this.conditionSpinner.setAdapter(this.conditionAdapter);
 
@@ -215,7 +223,10 @@ public class BaseballCardDetails extends Fragment {
 
         this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
         this.playerPositionSpinner.setAdapter(this.positionsAdapter);
+    }
 
+    @SuppressLint("StaticFieldLeak")
+    private void populateTextEdits() {
         Bundle args = getArguments();
         if (args != null) {
             long id = args.getLong(ID);
@@ -226,8 +237,7 @@ public class BaseballCardDetails extends Fragment {
                     BaseballCardDatabase database =
                         BaseballCardDatabase.getInstance(getActivity());
                     BaseballCardDao dao = database.getBaseballCardDao();
-                    BaseballCard card = dao.getBaseballCard(id);
-                    return card;
+                    return dao.getBaseballCard(id);
                 }
 
                 @Override
@@ -236,8 +246,6 @@ public class BaseballCardDetails extends Fragment {
                 }
             }.execute(id);
         }
-
-        return view;
     }
 
     private void setCard(BaseballCard card) {
