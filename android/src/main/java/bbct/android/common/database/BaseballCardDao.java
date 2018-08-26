@@ -12,19 +12,13 @@ import java.util.List;
 @Dao
 public interface BaseballCardDao {
     @Insert
-    long insertBaseballCard(BaseballCard card);
-
-    @Insert
-    long[] insertBaseballCards(List<BaseballCard> cards);
+    void insertBaseballCard(BaseballCard card);
 
     @Update
-    int updateBaseballCard(BaseballCard card);
-
-    @Update
-    int updateBaseballCards(List<BaseballCard> cards);
+    void updateBaseballCard(BaseballCard card);
 
     @Delete
-    int deleteBaseballCards(List<BaseballCard> cards);
+    void deleteBaseballCards(List<BaseballCard> cards);
 
     @Query("SELECT * FROM baseball_cards")
     LiveData<List<BaseballCard>> getBaseballCards();
