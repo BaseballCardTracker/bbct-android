@@ -109,7 +109,7 @@ public class BaseballCardDetailsEditCardTest extends
 
         inst.setInTouchMode(true);
         FragmentTestActivity activity = this.getActivity();
-        BaseballCardDetails fragment = BaseballCardDetails.getInstance(cardId, this.oldCard);
+        BaseballCardDetails fragment = BaseballCardDetails.getInstance(cardId);
         activity.replaceFragment(fragment);
     }
 
