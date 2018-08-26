@@ -248,7 +248,7 @@ public class BaseballCardList extends ListFragment {
             String brand = filterParams.getString(
                 FilterCards.BRAND_EXTRA, "");
             String year = filterParams.getString(
-                FilterCards.YEAR_EXTRA);
+                FilterCards.YEAR_EXTRA, "-1");
             String number = filterParams.getString(
                 FilterCards.NUMBER_EXTRA, "");
             String playerName = filterParams.getString(
@@ -256,22 +256,13 @@ public class BaseballCardList extends ListFragment {
             String team = filterParams.getString(
                 FilterCards.TEAM_EXTRA, "");
 
-            if (year == null) {
-                cards = dao.getBaseballCards(
-                    String.format(format, brand),
-                    String.format(format, number),
-                    String.format(format, playerName),
-                    String.format(format, team)
-                );
-            } else {
-                cards = dao.getBaseballCards(
-                    String.format(format, brand),
-                    Integer.valueOf(year),
-                    String.format(format, number),
-                    String.format(format, playerName),
-                    String.format(format, team)
-                );
-            }
+            cards = dao.getBaseballCards(
+                String.format(format, brand),
+                Integer.valueOf(year),
+                String.format(format, number),
+                String.format(format, playerName),
+                String.format(format, team)
+            );
         }
 
         cards.observe(this, new Observer<List<BaseballCard>>() {
