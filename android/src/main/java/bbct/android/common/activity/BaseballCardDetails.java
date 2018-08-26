@@ -23,6 +23,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.database.SQLException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -44,7 +45,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.List;
 import java.util.Locale;
 
@@ -216,13 +216,25 @@ public class BaseballCardDetails extends Fragment {
         this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
         this.playerPositionSpinner.setAdapter(this.positionsAdapter);
 
-        Bundle args = this.getArguments();
+        Bundle args = getArguments();
         if (args != null) {
-            BaseballCardDatabase database = BaseballCardDatabase.getInstance(this.getActivity());
-            BaseballCardDao dao = database.getBaseballCardDao();
             long id = args.getLong(ID);
-            BaseballCard card = dao.getBaseballCard(id);
-            setCard(card);
+            new AsyncTask<Long, Void, BaseballCard>() {
+                @Override
+                protected BaseballCard doInBackground(Long... args) {
+                    long id = args[0];
+                    BaseballCardDatabase database =
+                        BaseballCardDatabase.getInstance(getActivity());
+                    BaseballCardDao dao = database.getBaseballCardDao();
+                    BaseballCard card = dao.getBaseballCard(id);
+                    return card;
+                }
+
+                @Override
+                protected void onPostExecute(BaseballCard card) {
+                    setCard(card);
+                }
+            }.execute(id);
         }
 
         return view;

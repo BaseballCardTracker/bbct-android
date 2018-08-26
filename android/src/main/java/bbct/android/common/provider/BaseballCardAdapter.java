@@ -89,4 +89,11 @@ public class BaseballCardAdapter extends ArrayAdapter<BaseballCard> {
 
         return row;
     }
+
+    @Override
+    public long getItemId(int position) {
+        BaseballCard card = getItem(position);
+        assert card != null;
+        return card._id;
+    }
 }
