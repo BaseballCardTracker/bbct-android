@@ -51,15 +51,15 @@ abstract public class NavigateUpFromBaseballCardListTest<T extends MainActivity>
 
     @Before
     public void setUp() throws Exception {
-        activityActivityTestRule.getActivity()
-                .getSupportFragmentManager().beginTransaction();
         context = getInstrumentation().getTargetContext();
     }
 
     @Test
     public void testNavigateUp() {
         String expectedTitle = context.getString(R.string.app_name);
-        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
-        onView(withText(expectedTitle)).check(matches(isDisplayed()));
+        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed()))
+                .perform(click());
+        onView(withText(expectedTitle))
+                .check(matches(isDisplayed()));
     }
 }

@@ -48,17 +48,18 @@ abstract public class NavigateUpFromFilterCardsTest<T extends MainActivity> {
 
     @Before
     public void setUp() throws Exception {
-        activityActivityTestRule.getActivity()
-                .getSupportFragmentManager().beginTransaction();
         context = getInstrumentation().getTargetContext();
     }
 
     @Test
     public void testNavigateUp() {
         String expectedTitle = context.getString(R.string.app_name);
-        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
-        onView(allOf(withContentDescription(R.string.filter_cards_title), isDisplayed())).perform(click());
-        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
+        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed()))
+                .perform(click());
+        onView(allOf(withContentDescription(R.string.filter_cards_title), isDisplayed()))
+                .perform(click());
+        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed()))
+                .perform(click());
         onView(allOf(withText(expectedTitle), isDisplayed()));
     }
 }

@@ -52,8 +52,6 @@ abstract public class NavigateUpFromBaseballCardDetailsTest<T extends MainActivi
 
     @Before
     public void setUp() throws Exception {
-        activityActivityTestRule.getActivity()
-                .getSupportFragmentManager().beginTransaction();
         context = getInstrumentation().getTargetContext();
     }
 
@@ -62,8 +60,11 @@ abstract public class NavigateUpFromBaseballCardDetailsTest<T extends MainActivi
         String cardDetailsTitle = context.getString(R.string.card_details_title);
         String expectedTitle = context.getString(R.string.bbct_title, cardDetailsTitle);
 
-        onView(withText(expectedTitle)).check(matches(isDisplayed()));
-        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed())).perform(click());
-        onView(withText(R.string.app_name)).check(matches(isDisplayed()));
+        onView(withText(expectedTitle))
+                .check(matches(isDisplayed()));
+        onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed()))
+                .perform(click());
+        onView(withText(R.string.app_name))
+                .check(matches(isDisplayed()));
     }
 }

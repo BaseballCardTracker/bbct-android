@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
@@ -311,13 +310,6 @@ final public class BBCTTestUtil {
         Log.d(TAG, "power=" + power);
 
         return power;
-    }
-
-    public static void skipSurvey() {
-        onView(withText(R.string.survey1)).check(matches(isDisplayed()));
-        onView(withText(R.string.later))
-                .check(matches(isDisplayed()))
-                .perform(click());
     }
 
     public enum EditTexts {
