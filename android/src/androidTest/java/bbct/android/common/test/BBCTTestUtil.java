@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.Espresso;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
@@ -68,6 +69,11 @@ final public class BBCTTestUtil {
     public static final String DELETE_MESSAGE = "Cards deleted successfully";
 
     private BBCTTestUtil() {
+    }
+
+    public static void hideKeyboardAndPressBack() {
+        Espresso.closeSoftKeyboard();
+        Espresso.pressBack();
     }
 
     public static void assertListViewContainsItems(List<BaseballCard> expectedItems) {
