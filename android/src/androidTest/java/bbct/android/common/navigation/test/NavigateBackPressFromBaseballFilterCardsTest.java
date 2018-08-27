@@ -18,6 +18,7 @@
  */
 package bbct.android.common.navigation.test;
 
+import android.content.Context;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.rule.ActivityTestRule;
@@ -29,6 +30,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
+import bbct.android.common.activity.MainActivity;
+import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.lite.provider.LiteActivity;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
@@ -41,35 +44,27 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class NavigateBackPressFromBaseballFilterCardsTest {
+public class NavigateBackPressFromBaseballFilterCardsTest<T extends MainActivity> {
     @Rule
-    public ActivityTestRule<LiteActivity> activityActivityTestRule = new ActivityTestRule<LiteActivity>(LiteActivity.class);
+    public ActivityTestRule<T> activityActivityTestRule = null;
+    private Context context = null;
+
+    public NavigateBackPressFromBaseballFilterCardsTest(Class<T> activityClass) {
+        this.activityActivityTestRule = new ActivityTestRule<>(activityClass);
+    }
 
     @Before
     public void setUp() throws Exception {
-        activityActivityTestRule.getActivity()
-                .getSupportFragmentManager().beginTransaction();
-    }
-
-    private void skipSurvey() {
-        try {
-            onView(withText(R.string.survey1)).check(matches(isDisplayed()));
-            onView(withText(R.string.later))
-                    .check(matches(isDisplayed()))
-                    .perform(click());
-        } catch (NoMatchingViewException e) {
-            //view not displayed logic
-        }
+        context = getInstrumentation().getTargetContext();
     }
 
     @Test
     public void testNavigateUp() {
-        skipSurvey();
-        String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.app_name);
-        Espresso.closeSoftKeyboard();
-        Espresso.pressBack();
-        onView(allOf(withContentDescription(R.string.filter_cards_title), isDisplayed())).perform(click());
-        Espresso.pressBack();
+        String expectedTitle = context.getString(R.string.app_name);
+        BBCTTestUtil.hideKeyboardAndPressBack();
+        onView(allOf(withContentDescription(R.string.filter_cards_title), isDisplayed()))
+                .perform(click());
+        BBCTTestUtil.hideKeyboardAndPressBack();
         onView(allOf(withText(expectedTitle), isDisplayed()));
 
     }

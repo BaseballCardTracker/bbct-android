@@ -29,6 +29,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
+import bbct.android.common.activity.MainActivity;
+import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.lite.provider.LiteActivity;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
@@ -41,35 +43,22 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class NavigateBackPressFromBaseballCardDetailsTest {
+public class NavigateBackPressFromBaseballCardDetailsTest<T extends MainActivity> {
     @Rule
-    public ActivityTestRule<LiteActivity> activityActivityTestRule = new ActivityTestRule<LiteActivity>(LiteActivity.class);
+    public ActivityTestRule<T> activityActivityTestRule = null;
 
-    @Before
-    public void setUp() throws Exception {
-        activityActivityTestRule.getActivity()
-                .getSupportFragmentManager().beginTransaction();
-    }
-
-    private void skipSurvey() {
-        try {
-            onView(withText(R.string.survey1)).check(matches(isDisplayed()));
-            onView(withText(R.string.later))
-                    .check(matches(isDisplayed()))
-                    .perform(click());
-        } catch (NoMatchingViewException e) {
-            //view not displayed logic
-        }
+    public NavigateBackPressFromBaseballCardDetailsTest(Class<T> activityClass) {
+        this.activityActivityTestRule = new ActivityTestRule<>(activityClass);
     }
 
     @Test
     public void testDefaultNavigateUpWithNoData() {
-        skipSurvey();
         String cardDetailsTitle = getInstrumentation().getTargetContext().getString(R.string.card_details_title);
         String expectedTitle = getInstrumentation().getTargetContext().getString(R.string.bbct_title, cardDetailsTitle);
-        Espresso.closeSoftKeyboard();
-        onView(withText(expectedTitle)).check(matches(isDisplayed()));
-        Espresso.pressBack();
-        onView(withText(R.string.app_name)).check(matches(isDisplayed()));
+        onView(withText(expectedTitle))
+                .check(matches(isDisplayed()));
+        BBCTTestUtil.hideKeyboardAndPressBack();
+        onView(withText(R.string.app_name))
+                .check(matches(isDisplayed()));
     }
 }
