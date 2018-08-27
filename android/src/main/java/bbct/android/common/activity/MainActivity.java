@@ -71,12 +71,15 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             Uri uri = BaseballCardContract.getUri(this.getPackageName());
             Cursor cursor = this.getContentResolver().query(uri,
                     BaseballCardContract.PROJECTION, null, null, null);
-            fragmentManager.beginTransaction().add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST)
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST)
                     .addToBackStack(FragmentTags.CARD_LIST)
                     .commit();
 
             if (cursor == null || cursor.getCount() == 0) {
-                fragmentManager.beginTransaction().replace(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD)
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD)
                         .addToBackStack(FragmentTags.EDIT_CARD)
                         .commit();
             }
