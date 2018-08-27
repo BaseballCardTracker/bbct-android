@@ -212,8 +212,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 .findFragmentById(R.id.fragment_holder);
         if (currentFragment instanceof About) {
             fragmentManager.popBackStack(FragmentTags.CARD_LIST, 0);
-            return;
         }
-        super.onBackPressed();
+        else {
+            super.onBackPressed();
+        }
     }
 }
