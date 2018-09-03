@@ -34,7 +34,10 @@ jobs:
       - run:
           name: Test with Firebase Test Lab
           command: >
-            sudo gcloud firebase test android run
-              --app <local_server_path>/<app_apk>.apk
-              --test <local_server_path>/<app_test_apk>.apk
+            sudo gcloud firebase test android run \
+              --type=instrumentation \
+              --app ./android/build/outputs/apk/lite/debug/android-lite-debug.apk \
+              --test ./android/build/outputs/apk/androidTest/lite/debug/android-lite-debug-androidTest.apk \
+              --device model=sailfish \
+              --test-targets="class bbct.android.lite.suite.GoodTests" \
               --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
