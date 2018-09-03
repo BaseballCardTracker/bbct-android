@@ -21,7 +21,8 @@ jobs:
           name: Build debug APK and release APK
           command: |
             ./gradlew :android:assembleDebug
-            ./gradlew :android:assembleDebugAndroidTest
+            ./gradlew :android:assembleLiteDebugAndroidTest
+            ./gradlew :android:assemblePremiumDebugAndroidTest
       - run:
           name: Store Google Service Account
           command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
