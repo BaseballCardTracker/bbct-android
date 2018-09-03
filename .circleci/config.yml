@@ -41,3 +41,10 @@ jobs:
               --device model=sailfish \
               --test-targets="class bbct.android.lite.suite.GoodTests" \
               --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
+            sudo gcloud firebase test android run \
+              --type=instrumentation \
+              --app ./android/build/outputs/apk/premium/debug/android-premium-debug.apk \
+              --test ./android/build/outputs/apk/androidTest/premium/debug/android-premium-debug-androidTest.apk \
+              --device model=sailfish \
+              --test-targets="class bbct.android.premium.suite.GoodTests" \
+              --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
