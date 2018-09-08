@@ -20,6 +20,8 @@ package bbct.android.common.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +43,7 @@ import bbct.android.common.SharedPreferenceKeys;
 import bbct.android.common.activity.util.DialogUtil;
 import io.fabric.sdk.android.Fabric;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
     public static final int SURVEY_DELAY = 7;
     public static final String SURVEY1_URI = "https://docs.google.com/forms/d/1wj3d3SiZ7U81_ZRp0zwgH0l2b2Az3A9XkYJbgQFdO9I/viewform";
     public static final String SURVEY2_URI = "https://docs.google.com/forms/d/e/1FAIpQLSfg0TPyKcWlGSOlhhDd_4qIjYG9htOjJ5pwjRYtc71zxPw-ag/viewform";
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
 
     private SharedPreferences prefs;
+    private FragmentManager fragmentManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,16 +62,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         this.setContentView(R.layout.main);
+        fragmentManager = getSupportFragmentManager();
 
         if (savedInstanceState == null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
             ft.commit();
 
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
+            fragmentManager.addOnBackStackChangedListener(this);
         }
 
         prefs = getSharedPreferences(SharedPreferenceKeys.PREFS, MODE_PRIVATE);
@@ -154,18 +155,54 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
+    public boolean onSupportNavigateUp() {
+        this.onBackPressed();
+        return true;
+    }
 
-        if (itemId == R.id.about_menu) {
-            this.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
-                    .addToBackStack(FragmentTags.ABOUT)
-                    .commit();
-            return true;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+        switch (menuId) {
+            case R.id.about_menu:
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
+                        .addToBackStack(FragmentTags.ABOUT)
+                        .commit();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.updateUpButtonVisibility();
+    }
+
+    @Override
+    public void onBackStackChanged() {
+        this.updateUpButtonVisibility();
+    }
+
+    public void updateUpButtonVisibility() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(fragmentManager.getBackStackEntryCount() > 1);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment currentFragment = fragmentManager
+                .findFragmentById(R.id.fragment_holder);
+        if (currentFragment instanceof About) {
+            fragmentManager.popBackStack(FragmentTags.CARD_LIST, 0);
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 }
