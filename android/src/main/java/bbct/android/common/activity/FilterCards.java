@@ -21,12 +21,10 @@ package bbct.android.common.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -36,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import bbct.android.common.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class FilterCards extends Fragment {
 
@@ -59,6 +59,9 @@ public class FilterCards extends Fragment {
     private static final String[] EXTRAS = { BRAND_EXTRA, YEAR_EXTRA, NUMBER_EXTRA,
             PLAYER_NAME_EXTRA, TEAM_EXTRA };
 
+    @BindView(R.id.confirm_button)
+    FloatingActionButton confirmButton;
+
     private View.OnClickListener onCheckBoxClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -73,8 +76,8 @@ public class FilterCards extends Fragment {
 
             if (input != null) {
                 toggleTextField(input);
-                activity.invalidateOptionsMenu();
             }
+            confirmButton.setEnabled(numberChecked() > 0);
         }
     };
     private final ArrayList<Integer> enabledFields = new ArrayList<>();
@@ -89,6 +92,15 @@ public class FilterCards extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.filter_cards, container, false);
+        ButterKnife.bind(this, view);
+
+        confirmButton.setEnabled(false);
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onConfirm();
+            }
+        });
 
         // set title
         String format = this.getString(R.string.bbct_title);
@@ -138,36 +150,6 @@ public class FilterCards extends Fragment {
         super.onSaveInstanceState(outState);
 
         outState.putIntegerArrayList(INPUT_EXTRA, enabledFields);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.save, menu);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        MenuItem confirm = menu.findItem(R.id.save_menu);
-
-        if (this.numberChecked() > 0) {
-            confirm.setVisible(true);
-            confirm.setEnabled(true);
-        } else {
-            confirm.setVisible(false);
-            confirm.setEnabled(false);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int menuId = item.getItemId();
-
-        if (menuId == R.id.save_menu) {
-            this.onConfirm();
-            return true;
-        }
-
-        return false;
     }
 
     private void toggleTextField(EditText et) {
