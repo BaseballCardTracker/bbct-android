@@ -28,6 +28,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -59,7 +60,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BaseballCardDetails extends Fragment {
-
     private static final String ID = "id";
     private static final String TAG = BaseballCardDetails.class.getName();
 
@@ -83,6 +83,8 @@ public class BaseballCardDetails extends Fragment {
     AutoCompleteTextView teamText = null;
     @BindView(R.id.player_position_text)
     Spinner playerPositionSpinner = null;
+    @BindView(R.id.save_button)
+    FloatingActionButton saveButton = null;
 
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;
@@ -116,6 +118,13 @@ public class BaseballCardDetails extends Fragment {
         String cardDetailsTitle = this.getString(R.string.card_details_title);
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
         activity.setTitle(title);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSave();
+            }
+        });
 
         brandText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -266,24 +275,6 @@ public class BaseballCardDetails extends Fragment {
 
         int selectedPosition = this.positionsAdapter.getPosition(card.position);
         this.playerPositionSpinner.setSelection(selectedPosition);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.save, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int menuId = item.getItemId();
-
-        switch (menuId) {
-            case R.id.save_menu:
-                this.onSave();
-                return true;
-        }
-
-        return false;
     }
 
     private ArrayAdapter<CharSequence> populateSpinnerAdapter(int arrayId) {
