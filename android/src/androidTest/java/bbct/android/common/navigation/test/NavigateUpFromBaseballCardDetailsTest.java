@@ -51,15 +51,17 @@ abstract public class NavigateUpFromBaseballCardDetailsTest<T extends MainActivi
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         context = getInstrumentation().getTargetContext();
     }
 
     @Test
-    public void testDefaultNavigateUpWithNoData() {
+    public void testNavigateUp() {
         String cardDetailsTitle = context.getString(R.string.card_details_title);
         String expectedTitle = context.getString(R.string.bbct_title, cardDetailsTitle);
 
+        onView(allOf(withContentDescription(R.string.add_menu), isDisplayed()))
+            .perform(click());
         onView(withText(expectedTitle))
                 .check(matches(isDisplayed()));
         onView(allOf(withContentDescription(R.string.abc_action_bar_up_description), isDisplayed()))

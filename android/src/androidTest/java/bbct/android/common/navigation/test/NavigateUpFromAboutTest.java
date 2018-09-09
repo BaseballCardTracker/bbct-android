@@ -47,28 +47,20 @@ abstract public class NavigateUpFromAboutTest<T extends MainActivity> {
     @Rule
     public ActivityTestRule<T> activityActivityTestRule;
     private Context context = null;
-    private DatabaseUtil dbUtil = null;
 
     public NavigateUpFromAboutTest(Class<T> activityClass) {
         this.activityActivityTestRule = new ActivityTestRule<>(activityClass);
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         context = getInstrumentation().getTargetContext();
-        this.dbUtil = new DatabaseUtil(context);
     }
 
     @Test
     public void testNavigateToBaseballCardDetailsThenAboutFragment() {
         String expectedTitle = context.getString(R.string.app_name);
 
-        // pop to BaseballCardList first if db is empty
-        if (this.dbUtil.isEmpty()) {
-            onView(allOf(withContentDescription(R.string
-                .abc_action_bar_up_description), isDisplayed()))
-                .perform(click());
-        }
         // navigate to BaseballCardDetails
         onView(allOf(withContentDescription(R.string.add_menu), isDisplayed()))
             .perform(click());
@@ -86,13 +78,6 @@ abstract public class NavigateUpFromAboutTest<T extends MainActivity> {
     @Test
     public void testNavigateToFilterThenAboutFragment() {
         String expectedTitle = context.getString(R.string.app_name);
-
-        // pop to BaseballCardList first if db is empty
-        if (this.dbUtil.isEmpty()) {
-            onView(allOf(withContentDescription(R.string
-                .abc_action_bar_up_description), isDisplayed()))
-                .perform(click());
-        }
 
         // navigate to FilterCards
         onView(allOf(withContentDescription(R.string.filter_cards_title), isDisplayed()))
@@ -116,9 +101,8 @@ abstract public class NavigateUpFromAboutTest<T extends MainActivity> {
             aboutTitle);
         onView(withText(expectedTitle))
             .check(matches(isDisplayed()));
-
-        onView(allOf(withContentDescription(R.string
-            .abc_action_bar_up_description), isDisplayed()))
+        onView(allOf(withContentDescription(
+            R.string.abc_action_bar_up_description), isDisplayed()))
             .perform(click());
         onView(withText(initialTitle))
             .check(matches(isDisplayed()));
