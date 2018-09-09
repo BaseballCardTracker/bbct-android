@@ -166,7 +166,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_menu_save"
+        android:src="@drawable/check"
         app:layout_anchor="@id/scroll_card_details"
         app:layout_anchorGravity="bottom|right|end"
     />
