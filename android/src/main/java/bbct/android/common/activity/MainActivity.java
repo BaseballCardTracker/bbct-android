@@ -19,8 +19,6 @@
 package bbct.android.common.activity;
 
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -43,7 +41,6 @@ import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.SharedPreferenceKeys;
 import bbct.android.common.activity.util.DialogUtil;
-import bbct.android.common.provider.BaseballCardContract;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
@@ -68,22 +65,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         fragmentManager = getSupportFragmentManager();
 
         if (savedInstanceState == null) {
-            Uri uri = BaseballCardContract.getUri(this.getPackageName());
-            Cursor cursor = this.getContentResolver().query(uri,
-                    BaseballCardContract.PROJECTION, null, null, null);
-
             fragmentManager.beginTransaction()
-                    .add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST)
-                    .addToBackStack(FragmentTags.CARD_LIST)
-                    .commit();
-
-            if (cursor == null || cursor.getCount() == 0) {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_holder, new BaseballCardDetails(), FragmentTags.EDIT_CARD)
-                        .addToBackStack(FragmentTags.EDIT_CARD)
-                        .commit();
-            }
-            cursor.close();
+                .add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST)
+                .addToBackStack(FragmentTags.CARD_LIST)
+                .commit();
 
             fragmentManager.addOnBackStackChangedListener(this);
         }
@@ -111,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
                     DialogUtil.showSurveyDialog(this, todayStr, R.string.survey1,
-                            SharedPreferenceKeys.SURVEY1_DATE, SURVEY1_URI);
+                        SharedPreferenceKeys.SURVEY1_DATE, SURVEY1_URI);
                 }
             } catch (ParseException e) {
                 Log.d(TAG, "Error parsing install date");
@@ -126,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         final String todayStr = dateFormat.format(today);
 
         if (prefs.contains(SharedPreferenceKeys.SURVEY1_DATE)
-                && !prefs.contains(SharedPreferenceKeys.SURVEY2_DATE)) {
+            && !prefs.contains(SharedPreferenceKeys.SURVEY2_DATE)) {
             String survey1Date = prefs.getString(SharedPreferenceKeys.SURVEY1_DATE, today.toString());
 
             try {
@@ -135,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 cal.add(Calendar.DATE, SURVEY_DELAY);
                 if (today.after(cal.getTime())) {
                     DialogUtil.showSurveyDialog(this, todayStr, R.string.survey2,
-                            SharedPreferenceKeys.SURVEY2_DATE, SURVEY2_URI);
+                        SharedPreferenceKeys.SURVEY2_DATE, SURVEY2_URI);
                 }
             } catch (ParseException e) {
                 Log.d(TAG, "Error parsing install date");
@@ -182,12 +167,13 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         switch (menuId) {
             case R.id.about_menu:
                 fragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
-                        .addToBackStack(FragmentTags.ABOUT)
-                        .commit();
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
+                    .addToBackStack(FragmentTags.ABOUT)
+                    .commit();
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -212,11 +198,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     @Override
     public void onBackPressed() {
         Fragment currentFragment = fragmentManager
-                .findFragmentById(R.id.fragment_holder);
+            .findFragmentById(R.id.fragment_holder);
         if (currentFragment instanceof About) {
             fragmentManager.popBackStack(FragmentTags.CARD_LIST, 0);
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }

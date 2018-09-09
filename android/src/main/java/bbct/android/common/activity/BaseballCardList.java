@@ -18,10 +18,12 @@
  */
 package bbct.android.common.activity;
 
-import android.content.ContentUris;
-import android.database.Cursor;
-import android.net.Uri;
+import android.app.Activity;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
@@ -41,34 +43,30 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import bbct.android.common.R;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
+import bbct.android.common.database.BaseballCard;
+import bbct.android.common.database.BaseballCardDao;
+import bbct.android.common.database.BaseballCardDatabase;
 import bbct.android.common.provider.BaseballCardAdapter;
-import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.view.HeaderView;
-import bbct.data.BaseballCard;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 //TODO: Make list fancier
 public class BaseballCardList extends ListFragment {
-
-    private static final String[] ROW_PROJECTION = {
-            BaseballCardContract.BRAND_COL_NAME,
-            BaseballCardContract.YEAR_COL_NAME,
-            BaseballCardContract.NUMBER_COL_NAME,
-            BaseballCardContract.PLAYER_NAME_COL_NAME};
-    private static final int[] ROW_TEXT_VIEWS = {R.id.brand_text_view,
-            R.id.year_text_view, R.id.number_text_view,
-            R.id.player_name_text_view};
     private static final String FILTER_PARAMS = "filterParams";
     private static final String TAG = BaseballCardList.class.getName();
 
-    @BindView(android.R.id.empty) TextView emptyList = null;
-    @BindView(android.R.id.list) ListView listView;
+    @BindView(android.R.id.empty)
+    TextView emptyList = null;
+    @BindView(android.R.id.list)
+    ListView listView;
 
     private BaseballCardAdapter adapter = null;
-    private Uri uri = null;
     private Bundle filterParams = null;
     private BaseballCardMultiChoiceModeListener mCallbacks;
 
@@ -84,19 +82,7 @@ public class BaseballCardList extends ListFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate()");
-        Log.d(TAG, "  savedInstanceState=" + savedInstanceState);
-
         super.onCreate(savedInstanceState);
-
-        this.adapter = new BaseballCardAdapter(this.getActivity(),
-                R.layout.baseball_card, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
-
-        Log.d(TAG, "  adapter=" + this.adapter);
-
-        this.uri = BaseballCardContract.getUri(this.getActivity()
-                .getPackageName());
-
         Bundle args = this.getArguments();
 
         if (savedInstanceState != null) {
@@ -117,8 +103,6 @@ public class BaseballCardList extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView()");
-
         View view = inflater.inflate(R.layout.card_list, container, false);
         ButterKnife.bind(this, view);
 
@@ -137,14 +121,7 @@ public class BaseballCardList extends ListFragment {
             }
         });
         listView.addHeaderView(headerView);
-        this.setListAdapter(this.adapter);
-        this.adapter.setListFragment(this);
-
-        mCallbacks = new BaseballCardMultiChoiceModeListener(this);
-        listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(mCallbacks);
-        this.adapter.setActionModeCallback(mCallbacks);
-        this.applyFilter(this.filterParams);
+        applyFilter(filterParams);
 
         return view;
     }
@@ -197,6 +174,7 @@ public class BaseballCardList extends ListFragment {
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
             this.emptyList.setText(R.string.start);
+            this.filterParams = null;
             this.applyFilter(null);
 
             this.getActivity().supportInvalidateOptionsMenu();
@@ -211,7 +189,7 @@ public class BaseballCardList extends ListFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putBundle(FILTER_PARAMS, this.filterParams);
@@ -223,9 +201,7 @@ public class BaseballCardList extends ListFragment {
             return;
         }
 
-        BaseballCard card = BaseballCardList.this.adapter.getItem(position - 1);
-
-        Fragment details = BaseballCardDetails.getInstance(id, card);
+        Fragment details = BaseballCardDetails.getInstance(id);
         this.getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
@@ -234,17 +210,29 @@ public class BaseballCardList extends ListFragment {
     }
 
     public void deleteSelectedCards() {
+        final Activity activity = getActivity();
+        final List<BaseballCard> cards = new ArrayList<>();
         for (int i = 0; i < getListAdapter().getCount() + 1; ++i) {
             if (getListView().isItemChecked(i)) {
-                // Subtract one to compensate for the header view
-                long id = this.adapter.getItemId(i - 1);
-                Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
-                this.getActivity().getContentResolver().delete(deleteUri, null, null);
+                BaseballCard card = this.adapter.getItem(i - 1);
+                cards.add(card);
             }
         }
 
-        Toast.makeText(this.getActivity(), R.string.card_deleted_message, Toast.LENGTH_LONG)
-                .show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BaseballCardDatabase database =
+                        BaseballCardDatabase.getInstance(activity);
+                database.getBaseballCardDao().deleteBaseballCards(cards);
+            }
+        }).start();
+
+        Toast.makeText(
+                activity,
+                R.string.card_deleted_message,
+                Toast.LENGTH_LONG
+        ).show();
     }
 
     private void setAllChecked(boolean checked) {
@@ -256,79 +244,49 @@ public class BaseballCardList extends ListFragment {
     }
 
     protected void applyFilter(Bundle filterParams) {
-        Log.d(TAG, "applyFilter()");
+        LiveData<List<BaseballCard>> cards;
+        BaseballCardDatabase database =
+            BaseballCardDatabase.getInstance(getActivity());
+        BaseballCardDao dao = database.getBaseballCardDao();
 
-        this.filterParams = filterParams;
-
-        if (this.filterParams == null) {
-            this.emptyList.setText(R.string.start);
+        if (filterParams == null) {
+            cards = dao.getBaseballCards();
         } else {
-            this.emptyList.setText(R.string.empty_list);
+            String format = "%%%s%%";
+            String brand = filterParams.getString(
+                FilterCards.BRAND_EXTRA, "");
+            String year = filterParams.getString(
+                FilterCards.YEAR_EXTRA, "-1");
+            String number = filterParams.getString(
+                FilterCards.NUMBER_EXTRA, "");
+            String playerName = filterParams.getString(
+                FilterCards.PLAYER_NAME_EXTRA, "");
+            String team = filterParams.getString(
+                FilterCards.TEAM_EXTRA, "");
+
+            cards = dao.getBaseballCards(
+                String.format(format, brand),
+                Integer.valueOf(year),
+                String.format(format, number),
+                String.format(format, playerName),
+                String.format(format, team)
+            );
         }
 
-        StringBuilder sb = null;
-        String[] args = null;
+        cards.observe(this, new Observer<List<BaseballCard>>() {
+            @Override
+            public void onChanged(@Nullable List<BaseballCard> cards) {
+                Activity activity = getActivity();
+                adapter = new BaseballCardAdapter(
+                    activity, R.layout.baseball_card, cards);
+                setListAdapter(adapter);
+                adapter.setListFragment(BaseballCardList.this);
 
-        if (this.filterParams != null) {
-            sb = new StringBuilder();
-            args = new String[this.filterParams.size()];
-
-            int numQueries = 0;
-            for (String key : this.filterParams.keySet()) {
-                String value = this.filterParams.getString(key);
-
-                switch (key) {
-                    case FilterCards.YEAR_EXTRA:
-                        sb.append(BaseballCardContract.YEAR_SELECTION);
-                        break;
-                    case FilterCards.BRAND_EXTRA:
-                        sb.append(BaseballCardContract.BRAND_SELECTION);
-                        break;
-                    case FilterCards.NUMBER_EXTRA:
-                        sb.append(BaseballCardContract.NUMBER_SELECTION);
-                        break;
-                    case FilterCards.PLAYER_NAME_EXTRA:
-                        sb.append(BaseballCardContract.PLAYER_NAME_SELECTION);
-                        break;
-                    case FilterCards.TEAM_EXTRA:
-                        sb.append(BaseballCardContract.TEAM_SELECTION);
-                        break;
-                    default:
-                        Log.e(TAG, "Invalid key: " + key);
-                        break;
-                }
-
-                args[numQueries] = value;
-                numQueries++;
-
-                if (numQueries < args.length) {
-                    sb.append(" AND ");
-                }
+                mCallbacks = new BaseballCardMultiChoiceModeListener(BaseballCardList.this);
+                listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+                listView.setMultiChoiceModeListener(mCallbacks);
+                adapter.setActionModeCallback(mCallbacks);
             }
-        }
-
-        Cursor cursor = this
-                .getActivity()
-                .getContentResolver()
-                .query(this.uri, BaseballCardContract.PROJECTION,
-                        sb == null ? null : sb.toString(), args, null);
-        this.swapCursor(cursor);
+        });
     }
-
-    @SuppressWarnings("deprecation")
-    private void swapCursor(Cursor newCursor) {
-        Log.d(TAG, "swapCursor()");
-        Cursor oldCursor = this.adapter.getCursor();
-
-        if (oldCursor != null) {
-            oldCursor.close();
-            this.getActivity().stopManagingCursor(oldCursor);
-        }
-
-        if (newCursor != null) {
-            this.getActivity().startManagingCursor(newCursor);
-            this.adapter.changeCursor(newCursor);
-        }
-    }
-
 }

@@ -18,15 +18,18 @@
  */
 package bbct.android.common.activity;
 
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.database.SQLException;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -39,49 +42,54 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Locale;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.util.DialogUtil;
-import bbct.android.common.provider.BaseballCardContract;
-import bbct.android.common.provider.SingleColumnCursorAdapter;
-import bbct.data.BaseballCard;
+import bbct.android.common.database.BaseballCard;
+import bbct.android.common.database.BaseballCardDao;
+import bbct.android.common.database.BaseballCardDatabase;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BaseballCardDetails extends Fragment {
 
     private static final String ID = "id";
-    private static final String CARD = "card";
     private static final String TAG = BaseballCardDetails.class.getName();
 
-    @BindView(R.id.autograph) CheckBox autographCheckBox = null;
-    @BindView(R.id.condition) Spinner conditionSpinner = null;
-    @BindView(R.id.brand_text) AutoCompleteTextView brandText = null;
-    @BindView(R.id.year_text) EditText yearText = null;
-    @BindView(R.id.number_text) EditText numberText = null;
-    @BindView(R.id.value_text) EditText valueText = null;
-    @BindView(R.id.count_text) EditText countText = null;
-    @BindView(R.id.player_name_text) AutoCompleteTextView playerNameText = null;
-    @BindView(R.id.team_text) AutoCompleteTextView teamText = null;
-    @BindView(R.id.player_position_text) Spinner playerPositionSpinner = null;
+    @BindView(R.id.autograph)
+    CheckBox autographCheckBox = null;
+    @BindView(R.id.condition)
+    Spinner conditionSpinner = null;
+    @BindView(R.id.brand_text)
+    AutoCompleteTextView brandText = null;
+    @BindView(R.id.year_text)
+    EditText yearText = null;
+    @BindView(R.id.number_text)
+    EditText numberText = null;
+    @BindView(R.id.value_text)
+    EditText valueText = null;
+    @BindView(R.id.count_text)
+    EditText countText = null;
+    @BindView(R.id.player_name_text)
+    AutoCompleteTextView playerNameText = null;
+    @BindView(R.id.team_text)
+    AutoCompleteTextView teamText = null;
+    @BindView(R.id.player_position_text)
+    Spinner playerPositionSpinner = null;
 
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;
-    private Uri uri = null;
     private boolean isUpdating = false;
-    private long cardId = -1L;
 
-    public static BaseballCardDetails getInstance(long id, BaseballCard card) {
+    public static BaseballCardDetails getInstance(long id) {
         Bundle args = new Bundle();
         args.putLong(ID, id);
-        args.putSerializable(CARD, card);
-
         BaseballCardDetails details = new BaseballCardDetails();
         details.setArguments(args);
 
@@ -96,7 +104,10 @@ public class BaseballCardDetails extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(
+            @NonNull LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.card_details, container, false);
         ButterKnife.bind(this, view);
 
@@ -153,59 +164,106 @@ public class BaseballCardDetails extends Fragment {
 
         String cardDetailsTitle = this.getString(R.string.card_details_title);
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
-        this.getActivity().setTitle(title);
+        final Activity activity = getActivity();
+        activity.setTitle(title);
 
-        this.conditionAdapter = this.populateSpinnerAdapter(R.array.condition);
-        this.conditionSpinner.setAdapter(this.conditionAdapter);
-
-        CursorAdapter brandAdapter = getSingleColumnCursorAdapter(BaseballCardContract.BRAND_COL_NAME);
-        this.brandText.setAdapter(brandAdapter);
-
-        CursorAdapter playerNameAdapter = getSingleColumnCursorAdapter(BaseballCardContract.PLAYER_NAME_COL_NAME);
-        this.playerNameText.setAdapter(playerNameAdapter);
-
-        CursorAdapter teamAdapter = getSingleColumnCursorAdapter(BaseballCardContract.TEAM_COL_NAME);
-        this.teamText.setAdapter(teamAdapter);
-
-        this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
-        this.playerPositionSpinner.setAdapter(this.positionsAdapter);
-
-        Bundle args = this.getArguments();
-        if (args != null) {
-            long id = args.getLong(ID);
-            BaseballCard card = (BaseballCard) args.getSerializable(CARD);
-            this.setCard(id, card);
-        }
-
-        this.uri = BaseballCardContract.getUri(this.getActivity().getPackageName());
+        createAdapters(activity);
+        populateTextEdits();
 
         return view;
     }
 
-    @NonNull
-    private CursorAdapter getSingleColumnCursorAdapter(String colName) {
-        return new SingleColumnCursorAdapter(getActivity(), colName);
+    private void createAdapters(final Activity activity) {
+        this.conditionAdapter = this.populateSpinnerAdapter(R.array.condition);
+        this.conditionSpinner.setAdapter(this.conditionAdapter);
+
+        final ArrayAdapter<String> brandAdapter = new ArrayAdapter<>(
+                activity,
+                android.R.layout.simple_list_item_1
+        );
+        this.brandText.setAdapter(brandAdapter);
+
+        final ArrayAdapter<String> playerNameAdapter = new ArrayAdapter<>(
+                activity,
+                android.R.layout.simple_list_item_1
+        );
+        this.playerNameText.setAdapter(playerNameAdapter);
+
+        final ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(
+            activity,
+            android.R.layout.simple_list_item_1
+        );
+        this.teamText.setAdapter(teamAdapter);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                BaseballCardDatabase database =
+                    BaseballCardDatabase.getInstance(activity);
+                BaseballCardDao dao = database.getBaseballCardDao();
+                LiveData<List<String>> brands = dao.getBrands();
+                brands.observe(
+                    BaseballCardDetails.this,
+                    new ListObserver(brandAdapter)
+                );
+
+                LiveData<List<String>> playerNames = dao.getPlayerNames();
+                playerNames.observe(
+                    BaseballCardDetails.this,
+                    new ListObserver(playerNameAdapter)
+                );
+
+                LiveData<List<String>> teams = dao.getTeams();
+                teams.observe(
+                    BaseballCardDetails.this,
+                    new ListObserver(teamAdapter)
+                );
+            }
+        }).start();
+
+        this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
+        this.playerPositionSpinner.setAdapter(this.positionsAdapter);
     }
 
-    private void setCard(long cardId, BaseballCard card) {
-        this.isUpdating = true;
-        this.cardId = cardId;
-        this.autographCheckBox.setChecked(card.isAutographed());
+    @SuppressLint("StaticFieldLeak")
+    private void populateTextEdits() {
+        Bundle args = getArguments();
+        if (args != null) {
+            long id = args.getLong(ID);
+            new AsyncTask<Long, Void, BaseballCard>() {
+                @Override
+                protected BaseballCard doInBackground(Long... args) {
+                    long id = args[0];
+                    BaseballCardDatabase database =
+                        BaseballCardDatabase.getInstance(getActivity());
+                    BaseballCardDao dao = database.getBaseballCardDao();
+                    return dao.getBaseballCard(id);
+                }
 
-        int selectedCondition = this.conditionAdapter.getPosition(card
-                .getCondition());
+                @Override
+                protected void onPostExecute(BaseballCard card) {
+                    setCard(card);
+                }
+            }.execute(id);
+        }
+    }
+
+    private void setCard(BaseballCard card) {
+        this.isUpdating = true;
+        this.autographCheckBox.setChecked(card.autographed);
+
+        int selectedCondition = this.conditionAdapter.getPosition(card.condition);
         this.conditionSpinner.setSelection(selectedCondition);
 
-        this.brandText.setText(card.getBrand());
-        this.yearText.setText(String.format(Locale.getDefault(), "%d", card.getYear()));
-        this.numberText.setText(String.format(Locale.getDefault(), "%d", card.getNumber()));
-        this.valueText.setText(String.format(Locale.getDefault(), "%.2f", card.getValue() / 100.0));
-        this.countText.setText(String.format(Locale.getDefault(), "%d", card.getCount()));
-        this.playerNameText.setText(card.getPlayerName());
-        this.teamText.setText(card.getTeam());
+        this.brandText.setText(card.brand);
+        this.yearText.setText(String.format(Locale.getDefault(), "%d", card.year));
+        this.numberText.setText(String.format(Locale.getDefault(), "%d", card.number));
+        this.valueText.setText(String.format(Locale.getDefault(), "%.2f", card.value / 100.0));
+        this.countText.setText(String.format(Locale.getDefault(), "%d", card.quantity));
+        this.playerNameText.setText(card.playerName);
+        this.teamText.setText(card.team);
 
-        int selectedPosition = this.positionsAdapter.getPosition(card
-                .getPlayerPosition());
+        int selectedPosition = this.positionsAdapter.getPosition(card.position);
         this.playerPositionSpinner.setSelection(selectedPosition);
     }
 
@@ -238,13 +296,13 @@ public class BaseballCardDetails extends Fragment {
     private BaseballCard getBaseballCard() {
         Log.d(TAG, "getBaseballCard()");
 
-        EditText[] allEditTexts = { this.brandText, this.yearText,
+        EditText[] allEditTexts = {this.brandText, this.yearText,
                 this.numberText, this.valueText, this.countText,
-                this.playerNameText, this.teamText };
-        int[] errorIds = { R.string.brand_input_error,
+                this.playerNameText, this.teamText};
+        int[] errorIds = {R.string.brand_input_error,
                 R.string.year_input_error, R.string.number_input_error,
                 R.string.value_input_error, R.string.count_input_error,
-                R.string.player_name_input_error, R.string.team_input_error };
+                R.string.player_name_input_error, R.string.team_input_error};
         boolean validInput = true;
 
         boolean autographed = this.autographCheckBox.isChecked();
@@ -294,21 +352,30 @@ public class BaseballCardDetails extends Fragment {
     }
 
     private void onSave() {
-        ContentResolver resolver = this.getActivity().getContentResolver();
-        BaseballCard newCard = this.getBaseballCard();
+        final BaseballCard newCard = this.getBaseballCard();
+        BaseballCardDatabase database = BaseballCardDatabase.getInstance(this.getActivity());
+        final BaseballCardDao dao = database.getBaseballCardDao();
 
         if (newCard != null) {
             if (this.isUpdating) {
-                Uri uri = ContentUris.withAppendedId(this.uri, this.cardId);
-                resolver.update(uri,
-                        BaseballCardContract.getContentValues(newCard), null,
-                        null);
+                new Thread() {
+                    @Override
+                    public void run() {
+                        dao.updateBaseballCard(newCard);
+                        FragmentActivity activity = getActivity();
+                        if (activity != null) {
+                            activity.getSupportFragmentManager().popBackStack();
+                        }
+                    }
+                }.start();
             } else {
                 try {
-                    ContentValues values = BaseballCardContract
-                            .getContentValues(newCard);
-                    resolver.insert(this.uri, values);
-
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            dao.insertBaseballCard(newCard);
+                        }
+                    }.start();
                     this.resetInput();
                     this.brandText.requestFocus();
                     Toast.makeText(this.getActivity(), R.string.card_added_message,
@@ -324,4 +391,21 @@ public class BaseballCardDetails extends Fragment {
         }
     }
 
+}
+
+class ListObserver implements Observer<List<String>> {
+    private ArrayAdapter<String> adapter;
+
+    ListObserver(ArrayAdapter<String> adapter) {
+        this.adapter = adapter;
+    }
+
+    @Override
+    public void onChanged(@Nullable List<String> strings) {
+        if (strings != null) {
+            adapter.clear();
+            adapter.addAll(strings);
+            adapter.notifyDataSetChanged();
+        }
+    }
 }

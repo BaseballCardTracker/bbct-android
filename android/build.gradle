@@ -39,6 +39,11 @@ android {
         versionCode 20
         versionName "0.6.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     signingConfigs {
         release
@@ -129,27 +134,29 @@ ext {
     espressoVersion = '2.2.1'
     testSupportLibVersion = '0.5'
     butterknifeVersion = '8.8.1'
+    archCompVersion = '1.1.1'
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':lib')
     implementation "com.android.support:appcompat-v7:${supportLibVersion}"
     implementation "com.android.support:support-v4:${supportLibVersion}"
+    implementation "android.arch.persistence.room:runtime:${archCompVersion}"
+    implementation "android.arch.lifecycle:livedata:${archCompVersion}"
     implementation 'com.google.android.gms:play-services:6.1.71'
     implementation('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true
     }
     implementation "com.jakewharton:butterknife:${butterknifeVersion}"
-    implementation project(':lib')
-
+    annotationProcessor "android.arch.persistence.room:compiler:${archCompVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
-
     androidTestImplementation "com.android.support.test:runner:${testSupportLibVersion}"
     androidTestImplementation "com.android.support.test:rules:${testSupportLibVersion}"
     androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
     androidTestImplementation "com.android.support:support-annotations:${supportLibVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:${espressoVersion}"
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:${espressoVersion}"
-
     testImplementation 'junit:junit:4.12'
+    testImplementation "android.arch.persistence.room:testing:${archCompVersion}"
 }

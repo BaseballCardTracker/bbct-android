@@ -51,6 +51,8 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      */
     public static final int AUTO_AND_CONDITION_SCHEMA = 4;
 
+    public static final int ROOM_SCHEMA = 5;
+
     public BaseballCardSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
 
