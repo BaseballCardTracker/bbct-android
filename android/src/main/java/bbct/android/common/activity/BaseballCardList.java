@@ -154,33 +154,35 @@ public class BaseballCardList extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
-        if (itemId == R.id.add_menu) {
-            BaseballCardDetails details = new BaseballCardDetails();
-            this.getActivity().getSupportFragmentManager()
+        switch (itemId) {
+            case R.id.add_menu:
+                BaseballCardDetails details = new BaseballCardDetails();
+                this.getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
                     .addToBackStack(FragmentTags.EDIT_CARD)
                     .commit();
-            return true;
-        } else if (itemId == R.id.filter_menu) {
-            FilterCards filterCards = new FilterCards();
-            this.getActivity().getSupportFragmentManager()
+                return true;
+            case R.id.filter_menu:
+                FilterCards filterCards = new FilterCards();
+                this.getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_holder, filterCards, FragmentTags.FILTER_CARDS)
                     .addToBackStack(FragmentTags.FILTER_CARDS)
                     .commit();
-            return true;
-        } else if (itemId == R.id.clear_filter_menu) {
-            this.emptyList.setText(R.string.start);
-            this.filterParams = null;
-            this.applyFilter(null);
+                return true;
+            case R.id.clear_filter_menu:
+                this.emptyList.setText(R.string.start);
+                this.filterParams = null;
+                this.applyFilter(null);
 
-            this.getActivity().invalidateOptionsMenu();
+                this.getActivity().invalidateOptionsMenu();
 
-            return true;
-        } else {
-            Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
-            // TODO Throw exception?
+                return true;
+            default:
+                Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
+                // TODO Throw exception?
+                break;
         }
 
         return super.onOptionsItemSelected(item);
