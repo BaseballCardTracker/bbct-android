@@ -29,7 +29,6 @@ import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.MainActivity;
-import bbct.android.common.test.DatabaseUtil;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
