@@ -108,5 +108,5 @@ public class PremiumSQLHelper extends
     private static final String TAG = PremiumSQLHelper.class.getName();
     private static final String LITE_PACKAGE = "bbct.android";
     private static final int MIN_LITE_VERSION = 3;
-    private Context context = null;
+    private Context context;
 }
