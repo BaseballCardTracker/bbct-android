@@ -62,7 +62,7 @@ public class FilterCards extends Fragment {
 
             for (int i = 0; i < CHECKBOXES.length; i++) {
                 if (v.getId() == CHECKBOXES[i]) {
-                    input = (EditText) FilterCards.this.getActivity().findViewById(TEXT_FIELDS[i]);
+                    input = FilterCards.this.getActivity().findViewById(TEXT_FIELDS[i]);
                 }
             }
 
@@ -100,9 +100,9 @@ public class FilterCards extends Fragment {
                     .getIntegerArrayList(INPUT_EXTRA);
             if (enabledFields != null) {
                 for (int i : enabledFields) {
-                    CheckBox cb = (CheckBox) view.findViewById(CHECKBOXES[i]);
+                    CheckBox cb = view.findViewById(CHECKBOXES[i]);
                     cb.setChecked(true);
-                    EditText et = (EditText) view.findViewById(TEXT_FIELDS[i]);
+                    EditText et = view.findViewById(TEXT_FIELDS[i]);
                     et.setEnabled(true);
                 }
             }
@@ -117,7 +117,7 @@ public class FilterCards extends Fragment {
 
         enabledFields.clear();
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
-            EditText et = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
+            EditText et = this.getActivity().findViewById(TEXT_FIELDS[i]);
             if (et.isEnabled()) {
                 enabledFields.add(i);
             }
@@ -173,7 +173,7 @@ public class FilterCards extends Fragment {
     private int numberChecked() {
         int count = 0;
         for (int id : CHECKBOXES) {
-            CheckBox cb = (CheckBox) this.getActivity().findViewById(id);
+            CheckBox cb = this.getActivity().findViewById(id);
             if (cb != null && cb.isChecked()) {
                 count++;
             }
@@ -185,7 +185,7 @@ public class FilterCards extends Fragment {
     private void onConfirm() {
         Bundle filterArgs = new Bundle();
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
-            EditText input = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
+            EditText input = this.getActivity().findViewById(TEXT_FIELDS[i]);
             if (input.isEnabled() && input.getText().toString().length() > 0) {
                 String key = EXTRAS[i];
                 filterArgs.putString(key, input.getText().toString());

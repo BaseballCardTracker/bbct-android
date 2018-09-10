@@ -38,7 +38,7 @@ public class HeaderView extends CheckableLinearLayout {
         super(context, attrs, defStyle);
 
         ViewGroup root = (ViewGroup) ViewGroup.inflate(context, R.layout.list_header, this);
-        mCheckable = (Checkable) root.findViewById(R.id.select_all);
+        mCheckable = root.findViewById(R.id.select_all);
     }
 
 }
