@@ -63,7 +63,7 @@ public class BaseballCardDetailsWithDataTest {
     private UiDevice device;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mCard = dataTestRule.getCard(0);
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
     }
@@ -74,22 +74,21 @@ public class BaseballCardDetailsWithDataTest {
     }
 
     @Test
-    public void testBrandAutoCompletePopup() throws Throwable {
+    public void testBrandAutoCompletePopup() {
         this.testAutoCompletePopup(R.id.brand_text, mCard.getBrand());
     }
 
     @Test
-    public void testPlayerNameAutoCompletePopup() throws Throwable {
+    public void testPlayerNameAutoCompletePopup() {
         this.testAutoCompletePopup(R.id.player_name_text, mCard.getPlayerName());
     }
 
     @Test
-    public void testTeamAutoCompletePopup() throws Throwable {
+    public void testTeamAutoCompletePopup() {
         this.testAutoCompletePopup(R.id.team_text, mCard.getTeam());
     }
 
-    private void testAutoCompletePopup(int textViewId, String text)
-            throws Throwable {
+    private void testAutoCompletePopup(int textViewId, String text) {
         Activity activity = fragmentTestRule.getActivity();
         onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
         onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
@@ -119,21 +118,21 @@ public class BaseballCardDetailsWithDataTest {
     }
 
     @Test
-    public void testBrandAutoCompleteSelect() throws RemoteException {
+    public void testBrandAutoCompleteSelect() {
         testAutoCompleteSelect(R.id.brand_text, mCard.getBrand());
     }
 
     @Test
-    public void testPlayerNameAutoCompleteSelect() throws RemoteException {
+    public void testPlayerNameAutoCompleteSelect() {
         testAutoCompleteSelect(R.id.player_name_text, mCard.getPlayerName());
     }
 
     @Test
-    public void testTeamAutoCompleteSelect() throws RemoteException {
+    public void testTeamAutoCompleteSelect() {
         testAutoCompleteSelect(R.id.team_text, mCard.getTeam());
     }
 
-    private void testAutoCompleteSelect(int textViewId, String text) throws RemoteException {
+    private void testAutoCompleteSelect(int textViewId, String text) {
         Activity activity = fragmentTestRule.getActivity();
         onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
         onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))

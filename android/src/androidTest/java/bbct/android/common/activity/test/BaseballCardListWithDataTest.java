@@ -84,7 +84,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         inst = InstrumentationRegistry.getInstrumentation();
         device = UiDevice.getInstance(inst);
         activity = activityTestRule.getActivity();
@@ -147,7 +147,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testOnListItemClick() throws Throwable {
+    public void testOnListItemClick() {
         Log.d(TAG, "testOnListItemClick()");
         int cardIndex = 3;
         BaseballCard expectedCard = allCards.get(cardIndex);
@@ -156,7 +156,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testAddDuplicateCard() throws Throwable {
+    public void testAddDuplicateCard() {
         BaseballCard card = dataTestRule.getCard(0);
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(card);
@@ -174,7 +174,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testAddCardToPopulatedDatabase() throws Throwable {
+    public void testAddCardToPopulatedDatabase() {
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(newCard);
         // BBCTTestUtil.waitForToast(BBCTTestUtil.ADD_MESSAGE);
@@ -184,7 +184,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testAddCardMatchingCurrentFilter() throws Throwable {
+    public void testAddCardMatchingCurrentFilter() {
         testYearFilter();
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(newCard);
@@ -195,7 +195,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testAddCardNotMatchingCurrentFilter() throws Throwable {
+    public void testAddCardNotMatchingCurrentFilter() {
         testYearFilter();
         newCard = new BaseballCard(false, "Excellent", "Codeguru Apps",
                 1976, 1, 50000, 1, "Codeguru", "Codeguru Devs", "Catcher");
@@ -207,7 +207,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testAddCardAfterClearFilter() throws Throwable {
+    public void testAddCardAfterClearFilter() {
         testClearFilter();
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(newCard);
@@ -243,14 +243,14 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testDeleteAll() throws Throwable {
+    public void testDeleteAll() {
         this.markAll();
         deleteCards();
         onView(withId(android.R.id.empty)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void testUnmarkAll() throws Throwable {
+    public void testUnmarkAll() {
         this.markAll();
         onView(withId(R.id.select_all)).perform(click());
         assertNoCheckboxesChecked();
@@ -268,7 +268,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testDeleteCardUsingFilter() throws Throwable {
+    public void testDeleteCardUsingFilter() {
         testYearFilter();
 
         int cardIndex = 0;
@@ -293,7 +293,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testDeleteCardNoFilter() throws Throwable {
+    public void testDeleteCardNoFilter() {
         int cardIndex = 0;
 
         expectedCards = new ArrayList<>(allCards);

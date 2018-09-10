@@ -36,7 +36,6 @@ import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.view.BaseballCardView;
-import butterknife.ButterKnife;
 
 public class BaseballCardAdapter extends ArrayAdapter<BaseballCard> {
 
@@ -68,7 +67,7 @@ public class BaseballCardAdapter extends ArrayAdapter<BaseballCard> {
             row = new BaseballCardView(mActivity);
         }
 
-        CheckBox ctv = ButterKnife.findById(row, R.id.checkmark);
+        CheckBox ctv = row.findViewById(R.id.checkmark);
 
         // set listener
         ctv.setOnCheckedChangeListener(new OnCheckedChangeListener() {

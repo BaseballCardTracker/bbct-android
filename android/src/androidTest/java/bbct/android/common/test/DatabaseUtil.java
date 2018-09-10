@@ -30,8 +30,8 @@ import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.data.BaseballCard;
 
 public class DatabaseUtil {
-    private SQLiteDatabase db = null;
-    private Context context = null;
+    private SQLiteDatabase db;
+    private Context context;
     private static final String DB_NAME = BaseballCardSQLHelper.DATABASE_NAME;
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
     private static final String TAG = DatabaseUtil.class.getName();

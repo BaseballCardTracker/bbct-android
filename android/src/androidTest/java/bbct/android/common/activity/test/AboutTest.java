@@ -42,7 +42,7 @@ public class AboutTest {
     private Fragment aboutFragment;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         this.activity = fragmentTestRule.getActivity();
         this.aboutFragment = fragmentTestRule.getFragment();
     }

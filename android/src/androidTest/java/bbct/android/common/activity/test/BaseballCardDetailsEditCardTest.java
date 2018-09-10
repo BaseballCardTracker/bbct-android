@@ -122,7 +122,7 @@ public class BaseballCardDetailsEditCardTest extends
         Log.d(TAG, "tearDown()");
     }
 
-    public void testEditCard() throws Throwable {
+    public void testEditCard() {
         Log.d(TAG, "testEditCard()");
 
         Assert.assertTrue(this.dbUtil.containsBaseballCard(this.oldCard));

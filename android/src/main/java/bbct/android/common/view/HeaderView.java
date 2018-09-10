@@ -21,7 +21,7 @@ package bbct.android.common.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.widget.Checkable;
+
 import bbct.android.common.R;
 
 public class HeaderView extends CheckableLinearLayout {
@@ -38,7 +38,7 @@ public class HeaderView extends CheckableLinearLayout {
         super(context, attrs, defStyle);
 
         ViewGroup root = (ViewGroup) ViewGroup.inflate(context, R.layout.list_header, this);
-        mCheckable = (Checkable) root.findViewById(R.id.select_all);
+        mCheckable = root.findViewById(R.id.select_all);
     }
 
 }

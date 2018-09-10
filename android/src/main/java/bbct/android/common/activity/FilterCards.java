@@ -18,8 +18,11 @@
  */
 package bbct.android.common.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +33,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import bbct.android.common.R;
 
@@ -60,14 +64,17 @@ public class FilterCards extends Fragment {
         public void onClick(View v) {
             EditText input = null;
 
+            Activity activity = Objects.requireNonNull(getActivity());
             for (int i = 0; i < CHECKBOXES.length; i++) {
                 if (v.getId() == CHECKBOXES[i]) {
-                    input = (EditText) FilterCards.this.getActivity().findViewById(TEXT_FIELDS[i]);
+                    input = activity.findViewById(TEXT_FIELDS[i]);
                 }
             }
 
-            FilterCards.this.toggleTextField(input);
-            FilterCards.this.getActivity().supportInvalidateOptionsMenu();
+            if (input != null) {
+                toggleTextField(input);
+                activity.invalidateOptionsMenu();
+            }
         }
     };
     private final ArrayList<Integer> enabledFields = new ArrayList<>();
@@ -80,14 +87,15 @@ public class FilterCards extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.filter_cards, container, false);
 
         // set title
         String format = this.getString(R.string.bbct_title);
         String filterCardsTitle = this.getString(R.string.filter_cards_title);
         String title = String.format(format, filterCardsTitle);
-        this.getActivity().setTitle(title);
+        Activity activity = Objects.requireNonNull(getActivity());
+        activity.setTitle(title);
 
         for (int id : CHECKBOXES) {
             View checkBox = view.findViewById(id);
@@ -100,9 +108,9 @@ public class FilterCards extends Fragment {
                     .getIntegerArrayList(INPUT_EXTRA);
             if (enabledFields != null) {
                 for (int i : enabledFields) {
-                    CheckBox cb = (CheckBox) view.findViewById(CHECKBOXES[i]);
+                    CheckBox cb = view.findViewById(CHECKBOXES[i]);
                     cb.setChecked(true);
-                    EditText et = (EditText) view.findViewById(TEXT_FIELDS[i]);
+                    EditText et = view.findViewById(TEXT_FIELDS[i]);
                     et.setEnabled(true);
                 }
             }
@@ -116,8 +124,9 @@ public class FilterCards extends Fragment {
         super.onPause();
 
         enabledFields.clear();
+        Activity activity = Objects.requireNonNull(getActivity());
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
-            EditText et = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
+            EditText et = activity.findViewById(TEXT_FIELDS[i]);
             if (et.isEnabled()) {
                 enabledFields.add(i);
             }
@@ -125,7 +134,7 @@ public class FilterCards extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putIntegerArrayList(INPUT_EXTRA, enabledFields);
@@ -172,8 +181,9 @@ public class FilterCards extends Fragment {
 
     private int numberChecked() {
         int count = 0;
+        Activity activity = Objects.requireNonNull(getActivity());
         for (int id : CHECKBOXES) {
-            CheckBox cb = (CheckBox) this.getActivity().findViewById(id);
+            CheckBox cb = activity.findViewById(id);
             if (cb != null && cb.isChecked()) {
                 count++;
             }
@@ -184,8 +194,9 @@ public class FilterCards extends Fragment {
 
     private void onConfirm() {
         Bundle filterArgs = new Bundle();
+        FragmentActivity activity = Objects.requireNonNull(getActivity());
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
-            EditText input = (EditText) this.getActivity().findViewById(TEXT_FIELDS[i]);
+            EditText input = activity.findViewById(TEXT_FIELDS[i]);
             if (input.isEnabled() && input.getText().toString().length() > 0) {
                 String key = EXTRAS[i];
                 filterArgs.putString(key, input.getText().toString());
@@ -193,7 +204,7 @@ public class FilterCards extends Fragment {
         }
 
         BaseballCardList cardList = BaseballCardList.getInstance(filterArgs);
-        this.getActivity().getSupportFragmentManager()
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_holder, cardList)
                 .addToBackStack(FILTERED_LIST)

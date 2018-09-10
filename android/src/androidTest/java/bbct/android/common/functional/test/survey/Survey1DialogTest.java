@@ -25,17 +25,18 @@ import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.UiObjectNotFoundException;
-import bbct.android.common.R;
-import bbct.android.common.SharedPreferenceKeys;
-import bbct.android.common.activity.MainActivity;
-import bbct.android.common.test.rule.Survey1SharedPreferencesTestRule;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import bbct.android.common.R;
+import bbct.android.common.SharedPreferenceKeys;
+import bbct.android.common.activity.MainActivity;
+import bbct.android.common.test.rule.Survey1SharedPreferencesTestRule;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -58,7 +59,7 @@ public class Survey1DialogTest {
     private Context context;
 
     @Before
-    public void setUp() throws UiObjectNotFoundException {
+    public void setUp() {
         context = InstrumentationRegistry.getTargetContext();
         startApp();
         Intents.init();
@@ -78,7 +79,7 @@ public class Survey1DialogTest {
     }
 
     @Test
-    public void testTakeSurveyNow() throws UiObjectNotFoundException {
+    public void testTakeSurveyNow() {
         onView(withText(R.string.survey1))
                 .check(matches(isDisplayed()));
         onView(withText(R.string.now))
@@ -95,7 +96,7 @@ public class Survey1DialogTest {
     }
 
     @Test
-    public void testTakeSurveyLater() throws UiObjectNotFoundException {
+    public void testTakeSurveyLater() {
         onView(withText(R.string.survey1))
                 .check(matches(isDisplayed()));
         onView(withText(R.string.later))
@@ -110,6 +111,7 @@ public class Survey1DialogTest {
     private void startApp() {
         String packageName = context.getPackageName();
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+        assert intent != null;
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }

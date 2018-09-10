@@ -22,7 +22,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -188,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         this.updateUpButtonVisibility();
     }
 
-    public void updateUpButtonVisibility() {
+    private void updateUpButtonVisibility() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(fragmentManager.getBackStackEntryCount() > 1);
