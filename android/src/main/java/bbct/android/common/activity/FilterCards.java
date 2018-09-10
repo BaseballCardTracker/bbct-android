@@ -67,7 +67,7 @@ public class FilterCards extends Fragment {
             }
 
             FilterCards.this.toggleTextField(input);
-            FilterCards.this.getActivity().supportInvalidateOptionsMenu();
+            FilterCards.this.getActivity().invalidateOptionsMenu();
         }
     };
     private final ArrayList<Integer> enabledFields = new ArrayList<>();

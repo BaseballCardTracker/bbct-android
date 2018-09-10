@@ -177,7 +177,7 @@ public class BaseballCardList extends ListFragment {
             this.filterParams = null;
             this.applyFilter(null);
 
-            this.getActivity().supportInvalidateOptionsMenu();
+            this.getActivity().invalidateOptionsMenu();
 
             return true;
         } else {
