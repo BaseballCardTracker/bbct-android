@@ -63,7 +63,7 @@ public class BaseballCardDetailsWithDataTest {
     private UiDevice device;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         mCard = dataTestRule.getCard(0);
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
     }
@@ -88,8 +88,7 @@ public class BaseballCardDetailsWithDataTest {
         this.testAutoCompletePopup(R.id.team_text, mCard.getTeam());
     }
 
-    private void testAutoCompletePopup(int textViewId, String text)
-            throws Throwable {
+    private void testAutoCompletePopup(int textViewId, String text) {
         Activity activity = fragmentTestRule.getActivity();
         onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
         onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
@@ -133,7 +132,7 @@ public class BaseballCardDetailsWithDataTest {
         testAutoCompleteSelect(R.id.team_text, mCard.getTeam());
     }
 
-    private void testAutoCompleteSelect(int textViewId, String text) throws RemoteException {
+    private void testAutoCompleteSelect(int textViewId, String text) {
         Activity activity = fragmentTestRule.getActivity();
         onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
         onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))

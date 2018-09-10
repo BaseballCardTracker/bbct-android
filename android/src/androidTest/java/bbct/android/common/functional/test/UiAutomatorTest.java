@@ -60,7 +60,7 @@ public abstract class UiAutomatorTest {
         device.pressHome();
     }
 
-    private void startApp() throws UiObjectNotFoundException {
+    private void startApp() {
         // Start from the home screen
         device.pressHome();
 

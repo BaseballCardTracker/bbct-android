@@ -74,7 +74,7 @@ public class DetailsNavigateNextTest {
         testNext(R.id.player_name_text, R.id.team_text);
     }
 
-    private void testNext(@IdRes int startingTextView, @IdRes int nextTextView) throws Exception {
+    private void testNext(@IdRes int startingTextView, @IdRes int nextTextView) {
         onView(withId(startingTextView))
                 .check(matches(isDisplayed()))
                 .perform(requestFocus())

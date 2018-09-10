@@ -58,7 +58,7 @@ public class FilterCardsTest {
     private UiDevice device;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         activity = fragmentTestRule.getActivity();
         device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
     }

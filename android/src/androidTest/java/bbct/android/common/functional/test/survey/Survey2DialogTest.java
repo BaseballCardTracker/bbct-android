@@ -58,7 +58,7 @@ public class Survey2DialogTest {
     private Context context;
 
     @Before
-    public void setUp() throws UiObjectNotFoundException {
+    public void setUp() {
         context = InstrumentationRegistry.getTargetContext();
         startApp();
         Intents.init();
@@ -77,7 +77,7 @@ public class Survey2DialogTest {
     }
 
     @Test
-    public void testTakeSurveyNow() throws UiObjectNotFoundException {
+    public void testTakeSurveyNow() {
         onView(withText(R.string.survey2))
                 .check(matches(isDisplayed()));
         onView(withText(R.string.now))
@@ -94,7 +94,7 @@ public class Survey2DialogTest {
     }
 
     @Test
-    public void testTakeSurveyLater() throws UiObjectNotFoundException {
+    public void testTakeSurveyLater() {
         onView(withText(R.string.survey2))
                 .check(matches(isDisplayed()));
         onView(withText(R.string.later))
