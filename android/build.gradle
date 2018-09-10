@@ -34,7 +34,7 @@ android {
 
     defaultConfig {
         applicationId "bbct.android.common"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 27
         versionCode 21
         versionName "0.6.8"
