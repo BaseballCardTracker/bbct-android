@@ -178,10 +178,10 @@ public class BaseballCardList extends ListFragment {
             case R.id.filter_menu:
                 FilterCards filterCards = new FilterCards();
                 activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_holder, filterCards, FragmentTags.FILTER_CARDS)
-                        .addToBackStack(FragmentTags.FILTER_CARDS)
-                        .commit();
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder, filterCards, FragmentTags.FILTER_CARDS)
+                    .addToBackStack(FragmentTags.FILTER_CARDS)
+                    .commit();
                 return true;
             case R.id.clear_filter_menu:
                 this.emptyList.setText(R.string.start);
@@ -212,16 +212,16 @@ public class BaseballCardList extends ListFragment {
         }
 
         Fragment details = BaseballCardDetails.getInstance(id);
-        FragmentActivity activity = Objects.requireNonNull(this.getActivity());
+        FragmentActivity activity = Objects.requireNonNull(getActivity());
         activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
-                .addToBackStack(FragmentTags.EDIT_CARD)
-                .commit();
+            .beginTransaction()
+            .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
+            .addToBackStack(FragmentTags.EDIT_CARD)
+            .commit();
     }
 
     public void deleteSelectedCards() {
-        final Activity activity = getActivity();
+        final Activity activity = Objects.requireNonNull(getActivity());
         final List<BaseballCard> cards = new ArrayList<>();
         for (int i = 0; i < getListAdapter().getCount() + 1; ++i) {
             if (getListView().isItemChecked(i)) {
@@ -234,15 +234,15 @@ public class BaseballCardList extends ListFragment {
             @Override
             public void run() {
                 BaseballCardDatabase database =
-                        BaseballCardDatabase.getInstance(activity);
+                    BaseballCardDatabase.getInstance(activity);
                 database.getBaseballCardDao().deleteBaseballCards(cards);
             }
         }).start();
 
         Toast.makeText(
-                activity,
-                R.string.card_deleted_message,
-                Toast.LENGTH_LONG
+            activity,
+            R.string.card_deleted_message,
+            Toast.LENGTH_LONG
         ).show();
     }
 
@@ -256,8 +256,9 @@ public class BaseballCardList extends ListFragment {
 
     private void applyFilter(Bundle filterParams) {
         LiveData<List<BaseballCard>> cards;
+        final Activity activity = Objects.requireNonNull(getActivity());
         BaseballCardDatabase database =
-            BaseballCardDatabase.getInstance(getActivity());
+            BaseballCardDatabase.getInstance(activity);
         BaseballCardDao dao = database.getBaseballCardDao();
 
         if (filterParams == null) {
@@ -287,7 +288,6 @@ public class BaseballCardList extends ListFragment {
         cards.observe(this, new Observer<List<BaseballCard>>() {
             @Override
             public void onChanged(@Nullable List<BaseballCard> cards) {
-                Activity activity = getActivity();
                 adapter = new BaseballCardAdapter(
                     activity, R.layout.baseball_card, cards);
                 setListAdapter(adapter);

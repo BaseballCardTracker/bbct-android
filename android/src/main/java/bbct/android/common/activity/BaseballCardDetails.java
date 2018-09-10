@@ -241,8 +241,9 @@ public class BaseballCardDetails extends Fragment {
                 @Override
                 protected BaseballCard doInBackground(Long... args) {
                     long id = args[0];
+                    Activity activity = Objects.requireNonNull(getActivity());
                     BaseballCardDatabase database =
-                        BaseballCardDatabase.getInstance(getActivity());
+                        BaseballCardDatabase.getInstance(activity);
                     BaseballCardDao dao = database.getBaseballCardDao();
                     return dao.getBaseballCard(id);
                 }
@@ -343,7 +344,8 @@ public class BaseballCardDetails extends Fragment {
 
     private void onSave() {
         final BaseballCard newCard = this.getBaseballCard();
-        BaseballCardDatabase database = BaseballCardDatabase.getInstance(this.getActivity());
+        Activity activity = Objects.requireNonNull(getActivity());
+        BaseballCardDatabase database = BaseballCardDatabase.getInstance(activity);
         final BaseballCardDao dao = database.getBaseballCardDao();
 
         if (newCard != null) {
@@ -353,10 +355,8 @@ public class BaseballCardDetails extends Fragment {
                     @Override
                     public void run() {
                         dao.updateBaseballCard(newCard);
-                        FragmentActivity activity = getActivity();
-                        if (activity != null) {
-                            activity.getSupportFragmentManager().popBackStack();
-                        }
+                        FragmentActivity activity = Objects.requireNonNull(getActivity());
+                        activity.getSupportFragmentManager().popBackStack();
                     }
                 }.start();
             } else {
@@ -369,12 +369,12 @@ public class BaseballCardDetails extends Fragment {
                     }.start();
                     this.resetInput();
                     this.brandText.requestFocus();
-                    Toast.makeText(this.getActivity(), R.string.card_added_message,
+                    Toast.makeText(activity, R.string.card_added_message,
                             Toast.LENGTH_LONG).show();
                 } catch (SQLException e) {
                     // Is duplicate card the only reason this exception
                     // will be thrown?
-                    DialogUtil.showErrorDialog(this.getActivity(),
+                    DialogUtil.showErrorDialog(activity,
                             R.string.duplicate_card_title,
                             R.string.duplicate_card_error);
                 }
