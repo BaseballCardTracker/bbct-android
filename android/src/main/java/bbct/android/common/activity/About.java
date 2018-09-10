@@ -42,7 +42,7 @@ public class About extends Fragment {
         String title = this.getString(R.string.bbct_title, aboutTitle);
         this.getActivity().setTitle(title);
 
-        TextView versionLabel = ButterKnife.findById(view, R.id.version_label);
+        TextView versionLabel = view.findViewById(R.id.version_label);
         String versionNumber = this.getString(R.string.version_number);
         String versionString = this.getString(R.string.version_text, versionNumber);
 

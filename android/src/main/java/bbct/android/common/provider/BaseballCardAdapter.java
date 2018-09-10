@@ -68,7 +68,7 @@ public class BaseballCardAdapter extends ArrayAdapter<BaseballCard> {
             row = new BaseballCardView(mActivity);
         }
 
-        CheckBox ctv = ButterKnife.findById(row, R.id.checkmark);
+        CheckBox ctv = row.findViewById(R.id.checkmark);
 
         // set listener
         ctv.setOnCheckedChangeListener(new OnCheckedChangeListener() {

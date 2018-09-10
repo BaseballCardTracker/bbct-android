@@ -128,7 +128,7 @@ public class BaseballCardDetailsTest {
         device.pressEnter();
         onView(withId(R.id.team_text)).check(matches(hasFocus()));
 
-        ViewGroup content = ButterKnife.findById(this.activity, android.R.id.content);
+        ViewGroup content = activity.findViewById(android.R.id.content);
         View rootView = content.getChildAt(0);
         Rect r = new Rect();
         // r will be populated with the coordinates of the view area still
