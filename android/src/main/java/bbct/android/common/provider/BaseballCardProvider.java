@@ -67,7 +67,7 @@ public abstract class BaseballCardProvider extends ContentProvider {
         return true;
     }
 
-    private BaseballCardSQLHelper getSQLHelper(Context context) {
+    protected BaseballCardSQLHelper getSQLHelper(Context context) {
         return new BaseballCardSQLHelper(context);
     }
 
