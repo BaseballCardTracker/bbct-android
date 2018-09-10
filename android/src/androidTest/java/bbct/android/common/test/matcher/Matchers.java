@@ -45,7 +45,7 @@ public class Matchers {
             }
             EditText editText = (EditText) view;
             String expectedError = editText.getResources().getString(errorRes);
-            return expectedError.equals(editText.getError());
+            return expectedError.equals(editText.getError().toString());
         }
 
         @Override
