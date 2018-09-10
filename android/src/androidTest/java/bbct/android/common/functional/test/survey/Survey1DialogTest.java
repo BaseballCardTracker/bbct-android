@@ -110,6 +110,7 @@ public class Survey1DialogTest {
     private void startApp() {
         String packageName = context.getPackageName();
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+        assert intent != null;
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }
