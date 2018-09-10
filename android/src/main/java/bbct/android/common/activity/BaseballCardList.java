@@ -25,7 +25,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -43,6 +45,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
@@ -95,7 +98,8 @@ public class BaseballCardList extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(R.string.app_name);
+        Activity activity = Objects.requireNonNull(getActivity());
+        activity.setTitle(R.string.app_name);
     }
 
     @Override
@@ -104,13 +108,14 @@ public class BaseballCardList extends ListFragment {
         View view = inflater.inflate(R.layout.card_list, container, false);
         ButterKnife.bind(this, view);
 
+        final Activity activity = Objects.requireNonNull(getActivity());
         View headerView = new HeaderView(this.getActivity());
         CheckBox selectAll = headerView.findViewById(R.id.select_all);
         selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked && !mCallbacks.isStarted()) {
-                    BaseballCardList.this.getActivity().startActionMode(mCallbacks);
+                    activity.startActionMode(mCallbacks);
                 } else if (mCallbacks.isStarted()) {
                     mCallbacks.finish();
                 }
@@ -154,10 +159,11 @@ public class BaseballCardList extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
+        FragmentActivity activity = Objects.requireNonNull(getActivity());
         switch (itemId) {
             case R.id.add_menu:
                 BaseballCardDetails details = new BaseballCardDetails();
-                this.getActivity().getSupportFragmentManager()
+                activity.getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
                     .addToBackStack(FragmentTags.EDIT_CARD)
@@ -165,7 +171,7 @@ public class BaseballCardList extends ListFragment {
                 return true;
             case R.id.filter_menu:
                 FilterCards filterCards = new FilterCards();
-                this.getActivity().getSupportFragmentManager()
+                activity.getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_holder, filterCards, FragmentTags.FILTER_CARDS)
                     .addToBackStack(FragmentTags.FILTER_CARDS)
@@ -175,9 +181,7 @@ public class BaseballCardList extends ListFragment {
                 this.emptyList.setText(R.string.start);
                 this.filterParams = null;
                 this.applyFilter(null);
-
-                this.getActivity().invalidateOptionsMenu();
-
+                activity.invalidateOptionsMenu();
                 return true;
             default:
                 Log.e(TAG, "onOptionsItemSelected(): Invalid menu code: " + itemId);
@@ -202,7 +206,8 @@ public class BaseballCardList extends ListFragment {
         }
 
         Fragment details = BaseballCardDetails.getInstance(id);
-        this.getActivity().getSupportFragmentManager()
+        FragmentActivity activity = Objects.requireNonNull(this.getActivity());
+        activity.getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
                 .addToBackStack(FragmentTags.EDIT_CARD)

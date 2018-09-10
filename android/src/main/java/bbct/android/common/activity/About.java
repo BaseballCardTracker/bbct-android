@@ -18,6 +18,7 @@
  */
 package bbct.android.common.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -26,8 +27,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import bbct.android.common.R;
-import butterknife.ButterKnife;
 
 public class About extends Fragment {
 
@@ -40,7 +42,8 @@ public class About extends Fragment {
 
         String aboutTitle = this.getString(R.string.about_title);
         String title = this.getString(R.string.bbct_title, aboutTitle);
-        this.getActivity().setTitle(title);
+        Activity activity = Objects.requireNonNull(getActivity());
+        activity.setTitle(title);
 
         TextView versionLabel = view.findViewById(R.id.version_label);
         String versionNumber = this.getString(R.string.version_number);

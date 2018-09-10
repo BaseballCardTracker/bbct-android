@@ -48,6 +48,7 @@ import android.widget.Toast;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.util.DialogUtil;
@@ -110,6 +111,10 @@ public class BaseballCardDetails extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.card_details, container, false);
         ButterKnife.bind(this, view);
+        final Activity activity = Objects.requireNonNull(getActivity());
+        String cardDetailsTitle = this.getString(R.string.card_details_title);
+        String title = this.getString(R.string.bbct_title, cardDetailsTitle);
+        activity.setTitle(title);
 
         brandText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -151,8 +156,8 @@ public class BaseballCardDetails extends Fragment {
 
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
                     Log.d(TAG, "hide keyboard");
-                    InputMethodManager imm = (InputMethodManager) getActivity()
-                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = Objects.requireNonNull(
+                        (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE));
                     imm.hideSoftInputFromWindow(teamText.getWindowToken(), 0);
                     playerPositionSpinner.requestFocus();
                     return true;
@@ -161,11 +166,6 @@ public class BaseballCardDetails extends Fragment {
                 return false;
             }
         });
-
-        String cardDetailsTitle = this.getString(R.string.card_details_title);
-        String title = this.getString(R.string.bbct_title, cardDetailsTitle);
-        final Activity activity = getActivity();
-        activity.setTitle(title);
 
         createAdapters(activity);
         populateTextEdits();
@@ -286,8 +286,9 @@ public class BaseballCardDetails extends Fragment {
     }
 
     private ArrayAdapter<CharSequence> populateSpinnerAdapter(int arrayId) {
+        Activity activity = Objects.requireNonNull(getActivity());
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this.getActivity(), arrayId, android.R.layout.simple_spinner_item);
+            activity, arrayId, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         return adapter;
@@ -390,7 +391,6 @@ public class BaseballCardDetails extends Fragment {
             }
         }
     }
-
 }
 
 class ListObserver implements Observer<List<String>> {
