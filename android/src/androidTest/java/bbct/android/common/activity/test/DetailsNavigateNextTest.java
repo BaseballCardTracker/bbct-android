@@ -45,32 +45,32 @@ public class DetailsNavigateNextTest {
             = new SupportFragmentTestRule(new BaseballCardDetails());
 
     @Test
-    public void brandNext() throws Exception {
+    public void brandNext() {
         testNext(R.id.brand_text, R.id.year_text);
     }
 
     @Test
-    public void yearNext() throws Exception {
+    public void yearNext() {
         testNext(R.id.year_text, R.id.number_text);
     }
 
     @Test
-    public void numberNext() throws Exception {
+    public void numberNext() {
         testNext(R.id.number_text, R.id.value_text);
     }
 
     @Test
-    public void valueNext() throws Exception {
+    public void valueNext() {
         testNext(R.id.value_text, R.id.count_text);
     }
 
     @Test
-    public void countNext() throws Exception {
+    public void countNext() {
         testNext(R.id.count_text, R.id.player_name_text);
     }
 
     @Test
-    public void playerNameNext() throws Exception {
+    public void playerNameNext() {
         testNext(R.id.player_name_text, R.id.team_text);
     }
 

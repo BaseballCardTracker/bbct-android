@@ -25,17 +25,18 @@ import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.UiObjectNotFoundException;
-import bbct.android.common.R;
-import bbct.android.common.SharedPreferenceKeys;
-import bbct.android.common.activity.MainActivity;
-import bbct.android.common.test.rule.Survey2SharedPreferencesTestRule;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import bbct.android.common.R;
+import bbct.android.common.SharedPreferenceKeys;
+import bbct.android.common.activity.MainActivity;
+import bbct.android.common.test.rule.Survey2SharedPreferencesTestRule;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

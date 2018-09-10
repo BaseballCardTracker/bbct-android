@@ -71,14 +71,14 @@ public class BaseballCardDetailsAddCardsTest {
     }
 
     @Test
-    public void testAddCard() throws Throwable {
+    public void testAddCard() {
         BBCTTestUtil.addCard(card);
         // BBCTTestUtil.waitForToast(fragmentTestRule.getActivity(), BBCTTestUtil.ADD_MESSAGE);
         Assert.assertTrue("Missing card: " + card, dbUtil.containsBaseballCard(card));
     }
 
     @Test
-    public void testAddMultipleCards() throws Throwable {
+    public void testAddMultipleCards() {
         for (BaseballCard nextCard : this.allCards) {
             BBCTTestUtil.addCard(nextCard);
             // BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);

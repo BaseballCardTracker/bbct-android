@@ -156,7 +156,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testAddDuplicateCard() throws Throwable {
+    public void testAddDuplicateCard() {
         BaseballCard card = dataTestRule.getCard(0);
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(card);
@@ -174,7 +174,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testAddCardToPopulatedDatabase() throws Throwable {
+    public void testAddCardToPopulatedDatabase() {
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(newCard);
         // BBCTTestUtil.waitForToast(BBCTTestUtil.ADD_MESSAGE);
@@ -184,7 +184,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testAddCardMatchingCurrentFilter() throws Throwable {
+    public void testAddCardMatchingCurrentFilter() {
         testYearFilter();
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(newCard);
@@ -195,7 +195,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testAddCardNotMatchingCurrentFilter() throws Throwable {
+    public void testAddCardNotMatchingCurrentFilter() {
         testYearFilter();
         newCard = new BaseballCard(false, "Excellent", "Codeguru Apps",
                 1976, 1, 50000, 1, "Codeguru", "Codeguru Devs", "Catcher");
@@ -207,7 +207,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testAddCardAfterClearFilter() throws Throwable {
+    public void testAddCardAfterClearFilter() {
         testClearFilter();
         BBCTTestUtil.testMenuItem(R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(newCard);

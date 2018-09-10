@@ -74,17 +74,17 @@ public class BaseballCardDetailsWithDataTest {
     }
 
     @Test
-    public void testBrandAutoCompletePopup() throws Throwable {
+    public void testBrandAutoCompletePopup() {
         this.testAutoCompletePopup(R.id.brand_text, mCard.getBrand());
     }
 
     @Test
-    public void testPlayerNameAutoCompletePopup() throws Throwable {
+    public void testPlayerNameAutoCompletePopup() {
         this.testAutoCompletePopup(R.id.player_name_text, mCard.getPlayerName());
     }
 
     @Test
-    public void testTeamAutoCompletePopup() throws Throwable {
+    public void testTeamAutoCompletePopup() {
         this.testAutoCompletePopup(R.id.team_text, mCard.getTeam());
     }
 
@@ -118,17 +118,17 @@ public class BaseballCardDetailsWithDataTest {
     }
 
     @Test
-    public void testBrandAutoCompleteSelect() throws RemoteException {
+    public void testBrandAutoCompleteSelect() {
         testAutoCompleteSelect(R.id.brand_text, mCard.getBrand());
     }
 
     @Test
-    public void testPlayerNameAutoCompleteSelect() throws RemoteException {
+    public void testPlayerNameAutoCompleteSelect() {
         testAutoCompleteSelect(R.id.player_name_text, mCard.getPlayerName());
     }
 
     @Test
-    public void testTeamAutoCompleteSelect() throws RemoteException {
+    public void testTeamAutoCompleteSelect() {
         testAutoCompleteSelect(R.id.team_text, mCard.getTeam());
     }
 
