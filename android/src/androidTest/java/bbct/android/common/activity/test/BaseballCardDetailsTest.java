@@ -46,7 +46,6 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 import bbct.data.BaseballCard;
-import butterknife.ButterKnife;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;

@@ -21,7 +21,7 @@ package bbct.android.common.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.widget.Checkable;
+
 import bbct.android.common.R;
 
 public class HeaderView extends CheckableLinearLayout {

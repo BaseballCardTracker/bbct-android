@@ -36,7 +36,6 @@ import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.view.BaseballCardView;
-import butterknife.ButterKnife;
 
 public class BaseballCardAdapter extends ArrayAdapter<BaseballCard> {
 
