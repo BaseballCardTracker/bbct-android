@@ -25,7 +25,6 @@
     <string name="card_details_title">Card Details</string>
     <string name="filter_cards_title">Filter Cards</string>
     <string name="about_title">About</string>
-    <string name="input_error_title">Input Error</string>
     <string name="duplicate_card_title">Duplicate Card</string>
     <string name="start">Tap (+) to get started.</string>
     <string name="empty_list">No cards found.</string>
@@ -119,7 +118,6 @@
     <string name="team_input_error">Please enter the player\'s team.</string>
     <string name="player_position_input_error">Please enter the player\'s position.</string>
     <string name="invalid_uri_error">Invalid URI: %1$s</string>
-    <string name="database_error">Error occurred while connecting to database.</string>
     <string name="duplicate_card_error">Baseball card already exists. Please update its count.</string>
     <string name="sponsor">Proud Sponsor of:</string>
     <string name="survey1">Help me improve BBCT by answering a short survey with seven questions.</string>
