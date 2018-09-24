@@ -20,20 +20,25 @@ package bbct.android.common.provider;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.view.BaseballCardView;
+import bbct.android.common.view.HeaderView;
 
 public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder> {
+    private final int TYPE_HEADER = 0;
+    private final int TYPE_ITEM = 1;
+
     private List<BaseballCard> cards;
 
-    public class BaseballCardViewHolder extends RecyclerView.ViewHolder {
-        public BaseballCardView view;
+    public class BaseballCardViewHolder<T extends View> extends RecyclerView.ViewHolder {
+        public T view;
 
-        BaseballCardViewHolder(BaseballCardView view) {
+        BaseballCardViewHolder(T view) {
             super(view);
             this.view = view;
         }
@@ -46,17 +51,45 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
     @NonNull
     @Override
     public BaseballCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        BaseballCardView view = new BaseballCardView(parent.getContext());
-        return new BaseballCardViewHolder(view);
+        switch (viewType) {
+            case TYPE_HEADER:
+                HeaderView headerView = new HeaderView(parent.getContext());
+                return new BaseballCardViewHolder<>(headerView);
+
+            case TYPE_ITEM:
+                BaseballCardView view = new BaseballCardView(parent.getContext());
+                return new BaseballCardViewHolder<>(view);
+        }
+
+        return new BaseballCardViewHolder<View>(null);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseballCardViewHolder holder, int position) {
-        holder.view.setBaseballCard(cards.get(position));
+        int viewType = getItemViewType(position);
+
+        switch (viewType) {
+            case TYPE_HEADER:
+                break;
+
+            case TYPE_ITEM:
+                BaseballCardView view = (BaseballCardView) holder.view;
+                view.setBaseballCard(cards.get(position - 1));
+                break;
+        }
     }
 
     @Override
     public int getItemCount() {
-        return cards.size();
+        return cards.size() + 1;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return TYPE_HEADER;
+        }
+
+        return TYPE_ITEM;
     }
 }
