@@ -18,81 +18,45 @@
  */
 package bbct.android.common.provider;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.view.View;
+import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ListView;
 
 import java.util.List;
 
-import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardList;
-import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.view.BaseballCardView;
 
-public class BaseballCardAdapter extends ArrayAdapter<BaseballCard> {
+public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder> {
+    private List<BaseballCard> cards;
 
-    private final FragmentActivity mActivity;
-    private BaseballCardList mListFragment;
-    private BaseballCardMultiChoiceModeListener mCallback;
+    public class BaseballCardViewHolder extends RecyclerView.ViewHolder {
+        public BaseballCardView view;
 
-    @SuppressWarnings("deprecation")
-    public BaseballCardAdapter(Context context, int layout, List<BaseballCard> cards) {
-        super(context, layout, cards);
-
-        this.mActivity = (FragmentActivity) context;
+        BaseballCardViewHolder(BaseballCardView view) {
+            super(view);
+            this.view = view;
+        }
     }
 
-    public void setListFragment(BaseballCardList listFragment) {
-        mListFragment = listFragment;
-    }
-
-    public void setActionModeCallback(BaseballCardMultiChoiceModeListener callback) {
-        mCallback = callback;
+    public BaseballCardAdapter(List<BaseballCard> cards) {
+        this.cards = cards;
     }
 
     @NonNull
     @Override
-    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
-        BaseballCardView row = (BaseballCardView) convertView;
-
-        if (row == null) {
-            row = new BaseballCardView(mActivity);
-        }
-
-        CheckBox ctv = row.findViewById(R.id.checkmark);
-
-        // set listener
-        ctv.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && !mCallback.isStarted()) {
-                    mActivity.startActionMode(mCallback);
-                }
-
-                ListView listView = mListFragment.getListView();
-                // Add 1 to compensate for the header view
-                listView.setItemChecked(position + 1, isChecked);
-            }
-        });
-
-        BaseballCard card = getItem(position);
-        row.setBaseballCard(card);
-
-        return row;
+    public BaseballCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        BaseballCardView view = new BaseballCardView(parent.getContext());
+        return new BaseballCardViewHolder(view);
     }
 
     @Override
-    public long getItemId(int position) {
-        BaseballCard card = getItem(position);
-        assert card != null;
-        return card._id;
+    public void onBindViewHolder(@NonNull BaseballCardViewHolder holder, int position) {
+        holder.view.setBaseballCard(cards.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return cards.size();
     }
 }

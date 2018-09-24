@@ -22,15 +22,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 >
-    <TextView android:id="@android:id/empty"
-              android:text="@string/start"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:gravity="center"
-    />
-    <ListView android:id="@android:id/list"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/card_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
     />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_button"
