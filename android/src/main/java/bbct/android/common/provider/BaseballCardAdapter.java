@@ -19,12 +19,19 @@
 package bbct.android.common.provider;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.Objects;
 
+import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.view.BaseballCardView;
 import bbct.android.common.view.HeaderView;
@@ -33,18 +40,35 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
     private final int TYPE_HEADER = 0;
     private final int TYPE_ITEM = 1;
 
+    private FragmentActivity activity;
     private List<BaseballCard> cards;
 
-    public class BaseballCardViewHolder<T extends View> extends RecyclerView.ViewHolder {
+    public class BaseballCardViewHolder<T extends View>
+        extends RecyclerView.ViewHolder
+        implements View.OnClickListener {
+        public long id = -1;
         public T view;
 
         BaseballCardViewHolder(T view) {
             super(view);
             this.view = view;
+            this.view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Fragment details = BaseballCardDetails.getInstance(id);
+            activity.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
+                .addToBackStack(FragmentTags.EDIT_CARD)
+                .commit();
         }
     }
 
-    public BaseballCardAdapter(List<BaseballCard> cards) {
+    public BaseballCardAdapter(@NonNull FragmentActivity activity,
+                               @Nullable List<BaseballCard> cards) {
+        this.activity = activity;
         this.cards = cards;
     }
 
@@ -73,6 +97,7 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
                 break;
 
             case TYPE_ITEM:
+                holder.id = getItemId(position);
                 BaseballCardView view = (BaseballCardView) holder.view;
                 view.setBaseballCard(cards.get(position - 1));
                 break;
@@ -91,5 +116,10 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
         }
 
         return TYPE_ITEM;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return cards.get(position - 1)._id;
     }
 }

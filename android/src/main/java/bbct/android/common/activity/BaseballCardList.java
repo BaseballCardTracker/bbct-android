@@ -199,10 +199,6 @@ public class BaseballCardList extends Fragment {
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {
-        if (position == 0) {
-            return;
-        }
-
         Fragment details = BaseballCardDetails.getInstance(id);
         FragmentActivity activity = Objects.requireNonNull(getActivity());
         activity.getSupportFragmentManager()
@@ -280,7 +276,7 @@ public class BaseballCardList extends Fragment {
         cards.observe(this, new Observer<List<BaseballCard>>() {
             @Override
             public void onChanged(@Nullable List<BaseballCard> cards) {
-                RecyclerView.Adapter adapter = new BaseballCardAdapter(cards);
+                RecyclerView.Adapter adapter = new BaseballCardAdapter(getActivity(), cards);
                 cardList.setAdapter(adapter);
             }
         });
