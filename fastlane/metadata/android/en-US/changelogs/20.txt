@@ -1,0 +1,3 @@
+v0.6.7
+-Fix autocomplete suggestions
+    Brand, Player Name, and Team entries will provide suggestions based on data which you have previously entered. When you click on a suggestion, the field will now be filled correctly with your selection.
