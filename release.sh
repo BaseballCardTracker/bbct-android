@@ -7,6 +7,7 @@ SRC_REL=$REL_DIR/src/android
 PREFIX=bbct-android
 
 build_apk() {
+    echo Building APKs... &&
     ./gradlew clean assembleRelease
 }
 
@@ -75,9 +76,8 @@ if [ $# == 1 ]
 then {
     version=$1
 
-    echo Building APKs... &&
+    pull_devel &&
     build_apk &&
-
     merge &&
     tag ${version} &&
     push ${version}
