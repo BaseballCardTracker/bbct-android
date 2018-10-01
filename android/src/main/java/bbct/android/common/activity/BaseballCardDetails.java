@@ -87,6 +87,7 @@ public class BaseballCardDetails extends Fragment {
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;
     private boolean isUpdating = false;
+    private long id;
 
     public static BaseballCardDetails getInstance(long id) {
         Bundle args = new Bundle();
@@ -229,7 +230,7 @@ public class BaseballCardDetails extends Fragment {
     private void populateTextEdits() {
         Bundle args = getArguments();
         if (args != null) {
-            long id = args.getLong(ID);
+            id = args.getLong(ID);
             new AsyncTask<Long, Void, BaseballCard>() {
                 @Override
                 protected BaseballCard doInBackground(Long... args) {
@@ -359,6 +360,7 @@ public class BaseballCardDetails extends Fragment {
 
         if (newCard != null) {
             if (this.isUpdating) {
+                newCard._id = id;
                 new Thread() {
                     @Override
                     public void run() {
