@@ -61,8 +61,8 @@
                     android:completionThreshold="1"
                     android:hint="@string/brand_hint"
                     android:inputType="textCapWords"
-                    android:selectAllOnFocus="true"
                     android:maxLines="1"
+                    android:selectAllOnFocus="true"
                 >
                     <requestFocus />
                 </AutoCompleteTextView>
@@ -76,8 +76,8 @@
                     android:id="@id/year_text"
                     android:hint="@string/year_hint"
                     android:inputType="number"
-                    android:selectAllOnFocus="true"
                     android:maxLines="1"
+                    android:selectAllOnFocus="true"
                 />
             </TableRow>
             <TableRow>
@@ -89,8 +89,8 @@
                     android:id="@id/number_text"
                     android:hint="@string/number_hint"
                     android:inputType="number"
-                    android:selectAllOnFocus="true"
                     android:maxLines="1"
+                    android:selectAllOnFocus="true"
                 />
             </TableRow>
             <TableRow>
@@ -102,8 +102,8 @@
                     android:id="@id/value_text"
                     android:hint="@string/value_hint"
                     android:inputType="numberDecimal"
-                    android:selectAllOnFocus="true"
                     android:maxLines="1"
+                    android:selectAllOnFocus="true"
                 />
             </TableRow>
             <TableRow>
@@ -115,8 +115,8 @@
                     android:id="@id/count_text"
                     android:hint="@string/count_hint"
                     android:inputType="number"
-                    android:selectAllOnFocus="true"
                     android:maxLines="1"
+                    android:selectAllOnFocus="true"
                 />
             </TableRow>
             <TableRow>
@@ -129,8 +129,8 @@
                     android:completionThreshold="1"
                     android:hint="@string/player_name_hint"
                     android:inputType="textCapWords"
-                    android:selectAllOnFocus="true"
                     android:maxLines="1"
+                    android:selectAllOnFocus="true"
                 />
             </TableRow>
             <TableRow>
@@ -143,8 +143,8 @@
                     android:completionThreshold="1"
                     android:hint="@string/team_hint"
                     android:inputType="textCapWords"
-                    android:selectAllOnFocus="true"
                     android:maxLines="1"
+                    android:selectAllOnFocus="true"
                 />
             </TableRow>
             <TableRow>
