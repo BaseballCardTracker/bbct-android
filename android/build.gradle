@@ -36,8 +36,8 @@ android {
         applicationId "bbct.android.common"
         minSdkVersion 19
         targetSdkVersion 27
-        versionCode 21
-        versionName "0.6.8"
+        versionCode 22
+        versionName "0.6.8.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
