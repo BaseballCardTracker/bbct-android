@@ -113,6 +113,7 @@ public class BaseballCardList extends Fragment {
             }
         });
 
+        /*
         View headerView = new HeaderView(activity);
         CheckBox selectAll = headerView.findViewById(R.id.select_all);
         selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -127,6 +128,8 @@ public class BaseballCardList extends Fragment {
                 BaseballCardList.this.setAllChecked(isChecked);
             }
         });
+        */
+
         applyFilter(filterParams);
 
         return view;
