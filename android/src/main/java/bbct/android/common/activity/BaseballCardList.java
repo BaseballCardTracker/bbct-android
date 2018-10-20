@@ -201,16 +201,6 @@ public class BaseballCardList extends Fragment {
         outState.putBundle(FILTER_PARAMS, this.filterParams);
     }
 
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        Fragment details = BaseballCardDetails.getInstance(id);
-        FragmentActivity activity = Objects.requireNonNull(getActivity());
-        activity.getSupportFragmentManager()
-            .beginTransaction()
-            .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
-            .addToBackStack(FragmentTags.EDIT_CARD)
-            .commit();
-    }
-
     /*public void deleteSelectedCards() {
         final Activity activity = Objects.requireNonNull(getActivity());
         final List<BaseballCard> cards = new ArrayList<>();
