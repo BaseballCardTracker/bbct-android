@@ -138,6 +138,9 @@ public class BaseballCardList extends Fragment {
     private void setUpRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         cardList.setLayoutManager(layoutManager);
+        FragmentActivity activity = Objects.requireNonNull(getActivity());
+        adapter = new BaseballCardAdapter(activity);
+        cardList.setAdapter(adapter);
     }
 
     @Override
@@ -269,8 +272,7 @@ public class BaseballCardList extends Fragment {
         cards.observe(this, new Observer<List<BaseballCard>>() {
             @Override
             public void onChanged(@Nullable List<BaseballCard> cards) {
-                RecyclerView.Adapter adapter = new BaseballCardAdapter(getActivity(), cards);
-                cardList.setAdapter(adapter);
+                adapter.setCards(Objects.requireNonNull(cards));
             }
         });
     }

@@ -26,6 +26,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -66,10 +67,9 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
         }
     }
 
-    public BaseballCardAdapter(@NonNull FragmentActivity activity,
-                               @Nullable List<BaseballCard> cards) {
+    public BaseballCardAdapter(@NonNull FragmentActivity activity) {
         this.activity = activity;
-        this.cards = cards;
+        this.cards = new ArrayList<>();
     }
 
     @NonNull
@@ -121,5 +121,10 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
     @Override
     public long getItemId(int position) {
         return cards.get(position - 1)._id;
+    }
+
+    public void setCards(@NonNull List<BaseballCard> cards) {
+        this.cards = cards;
+        notifyDataSetChanged();
     }
 }
