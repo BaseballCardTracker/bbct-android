@@ -36,13 +36,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Objects;
 
 import bbct.android.common.R;
+import bbct.android.common.activity.util.BaseballCardActionModeCallback;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.database.BaseballCardDao;
 import bbct.android.common.database.BaseballCardDatabase;
@@ -61,6 +61,8 @@ public class BaseballCardList extends Fragment {
 
     private BaseballCardAdapter adapter = null;
     private Bundle filterParams = null;
+    private BaseballCardActionModeCallback callback =
+            new BaseballCardActionModeCallback(this);
 
     public static BaseballCardList getInstance(Bundle filterArgs) {
         BaseballCardList cardList = new BaseballCardList();
@@ -113,22 +115,20 @@ public class BaseballCardList extends Fragment {
             }
         });
 
-        /*
-        View headerView = new HeaderView(activity);
+        /*View headerView = new HeaderView(activity);
         CheckBox selectAll = headerView.findViewById(R.id.select_all);
-        selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && !mCallbacks.isStarted()) {
-                    activity.startActionMode(mCallbacks);
-                } else if (mCallbacks.isStarted()) {
-                    mCallbacks.finish();
+                if (isChecked && !callback.isStarted()) {
+                    activity.startActionMode(callback);
+                } else if (callback.isStarted()) {
+                    callback.finish();
                 }
 
-                BaseballCardList.this.setAllChecked(isChecked);
+                adapter.selectAll(isChecked);
             }
-        });
-        */
+        });*/
 
         applyFilter(filterParams);
 
@@ -139,7 +139,7 @@ public class BaseballCardList extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         cardList.setLayoutManager(layoutManager);
         FragmentActivity activity = Objects.requireNonNull(getActivity());
-        adapter = new BaseballCardAdapter(activity);
+        adapter = new BaseballCardAdapter(activity, callback);
         cardList.setAdapter(adapter);
     }
 
@@ -204,15 +204,9 @@ public class BaseballCardList extends Fragment {
         outState.putBundle(FILTER_PARAMS, this.filterParams);
     }
 
-    /*public void deleteSelectedCards() {
+    public void deleteSelectedCards() {
         final Activity activity = Objects.requireNonNull(getActivity());
-        final List<BaseballCard> cards = new ArrayList<>();
-        for (int i = 0; i < getListAdapter().getCount() + 1; ++i) {
-            if (getListView().isItemChecked(i)) {
-                BaseballCard card = this.adapter.getItem(i - 1);
-                cards.add(card);
-            }
-        }
+        final List<BaseballCard> cards = adapter.getSelectedItems();
 
         new Thread(new Runnable() {
             @Override
@@ -228,15 +222,7 @@ public class BaseballCardList extends Fragment {
             R.string.card_deleted_message,
             Toast.LENGTH_LONG
         ).show();
-    }*/
-
-    /*private void setAllChecked(boolean checked) {
-        ListView listView = this.getListView();
-        // Add 1 for the header view
-        for (int i = 0; i < this.adapter.getCount() + 1; ++i) {
-            listView.setItemChecked(i, checked);
-        }
-    }*/
+    }
 
     private void applyFilter(Bundle filterParams) {
         LiveData<List<BaseballCard>> cards;

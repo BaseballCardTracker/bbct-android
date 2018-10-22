@@ -19,20 +19,22 @@
 package bbct.android.common.provider;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTags;
+import bbct.android.common.activity.util.BaseballCardActionModeCallback;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.view.BaseballCardView;
 import bbct.android.common.view.HeaderView;
@@ -42,7 +44,9 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
     private final int TYPE_ITEM = 1;
 
     private FragmentActivity activity;
-    private List<BaseballCard> cards;
+    private List<BaseballCard> cards = new ArrayList<>();
+    private List<Boolean> selected = new ArrayList<>();
+    private BaseballCardActionModeCallback callback;
 
     public class BaseballCardViewHolder<T extends View>
         extends RecyclerView.ViewHolder
@@ -67,9 +71,10 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
         }
     }
 
-    public BaseballCardAdapter(@NonNull FragmentActivity activity) {
+    public BaseballCardAdapter(@NonNull FragmentActivity activity,
+                               @NonNull BaseballCardActionModeCallback callback) {
         this.activity = activity;
-        this.cards = new ArrayList<>();
+        this.callback = callback;
     }
 
     @NonNull
@@ -89,7 +94,7 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BaseballCardViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final BaseballCardViewHolder holder, int position) {
         int viewType = getItemViewType(position);
 
         switch (viewType) {
@@ -99,7 +104,23 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
             case TYPE_ITEM:
                 holder.id = getItemId(position);
                 BaseballCardView view = (BaseballCardView) holder.view;
+                // Subtract 1 to account for header row
                 view.setBaseballCard(cards.get(position - 1));
+                view.setChecked(selected.get(position - 1));
+
+                CheckBox ctv = view.findViewById(R.id.checkmark);
+                ctv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        int position = holder.getAdapterPosition();
+                        if (isChecked && !callback.isStarted()) {
+                            activity.startActionMode(callback);
+                        }
+
+                        // Subtract 1 to account for header row
+                        setItemSelected(position - 1, isChecked);
+                    }
+                });
                 break;
         }
     }
@@ -125,6 +146,23 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
 
     public void setCards(@NonNull List<BaseballCard> cards) {
         this.cards = cards;
+        this.selected =
+                new ArrayList<>(Collections.nCopies(cards.size(), false));
         notifyDataSetChanged();
+    }
+
+    private void setItemSelected(int position, boolean isSelected) {
+        selected.set(position, isSelected);
+    }
+
+    public List<BaseballCard> getSelectedItems() {
+        List<BaseballCard> selectedCards = new ArrayList<>();
+        for (int i = 0; i < selected.size(); ++i) {
+            if (selected.get(i)) {
+                selectedCards.add(cards.get(i));
+            }
+        }
+
+        return selectedCards;
     }
 }
