@@ -18,9 +18,10 @@
  */
 package bbct.android.common.functional.test;
 
-import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiSelector;
+import androidx.test.runner.AndroidJUnit4;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiSelector;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

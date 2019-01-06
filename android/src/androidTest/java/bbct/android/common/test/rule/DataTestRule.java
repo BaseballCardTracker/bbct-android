@@ -19,7 +19,8 @@
 package bbct.android.common.test.rule;
 
 import android.app.Instrumentation;
-import android.support.test.InstrumentationRegistry;
+
+import androidx.test.InstrumentationRegistry;
 
 import org.junit.rules.ExternalResource;
 
