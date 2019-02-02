@@ -151,7 +151,7 @@ dependencies {
     implementation project(':lib')
     implementation "androidx.appcompat:appcompat:${appcompatVersion}"
     implementation "androidx.legacy:legacy-support-v4:${legacyVersion}"
-    implementation "com.android.support:design:${supportLibVersion}"
+    implementation "com.google.android.material:material:1.0.0-beta01"
     implementation "androidx.room:room-runtime:${roomVersion}"
     implementation "androidx.lifecycle:lifecycle-livedata:${lifecycleVersion}"
     implementation 'com.google.android.gms:play-services:6.1.71'
