@@ -18,17 +18,15 @@
  */
 package bbct.android.common.provider;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+
 import java.util.List;
 
 import bbct.android.common.R;

@@ -19,8 +19,10 @@
 package bbct.android.common.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import bbct.android.common.R;
 
 public class FragmentTestActivity extends AppCompatActivity {
