@@ -197,31 +197,26 @@ public class BaseballCardDetails extends Fragment {
         );
         this.teamText.setAdapter(teamAdapter);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                BaseballCardDatabase database =
-                    BaseballCardDatabase.getInstance(activity);
-                BaseballCardDao dao = database.getBaseballCardDao();
-                LiveData<List<String>> brands = dao.getBrands();
-                brands.observe(
-                    BaseballCardDetails.this,
-                    new ListObserver(brandAdapter)
-                );
+        BaseballCardDatabase database =
+            BaseballCardDatabase.getInstance(activity);
+        BaseballCardDao dao = database.getBaseballCardDao();
+        LiveData<List<String>> brands = dao.getBrands();
+        brands.observe(
+            BaseballCardDetails.this,
+            new ListObserver(brandAdapter)
+        );
 
-                LiveData<List<String>> playerNames = dao.getPlayerNames();
-                playerNames.observe(
-                    BaseballCardDetails.this,
-                    new ListObserver(playerNameAdapter)
-                );
+        LiveData<List<String>> playerNames = dao.getPlayerNames();
+        playerNames.observe(
+            BaseballCardDetails.this,
+            new ListObserver(playerNameAdapter)
+        );
 
-                LiveData<List<String>> teams = dao.getTeams();
-                teams.observe(
-                    BaseballCardDetails.this,
-                    new ListObserver(teamAdapter)
-                );
-            }
-        }).start();
+        LiveData<List<String>> teams = dao.getTeams();
+        teams.observe(
+            BaseballCardDetails.this,
+            new ListObserver(teamAdapter)
+        );
 
         this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
         this.playerPositionSpinner.setAdapter(this.positionsAdapter);
