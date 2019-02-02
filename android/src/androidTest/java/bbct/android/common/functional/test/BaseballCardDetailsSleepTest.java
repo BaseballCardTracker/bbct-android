@@ -19,14 +19,17 @@
 package bbct.android.common.functional.test;
 
 import android.os.RemoteException;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiObjectNotFoundException;
-import android.support.test.uiautomator.UiSelector;
 import android.util.Log;
 import android.widget.EditText;
-import bbct.android.common.R;
+
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObjectNotFoundException;
+import androidx.test.uiautomator.UiSelector;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import bbct.android.common.R;
 
 public class BaseballCardDetailsSleepTest extends UiAutomatorTest {
     private static final String TAG = BaseballCardDetailsSleepTest.class.getName();

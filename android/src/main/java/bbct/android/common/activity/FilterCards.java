@@ -30,6 +30,10 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+
 import java.util.ArrayList;
 import java.util.Objects;
 

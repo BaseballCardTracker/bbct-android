@@ -18,8 +18,8 @@
  */
 package bbct.android.common.test.rule;
 
-import android.support.test.rule.ActivityTestRule;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
+import androidx.test.rule.ActivityTestRule;
 
 import bbct.android.common.activity.FragmentTestActivity;
 

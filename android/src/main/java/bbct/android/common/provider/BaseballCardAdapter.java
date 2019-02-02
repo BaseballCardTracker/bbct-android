@@ -19,8 +19,6 @@
 package bbct.android.common.provider;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -28,6 +26,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import java.util.List;
 

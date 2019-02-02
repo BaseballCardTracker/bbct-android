@@ -12,7 +12,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'io.fabric.tools:gradle:1.+'
         classpath 'com.testdroid:gradle:1.3.0'
     }
@@ -29,21 +29,25 @@ allprojects {
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     flavorDimensions "tier"
 
     defaultConfig {
         applicationId "bbct.android.common"
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 22
         versionName "0.6.8.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     signingConfigs {
         release
@@ -130,37 +134,40 @@ if (propFile.canRead()) {
 }
 
 ext {
-    supportLibVersion = '27.1.1'
-    espressoVersion = '2.2.1'
-    testSupportLibVersion = '0.5'
-    butterknifeVersion = '8.8.1'
+    appcompatVersion = '1.1.0-alpha01'
+    legacyVersion = '1.0.0'
     archCompVersion = '1.1.1'
+    roomVersion = '2.1.0-alpha04'
+    lifecycleVersion = '2.1.0-alpha02'
+    butterknifeVersion = '10.0.0'
+    espressoVersion = '3.1.1'
+    testLibVersion = '1.1.1'
+    uiautomatorVersion = '2.2.0'
+    annotationVersion = '1.0.1'
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':lib')
-    implementation "com.android.support:appcompat-v7:${supportLibVersion}"
-    implementation "com.android.support:support-v4:${supportLibVersion}"
+    implementation "androidx.appcompat:appcompat:${appcompatVersion}"
+    implementation "androidx.legacy:legacy-support-v4:${legacyVersion}"
     implementation "com.android.support:design:${supportLibVersion}"
-    implementation "android.arch.persistence.room:runtime:${archCompVersion}"
-    implementation "android.arch.lifecycle:livedata:${archCompVersion}"
+    implementation "androidx.room:room-runtime:${roomVersion}"
+    implementation "androidx.lifecycle:lifecycle-livedata:${lifecycleVersion}"
     implementation 'com.google.android.gms:play-services:6.1.71'
     implementation('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true
     }
     implementation "com.jakewharton:butterknife:${butterknifeVersion}"
-
-    annotationProcessor "android.arch.persistence.room:compiler:${archCompVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
-
-    androidTestImplementation "com.android.support.test:runner:${testSupportLibVersion}"
-    androidTestImplementation "com.android.support.test:rules:${testSupportLibVersion}"
-    androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
-    androidTestImplementation "com.android.support:support-annotations:${supportLibVersion}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${espressoVersion}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-intents:${espressoVersion}"
+    annotationProcessor "androidx.room:room-compiler:${roomVersion}"
 
     testImplementation 'junit:junit:4.12'
-    testImplementation "android.arch.persistence.room:testing:${archCompVersion}"
+    androidTestImplementation "androidx.annotation:annotation:${annotationVersion}"
+    androidTestImplementation "androidx.test:runner:${testLibVersion}"
+    androidTestImplementation "androidx.test:rules:${testLibVersion}"
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:${uiautomatorVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${espressoVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-intents:${espressoVersion}"
+    testImplementation "androidx.room:room-testing:${roomVersion}"
 }
