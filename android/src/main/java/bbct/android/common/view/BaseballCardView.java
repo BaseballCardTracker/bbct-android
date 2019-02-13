@@ -21,10 +21,24 @@ package bbct.android.common.view;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.widget.Checkable;
+import android.widget.TextView;
+
+import java.util.Locale;
+
 import bbct.android.common.R;
+import bbct.android.common.database.BaseballCard;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class BaseballCardView extends CheckableLinearLayout {
+    @BindView(R.id.brand)
+    TextView brand;
+    @BindView(R.id.year)
+    TextView year;
+    @BindView(R.id.number)
+    TextView number;
+    @BindView(R.id.player_name)
+    TextView player;
 
     public BaseballCardView(Context context) {
         this(context, null);
@@ -38,7 +52,16 @@ public class BaseballCardView extends CheckableLinearLayout {
         super(context, attrs, defStyle);
 
         ViewGroup root = (ViewGroup) ViewGroup.inflate(context, R.layout.baseball_card, this);
-        mCheckable = (Checkable) root.findViewById(R.id.checkmark);
+        mCheckable = root.findViewById(R.id.checkmark);
+
+        ButterKnife.bind(root);
     }
 
+    public void setBaseballCard(BaseballCard card) {
+        Locale locale = Locale.getDefault();
+        brand.setText(card.brand);
+        year.setText(String.format(locale, "%d", card.year));
+        number.setText(String.format(locale, "%d", card.number));
+        player.setText(card.playerName);
+    }
 }

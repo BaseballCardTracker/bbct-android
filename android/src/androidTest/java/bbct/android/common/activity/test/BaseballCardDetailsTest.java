@@ -46,7 +46,6 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 import bbct.data.BaseballCard;
-import butterknife.ButterKnife;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -128,7 +127,7 @@ public class BaseballCardDetailsTest {
         device.pressEnter();
         onView(withId(R.id.team_text)).check(matches(hasFocus()));
 
-        ViewGroup content = ButterKnife.findById(this.activity, android.R.id.content);
+        ViewGroup content = activity.findViewById(android.R.id.content);
         View rootView = content.getChildAt(0);
         Rect r = new Rect();
         // r will be populated with the coordinates of the view area still

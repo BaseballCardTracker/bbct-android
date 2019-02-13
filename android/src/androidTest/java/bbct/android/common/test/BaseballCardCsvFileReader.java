@@ -31,6 +31,7 @@ import java.util.List;
  * as comma-separated values.
  */
 public class BaseballCardCsvFileReader {
+    private BufferedReader in;
 
     /**
      * Create a {@link BaseballCardCsvFileReader} object which reads baseball
@@ -120,6 +121,4 @@ public class BaseballCardCsvFileReader {
     public void close() throws IOException {
         this.in.close();
     }
-
-    private BufferedReader in = null;
 }

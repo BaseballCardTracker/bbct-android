@@ -19,12 +19,15 @@
 package bbct.android.common.activity.util;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Build;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
+
+import java.util.Objects;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
@@ -62,7 +65,8 @@ public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiCho
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        mListFragment.getActivity().getMenuInflater().inflate(R.menu.context, menu);
+        Activity activity = Objects.requireNonNull(mListFragment.getActivity());
+        activity.getMenuInflater().inflate(R.menu.context, menu);
         mMode = mode;
         mStarted = true;
 

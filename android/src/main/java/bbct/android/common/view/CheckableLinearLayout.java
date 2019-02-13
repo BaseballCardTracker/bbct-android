@@ -23,8 +23,11 @@ import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
 
-public class CheckableLinearLayout extends LinearLayout implements Checkable {
+import bbct.android.common.R;
+import butterknife.BindView;
 
+public class CheckableLinearLayout extends LinearLayout implements Checkable {
+    @BindView(R.id.checkmark)
     Checkable mCheckable;
 
     public CheckableLinearLayout(Context context, AttributeSet attrs, int defStyle) {
@@ -45,5 +48,4 @@ public class CheckableLinearLayout extends LinearLayout implements Checkable {
     public void toggle() {
         mCheckable.toggle();
     }
-
 }

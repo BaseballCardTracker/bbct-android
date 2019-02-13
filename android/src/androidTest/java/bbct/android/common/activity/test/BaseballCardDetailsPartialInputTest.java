@@ -89,7 +89,7 @@ public class BaseballCardDetailsPartialInputTest extends
         activity.replaceFragment(new BaseballCardDetails());
     }
 
-    public void testPartialInput() throws Throwable {
+    public void testPartialInput() {
         Log.d(TAG, "testPartialInput()");
         Log.d(TAG, "inputFieldsMask=" + this.inputFieldsMask);
 

@@ -87,7 +87,7 @@ final public class BBCTTestUtil {
         onView(withId(menuId)).perform(click());
     }
 
-    public static void addCard(BaseballCard card) throws Throwable {
+    public static void addCard(BaseballCard card) {
         BBCTTestUtil.sendKeysToCardDetails(card);
         onView(withId(R.id.save_menu))
                 .perform(click());
