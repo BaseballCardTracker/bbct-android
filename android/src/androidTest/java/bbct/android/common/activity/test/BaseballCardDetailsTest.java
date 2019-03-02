@@ -22,13 +22,14 @@ import android.app.Activity;
 import android.app.Instrumentation;
 import android.graphics.Rect;
 import android.os.RemoteException;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.Espresso;
-import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.UiDevice;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.test.InstrumentationRegistry;
+import androidx.test.espresso.Espresso;
+import androidx.test.runner.AndroidJUnit4;
+import androidx.test.uiautomator.UiDevice;
 
 import junit.framework.Assert;
 
@@ -47,13 +48,13 @@ import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 import bbct.data.BaseballCard;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.scrollTo;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasFocus;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsTest {

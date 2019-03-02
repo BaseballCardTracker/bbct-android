@@ -20,16 +20,10 @@ package bbct.android.common.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -45,6 +39,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import java.util.List;
 import java.util.Locale;
@@ -196,31 +197,26 @@ public class BaseballCardDetails extends Fragment {
         );
         this.teamText.setAdapter(teamAdapter);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                BaseballCardDatabase database =
-                    BaseballCardDatabase.getInstance(activity);
-                BaseballCardDao dao = database.getBaseballCardDao();
-                LiveData<List<String>> brands = dao.getBrands();
-                brands.observe(
-                    BaseballCardDetails.this,
-                    new ListObserver(brandAdapter)
-                );
+        BaseballCardDatabase database =
+            BaseballCardDatabase.getInstance(activity);
+        BaseballCardDao dao = database.getBaseballCardDao();
+        LiveData<List<String>> brands = dao.getBrands();
+        brands.observe(
+            BaseballCardDetails.this,
+            new ListObserver(brandAdapter)
+        );
 
-                LiveData<List<String>> playerNames = dao.getPlayerNames();
-                playerNames.observe(
-                    BaseballCardDetails.this,
-                    new ListObserver(playerNameAdapter)
-                );
+        LiveData<List<String>> playerNames = dao.getPlayerNames();
+        playerNames.observe(
+            BaseballCardDetails.this,
+            new ListObserver(playerNameAdapter)
+        );
 
-                LiveData<List<String>> teams = dao.getTeams();
-                teams.observe(
-                    BaseballCardDetails.this,
-                    new ListObserver(teamAdapter)
-                );
-            }
-        }).start();
+        LiveData<List<String>> teams = dao.getTeams();
+        teams.observe(
+            BaseballCardDetails.this,
+            new ListObserver(teamAdapter)
+        );
 
         this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
         this.playerPositionSpinner.setAdapter(this.positionsAdapter);

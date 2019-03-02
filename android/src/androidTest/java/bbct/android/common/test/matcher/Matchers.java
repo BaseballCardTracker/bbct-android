@@ -20,11 +20,12 @@ package bbct.android.common.test.matcher;
 
 import android.view.View;
 import android.widget.EditText;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import static android.support.test.espresso.core.deps.guava.base.Preconditions.checkNotNull;
+import static androidx.test.espresso.intent.Checks.checkNotNull;
 
 public class Matchers {
     public static Matcher<? super View> hasErrorText(int errorRes) {

@@ -18,7 +18,7 @@
  */
 package bbct.android.lite.activity.test;
 
-import android.support.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.runner.RunWith;
 
