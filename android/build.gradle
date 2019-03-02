@@ -76,6 +76,10 @@ android {
     packagingOptions {
         exclude 'LICENSE.txt'
     }
+
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
 }
 
 testdroid {
@@ -143,7 +147,7 @@ ext {
     espressoVersion = '3.1.1'
     testLibVersion = '1.1.1'
     uiautomatorVersion = '2.2.0'
-    annotationVersion = '1.0.1'
+    annotationVersion = '1.0.0'
 }
 
 dependencies {
