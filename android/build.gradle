@@ -138,7 +138,7 @@ if (propFile.canRead()) {
 }
 
 ext {
-    appcompatVersion = '1.1.0-alpha01'
+    appcompatVersion = '1.1.0-alpha02'
     legacyVersion = '1.0.0'
     archCompVersion = '1.1.1'
     roomVersion = '2.1.0-alpha04'
