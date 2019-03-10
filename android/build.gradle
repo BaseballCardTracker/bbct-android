@@ -139,7 +139,6 @@ if (propFile.canRead()) {
 
 ext {
     appcompatVersion = '1.1.0-alpha02'
-    legacyVersion = '1.0.0'
     archCompVersion = '1.1.1'
     roomVersion = '2.1.0-alpha04'
     lifecycleVersion = '2.1.0-alpha02'
@@ -154,7 +153,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':lib')
     implementation "androidx.appcompat:appcompat:${appcompatVersion}"
-    implementation "androidx.legacy:legacy-support-v4:${legacyVersion}"
     implementation "com.google.android.material:material:1.0.0-beta01"
     implementation "androidx.room:room-runtime:${roomVersion}"
     implementation "androidx.lifecycle:lifecycle-livedata:${lifecycleVersion}"
