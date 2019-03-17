@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.activity.util;
+package bbct.android.common.view;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

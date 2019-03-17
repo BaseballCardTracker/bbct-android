@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.provider;
+package bbct.android.common.view;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,10 +35,7 @@ import java.util.List;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTags;
-import bbct.android.common.activity.util.BaseballCardActionModeCallback;
 import bbct.android.common.database.BaseballCard;
-import bbct.android.common.view.BaseballCardView;
-import bbct.android.common.view.HeaderView;
 
 public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder> {
     private final int TYPE_HEADER = 0;
