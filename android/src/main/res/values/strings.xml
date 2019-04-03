@@ -127,5 +127,6 @@
     </string>
     <string name="now">Now</string>
     <string name="later">Later</string>
+    <string name="cab_label">%1$d Card%2$s selected</string>
 
 </resources>

@@ -20,6 +20,8 @@ package bbct.android.common.activity.util;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Build;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -60,6 +62,8 @@ public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiCho
             } else {
                 listView.setItemChecked(0, false);
             }
+
+            setCABTitle(mListFragment.getContext(), checkedCount);
         }
     }
 
@@ -102,5 +106,12 @@ public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiCho
 
     public void finish() {
         mMode.finish();
+    }
+
+    public void setCABTitle(Context context, int count) {
+        final Resources res = context.getResources();
+        final String prefix = count == 0 ? "" : "s";
+        final String cabLabel = String.format(res.getString(R.string.cab_label), count, prefix);
+        mMode.setTitle(cabLabel);
     }
 }
