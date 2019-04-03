@@ -20,6 +20,7 @@ package bbct.android.common.activity.test;
 
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.content.res.Resources;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -233,6 +234,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                     .atPosition(i)
                     .check(matches(isChecked()));
         }
+
+        this.assertCorrectCABLabel(allCards.size() - 1);
     }
 
     private void markAll() {
@@ -240,6 +243,15 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                 .perform(click())
                 .check(matches(isChecked()));
         onView(withId(R.id.delete_menu))
+                .check(matches(isDisplayed()));
+    }
+
+    private void assertCorrectCABLabel(int count) {
+        final Resources res = activityTestRule.getActivity().getResources();
+        final String prefix = count == 0 ? "" : "s";
+        final String expectedLabel = String.format(res.getString(R.string.cab_label), count, prefix);
+
+        onView(withText(expectedLabel))
                 .check(matches(isDisplayed()));
     }
 
@@ -266,6 +278,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                     .atPosition(i)
                     .check(matches(isNotChecked()));
         }
+
+        this.assertCorrectCABLabel(0);
     }
 
     @Test
