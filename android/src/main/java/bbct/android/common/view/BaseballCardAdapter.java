@@ -108,7 +108,6 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
                             callback.finish();
                         }
                         setAllSelected(isChecked);
-                        notifyDataSetChanged();
                     }
                 });
                 break;
@@ -165,11 +164,12 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
         notifyDataSetChanged();
     }
 
-    private void setAllSelected(boolean isSelected) {
+    public void setAllSelected(boolean isSelected) {
         // Add 1 for the header view
         for (int i = 0; i < getItemCount() - 1; ++i) {
             setItemSelected(i, isSelected);
         }
+        notifyDataSetChanged();
     }
 
     private void setItemSelected(int position, boolean isSelected) {
@@ -187,7 +187,7 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
         return selectedCards;
     }
 
-    public int getSelectedCount() {
+    private int getSelectedCount() {
         int count = 0;
         for (boolean selectedItem : selected) {
             if (selectedItem) {

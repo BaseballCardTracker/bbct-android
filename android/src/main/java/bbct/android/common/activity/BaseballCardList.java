@@ -249,4 +249,8 @@ public class BaseballCardList extends Fragment {
             }
         });
     }
+
+    public void setAllSelected(boolean isSelected) {
+        adapter.setAllSelected(isSelected);
+    }
 }

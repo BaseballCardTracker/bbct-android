@@ -69,6 +69,7 @@ public class BaseballCardActionModeCallback implements ActionMode.Callback {
 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
+        listFragment.setAllSelected(false);
         isStarted = false;
         actionMode = null;
     }
