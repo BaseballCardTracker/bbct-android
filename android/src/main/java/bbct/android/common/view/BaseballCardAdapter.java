@@ -97,16 +97,30 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
 
         switch (viewType) {
             case TYPE_HEADER:
+                HeaderView headerView = (HeaderView) holder.view;
+                CheckBox selectAll = headerView.findViewById(R.id.select_all);
+                selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked && !callback.isStarted()) {
+                            activity.startActionMode(callback);
+                        } else if (callback.isStarted()) {
+                            callback.finish();
+                        }
+                        setAllSelected(isChecked);
+                        notifyDataSetChanged();
+                    }
+                });
                 break;
 
             case TYPE_ITEM:
                 holder.id = getItemId(position);
-                BaseballCardView view = (BaseballCardView) holder.view;
+                BaseballCardView cardView = (BaseballCardView) holder.view;
                 // Subtract 1 to account for header row
-                view.setBaseballCard(cards.get(position - 1));
-                view.setChecked(selected.get(position - 1));
+                cardView.setBaseballCard(cards.get(position - 1));
+                cardView.setChecked(selected.get(position - 1));
 
-                CheckBox ctv = view.findViewById(R.id.checkmark);
+                CheckBox ctv = cardView.findViewById(R.id.checkmark);
                 ctv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -147,6 +161,13 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
         this.selected =
                 new ArrayList<>(Collections.nCopies(cards.size(), false));
         notifyDataSetChanged();
+    }
+
+    private void setAllSelected(boolean isSelected) {
+        // Add 1 for the header view
+        for (int i = 0; i < getItemCount() - 1; ++i) {
+            setItemSelected(i, isSelected);
+        }
     }
 
     private void setItemSelected(int position, boolean isSelected) {
