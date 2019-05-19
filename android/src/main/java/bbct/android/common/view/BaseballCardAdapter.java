@@ -125,12 +125,14 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         int position = holder.getAdapterPosition();
-                        if (isChecked && !callback.isStarted()) {
-                            activity.startActionMode(callback);
-                        }
-
                         // Subtract 1 to account for header row
                         setItemSelected(position - 1, isChecked);
+
+                        if (isChecked && !callback.isStarted()) {
+                            activity.startActionMode(callback);
+                        } else if (callback.isStarted() && getSelectedCount() == 0) {
+                            callback.finish();
+                        }
                     }
                 });
                 break;
@@ -183,5 +185,15 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
         }
 
         return selectedCards;
+    }
+
+    public int getSelectedCount() {
+        int count = 0;
+        for (boolean selectedItem : selected) {
+            if (selectedItem) {
+                count++;
+            }
+        }
+        return count;
     }
 }
