@@ -364,10 +364,11 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testOnClickCheckboxStartActionMode() {
         int index = 4;
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
+        onView(withRecyclerView(R.id.card_list).atPositionOnView(index, R.id.checkmark))
+            .perform(click())
+            .check(matches(isChecked()));
+        onView(withId(R.id.delete_menu))
+            .check(matches(isDisplayed()));
         onView(withId(R.id.delete_menu))
                 .check(matches(isDisplayed()));
     }
