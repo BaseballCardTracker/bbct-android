@@ -414,12 +414,10 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     @Test
     public void testOnClickCheckboxAndOnCheckAll() {
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(1)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
+        onView(withRecyclerView(R.id.card_list).atPositionOnView(1, R.id.checkmark))
+            .perform(click());
         onView(withId(R.id.select_all))
-                .perform(click());
+            .perform(click());
         this.assertAllCheckboxesChecked();
     }
 
