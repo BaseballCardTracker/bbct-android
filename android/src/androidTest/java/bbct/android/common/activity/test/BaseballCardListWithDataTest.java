@@ -59,6 +59,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static bbct.android.common.test.matcher.BaseballCardMatchers.withYear;
+import static bbct.android.common.test.matcher.RecyclerViewMatcher.withRecyclerView;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
@@ -228,10 +229,12 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         onView(withId(R.id.select_all))
                 .check(matches(isChecked()));
 
-        for (int i = 0; i < allCards.size(); i++) {
-            onData(instanceOf(BaseballCard.class))
-                    .atPosition(i)
-                    .check(matches(isChecked()));
+        // skip header view
+        for (int i = 1; i < allCards.size() + 1; i++) {
+            onView(
+                withRecyclerView(R.id.card_list)
+                    .atPositionOnView(i, R.id.checkmark)
+            ).check(matches(isChecked()));
         }
     }
 
