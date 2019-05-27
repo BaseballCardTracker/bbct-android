@@ -424,13 +424,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testOnItemLongClickStartActionMode() {
         int index = 4;
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .perform(longClick());
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .check(matches(isChecked()));
+        onView(withRecyclerView(R.id.card_list).atPosition(index))
+            .perform(longClick())
+            .check(matches(isChecked()));
         onView(withId(R.id.delete_menu))
                 .check(matches(isDisplayed()));
     }
