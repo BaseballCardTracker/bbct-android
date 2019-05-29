@@ -318,21 +318,17 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         Log.d(TAG, "testSelectionAfterSaveInstanceState()");
 
         int index = 1;
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
+        onView(withRecyclerView(R.id.card_list).atPositionOnView(index, R.id.checkmark))
+            .perform(click());
         onView(withId(R.id.delete_menu))
-                .check(matches(isDisplayed()));
+            .check(matches(isDisplayed()));
 
         Log.d(TAG, "change orientation");
         device.setOrientationLeft();
 
         Log.d(TAG, "assertions");
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .check(matches(isChecked()));
+        onView(withRecyclerView(R.id.card_list).atPositionOnView(index, R.id.checkmark))
+            .check(matches(isChecked()));
     }
 
     @Test
