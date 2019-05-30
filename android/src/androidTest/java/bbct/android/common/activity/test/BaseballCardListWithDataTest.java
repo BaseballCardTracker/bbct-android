@@ -60,10 +60,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static bbct.android.common.test.matcher.BaseballCardMatchers.withYear;
 import static bbct.android.common.test.matcher.RecyclerViewMatcher.withRecyclerView;
-import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
 abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
