@@ -64,6 +64,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Rule
@@ -371,18 +372,15 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testOnClickCheckboxStopActionMode() {
         int index = 4;
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
+        onView(withRecyclerView(R.id.card_list).atPositionOnView(index, R.id.checkmark))
+            .perform(click());
         onView(withId(R.id.delete_menu))
                 .check(matches(isDisplayed()));
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
-        onView(withId(R.id.add_menu))
-                .check(matches(isDisplayed()));
+        onView(withRecyclerView(R.id.card_list).atPositionOnView(index, R.id.checkmark))
+            .perform(click())
+            .check(matches(isNotChecked()));
+        onView(withId(R.id.delete_menu))
+            .check(matches(not(isDisplayed())));
     }
 
     @Test
