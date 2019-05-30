@@ -154,7 +154,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         Log.d(TAG, "testOnListItemClick()");
         int cardIndex = 3;
         BaseballCard expectedCard = allCards.get(cardIndex);
-        onData(allOf(instanceOf(BaseballCard.class), is(expectedCard))).perform(click());
+        onView(withRecyclerView(R.id.card_list).atPosition(cardIndex + 1))
+            .perform(click());
         BBCTTestUtil.assertAllEditTextContents(expectedCard);
     }
 
