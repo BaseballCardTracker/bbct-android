@@ -264,10 +264,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         onView(withId(R.id.select_all))
                 .check(matches(isNotChecked()));
 
-        for (int i = 0; i < allCards.size(); i++) {
-            onData(instanceOf(BaseballCard.class))
-                    .atPosition(i)
-                    .check(matches(isNotChecked()));
+        for (int i = 1; i < allCards.size() + 1; i++) {
+            onView(withRecyclerView(R.id.card_list).atPositionOnView(i, R.id.checkmark))
+                .check(matches(isNotChecked()));
         }
     }
 
