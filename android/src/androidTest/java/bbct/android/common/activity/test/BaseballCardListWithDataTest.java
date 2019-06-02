@@ -49,12 +49,9 @@ import bbct.data.BaseballCard;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -62,7 +59,6 @@ import static bbct.android.common.test.matcher.BaseballCardMatchers.withYear;
 import static bbct.android.common.test.matcher.RecyclerViewMatcher.withRecyclerView;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.not;
 
 abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Rule
@@ -75,7 +71,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     private UiDevice device;
     private List<BaseballCard> expectedCards;
     private Instrumentation inst;
-    private Activity activity = null;
+    private Activity activity;
     private List<BaseballCard> allCards;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil;
@@ -220,54 +216,10 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testMarkAll() {
-        this.markAll();
-        this.assertAllCheckboxesChecked();
-    }
-
-    private void assertAllCheckboxesChecked() {
-        onView(withId(R.id.select_all))
-                .check(matches(isChecked()));
-
-        // skip header view
-        for (int i = 1; i < allCards.size() + 1; i++) {
-            onView(
-                withRecyclerView(R.id.card_list)
-                    .atPositionOnView(i, R.id.checkmark)
-            ).check(matches(isChecked()));
-        }
-    }
-
-    private void markAll() {
-        onView(withId(R.id.select_all))
-                .perform(click())
-                .check(matches(isChecked()));
-        onView(withId(R.id.delete_menu))
-                .check(matches(isDisplayed()));
-    }
-
-    @Test
     public void testDeleteAll() {
         this.markAll();
         deleteCards();
         onView(withId(android.R.id.empty)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testUnmarkAll() {
-        this.markAll();
-        onView(withId(R.id.select_all)).perform(click());
-        assertNoCheckboxesChecked();
-    }
-
-    private void assertNoCheckboxesChecked() {
-        onView(withId(R.id.select_all))
-                .check(matches(isNotChecked()));
-
-        for (int i = 1; i < allCards.size() + 1; i++) {
-            onView(withRecyclerView(R.id.card_list).atPositionOnView(i, R.id.checkmark))
-                .check(matches(isNotChecked()));
-        }
     }
 
     @Test
@@ -310,24 +262,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
                 .check(matches(isDisplayed()));
         deleteCards();
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
-    }
-
-    @Test
-    public void testSelectionAfterSaveInstanceState() throws Throwable {
-        Log.d(TAG, "testSelectionAfterSaveInstanceState()");
-
-        int index = 1;
-        onView(withRecyclerView(R.id.card_list).atPositionOnView(index, R.id.checkmark))
-            .perform(click());
-        onView(withId(R.id.delete_menu))
-            .check(matches(isDisplayed()));
-
-        Log.d(TAG, "change orientation");
-        device.setOrientationLeft();
-
-        Log.d(TAG, "assertions");
-        onView(withRecyclerView(R.id.card_list).atPositionOnView(index, R.id.checkmark))
-            .check(matches(isChecked()));
     }
 
     @Test
