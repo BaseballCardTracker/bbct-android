@@ -1,10 +1,8 @@
 package bbct.android.common.fragement.test;
 
-import android.app.Activity;
 import android.app.Instrumentation;
 
 import androidx.test.InstrumentationRegistry;
-import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiDevice;
 
 import junit.framework.Assert;
@@ -16,10 +14,11 @@ import org.junit.Test;
 import java.util.List;
 
 import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.DataTestRule;
-import bbct.android.lite.provider.LiteActivity;
+import bbct.android.common.test.rule.SupportFragmentTestRule;
 import bbct.data.BaseballCard;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -37,10 +36,10 @@ public class BaseballCardListSelectionTest {
     @Rule
     public DataTestRule dataTestRule = new DataTestRule();
     @Rule
-    public ActivityTestRule<LiteActivity> activityTestRule = new ActivityTestRule<>(LiteActivity.class);
+    public SupportFragmentTestRule fragmentTestRule =
+        new SupportFragmentTestRule(new BaseballCardList());
 
     private UiDevice device;
-    private Activity activity;
     private Instrumentation inst;
     private DatabaseUtil dbUtil;
     private List<BaseballCard> allCards;
@@ -49,14 +48,12 @@ public class BaseballCardListSelectionTest {
     public void setUp() {
         inst = InstrumentationRegistry.getInstrumentation();
         device = UiDevice.getInstance(inst);
-        activity = activityTestRule.getActivity();
         allCards = dataTestRule.getAllCards();
         dbUtil = new DatabaseUtil(inst.getTargetContext());
     }
 
     @Test
     public void testPreConditions() {
-        Assert.assertNotNull(this.activity);
         BBCTTestUtil.assertDatabaseCreated(inst.getTargetContext());
         Assert.assertTrue(dbUtil.containsAllBaseballCards(this.allCards));
         BBCTTestUtil.assertListViewContainsItems(this.allCards);
