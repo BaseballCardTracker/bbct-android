@@ -84,7 +84,7 @@ public class FilterCardsTest {
     private void testCheckBox(int checkId, int inputId) {
         onView(withId(checkId)).perform(click());
         onView(withId(inputId)).check(matches(allOf(isEnabled(), hasFocus())));
-        onView(withId(R.id.save_menu)).check(matches(isDisplayed()));
+        onView(withId(R.id.confirm_button)).check(matches(isDisplayed()));
     }
 
     @Test

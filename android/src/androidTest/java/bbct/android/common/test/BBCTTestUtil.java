@@ -84,7 +84,7 @@ final public class BBCTTestUtil {
 
     public static void addCard(BaseballCard card) {
         BBCTTestUtil.sendKeysToCardDetails(card);
-        onView(withId(R.id.save_menu))
+        onView(withId(R.id.save_button))
                 .perform(click());
     }
 
