@@ -134,6 +134,15 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
                         }
                     }
                 });
+
+                cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        CheckableLinearLayout check = (CheckableLinearLayout)v;
+                        check.setChecked(true);
+                        return true;
+                    }
+                });
                 break;
         }
     }
