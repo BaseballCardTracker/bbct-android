@@ -48,6 +48,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
 public class FilterCardsTest {
@@ -72,7 +73,7 @@ public class FilterCardsTest {
     @Test
     public void testPreConditions() {
         Assert.assertNotNull(this.activity);
-        onView(withId(R.id.save_menu)).check(doesNotExist());
+        onView(withId(R.id.confirm_button)).check(matches(not(isEnabled())));
     }
 
     @Test
@@ -84,7 +85,7 @@ public class FilterCardsTest {
     private void testCheckBox(int checkId, int inputId) {
         onView(withId(checkId)).perform(click());
         onView(withId(inputId)).check(matches(allOf(isEnabled(), hasFocus())));
-        onView(withId(R.id.save_menu)).check(matches(isDisplayed()));
+        onView(withId(R.id.confirm_button)).check(matches(isDisplayed()));
     }
 
     @Test

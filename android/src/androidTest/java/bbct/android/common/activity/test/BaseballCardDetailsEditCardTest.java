@@ -136,7 +136,7 @@ public class BaseballCardDetailsEditCardTest extends
         BBCTTestUtil.assertAllEditTextContents(expected);
         Log.d("DEBUG", "Success!");
 
-        onView(withId(R.id.save_menu)).perform(click());
+        onView(withId(R.id.save_button)).perform(click());
         Assert.assertTrue(this.dbUtil.containsBaseballCard(expected));
     }
 
