@@ -2,7 +2,7 @@ package bbct.android.common.fragement.test;
 
 import android.app.Instrumentation;
 
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 
 import junit.framework.Assert;
