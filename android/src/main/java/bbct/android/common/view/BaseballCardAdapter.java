@@ -38,9 +38,6 @@ import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.database.BaseballCard;
 
 public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder> {
-    private final int TYPE_HEADER = 0;
-    private final int TYPE_ITEM = 1;
-
     private FragmentActivity activity;
     private List<BaseballCard> cards = new ArrayList<>();
     private List<Boolean> selected = new ArrayList<>();
@@ -78,98 +75,56 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
     @NonNull
     @Override
     public BaseballCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch (viewType) {
-            case TYPE_HEADER:
-                HeaderView headerView = new HeaderView(parent.getContext());
-                return new BaseballCardViewHolder<>(headerView);
-
-            case TYPE_ITEM:
-                BaseballCardView view = new BaseballCardView(parent.getContext());
-                return new BaseballCardViewHolder<>(view);
-        }
-
-        return new BaseballCardViewHolder<View>(null);
+            BaseballCardView view = new BaseballCardView(parent.getContext());
+            return new BaseballCardViewHolder<>(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final BaseballCardViewHolder holder, int position) {
-        int viewType = getItemViewType(position);
+        holder.id = getItemId(position);
+        BaseballCardView cardView = (BaseballCardView) holder.view;
+        cardView.setBaseballCard(cards.get(position));
+        cardView.setChecked(selected.get(position));
 
-        switch (viewType) {
-            case TYPE_HEADER:
-                HeaderView headerView = (HeaderView) holder.view;
-                CheckBox selectAll = headerView.findViewById(R.id.select_all);
-                selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (isChecked && !callback.isStarted()) {
-                            activity.startActionMode(callback);
-                        } else if (callback.isStarted()) {
-                            callback.finish();
-                        }
-                        setAllSelected(isChecked);
-                    }
-                });
-                break;
+        CheckBox ctv = cardView.findViewById(R.id.checkmark);
+        ctv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int position = holder.getAdapterPosition();
+                setItemSelected(position, isChecked);
 
-            case TYPE_ITEM:
-                holder.id = getItemId(position);
-                BaseballCardView cardView = (BaseballCardView) holder.view;
-                // Subtract 1 to account for header row
-                cardView.setBaseballCard(cards.get(position - 1));
-                cardView.setChecked(selected.get(position - 1));
+                if (isChecked && !callback.isStarted()) {
+                    activity.startActionMode(callback);
+                } else if (callback.isStarted() && getSelectedCount() == 0) {
+                    callback.finish();
+                }
+            }
+        });
 
-                CheckBox ctv = cardView.findViewById(R.id.checkmark);
-                ctv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        int position = holder.getAdapterPosition();
-                        // Subtract 1 to account for header row
-                        setItemSelected(position - 1, isChecked);
-
-                        if (isChecked && !callback.isStarted()) {
-                            activity.startActionMode(callback);
-                        } else if (callback.isStarted() && getSelectedCount() == 0) {
-                            callback.finish();
-                        }
-                    }
-                });
-
-                cardView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        CheckableLinearLayout check = (CheckableLinearLayout)v;
-                        check.setChecked(true);
-                        return true;
-                    }
-                });
-                break;
-        }
+        cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                CheckableLinearLayout check = (CheckableLinearLayout)v;
+                check.setChecked(true);
+                return true;
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return cards.size() + 1;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position == 0) {
-            return TYPE_HEADER;
-        }
-
-        return TYPE_ITEM;
+        return cards.size();
     }
 
     @Override
     public long getItemId(int position) {
-        return cards.get(position - 1)._id;
+        return cards.get(position)._id;
     }
 
     public void setCards(@NonNull List<BaseballCard> cards) {
         this.cards = cards;
         this.selected =
-                new ArrayList<>(Collections.nCopies(cards.size(), false));
+            new ArrayList<>(Collections.nCopies(cards.size(), false));
         notifyDataSetChanged();
     }
 
