@@ -129,8 +129,7 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
     }
 
     public void setAllSelected(boolean isSelected) {
-        // Add 1 for the header view
-        for (int i = 0; i < getItemCount() - 1; ++i) {
+        for (int i = 0; i < getItemCount(); ++i) {
             setItemSelected(i, isSelected);
         }
         notifyDataSetChanged();

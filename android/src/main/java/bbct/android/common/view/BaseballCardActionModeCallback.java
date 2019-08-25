@@ -62,6 +62,9 @@ public class BaseballCardActionModeCallback implements ActionMode.Callback {
                 listFragment.deleteSelectedCards();
                 actionMode.finish();
                 return true;
+            case R.id.select_all_menu:
+                listFragment.setAllSelected(true);
+                return true;
         }
 
         return false;

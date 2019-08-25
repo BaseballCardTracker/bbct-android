@@ -22,4 +22,8 @@
         android:id="@+id/delete_menu"
         android:icon="@drawable/delete"
         android:title="@string/delete_menu"/>
+    <item
+        android:id="@+id/select_all_menu"
+        android:icon="@drawable/select_all"
+        android:title="@string/select_all_menu"/>
 </menu>
