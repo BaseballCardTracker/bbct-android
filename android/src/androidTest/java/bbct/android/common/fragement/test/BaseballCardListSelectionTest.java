@@ -116,7 +116,7 @@ public class BaseballCardListSelectionTest {
     }
 
     private void assertAllCheckboxesChecked() {
-        for (int i = 0; i < allCards.size() + 1; i++) {
+        for (int i = 0; i < allCards.size(); i++) {
             onView(
                 withRecyclerView(R.id.card_list)
                     .atPositionOnView(i, R.id.checkmark)
@@ -125,7 +125,7 @@ public class BaseballCardListSelectionTest {
     }
 
     private void assertNoCheckboxesChecked() {
-        for (int i = 0; i < allCards.size() + 1; i++) {
+        for (int i = 0; i < allCards.size(); i++) {
             onView(withRecyclerView(R.id.card_list).atPositionOnView(i, R.id.checkmark))
                 .check(matches(isNotChecked()));
         }
