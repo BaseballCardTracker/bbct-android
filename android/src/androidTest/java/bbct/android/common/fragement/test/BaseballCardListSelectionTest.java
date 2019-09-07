@@ -60,16 +60,12 @@ public class BaseballCardListSelectionTest {
     }
 
     @Test
-    public void testMarkAll() {
-        this.markAll();
+    public void testSelectAll() {
+        onView(withRecyclerView(R.id.card_list).atPositionOnView(0, R.id.checkmark))
+            .perform(click());
+        onView(withId(R.id.select_all_menu))
+            .perform(click());
         this.assertAllCheckboxesChecked();
-    }
-
-    @Test
-    public void testUnmarkAll() {
-        this.markAll();
-        onView(withId(R.id.select_all)).perform(click());
-        assertNoCheckboxesChecked();
     }
 
     @Test
@@ -92,8 +88,6 @@ public class BaseballCardListSelectionTest {
             .check(matches(isChecked()));
         onView(withId(R.id.delete_menu))
             .check(matches(isDisplayed()));
-        onView(withId(R.id.delete_menu))
-            .check(matches(isDisplayed()));
     }
 
     @Test
@@ -108,36 +102,7 @@ public class BaseballCardListSelectionTest {
             .check(matches(isNotChecked()));
         onView(withId(R.id.delete_menu))
             .check(matches(not(isDisplayed())));
-    }
-
-    @Test
-    public void testOnClickCheckboxAll() {
-        for(int i = 1; i < allCards.size() + 1; ++i) {
-            onView(withRecyclerView(R.id.card_list).atPositionOnView(i, R.id.checkmark))
-                .perform(click());
-        }
-
-        onView(withId(R.id.select_all))
-            .check(matches(isChecked()));
-    }
-
-    @Test
-    public void testOnCheckAllAndOnClickCheckbox() {
-        onView(withId(R.id.select_all))
-            .perform(click());
-        onView(withRecyclerView(R.id.card_list).atPositionOnView(1, R.id.checkmark))
-            .perform(click());
-        onView(withId(R.id.select_all))
-            .check(matches(isNotChecked()));
-    }
-
-    @Test
-    public void testOnClickCheckboxAndOnCheckAll() {
-        onView(withRecyclerView(R.id.card_list).atPositionOnView(1, R.id.checkmark))
-            .perform(click());
-        onView(withId(R.id.select_all))
-            .perform(click());
-        this.assertAllCheckboxesChecked();
+        assertNoCheckboxesChecked();
     }
 
     @Test
@@ -150,20 +115,8 @@ public class BaseballCardListSelectionTest {
             .check(matches(isDisplayed()));
     }
 
-    private void markAll() {
-        onView(withId(R.id.select_all))
-            .perform(click())
-            .check(matches(isChecked()));
-        onView(withId(R.id.delete_menu))
-            .check(matches(isDisplayed()));
-    }
-
     private void assertAllCheckboxesChecked() {
-        onView(withId(R.id.select_all))
-            .check(matches(isChecked()));
-
-        // skip header view
-        for (int i = 1; i < allCards.size() + 1; i++) {
+        for (int i = 0; i < allCards.size() + 1; i++) {
             onView(
                 withRecyclerView(R.id.card_list)
                     .atPositionOnView(i, R.id.checkmark)
@@ -172,10 +125,7 @@ public class BaseballCardListSelectionTest {
     }
 
     private void assertNoCheckboxesChecked() {
-        onView(withId(R.id.select_all))
-            .check(matches(isNotChecked()));
-
-        for (int i = 1; i < allCards.size() + 1; i++) {
+        for (int i = 0; i < allCards.size() + 1; i++) {
             onView(withRecyclerView(R.id.card_list).atPositionOnView(i, R.id.checkmark))
                 .check(matches(isNotChecked()));
         }
