@@ -159,7 +159,7 @@ public class BaseballCardDetails extends Fragment {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
                     Log.d(TAG, "hide keyboard");
                     InputMethodManager imm = Objects.requireNonNull(
-                        (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE));
+                            (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE));
                     imm.hideSoftInputFromWindow(teamText.getWindowToken(), 0);
                     playerPositionSpinner.requestFocus();
                     return true;
@@ -192,30 +192,30 @@ public class BaseballCardDetails extends Fragment {
         this.playerNameText.setAdapter(playerNameAdapter);
 
         final ArrayAdapter<String> teamAdapter = new ArrayAdapter<>(
-            activity,
-            android.R.layout.simple_list_item_1
+                activity,
+                android.R.layout.simple_list_item_1
         );
         this.teamText.setAdapter(teamAdapter);
 
         BaseballCardDatabase database =
-            BaseballCardDatabase.getInstance(activity);
+                BaseballCardDatabase.getInstance(activity);
         BaseballCardDao dao = database.getBaseballCardDao();
         LiveData<List<String>> brands = dao.getBrands();
         brands.observe(
-            BaseballCardDetails.this,
-            new ListObserver(brandAdapter)
+                BaseballCardDetails.this,
+                new ListObserver(brandAdapter)
         );
 
         LiveData<List<String>> playerNames = dao.getPlayerNames();
         playerNames.observe(
-            BaseballCardDetails.this,
-            new ListObserver(playerNameAdapter)
+                BaseballCardDetails.this,
+                new ListObserver(playerNameAdapter)
         );
 
         LiveData<List<String>> teams = dao.getTeams();
         teams.observe(
-            BaseballCardDetails.this,
-            new ListObserver(teamAdapter)
+                BaseballCardDetails.this,
+                new ListObserver(teamAdapter)
         );
 
         this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
@@ -232,7 +232,7 @@ public class BaseballCardDetails extends Fragment {
                 protected BaseballCard doInBackground(Long... args) {
                     long id = args[0];
                     BaseballCardDatabase database =
-                        BaseballCardDatabase.getInstance(getActivity());
+                            BaseballCardDatabase.getInstance(getActivity());
                     BaseballCardDao dao = database.getBaseballCardDao();
                     return dao.getBaseballCard(id);
                 }
@@ -285,7 +285,7 @@ public class BaseballCardDetails extends Fragment {
     private ArrayAdapter<CharSequence> populateSpinnerAdapter(int arrayId) {
         Activity activity = Objects.requireNonNull(getActivity());
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-            activity, arrayId, android.R.layout.simple_spinner_item);
+                activity, arrayId, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         return adapter;
@@ -295,11 +295,10 @@ public class BaseballCardDetails extends Fragment {
         Log.d(TAG, "getBaseballCard()");
 
         EditText[] allEditTexts = {this.brandText, this.yearText,
-                this.numberText, this.valueText, this.countText,
+                this.numberText, this.countText,
                 this.playerNameText, this.teamText};
         int[] errorIds = {R.string.brand_input_error,
-                R.string.year_input_error, R.string.number_input_error,
-                R.string.value_input_error, R.string.count_input_error,
+                R.string.year_input_error, R.string.number_input_error, R.string.count_input_error,
                 R.string.player_name_input_error, R.string.team_input_error};
         boolean validInput = true;
 
