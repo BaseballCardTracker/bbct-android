@@ -30,7 +30,7 @@ public class BaseballCard {
     public String condition;
     public String brand;
     public Integer year;
-    public Integer number;
+    public String number;
     public Integer value;
     @ColumnInfo(name = "card_count")
     public Integer quantity;
@@ -41,7 +41,7 @@ public class BaseballCard {
     public String position;
 
     public BaseballCard(boolean autographed, String condition, String brand,
-                        int year, int number, int value, int quantity,
+                        int year, String number, int value, int quantity,
                         String playerName, String team, String position) {
         this.autographed = autographed;
         this.condition = condition;
@@ -84,7 +84,7 @@ public class BaseballCard {
         hash = 67 * hash + this.condition.hashCode();
         hash = 67 * hash + this.brand.hashCode();
         hash = 67 * hash + this.year;
-        hash = 67 * hash + this.number;
+        hash = 67 * hash + this.number.hashCode();
         hash = 67 * hash + this.value;
         hash = 67 * hash + this.quantity;
         hash = 67 * hash + this.playerName.hashCode();
