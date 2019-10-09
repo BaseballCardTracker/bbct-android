@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 5,
-    "identityHash": "14e058026cab1bf2143c97c9eba60233",
+    "identityHash": "d87e130401a9064c5e277d0c16974388",
     "entities": [
       {
         "tableName": "baseball_cards",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER, `autographed` INTEGER, `condition` TEXT, `brand` TEXT, `year` INTEGER, `number` TEXT, `value` INTEGER, `card_count` INTEGER, `player_name` TEXT, `team` TEXT, `player_position` TEXT, PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER, `autographed` INTEGER, `condition` TEXT, `brand` TEXT, `year` INTEGER, `number` INTEGER, `value` INTEGER, `card_count` INTEGER, `player_name` TEXT, `team` TEXT, `player_position` TEXT, PRIMARY KEY(`_id`))",
         "fields": [
           {
             "fieldPath": "_id",
@@ -41,7 +41,7 @@
           {
             "fieldPath": "number",
             "columnName": "number",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -85,10 +85,9 @@
         "foreignKeys": []
       }
     ],
-    "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"14e058026cab1bf2143c97c9eba60233\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d87e130401a9064c5e277d0c16974388\")"
     ]
   }
 }
