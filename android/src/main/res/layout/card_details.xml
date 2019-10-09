@@ -88,7 +88,8 @@
             <EditText
                 android:id="@id/number_text"
                 android:hint="@string/number_hint"
-                android:inputType="number"
+                android:inputType="text"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
                 android:selectAllOnFocus="true"
                 android:maxLines="1" />
         </TableRow>

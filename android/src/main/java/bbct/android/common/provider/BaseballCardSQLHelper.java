@@ -53,6 +53,8 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     public static final int ROOM_SCHEMA = 5;
 
+    public static final int UPDATED_SCHEMA = 6;
+
     public BaseballCardSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
 
@@ -69,7 +71,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                 + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + BaseballCardContract.BRAND_COL_NAME + " TEXT, "
                 + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
-                + BaseballCardContract.NUMBER_COL_NAME + " INTEGER, "
+                + BaseballCardContract.NUMBER_COL_NAME + " TEXT, "
                 + BaseballCardContract.VALUE_COL_NAME + " INTEGER, "
                 + BaseballCardContract.COUNT_COL_NAME + " INTEGER, "
                 + BaseballCardContract.PLAYER_NAME_COL_NAME + " TEXT, "
