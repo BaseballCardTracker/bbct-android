@@ -18,24 +18,15 @@ Latest updates
 * Version 0.6.8.1
 * Fix bug that prevents editing cards
 
-Developer info
+Contributing
 -
 
-* bbct-list@lists.sourceforge.net
-* https://github.com/BaseballCardTracker/bbct/issues/new
-* [More apps by this developer](https://play.google.com/store/apps/developer?id=codeguru&hl=en_US)
+If you are interested in contributing to BBCT, please join our [Google Group](https://groups.google.com/forum/?hl=en#!forum/bbct). Then [download and install the desktop app](https://sourceforge.net/projects/bbct/files/latest/download) and/or the Android app from Google Play. Read [Getting Started](https://github.com/BaseballCardTracker/bbct/wiki/Getting-Started) for instructions about what tools to install and how to get the code. Finally, browse the open issues to find a task that interests you. When you are ready to submit changes, make a [Pull Request](https://help.github.com/en/articles/about-pull-requests) for a code review. If you have any questions, please [post the our Google Group](https://groups.google.com/forum/?hl=en#!newtopic/bbct), Make sure you already join the Group before asking a question.
 
-Technical details
--
-
-**Size**: 3.4MB  
-**Version**: 0.6.8.1  
-**Developed By**: codeguru ( [Privacy Policy](https://github.com/BaseballCardTracker/bbct/wiki/Privacy-Policy) )  
-**Application Permissions**: ( [Help me understand what permissions mean](https://www.amazon.com/gp/help/customer/display.html?nodeId=201357670) )
-* Access coarse (e.g., Cell-ID, Wi-Fi) location
-* Open network sockets
-* Access information about networks
-* Access information about Wi-Fi networks
-
-**Minimum Operating System**: Android 4.4  
-**Approximate Download Time**: Less than 30 seconds  
+**Here is some link to help contribute**
+- [Keeping Local Repo Up to Date](https://github.com/BaseballCardTracker/bbct/wiki/Keeping-Local-Repo-Up-to-Date)
+- [Workflow Guidelines](https://github.com/BaseballCardTracker/bbct/wiki/Workflow-Guidelines)
+- [Commit Guidelines](https://github.com/BaseballCardTracker/bbct/wiki/Commit-Guidelines)
+- [Coding Style](https://github.com/BaseballCardTracker/bbct/wiki/Coding-Style)
+- [Testing](https://github.com/BaseballCardTracker/bbct/wiki/Testing)
+or just go to our wiki [here](https://github.com/BaseballCardTracker/bbct/wiki)
