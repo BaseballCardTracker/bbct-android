@@ -31,6 +31,7 @@ import junit.framework.Assert;
 
 import org.hamcrest.Matcher;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -139,16 +140,16 @@ final public class BBCTTestUtil {
 
         onView(withId(R.id.number_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.NUMBER)) {
-            String numberStr = Integer.toString(card.getNumber());
+            String numberStr = card.getNumber();
             onView(withId(R.id.number_text))
                     .perform(scrollTo(), typeTextIntoFocusedView(numberStr))
-                    .check(matches(withText(numberStr)));
+                    .check(matches(withText(numberStr.replaceAll("[^a-zA-Z0-9]+", ""))));
         }
         device.pressEnter();
 
         onView(withId(R.id.value_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.VALUE)) {
-            String valueStr = String.format("%.2f", card.getValue() / 100.0);
+            String valueStr = String.format("%d", card.getValue());
             onView(withId(R.id.value_text))
                     .perform(scrollTo(), typeTextIntoFocusedView(valueStr))
                     .check(matches(withText(valueStr)));
@@ -206,7 +207,7 @@ final public class BBCTTestUtil {
         String yearStr = Integer.toString(expectedCard.getYear());
         onView(withId(R.id.year_text))
                 .check(matches(withText(yearStr)));
-        String numberStr = Integer.toString(expectedCard.getNumber());
+        String numberStr = expectedCard.getNumber();
         onView(withId(R.id.number_text))
                 .check(matches(withText(numberStr)));
         String valueStr = String.format("%.2f", expectedCard.getValue() / 100.0);
@@ -245,7 +246,7 @@ final public class BBCTTestUtil {
 
         if (fieldFlags.contains(FilterOption.NUMBER)) {
             sendKeysToCurrFieldFilterCards(R.id.number_check, R.id.number_input,
-                    Integer.toString(testCard.getNumber()));
+                    testCard.getNumber());
         }
 
         if (fieldFlags.contains(FilterOption.PLAYER_NAME)) {
@@ -265,7 +266,7 @@ final public class BBCTTestUtil {
     }
 
     public static List<BaseballCard> filterList(List<BaseballCard> list,
-            Matcher<BaseballCard> cardMatcher) {
+                                                Matcher<BaseballCard> cardMatcher) {
         List<BaseballCard> filteredList = new ArrayList<>();
 
         for (BaseballCard obj : list) {

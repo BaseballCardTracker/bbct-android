@@ -53,7 +53,7 @@ public class BaseballCard implements Serializable {
      *            The position this player played.
      */
     public BaseballCard(boolean autographed, String condition, String brand,
-            int year, int number, int value, int count, String playerName,
+            int year, String number, int value, int count, String playerName,
             String team, String playerPosition) {
         this.autographed = autographed;
         this.condition = condition;
@@ -108,7 +108,7 @@ public class BaseballCard implements Serializable {
      *
      * @return The number of this {@link BaseballCard}.
      */
-    public int getNumber() {
+    public String getNumber() {
         return this.number;
     }
 
@@ -220,7 +220,7 @@ public class BaseballCard implements Serializable {
         hash = 67 * hash + this.condition.hashCode();
         hash = 67 * hash + this.brand.hashCode();
         hash = 67 * hash + this.year;
-        hash = 67 * hash + this.number;
+        hash = 67 * hash + this.number.hashCode();
         hash = 67 * hash + this.value;
         hash = 67 * hash + this.count;
         hash = 67 * hash + this.playerName.hashCode();
@@ -251,7 +251,7 @@ public class BaseballCard implements Serializable {
     private final String condition;
     private final String brand;
     private final int year;
-    private final int number;
+    private final String number;
     private int value;
     private int count;
     private final String playerName;

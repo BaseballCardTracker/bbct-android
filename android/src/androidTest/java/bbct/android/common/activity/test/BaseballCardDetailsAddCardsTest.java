@@ -47,10 +47,11 @@ public class BaseballCardDetailsAddCardsTest {
     public SupportFragmentTestRule fragmentTestRule =
             new SupportFragmentTestRule(new BaseballCardDetails());
 
-    private static final String CARD_DATA = "three_cards.csv";
+    //  private static final String CARD_DATA = "three_cards.csv";
+    private static final String CARD_DATA = "cards_alphanumeric.csv";
 
     private List<BaseballCard> allCards = null;
-    private BaseballCard card = null;
+    private BaseballCard card = null, newCard = null;
     private DatabaseUtil dbUtil;
 
     @Before
@@ -64,6 +65,9 @@ public class BaseballCardDetailsAddCardsTest {
         this.allCards = cardInput.getAllBaseballCards();
         this.card = this.allCards.get(0);
         cardInput.close();
+        newCard = new BaseballCard(false, "Excellent", "Codeguru Apps",
+                1976, "123Abc/&($*+#", 50000, 1, "Codeguru", "Codeguru Devs", "Catcher");
+
     }
 
     @After
@@ -76,6 +80,13 @@ public class BaseballCardDetailsAddCardsTest {
         BBCTTestUtil.addCard(card);
         // BBCTTestUtil.waitForToast(fragmentTestRule.getActivity(), BBCTTestUtil.ADD_MESSAGE);
         Assert.assertTrue("Missing card: " + card, dbUtil.containsBaseballCard(card));
+    }
+
+    @Test
+    public void testAddCardNotAlphaNumeric() {
+        BBCTTestUtil.addCard(newCard);
+        // BBCTTestUtil.waitForToast(fragmentTestRule.getActivity(), BBCTTestUtil.ADD_MESSAGE);
+        Assert.assertTrue("Missing card: " + card, dbUtil.containsBaseballCard(newCard));
     }
 
     @Test

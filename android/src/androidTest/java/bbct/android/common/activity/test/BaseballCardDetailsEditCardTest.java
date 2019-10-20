@@ -151,7 +151,7 @@ public class BaseballCardDetailsEditCardTest extends
                 .getBrand() : this.oldCard.getBrand();
         int year = this.inputMask.contains(BBCTTestUtil.EditTexts.YEAR) ? this.newCard
                 .getYear() : this.oldCard.getYear();
-        int number = this.inputMask.contains(BBCTTestUtil.EditTexts.NUMBER) ? this.newCard
+        String number = this.inputMask.contains(BBCTTestUtil.EditTexts.NUMBER) ? this.newCard
                 .getNumber() : this.oldCard.getNumber();
         int value = this.inputMask.contains(BBCTTestUtil.EditTexts.VALUE) ? this.newCard
                 .getValue() : this.oldCard.getValue();

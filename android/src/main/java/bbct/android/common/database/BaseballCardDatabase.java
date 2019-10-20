@@ -12,7 +12,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 
-@Database(version = BaseballCardSQLHelper.UPDATED_SCHEMA, entities = {BaseballCard.class})
+@Database(version = BaseballCardSQLHelper.ALPHA_NUMERIC_SCHEMA, entities = {BaseballCard.class})
 public abstract class BaseballCardDatabase extends RoomDatabase {
     private static BaseballCardDatabase instance = null;
     private static final String DATABASE_NAME = "bbct.db";
@@ -26,7 +26,7 @@ public abstract class BaseballCardDatabase extends RoomDatabase {
     };
 
     private static final Migration MIGRATION_5_6 = new Migration(
-            BaseballCardSQLHelper.ROOM_SCHEMA, BaseballCardSQLHelper.UPDATED_SCHEMA) {
+            BaseballCardSQLHelper.ROOM_SCHEMA, BaseballCardSQLHelper.ALPHA_NUMERIC_SCHEMA) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("CREATE TABLE IF NOT EXISTS "

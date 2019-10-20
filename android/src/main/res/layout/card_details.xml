@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  This file is part of BBCT for Android.
 
  Copyright 2012 codeguru <codeguru@users.sourceforge.net>
@@ -20,19 +19,19 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@id/scroll_card_details"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent">
 
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="1" >
+        android:stretchColumns="1">
 
         <TableRow>
 
             <CheckBox
                 android:id="@id/autograph"
-                android:text="@string/autograph_label"
-                android:layout_span="2" />
+                android:layout_span="2"
+                android:text="@string/autograph_label" />
         </TableRow>
 
         <TableRow>
@@ -58,8 +57,8 @@
                 android:completionThreshold="1"
                 android:hint="@string/brand_hint"
                 android:inputType="textCapWords"
-                android:selectAllOnFocus="true"
-                android:maxLines="1">
+                android:maxLines="1"
+                android:selectAllOnFocus="true">
 
                 <requestFocus />
             </AutoCompleteTextView>
@@ -75,8 +74,8 @@
                 android:id="@id/year_text"
                 android:hint="@string/year_hint"
                 android:inputType="number"
-                android:selectAllOnFocus="true"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:selectAllOnFocus="true" />
         </TableRow>
 
         <TableRow>
@@ -87,11 +86,12 @@
 
             <EditText
                 android:id="@id/number_text"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
                 android:hint="@string/number_hint"
                 android:inputType="text"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
+                android:maxLines="1"
                 android:selectAllOnFocus="true"
-                android:maxLines="1" />
+                android:singleLine="true" />
         </TableRow>
 
         <TableRow>
@@ -104,8 +104,8 @@
                 android:id="@id/value_text"
                 android:hint="@string/value_hint"
                 android:inputType="numberDecimal"
-                android:selectAllOnFocus="true"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:selectAllOnFocus="true" />
         </TableRow>
 
         <TableRow>
@@ -118,8 +118,8 @@
                 android:id="@id/count_text"
                 android:hint="@string/count_hint"
                 android:inputType="number"
-                android:selectAllOnFocus="true"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:selectAllOnFocus="true" />
         </TableRow>
 
         <TableRow>
@@ -133,8 +133,8 @@
                 android:completionThreshold="1"
                 android:hint="@string/player_name_hint"
                 android:inputType="textCapWords"
-                android:selectAllOnFocus="true"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:selectAllOnFocus="true" />
         </TableRow>
 
         <TableRow>
@@ -148,8 +148,8 @@
                 android:completionThreshold="1"
                 android:hint="@string/team_hint"
                 android:inputType="textCapWords"
-                android:selectAllOnFocus="true"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:selectAllOnFocus="true" />
         </TableRow>
 
         <TableRow>

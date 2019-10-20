@@ -68,7 +68,7 @@ public class BaseballCardCsvFileReader {
         String condition = data[1];
         String brand = data[2];
         int year = Integer.parseInt(data[3]);
-        int number = Integer.parseInt(data[4]);
+        String number = data[4];
         int value = 10000;
         int count = 1;
         String playerName = data[5];

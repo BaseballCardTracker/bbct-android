@@ -53,7 +53,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     public static final int ROOM_SCHEMA = 5;
 
-    public static final int UPDATED_SCHEMA = 6;
+    public static final int ALPHA_NUMERIC_SCHEMA = 6;
 
     public BaseballCardSQLHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
