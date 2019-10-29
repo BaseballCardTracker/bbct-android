@@ -23,7 +23,7 @@ Contributing
 
 If you are interested in contributing to BBCT, please join our [Google Group](https://groups.google.com/forum/?hl=en#!forum/bbct). Then [download and install the desktop app](https://sourceforge.net/projects/bbct/files/latest/download) and/or the Android app from Google Play. Read [Getting Started](https://github.com/BaseballCardTracker/bbct/wiki/Getting-Started) for instructions about what tools to install and how to get the code. Finally, browse the open issues to find a task that interests you. When you are ready to submit changes, make a [Pull Request](https://help.github.com/en/articles/about-pull-requests) for a code review. If you have any questions, please [post the our Google Group](https://groups.google.com/forum/?hl=en#!newtopic/bbct), Make sure you already join the Group before asking a question.
 
-**Here is some link to help contribute**
+**Additional Links**
 - [Keeping Local Repo Up to Date](https://github.com/BaseballCardTracker/bbct/wiki/Keeping-Local-Repo-Up-to-Date)
 - [Workflow Guidelines](https://github.com/BaseballCardTracker/bbct/wiki/Workflow-Guidelines)
 - [Commit Guidelines](https://github.com/BaseballCardTracker/bbct/wiki/Commit-Guidelines)
