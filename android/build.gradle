@@ -150,6 +150,7 @@ ext {
     fragment_version = '1.1.0'
     uiautomatorVersion = '2.2.0'
     annotationVersion = '1.0.0'
+    navVersion = '2.1.0'
 }
 
 dependencies {
@@ -157,6 +158,8 @@ dependencies {
     implementation project(':lib')
     implementation "androidx.appcompat:appcompat:${appcompatVersion}"
     implementation "com.google.android.material:material:1.0.0"
+    implementation "androidx.navigation:navigation-fragment:$navVersion"
+    implementation "androidx.navigation:navigation-ui:$navVersion"
     implementation "androidx.room:room-runtime:${roomVersion}"
     implementation "androidx.lifecycle:lifecycle-livedata:${lifecycleVersion}"
     liteImplementation 'com.google.android.gms:play-services-ads:18.3.0'
