@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/card_list">
 
+    <fragment
+        android:id="@+id/card_list"
+        android:name="bbct.android.common.activity.BaseballCardList"
+        android:label="card_list"
+        tools:layout="@layout/card_list">
+        <action
+            android:id="@+id/action_details"
+            app:destination="@id/card_details" />
+        <action
+            android:id="@+id/action_filter"
+            app:destination="@id/filter_cards" />
+    </fragment>
+    <fragment
+        android:id="@+id/about"
+        android:name="bbct.android.common.activity.About"
+        android:label="about"
+        tools:layout="@layout/about" />
+    <fragment
+        android:id="@+id/card_details"
+        android:name="bbct.android.common.activity.BaseballCardDetails"
+        android:label="card_details"
+        tools:layout="@layout/card_details" />
+    <fragment
+        android:id="@+id/filter_cards"
+        android:name="bbct.android.common.activity.FilterCards"
+        android:label="filter_cards"
+        tools:layout="@layout/filter_cards" />
+    <action android:id="@+id/action_about" app:destination="@id/about" />
 </navigation>
