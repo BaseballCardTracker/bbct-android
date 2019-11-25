@@ -162,12 +162,8 @@ public class BaseballCardList extends Fragment {
         FragmentActivity activity = Objects.requireNonNull(getActivity());
         switch (itemId) {
             case R.id.filter_menu:
-                FilterCards filterCards = new FilterCards();
-                activity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder, filterCards, FragmentTags.FILTER_CARDS)
-                    .addToBackStack(FragmentTags.FILTER_CARDS)
-                    .commit();
+                NavDirections action = BaseballCardListDirections.actionFilter();
+                NavHostFragment.findNavController(this).navigate(action);
                 return true;
             case R.id.clear_filter_menu:
                 this.filterParams = null;
