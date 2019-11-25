@@ -233,7 +233,7 @@ public class BaseballCardDetails extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private void populateTextEdits() {
         Bundle args = getArguments();
-        if (args != null) {
+        if (args != null && args.size() != 0) {
             id = args.getLong(ID);
             new AsyncTask<Long, Void, BaseballCard>() {
                 @Override

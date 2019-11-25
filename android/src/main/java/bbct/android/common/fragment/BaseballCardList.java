@@ -35,6 +35,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -108,12 +111,8 @@ public class BaseballCardList extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BaseballCardDetails details = new BaseballCardDetails();
-                activity.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
-                        .addToBackStack(FragmentTags.EDIT_CARD)
-                        .commit();
+                NavDirections action = BaseballCardListDirections.actionDetails();
+                Navigation.findNavController(v).navigate(action);
             }
         });
 
