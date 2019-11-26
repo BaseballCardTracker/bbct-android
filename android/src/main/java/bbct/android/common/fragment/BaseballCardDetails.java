@@ -235,22 +235,24 @@ public class BaseballCardDetails extends Fragment {
         Bundle args = getArguments();
         if (args != null && args.size() != 0) {
             id = args.getLong(ID);
-            new AsyncTask<Long, Void, BaseballCard>() {
-                @Override
-                protected BaseballCard doInBackground(Long... args) {
-                    long id = args[0];
-                    Activity activity = Objects.requireNonNull(getActivity());
-                    BaseballCardDatabase database =
-                        BaseballCardDatabase.getInstance(activity);
-                    BaseballCardDao dao = database.getBaseballCardDao();
-                    return dao.getBaseballCard(id);
-                }
+            if (id != -1) {
+                new AsyncTask<Long, Void, BaseballCard>() {
+                    @Override
+                    protected BaseballCard doInBackground(Long... args) {
+                        long id = args[0];
+                        Activity activity = Objects.requireNonNull(getActivity());
+                        BaseballCardDatabase database =
+                            BaseballCardDatabase.getInstance(activity);
+                        BaseballCardDao dao = database.getBaseballCardDao();
+                        return dao.getBaseballCard(id);
+                    }
 
-                @Override
-                protected void onPostExecute(BaseballCard card) {
-                    setCard(card);
-                }
-            }.execute(id);
+                    @Override
+                    protected void onPostExecute(BaseballCard card) {
+                        setCard(card);
+                    }
+                }.execute(id);
+            }
         }
     }
 

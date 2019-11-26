@@ -24,8 +24,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -33,8 +34,7 @@ import java.util.Collections;
 import java.util.List;
 
 import bbct.android.common.R;
-import bbct.android.common.fragment.BaseballCardDetails;
-import bbct.android.common.fragment.FragmentTags;
+import bbct.android.common.activity.BaseballCardListDirections;
 import bbct.android.common.database.BaseballCard;
 
 public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder> {
@@ -57,12 +57,8 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
 
         @Override
         public void onClick(View v) {
-            Fragment details = BaseballCardDetails.getInstance(id);
-            activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
-                .addToBackStack(FragmentTags.EDIT_CARD)
-                .commit();
+            NavDirections action = BaseballCardListDirections.actionDetails(id);
+            Navigation.findNavController(v).navigate(action);
         }
     }
 

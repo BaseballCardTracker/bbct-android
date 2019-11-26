@@ -26,7 +26,11 @@
         android:id="@+id/card_details"
         android:name="bbct.android.common.activity.BaseballCardDetails"
         android:label="card_details"
-        tools:layout="@layout/card_details" />
+        tools:layout="@layout/card_details" >
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </fragment>
     <fragment
         android:id="@+id/filter_cards"
         android:name="bbct.android.common.activity.FilterCards"

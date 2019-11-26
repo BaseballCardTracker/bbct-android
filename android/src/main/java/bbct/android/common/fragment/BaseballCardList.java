@@ -111,7 +111,7 @@ public class BaseballCardList extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NavDirections action = BaseballCardListDirections.actionDetails();
+                NavDirections action = BaseballCardListDirections.actionDetails(-1);
                 Navigation.findNavController(v).navigate(action);
             }
         });
