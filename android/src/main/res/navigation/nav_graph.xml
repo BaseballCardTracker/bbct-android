@@ -16,6 +16,10 @@
         <action
             android:id="@+id/action_filter"
             app:destination="@id/filter_cards" />
+        <argument
+            android:name="filterParams"
+            app:argType="android.os.Bundle"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/about"
@@ -35,6 +39,10 @@
         android:id="@+id/filter_cards"
         android:name="bbct.android.common.activity.FilterCards"
         android:label="filter_cards"
-        tools:layout="@layout/filter_cards" />
+        tools:layout="@layout/filter_cards" >
+        <action
+            android:id="@+id/action_list"
+            app:destination="@id/card_list" />
+    </fragment>
     <action android:id="@+id/action_about" app:destination="@id/about" />
 </navigation>
