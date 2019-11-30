@@ -42,11 +42,6 @@ public class About extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.about, container, false);
 
-        String aboutTitle = this.getString(R.string.about_title);
-        String title = this.getString(R.string.bbct_title, aboutTitle);
-        Activity activity = Objects.requireNonNull(getActivity());
-        activity.setTitle(title);
-
         TextView versionLabel = view.findViewById(R.id.version_label);
         String versionNumber = this.getString(R.string.version_number);
         String versionString = this.getString(R.string.version_text, versionNumber);

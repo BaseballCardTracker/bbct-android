@@ -94,13 +94,6 @@ public class BaseballCardList extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Activity activity = Objects.requireNonNull(getActivity());
-        activity.setTitle(R.string.app_name);
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.card_list, container, false);

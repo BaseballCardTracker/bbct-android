@@ -20,7 +20,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:bbct="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/about_menu"
+        android:id="@id/about"
         android:icon="@drawable/ic_menu_about"
         android:title="@string/about_menu"
         bbct:showAsAction="never" />

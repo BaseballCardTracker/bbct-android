@@ -22,9 +22,10 @@
     <string name="provider_name">BBCT Data</string>
 
     <!-- Activity titles -->
-    <string name="card_details_title">Card Details</string>
-    <string name="filter_cards_title">Filter Cards</string>
-    <string name="about_title">About</string>
+    <string name="card_list_title">BBCT</string>
+    <string name="card_details_title">BBCT - Card Details</string>
+    <string name="filter_cards_title">BBCT - Filter Cards</string>
+    <string name="about_title">BBCT - About</string>
     <string name="duplicate_card_title">Duplicate Card</string>
     <string name="start">Tap (+) to get started.</string>
     <string name="empty_list">No cards found.</string>

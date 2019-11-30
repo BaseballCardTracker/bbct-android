@@ -115,9 +115,6 @@ public class BaseballCardDetails extends Fragment {
         View view = inflater.inflate(R.layout.card_details, container, false);
         ButterKnife.bind(this, view);
         final Activity activity = Objects.requireNonNull(getActivity());
-        String cardDetailsTitle = this.getString(R.string.card_details_title);
-        String title = this.getString(R.string.bbct_title, cardDetailsTitle);
-        activity.setTitle(title);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override

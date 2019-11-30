@@ -21,6 +21,10 @@
 
     <string name="app_name">BBCT Lite</string>
     <string name="bbct_title">BBCT Lite - %1$s</string>
+    <string name="card_list_title">BBCT Lite</string>
+    <string name="card_details_title">BBCT Lite - Card Details</string>
+    <string name="filter_cards_title">BBCT Lite - Filter Cards</string>
+    <string name="about_title">BBCT Lite - About</string>
     <string name="premium">If you enjoy using BBCT, get the ad-free <a href="market://details?id=bbct.android.premium">premium edition</a> for only $1.99USD.</string>
     <string name="provider_name">BBCT Lite Data</string>
 

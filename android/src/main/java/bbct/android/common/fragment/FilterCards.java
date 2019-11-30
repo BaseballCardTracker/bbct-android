@@ -104,13 +104,6 @@ public class FilterCards extends Fragment {
             }
         });
 
-        // set title
-        String format = this.getString(R.string.bbct_title);
-        String filterCardsTitle = this.getString(R.string.filter_cards_title);
-        String title = String.format(format, filterCardsTitle);
-        Activity activity = Objects.requireNonNull(getActivity());
-        activity.setTitle(title);
-
         for (int id : CHECKBOXES) {
             View checkBox = view.findViewById(id);
             checkBox.setOnClickListener(this.onCheckBoxClick);
