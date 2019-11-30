@@ -26,7 +26,7 @@
         bbct:showAsAction="ifRoom" />
     <item
         android:id="@+id/clear_filter_menu"
-        android:icon="@drawable/ic_menu_block"
+        android:icon="@drawable/cancel"
         android:title="@string/clear_filter_menu"
         bbct:showAsAction="ifRoom" />
 </menu>
