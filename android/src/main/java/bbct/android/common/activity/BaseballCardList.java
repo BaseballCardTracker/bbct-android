@@ -27,49 +27,44 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.ListFragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 import java.util.Objects;
 
 import bbct.android.common.R;
-import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
+import bbct.android.common.view.BaseballCardActionModeCallback;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.database.BaseballCardDao;
 import bbct.android.common.database.BaseballCardDatabase;
-import bbct.android.common.provider.BaseballCardAdapter;
-import bbct.android.common.view.HeaderView;
+import bbct.android.common.view.BaseballCardAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-//TODO: Make list fancier
-public class BaseballCardList extends ListFragment {
+public class BaseballCardList extends Fragment {
     private static final String FILTER_PARAMS = "filterParams";
     private static final String TAG = BaseballCardList.class.getName();
 
-    @BindView(android.R.id.empty)
-    TextView emptyList = null;
-    @BindView(android.R.id.list)
-    ListView listView;
+    @BindView(R.id.card_list)
+    RecyclerView cardList;
+    @BindView(R.id.add_button)
+    FloatingActionButton addButton;
 
     private BaseballCardAdapter adapter = null;
     private Bundle filterParams = null;
-    private BaseballCardMultiChoiceModeListener mCallbacks;
+    private BaseballCardActionModeCallback callback =
+            new BaseballCardActionModeCallback(this);
 
     public static BaseballCardList getInstance(Bundle filterArgs) {
         BaseballCardList cardList = new BaseballCardList();
@@ -103,30 +98,36 @@ public class BaseballCardList extends ListFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.card_list, container, false);
         ButterKnife.bind(this, view);
+        setUpRecyclerView();
 
-        final Activity activity = Objects.requireNonNull(getActivity());
-        View headerView = new HeaderView(this.getActivity());
-        CheckBox selectAll = headerView.findViewById(R.id.select_all);
-        selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        final FragmentActivity activity = Objects.requireNonNull(getActivity());
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && !mCallbacks.isStarted()) {
-                    activity.startActionMode(mCallbacks);
-                } else if (mCallbacks.isStarted()) {
-                    mCallbacks.finish();
-                }
-
-                BaseballCardList.this.setAllChecked(isChecked);
+            public void onClick(View v) {
+                BaseballCardDetails details = new BaseballCardDetails();
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
+                        .addToBackStack(FragmentTags.EDIT_CARD)
+                        .commit();
             }
         });
-        listView.addHeaderView(headerView);
+
         applyFilter(filterParams);
 
         return view;
+    }
+
+    private void setUpRecyclerView() {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        cardList.setLayoutManager(layoutManager);
+        FragmentActivity activity = Objects.requireNonNull(getActivity());
+        adapter = new BaseballCardAdapter(activity, callback);
+        cardList.setAdapter(adapter);
     }
 
     @Override
@@ -161,14 +162,6 @@ public class BaseballCardList extends ListFragment {
 
         FragmentActivity activity = Objects.requireNonNull(getActivity());
         switch (itemId) {
-            case R.id.add_menu:
-                BaseballCardDetails details = new BaseballCardDetails();
-                activity.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
-                    .addToBackStack(FragmentTags.EDIT_CARD)
-                    .commit();
-                return true;
             case R.id.filter_menu:
                 FilterCards filterCards = new FilterCards();
                 activity.getSupportFragmentManager()
@@ -178,7 +171,6 @@ public class BaseballCardList extends ListFragment {
                     .commit();
                 return true;
             case R.id.clear_filter_menu:
-                this.emptyList.setText(R.string.start);
                 this.filterParams = null;
                 this.applyFilter(null);
                 activity.invalidateOptionsMenu();
@@ -199,59 +191,31 @@ public class BaseballCardList extends ListFragment {
         outState.putBundle(FILTER_PARAMS, this.filterParams);
     }
 
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        if (position == 0) {
-            return;
-        }
-
-        Fragment details = BaseballCardDetails.getInstance(id);
-        FragmentActivity activity = Objects.requireNonNull(this.getActivity());
-        activity.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
-                .addToBackStack(FragmentTags.EDIT_CARD)
-                .commit();
-    }
-
     public void deleteSelectedCards() {
-        final Activity activity = getActivity();
-        final List<BaseballCard> cards = new ArrayList<>();
-        for (int i = 0; i < getListAdapter().getCount() + 1; ++i) {
-            if (getListView().isItemChecked(i)) {
-                BaseballCard card = this.adapter.getItem(i - 1);
-                cards.add(card);
-            }
-        }
+        final Activity activity = Objects.requireNonNull(getActivity());
+        final List<BaseballCard> cards = adapter.getSelectedItems();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 BaseballCardDatabase database =
-                        BaseballCardDatabase.getInstance(activity);
+                    BaseballCardDatabase.getInstance(activity);
                 database.getBaseballCardDao().deleteBaseballCards(cards);
             }
         }).start();
 
         Toast.makeText(
-                activity,
-                R.string.card_deleted_message,
-                Toast.LENGTH_LONG
+            activity,
+            R.string.card_deleted_message,
+            Toast.LENGTH_LONG
         ).show();
-    }
-
-    private void setAllChecked(boolean checked) {
-        ListView listView = this.getListView();
-        // Add 1 for the header view
-        for (int i = 0; i < this.adapter.getCount() + 1; ++i) {
-            listView.setItemChecked(i, checked);
-        }
     }
 
     private void applyFilter(Bundle filterParams) {
         LiveData<List<BaseballCard>> cards;
+        final Activity activity = Objects.requireNonNull(getActivity());
         BaseballCardDatabase database =
-            BaseballCardDatabase.getInstance(getActivity());
+            BaseballCardDatabase.getInstance(activity);
         BaseballCardDao dao = database.getBaseballCardDao();
 
         if (filterParams == null) {
@@ -281,17 +245,12 @@ public class BaseballCardList extends ListFragment {
         cards.observe(this, new Observer<List<BaseballCard>>() {
             @Override
             public void onChanged(@Nullable List<BaseballCard> cards) {
-                Activity activity = getActivity();
-                adapter = new BaseballCardAdapter(
-                    activity, R.layout.baseball_card, cards);
-                setListAdapter(adapter);
-                adapter.setListFragment(BaseballCardList.this);
-
-                mCallbacks = new BaseballCardMultiChoiceModeListener(BaseballCardList.this);
-                listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-                listView.setMultiChoiceModeListener(mCallbacks);
-                adapter.setActionModeCallback(mCallbacks);
+                adapter.setCards(Objects.requireNonNull(cards));
             }
         });
+    }
+
+    public void setAllSelected(boolean isSelected) {
+        adapter.setAllSelected(isSelected);
     }
 }

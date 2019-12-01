@@ -49,20 +49,16 @@ import bbct.data.BaseballCard;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static bbct.android.common.test.matcher.BaseballCardMatchers.withYear;
-import static org.hamcrest.Matchers.allOf;
+import static bbct.android.common.test.matcher.RecyclerViewMatcher.withRecyclerView;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.is;
 
 abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Rule
@@ -75,7 +71,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     private UiDevice device;
     private List<BaseballCard> expectedCards;
     private Instrumentation inst;
-    private Activity activity = null;
+    private Activity activity;
     private List<BaseballCard> allCards;
     private BaseballCard newCard = null;
     private DatabaseUtil dbUtil;
@@ -152,7 +148,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         Log.d(TAG, "testOnListItemClick()");
         int cardIndex = 3;
         BaseballCard expectedCard = allCards.get(cardIndex);
-        onData(allOf(instanceOf(BaseballCard.class), is(expectedCard))).perform(click());
+        onView(withRecyclerView(R.id.card_list).atPosition(cardIndex + 1))
+            .perform(click());
         BBCTTestUtil.assertAllEditTextContents(expectedCard);
     }
 
@@ -219,53 +216,10 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testMarkAll() {
-        this.markAll();
-        this.assertAllCheckboxesChecked();
-    }
-
-    private void assertAllCheckboxesChecked() {
-        onView(withId(R.id.select_all))
-                .check(matches(isChecked()));
-
-        for (int i = 0; i < allCards.size(); i++) {
-            onData(instanceOf(BaseballCard.class))
-                    .atPosition(i)
-                    .check(matches(isChecked()));
-        }
-    }
-
-    private void markAll() {
-        onView(withId(R.id.select_all))
-                .perform(click())
-                .check(matches(isChecked()));
-        onView(withId(R.id.delete_menu))
-                .check(matches(isDisplayed()));
-    }
-
-    @Test
     public void testDeleteAll() {
         this.markAll();
         deleteCards();
         onView(withId(android.R.id.empty)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testUnmarkAll() {
-        this.markAll();
-        onView(withId(R.id.select_all)).perform(click());
-        assertNoCheckboxesChecked();
-    }
-
-    private void assertNoCheckboxesChecked() {
-        onView(withId(R.id.select_all))
-                .check(matches(isNotChecked()));
-
-        for (int i = 0; i < allCards.size(); i++) {
-            onData(instanceOf(BaseballCard.class))
-                    .atPosition(i)
-                    .check(matches(isNotChecked()));
-        }
     }
 
     @Test
@@ -311,28 +265,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testSelectionAfterSaveInstanceState() throws Throwable {
-        Log.d(TAG, "testSelectionAfterSaveInstanceState()");
-
-        int index = 1;
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
-        onView(withId(R.id.delete_menu))
-                .check(matches(isDisplayed()));
-
-        Log.d(TAG, "change orientation");
-        device.setOrientationLeft();
-
-        Log.d(TAG, "assertions");
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .check(matches(isChecked()));
-    }
-
-    @Test
     public void testYearFilter() {
         final int year = 1993;
         testSingleFilter(R.id.year_check, R.id.year_input, year + "", withYear(year));
@@ -357,91 +289,4 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         BBCTTestUtil.assertListViewContainsItems(this.expectedCards);
         onView(withId(R.id.clear_filter_menu)).check(matches(isDisplayed()));
     }
-
-    @Test
-    public void testOnClickCheckboxStartActionMode() {
-        int index = 4;
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
-        onView(withId(R.id.delete_menu))
-                .check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testOnClickCheckboxStopActionMode() {
-        int index = 4;
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
-        onView(withId(R.id.delete_menu))
-                .check(matches(isDisplayed()));
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
-        onView(withId(R.id.add_menu))
-                .check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testOnClickCheckboxAll() {
-        for(int i = 0; i < allCards.size(); ++i) {
-            onData(instanceOf(BaseballCard.class))
-                    .atPosition(i)
-                    .onChildView(withId(R.id.checkmark))
-                    .perform(click());
-        }
-
-        onView(withId(R.id.select_all))
-                .check(matches(isChecked()));
-    }
-
-    @Test
-    public void testOnCheckAllAndOnClickCheckbox() {
-        onView(withId(R.id.select_all))
-                .perform(click());
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(1)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
-        onView(withId(R.id.select_all))
-                .check(matches(isNotChecked()));
-    }
-
-    @Test
-    public void testOnClickCheckboxAndOnCheckAll() {
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(1)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
-        onView(withId(R.id.select_all))
-                .perform(click());
-        this.assertAllCheckboxesChecked();
-    }
-
-    @Test
-    public void testOnItemLongClickStartActionMode() {
-        int index = 4;
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .perform(longClick());
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(index)
-                .onChildView(withId(R.id.checkmark))
-                .check(matches(isChecked()));
-        onView(withId(R.id.delete_menu))
-                .check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testOnClickDoneButton() {
-        this.testMarkAll();
-        onView(withId(R.id.action_mode_close_button)).perform(click());
-        onView(withId(R.id.add_menu)).check(matches(isDisplayed()));
-        onView(withId(R.id.select_all)).check(matches(isNotChecked()));
-    }
-
 }

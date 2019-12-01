@@ -94,7 +94,7 @@ public class BaseballCardDetailsPartialInputTest extends
         Log.d(TAG, "inputFieldsMask=" + this.inputFieldsMask);
 
         BBCTTestUtil.sendKeysToCardDetails(this.card, this.inputFieldsMask);
-        onView(withId(R.id.save_menu)).perform(click());
+        onView(withId(R.id.save_button)).perform(click());
 
         int focusId = -1;
 

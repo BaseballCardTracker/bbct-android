@@ -69,6 +69,7 @@
     <string name="clear_filter_menu">Clear Filter</string>
     <string name="about_menu">About</string>
     <string name="delete_menu">Delete</string>
+    <string name="select_all_menu">Select All</string>
     <string name="save_menu">Save</string>
 
     <!-- Text in About activity -->

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.activity.util;
+package bbct.android.common.view;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -24,8 +24,6 @@ import android.os.Build;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AbsListView;
-import android.widget.ListView;
 
 import java.util.Objects;
 
@@ -33,43 +31,22 @@ import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiChoiceModeListener {
+public class BaseballCardActionModeCallback implements ActionMode.Callback {
 
-    private final BaseballCardList mListFragment;
+    private final BaseballCardList listFragment;
+    private ActionMode actionMode;
+    private boolean isStarted;
 
-    private ActionMode mMode;
-
-    private boolean mStarted;
-
-    public BaseballCardMultiChoiceModeListener(BaseballCardList listFragment) {
-        mListFragment = listFragment;
-    }
-
-    @Override
-    public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-        if (position != 0) {
-            ListView listView = mListFragment.getListView();
-
-            boolean selectAllChecked = listView.isItemChecked(0);
-            // Subtract 1 for header view, if it is checked
-            int checkedCount = listView.getCheckedItemCount() - (selectAllChecked ? 1 : 0);
-            int itemCount = listView.getAdapter().getCount() - 1;
-
-            if (checkedCount == itemCount) {
-                listView.setItemChecked(0, true);
-            } else {
-                listView.setItemChecked(0, false);
-            }
-        }
+    public BaseballCardActionModeCallback(BaseballCardList listFragment) {
+        this.listFragment = listFragment;
     }
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        Activity activity = Objects.requireNonNull(mListFragment.getActivity());
+        Activity activity = Objects.requireNonNull(listFragment.getActivity());
         activity.getMenuInflater().inflate(R.menu.context, menu);
-        mMode = mode;
-        mStarted = true;
-
+        actionMode = mode;
+        isStarted = true;
         return true;
     }
 
@@ -82,8 +59,11 @@ public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiCho
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
         switch (item.getItemId()) {
             case R.id.delete_menu:
-                mListFragment.deleteSelectedCards();
-                mMode.finish();
+                listFragment.deleteSelectedCards();
+                actionMode.finish();
+                return true;
+            case R.id.select_all_menu:
+                listFragment.setAllSelected(true);
                 return true;
         }
 
@@ -92,15 +72,16 @@ public class BaseballCardMultiChoiceModeListener implements AbsListView.MultiCho
 
     @Override
     public void onDestroyActionMode(ActionMode mode) {
-        mStarted = false;
-        mMode = null;
+        isStarted = false;
+        actionMode = null;
+        listFragment.setAllSelected(false);
     }
 
     public boolean isStarted() {
-        return mStarted;
+        return isStarted;
     }
 
     public void finish() {
-        mMode.finish();
+        actionMode.finish();
     }
 }

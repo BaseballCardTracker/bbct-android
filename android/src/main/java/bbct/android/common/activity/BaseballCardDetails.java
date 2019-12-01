@@ -27,9 +27,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -47,6 +44,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -60,7 +59,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BaseballCardDetails extends Fragment {
-
     private static final String ID = "id";
     private static final String TAG = BaseballCardDetails.class.getName();
 
@@ -84,6 +82,8 @@ public class BaseballCardDetails extends Fragment {
     AutoCompleteTextView teamText = null;
     @BindView(R.id.player_position_text)
     Spinner playerPositionSpinner = null;
+    @BindView(R.id.save_button)
+    FloatingActionButton saveButton = null;
 
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;
@@ -117,6 +117,13 @@ public class BaseballCardDetails extends Fragment {
         String cardDetailsTitle = this.getString(R.string.card_details_title);
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
         activity.setTitle(title);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSave();
+            }
+        });
 
         brandText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -231,8 +238,9 @@ public class BaseballCardDetails extends Fragment {
                 @Override
                 protected BaseballCard doInBackground(Long... args) {
                     long id = args[0];
+                    Activity activity = Objects.requireNonNull(getActivity());
                     BaseballCardDatabase database =
-                        BaseballCardDatabase.getInstance(getActivity());
+                        BaseballCardDatabase.getInstance(activity);
                     BaseballCardDao dao = database.getBaseballCardDao();
                     return dao.getBaseballCard(id);
                 }
@@ -262,24 +270,6 @@ public class BaseballCardDetails extends Fragment {
 
         int selectedPosition = this.positionsAdapter.getPosition(card.position);
         this.playerPositionSpinner.setSelection(selectedPosition);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.save, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int menuId = item.getItemId();
-
-        switch (menuId) {
-            case R.id.save_menu:
-                this.onSave();
-                return true;
-        }
-
-        return false;
     }
 
     private ArrayAdapter<CharSequence> populateSpinnerAdapter(int arrayId) {
@@ -351,7 +341,8 @@ public class BaseballCardDetails extends Fragment {
 
     private void onSave() {
         final BaseballCard newCard = this.getBaseballCard();
-        BaseballCardDatabase database = BaseballCardDatabase.getInstance(this.getActivity());
+        Activity activity = Objects.requireNonNull(getActivity());
+        BaseballCardDatabase database = BaseballCardDatabase.getInstance(activity);
         final BaseballCardDao dao = database.getBaseballCardDao();
 
         if (newCard != null) {
@@ -361,10 +352,8 @@ public class BaseballCardDetails extends Fragment {
                     @Override
                     public void run() {
                         dao.updateBaseballCard(newCard);
-                        FragmentActivity activity = getActivity();
-                        if (activity != null) {
-                            activity.getSupportFragmentManager().popBackStack();
-                        }
+                        FragmentActivity activity = Objects.requireNonNull(getActivity());
+                        activity.getSupportFragmentManager().popBackStack();
                     }
                 }.start();
             } else {
@@ -377,12 +366,12 @@ public class BaseballCardDetails extends Fragment {
                     }.start();
                     this.resetInput();
                     this.brandText.requestFocus();
-                    Toast.makeText(this.getActivity(), R.string.card_added_message,
+                    Toast.makeText(activity, R.string.card_added_message,
                             Toast.LENGTH_LONG).show();
                 } catch (SQLException e) {
                     // Is duplicate card the only reason this exception
                     // will be thrown?
-                    DialogUtil.showErrorDialog(this.getActivity(),
+                    DialogUtil.showErrorDialog(activity,
                             R.string.duplicate_card_title,
                             R.string.duplicate_card_error);
                 }
