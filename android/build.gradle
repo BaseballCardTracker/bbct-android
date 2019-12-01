@@ -147,6 +147,7 @@ ext {
     butterknifeVersion = '10.0.0'
     espressoVersion = '3.1.1'
     testLibVersion = '1.1.1'
+    fragment_version = '1.1.0'
     uiautomatorVersion = '2.2.0'
     annotationVersion = '1.0.0'
 }
@@ -171,6 +172,7 @@ dependencies {
     androidTestImplementation "androidx.annotation:annotation:${annotationVersion}"
     androidTestImplementation "androidx.test:runner:${testLibVersion}"
     androidTestImplementation "androidx.test:rules:${testLibVersion}"
+    androidTestImplementation "androidx.fragment:fragment-testing:${fragment_version}"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:${uiautomatorVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${espressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-intents:${espressoVersion}"
