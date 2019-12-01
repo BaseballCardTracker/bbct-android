@@ -5,32 +5,32 @@ import org.junit.Test;
 
 public class NavigationTest {
     @Test
-    void appStartsOnListView() {
+    public void appStartsOnListView() {
         Assert.fail("NOT IMPLEMENTED");
     }
 
     @Test
-    void clickOnAddButtonNavigatesToDetails() {
+    public void clickOnAddButtonNavigatesToDetails() {
         Assert.fail("NOT IMPLEMENTED");
     }
 
     @Test
-    void clickOnListItemNavigatesToDetails() {
+    public void clickOnListItemNavigatesToDetails() {
         Assert.fail("NOT IMPLEMENTED");
     }
 
     @Test
-    void clickOnSearchMenuNavigatesToFilter() {
+    public void clickOnSearchMenuNavigatesToFilter() {
         Assert.fail("NOT IMPLEMENTED");
     }
 
     @Test
-    void clickOnApplyNavigatesBackToList() {
+    public void clickOnApplyNavigatesBackToList() {
         Assert.fail("NOT IMPLEMENTED");
     }
 
     @Test
-    void clickOnAboutMenuNavigatesToAbout() {
+    public void clickOnAboutMenuNavigatesToAbout() {
         Assert.fail("NOT IMPLEMENTED");
     }
 }
