@@ -145,6 +145,7 @@ if (propFile.canRead()) {
 
 ext {
     appcompatVersion = '1.1.0'
+    fragment_version = "1.1.0"
     archCompVersion = '1.1.1'
     roomVersion = '2.1.0-alpha04'
     lifecycleVersion = '2.1.0-alpha02'
@@ -186,5 +187,6 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:${espressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:${espressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-intents:${espressoVersion}"
+    androidTestImplementation "androidx.fragment:fragment-testing:${fragment_version}"
     testImplementation "androidx.room:room-testing:${roomVersion}"
 }
