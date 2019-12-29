@@ -159,7 +159,6 @@ ext {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':lib')
     implementation "androidx.appcompat:appcompat:${appcompatVersion}"
     implementation "com.google.android.material:material:1.0.0"
