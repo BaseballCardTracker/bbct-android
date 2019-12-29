@@ -21,7 +21,6 @@ package bbct.android.common.activity.test;
 import android.app.Instrumentation;
 
 import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
 
 import junit.framework.Assert;
 
@@ -29,7 +28,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.io.InputStream;
 import java.util.List;
@@ -41,7 +39,6 @@ import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 import bbct.data.BaseballCard;
 
-@RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsAddCardsTest {
     @Rule
     public SupportFragmentTestRule fragmentTestRule =

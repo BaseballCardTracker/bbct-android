@@ -157,7 +157,7 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
         };
 
         BBCTTestUtil.sendKeysToFilterCards(testCard, inputFieldsMask);
-        onView(withId(R.id.save_menu)).perform(click());
+        onView(withId(R.id.save_button)).perform(click());
         List<BaseballCard> expectedCards = BBCTTestUtil.filterList(allCards, cardMatcher);
         BBCTTestUtil.assertListViewContainsItems(expectedCards);
     }
