@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     private static final String TAG = MainActivity.class.getName();
 
+    private FirebaseAnalytics analytics;
     private SharedPreferences prefs;
     private FragmentManager fragmentManager;
 
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         if (!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
         }
+        analytics = FirebaseAnalytics.getInstance(this);
 
         this.setContentView(R.layout.main);
         fragmentManager = getSupportFragmentManager();

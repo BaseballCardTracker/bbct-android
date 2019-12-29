@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'io.fabric'
 apply plugin: 'testdroid'
 
@@ -15,6 +16,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.5.3'
         classpath 'io.fabric.tools:gradle:1.+'
         classpath 'com.testdroid:gradle:1.3.0'
+        classpath 'com.google.gms:google-services:4.3.3'
     }
 }
 
@@ -157,6 +159,7 @@ dependencies {
     implementation "androidx.room:room-runtime:${roomVersion}"
     implementation "androidx.lifecycle:lifecycle-livedata:${lifecycleVersion}"
     implementation 'com.google.android.gms:play-services:6.1.71'
+    implementation 'com.google.firebase:firebase-analytics:17.2.1'
     implementation('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true
     }
