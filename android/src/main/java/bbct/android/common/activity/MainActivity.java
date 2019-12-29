@@ -30,7 +30,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.analytics.tracking.android.EasyTracker;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     private static final String TAG = MainActivity.class.getName();
 
+    private FirebaseAnalytics analytics;
     private SharedPreferences prefs;
     private FragmentManager fragmentManager;
 
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         if (!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
         }
+        analytics = FirebaseAnalytics.getInstance(this);
 
         this.setContentView(R.layout.main);
         fragmentManager = getSupportFragmentManager();
@@ -128,23 +130,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             }
         } else if (prefs.contains(SharedPreferenceKeys.SURVEY_TAKEN_PREF)) {
             prefs.edit().putString(SharedPreferenceKeys.SURVEY1_DATE, todayStr).apply();
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        if (!BuildConfig.DEBUG) {
-            EasyTracker.getInstance(this).activityStart(this);
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (!BuildConfig.DEBUG) {
-            EasyTracker.getInstance(this).activityStop(this);
         }
     }
 
