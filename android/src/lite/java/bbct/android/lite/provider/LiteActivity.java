@@ -25,8 +25,6 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.MainActivity;
@@ -47,11 +45,7 @@ public class LiteActivity extends MainActivity {
 
         premiumText.setMovementMethod(LinkMovementMethod.getInstance());
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
+        MobileAds.initialize(this, initializationStatus -> {});
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
