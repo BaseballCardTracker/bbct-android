@@ -20,8 +20,13 @@ package bbct.android.lite.provider;
 
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
-import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.MainActivity;
@@ -30,8 +35,10 @@ import butterknife.ButterKnife;
 
 public class LiteActivity extends MainActivity {
 
-    @BindView(R.id.ad_view) ViewGroup adViewContainer;
-    @BindView(R.id.premium_text) TextView premiumText;
+    @BindView(R.id.ad_view)
+    AdView adView;
+    @BindView(R.id.premium_text)
+    TextView premiumText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,5 +46,13 @@ public class LiteActivity extends MainActivity {
         ButterKnife.bind(this);
 
         premiumText.setMovementMethod(LinkMovementMethod.getInstance());
+
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 }
