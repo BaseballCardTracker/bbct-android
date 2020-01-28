@@ -116,14 +116,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     }
 
     @Test
-    public void testHeader() {
-        onView(withText(R.string.brand)).check(matches(isDisplayed()));
-        onView(withText(R.string.year)).check(matches(isDisplayed()));
-        onView(withText(R.string.number_col)).check(matches(isDisplayed()));
-        onView(withText(R.string.player_name)).check(matches(isDisplayed()));
-    }
-
-    @Test
     public void testStateDestroyWithoutFilter() throws RemoteException {
         device.setOrientationLeft();
         BBCTTestUtil.assertListViewContainsItems(allCards);
