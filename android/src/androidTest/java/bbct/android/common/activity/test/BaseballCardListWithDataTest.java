@@ -140,7 +140,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         Log.d(TAG, "testOnListItemClick()");
         int cardIndex = 3;
         BaseballCard expectedCard = allCards.get(cardIndex);
-        onView(withRecyclerView(R.id.card_list).atPosition(cardIndex + 1))
+        onView(withRecyclerView(R.id.card_list).atPosition(cardIndex))
             .perform(click());
         BBCTTestUtil.assertAllEditTextContents(expectedCard);
     }
