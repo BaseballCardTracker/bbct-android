@@ -175,6 +175,7 @@ dependencies {
     androidTestImplementation "androidx.fragment:fragment-testing:${fragment_version}"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:${uiautomatorVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${espressoVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:${espressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-intents:${espressoVersion}"
     testImplementation "androidx.room:room-testing:${roomVersion}"
 }
