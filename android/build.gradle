@@ -156,7 +156,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':lib')
     implementation "androidx.appcompat:appcompat:${appcompatVersion}"
-    implementation "com.google.android.material:material:1.0.0-beta01"
+    implementation "com.google.android.material:material:1.0.0"
     implementation "androidx.room:room-runtime:${roomVersion}"
     implementation "androidx.lifecycle:lifecycle-livedata:${lifecycleVersion}"
     implementation 'com.google.android.gms:play-services-ads:18.3.0'
