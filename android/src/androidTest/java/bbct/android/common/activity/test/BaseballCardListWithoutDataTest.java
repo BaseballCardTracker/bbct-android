@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import bbct.android.common.R;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
@@ -43,7 +44,10 @@ import bbct.android.common.test.DatabaseUtil;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static bbct.android.common.test.matcher.RecyclerViewMatcher.contains;
 import static org.hamcrest.Matchers.containsString;
 
 abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
@@ -90,6 +94,8 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
     public void testAddCardToEmptyDatabase() throws Throwable {
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
+        onView(withId(R.id.add_button))
+            .perform(click());
         BBCTTestUtil.addCard(card);
         // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.ADD_MESSAGE);
         onView(withContentDescription(containsString("Navigate up"))).perform(click());
@@ -98,7 +104,8 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
 
         List<BaseballCard> cards = new ArrayList<>();
         cards.add(card);
-        BBCTTestUtil.assertListViewContainsItems(cards);
+        onView(withId(R.id.card_list))
+            .check(matches(contains(cards)));
     }
 
     @Test
