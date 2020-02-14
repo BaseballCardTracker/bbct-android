@@ -112,6 +112,8 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
     public void testAddMultipleCards() throws Throwable {
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
 
+        onView(withId(R.id.add_button))
+            .perform(click());
         for (BaseballCard card : cards) {
             BBCTTestUtil.addCard(card);
             // BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
@@ -119,6 +121,7 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
 
         onView(withContentDescription(containsString("Navigate up"))).perform(click());
         Assert.assertTrue(dbUtil.containsAllBaseballCards(cards));
-        BBCTTestUtil.assertListViewContainsItems(cards);
+        onView(withId(R.id.card_list))
+            .check(matches(contains(cards)));
     }
 }
