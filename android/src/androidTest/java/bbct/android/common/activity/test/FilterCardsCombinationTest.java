@@ -39,10 +39,10 @@ import java.util.Set;
 import bbct.android.common.R;
 import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import bbct.data.BaseballCard;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -129,27 +129,23 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
                 boolean condition = true;
 
                 if (mask.contains(BBCTTestUtil.FilterOption.BRAND)) {
-                    condition = card.getBrand().equals(test.getBrand());
+                    condition = card.brand.equals(test.brand);
                 }
 
                 if (mask.contains(BBCTTestUtil.FilterOption.YEAR)) {
-                    condition = condition && card.getYear() == test.getYear();
+                    condition = condition && card.year == test.year;
                 }
 
                 if (mask.contains(BBCTTestUtil.FilterOption.NUMBER)) {
-                    condition = condition
-                            && card.getNumber() == test.getNumber();
+                    condition = condition && card.number == test.number;
                 }
 
                 if (mask.contains(BBCTTestUtil.FilterOption.PLAYER_NAME)) {
-                    condition = condition
-                            && card.getPlayerName()
-                                    .equals(test.getPlayerName());
+                    condition = condition && card.playerName.equals(test.playerName);
                 }
 
                 if (mask.contains(BBCTTestUtil.FilterOption.TEAM)) {
-                    condition = condition
-                            && card.getTeam().equals(test.getTeam());
+                    condition = condition && card.team.equals(test.team);
                 }
 
                 return condition;

@@ -1,9 +1,10 @@
 package bbct.android.common.test.matcher;
 
-import bbct.data.BaseballCard;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+
+import bbct.android.common.database.BaseballCard;
 
 public class BaseballCardMatchers {
     public static Matcher<BaseballCard> withYear(final int year) {
@@ -16,7 +17,7 @@ public class BaseballCardMatchers {
             @Override
             public boolean matches(Object obj) {
                 BaseballCard card = (BaseballCard)obj;
-                return card.getYear() == year;
+                return card.year == year;
             }
         };
     }

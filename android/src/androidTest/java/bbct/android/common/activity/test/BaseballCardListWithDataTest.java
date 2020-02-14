@@ -41,10 +41,10 @@ import java.util.List;
 import bbct.android.common.R;
 import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.DataTestRule;
-import bbct.data.BaseballCard;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;

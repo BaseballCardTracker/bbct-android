@@ -36,10 +36,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bbct.android.common.activity.MainActivity;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import bbct.data.BaseballCard;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;

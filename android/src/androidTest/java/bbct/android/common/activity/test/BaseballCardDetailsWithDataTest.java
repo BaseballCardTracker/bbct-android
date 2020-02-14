@@ -34,9 +34,9 @@ import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
-import bbct.data.BaseballCard;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -76,17 +76,17 @@ public class BaseballCardDetailsWithDataTest {
 
     @Test
     public void testBrandAutoCompletePopup() {
-        this.testAutoCompletePopup(R.id.brand_text, mCard.getBrand());
+        this.testAutoCompletePopup(R.id.brand_text, mCard.brand);
     }
 
     @Test
     public void testPlayerNameAutoCompletePopup() {
-        this.testAutoCompletePopup(R.id.player_name_text, mCard.getPlayerName());
+        this.testAutoCompletePopup(R.id.player_name_text, mCard.playerName);
     }
 
     @Test
     public void testTeamAutoCompletePopup() {
-        this.testAutoCompletePopup(R.id.team_text, mCard.getTeam());
+        this.testAutoCompletePopup(R.id.team_text, mCard.team);
     }
 
     private void testAutoCompletePopup(int textViewId, String text) {
@@ -99,17 +99,17 @@ public class BaseballCardDetailsWithDataTest {
 
     @Test
     public void testBrandAutoCompleteDestroy() throws RemoteException {
-        testAutoCompleteDestroy(R.id.brand_text, mCard.getBrand());
+        testAutoCompleteDestroy(R.id.brand_text, mCard.brand);
     }
 
     @Test
     public void testPlayerNameAutoCompleteDestroy() throws RemoteException {
-        testAutoCompleteDestroy(R.id.player_name_text, mCard.getPlayerName());
+        testAutoCompleteDestroy(R.id.player_name_text, mCard.playerName);
     }
 
     @Test
     public void testTeamAutoCompleteDestroy() throws RemoteException {
-        testAutoCompleteDestroy(R.id.team_text, mCard.getTeam());
+        testAutoCompleteDestroy(R.id.team_text, mCard.team);
     }
 
     private void testAutoCompleteDestroy(int id, String text) throws RemoteException {
@@ -120,17 +120,17 @@ public class BaseballCardDetailsWithDataTest {
 
     @Test
     public void testBrandAutoCompleteSelect() {
-        testAutoCompleteSelect(R.id.brand_text, mCard.getBrand());
+        testAutoCompleteSelect(R.id.brand_text, mCard.brand);
     }
 
     @Test
     public void testPlayerNameAutoCompleteSelect() {
-        testAutoCompleteSelect(R.id.player_name_text, mCard.getPlayerName());
+        testAutoCompleteSelect(R.id.player_name_text, mCard.playerName);
     }
 
     @Test
     public void testTeamAutoCompleteSelect() {
-        testAutoCompleteSelect(R.id.team_text, mCard.getTeam());
+        testAutoCompleteSelect(R.id.team_text, mCard.team);
     }
 
     private void testAutoCompleteSelect(int textViewId, String text) {

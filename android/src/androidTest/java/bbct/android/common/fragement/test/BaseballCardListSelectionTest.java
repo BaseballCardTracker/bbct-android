@@ -15,11 +15,11 @@ import java.util.List;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
-import bbct.data.BaseballCard;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;

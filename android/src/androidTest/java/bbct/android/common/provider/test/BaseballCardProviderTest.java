@@ -31,11 +31,11 @@ import junit.framework.Assert;
 import java.util.ArrayList;
 import java.util.List;
 
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardProvider;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.android.common.test.DatabaseUtil;
-import bbct.data.BaseballCard;
 
 public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> extends ProviderTestCase2<T> {
     private static final String CREATE_TABLE = "CREATE TABLE baseball_cards"

@@ -35,8 +35,8 @@ import org.junit.runner.RunWith;
 import java.io.File;
 
 import bbct.android.common.R;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
-import bbct.data.BaseballCard;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -81,7 +81,7 @@ public class Screenshots extends UiAutomatorTest {
         device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
         takeScreenshot("CardList");
 
-        UiSelector playerNameSelector = new UiSelector().text(card.getPlayerName());
+        UiSelector playerNameSelector = new UiSelector().text(card.playerName);
         UiObject listItem = device.findObject(playerNameSelector);
         listItem.click();
         device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);

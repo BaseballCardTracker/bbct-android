@@ -35,10 +35,10 @@ import java.util.Set;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.activity.FragmentTestActivity;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import bbct.data.BaseballCard;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -95,8 +95,8 @@ public class BaseballCardDetailsEditCardTest extends
         this.newCard = allCards.get(4); // Dave Hollins
         cardInput.close();
 
-        this.newCard.setValue(this.newCard.getValue() + 50);
-        this.newCard.setCount(this.newCard.getCount() + 1);
+        this.newCard.value = this.newCard.value + 50;
+        this.newCard.quantity = this.newCard.quantity + 1;
 
         this.dbUtil = new DatabaseUtil(inst.getTargetContext());
         long cardId = this.dbUtil.insertBaseballCard(this.oldCard);
@@ -141,31 +141,37 @@ public class BaseballCardDetailsEditCardTest extends
     }
 
     private BaseballCard getExpectedCard() {
-        boolean autographed = this.inputMask
-                .contains(BBCTTestUtil.EditTexts.AUTOGRAPHED) ? this.newCard
-                .isAutographed() : this.oldCard.isAutographed();
-        String condition = this.inputMask
-                .contains(BBCTTestUtil.EditTexts.CONDITION) ? this.newCard
-                .getCondition() : this.oldCard.getCondition();
-        String brand = this.inputMask.contains(BBCTTestUtil.EditTexts.BRAND) ? this.newCard
-                .getBrand() : this.oldCard.getBrand();
-        int year = this.inputMask.contains(BBCTTestUtil.EditTexts.YEAR) ? this.newCard
-                .getYear() : this.oldCard.getYear();
-        int number = this.inputMask.contains(BBCTTestUtil.EditTexts.NUMBER) ? this.newCard
-                .getNumber() : this.oldCard.getNumber();
-        int value = this.inputMask.contains(BBCTTestUtil.EditTexts.VALUE) ? this.newCard
-                .getValue() : this.oldCard.getValue();
-        int count = this.inputMask.contains(BBCTTestUtil.EditTexts.COUNT) ? this.newCard
-                .getCount() : this.oldCard.getCount();
-        String name = this.inputMask
-                .contains(BBCTTestUtil.EditTexts.PLAYER_NAME) ? this.newCard
-                .getPlayerName() : this.oldCard.getPlayerName();
-        String team = this.inputMask.contains(BBCTTestUtil.EditTexts.TEAM) ? this.newCard
-                .getTeam() : this.oldCard.getTeam();
-        String position = this.inputMask
-                .contains(BBCTTestUtil.EditTexts.PLAYER_POSITION) ? this.newCard
-                .getPlayerPosition() : this.oldCard.getPlayerPosition();
-        return new BaseballCard(autographed, condition, brand, year, number,
-                value, count, name, team, position);
+        boolean autographed = this.inputMask.contains(BBCTTestUtil.EditTexts.AUTOGRAPHED)
+            ? this.newCard.autographed : this.oldCard.autographed;
+        String condition = this.inputMask.contains(BBCTTestUtil.EditTexts.CONDITION)
+            ? this.newCard.condition : this.oldCard.condition;
+        String brand = this.inputMask.contains(BBCTTestUtil.EditTexts.BRAND)
+            ? this.newCard.brand : this.oldCard.brand;
+        int year = this.inputMask.contains(BBCTTestUtil.EditTexts.YEAR)
+            ? this.newCard.year : this.oldCard.year;
+        int number = this.inputMask.contains(BBCTTestUtil.EditTexts.NUMBER)
+            ? this.newCard.number : this.oldCard.number;
+        int value = this.inputMask.contains(BBCTTestUtil.EditTexts.VALUE)
+            ? this.newCard.value : this.oldCard.value;
+        int quantity = this.inputMask.contains(BBCTTestUtil.EditTexts.COUNT)
+            ? this.newCard.quantity : this.oldCard.quantity;
+        String name = this.inputMask.contains(BBCTTestUtil.EditTexts.PLAYER_NAME)
+            ? this.newCard.playerName : this.oldCard.playerName;
+        String team = this.inputMask.contains(BBCTTestUtil.EditTexts.TEAM)
+            ? this.newCard.team : this.oldCard.team;
+        String position = this.inputMask.contains(BBCTTestUtil.EditTexts.PLAYER_POSITION)
+            ? this.newCard.position : this.oldCard.position;
+        return new BaseballCard(
+            autographed,
+            condition,
+            brand,
+            year,
+            number,
+            value,
+            quantity,
+            name,
+            team,
+            position
+        );
     }
 }

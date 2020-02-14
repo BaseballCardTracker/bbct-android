@@ -39,8 +39,8 @@ import java.util.List;
 import java.util.Set;
 
 import bbct.android.common.R;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.data.BaseballCard;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
@@ -104,7 +104,7 @@ final public class BBCTTestUtil {
         UiDevice device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
-            if (card.isAutographed()) {
+            if (card.autographed) {
                 onView(withId(R.id.autograph))
                         .perform(scrollTo(), click())
                         .check(matches(isChecked()));
@@ -114,23 +114,23 @@ final public class BBCTTestUtil {
         if (fieldFlags.contains(EditTexts.CONDITION)) {
             onView(withId(R.id.condition))
                     .perform(scrollTo(), click());
-            onData(allOf(instanceOf(String.class), is(card.getCondition())))
+            onData(allOf(instanceOf(String.class), is(card.condition)))
                     .perform(click());
             onView(withId(R.id.condition))
-                    .check(matches(withSpinnerText(card.getCondition())));
+                    .check(matches(withSpinnerText(card.condition)));
         }
 
         onView(withId(R.id.brand_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.BRAND)) {
             onView(withId(R.id.brand_text))
-                    .perform(scrollTo(), clearText(), typeTextIntoFocusedView(card.getBrand()))
-                    .check(matches(withText(card.getBrand())));
+                    .perform(scrollTo(), clearText(), typeTextIntoFocusedView(card.brand))
+                    .check(matches(withText(card.brand)));
         }
         device.pressEnter();
 
         onView(withId(R.id.year_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.YEAR)) {
-            String yearStr = Integer.toString(card.getYear());
+            String yearStr = Integer.toString(card.year);
             onView(withId(R.id.year_text))
                     .perform(scrollTo(), typeTextIntoFocusedView(yearStr))
                     .check(matches(withText(yearStr)));
@@ -139,7 +139,7 @@ final public class BBCTTestUtil {
 
         onView(withId(R.id.number_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.NUMBER)) {
-            String numberStr = Integer.toString(card.getNumber());
+            String numberStr = Integer.toString(card.number);
             onView(withId(R.id.number_text))
                     .perform(scrollTo(), typeTextIntoFocusedView(numberStr))
                     .check(matches(withText(numberStr)));
@@ -148,7 +148,7 @@ final public class BBCTTestUtil {
 
         onView(withId(R.id.value_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.VALUE)) {
-            String valueStr = String.format("%.2f", card.getValue() / 100.0);
+            String valueStr = String.format("%.2f", card.value / 100.0);
             onView(withId(R.id.value_text))
                     .perform(scrollTo(), typeTextIntoFocusedView(valueStr))
                     .check(matches(withText(valueStr)));
@@ -157,7 +157,7 @@ final public class BBCTTestUtil {
 
         onView(withId(R.id.count_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.COUNT)) {
-            String countStr = Integer.toString(card.getCount());
+            String countStr = Integer.toString(card.quantity);
             onView(withId(R.id.count_text))
                     .perform(scrollTo(), typeTextIntoFocusedView(countStr))
                     .check(matches(withText(countStr)));
@@ -167,58 +167,58 @@ final public class BBCTTestUtil {
         onView(withId(R.id.player_name_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
             onView(withId(R.id.player_name_text))
-                    .perform(scrollTo(), typeTextIntoFocusedView(card.getPlayerName()))
-                    .check(matches(withText(card.getPlayerName())));
+                    .perform(scrollTo(), typeTextIntoFocusedView(card.playerName))
+                    .check(matches(withText(card.playerName)));
         }
         device.pressEnter();
 
         onView(withId(R.id.team_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.TEAM)) {
             onView(withId(R.id.team_text))
-                    .perform(scrollTo(), typeTextIntoFocusedView(card.getTeam()))
-                    .check(matches(withText(card.getTeam())));
+                    .perform(scrollTo(), typeTextIntoFocusedView(card.team))
+                    .check(matches(withText(card.team)));
         }
         device.pressEnter();
 
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
             onView(withId(R.id.player_position_text))
                     .perform(scrollTo(), click());
-            onData(allOf(instanceOf(String.class), is(card.getPlayerPosition())))
+            onData(allOf(instanceOf(String.class), is(card.position)))
                     .perform(click());
             onView(withId(R.id.player_position_text))
-                    .check(matches(withSpinnerText(card.getPlayerPosition())));
+                    .check(matches(withSpinnerText(card.position)));
         }
     }
 
     public static void assertAllEditTextContents(BaseballCard expectedCard) {
         ViewInteraction autographView = onView(withId(R.id.autograph));
 
-        if (expectedCard.isAutographed()) {
+        if (expectedCard.autographed) {
             autographView.check(matches(isChecked()));
         } else {
             autographView.check(matches(isNotChecked()));
         }
 
         onView(withId(R.id.condition))
-                .check(matches(withSpinnerText(expectedCard.getCondition())));
+                .check(matches(withSpinnerText(expectedCard.condition)));
         onView(withId(R.id.brand_text))
-                .check(matches(withText(expectedCard.getBrand())));
-        String yearStr = Integer.toString(expectedCard.getYear());
+                .check(matches(withText(expectedCard.brand)));
+        String yearStr = Integer.toString(expectedCard.year);
         onView(withId(R.id.year_text))
                 .check(matches(withText(yearStr)));
-        String numberStr = Integer.toString(expectedCard.getNumber());
+        String numberStr = Integer.toString(expectedCard.number);
         onView(withId(R.id.number_text))
                 .check(matches(withText(numberStr)));
-        String valueStr = String.format("%.2f", expectedCard.getValue() / 100.0);
+        String valueStr = String.format("%.2f", expectedCard.value / 100.0);
         onView(withId(R.id.value_text))
                 .check(matches(withText(valueStr)));
-        String countStr = Integer.toString(expectedCard.getCount());
+        String countStr = Integer.toString(expectedCard.quantity);
         onView(withId(R.id.count_text))
                 .check(matches(withText(countStr)));
         onView(withId(R.id.player_name_text))
-                .check(matches(withText(expectedCard.getPlayerName())));
+                .check(matches(withText(expectedCard.playerName)));
         onView(withId(R.id.player_position_text))
-                .check(matches(withSpinnerText(expectedCard.getPlayerPosition())));
+                .check(matches(withSpinnerText(expectedCard.position)));
     }
 
     public static void assertDatabaseCreated(Context targetContext) {
@@ -235,27 +235,27 @@ final public class BBCTTestUtil {
     public static void sendKeysToFilterCards(BaseballCard testCard, Set<FilterOption> fieldFlags) {
         if (fieldFlags.contains(FilterOption.BRAND)) {
             sendKeysToCurrFieldFilterCards(R.id.brand_check, R.id.brand_input,
-                    testCard.getBrand());
+                    testCard.brand);
         }
 
         if (fieldFlags.contains(FilterOption.YEAR)) {
             sendKeysToCurrFieldFilterCards(R.id.year_check, R.id.year_input,
-                    Integer.toString(testCard.getYear()));
+                    Integer.toString(testCard.year));
         }
 
         if (fieldFlags.contains(FilterOption.NUMBER)) {
             sendKeysToCurrFieldFilterCards(R.id.number_check, R.id.number_input,
-                    Integer.toString(testCard.getNumber()));
+                    Integer.toString(testCard.number));
         }
 
         if (fieldFlags.contains(FilterOption.PLAYER_NAME)) {
             sendKeysToCurrFieldFilterCards(R.id.player_name_check, R.id.player_name_input,
-                    testCard.getPlayerName());
+                    testCard.playerName);
         }
 
         if (fieldFlags.contains(FilterOption.TEAM)) {
             sendKeysToCurrFieldFilterCards(R.id.team_check, R.id.team_input,
-                    testCard.getTeam());
+                    testCard.team);
         }
     }
 
