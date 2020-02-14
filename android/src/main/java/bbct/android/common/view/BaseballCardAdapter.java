@@ -150,6 +150,10 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
         return selectedCards;
     }
 
+    public List<BaseballCard> getCards() {
+        return cards;
+    }
+
     private int getSelectedCount() {
         int count = 0;
         for (boolean selectedItem : selected) {

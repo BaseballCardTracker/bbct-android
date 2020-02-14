@@ -13,6 +13,11 @@ import org.hamcrest.TypeSafeMatcher;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
+import bbct.android.common.database.BaseballCard;
+import bbct.android.common.view.BaseballCardAdapter;
+
 public class RecyclerViewMatcher {
     public static RecyclerViewMatcher withRecyclerView(final int recyclerViewId) {
         return new RecyclerViewMatcher(recyclerViewId);
@@ -78,6 +83,24 @@ public class RecyclerViewMatcher {
                     }
                     return view == targetView;
                 }
+            }
+        };
+    }
+
+    public static Matcher<View> contains(List<BaseballCard> cards) {
+        return new TypeSafeMatcher<View>() {
+            @Override
+            protected boolean matchesSafely(View view) {
+                RecyclerView recyclerView = (RecyclerView) view;
+                BaseballCardAdapter adapter =
+                    (BaseballCardAdapter) recyclerView.getAdapter();
+                return adapter != null && adapter.getCards().equals(cards);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("RecyclerView doesn't match: ");
+                description.appendValueList("(", ",", ")", cards);
             }
         };
     }
