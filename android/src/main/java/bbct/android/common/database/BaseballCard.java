@@ -69,7 +69,7 @@ public class BaseballCard {
                     && this.quantity.equals(c.quantity)
                     && this.playerName.equals(c.playerName)
                     && this.team.equals(c.team)
-                    && this.position.equals(c.playerName);
+                    && this.position.equals(c.position);
         }
 
         return false;
@@ -91,5 +91,18 @@ public class BaseballCard {
         hash = 67 * hash + this.team.hashCode();
         hash = 67 * hash + this.position.hashCode();
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseballCard{"
+            + "brand=" + brand +
+            ", year=" + year
+            + ", number=" + number +
+            ", value=" + value
+            + ", quantity=" + quantity
+            + ", playerName=" + playerName
+            + ", position=" + position
+            + '}';
     }
 }
