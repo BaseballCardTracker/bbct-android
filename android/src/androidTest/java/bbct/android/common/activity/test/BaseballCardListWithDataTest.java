@@ -301,7 +301,18 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testYearFilter() {
         final int year = 1993;
-        testSingleFilter(R.id.year_check, R.id.year_input, year + "", withYear(year));
+        onView(withId(R.id.filter_menu)).perform(click());
+        BBCTTestUtil.sendKeysToCurrFieldFilterCards(
+            R.id.year_check,
+            R.id.year_input,
+            year + ""
+        );
+        onView(withId(R.id.confirm_button)).perform(click());
+        expectedCards = BBCTTestUtil.filterList(allCards, withYear(year));
+        onView(withId(R.id.card_list))
+            .check(matches(contains(expectedCards)));
+        onView(withId(R.id.clear_filter_menu))
+            .check(matches(isDisplayed()));
     }
 
     @Test
