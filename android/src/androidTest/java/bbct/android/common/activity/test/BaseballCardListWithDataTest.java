@@ -282,12 +282,6 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
             .check(matches(contains(expectedCards)));
     }
 
-    private void deleteCards() {
-        onView(withId(R.id.delete_menu)).perform(click());
-        // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.DELETE_MESSAGE);
-        onView(withId(R.id.add_button)).check(matches(isDisplayed()));
-    }
-
     @Test
     public void testDeleteCardNoFilter() {
         int cardIndex = 0;
