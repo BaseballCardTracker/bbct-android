@@ -46,7 +46,9 @@ import bbct.android.common.test.DatabaseUtil;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static bbct.android.common.test.matcher.RecyclerViewMatcher.contains;
 
 abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
         ActivityInstrumentationTestCase2<T> {
@@ -133,11 +135,11 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
                 }
 
                 if (mask.contains(BBCTTestUtil.FilterOption.YEAR)) {
-                    condition = condition && card.year == test.year;
+                    condition = condition && card.year.equals(test.year);
                 }
 
                 if (mask.contains(BBCTTestUtil.FilterOption.NUMBER)) {
-                    condition = condition && card.number == test.number;
+                    condition = condition && card.number.equals(test.number);
                 }
 
                 if (mask.contains(BBCTTestUtil.FilterOption.PLAYER_NAME)) {
@@ -153,8 +155,9 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
         };
 
         BBCTTestUtil.sendKeysToFilterCards(testCard, inputFieldsMask);
-        onView(withId(R.id.save_button)).perform(click());
+        onView(withId(R.id.confirm_button)).perform(click());
         List<BaseballCard> expectedCards = BBCTTestUtil.filterList(allCards, cardMatcher);
-        BBCTTestUtil.assertListViewContainsItems(expectedCards);
+        onView(withId(R.id.card_list))
+            .check(matches(contains(expectedCards)));
     }
 }
