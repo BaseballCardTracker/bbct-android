@@ -56,6 +56,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static bbct.android.common.test.matcher.BaseballCardMatchers.withYear;
+import static bbct.android.common.test.matcher.RecyclerViewMatcher.contains;
 import static bbct.android.common.test.matcher.RecyclerViewMatcher.withRecyclerView;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
@@ -165,12 +166,14 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     @Test
     public void testAddCardToPopulatedDatabase() {
-        BBCTTestUtil.testMenuItem(R.id.add_button, FragmentTags.EDIT_CARD);
+        onView(withId(R.id.add_button)).perform(click());
         BBCTTestUtil.addCard(newCard);
         // BBCTTestUtil.waitForToast(BBCTTestUtil.ADD_MESSAGE);
         onView(withContentDescription(containsString("Navigate up"))).perform(click());
-        allCards.add(newCard);
-        BBCTTestUtil.assertListViewContainsItems(allCards);
+        expectedCards = new ArrayList<>(allCards);
+        expectedCards.add(newCard);
+        onView(withId(R.id.card_list))
+            .check(matches(contains(expectedCards)));
     }
 
     @Test
