@@ -130,9 +130,18 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     @Test
     public void testStateDestroyClearFilter() throws RemoteException {
-        this.testClearFilter();
+        final int year = 1993;
+        onView(withId(R.id.filter_menu)).perform(click());
+        BBCTTestUtil.sendKeysToCurrFieldFilterCards(
+            R.id.year_check,
+            R.id.year_input,
+            year + ""
+        );
+        onView(withId(R.id.confirm_button)).perform(click());
+        onView(withId(R.id.clear_filter_menu)).perform(click());
         device.setOrientationLeft();
-        BBCTTestUtil.assertListViewContainsItems(allCards);
+        onView(withId(R.id.card_list))
+            .check(matches(contains(allCards)));
     }
 
     @Test
