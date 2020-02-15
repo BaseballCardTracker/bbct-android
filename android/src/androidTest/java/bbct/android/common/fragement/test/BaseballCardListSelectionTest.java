@@ -88,6 +88,8 @@ public class BaseballCardListSelectionTest {
             .check(matches(isChecked()));
         onView(withId(R.id.delete_menu))
             .check(matches(isDisplayed()));
+        onView(withId(R.id.select_all_menu))
+            .check(matches(isDisplayed()));
     }
 
     @Test
@@ -102,6 +104,8 @@ public class BaseballCardListSelectionTest {
             .check(matches(isNotChecked()));
         onView(withId(R.id.delete_menu))
             .check(matches(not(isDisplayed())));
+        onView(withId(R.id.select_all_menu))
+            .check(matches(not(isDisplayed())));
         assertNoCheckboxesChecked();
     }
 
@@ -112,6 +116,8 @@ public class BaseballCardListSelectionTest {
             .perform(longClick())
             .check(matches(isChecked()));
         onView(withId(R.id.delete_menu))
+            .check(matches(isDisplayed()));
+        onView(withId(R.id.select_all_menu))
             .check(matches(isDisplayed()));
     }
 
