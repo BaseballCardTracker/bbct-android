@@ -75,4 +75,26 @@ public class Matchers {
             }
         };
     }
+
+    public static <T> Matcher<T> atPosition(int position, final Matcher<T> matcher) {
+        return new TypeSafeMatcher<T>() {
+            private int counter = 0;
+
+            @Override
+            protected boolean matchesSafely(T item) {
+                if (matcher.matches(item)) {
+                    if (counter++ == position) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("No items matched");
+            }
+        };
+    }
 }
