@@ -18,8 +18,6 @@
  */
 package bbct.android.common.activity.test;
 
-import android.app.Activity;
-import android.database.Cursor;
 import android.os.RemoteException;
 
 import androidx.test.InstrumentationRegistry;
@@ -38,20 +36,13 @@ import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.CursorMatchers.withRowString;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
-import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsWithDataTest {
