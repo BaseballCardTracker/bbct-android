@@ -29,7 +29,6 @@ import androidx.test.uiautomator.UiDevice;
 
 import junit.framework.Assert;
 
-import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -59,7 +58,6 @@ import static bbct.android.common.test.matcher.BaseballCardMatchers.withYear;
 import static bbct.android.common.test.matcher.Matchers.first;
 import static bbct.android.common.test.matcher.RecyclerViewMatcher.contains;
 import static bbct.android.common.test.matcher.RecyclerViewMatcher.withRecyclerView;
-import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 
