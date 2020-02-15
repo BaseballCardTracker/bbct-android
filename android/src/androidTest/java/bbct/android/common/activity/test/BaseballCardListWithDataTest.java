@@ -287,18 +287,15 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testDeleteCardNoFilter() {
         int cardIndex = 0;
-
         expectedCards = new ArrayList<>(allCards);
         expectedCards.remove(cardIndex);
-
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(cardIndex)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
+        onView(first(withId(R.id.checkmark)))
+            .perform(click());
         onView(withId(R.id.delete_menu))
-                .check(matches(isDisplayed()));
-        deleteCards();
-        BBCTTestUtil.assertListViewContainsItems(expectedCards);
+            .perform(click());
+        // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.DELETE_MESSAGE);
+        onView(withId(R.id.card_list))
+            .check(matches(contains(expectedCards)));
     }
 
     @Test
