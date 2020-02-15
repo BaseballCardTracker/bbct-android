@@ -38,6 +38,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
@@ -62,16 +63,17 @@ abstract public class NavigateUpFromAboutTest<T extends MainActivity> {
         String expectedTitle = context.getString(R.string.app_name);
 
         // navigate to BaseballCardDetails
-        onView(allOf(withContentDescription(R.string.add_menu), isDisplayed()))
+        onView(withId(R.id.add_button))
             .perform(click());
 
         // navigate to About
         navigateToAboutViaContextMenu();
 
         // Navigate Up
-        onView(allOf(withContentDescription(R.string
-            .abc_action_bar_up_description), isDisplayed()))
-            .perform(click());
+        onView(
+            withContentDescription(
+                R.string.abc_action_bar_up_description)
+            ).perform(click());
         onView(allOf(withText(expectedTitle), isDisplayed()));
     }
 
