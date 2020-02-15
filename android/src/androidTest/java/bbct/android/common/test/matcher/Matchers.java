@@ -54,4 +54,25 @@ public class Matchers {
             description.appendText("with string id: " + errorRes);
         }
     }
+
+    public static <T> Matcher<T> first(final Matcher<T> matcher) {
+        return new TypeSafeMatcher<T>() {
+            private boolean isFirst = true;
+
+            @Override
+            protected boolean matchesSafely(T item) {
+                if (isFirst && matcher.matches(item)) {
+                    isFirst = false;
+                    return true;
+                }
+
+                return false;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("No items matched");
+            }
+        };
+    }
 }
