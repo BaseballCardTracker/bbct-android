@@ -56,8 +56,10 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static bbct.android.common.test.matcher.BaseballCardMatchers.withYear;
+import static bbct.android.common.test.matcher.Matchers.first;
 import static bbct.android.common.test.matcher.RecyclerViewMatcher.contains;
 import static bbct.android.common.test.matcher.RecyclerViewMatcher.withRecyclerView;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 
@@ -251,9 +253,12 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     @Test
     public void testDeleteAll() {
-        this.markAll();
-        deleteCards();
-        onView(withId(android.R.id.empty)).check(matches(isDisplayed()));
+        onView(first(withId(R.id.checkmark))).perform(click());
+        onView(withId(R.id.select_all_menu)).perform(click());
+        onView(withId(R.id.delete_menu)).perform(click());
+        // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.DELETE_MESSAGE);
+        expectedCards = new ArrayList<>();
+        onView(withId(R.id.card_list)).check(matches(contains(expectedCards)));
     }
 
     @Test
