@@ -329,15 +329,4 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         onView(withId(R.id.card_list))
             .check(matches(contains(allCards)));
     }
-
-    private void testSingleFilter(int checkId, int editId, String input,
-                                  Matcher<BaseballCard> cardMatcher) {
-        BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
-
-        BBCTTestUtil.sendKeysToCurrFieldFilterCards(checkId, editId, input);
-        onView(withId(R.id.save_button)).perform(click());
-        expectedCards = BBCTTestUtil.filterList(allCards, cardMatcher);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards);
-        onView(withId(R.id.clear_filter_menu)).check(matches(isDisplayed()));
-    }
 }
