@@ -118,7 +118,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testStateDestroyWithoutFilter() throws RemoteException {
         device.setOrientationLeft();
-        BBCTTestUtil.assertListViewContainsItems(allCards);
+        onView(withId(R.id.card_list))
+            .check(matches(contains(allCards)));
     }
 
     @Test
