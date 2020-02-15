@@ -317,11 +317,17 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     @Test
     public void testClearFilter() {
-        this.testYearFilter();
-        BBCTTestUtil.testMenuItem(R.id.clear_filter_menu, FragmentTags.CARD_LIST);
-        onView(withId(R.id.add_button))
-                .check(matches(isDisplayed()));
-        BBCTTestUtil.assertListViewContainsItems(allCards);
+        final int year = 1993;
+        onView(withId(R.id.filter_menu)).perform(click());
+        BBCTTestUtil.sendKeysToCurrFieldFilterCards(
+            R.id.year_check,
+            R.id.year_input,
+            year + ""
+        );
+        onView(withId(R.id.confirm_button)).perform(click());
+        onView(withId(R.id.clear_filter_menu)).perform(click());
+        onView(withId(R.id.card_list))
+            .check(matches(contains(allCards)));
     }
 
     private void testSingleFilter(int checkId, int editId, String input,
