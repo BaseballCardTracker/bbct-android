@@ -19,43 +19,37 @@
 package bbct.android.common.functional.test;
 
 import android.os.RemoteException;
-import android.util.Log;
-import android.widget.EditText;
 
-import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiObjectNotFoundException;
-import androidx.test.uiautomator.UiSelector;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 import bbct.android.common.R;
+
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.clearText;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeTextIntoFocusedView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
 
 public class BaseballCardDetailsSleepTest extends UiAutomatorTest {
     private static final String TAG = BaseballCardDetailsSleepTest.class.getName();
 
     @Test
-    public void testSleep() throws UiObjectNotFoundException, RemoteException {
-        Log.d(TAG, "testSleep()");
-        String brandHint = inst.getTargetContext().getString(R.string.brand_hint);
-        UiSelector brandHintSelector = new UiSelector().className(EditText.class).text(brandHint);
-        UiObject brandUiObject = device.findObject(brandHintSelector);
+    public void testSleep() throws RemoteException {
+        String brand = "Topps";
+        onView(withId(R.id.add_button))
+            .perform(click());
+        onView(withId(R.id.brand_text))
+            .perform(clearText(), typeTextIntoFocusedView(brand));
 
-        Log.d(TAG, "Type brand name...");
-        String expectedBrand = "Topps";
-        brandUiObject.setText(expectedBrand);
-
-        Log.d(TAG, "Sleep...");
         device.waitForIdle();
         device.sleep();
 
-        Log.d(TAG, "Wake up...");
         device.wakeUp();
-        UiSelector brandSelector = new UiSelector().className(EditText.class).text(expectedBrand);
-        brandUiObject = device.findObject(brandSelector);
-
-        Log.d(TAG, "Assertion...");
-        String actualBrand = brandUiObject.getText();
-        Assert.assertEquals(expectedBrand, actualBrand);
+        onView(allOf(withId(R.id.brand), withText(brand)))
+            .check(matches(isDisplayed()));
     }
 }
