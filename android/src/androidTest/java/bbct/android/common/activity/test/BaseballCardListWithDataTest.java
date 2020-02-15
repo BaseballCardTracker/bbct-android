@@ -261,21 +261,25 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     @Test
     public void testDeleteCardUsingFilter() {
-        testYearFilter();
-
         int cardIndex = 0;
         final int year = 1993;
         expectedCards = BBCTTestUtil.filterList(allCards, withYear(year));
         expectedCards.remove(cardIndex);
 
-        onData(instanceOf(BaseballCard.class))
-                .atPosition(cardIndex)
-                .onChildView(withId(R.id.checkmark))
-                .perform(click());
+        onView(withId(R.id.filter_menu)).perform(click());
+        BBCTTestUtil.sendKeysToCurrFieldFilterCards(
+            R.id.year_check,
+            R.id.year_input,
+            year + ""
+        );
+        onView(withId(R.id.confirm_button)).perform(click());
+        onView(first(withId(R.id.checkmark)))
+            .perform(click());
         onView(withId(R.id.delete_menu))
-                .check(matches(isDisplayed()));
-        deleteCards();
-        BBCTTestUtil.assertListViewContainsItems(expectedCards);
+            .perform(click());
+        // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.DELETE_MESSAGE);
+        onView(withId(R.id.card_list))
+            .check(matches(contains(expectedCards)));
     }
 
     private void deleteCards() {
