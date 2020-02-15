@@ -201,13 +201,23 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     @Test
     public void testAddCardAfterClearFilter() {
-        testClearFilter();
-        BBCTTestUtil.testMenuItem(R.id.add_button, FragmentTags.EDIT_CARD);
+        final int year = 1993;
+        onView(withId(R.id.filter_menu)).perform(click());
+        BBCTTestUtil.sendKeysToCurrFieldFilterCards(
+            R.id.year_check,
+            R.id.year_input,
+            "" + year
+        );
+        onView(withId(R.id.confirm_button)).perform(click());
+        onView(withId(R.id.clear_filter_menu)).perform(click());
+        onView(withId(R.id.add_button)).perform(click());
         BBCTTestUtil.addCard(newCard);
         // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.ADD_MESSAGE);
         onView(withContentDescription(containsString("Navigate up"))).perform(click());
-        allCards.add(newCard);
-        BBCTTestUtil.assertListViewContainsItems(allCards);
+        expectedCards = new ArrayList<>(allCards);
+        expectedCards.add(newCard);
+        onView(withId(R.id.card_list))
+            .check(matches(contains(expectedCards)));
     }
 
     @Test
