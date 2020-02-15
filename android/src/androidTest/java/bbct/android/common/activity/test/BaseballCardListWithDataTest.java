@@ -149,7 +149,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testAddDuplicateCard() {
         BaseballCard card = dataTestRule.getCard(0);
-        BBCTTestUtil.testMenuItem(R.id.add_button, FragmentTags.EDIT_CARD);
+        onView(withId(R.id.add_button)).perform(click());
         BBCTTestUtil.addCard(card);
         onView(withText(R.string.duplicate_card_title))
                 .check(matches(isDisplayed()));
