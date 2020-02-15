@@ -7,6 +7,7 @@ import androidx.test.uiautomator.UiDevice;
 
 import junit.framework.Assert;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,6 +51,11 @@ public class BaseballCardListSelectionTest {
         device = UiDevice.getInstance(inst);
         allCards = dataTestRule.getAllCards();
         dbUtil = new DatabaseUtil(inst.getTargetContext());
+    }
+
+    @After
+    public void tearDown() throws Throwable{
+        device.setOrientationNatural();
     }
 
     @Test
