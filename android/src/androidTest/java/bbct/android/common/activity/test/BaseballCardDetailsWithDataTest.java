@@ -44,6 +44,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.CursorMatchers.withRowString;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -134,11 +135,10 @@ public class BaseballCardDetailsWithDataTest {
     }
 
     private void testAutoCompleteSelect(int textViewId, String text) {
-        Activity activity = fragmentTestRule.getActivity();
         onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
-        onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
-                .inRoot(withDecorView(not(activity.getWindow().getDecorView())))
-                .perform(click());
+        onView(withText(text))
+            .inRoot(isPlatformPopup())
+            .perform(click());
         onView(withId(textViewId)).check(matches(withText(text)));
     }
 }
