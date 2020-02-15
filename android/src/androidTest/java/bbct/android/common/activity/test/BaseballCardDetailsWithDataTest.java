@@ -91,11 +91,10 @@ public class BaseballCardDetailsWithDataTest {
     }
 
     private void testAutoCompletePopup(int textViewId, String text) {
-        Activity activity = fragmentTestRule.getActivity();
         onView(withId(textViewId)).perform(typeText(text.substring(0, 2)));
-        onData(allOf(instanceOf(Cursor.class), withRowString(1, text)))
-                .inRoot(withDecorView(not(activity.getWindow().getDecorView())))
-                .check(matches(isDisplayed()));
+        onView(withText(text))
+            .inRoot(isPlatformPopup())
+            .perform(click());
     }
 
     @Test
