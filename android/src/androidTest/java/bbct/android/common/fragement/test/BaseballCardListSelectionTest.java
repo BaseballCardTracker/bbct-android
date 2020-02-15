@@ -30,6 +30,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static bbct.android.common.test.matcher.Matchers.first;
 import static bbct.android.common.test.matcher.RecyclerViewMatcher.withRecyclerView;
 import static org.hamcrest.Matchers.not;
 
@@ -67,7 +68,7 @@ public class BaseballCardListSelectionTest {
 
     @Test
     public void testSelectAll() {
-        onView(withRecyclerView(R.id.card_list).atPositionOnView(0, R.id.checkmark))
+        onView(first(withId(R.id.checkmark)))
             .perform(click());
         onView(withId(R.id.select_all_menu))
             .perform(click());
