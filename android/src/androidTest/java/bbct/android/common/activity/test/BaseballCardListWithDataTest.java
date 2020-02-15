@@ -21,7 +21,6 @@ package bbct.android.common.activity.test;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.os.RemoteException;
-import android.util.Log;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -44,8 +43,8 @@ import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.DataTestRule;
+import bbct.android.common.view.BaseballCardView;
 
-import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
@@ -55,9 +54,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static bbct.android.common.test.matcher.BaseballCardMatchers.withYear;
+import static bbct.android.common.test.matcher.Matchers.atPosition;
 import static bbct.android.common.test.matcher.Matchers.first;
 import static bbct.android.common.test.matcher.RecyclerViewMatcher.contains;
-import static bbct.android.common.test.matcher.RecyclerViewMatcher.withRecyclerView;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.instanceOf;
 
@@ -138,10 +137,9 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     @Test
     public void testOnListItemClick() {
-        Log.d(TAG, "testOnListItemClick()");
         int cardIndex = 3;
         BaseballCard expectedCard = allCards.get(cardIndex);
-        onView(withRecyclerView(R.id.card_list).atPosition(cardIndex))
+        onView(atPosition(cardIndex, instanceOf(BaseballCardView.class)))
             .perform(click());
         BBCTTestUtil.assertAllEditTextContents(expectedCard);
     }
