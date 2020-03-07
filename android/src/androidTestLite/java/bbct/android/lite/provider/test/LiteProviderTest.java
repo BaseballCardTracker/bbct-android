@@ -19,7 +19,7 @@
 
 package bbct.android.lite.provider.test;
 
-import bbct.android.common.provider.test.BaseballCardProviderTest;
+import bbct.android.common.provider.BaseballCardProviderTest;
 import bbct.android.lite.provider.LiteProvider;
 
 public class LiteProviderTest extends BaseballCardProviderTest<LiteProvider> {

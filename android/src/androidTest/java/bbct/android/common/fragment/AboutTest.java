@@ -16,40 +16,41 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.layout.test;
+package bbct.android.common.fragment;
 
+import android.app.Activity;
+
+import androidx.fragment.app.Fragment;
 import androidx.test.runner.AndroidJUnit4;
 
+import junit.framework.Assert;
+
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.activity.About;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasFocus;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.Matchers.allOf;
-
+// TODO: Add tests for the layout of {@link About}
 @RunWith(AndroidJUnit4.class)
-public class BaseballCardDetailsLayoutTest {
+public class AboutTest {
     @Rule
-    public SupportFragmentTestRule fragmentTestRule
-            = new SupportFragmentTestRule(new BaseballCardDetails());
+    public SupportFragmentTestRule fragmentTestRule = new SupportFragmentTestRule(new About());
 
-    @Test
-    public void testAutographedCheckBox() {
-        onView(withId(R.id.autograph)).check(matches(allOf(isDisplayed(), isNotChecked())));
+    private Activity activity;
+    private Fragment aboutFragment;
+
+    @Before
+    public void setUp() {
+        this.activity = fragmentTestRule.getActivity();
+        this.aboutFragment = fragmentTestRule.getFragment();
     }
 
     @Test
-    public void testBrandEditText() {
-        onView(withId(R.id.brand_text)).check(matches(allOf(isDisplayed(), hasFocus())));
+    public void testPreConditions() {
+        Assert.assertNotNull(this.activity);
+        Assert.assertNotNull(this.aboutFragment);
     }
-
 }

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.provider.test;
+package bbct.android.common.provider;
 
 import android.app.Instrumentation;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,7 +27,6 @@ import junit.framework.Assert;
 
 import java.io.InputStream;
 
-import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;

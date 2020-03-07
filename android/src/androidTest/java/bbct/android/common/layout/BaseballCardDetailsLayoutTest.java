@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2017 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,11 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.fragment.test;
+package bbct.android.common.layout;
 
-import android.view.KeyEvent;
-
-import androidx.annotation.IdRes;
 import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Rule;
@@ -32,56 +29,27 @@ import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.pressKey;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasFocus;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static bbct.android.common.test.ViewActions.requestFocus;
+import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class DetailsNavigateNextTest {
+public class BaseballCardDetailsLayoutTest {
     @Rule
     public SupportFragmentTestRule fragmentTestRule
             = new SupportFragmentTestRule(new BaseballCardDetails());
 
     @Test
-    public void brandNext() {
-        testNext(R.id.brand_text, R.id.year_text);
+    public void testAutographedCheckBox() {
+        onView(withId(R.id.autograph)).check(matches(allOf(isDisplayed(), isNotChecked())));
     }
 
     @Test
-    public void yearNext() {
-        testNext(R.id.year_text, R.id.number_text);
+    public void testBrandEditText() {
+        onView(withId(R.id.brand_text)).check(matches(allOf(isDisplayed(), hasFocus())));
     }
 
-    @Test
-    public void numberNext() {
-        testNext(R.id.number_text, R.id.value_text);
-    }
-
-    @Test
-    public void valueNext() {
-        testNext(R.id.value_text, R.id.count_text);
-    }
-
-    @Test
-    public void countNext() {
-        testNext(R.id.count_text, R.id.player_name_text);
-    }
-
-    @Test
-    public void playerNameNext() {
-        testNext(R.id.player_name_text, R.id.team_text);
-    }
-
-    private void testNext(@IdRes int startingTextView, @IdRes int nextTextView) {
-        onView(withId(startingTextView))
-                .check(matches(isDisplayed()))
-                .perform(requestFocus())
-                .check(matches(hasFocus()))
-                .perform(pressKey(KeyEvent.KEYCODE_ENTER));
-        onView(withId(nextTextView))
-                .check(matches(hasFocus()));
-    }
 }

@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.provider.test;
+package bbct.android.common.provider;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -32,9 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bbct.android.common.database.BaseballCard;
-import bbct.android.common.provider.BaseballCardContract;
-import bbct.android.common.provider.BaseballCardProvider;
-import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.android.common.test.DatabaseUtil;
 
 public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> extends ProviderTestCase2<T> {

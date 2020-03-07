@@ -16,41 +16,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.fragment.test;
+package bbct.android.common.functional;
 
-import android.app.Activity;
-
-import androidx.fragment.app.Fragment;
 import androidx.test.runner.AndroidJUnit4;
+import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiSelector;
 
-import junit.framework.Assert;
-
-import org.junit.Before;
-import org.junit.Rule;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import bbct.android.common.activity.About;
-import bbct.android.common.test.rule.SupportFragmentTestRule;
-
-// TODO: Add tests for the layout of {@link About}
 @RunWith(AndroidJUnit4.class)
-public class AboutTest {
-    @Rule
-    public SupportFragmentTestRule fragmentTestRule = new SupportFragmentTestRule(new About());
-
-    private Activity activity;
-    private Fragment aboutFragment;
-
-    @Before
-    public void setUp() {
-        this.activity = fragmentTestRule.getActivity();
-        this.aboutFragment = fragmentTestRule.getFragment();
-    }
+public class LaunchTest extends UiAutomatorTest {
 
     @Test
-    public void testPreConditions() {
-        Assert.assertNotNull(this.activity);
-        Assert.assertNotNull(this.aboutFragment);
+    public void testLaunch() {
+        String packageName = inst.getTargetContext().getPackageName();
+        UiObject appValidation = device.findObject(new UiSelector().packageName(packageName));
+        Assert.assertTrue("Could not open test app", appValidation.exists());
     }
+
 }

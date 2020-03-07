@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.layout.test;
+package bbct.android.common.layout;
 
 import androidx.test.runner.AndroidJUnit4;
 
