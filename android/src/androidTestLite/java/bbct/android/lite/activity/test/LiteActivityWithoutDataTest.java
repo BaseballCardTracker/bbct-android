@@ -22,7 +22,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.runner.RunWith;
 
-import bbct.android.common.activity.test.BaseballCardListWithoutDataTest;
+import bbct.android.common.fragement.test.BaseballCardListWithoutDataTest;
 import bbct.android.lite.provider.LiteActivity;
 
 @RunWith(AndroidJUnit4.class)

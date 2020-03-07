@@ -18,7 +18,7 @@
  */
 package bbct.android.lite.activity.test;
 
-import bbct.android.common.activity.test.FilterCardsCombinationTest;
+import bbct.android.common.fragement.test.FilterCardsCombinationTest;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.lite.provider.LiteActivity;
 import java.util.Set;
