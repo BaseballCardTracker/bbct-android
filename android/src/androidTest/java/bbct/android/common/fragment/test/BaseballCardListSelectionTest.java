@@ -1,4 +1,4 @@
-package bbct.android.common.fragement.test;
+package bbct.android.common.fragment.test;
 
 import android.app.Instrumentation;
 
