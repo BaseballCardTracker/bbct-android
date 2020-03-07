@@ -37,6 +37,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
@@ -61,7 +62,7 @@ abstract public class NavigateUpFromBaseballCardDetailsTest<T extends MainActivi
         String cardDetailsTitle = context.getString(R.string.card_details_title);
         String expectedTitle = context.getString(R.string.bbct_title, cardDetailsTitle);
 
-        onView(allOf(withContentDescription(R.string.add_menu), isDisplayed()))
+        onView(withId(R.id.add_button))
             .perform(click());
         onView(withText(expectedTitle))
                 .check(matches(isDisplayed()));
