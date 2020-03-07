@@ -28,7 +28,7 @@ import android.view.MenuItem;
 import java.util.Objects;
 
 import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardList;
+import bbct.android.common.fragment.BaseballCardList;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class BaseballCardActionModeCallback implements ActionMode.Callback {

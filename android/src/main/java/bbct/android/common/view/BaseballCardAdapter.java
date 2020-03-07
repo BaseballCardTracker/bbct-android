@@ -33,8 +33,8 @@ import java.util.Collections;
 import java.util.List;
 
 import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardDetails;
-import bbct.android.common.activity.FragmentTags;
+import bbct.android.common.fragment.BaseballCardDetails;
+import bbct.android.common.fragment.FragmentTags;
 import bbct.android.common.database.BaseballCard;
 
 public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder> {

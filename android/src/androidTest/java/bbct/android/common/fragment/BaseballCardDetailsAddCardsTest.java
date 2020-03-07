@@ -32,7 +32,6 @@ import org.junit.Test;
 import java.io.InputStream;
 import java.util.List;
 
-import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;

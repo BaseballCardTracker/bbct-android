@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
-import bbct.android.common.activity.FilterCards;
+import bbct.android.common.fragment.FilterCards;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 
 import static androidx.test.espresso.Espresso.onView;

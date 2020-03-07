@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Set;
 
 import bbct.android.common.R;
-import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;

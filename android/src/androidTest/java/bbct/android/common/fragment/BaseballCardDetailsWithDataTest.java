@@ -31,7 +31,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.test.rule.SupportFragmentTestRule;

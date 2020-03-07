@@ -30,7 +30,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import bbct.android.common.activity.About;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 
 // TODO: Add tests for the layout of {@link About}
