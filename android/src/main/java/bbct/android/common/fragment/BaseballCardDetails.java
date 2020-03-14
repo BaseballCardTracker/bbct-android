@@ -55,6 +55,7 @@ import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.database.BaseballCardDao;
 import bbct.android.common.database.BaseballCardDatabase;
+import bbct.android.common.database.InsertCardTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -357,26 +358,26 @@ public class BaseballCardDetails extends Fragment {
                     }
                 }.start();
             } else {
-                try {
-                    new Thread() {
-                        @Override
-                        public void run() {
-                            dao.insertBaseballCard(newCard);
-                        }
-                    }.start();
-                    this.resetInput();
-                    this.brandText.requestFocus();
-                    Toast.makeText(activity, R.string.card_added_message,
-                            Toast.LENGTH_LONG).show();
-                } catch (SQLException e) {
-                    // Is duplicate card the only reason this exception
-                    // will be thrown?
-                    DialogUtil.showErrorDialog(activity,
-                            R.string.duplicate_card_title,
-                            R.string.duplicate_card_error);
-                }
+                new InsertCardTask(this, dao).execute(newCard);
             }
         }
+    }
+
+    public void insertSuccessful() {
+        Activity activity = Objects.requireNonNull(getActivity());
+        this.resetInput();
+        this.brandText.requestFocus();
+        Toast.makeText(activity, R.string.card_added_message,
+            Toast.LENGTH_LONG).show();
+    }
+
+    public void insertFailed() {
+        Activity activity = Objects.requireNonNull(getActivity());
+        // Is duplicate card the only reason this exception
+        // will be thrown?
+        DialogUtil.showErrorDialog(activity,
+            R.string.duplicate_card_title,
+            R.string.duplicate_card_error);
     }
 }
 
