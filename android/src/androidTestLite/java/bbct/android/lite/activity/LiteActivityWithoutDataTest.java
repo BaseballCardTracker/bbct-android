@@ -16,18 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.lite.activity.test;
+package bbct.android.lite.activity;
 
 import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.runner.RunWith;
 
-import bbct.android.common.fragment.BaseballCardListWithDataTest;
+import bbct.android.common.fragment.BaseballCardListWithoutDataTest;
 import bbct.android.lite.provider.LiteActivity;
 
 @RunWith(AndroidJUnit4.class)
-public class LiteActivityWithDataTest extends BaseballCardListWithDataTest<LiteActivity> {
-    public LiteActivityWithDataTest() {
+public class LiteActivityWithoutDataTest extends BaseballCardListWithoutDataTest<LiteActivity> {
+    public LiteActivityWithoutDataTest() {
         super(LiteActivity.class);
     }
 }

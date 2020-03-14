@@ -1,4 +1,4 @@
-package bbct.android.lite.activity.test;
+package bbct.android.lite.activity;
 
 import bbct.android.common.navigation.NavigateUpFromFilterCardsTest;
 import bbct.android.lite.provider.LiteActivity;

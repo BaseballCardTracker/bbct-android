@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package bbct.android.lite.provider.test;
+package bbct.android.lite.provider;
 
 import bbct.android.common.provider.BaseballCardProviderTest;
 import bbct.android.lite.provider.LiteProvider;
