@@ -20,6 +20,7 @@ import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
+import bbct.android.common.view.BaseballCardView;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -31,7 +32,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static bbct.android.common.test.matcher.Matchers.atPosition;
 import static bbct.android.common.test.matcher.Matchers.first;
-import static bbct.android.common.test.matcher.RecyclerViewMatcher.withRecyclerView;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.not;
 
 public class BaseballCardListSelectionTest {
@@ -83,16 +84,15 @@ public class BaseballCardListSelectionTest {
         onView(withId(R.id.delete_menu))
             .check(matches(isDisplayed()));
         device.setOrientationLeft();
-        onView(withRecyclerView(R.id.card_list).atPositionOnView(index, R.id.checkmark))
+        onView(atPosition(index, withId(R.id.checkmark)))
             .check(matches(isChecked()));
     }
 
     @Test
     public void testOnClickCheckboxStartActionMode() {
         int index = 4;
-        onView(withRecyclerView(R.id.card_list).atPositionOnView(index, R.id.checkmark))
-            .perform(click())
-            .check(matches(isChecked()));
+        onView(atPosition(index, withId(R.id.checkmark)))
+            .perform(click());
         onView(withId(R.id.delete_menu))
             .check(matches(isDisplayed()));
         onView(withId(R.id.select_all_menu))
@@ -102,13 +102,12 @@ public class BaseballCardListSelectionTest {
     @Test
     public void testOnClickCheckboxStopActionMode() {
         int index = 4;
-        onView(withRecyclerView(R.id.card_list).atPositionOnView(index, R.id.checkmark))
+        onView(atPosition(index, withId(R.id.checkmark)))
             .perform(click());
         onView(withId(R.id.delete_menu))
             .check(matches(isDisplayed()));
-        onView(withRecyclerView(R.id.card_list).atPositionOnView(index, R.id.checkmark))
-            .perform(click())
-            .check(matches(isNotChecked()));
+        onView(atPosition(index, withId(R.id.checkmark)))
+            .perform(click());
         onView(withId(R.id.delete_menu))
             .check(matches(not(isDisplayed())));
         onView(withId(R.id.select_all_menu))
@@ -119,9 +118,8 @@ public class BaseballCardListSelectionTest {
     @Test
     public void testOnItemLongClickStartActionMode() {
         int index = 4;
-        onView(withRecyclerView(R.id.card_list).atPosition(index))
-            .perform(longClick())
-            .check(matches(isChecked()));
+        onView(atPosition(index, instanceOf(BaseballCardView.class)))
+            .perform(longClick());
         onView(withId(R.id.delete_menu))
             .check(matches(isDisplayed()));
         onView(withId(R.id.select_all_menu))
@@ -130,16 +128,14 @@ public class BaseballCardListSelectionTest {
 
     private void assertAllCheckboxesChecked() {
         for (int i = 0; i < allCards.size(); i++) {
-            onView(
-                withRecyclerView(R.id.card_list)
-                    .atPositionOnView(i, R.id.checkmark)
-            ).check(matches(isChecked()));
+            onView(atPosition(i, instanceOf(BaseballCardView.class)))
+                .check(matches(isChecked()));
         }
     }
 
     private void assertNoCheckboxesChecked() {
         for (int i = 0; i < allCards.size(); i++) {
-            onView(withRecyclerView(R.id.card_list).atPositionOnView(i, R.id.checkmark))
+            onView(atPosition(i, instanceOf(BaseballCardView.class)))
                 .check(matches(isNotChecked()));
         }
     }
