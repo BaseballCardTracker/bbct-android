@@ -31,8 +31,8 @@ import android.util.Log;
 import java.util.List;
 
 import bbct.android.common.R;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
-import bbct.data.BaseballCard;
 
 /**
  * Overrides
