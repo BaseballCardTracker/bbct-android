@@ -1,4 +1,4 @@
-BaseBall Card Tracker Apps
+BaseBall Card Tracker Apps [![Android CI](https://github.com/BaseballCardTracker/bbct/workflows/Android%20CI/badge.svg)](https://github.com/BaseballCardTracker/bbct/actions)
 =
 
 Baseball Card Tracker (BBCT) is a simple database app for your baseball card collection. You can add information about the cards in your collection, view details about individual cards, and filter the list of cards according to a limited set of criteria. BBCT helps you organize your collection and quickly look up which cards you own. Feel free to email your feedback and comments or visit the project website.
