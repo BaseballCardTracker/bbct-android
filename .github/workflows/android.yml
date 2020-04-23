@@ -22,4 +22,4 @@ jobs:
         FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
       run: echo $FIREBASE_CONFIG > android/google-services.json
     - name: Build with Gradle
-      run: ./gradlew android:buildDebug
+      run: ./gradlew android:buildLiteDebug
