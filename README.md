@@ -11,12 +11,6 @@ Product features
 * Filter list of cards using simple criteria, including card year, card number, both year and number, player's name, or team
 * Update monetary value and number of copies that you own of a particular card
 
-Latest updates
--
-
-**What's new in version 0.6.8.1**
-* Version 0.6.8.1
-* Fix bug that prevents editing cards
 
 Contributing
 -
