@@ -103,19 +103,6 @@
             android:paddingTop="10dp"
             android:text="@string/license" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="12dp"
-            android:textStyle="bold"
-            android:text="@string/sponsor" />
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/pass4kids" />
     </LinearLayout>
 
 </ScrollView>

@@ -75,7 +75,7 @@
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
     <string name="version_number">1.0.0</string>
-    <string name="copyright">Copyright 2012–14 by codeguru</string>
+    <string name="copyright">Copyright 2012–20 by codeguru</string>
     <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
     <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
     <string name="license">This software is licensed under the GPL. Visit\nhttp://www.gnu.org/licenses/ for a copy of the license.</string>
