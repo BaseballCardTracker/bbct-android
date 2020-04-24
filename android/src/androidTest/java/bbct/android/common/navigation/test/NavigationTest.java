@@ -1,4 +1,4 @@
-package bbct.android.common.navigation.test;
+package bbct.android.common.navigation;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.navigation.NavController;
@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardList;
+import bbct.android.common.fragment.BaseballCardList;
 
 public class NavigationTest {
     @Test
