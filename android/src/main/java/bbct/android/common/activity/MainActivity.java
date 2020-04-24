@@ -41,9 +41,6 @@ import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.SharedPreferenceKeys;
 import bbct.android.common.activity.util.DialogUtil;
-import bbct.android.common.fragment.About;
-import bbct.android.common.fragment.BaseballCardList;
-import bbct.android.common.fragment.FragmentTags;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
