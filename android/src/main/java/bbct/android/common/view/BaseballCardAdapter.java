@@ -34,8 +34,8 @@ import java.util.Collections;
 import java.util.List;
 
 import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardListDirections;
 import bbct.android.common.database.BaseballCard;
+import bbct.android.common.fragment.BaseballCardListDirections;
 
 public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder> {
     private FragmentActivity activity;

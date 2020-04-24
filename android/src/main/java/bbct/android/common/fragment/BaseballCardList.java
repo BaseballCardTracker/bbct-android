@@ -47,7 +47,6 @@ import java.util.List;
 import java.util.Objects;
 
 import bbct.android.common.R;
-import bbct.android.common.activity.BaseballCardListDirections;
 import bbct.android.common.view.BaseballCardActionModeCallback;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.database.BaseballCardDao;

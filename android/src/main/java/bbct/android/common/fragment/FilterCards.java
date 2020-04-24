@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import bbct.android.common.R;
-import bbct.android.common.activity.FilterCardsDirections;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
