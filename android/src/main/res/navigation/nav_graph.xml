@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/card_list"
-        android:name="bbct.android.common.activity.BaseballCardList"
+        android:name="bbct.android.common.fragment.BaseballCardList"
         android:label="@string/app_name"
         tools:layout="@layout/card_list">
         <action
@@ -23,12 +23,12 @@
     </fragment>
     <fragment
         android:id="@+id/about"
-        android:name="bbct.android.common.activity.About"
+        android:name="bbct.android.common.fragment.About"
         android:label="@string/about_title"
         tools:layout="@layout/about" />
     <fragment
         android:id="@+id/card_details"
-        android:name="bbct.android.common.activity.BaseballCardDetails"
+        android:name="bbct.android.common.fragment.BaseballCardDetails"
         android:label="@string/card_details_title"
         tools:layout="@layout/card_details">
         <argument
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/filter_cards"
-        android:name="bbct.android.common.activity.FilterCards"
+        android:name="bbct.android.common.fragment.FilterCards"
         android:label="@string/filter_cards_title"
         tools:layout="@layout/filter_cards">
         <action
