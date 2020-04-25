@@ -19,7 +19,7 @@
 
 package bbct.android.premium.provider.test;
 
-import bbct.android.common.provider.test.BaseballCardProviderTest;
+import bbct.android.common.provider.BaseballCardProviderTest;
 import bbct.android.premium.provider.PremiumProvider;
 
 public class PremiumProviderTest extends BaseballCardProviderTest<PremiumProvider> {

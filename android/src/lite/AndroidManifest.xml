@@ -54,15 +54,9 @@
             android:readPermission="bbct.android.lite.permission.READ"
             android:writePermission="bbct.android.lite.permission.WRITE"/>
 
-        <activity
-            android:name="com.google.android.gms.ads.AdActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
-        <activity
-            android:name="com.amazon.device.ads.AdActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"/>
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4313300967266958~1096433226"/>
     </application>
 
 </manifest>

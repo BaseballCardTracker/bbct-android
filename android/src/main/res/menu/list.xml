@@ -20,18 +20,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:bbct="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/add_menu"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="@string/add_menu"
-        bbct:showAsAction="ifRoom" />
-    <item
         android:id="@+id/filter_menu"
-        android:icon="@drawable/ic_menu_find"
+        android:icon="@drawable/search"
         android:title="@string/filter_menu"
         bbct:showAsAction="ifRoom" />
     <item
         android:id="@+id/clear_filter_menu"
-        android:icon="@drawable/ic_menu_block"
+        android:icon="@drawable/cancel"
         android:title="@string/clear_filter_menu"
         bbct:showAsAction="ifRoom" />
 </menu>

@@ -19,7 +19,7 @@
 package bbct.android.premium.activity.test;
 
 import bbct.android.common.activity.MainActivity;
-import bbct.android.common.activity.test.FilterCardsCombinationTest;
+import bbct.android.common.fragment.FilterCardsCombinationTest;
 import bbct.android.common.test.BBCTTestUtil;
 import java.util.Set;
 import junit.framework.Test;

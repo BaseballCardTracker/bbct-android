@@ -28,9 +28,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BaseballCardCsvFileReader;
 import bbct.android.common.test.DatabaseUtil;
-import bbct.data.BaseballCard;
 
 public class DataTestRule extends ExternalResource {
     private static final String TAG = DataTestRule.class.getName();
