@@ -265,8 +265,10 @@ final public class BBCTTestUtil {
         onView(withId(editTextId)).check(matches(isDisplayed())).perform(typeText(input));
     }
 
-    public static List<BaseballCard> filterList(List<BaseballCard> list,
-                                                Matcher<BaseballCard> cardMatcher) {
+    public static List<BaseballCard> filterList(
+        List<BaseballCard> list,
+        Matcher<BaseballCard> cardMatcher
+    ) {
         List<BaseballCard> filteredList = new ArrayList<>();
 
         for (BaseballCard obj : list) {
