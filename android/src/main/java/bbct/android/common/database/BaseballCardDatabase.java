@@ -29,8 +29,9 @@ public abstract class BaseballCardDatabase extends RoomDatabase {
             BaseballCardSQLHelper.ROOM_SCHEMA, BaseballCardSQLHelper.ALPHA_NUMERIC_SCHEMA) {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
+            String temp_table_name = BaseballCardContract.TABLE_NAME + "_new";
             database.execSQL("CREATE TABLE IF NOT EXISTS "
-                    + BaseballCardContract.TABLE_NAME + "_new" + "("
+                    + temp_table_name + "("
                     + BaseballCardContract.ID_COL_NAME
                     + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                     + BaseballCardContract.BRAND_COL_NAME + " TEXT, "
@@ -46,37 +47,37 @@ public abstract class BaseballCardDatabase extends RoomDatabase {
                     + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", "
                     + BaseballCardContract.YEAR_COL_NAME + ", "
                     + BaseballCardContract.NUMBER_COL_NAME + "))");
-
             database.execSQL(
-                    "INSERT INTO " + BaseballCardContract.TABLE_NAME + "_new ("
-                            + BaseballCardContract.ID_COL_NAME + ", "
-                            + BaseballCardContract.BRAND_COL_NAME + ", "
-                            + BaseballCardContract.YEAR_COL_NAME + ", "
-                            + BaseballCardContract.NUMBER_COL_NAME + ", "
-                            + BaseballCardContract.VALUE_COL_NAME + ", "
-                            + BaseballCardContract.COUNT_COL_NAME + ", "
-                            + BaseballCardContract.PLAYER_NAME_COL_NAME + ", "
-                            + BaseballCardContract.TEAM_COL_NAME + ", "
-                            + BaseballCardContract.PLAYER_POSITION_COL_NAME + ", "
-                            + BaseballCardContract.AUTOGRAPHED_COL_NAME + ", "
-                            + BaseballCardContract.CONDITION_COL_NAME
-                            + ") SELECT "
-                            + BaseballCardContract.ID_COL_NAME + ", "
-                            + BaseballCardContract.BRAND_COL_NAME + ", "
-                            + BaseballCardContract.YEAR_COL_NAME + ", "
-                            + BaseballCardContract.NUMBER_COL_NAME + ", "
-                            + BaseballCardContract.VALUE_COL_NAME + ", "
-                            + BaseballCardContract.COUNT_COL_NAME + ", "
-                            + BaseballCardContract.PLAYER_NAME_COL_NAME + ", "
-                            + BaseballCardContract.TEAM_COL_NAME + ", "
-                            + BaseballCardContract.PLAYER_POSITION_COL_NAME + ", "
-                            + BaseballCardContract.AUTOGRAPHED_COL_NAME + ", "
-                            + BaseballCardContract.CONDITION_COL_NAME
-                            + " FROM " + BaseballCardContract.TABLE_NAME);
+                "INSERT INTO " + temp_table_name + " ("
+                    + BaseballCardContract.ID_COL_NAME + ", "
+                    + BaseballCardContract.BRAND_COL_NAME + ", "
+                    + BaseballCardContract.YEAR_COL_NAME + ", "
+                    + BaseballCardContract.NUMBER_COL_NAME + ", "
+                    + BaseballCardContract.VALUE_COL_NAME + ", "
+                    + BaseballCardContract.COUNT_COL_NAME + ", "
+                    + BaseballCardContract.PLAYER_NAME_COL_NAME + ", "
+                    + BaseballCardContract.TEAM_COL_NAME + ", "
+                    + BaseballCardContract.PLAYER_POSITION_COL_NAME + ", "
+                    + BaseballCardContract.AUTOGRAPHED_COL_NAME + ", "
+                    + BaseballCardContract.CONDITION_COL_NAME
+                    + ") SELECT "
+                    + BaseballCardContract.ID_COL_NAME + ", "
+                    + BaseballCardContract.BRAND_COL_NAME + ", "
+                    + BaseballCardContract.YEAR_COL_NAME + ", "
+                    + BaseballCardContract.NUMBER_COL_NAME + ", "
+                    + BaseballCardContract.VALUE_COL_NAME + ", "
+                    + BaseballCardContract.COUNT_COL_NAME + ", "
+                    + BaseballCardContract.PLAYER_NAME_COL_NAME + ", "
+                    + BaseballCardContract.TEAM_COL_NAME + ", "
+                    + BaseballCardContract.PLAYER_POSITION_COL_NAME + ", "
+                    + BaseballCardContract.AUTOGRAPHED_COL_NAME + ", "
+                    + BaseballCardContract.CONDITION_COL_NAME
+                    + " FROM " + BaseballCardContract.TABLE_NAME);
 
             database.execSQL("DROP TABLE " + BaseballCardContract.TABLE_NAME);
-            database.execSQL("ALTER TABLE " + BaseballCardContract.TABLE_NAME + "_new RENAME TO "
-                    + BaseballCardContract.TABLE_NAME);
+            database.execSQL(
+                "ALTER TABLE " + temp_table_name + " RENAME TO " + BaseballCardContract.TABLE_NAME
+            );
         }
     };
 
