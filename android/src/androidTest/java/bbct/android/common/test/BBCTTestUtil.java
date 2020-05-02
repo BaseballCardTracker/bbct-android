@@ -149,7 +149,7 @@ final public class BBCTTestUtil {
 
         onView(withId(R.id.value_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.VALUE)) {
-            String valueStr = String.format("%d", card.getValue());
+            String valueStr = String.format("%.2f", card.getValue() / 100.0);
             onView(withId(R.id.value_text))
                     .perform(scrollTo(), typeTextIntoFocusedView(valueStr))
                     .check(matches(withText(valueStr)));
