@@ -75,7 +75,6 @@ android {
     }
     packagingOptions {
         exclude 'LICENSE.txt'
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
 
     useLibrary 'android.test.runner'
