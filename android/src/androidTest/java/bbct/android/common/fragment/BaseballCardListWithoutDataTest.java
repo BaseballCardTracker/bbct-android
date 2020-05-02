@@ -112,6 +112,7 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
     @Test
     public void testAddCardWithoutValue() throws Throwable {
         BaseballCard card = this.cardInput.getNextBaseballCard();
+        card.value = null;
 
         onView(withId(R.id.add_button))
             .perform(click());
