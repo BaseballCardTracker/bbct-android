@@ -31,7 +31,6 @@ import junit.framework.Assert;
 
 import org.hamcrest.Matcher;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
