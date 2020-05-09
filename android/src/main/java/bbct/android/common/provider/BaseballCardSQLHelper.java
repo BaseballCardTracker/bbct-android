@@ -42,7 +42,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      */
     public static final int BAD_TEAM_SCHEMA = 2;
     /**
-     * Schema version which correctly added the team field.
+     * Schema version which correctly added the team field.N
      */
     public static final int TEAM_SCHEMA = 3;
 

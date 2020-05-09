@@ -25,9 +25,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.data.BaseballCard;
 
 public class DatabaseUtil {
     private SQLiteDatabase db;
@@ -91,8 +91,8 @@ public class DatabaseUtil {
                 + "   AND " + BaseballCardContract.COUNT_COL_NAME + " = ?"
                 + "   AND " + BaseballCardContract.PLAYER_NAME_COL_NAME + " = ?"
                 + "   AND " + BaseballCardContract.PLAYER_POSITION_COL_NAME + " = ?";
-        String[] selectionArgs = {card.getBrand(), Integer.toString(card.getYear()), card.getNumber(),
-            Integer.toString(card.getValue()), Integer.toString(card.getCount()), card.getPlayerName(), card.getPlayerPosition()};
+        String[] selectionArgs = {card.brand, Integer.toString(card.year), card.number,
+            Integer.toString(card.value), Integer.toString(card.quantity), card.playerName, card.position};
         Cursor cursor = this.db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
         boolean result = cursor.getCount() == 1;
         cursor.close();

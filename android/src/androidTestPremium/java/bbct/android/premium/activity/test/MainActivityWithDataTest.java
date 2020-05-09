@@ -19,7 +19,7 @@
 package bbct.android.premium.activity.test;
 
 import bbct.android.common.activity.MainActivity;
-import bbct.android.common.activity.test.BaseballCardListWithDataTest;
+import bbct.android.common.fragment.BaseballCardListWithDataTest;
 
 public class MainActivityWithDataTest extends BaseballCardListWithDataTest<MainActivity> {
     public MainActivityWithDataTest() {

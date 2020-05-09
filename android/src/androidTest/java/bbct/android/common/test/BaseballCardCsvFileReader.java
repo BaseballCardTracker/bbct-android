@@ -18,13 +18,14 @@
  */
 package bbct.android.common.test;
 
-import bbct.data.BaseballCard;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import bbct.android.common.database.BaseballCard;
 
 /**
  * This class reads baseball card data from an input stream which is formatted

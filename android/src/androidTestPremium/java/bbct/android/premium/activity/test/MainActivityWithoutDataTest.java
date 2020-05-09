@@ -23,7 +23,7 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.runner.RunWith;
 
 import bbct.android.common.activity.MainActivity;
-import bbct.android.common.activity.test.BaseballCardListWithoutDataTest;
+import bbct.android.common.fragment.BaseballCardListWithoutDataTest;
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityWithoutDataTest extends BaseballCardListWithoutDataTest<MainActivity> {

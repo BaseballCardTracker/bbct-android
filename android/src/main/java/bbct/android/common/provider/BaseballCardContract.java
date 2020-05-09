@@ -26,7 +26,7 @@ import android.net.Uri;
 import java.util.ArrayList;
 import java.util.List;
 
-import bbct.data.BaseballCard;
+import bbct.android.common.database.BaseballCard;
 
 public final class BaseballCardContract {
 
@@ -101,17 +101,17 @@ public final class BaseballCardContract {
 
     public static ContentValues getContentValues(BaseballCard card) {
         ContentValues cv = new ContentValues(7);
-        cv.put(BaseballCardContract.AUTOGRAPHED_COL_NAME, card.isAutographed());
-        cv.put(BaseballCardContract.CONDITION_COL_NAME, card.getCondition());
-        cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
-        cv.put(BaseballCardContract.YEAR_COL_NAME, card.getYear());
-        cv.put(BaseballCardContract.NUMBER_COL_NAME, card.getNumber());
-        cv.put(BaseballCardContract.VALUE_COL_NAME, card.getValue());
-        cv.put(BaseballCardContract.COUNT_COL_NAME, card.getCount());
-        cv.put(BaseballCardContract.PLAYER_NAME_COL_NAME, card.getPlayerName());
-        cv.put(BaseballCardContract.TEAM_COL_NAME, card.getTeam());
+        cv.put(BaseballCardContract.AUTOGRAPHED_COL_NAME, card.autographed);
+        cv.put(BaseballCardContract.CONDITION_COL_NAME, card.condition);
+        cv.put(BaseballCardContract.BRAND_COL_NAME, card.brand);
+        cv.put(BaseballCardContract.YEAR_COL_NAME, card.year);
+        cv.put(BaseballCardContract.NUMBER_COL_NAME, card.number);
+        cv.put(BaseballCardContract.VALUE_COL_NAME, card.value);
+        cv.put(BaseballCardContract.COUNT_COL_NAME, card.quantity);
+        cv.put(BaseballCardContract.PLAYER_NAME_COL_NAME, card.playerName);
+        cv.put(BaseballCardContract.TEAM_COL_NAME, card.team);
         cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME,
-                card.getPlayerPosition());
+                card.position);
         return cv;
     }
 
@@ -138,7 +138,7 @@ public final class BaseballCardContract {
                 .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
         int value = cursor.getInt(cursor
                 .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
-        int count = cursor.getInt(cursor
+        int quantity = cursor.getInt(cursor
                 .getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
         String name = cursor.getString(cursor
                 .getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
@@ -148,7 +148,7 @@ public final class BaseballCardContract {
                 .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
 
         return new BaseballCard(autographed, condition, brand, year, number,
-                value, count, name, team, position);
+                value, quantity, name, team, position);
     }
 
     public static List<BaseballCard> getAllBaseballCardsFromCursor(Cursor cursor) {
