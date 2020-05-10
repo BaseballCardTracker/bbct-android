@@ -142,7 +142,7 @@ final public class BBCTTestUtil {
             String numberStr = card.number;
             onView(withId(R.id.number_text))
                     .perform(scrollTo(), typeTextIntoFocusedView(numberStr))
-                    .check(matches(withText(numberStr)));
+                    .check(matches(withText(numberStr.replaceAll("[^a-zA-Z0-9]+", ""))));
         }
         device.pressEnter();
 
