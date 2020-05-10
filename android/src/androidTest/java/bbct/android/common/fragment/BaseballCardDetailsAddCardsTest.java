@@ -43,7 +43,7 @@ public class BaseballCardDetailsAddCardsTest {
     public SupportFragmentTestRule fragmentTestRule =
             new SupportFragmentTestRule(new BaseballCardDetails());
 
-    private static final String CARD_DATA = "three_cards.csv";
+      private static final String CARD_DATA = "three_cards.csv";
 
     private List<BaseballCard> allCards = null;
     private BaseballCard card = null;
@@ -69,6 +69,14 @@ public class BaseballCardDetailsAddCardsTest {
 
     @Test
     public void testAddCard() {
+        BBCTTestUtil.addCard(card);
+        // BBCTTestUtil.waitForToast(fragmentTestRule.getActivity(), BBCTTestUtil.ADD_MESSAGE);
+        Assert.assertTrue("Missing card: " + card, dbUtil.containsBaseballCard(card));
+    }
+
+    @Test
+    public void testAddCardAlphanumericCardNumber() {
+        card.number = "123Abc";
         BBCTTestUtil.addCard(card);
         // BBCTTestUtil.waitForToast(fragmentTestRule.getActivity(), BBCTTestUtil.ADD_MESSAGE);
         Assert.assertTrue("Missing card: " + card, dbUtil.containsBaseballCard(card));

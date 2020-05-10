@@ -61,7 +61,7 @@ public class BaseballCardView extends CheckableLinearLayout {
         Locale locale = Locale.getDefault();
         brand.setText(card.brand);
         year.setText(String.format(locale, "%d", card.year));
-        number.setText(String.format(locale, "%d", card.number));
+        number.setText(card.number);
         player.setText(card.playerName);
     }
 }

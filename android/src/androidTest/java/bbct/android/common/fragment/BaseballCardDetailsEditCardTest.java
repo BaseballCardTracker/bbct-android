@@ -148,7 +148,7 @@ public class BaseballCardDetailsEditCardTest extends
             ? this.newCard.brand : this.oldCard.brand;
         int year = this.inputMask.contains(BBCTTestUtil.EditTexts.YEAR)
             ? this.newCard.year : this.oldCard.year;
-        int number = this.inputMask.contains(BBCTTestUtil.EditTexts.NUMBER)
+        String number = this.inputMask.contains(BBCTTestUtil.EditTexts.NUMBER)
             ? this.newCard.number : this.oldCard.number;
         int value = this.inputMask.contains(BBCTTestUtil.EditTexts.VALUE)
             ? this.newCard.value : this.oldCard.value;

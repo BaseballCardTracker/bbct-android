@@ -86,7 +86,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         activity = activityTestRule.getActivity();
         allCards = dataTestRule.getAllCards();
         newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
-                1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
+                "1", 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
 
         dbUtil = new DatabaseUtil(inst.getTargetContext());
     }
@@ -205,7 +205,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
             "Excellent",
             "Codeguru Apps",
             1976,
-            1,
+            "1",
             50000,
             1,
             "Codeguru",

@@ -263,7 +263,7 @@ public class BaseballCardDetails extends Fragment {
 
         this.brandText.setText(card.brand);
         this.yearText.setText(String.format(Locale.getDefault(), "%d", card.year));
-        this.numberText.setText(String.format(Locale.getDefault(), "%d", card.number));
+        this.numberText.setText(card.number);
         this.valueText.setText(String.format(Locale.getDefault(), "%.2f", card.value / 100.0));
         this.countText.setText(String.format(Locale.getDefault(), "%d", card.quantity));
         this.playerNameText.setText(card.playerName);
@@ -312,8 +312,7 @@ public class BaseballCardDetails extends Fragment {
             String brand = this.brandText.getText().toString();
             String yearStr = this.yearText.getText().toString();
             int year = Integer.parseInt(yearStr);
-            String numberStr = this.numberText.getText().toString();
-            int number = Integer.parseInt(numberStr);
+            String number = this.numberText.getText().toString();
             String valueStr = this.valueText.getText().toString();
             double value = Double.parseDouble(valueStr);
             String countStr = this.countText.getText().toString();
