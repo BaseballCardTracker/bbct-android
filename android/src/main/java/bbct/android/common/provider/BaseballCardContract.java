@@ -134,7 +134,7 @@ public final class BaseballCardContract {
                 .getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
         int year = cursor.getInt(cursor
                 .getColumnIndex(BaseballCardContract.YEAR_COL_NAME));
-        int number = cursor.getInt(cursor
+        String number = cursor.getString(cursor
                 .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
         int value = cursor.getInt(cursor
                 .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));

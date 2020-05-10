@@ -41,7 +41,7 @@ public class DatabaseUtil {
                 + BaseballCardContract.ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + BaseballCardContract.BRAND_COL_NAME + " TEXT, "
                 + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
-                + BaseballCardContract.NUMBER_COL_NAME + " INTEGER, "
+                + BaseballCardContract.NUMBER_COL_NAME + " TEXT, "
                 + BaseballCardContract.VALUE_COL_NAME + " INTEGER, "
                 + BaseballCardContract.COUNT_COL_NAME + " INTEGER, "
                 + BaseballCardContract.PLAYER_NAME_COL_NAME + " TEXT, "
@@ -91,7 +91,7 @@ public class DatabaseUtil {
                 + "   AND " + BaseballCardContract.COUNT_COL_NAME + " = ?"
                 + "   AND " + BaseballCardContract.PLAYER_NAME_COL_NAME + " = ?"
                 + "   AND " + BaseballCardContract.PLAYER_POSITION_COL_NAME + " = ?";
-        String[] selectionArgs = {card.brand, Integer.toString(card.year), Integer.toString(card.number),
+        String[] selectionArgs = {card.brand, Integer.toString(card.year), card.number,
             Integer.toString(card.value), Integer.toString(card.quantity), card.playerName, card.position};
         Cursor cursor = this.db.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
         boolean result = cursor.getCount() == 1;

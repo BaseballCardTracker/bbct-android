@@ -139,10 +139,10 @@ final public class BBCTTestUtil {
 
         onView(withId(R.id.number_text)).check(matches(hasFocus()));
         if (fieldFlags.contains(EditTexts.NUMBER)) {
-            String numberStr = Integer.toString(card.number);
+            String numberStr = card.number;
             onView(withId(R.id.number_text))
                     .perform(scrollTo(), typeTextIntoFocusedView(numberStr))
-                    .check(matches(withText(numberStr)));
+                    .check(matches(withText(numberStr.replaceAll("[^a-zA-Z0-9]+", ""))));
         }
         device.pressEnter();
 
@@ -206,7 +206,7 @@ final public class BBCTTestUtil {
         String yearStr = Integer.toString(expectedCard.year);
         onView(withId(R.id.year_text))
                 .check(matches(withText(yearStr)));
-        String numberStr = Integer.toString(expectedCard.number);
+        String numberStr = expectedCard.number;
         onView(withId(R.id.number_text))
                 .check(matches(withText(numberStr)));
         String valueStr = String.format("%.2f", expectedCard.value / 100.0);
@@ -245,7 +245,7 @@ final public class BBCTTestUtil {
 
         if (fieldFlags.contains(FilterOption.NUMBER)) {
             sendKeysToCurrFieldFilterCards(R.id.number_check, R.id.number_input,
-                    Integer.toString(testCard.number));
+                    testCard.number);
         }
 
         if (fieldFlags.contains(FilterOption.PLAYER_NAME)) {
@@ -264,8 +264,10 @@ final public class BBCTTestUtil {
         onView(withId(editTextId)).check(matches(isDisplayed())).perform(typeText(input));
     }
 
-    public static List<BaseballCard> filterList(List<BaseballCard> list,
-            Matcher<BaseballCard> cardMatcher) {
+    public static List<BaseballCard> filterList(
+        List<BaseballCard> list,
+        Matcher<BaseballCard> cardMatcher
+    ) {
         List<BaseballCard> filteredList = new ArrayList<>();
 
         for (BaseballCard obj : list) {
