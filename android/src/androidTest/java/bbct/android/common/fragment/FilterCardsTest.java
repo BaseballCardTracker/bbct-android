@@ -22,7 +22,6 @@ import android.app.Activity;
 import android.os.RemoteException;
 
 import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiDevice;
 
 import junit.framework.Assert;
@@ -31,7 +30,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
@@ -48,7 +46,6 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 
-@RunWith(AndroidJUnit4.class)
 public class FilterCardsTest {
     @Rule
     public SupportFragmentTestRule fragmentTestRule

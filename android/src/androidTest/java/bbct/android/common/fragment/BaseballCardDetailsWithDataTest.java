@@ -21,14 +21,12 @@ package bbct.android.common.fragment;
 import android.os.RemoteException;
 
 import androidx.test.InstrumentationRegistry;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiDevice;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
 import bbct.android.common.database.BaseballCard;
@@ -43,7 +41,6 @@ import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-@RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsWithDataTest {
     @Rule
     public DataTestRule dataTestRule = new DataTestRule();

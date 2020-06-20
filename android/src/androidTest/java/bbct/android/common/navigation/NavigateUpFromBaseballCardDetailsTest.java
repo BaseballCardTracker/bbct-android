@@ -21,12 +21,10 @@ package bbct.android.common.navigation;
 import android.content.Context;
 
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.MainActivity;
@@ -42,7 +40,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
 
-@RunWith(AndroidJUnit4.class)
 abstract public class NavigateUpFromBaseballCardDetailsTest<T extends MainActivity> {
     @Rule
     public ActivityTestRule<T> activityActivityTestRule;

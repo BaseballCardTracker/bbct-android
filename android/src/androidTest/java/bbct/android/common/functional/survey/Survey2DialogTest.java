@@ -25,14 +25,12 @@ import android.net.Uri;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.intent.Intents;
-import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
 import bbct.android.common.SharedPreferenceKeys;
@@ -51,7 +49,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.startsWith;
 
-@RunWith(AndroidJUnit4.class)
 public class Survey2DialogTest {
     @Rule
     public Survey2SharedPreferencesTestRule prefsRule = new Survey2SharedPreferencesTestRule();
