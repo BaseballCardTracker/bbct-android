@@ -27,9 +27,8 @@ import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.uiautomator.UiDevice;
 
-import junit.framework.Assert;
-
 import org.hamcrest.Matcher;
+import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
