@@ -285,7 +285,7 @@ final public class BBCTTestUtil {
         Set<T> copy = new HashSet<>(input);
         if (copy.isEmpty()) {
             Set<Set<T>> power = new HashSet<>();
-            power.add(new HashSet<T>());
+            power.add(new HashSet<>());
             return power;
         }
 
