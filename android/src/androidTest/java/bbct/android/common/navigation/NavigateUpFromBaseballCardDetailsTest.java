@@ -20,6 +20,7 @@ package bbct.android.common.navigation;
 
 import android.content.Context;
 
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import org.junit.Before;
@@ -29,7 +30,6 @@ import org.junit.Test;
 import bbct.android.common.R;
 import bbct.android.common.activity.MainActivity;
 
-import static androidx.test.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -51,7 +51,7 @@ abstract public class NavigateUpFromBaseballCardDetailsTest<T extends MainActivi
 
     @Before
     public void setUp() {
-        context = getInstrumentation().getTargetContext();
+        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
     }
 
     @Test

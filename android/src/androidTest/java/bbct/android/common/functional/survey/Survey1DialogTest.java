@@ -23,8 +23,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.intent.Intents;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -58,7 +58,7 @@ public class Survey1DialogTest {
 
     @Before
     public void setUp() {
-        context = InstrumentationRegistry.getTargetContext();
+        context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         startApp();
         Intents.init();
         prefs = prefsRule.getPrefs();

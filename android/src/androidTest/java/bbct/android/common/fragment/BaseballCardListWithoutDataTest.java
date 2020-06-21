@@ -21,7 +21,7 @@ package bbct.android.common.fragment;
 import android.app.Activity;
 import android.app.Instrumentation;
 
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import org.junit.After;
