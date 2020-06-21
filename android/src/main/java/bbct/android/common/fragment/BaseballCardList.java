@@ -235,7 +235,7 @@ public class BaseballCardList extends Fragment {
 
             cards = dao.getBaseballCards(
                 String.format(format, brand),
-                Integer.valueOf(year),
+                Integer.parseInt(year),
                 String.format(format, number),
                 String.format(format, playerName),
                 String.format(format, team)
