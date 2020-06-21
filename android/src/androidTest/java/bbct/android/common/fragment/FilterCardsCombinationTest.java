@@ -60,7 +60,7 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
     private BaseballCard testCard;
     private DatabaseUtil dbUtil = null;
 
-    public static <S extends FilterCardsCombinationTest> Test suite(Class<S> testClass)
+    public static <S extends FilterCardsCombinationTest<?>> Test suite(Class<S> testClass)
             throws ReflectiveOperationException {
         TestSuite suite = new TestSuite();
         Set<BBCTTestUtil.FilterOption> options = EnumSet.allOf(BBCTTestUtil.FilterOption.class);

@@ -37,7 +37,7 @@ import bbct.android.common.fragment.BaseballCardDetails;
 import bbct.android.common.fragment.FragmentTags;
 import bbct.android.common.database.BaseballCard;
 
-public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder> {
+public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder<?>> {
     private FragmentActivity activity;
     private List<BaseballCard> cards = new ArrayList<>();
     private List<Boolean> selected = new ArrayList<>();
@@ -74,7 +74,7 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
 
     @NonNull
     @Override
-    public BaseballCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseballCardViewHolder<?> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             BaseballCardView view = new BaseballCardView(parent.getContext());
             return new BaseballCardViewHolder<>(view);
     }
