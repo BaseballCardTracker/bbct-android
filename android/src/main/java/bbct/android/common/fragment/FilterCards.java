@@ -97,12 +97,7 @@ public class FilterCards extends Fragment {
         ButterKnife.bind(this, view);
 
         confirmButton.setEnabled(false);
-        confirmButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onConfirm();
-            }
-        });
+        confirmButton.setOnClickListener(v -> onConfirm());
 
         // set title
         String format = this.getString(R.string.bbct_title);

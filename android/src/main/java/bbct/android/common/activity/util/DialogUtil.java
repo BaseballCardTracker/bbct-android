@@ -20,7 +20,6 @@ package bbct.android.common.activity.util;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -37,11 +36,7 @@ public class DialogUtil {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         dialogBuilder.setTitle(titleId);
         dialogBuilder.setMessage(errorId);
-        dialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
+        dialogBuilder.setPositiveButton(android.R.string.ok, (dialog, which) -> { });
         dialogBuilder.show();
     }
 
@@ -49,20 +44,20 @@ public class DialogUtil {
                                         final String surveyDateKey, final String surveyUri) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(surveyMessage);
-        builder.setPositiveButton(R.string.now, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                SharedPreferences prefs = context.getSharedPreferences(SharedPreferenceKeys.PREFS, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString(surveyDateKey, todayStr);
-                editor.apply();
+        builder.setPositiveButton(R.string.now, (dialog, id) -> {
+            SharedPreferences prefs = context.getSharedPreferences(
+                SharedPreferenceKeys.PREFS,
+                Context.MODE_PRIVATE
+            );
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString(surveyDateKey, todayStr);
+            editor.apply();
 
-                try {
-                    Intent surveyIntent = Intent.parseUri(surveyUri, 0);
-                    context.startActivity(surveyIntent);
-                } catch (URISyntaxException e) {
-                    Log.e(TAG, "Error parsing URI for survey", e);
-                }
+            try {
+                Intent surveyIntent = Intent.parseUri(surveyUri, 0);
+                context.startActivity(surveyIntent);
+            } catch (URISyntaxException e) {
+                Log.e(TAG, "Error parsing URI for survey", e);
             }
         });
         builder.setNegativeButton(R.string.later, null);
