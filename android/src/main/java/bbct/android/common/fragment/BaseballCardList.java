@@ -61,8 +61,8 @@ public class BaseballCardList extends Fragment {
 
     private BaseballCardAdapter adapter = null;
     private Bundle filterParams = null;
-    private BaseballCardActionModeCallback callback =
-            new BaseballCardActionModeCallback(this);
+    private final BaseballCardActionModeCallback callback =
+        new BaseballCardActionModeCallback(this);
 
     public static BaseballCardList getInstance(Bundle filterArgs) {
         BaseballCardList cardList = new BaseballCardList();

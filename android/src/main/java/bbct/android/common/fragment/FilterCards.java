@@ -64,7 +64,7 @@ public class FilterCards extends Fragment {
     @BindView(R.id.confirm_button)
     FloatingActionButton confirmButton;
 
-    private View.OnClickListener onCheckBoxClick = new View.OnClickListener() {
+    private final View.OnClickListener onCheckBoxClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             EditText input = null;

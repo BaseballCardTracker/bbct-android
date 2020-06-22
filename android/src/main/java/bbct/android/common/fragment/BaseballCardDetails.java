@@ -366,7 +366,7 @@ public class BaseballCardDetails extends Fragment {
 }
 
 class ListObserver implements Observer<List<String>> {
-    private ArrayAdapter<String> adapter;
+    private final ArrayAdapter<String> adapter;
 
     ListObserver(ArrayAdapter<String> adapter) {
         this.adapter = adapter;

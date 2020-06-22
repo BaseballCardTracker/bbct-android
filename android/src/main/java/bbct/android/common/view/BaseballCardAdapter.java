@@ -37,16 +37,16 @@ import bbct.android.common.fragment.BaseballCardDetails;
 import bbct.android.common.fragment.FragmentTags;
 
 public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder<?>> {
-    private FragmentActivity activity;
+    private final FragmentActivity activity;
+    private final BaseballCardActionModeCallback callback;
     private List<BaseballCard> cards = new ArrayList<>();
     private List<Boolean> selected = new ArrayList<>();
-    private BaseballCardActionModeCallback callback;
 
     public class BaseballCardViewHolder<T extends View>
         extends RecyclerView.ViewHolder
         implements View.OnClickListener {
+        public final T view;
         public long id = -1;
-        public T view;
 
         BaseballCardViewHolder(T view) {
             super(view);
