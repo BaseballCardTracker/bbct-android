@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.common.functional;
+package bbct.android.common.screenshots;
 
 import android.util.Log;
 import android.widget.CheckBox;
@@ -31,10 +31,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import bbct.android.common.functional.UiAutomatorTest;
 import tools.fastlane.screengrab.Screengrab;
 import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy;
-
-import java.io.File;
 
 import bbct.android.common.R;
 import bbct.android.common.database.BaseballCard;
