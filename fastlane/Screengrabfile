@@ -1,10 +1,10 @@
 # remove the leading '#' to uncomment lines
 
-# app_package_name('your.app.package')
-# use_tests_in_packages(['your.screenshot.tests.package'])
+app_package_name('bbct.android')
+use_tests_in_packages(['bbct.android.common.screenshots'])
 
-# app_apk_path('path/to/your/app.apk')
-# tests_apk_path('path/to/your/tests.apk')
+app_apk_path('android/build/outputs/apk/lite/debug/android-lite-debug.apk')
+tests_apk_path('android/build/outputs/apk/androidTest/lite/debug/android-lite-debug-androidTest.apk')
 
 locales(['en-US'])
 
