@@ -26,6 +26,7 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         analytics = FirebaseAnalytics.getInstance(this);
 
         this.setContentView(R.layout.main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         fragmentManager = getSupportFragmentManager();
 
         if (savedInstanceState == null) {
