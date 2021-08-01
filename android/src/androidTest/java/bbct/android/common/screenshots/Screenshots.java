@@ -18,26 +18,36 @@
  */
 package bbct.android.common.screenshots;
 
-import android.util.Log;
-import android.widget.CheckBox;
-import android.widget.EditText;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-import androidx.test.uiautomator.UiObject;
+import android.app.Instrumentation;
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.Log;
+
+import androidx.test.core.app.ActivityScenario;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiObjectNotFoundException;
-import androidx.test.uiautomator.UiSelector;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
-import bbct.android.common.R;
 import bbct.android.common.database.BaseballCard;
-import bbct.android.common.functional.UiAutomatorTest;
 import bbct.android.common.test.rule.DataTestRule;
+import bbct.android.lite.provider.LiteActivity;
 import tools.fastlane.screengrab.Screengrab;
 import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy;
 
-public class Screenshots extends UiAutomatorTest {
+public class Screenshots {
+    @Rule
+    public ActivityScenarioRule<LiteActivity> activityRule = new ActivityScenarioRule<>(
+        LiteActivity.class
+    );
     @Rule
     public DataTestRule dataTestRule = new DataTestRule();
 
@@ -46,65 +56,29 @@ public class Screenshots extends UiAutomatorTest {
     private static final String YEAR_STRING = "1993";
     public static final int YEAR_INSTANCE = 1;
 
+    protected Context context;
+    protected Instrumentation inst;
+
     private int screenshotCount;
     private BaseballCard card;
 
     @Before
     public void setUp() throws UiObjectNotFoundException {
-        super.setUp();
+        inst = InstrumentationRegistry.getInstrumentation();
+        context = inst.getTargetContext();
+        ActivityScenario<LiteActivity> scenario = activityRule.getScenario();
+
         screenshotCount = 1;
         card = dataTestRule.getCard(0);
         Screengrab.setDefaultScreenshotStrategy(new UiAutomatorScreenshotStrategy());
     }
 
     @Test
-    public void takeScreenshots() throws Throwable {
-        UiSelector addSelector = new UiSelector().description(context.getString(R.string.add_menu));
-        UiObject addMenu = device.findObject(addSelector);
-        addMenu.click();
-        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
-        takeScreenshot("NewCard");
-
-        device.pressBack();
-        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
+    public void takeScreenshotCardList() {
+        Resources resources = context.getResources();
+        int actionBarId = resources.getIdentifier("action_bar_container", "id", "android");
+        onView(withId(actionBarId)).check(matches(isDisplayed()));
         takeScreenshot("CardList");
-
-        UiSelector playerNameSelector = new UiSelector().text(card.playerName);
-        UiObject listItem = device.findObject(playerNameSelector);
-        listItem.click();
-        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
-        device.pressBack();
-        takeScreenshot("CardDetails");
-
-        device.pressBack();
-        UiSelector filterSelector = new UiSelector().description(context.getString(R.string.filter_menu));
-        UiObject filterMenu = device.findObject(filterSelector);
-        filterMenu.click();
-        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
-        UiSelector yearCheckBoxSelector = new UiSelector().className(CheckBox.class).instance(YEAR_INSTANCE);
-        UiObject yearCheckBox = device.findObject(yearCheckBoxSelector);
-        yearCheckBox.click();
-        UiSelector yearTextViewSelector = new UiSelector().className(EditText.class).instance(YEAR_INSTANCE);
-        UiObject yearTextView = device.findObject(yearTextViewSelector);
-        yearTextView.setText(YEAR_STRING);
-        device.waitForIdle();
-        takeScreenshot("FilterCards");
-
-        UiSelector saveSelector = new UiSelector().description(context.getString(R.string.save_menu));
-        UiObject saveMenu = device.findObject(saveSelector);
-        saveMenu.click();
-        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
-        takeScreenshot("FilteredList");
-
-        UiSelector overflowSelector = new UiSelector().description("More options");
-        UiObject overflowMenu = device.findObject(overflowSelector);
-        overflowMenu.click();
-        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
-        UiSelector aboutSelector = new UiSelector().text(context.getString(R.string.about_menu));
-        UiObject aboutMenu = device.findObject(aboutSelector);
-        aboutMenu.click();
-        device.waitForWindowUpdate(context.getPackageName(), TIMEOUT);
-        takeScreenshot("About");
     }
 
     private void takeScreenshot(String description) {
