@@ -25,7 +25,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import android.app.Instrumentation;
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.Log;
 
 import androidx.test.core.app.ActivityScenario;
@@ -37,6 +36,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import bbct.android.common.R;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.lite.provider.LiteActivity;
@@ -75,15 +75,12 @@ public class Screenshots {
 
     @Test
     public void takeScreenshotCardList() {
-        Resources resources = context.getResources();
-        int actionBarId = resources.getIdentifier("action_bar_container", "id", "android");
-        onView(withId(actionBarId)).check(matches(isDisplayed()));
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         takeScreenshot("CardList");
     }
 
     private void takeScreenshot(String description) {
-        String screenshotName = String.format("%02d-%s", screenshotCount++,
-               description);
+        String screenshotName = String.format("%02d-%s", screenshotCount++, description);
         Log.d("screenshot", screenshotName);
         Screengrab.screenshot(screenshotName);
     }
