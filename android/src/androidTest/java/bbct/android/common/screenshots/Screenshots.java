@@ -19,7 +19,10 @@
 package bbct.android.common.screenshots;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -94,5 +97,14 @@ public class Screenshots {
         onView(atPosition(cardIndex, instanceOf(BaseballCardView.class)))
             .perform(click());
         Screengrab.screenshot("03-CardDetail");
+    }
+
+    @Test
+    public void takeScreenshotFilterCards() {
+        onView(withId(R.id.filter_menu)).perform(click());
+        onView(withId(R.id.year_check)).perform(click());
+        onView(withId(R.id.year_input))
+            .perform(scrollTo(), clearText(), typeTextIntoFocusedView(YEAR_STRING));
+        Screengrab.screenshot("04-FilterCards");
     }
 }
