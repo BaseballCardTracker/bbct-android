@@ -24,6 +24,9 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+import static org.hamcrest.Matchers.instanceOf;
+import static bbct.android.common.test.matcher.Matchers.atPosition;
+
 import android.app.Instrumentation;
 import android.content.Context;
 import android.util.Log;
@@ -40,6 +43,7 @@ import org.junit.Test;
 import bbct.android.common.R;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
+import bbct.android.common.view.BaseballCardView;
 import bbct.android.lite.provider.LiteActivity;
 import tools.fastlane.screengrab.Screengrab;
 import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy;
@@ -82,5 +86,13 @@ public class Screenshots {
     public void takeScreenshotCardList() {
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
         Screengrab.screenshot("02-CardList");
+    }
+
+    @Test
+    public void takeScreenshotCardDetail() {
+        int cardIndex = 0;
+        onView(atPosition(cardIndex, instanceOf(BaseballCardView.class)))
+            .perform(click());
+        Screengrab.screenshot("03-CardDetail");
     }
 }
