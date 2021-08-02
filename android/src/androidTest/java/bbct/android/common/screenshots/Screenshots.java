@@ -19,6 +19,7 @@
 package bbct.android.common.screenshots;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -59,7 +60,6 @@ public class Screenshots {
     protected Context context;
     protected Instrumentation inst;
 
-    private int screenshotCount;
     private BaseballCard card;
 
     @Before
@@ -68,20 +68,19 @@ public class Screenshots {
         context = inst.getTargetContext();
         ActivityScenario<LiteActivity> scenario = activityRule.getScenario();
 
-        screenshotCount = 1;
         card = dataTestRule.getCard(0);
         Screengrab.setDefaultScreenshotStrategy(new UiAutomatorScreenshotStrategy());
     }
 
     @Test
-    public void takeScreenshotCardList() {
-        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        takeScreenshot("CardList");
+    public void takeScreenshotNewCard() {
+        onView(withId(R.id.add_button)).perform(click());
+        Screengrab.screenshot("01-NewCard");
     }
 
-    private void takeScreenshot(String description) {
-        String screenshotName = String.format("%02d-%s", screenshotCount++, description);
-        Log.d("screenshot", screenshotName);
-        Screengrab.screenshot(screenshotName);
+    @Test
+    public void takeScreenshotCardList() {
+        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        Screengrab.screenshot("02-CardList");
     }
 }
