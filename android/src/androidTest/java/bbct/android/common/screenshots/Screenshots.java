@@ -107,4 +107,14 @@ public class Screenshots {
             .perform(scrollTo(), clearText(), typeTextIntoFocusedView(YEAR_STRING));
         Screengrab.screenshot("04-FilterCards");
     }
+
+    @Test
+    public void takeScreenshotFilteredList() {
+        onView(withId(R.id.filter_menu)).perform(click());
+        onView(withId(R.id.year_check)).perform(click());
+        onView(withId(R.id.year_input))
+            .perform(scrollTo(), clearText(), typeTextIntoFocusedView(YEAR_STRING));
+        onView(withId(R.id.confirm_button)).perform(click());
+        Screengrab.screenshot("05-FilteredList");
+    }
 }
