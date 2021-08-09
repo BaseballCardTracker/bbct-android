@@ -13,3 +13,5 @@ clear_previous_screenshots(true)
 
 # For more information about all available options run
 #   fastlane screengrab --help
+
+use_timestamp_suffix(false)
