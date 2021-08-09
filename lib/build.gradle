@@ -4,7 +4,7 @@ dependencies {
     sourceCompatibility = 1.7
     targetCompatibility = 1.7
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
 }
