@@ -25,13 +25,13 @@ allprojects {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     flavorDimensions "tier"
 
     defaultConfig {
         applicationId "bbct.android.common"
         minSdkVersion 19
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 23
         versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
