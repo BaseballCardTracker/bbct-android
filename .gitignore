@@ -19,3 +19,6 @@ bbct.properties
 *.keystore
 google-services.json
 key.json
+
+fastlane/README.md
+fastlane/report.xml

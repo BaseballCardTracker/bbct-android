@@ -24,7 +24,7 @@ platform :android do
   desc "Submit a new Beta Build Google Play"
   lane :beta do
     gradle(task: "clean assembleRelease")
-    upload_to_play_store track: "beta", package_name: "bbct.android", apk: "android/build/outputs/apk/premium/release/android-lite-release.apk"
+    upload_to_play_store track: "beta", package_name: "bbct.android", apk: "android/build/outputs/apk/lite/release/android-lite-release.apk"
     upload_to_play_store track: "beta", package_name: "bbct.android.premium", apk: "android/build/outputs/apk/premium/release/android-premium-release.apk"
   end
 
