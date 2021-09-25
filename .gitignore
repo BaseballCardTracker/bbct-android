@@ -18,3 +18,4 @@ build
 bbct.properties
 *.keystore
 google-services.json
+key.json

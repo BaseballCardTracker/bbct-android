@@ -1,0 +1,4 @@
+v0.6.6
+
+* New users now have 7 days to use the app before being asked to take a survey
+* You will be asked to take a new 6-question survey about new features requested in the previous survey. The dialog for this will appear 7 days after this update if you have already responded to the first survey

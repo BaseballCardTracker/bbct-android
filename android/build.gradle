@@ -159,6 +159,7 @@ dependencies {
     implementation "com.jakewharton:butterknife:${butterknifeVersion}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
     annotationProcessor "androidx.room:room-compiler:${roomVersion}"
+    androidTestImplementation 'tools.fastlane:screengrab:1.0.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation "androidx.annotation:annotation:${annotationVersion}"

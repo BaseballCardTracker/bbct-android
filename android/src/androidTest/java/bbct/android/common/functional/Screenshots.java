@@ -31,6 +31,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import tools.fastlane.screengrab.Screengrab;
+import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy;
 
 import java.io.File;
 
@@ -50,7 +52,6 @@ public class Screenshots extends UiAutomatorTest {
     private static final String YEAR_STRING = "1993";
     public static final int YEAR_INSTANCE = 1;
 
-    private File screenshotDir;
     private int screenshotCount;
     private BaseballCard card;
 
@@ -58,15 +59,8 @@ public class Screenshots extends UiAutomatorTest {
     public void setUp() throws UiObjectNotFoundException {
         super.setUp();
         screenshotCount = 1;
-        screenshotDir = new File(context.getFilesDir(), "screenshots");
-
-        if (!screenshotDir.exists()) {
-            assertTrue("Unable to create directory: " + screenshotDir.getName(), screenshotDir.mkdir());
-        }
-
-        Log.d(TAG, "screenshotDir: " + screenshotDir);
-
         card = dataTestRule.getCard(0);
+        Screengrab.setDefaultScreenshotStrategy(new UiAutomatorScreenshotStrategy());
     }
 
     @Test
@@ -120,9 +114,9 @@ public class Screenshots extends UiAutomatorTest {
     }
 
     private void takeScreenshot(String description) {
-        File screenshotFile
-                = new File(screenshotDir,
-                           String.format("%02d-%s.png", screenshotCount++, description));
-        device.takeScreenshot(screenshotFile);
+        String screenshotName = String.format("%02d-%s", screenshotCount++,
+               description);
+        Log.d("screenshot", screenshotName);
+        Screengrab.screenshot(screenshotName);
     }
 }

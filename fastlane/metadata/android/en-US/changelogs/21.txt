@@ -1,0 +1,3 @@
+Version 0.6.8
+* Fix navigation. The arrow in the toolbar now correctly navigates back to the previous screen.
+* Optimize database access. If you have a large collection, the UI will still respond while data is loading.
