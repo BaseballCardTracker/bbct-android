@@ -21,18 +21,17 @@ platform :android do
     gradle(task: "test")
   end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
+  desc "Submit a new Beta Build Google Play"
   lane :beta do
     gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
+    upload_to_play_store track: "beta", package_name: "bbct.android", apk: "android/build/outputs/apk/lite/release/android-lite-release.apk"
+    upload_to_play_store track: "beta", package_name: "bbct.android.premium", apk: "android/build/outputs/apk/premium/release/android-premium-release.apk"
   end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(task: "clean assembleRelease")
-    upload_to_play_store
+    upload_to_play_store package_name: "bbct.android", apk: "android/build/outputs/apk/lite/release/android-lite-debug.apk"
+    upload_to_play_store track: "beta", package_name: "bbct.android.premium", apk: "android/build/outputs/apk/premium/release/android-premium-release.apk"
   end
 end
