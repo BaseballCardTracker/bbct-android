@@ -25,11 +25,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.text.DateFormat;
@@ -37,11 +39,12 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
-import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.SharedPreferenceKeys;
 import bbct.android.common.activity.util.DialogUtil;
-import io.fabric.sdk.android.Fabric;
+import bbct.android.common.fragment.About;
+import bbct.android.common.fragment.BaseballCardList;
+import bbct.android.common.fragment.FragmentTags;
 
 public class MainActivity extends AppCompatActivity {
     public static final int SURVEY_DELAY = 7;
@@ -57,12 +60,10 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!BuildConfig.DEBUG) {
-            Fabric.with(this, new Crashlytics());
-        }
-        analytics = FirebaseAnalytics.getInstance(this);
-
         this.setContentView(R.layout.main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController);
 

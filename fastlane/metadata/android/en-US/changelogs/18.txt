@@ -1,0 +1,4 @@
+v0.6.5
+
+* Fixed a commonly encountered bug which causes the app to crash
+* Minor updates to help improve performance and avoid memory leaks
