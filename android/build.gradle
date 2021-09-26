@@ -170,14 +170,13 @@ dependencies {
     implementation "com.google.firebase:firebase-analytics:${firebaseAnalyticsVersion}"
     implementation "com.google.firebase:firebase-crashlytics:${firebaseCrashlyticsVersion}"
     implementation "com.jakewharton:butterknife:${butterknifeVersion}"
-    implementation "androidx.fragment:fragment-testing:${fragment_version}"
 
     liteImplementation "com.google.android.gms:play-services-ads:${googleServiceAdsVersion}"
 
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
     annotationProcessor "androidx.room:room-compiler:${roomVersion}"
 
-    debugImplementation "androidx.fragment:fragment-testing:${fragment_version}"
+    debugImplementation "androidx.fragment:fragment-testing:${fragmentVersion}"
 
     testImplementation "junit:junit:${junitVersion}"
     testImplementation 'org.mockito:mockito-core:1.10.19'
@@ -187,7 +186,6 @@ dependencies {
     androidTestImplementation "androidx.annotation:annotation:${annotationVersion}"
     androidTestImplementation "androidx.test:runner:${testLibVersion}"
     androidTestImplementation "androidx.test:rules:${testLibVersion}"
-    androidTestImplementation "androidx.fragment:fragment-testing:${fragmentVersion}"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:${uiautomatorVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${espressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:${espressoVersion}"
