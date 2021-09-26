@@ -23,15 +23,31 @@ platform :android do
 
   desc "Submit a new Beta Build Google Play"
   lane :beta do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store track: "beta", package_name: "bbct.android", apk: "android/build/outputs/apk/lite/release/android-lite-release.apk"
-    upload_to_play_store track: "beta", package_name: "bbct.android.premium", apk: "android/build/outputs/apk/premium/release/android-premium-release.apk"
+    gradle(task: "clean bundleRelease")
+    upload_to_play_store(
+      track: "beta",
+      package_name: "bbct.android",
+      apk: "android/lite/release/android-lite-release.aab"
+    )
+    upload_to_play_store(
+      track: "beta",
+      package_name: "bbct.android.premium",
+      apk: "android/premium/release/android-premium-release.aab"
+    )
   end
 
   desc "Deploy a new version to the Google Play"
   lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store package_name: "bbct.android", apk: "android/build/outputs/apk/lite/release/android-lite-debug.apk"
-    upload_to_play_store track: "beta", package_name: "bbct.android.premium", apk: "android/build/outputs/apk/premium/release/android-premium-release.apk"
+    gradle(task: "clean bundleRelease")
+    upload_to_play_store(
+      track: "beta",
+      package_name: "bbct.android",
+      apk: "android/lite/release/android-lite-release.aab"
+    )
+    upload_to_play_store(
+      track: "beta",
+      package_name: "bbct.android.premium",
+      apk: "android/premium/release/android-premium-release.aab"
+    )
   end
 end
