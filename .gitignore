@@ -9,6 +9,7 @@ gen
 .settings
 javadoc/
 /release
+build/
 screenshots
 *~
 .gradle
@@ -22,3 +23,5 @@ key.json
 
 fastlane/README.md
 fastlane/report.xml
+
+*.aab
