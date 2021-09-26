@@ -9,6 +9,7 @@ gen
 .settings
 javadoc/
 /release
+build/
 screenshots
 *~
 .gradle
