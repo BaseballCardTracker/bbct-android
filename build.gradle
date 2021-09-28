@@ -2,7 +2,6 @@
 
 buildscript {
     repositories {
-        jcenter()
     }
     dependencies {
         // NOTE: Do not place your application dependencies here; they belong
@@ -12,6 +11,5 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
     }
 }
