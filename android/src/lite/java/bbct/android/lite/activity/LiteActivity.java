@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.lite.provider;
+package bbct.android.lite.activity;
 
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;

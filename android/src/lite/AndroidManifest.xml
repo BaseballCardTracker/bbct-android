@@ -36,7 +36,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="bbct.android.lite.provider.LiteActivity"
+            android:name="bbct.android.lite.activity.LiteActivity"
             android:label="@string/app_name"
             android:exported="true">
             <intent-filter>
