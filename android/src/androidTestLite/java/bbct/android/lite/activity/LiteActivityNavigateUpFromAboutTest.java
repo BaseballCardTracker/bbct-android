@@ -23,7 +23,6 @@ import androidx.test.runner.AndroidJUnit4;
 import org.junit.runner.RunWith;
 
 import bbct.android.common.navigation.NavigateUpFromAboutTest;
-import bbct.android.lite.provider.LiteActivity;
 
 @RunWith(AndroidJUnit4.class)
 public class LiteActivityNavigateUpFromAboutTest extends NavigateUpFromAboutTest<LiteActivity> {
