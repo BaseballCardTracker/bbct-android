@@ -47,7 +47,7 @@ import bbct.android.common.R;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.view.BaseballCardView;
-import bbct.android.lite.provider.LiteActivity;
+import bbct.android.lite.activity.LiteActivity;
 import tools.fastlane.screengrab.Screengrab;
 import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy;
 
