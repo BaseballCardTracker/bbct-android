@@ -1,8 +1,0 @@
-apply plugin: 'java'
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'org.hsqldb:hsqldb:2.3.4'
-    implementation project(':lib')
-    testImplementation 'junit:junit:4.12'
-}
