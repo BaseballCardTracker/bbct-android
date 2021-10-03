@@ -21,6 +21,14 @@ platform :android do
     gradle(task: "test")
   end
 
+  desc "Take screenshots"
+  lane :screenshots do
+    gradle(task: "clean bundleRelease assembleAndroidTest")
+    screengrab(
+        app_apk_path: "android/lite/release/android-lite-release.aab"
+    )
+  end
+
   desc "Submit a new Beta Build Google Play"
   lane :beta do
     gradle(task: "clean bundleRelease")

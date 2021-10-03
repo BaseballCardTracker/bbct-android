@@ -3,7 +3,6 @@
 app_package_name('bbct.android')
 use_tests_in_packages(['bbct.android.common.screenshots'])
 
-app_apk_path('android/build/outputs/apk/lite/debug/android-lite-debug.apk')
 tests_apk_path('android/build/outputs/apk/androidTest/lite/debug/android-lite-debug-androidTest.apk')
 
 locales(['en-US'])
