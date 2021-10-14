@@ -23,13 +23,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 
-import junit.framework.Assert;
-
 import org.hamcrest.Matcher;
+import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -286,7 +285,7 @@ final public class BBCTTestUtil {
         Set<T> copy = new HashSet<>(input);
         if (copy.isEmpty()) {
             Set<Set<T>> power = new HashSet<>();
-            power.add(new HashSet<T>());
+            power.add(new HashSet<>());
             return power;
         }
 

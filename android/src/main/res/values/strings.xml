@@ -26,8 +26,6 @@
     <string name="filter_cards_title">Filter Cards</string>
     <string name="about_title">About</string>
     <string name="duplicate_card_title">Duplicate Card</string>
-    <string name="start">Tap (+) to get started.</string>
-    <string name="empty_list">No cards found.</string>
 
     <!-- Labels for card details -->
     <string name="condition_label">Condition:</string>
@@ -44,7 +42,6 @@
     <!-- Column headings for card list -->
     <string name="brand">Brand</string>
     <string name="year">Year</string>
-    <string name="number_col">#</string>
     <string name="number">Number</string>
     <string name="value">Value</string>
     <string name="count">Count</string>
@@ -120,7 +117,6 @@
     <string name="player_position_input_error">Please enter the player\'s position.</string>
     <string name="invalid_uri_error">Invalid URI: %1$s</string>
     <string name="duplicate_card_error">Baseball card already exists. Please update its count.</string>
-    <string name="sponsor">Proud Sponsor of:</string>
     <string name="survey1">Help me improve BBCT by answering a short survey with seven questions.</string>
     <string name="survey2">
         Thanks for your feedback in the first BBCT survey. Please take a moment to answer 6

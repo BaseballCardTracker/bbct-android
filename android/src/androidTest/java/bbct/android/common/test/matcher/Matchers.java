@@ -83,9 +83,7 @@ public class Matchers {
             @Override
             protected boolean matchesSafely(T item) {
                 if (matcher.matches(item)) {
-                    if (counter++ == position) {
-                        return true;
-                    }
+                    return counter++ == position;
                 }
 
                 return false;

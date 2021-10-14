@@ -20,7 +20,7 @@ package bbct.android.common.test.rule;
 
 import android.app.Instrumentation;
 
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.rules.ExternalResource;
 

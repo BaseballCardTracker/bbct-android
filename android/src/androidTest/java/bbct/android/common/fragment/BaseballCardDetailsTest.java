@@ -26,18 +26,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.Espresso;
-import androidx.test.runner.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 
-import junit.framework.Assert;
-
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.io.InputStream;
 
@@ -55,7 +52,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.hasFocus;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
-@RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsTest {
 
     private static final int SLEEP_TIME_TO_REFRESH = 200;
