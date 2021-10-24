@@ -21,11 +21,9 @@ package bbct.android.common.fragment;
 import android.view.KeyEvent;
 
 import androidx.annotation.IdRes;
-import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
 import bbct.android.common.test.rule.SupportFragmentTestRule;
@@ -38,7 +36,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static bbct.android.common.test.ViewActions.requestFocus;
 
-@RunWith(AndroidJUnit4.class)
 public class DetailsNavigateNextTest {
     @Rule
     public SupportFragmentTestRule fragmentTestRule

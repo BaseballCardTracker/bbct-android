@@ -23,7 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import java.io.InputStream;
 

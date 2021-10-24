@@ -40,7 +40,13 @@ import bbct.android.common.provider.BaseballCardContract;
  * in order to import data from the Lite edition.
  */
 public class PremiumSQLHelper extends
-        bbct.android.common.provider.BaseballCardSQLHelper {
+    bbct.android.common.provider.BaseballCardSQLHelper {
+    private static final String TAG = PremiumSQLHelper.class.getName();
+    private static final String LITE_PACKAGE = "bbct.android";
+    private static final int MIN_LITE_VERSION = 3;
+
+    private final Context context;
+
     public PremiumSQLHelper(Context context) {
         super(context);
 
@@ -104,9 +110,4 @@ public class PremiumSQLHelper extends
             db.endTransaction();
         }
     }
-
-    private static final String TAG = PremiumSQLHelper.class.getName();
-    private static final String LITE_PACKAGE = "bbct.android";
-    private static final int MIN_LITE_VERSION = 3;
-    private Context context;
 }

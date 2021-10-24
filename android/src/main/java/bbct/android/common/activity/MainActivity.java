@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     private static final String TAG = MainActivity.class.getName();
 
-    private FirebaseAnalytics analytics;
     private SharedPreferences prefs;
     private FragmentManager fragmentManager;
 

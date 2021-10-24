@@ -10,8 +10,8 @@ public class InsertCardTask extends AsyncTask<BaseballCard, Void, Integer> {
     private static final int STATUS_DUPLICATE = 2;
     private static final int STATUS_OTHER = 3;
 
-    private BaseballCardDetails fragment;
-    private BaseballCardDao dao;
+    private final BaseballCardDetails fragment;
+    private final BaseballCardDao dao;
 
     public InsertCardTask(BaseballCardDetails fragment, BaseballCardDao dao) {
         this.fragment = fragment;

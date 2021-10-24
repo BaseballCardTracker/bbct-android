@@ -21,7 +21,6 @@ package bbct.android.common.fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.database.SQLException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -119,62 +118,48 @@ public class BaseballCardDetails extends Fragment {
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
         activity.setTitle(title);
 
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSave();
+        saveButton.setOnClickListener(v -> onSave());
+
+        brandText.setOnKeyListener((v, keyCode, event) -> {
+            Log.d(TAG, "onKey() in Brand TextView");
+            Log.d(TAG, "keyCode = " + keyCode);
+
+            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+                Log.d(TAG, "focus on Year");
+                yearText.requestFocus();
+                return true;
             }
+
+            return false;
         });
 
-        brandText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                Log.d(TAG, "onKey() in Brand TextView");
-                Log.d(TAG, "keyCode = " + keyCode);
+        playerNameText.setOnKeyListener((v, keyCode, event) -> {
+            Log.d(TAG, "onKey() in Player Name TextView");
+            Log.d(TAG, "keyCode = " + keyCode);
 
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    Log.d(TAG, "focus on Year");
-                    yearText.requestFocus();
-                    return true;
-                }
-
-                return false;
+            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+                Log.d(TAG, "focus on Team");
+                teamText.requestFocus();
+                return true;
             }
+
+            return false;
         });
 
-        playerNameText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                Log.d(TAG, "onKey() in Player Name TextView");
-                Log.d(TAG, "keyCode = " + keyCode);
+        teamText.setOnKeyListener((v, keyCode, event) -> {
+            Log.d(TAG, "onKey() in Team TextView");
+            Log.d(TAG, "keyCode = " + keyCode);
 
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    Log.d(TAG, "focus on Team");
-                    teamText.requestFocus();
-                    return true;
-                }
-
-                return false;
+            if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
+                Log.d(TAG, "hide keyboard");
+                InputMethodManager imm = Objects.requireNonNull(
+                    (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE));
+                imm.hideSoftInputFromWindow(teamText.getWindowToken(), 0);
+                playerPositionSpinner.requestFocus();
+                return true;
             }
-        });
 
-        teamText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                Log.d(TAG, "onKey() in Team TextView");
-                Log.d(TAG, "keyCode = " + keyCode);
-
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_ENTER) {
-                    Log.d(TAG, "hide keyboard");
-                    InputMethodManager imm = Objects.requireNonNull(
-                        (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE));
-                    imm.hideSoftInputFromWindow(teamText.getWindowToken(), 0);
-                    playerPositionSpinner.requestFocus();
-                    return true;
-                }
-
-                return false;
-            }
+            return false;
         });
 
         createAdapters(activity);
@@ -381,7 +366,7 @@ public class BaseballCardDetails extends Fragment {
 }
 
 class ListObserver implements Observer<List<String>> {
-    private ArrayAdapter<String> adapter;
+    private final ArrayAdapter<String> adapter;
 
     ListObserver(ArrayAdapter<String> adapter) {
         this.adapter = adapter;

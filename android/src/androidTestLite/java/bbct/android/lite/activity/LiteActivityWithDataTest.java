@@ -18,13 +18,8 @@
  */
 package bbct.android.lite.activity;
 
-import androidx.test.runner.AndroidJUnit4;
-
-import org.junit.runner.RunWith;
-
 import bbct.android.common.fragment.BaseballCardListWithDataTest;
 
-@RunWith(AndroidJUnit4.class)
 public class LiteActivityWithDataTest extends BaseballCardListWithDataTest<LiteActivity> {
     public LiteActivityWithDataTest() {
         super(LiteActivity.class);

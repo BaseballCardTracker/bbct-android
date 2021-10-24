@@ -32,7 +32,7 @@ import bbct.android.common.database.BaseballCard;
  * as comma-separated values.
  */
 public class BaseballCardCsvFileReader {
-    private BufferedReader in;
+    private final BufferedReader in;
 
     /**
      * Create a {@link BaseballCardCsvFileReader} object which reads baseball

@@ -21,7 +21,6 @@ package bbct.android.common.view;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -33,21 +32,21 @@ import java.util.Collections;
 import java.util.List;
 
 import bbct.android.common.R;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.fragment.BaseballCardDetails;
 import bbct.android.common.fragment.FragmentTags;
-import bbct.android.common.database.BaseballCard;
 
-public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder> {
-    private FragmentActivity activity;
+public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapter.BaseballCardViewHolder<?>> {
+    private final FragmentActivity activity;
+    private final BaseballCardActionModeCallback callback;
     private List<BaseballCard> cards = new ArrayList<>();
     private List<Boolean> selected = new ArrayList<>();
-    private BaseballCardActionModeCallback callback;
 
     public class BaseballCardViewHolder<T extends View>
         extends RecyclerView.ViewHolder
         implements View.OnClickListener {
+        public final T view;
         public long id = -1;
-        public T view;
 
         BaseballCardViewHolder(T view) {
             super(view);
@@ -74,7 +73,7 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
 
     @NonNull
     @Override
-    public BaseballCardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseballCardViewHolder<?> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             BaseballCardView view = new BaseballCardView(parent.getContext());
             return new BaseballCardViewHolder<>(view);
     }
@@ -87,27 +86,21 @@ public class BaseballCardAdapter extends RecyclerView.Adapter<BaseballCardAdapte
         cardView.setChecked(selected.get(position));
 
         CheckBox ctv = cardView.findViewById(R.id.checkmark);
-        ctv.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                int position = holder.getAdapterPosition();
-                setItemSelected(position, isChecked);
+        ctv.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            int position1 = holder.getAdapterPosition();
+            setItemSelected(position1, isChecked);
 
-                if (isChecked && !callback.isStarted()) {
-                    activity.startActionMode(callback);
-                } else if (callback.isStarted() && getSelectedCount() == 0) {
-                    callback.finish();
-                }
+            if (isChecked && !callback.isStarted()) {
+                activity.startActionMode(callback);
+            } else if (callback.isStarted() && getSelectedCount() == 0) {
+                callback.finish();
             }
         });
 
-        cardView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                CheckableLinearLayout check = (CheckableLinearLayout)v;
-                check.setChecked(true);
-                return true;
-            }
+        cardView.setOnLongClickListener(v -> {
+            CheckableLinearLayout check = (CheckableLinearLayout)v;
+            check.setChecked(true);
+            return true;
         });
     }
 
