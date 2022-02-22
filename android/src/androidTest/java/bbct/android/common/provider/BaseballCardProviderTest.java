@@ -101,10 +101,13 @@ public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> e
         );
     }
 
+    private final Uri contentUri;
+
     private ContentResolver resolver = null;
 
-    public BaseballCardProviderTest(Class<T> providerClass) {
-        super(providerClass, BaseballCardContract.AUTHORITY);
+    public BaseballCardProviderTest(Class<T> providerClass, String authority, Uri contentUri) {
+        super(providerClass, authority);
+        this.contentUri = contentUri;
     }
 
     @Override
@@ -137,7 +140,7 @@ public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> e
 
     public void testQueryAll() {
         Cursor cursor = this.resolver.query(
-            BaseballCardContract.CONTENT_URI,
+            contentUri,
             BaseballCardContract.PROJECTION,
             null,
             null,
@@ -152,10 +155,7 @@ public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> e
     }
 
     public void testQueryId() {
-        Uri uri = ContentUris.withAppendedId(
-            BaseballCardContract.CONTENT_URI,
-            1
-        );
+        Uri uri = ContentUris.withAppendedId(contentUri, 1);
         Cursor cursor = this.resolver.query(
             uri,
             BaseballCardContract.PROJECTION,
@@ -181,7 +181,7 @@ public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> e
             "Pitcher"
         );
         Uri result = this.resolver.insert(
-            BaseballCardContract.CONTENT_URI,
+            contentUri,
             BaseballCardContract.getContentValues(newCard)
         );
         Assert.assertNotNull(result);
@@ -192,7 +192,7 @@ public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> e
         int newValue = 50000;
         values.put(BaseballCardContract.VALUE_COL_NAME, newValue);
         int affected = this.resolver.update(
-            BaseballCardContract.CONTENT_URI,
+            contentUri,
             values,
             null,
             null
@@ -200,7 +200,7 @@ public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> e
         Assert.assertEquals(CARDS.size(), affected);
 
         Cursor cursor = this.resolver.query(
-            BaseballCardContract.CONTENT_URI,
+            contentUri,
             BaseballCardContract.PROJECTION,
             null,
             null,
@@ -220,7 +220,7 @@ public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> e
 
     public void testDeleteAll() {
         int affected = this.resolver.delete(
-            BaseballCardContract.CONTENT_URI,
+            contentUri,
             null,
             null
         );
@@ -230,17 +230,14 @@ public abstract class BaseballCardProviderTest<T extends BaseballCardProvider> e
     public void testGetTypeItem() {
         String expected = BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE;
         String actual = this.resolver.getType(
-            Uri.withAppendedPath(
-                BaseballCardContract.CONTENT_URI,
-                "/1"
-            )
+            Uri.withAppendedPath(contentUri, "/1")
         );
         Assert.assertEquals(expected, actual);
     }
 
     public void testGetTypeList() {
         String expected = BaseballCardContract.BASEBALL_CARD_LIST_MIME_TYPE;
-        String actual = this.resolver.getType(BaseballCardContract.CONTENT_URI);
+        String actual = this.resolver.getType(contentUri);
         Assert.assertEquals(expected, actual);
     }
 

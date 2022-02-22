@@ -19,11 +19,16 @@
 
 package bbct.android.premium.provider.test;
 
+import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardProviderTest;
 import bbct.android.premium.provider.PremiumProvider;
 
 public class PremiumProviderTest extends BaseballCardProviderTest<PremiumProvider> {
     public PremiumProviderTest() {
-        super(PremiumProvider.class);
+        super(
+            PremiumProvider.class,
+            BaseballCardContract.PREMIUM_AUTHORITY,
+            BaseballCardContract.PREMIUM_URI
+        );
     }
 }
