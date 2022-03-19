@@ -31,7 +31,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     /**
      * Current schema version.
      */
-    public static final int SCHEMA_VERSION = 4;
+    public static final int SCHEMA_VERSION = 6;
     /**
      * Original schema version.
      */
