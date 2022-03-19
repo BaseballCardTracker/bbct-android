@@ -64,7 +64,7 @@ public class BaseballCardListSelectionTest {
     public void testPreConditions() {
         BBCTTestUtil.assertDatabaseCreated(inst.getTargetContext());
         Assert.assertTrue(dbUtil.containsAllBaseballCards(this.allCards));
-        BBCTTestUtil.assertListViewContainsItems(this.allCards);
+        BBCTTestUtil.assertListContainsItems(this.allCards);
     }
 
     @Test

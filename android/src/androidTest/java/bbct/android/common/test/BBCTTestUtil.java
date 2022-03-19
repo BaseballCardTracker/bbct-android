@@ -23,7 +23,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 
@@ -50,6 +53,7 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.hasFocus;
 import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -70,10 +74,19 @@ final public class BBCTTestUtil {
     private BBCTTestUtil() {
     }
 
-    public static void assertListViewContainsItems(List<BaseballCard> expectedItems) {
+    public static void assertListContainsItems(List<BaseballCard> expectedItems) {
         for (BaseballCard card : expectedItems) {
-            onData(allOf(instanceOf(BaseballCard.class), is(card)))
-                .check(matches(isDisplayed()));
+            onView(ViewMatchers.withId(R.id.card_list))
+                .perform(
+                    RecyclerViewActions.scrollTo(
+                        allOf(
+                            hasDescendant(withText(card.brand)),
+                            hasDescendant(withText(Integer.toString(card.year))),
+                            hasDescendant(withText(card.number)),
+                            hasDescendant(withText(card.playerName))
+                        )
+                    )
+                );
         }
     }
 
