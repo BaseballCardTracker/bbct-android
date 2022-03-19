@@ -110,7 +110,7 @@ ext {
     fragmentVersion = '1.3.6'
     googleServiceAdsVersion = '20.4.0'
     junitVersion = '4.13.1'
-    lifecycleVersion = '2.4.0-beta01'
+    lifecycleVersion = '2.5.0-alpha04'
     materialVersion = '1.5.0'
     roomVersion = '2.5.0-alpha01'
     testLibVersion = '1.4.0'
