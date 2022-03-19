@@ -135,6 +135,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:${roomVersion}"
 
     androidTestImplementation "androidx.annotation:annotation:${annotationVersion}"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation "androidx.test:runner:${testLibVersion}"
     androidTestImplementation "androidx.test:rules:${testLibVersion}"
     androidTestImplementation "androidx.fragment:fragment-testing:${fragmentVersion}"

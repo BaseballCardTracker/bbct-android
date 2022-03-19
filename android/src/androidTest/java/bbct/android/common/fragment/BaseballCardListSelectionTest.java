@@ -1,7 +1,21 @@
 package bbct.android.common.fragment;
 
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.longClick;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.not;
+import static bbct.android.common.test.matcher.Matchers.atPosition;
+import static bbct.android.common.test.matcher.Matchers.first;
+
 import android.app.Instrumentation;
 
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 
@@ -18,28 +32,15 @@ import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.DataTestRule;
-import bbct.android.common.test.rule.SupportFragmentTestRule;
 import bbct.android.common.view.BaseballCardView;
-
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.longClick;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static bbct.android.common.test.matcher.Matchers.atPosition;
-import static bbct.android.common.test.matcher.Matchers.first;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.not;
+import bbct.android.lite.activity.LiteActivity;
 
 public class BaseballCardListSelectionTest {
     @Rule
     public DataTestRule dataTestRule = new DataTestRule();
     @Rule
-    public SupportFragmentTestRule fragmentTestRule =
-        new SupportFragmentTestRule(new BaseballCardList());
+    public ActivityScenarioRule<LiteActivity> activityScenarioRule
+        = new ActivityScenarioRule<>(LiteActivity.class);
 
     private UiDevice device;
     private Instrumentation inst;
