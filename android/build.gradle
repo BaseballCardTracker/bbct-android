@@ -112,7 +112,7 @@ ext {
     junitVersion = '4.13.1'
     lifecycleVersion = '2.4.0-beta01'
     materialVersion = '1.5.0'
-    roomVersion = '2.4.0-alpha04'
+    roomVersion = '2.5.0-alpha01'
     testLibVersion = '1.4.0'
     uiautomatorVersion = '2.2.0'
 }
