@@ -28,24 +28,27 @@ import org.junit.Test;
 import java.util.List;
 
 import bbct.android.common.R;
+import bbct.android.common.activity.MainActivity;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.view.BaseballCardView;
-import bbct.android.lite.activity.LiteActivity;
 
-public class BaseballCardListSelectionTest {
+abstract public class BaseballCardListSelectionTest<T extends MainActivity> {
     @Rule
     public DataTestRule dataTestRule = new DataTestRule();
     @Rule
-    public ActivityScenarioRule<LiteActivity> activityScenarioRule
-        = new ActivityScenarioRule<>(LiteActivity.class);
+    public ActivityScenarioRule<T> activityScenarioRule;
 
     private UiDevice device;
     private Instrumentation inst;
     private DatabaseUtil dbUtil;
     private List<BaseballCard> allCards;
+
+    public BaseballCardListSelectionTest(Class<T> activityClass) {
+        activityScenarioRule = new ActivityScenarioRule<>(activityClass);
+    }
 
     @Before
     public void setUp() {
