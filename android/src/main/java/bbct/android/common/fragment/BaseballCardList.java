@@ -234,7 +234,7 @@ public class BaseballCardList extends Fragment {
             );
         }
 
-        cards.observe(this, cards1 -> adapter.setCards(Objects.requireNonNull(cards1)));
+        cards.observe(getViewLifecycleOwner(), cards1 -> adapter.setCards(Objects.requireNonNull(cards1)));
     }
 
     public void setAllSelected(boolean isSelected) {

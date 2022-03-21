@@ -195,19 +195,19 @@ public class BaseballCardDetails extends Fragment {
         BaseballCardDao dao = database.getBaseballCardDao();
         LiveData<List<String>> brands = dao.getBrands();
         brands.observe(
-            BaseballCardDetails.this,
+            getViewLifecycleOwner(),
             new ListObserver(brandAdapter)
         );
 
         LiveData<List<String>> playerNames = dao.getPlayerNames();
         playerNames.observe(
-            BaseballCardDetails.this,
+            getViewLifecycleOwner(),
             new ListObserver(playerNameAdapter)
         );
 
         LiveData<List<String>> teams = dao.getTeams();
         teams.observe(
-            BaseballCardDetails.this,
+            getViewLifecycleOwner(),
             new ListObserver(teamAdapter)
         );
 
