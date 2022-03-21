@@ -113,7 +113,7 @@ public class BaseballCardDetails extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.card_details, container, false);
         ButterKnife.bind(this, view);
-        final Activity activity = Objects.requireNonNull(getActivity());
+        final Activity activity = requireActivity();
         String cardDetailsTitle = this.getString(R.string.card_details_title);
         String title = this.getString(R.string.bbct_title, cardDetailsTitle);
         activity.setTitle(title);
@@ -224,7 +224,7 @@ public class BaseballCardDetails extends Fragment {
                 @Override
                 protected BaseballCard doInBackground(Long... args) {
                     long id = args[0];
-                    Activity activity = Objects.requireNonNull(getActivity());
+                    Activity activity = requireActivity();
                     BaseballCardDatabase database =
                         BaseballCardDatabase.getInstance(activity);
                     BaseballCardDao dao = database.getBaseballCardDao();
@@ -259,7 +259,7 @@ public class BaseballCardDetails extends Fragment {
     }
 
     private ArrayAdapter<CharSequence> populateSpinnerAdapter(int arrayId) {
-        Activity activity = Objects.requireNonNull(getActivity());
+        Activity activity = requireActivity();
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
             activity, arrayId, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -326,7 +326,7 @@ public class BaseballCardDetails extends Fragment {
 
     private void onSave() {
         final BaseballCard newCard = this.getBaseballCard();
-        Activity activity = Objects.requireNonNull(getActivity());
+        Activity activity = requireActivity();
         BaseballCardDatabase database = BaseballCardDatabase.getInstance(activity);
         final BaseballCardDao dao = database.getBaseballCardDao();
 
@@ -337,7 +337,7 @@ public class BaseballCardDetails extends Fragment {
                     @Override
                     public void run() {
                         dao.updateBaseballCard(newCard);
-                        FragmentActivity activity = Objects.requireNonNull(getActivity());
+                        FragmentActivity activity = requireActivity();
                         activity.getSupportFragmentManager().popBackStack();
                     }
                 }.start();
@@ -348,7 +348,7 @@ public class BaseballCardDetails extends Fragment {
     }
 
     public void insertSuccessful() {
-        Activity activity = Objects.requireNonNull(getActivity());
+        Activity activity = requireActivity();
         this.resetInput();
         this.brandText.requestFocus();
         Toast.makeText(activity, R.string.card_added_message,
@@ -356,7 +356,7 @@ public class BaseballCardDetails extends Fragment {
     }
 
     public void insertFailed() {
-        Activity activity = Objects.requireNonNull(getActivity());
+        Activity activity = requireActivity();
         // Is duplicate card the only reason this exception
         // will be thrown?
         DialogUtil.showErrorDialog(activity,

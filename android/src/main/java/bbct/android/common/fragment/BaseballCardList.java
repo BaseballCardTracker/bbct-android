@@ -91,7 +91,7 @@ public class BaseballCardList extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Activity activity = Objects.requireNonNull(getActivity());
+        Activity activity = requireActivity();
         activity.setTitle(R.string.app_name);
     }
 
@@ -102,7 +102,7 @@ public class BaseballCardList extends Fragment {
         ButterKnife.bind(this, view);
         setUpRecyclerView();
 
-        final FragmentActivity activity = Objects.requireNonNull(getActivity());
+        final FragmentActivity activity = requireActivity();
         addButton.setOnClickListener(v -> {
             BaseballCardDetails details = new BaseballCardDetails();
             activity.getSupportFragmentManager()
@@ -120,7 +120,7 @@ public class BaseballCardList extends Fragment {
     private void setUpRecyclerView() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         cardList.setLayoutManager(layoutManager);
-        FragmentActivity activity = Objects.requireNonNull(getActivity());
+        FragmentActivity activity = requireActivity();
         adapter = new BaseballCardAdapter(activity, callback);
         cardList.setAdapter(adapter);
     }
@@ -155,7 +155,7 @@ public class BaseballCardList extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
-        FragmentActivity activity = Objects.requireNonNull(getActivity());
+        FragmentActivity activity = requireActivity();
         switch (itemId) {
             case R.id.filter_menu:
                 FilterCards filterCards = new FilterCards();
@@ -187,7 +187,7 @@ public class BaseballCardList extends Fragment {
     }
 
     public void deleteSelectedCards() {
-        final Activity activity = Objects.requireNonNull(getActivity());
+        final Activity activity = requireActivity();
         final List<BaseballCard> cards = adapter.getSelectedItems();
 
         new Thread(() -> {
@@ -205,7 +205,7 @@ public class BaseballCardList extends Fragment {
 
     private void applyFilter(Bundle filterParams) {
         LiveData<List<BaseballCard>> cards;
-        final Activity activity = Objects.requireNonNull(getActivity());
+        final Activity activity = requireActivity();
         BaseballCardDatabase database =
             BaseballCardDatabase.getInstance(activity);
         BaseballCardDao dao = database.getBaseballCardDao();
