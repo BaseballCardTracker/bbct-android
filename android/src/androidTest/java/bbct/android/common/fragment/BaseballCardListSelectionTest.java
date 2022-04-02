@@ -3,13 +3,13 @@ package bbct.android.common.fragment;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.longClick;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.not;
 import static bbct.android.common.test.matcher.Matchers.atPosition;
 import static bbct.android.common.test.matcher.Matchers.first;
 
@@ -112,9 +112,9 @@ abstract public class BaseballCardListSelectionTest<T extends MainActivity> {
         onView(atPosition(index, withId(R.id.checkmark)))
             .perform(click());
         onView(withId(R.id.delete_menu))
-            .check(matches(not(isDisplayed())));
+            .check(doesNotExist());
         onView(withId(R.id.select_all_menu))
-            .check(matches(not(isDisplayed())));
+            .check(doesNotExist());
         assertNoCheckboxesChecked();
     }
 
