@@ -12,10 +12,10 @@ import retrofit2.http.Path;
 
 public interface BbctApi {
     @GET("baseball_cards/")
-    Call<List<BaseballCard>> baseballCards();
+    Call<List<BaseballCard>> getBaseballCards();
 
     @GET("baseball_cards/{id}/")
-    Call<BaseballCard> baseballCard(@Path("id") int id);
+    Call<BaseballCard> getBaseballCard(@Path("id") int id);
 
     @POST("baseball_cards/")
     Call<BaseballCard> createBaseballCard(@Body BaseballCard card);
