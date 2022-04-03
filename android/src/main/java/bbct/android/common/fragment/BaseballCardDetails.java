@@ -51,12 +51,17 @@ import java.util.Objects;
 
 import bbct.android.common.R;
 import bbct.android.common.activity.util.DialogUtil;
+import bbct.android.common.api.BbctApi;
+import bbct.android.common.api.RetrofitClient;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.database.BaseballCardDao;
 import bbct.android.common.database.BaseballCardDatabase;
 import bbct.android.common.database.InsertCardTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BaseballCardDetails extends Fragment {
     private static final String ID = "id";
@@ -343,8 +348,26 @@ public class BaseballCardDetails extends Fragment {
                 }.start();
             } else {
                 new InsertCardTask(this, dao).execute(newCard);
+
+                postCard(newCard);
             }
         }
+    }
+
+    private void postCard(BaseballCard card) {
+        BbctApi service = RetrofitClient.getInstance().create(BbctApi.class);
+        Call<bbct.android.common.api.BaseballCard> call = service.createBaseballCard(new bbct.android.common.api.BaseballCard(card));
+        call.enqueue(new Callback<bbct.android.common.api.BaseballCard>() {
+            @Override
+            public void onResponse(Call<bbct.android.common.api.BaseballCard> call, Response<bbct.android.common.api.BaseballCard> response) {
+                Log.d(TAG, response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<bbct.android.common.api.BaseballCard> call, Throwable t) {
+                Toast.makeText(requireActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void insertSuccessful() {

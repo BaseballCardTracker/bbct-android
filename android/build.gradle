@@ -127,6 +127,7 @@ dependencies {
     implementation "com.google.firebase:firebase-crashlytics:${firebaseCrashlyticsVersion}"
     implementation "com.jakewharton:butterknife:${butterknifeVersion}"
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
     liteImplementation "com.google.android.gms:play-services-ads:${googleServiceAdsVersion}"
 
