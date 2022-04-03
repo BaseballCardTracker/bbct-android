@@ -119,28 +119,28 @@ ext {
 
 dependencies {
     implementation "androidx.appcompat:appcompat:${appcompatVersion}"
-    implementation "com.google.android.material:material:${materialVersion}"
-    implementation "androidx.room:room-runtime:${roomVersion}"
     implementation "androidx.lifecycle:lifecycle-livedata:${lifecycleVersion}"
+    implementation "androidx.room:room-runtime:${roomVersion}"
+    implementation "com.google.android.material:material:${materialVersion}"
     implementation "com.google.firebase:firebase-analytics:${firebaseAnalyticsVersion}"
     implementation "com.google.firebase:firebase-crashlytics:${firebaseCrashlyticsVersion}"
     implementation "com.jakewharton:butterknife:${butterknifeVersion}"
 
     liteImplementation "com.google.android.gms:play-services-ads:${googleServiceAdsVersion}"
 
-    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
     annotationProcessor "androidx.room:room-compiler:${roomVersion}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
 
-    testImplementation "junit:junit:${junitVersion}"
     testImplementation "androidx.room:room-testing:${roomVersion}"
+    testImplementation "junit:junit:${junitVersion}"
 
     androidTestImplementation "androidx.annotation:annotation:${annotationVersion}"
-    androidTestImplementation "androidx.test:runner:${testLibVersion}"
-    androidTestImplementation "androidx.test:rules:${testLibVersion}"
     androidTestImplementation "androidx.fragment:fragment-testing:${fragmentVersion}"
-    androidTestImplementation "androidx.test.uiautomator:uiautomator:${uiautomatorVersion}"
-    androidTestImplementation "androidx.test.espresso:espresso-core:${espressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:${espressoVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${espressoVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-intents:${espressoVersion}"
+    androidTestImplementation "androidx.test.uiautomator:uiautomator:${uiautomatorVersion}"
+    androidTestImplementation "androidx.test:rules:${testLibVersion}"
+    androidTestImplementation "androidx.test:runner:${testLibVersion}"
     androidTestImplementation "tools.fastlane:screengrab:2.1.1"
 }
