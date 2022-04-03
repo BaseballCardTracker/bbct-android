@@ -2,7 +2,6 @@ package bbct.android.common.api;
 
 import java.util.List;
 
-import bbct.android.common.database.BaseballCard;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
