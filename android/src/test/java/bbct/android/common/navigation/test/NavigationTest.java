@@ -1,4 +1,4 @@
-package bbct.android.common.navigation;
+package bbct.android.common.navigation.test;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.navigation.NavController;
