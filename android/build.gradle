@@ -22,6 +22,14 @@ allprojects {
     }
 }
 
+Properties props = new Properties()
+def propFile = new File('bbct.properties')
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+} else {
+    println 'bbct.properties not found'
+}
+
 android {
     compileSdkVersion 32
     flavorDimensions "tier"
@@ -78,25 +86,15 @@ android {
     useLibrary 'android.test.mock'
 }
 
-Properties props = new Properties()
-def propFile = new File('bbct.properties')
-if (propFile.canRead()) {
-    props.load(new FileInputStream(propFile))
-
-    if (props != null) {
-        if (props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD')
-                && props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
-            android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
-            android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
-            android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
-            android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
-        } else {
-            println 'bbct.properties found but SIGNING entries are missing'
-            android.buildTypes.release.signingConfig = null
-        }
-    }
+if (props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD')
+        && props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
+    android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
+    android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
+    android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
+    android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
 } else {
-    println 'bbct.properties not found'
+    println 'bbct.properties found but SIGNING entries are missing'
+    android.buildTypes.release.signingConfig = null
 }
 
 ext {
