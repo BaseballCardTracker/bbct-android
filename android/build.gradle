@@ -129,7 +129,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 
-    debugImplementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 
     liteImplementation "com.google.android.gms:play-services-ads:${googleServiceAdsVersion}"
 
