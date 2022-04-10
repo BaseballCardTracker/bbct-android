@@ -18,15 +18,12 @@
  */
 package bbct.android.common.functional;
 
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiSelector;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-@RunWith(AndroidJUnit4.class)
 public class LaunchTest extends UiAutomatorTest {
 
     @Test

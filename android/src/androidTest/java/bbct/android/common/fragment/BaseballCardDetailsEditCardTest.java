@@ -22,9 +22,10 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.junit.Assert;
 
 import java.io.InputStream;
 import java.util.EnumSet;

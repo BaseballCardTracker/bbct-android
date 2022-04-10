@@ -21,7 +21,7 @@ package bbct.android.common.test.rule;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.rules.ExternalResource;
 
@@ -32,7 +32,7 @@ public class SharedPreferencesTestRule extends ExternalResource {
 
     @Override
     protected void before() throws Throwable {
-        Context context = InstrumentationRegistry.getTargetContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         prefs = context.getSharedPreferences(SharedPreferenceKeys.PREFS, Context.MODE_PRIVATE);
     }
 

@@ -22,7 +22,7 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
@@ -51,7 +51,7 @@ public abstract class UiAutomatorTest {
     public void setUp() throws UiObjectNotFoundException {
         inst = InstrumentationRegistry.getInstrumentation();
         device = UiDevice.getInstance(inst);
-        context = InstrumentationRegistry.getTargetContext();
+        context = inst.getTargetContext();
         targetPackage = context.getPackageName();
         startApp();
     }
@@ -71,7 +71,7 @@ public abstract class UiAutomatorTest {
         device.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)), LAUNCH_TIMEOUT);
 
         // Launch the app
-        Context context = InstrumentationRegistry.getContext();
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         final Intent intent = context.getPackageManager()
                 .getLaunchIntentForPackage(targetPackage);
         // Clear out any previous instances

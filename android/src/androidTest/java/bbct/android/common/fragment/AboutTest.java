@@ -21,19 +21,15 @@ package bbct.android.common.fragment;
 import android.app.Activity;
 
 import androidx.fragment.app.Fragment;
-import androidx.test.runner.AndroidJUnit4;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import bbct.android.common.test.rule.SupportFragmentTestRule;
 
 // TODO: Add tests for the layout of {@link About}
-@RunWith(AndroidJUnit4.class)
 public class AboutTest {
     @Rule
     public SupportFragmentTestRule fragmentTestRule = new SupportFragmentTestRule(new About());

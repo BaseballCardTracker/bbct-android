@@ -30,7 +30,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
@@ -47,10 +46,10 @@ import java.util.List;
 import java.util.Objects;
 
 import bbct.android.common.R;
-import bbct.android.common.view.BaseballCardActionModeCallback;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.database.BaseballCardDao;
 import bbct.android.common.database.BaseballCardDatabase;
+import bbct.android.common.view.BaseballCardActionModeCallback;
 import bbct.android.common.view.BaseballCardAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,8 +65,8 @@ public class BaseballCardList extends Fragment {
 
     private BaseballCardAdapter adapter = null;
     private Bundle filterParams = null;
-    private BaseballCardActionModeCallback callback =
-            new BaseballCardActionModeCallback(this);
+    private final BaseballCardActionModeCallback callback =
+        new BaseballCardActionModeCallback(this);
 
     public static BaseballCardList getInstance(Bundle filterArgs) {
         BaseballCardList cardList = new BaseballCardList();
@@ -123,7 +122,7 @@ public class BaseballCardList extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.list, menu);
     }
 
@@ -183,13 +182,10 @@ public class BaseballCardList extends Fragment {
         final Activity activity = Objects.requireNonNull(getActivity());
         final List<BaseballCard> cards = adapter.getSelectedItems();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                BaseballCardDatabase database =
-                    BaseballCardDatabase.getInstance(activity);
-                database.getBaseballCardDao().deleteBaseballCards(cards);
-            }
+        new Thread(() -> {
+            BaseballCardDatabase database =
+                BaseballCardDatabase.getInstance(activity);
+            database.getBaseballCardDao().deleteBaseballCards(cards);
         }).start();
 
         Toast.makeText(
@@ -223,19 +219,14 @@ public class BaseballCardList extends Fragment {
 
             cards = dao.getBaseballCards(
                 String.format(format, brand),
-                Integer.valueOf(year),
+                Integer.parseInt(year),
                 String.format(format, number),
                 String.format(format, playerName),
                 String.format(format, team)
             );
         }
 
-        cards.observe(this, new Observer<List<BaseballCard>>() {
-            @Override
-            public void onChanged(@Nullable List<BaseballCard> cards) {
-                adapter.setCards(Objects.requireNonNull(cards));
-            }
-        });
+        cards.observe(this, cards1 -> adapter.setCards(Objects.requireNonNull(cards1)));
     }
 
     public void setAllSelected(boolean isSelected) {

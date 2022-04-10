@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
 
-    private FirebaseAnalytics analytics;
     private SharedPreferences prefs;
 
     @Override

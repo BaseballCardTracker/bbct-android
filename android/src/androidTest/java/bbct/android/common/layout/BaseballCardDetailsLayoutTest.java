@@ -18,11 +18,8 @@
  */
 package bbct.android.common.layout;
 
-import androidx.test.runner.AndroidJUnit4;
-
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import bbct.android.common.R;
 import bbct.android.common.fragment.BaseballCardDetails;
@@ -36,7 +33,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.Matchers.allOf;
 
-@RunWith(AndroidJUnit4.class)
 public class BaseballCardDetailsLayoutTest {
     @Rule
     public SupportFragmentTestRule fragmentTestRule

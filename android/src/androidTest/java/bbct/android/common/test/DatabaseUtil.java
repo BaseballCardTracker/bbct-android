@@ -30,11 +30,12 @@ import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 
 public class DatabaseUtil {
-    private SQLiteDatabase db;
-    private Context context;
     private static final String DB_NAME = BaseballCardSQLHelper.DATABASE_NAME;
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
     private static final String TAG = DatabaseUtil.class.getName();
+
+    private final Context context;
+    private final SQLiteDatabase db;
 
     public DatabaseUtil(Context context) {
         String sqlCreate = "CREATE TABLE IF NOT EXISTS " + BaseballCardContract.TABLE_NAME + "("

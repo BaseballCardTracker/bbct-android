@@ -26,7 +26,7 @@ import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.test.ProviderTestCase2;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.List;

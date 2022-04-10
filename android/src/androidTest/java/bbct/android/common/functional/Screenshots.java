@@ -22,7 +22,6 @@ import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
@@ -30,7 +29,6 @@ import androidx.test.uiautomator.UiSelector;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import tools.fastlane.screengrab.Screengrab;
 import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy;
 
@@ -42,7 +40,6 @@ import bbct.android.common.test.rule.DataTestRule;
 
 import static junit.framework.Assert.assertTrue;
 
-@RunWith(AndroidJUnit4.class)
 public class Screenshots extends UiAutomatorTest {
     @Rule
     public DataTestRule dataTestRule = new DataTestRule();
