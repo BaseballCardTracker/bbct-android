@@ -148,6 +148,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:${roomVersion}"
 
     androidTestImplementation "androidx.annotation:annotation:${annotationVersion}"
+    androidTestImplementation "androidx.navigation:navigation-testing:${navVersion}"
     androidTestImplementation "androidx.test:runner:${testLibVersion}"
     androidTestImplementation "androidx.test:rules:${testLibVersion}"
     androidTestImplementation "androidx.test.uiautomator:uiautomator:${uiautomatorVersion}"
