@@ -21,9 +21,9 @@
     package="bbct.android.common"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -33,16 +33,14 @@
         android:uiOptions="splitActionBarWhenNarrow"
         android:usesCleartextTraffic="true"
     >
-
         <meta-data
             android:name="android.support.UI_OPTIONS"
-            android:value="splitActionBarWhenNarrow"/>
+            android:value="splitActionBarWhenNarrow" />
         <meta-data
             android:name="com.crashlytics.ApiKey"
-            android:value="9cde09037367c7862dce4570593feb1a6387b087"/>
+            android:value="9cde09037367c7862dce4570593feb1a6387b087" />
 
-        <activity android:name=".activity.FragmentTestActivity"/>
-
+        <activity android:name=".activity.FragmentTestActivity" />
     </application>
 
 </manifest>
