@@ -11,6 +11,8 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Objects;
+
 import bbct.android.common.R;
 import bbct.android.common.fragment.BaseballCardList;
 
@@ -28,7 +30,7 @@ public class NavigationTest {
             Navigation.setViewNavController(fragment.requireView(), navController)
         );
         Espresso.onView(ViewMatchers.withId(R.id.add_button)).perform(ViewActions.click());
-        Assert.assertEquals(navController.getCurrentDestination().getId(), R.id.card_details);
+        Assert.assertEquals(Objects.requireNonNull(navController.getCurrentDestination()).getId(), R.id.card_details);
     }
 
     @Test
