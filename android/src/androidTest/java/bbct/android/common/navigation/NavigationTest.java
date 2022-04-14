@@ -1,5 +1,7 @@
 package bbct.android.common.navigation;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
@@ -25,12 +27,17 @@ public class NavigationTest {
     @Test
     public void clickOnAddButtonNavigatesToDetails() {
         TestNavHostController navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
-        FragmentScenario<BaseballCardList> listScenario = FragmentScenario.launchInContainer(BaseballCardList.class);
-        listScenario.onFragment(fragment ->
-            Navigation.setViewNavController(fragment.requireView(), navController)
+        FragmentScenario<BaseballCardList> listScenario = FragmentScenario.launchInContainer(
+            BaseballCardList.class,
+            null,
+            R.style.AppTheme
         );
+        listScenario.onFragment(fragment -> {
+            navController.setGraph(R.navigation.nav_graph);
+            Navigation.setViewNavController(fragment.requireView(), navController);
+        });
         Espresso.onView(ViewMatchers.withId(R.id.add_button)).perform(ViewActions.click());
-        Assert.assertEquals(Objects.requireNonNull(navController.getCurrentDestination()).getId(), R.id.card_details);
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.card_details);
     }
 
     @Test
