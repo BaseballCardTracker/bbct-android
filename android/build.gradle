@@ -120,6 +120,7 @@ ext {
     navVersion = '2.4.2'
     roomVersion = '2.5.0-alpha01'
     testLibVersion = '1.4.0'
+    truthVersion = '1.4.0'
     uiautomatorVersion = '2.2.0'
 }
 
@@ -148,6 +149,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:${roomVersion}"
 
     androidTestImplementation "androidx.annotation:annotation:${annotationVersion}"
+    androidTestImplementation "androidx.test.ext:truth:${truthVersion}"
     androidTestImplementation "androidx.navigation:navigation-testing:${navVersion}"
     androidTestImplementation "androidx.test:runner:${testLibVersion}"
     androidTestImplementation "androidx.test:rules:${testLibVersion}"
