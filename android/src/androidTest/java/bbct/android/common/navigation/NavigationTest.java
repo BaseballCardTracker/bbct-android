@@ -5,6 +5,7 @@ import static com.google.common.truth.Truth.assertThat;
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
+import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
@@ -17,11 +18,18 @@ import java.util.Objects;
 
 import bbct.android.common.R;
 import bbct.android.common.fragment.BaseballCardList;
+import bbct.android.lite.activity.LiteActivity;
 
 public class NavigationTest {
     @Test
     public void appStartsOnListView() {
-        Assert.fail("NOT IMPLEMENTED");
+        TestNavHostController navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
+        ActivityScenario<LiteActivity> activityScenario = ActivityScenario.launch(LiteActivity.class);
+        activityScenario.onActivity(activity -> {
+            navController.setGraph(R.navigation.nav_graph);
+            Navigation.setViewNavController(activity.requireViewById(R.id.nav_host_fragment), navController);
+        });
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.card_list);
     }
 
     @Test
