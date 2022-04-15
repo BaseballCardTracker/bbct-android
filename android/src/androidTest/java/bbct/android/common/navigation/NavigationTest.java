@@ -3,6 +3,7 @@ package bbct.android.common.navigation;
 import static com.google.common.truth.Truth.assertThat;
 
 import androidx.fragment.app.testing.FragmentScenario;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
 import androidx.test.core.app.ActivityScenario;
@@ -55,7 +56,14 @@ public class NavigationTest {
 
     @Test
     public void clickOnSearchMenuNavigatesToFilter() {
-        Assert.fail("NOT IMPLEMENTED");
+        TestNavHostController navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
+        ActivityScenario<LiteActivity> listScenario = ActivityScenario.launch(LiteActivity.class);
+        listScenario.onActivity(activity -> {
+            navController.setGraph(R.navigation.nav_graph);
+            Navigation.setViewNavController(activity.requireViewById(R.id.nav_host_fragment), navController);
+        });
+        Espresso.onView(ViewMatchers.withId(R.id.filter_menu)).perform(ViewActions.click());
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.filter_cards);
     }
 
     @Test
