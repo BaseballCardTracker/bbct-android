@@ -1,6 +1,9 @@
 package bbct.android.common.navigation;
 
+import static androidx.test.espresso.action.ViewActions.click;
 import static com.google.common.truth.Truth.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
+import static bbct.android.common.test.matcher.Matchers.atPosition;
 
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.navigation.Navigation;
@@ -12,15 +15,21 @@ import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.Objects;
 
 import bbct.android.common.R;
 import bbct.android.common.fragment.BaseballCardList;
+import bbct.android.common.test.rule.DataTestRule;
+import bbct.android.common.view.BaseballCardView;
 import bbct.android.lite.activity.LiteActivity;
 
 public class NavigationTest {
+    @Rule
+    public DataTestRule dataTestRule = new DataTestRule();
+
     @Test
     public void appStartsOnListView() {
         TestNavHostController navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
@@ -50,7 +59,19 @@ public class NavigationTest {
 
     @Test
     public void clickOnListItemNavigatesToDetails() {
-        Assert.fail("NOT IMPLEMENTED");
+        TestNavHostController navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
+        FragmentScenario<BaseballCardList> listScenario = FragmentScenario.launchInContainer(
+            BaseballCardList.class,
+            null,
+            R.style.AppTheme
+        );
+        listScenario.onFragment(fragment -> {
+            navController.setGraph(R.navigation.nav_graph);
+            Navigation.setViewNavController(fragment.requireView(), navController);
+        });
+        Espresso.onView(atPosition(0, instanceOf(BaseballCardView.class)))
+            .perform(click());
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.card_details);
     }
 
     @Test
