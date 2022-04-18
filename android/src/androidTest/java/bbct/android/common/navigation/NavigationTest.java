@@ -23,6 +23,7 @@ import java.util.Objects;
 import bbct.android.common.R;
 import bbct.android.common.fragment.BaseballCardDetails;
 import bbct.android.common.fragment.BaseballCardList;
+import bbct.android.common.fragment.FilterCards;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.view.BaseballCardView;
 import bbct.android.lite.activity.LiteActivity;
@@ -100,6 +101,23 @@ public class NavigationTest {
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
         Espresso.onView(ViewMatchers.withId(R.id.save_button)).perform(ViewActions.click());
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.card_list);
+        Assert.fail("THIS SHOULD FAIL");
+    }
+
+    @Test
+    public void clickOnConfirmNavigatesFromFilterBackToList() {
+        TestNavHostController navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
+        FragmentScenario<FilterCards> listScenario = FragmentScenario.launchInContainer(
+            FilterCards.class,
+            null,
+            R.style.AppTheme
+        );
+        listScenario.onFragment(fragment -> {
+            navController.setGraph(R.navigation.nav_graph);
+            Navigation.setViewNavController(fragment.requireView(), navController);
+        });
+        Espresso.onView(ViewMatchers.withId(R.id.confirm_button)).perform(ViewActions.click());
         assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.card_list);
         Assert.fail("THIS SHOULD FAIL");
     }
