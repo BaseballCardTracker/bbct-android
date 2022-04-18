@@ -21,6 +21,7 @@ import org.junit.Test;
 import java.util.Objects;
 
 import bbct.android.common.R;
+import bbct.android.common.fragment.BaseballCardDetails;
 import bbct.android.common.fragment.BaseballCardList;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.view.BaseballCardView;
@@ -87,8 +88,20 @@ public class NavigationTest {
     }
 
     @Test
-    public void clickOnApplyNavigatesBackToList() {
-        Assert.fail("NOT IMPLEMENTED");
+    public void clickOnSaveNavigatesFromDetailsBackToList() {
+        TestNavHostController navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
+        FragmentScenario<BaseballCardDetails> listScenario = FragmentScenario.launchInContainer(
+            BaseballCardDetails.class,
+            null,
+            R.style.AppTheme
+        );
+        listScenario.onFragment(fragment -> {
+            navController.setGraph(R.navigation.nav_graph);
+            Navigation.setViewNavController(fragment.requireView(), navController);
+        });
+        Espresso.onView(ViewMatchers.withId(R.id.save_button)).perform(ViewActions.click());
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.card_list);
+        Assert.fail("THIS SHOULD FAIL");
     }
 
     @Test
