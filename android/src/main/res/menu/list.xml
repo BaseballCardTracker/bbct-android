@@ -20,7 +20,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:bbct="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/filter_menu"
+        android:id="@+id/filter_cards"
         android:icon="@drawable/search"
         android:title="@string/filter_menu"
         bbct:showAsAction="ifRoom" />

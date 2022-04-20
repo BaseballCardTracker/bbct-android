@@ -84,7 +84,7 @@ public class NavigationTest {
             navController.setGraph(R.navigation.nav_graph);
             Navigation.setViewNavController(activity.requireViewById(R.id.nav_host_fragment), navController);
         });
-        Espresso.onView(ViewMatchers.withId(R.id.filter_menu)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.filter_cards)).perform(ViewActions.click());
         assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.filter_cards);
     }
 

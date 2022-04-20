@@ -130,7 +130,7 @@ public class BaseballCardList extends Fragment {
     public void onPrepareOptionsMenu(Menu menu) {
         Log.d(TAG, "onPrepareOptionsMenu()");
 
-        MenuItem filter = menu.findItem(R.id.filter_menu);
+        MenuItem filter = menu.findItem(R.id.filter_cards);
         MenuItem clearFilter = menu.findItem(R.id.clear_filter_menu);
         if (this.filterParams == null) {
             filter.setVisible(true);
@@ -153,7 +153,7 @@ public class BaseballCardList extends Fragment {
 
         FragmentActivity activity = Objects.requireNonNull(getActivity());
         switch (itemId) {
-            case R.id.filter_menu:
+            case R.id.filter_cards:
                 NavDirections action = BaseballCardListDirections.actionFilter();
                 NavHostFragment.findNavController(this).navigate(action);
                 return true;

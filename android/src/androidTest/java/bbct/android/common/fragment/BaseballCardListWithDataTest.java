@@ -110,7 +110,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
 
     @Test
     public void testFilterCardsMenuItem() {
-        BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
+        BBCTTestUtil.testMenuItem(R.id.filter_cards, FragmentTags.FILTER_CARDS);
     }
 
     @Test
@@ -123,7 +123,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testStateDestroyWithFilter() throws RemoteException {
         final int year = 1993;
-        onView(withId(R.id.filter_menu)).perform(click());
+        onView(withId(R.id.filter_cards)).perform(click());
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(
             R.id.year_check,
             R.id.year_input,
@@ -178,7 +178,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testAddCardMatchingCurrentFilter() {
         final int year = 1993;
-        onView(withId(R.id.filter_menu)).perform(click());
+        onView(withId(R.id.filter_cards)).perform(click());
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(
             R.id.year_check,
             R.id.year_input,
@@ -211,7 +211,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
             "Codeguru Devs",
             "Catcher"
         );
-        onView(withId(R.id.filter_menu)).perform(click());
+        onView(withId(R.id.filter_cards)).perform(click());
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(
             R.id.year_check,
             R.id.year_input,
@@ -230,7 +230,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testAddCardAfterClearFilter() {
         final int year = 1993;
-        onView(withId(R.id.filter_menu)).perform(click());
+        onView(withId(R.id.filter_cards)).perform(click());
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(
             R.id.year_check,
             R.id.year_input,
@@ -265,7 +265,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         expectedCards = BBCTTestUtil.filterList(allCards, withYear(year));
         expectedCards.remove(cardIndex);
 
-        onView(withId(R.id.filter_menu)).perform(click());
+        onView(withId(R.id.filter_cards)).perform(click());
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(
             R.id.year_check,
             R.id.year_input,
@@ -298,7 +298,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testYearFilter() {
         final int year = 1993;
-        onView(withId(R.id.filter_menu)).perform(click());
+        onView(withId(R.id.filter_cards)).perform(click());
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(
             R.id.year_check,
             R.id.year_input,
@@ -315,7 +315,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
     @Test
     public void testClearFilter() {
         final int year = 1993;
-        onView(withId(R.id.filter_menu)).perform(click());
+        onView(withId(R.id.filter_cards)).perform(click());
         BBCTTestUtil.sendKeysToCurrFieldFilterCards(
             R.id.year_check,
             R.id.year_input,

@@ -114,7 +114,7 @@ abstract public class FilterCardsCombinationTest<T extends MainActivity> extends
     public void testFilter() {
         Log.d(TAG, "inputFieldsMask=" + inputFieldsMask);
 
-        BBCTTestUtil.testMenuItem(R.id.filter_menu, FragmentTags.FILTER_CARDS);
+        BBCTTestUtil.testMenuItem(R.id.filter_cards, FragmentTags.FILTER_CARDS);
 
         final Set<BBCTTestUtil.FilterOption> mask = inputFieldsMask;
         final BaseballCard test = testCard;
