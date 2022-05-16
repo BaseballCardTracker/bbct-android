@@ -38,9 +38,13 @@ public class NavigationTest {
         ActivityScenario<LiteActivity> activityScenario = ActivityScenario.launch(LiteActivity.class);
         activityScenario.onActivity(activity -> {
             navController.setGraph(R.navigation.nav_graph);
-            Navigation.setViewNavController(activity.requireViewById(R.id.nav_host_fragment), navController);
+            Navigation.setViewNavController(
+                activity.requireViewById(R.id.nav_host_fragment),
+                navController
+            );
         });
-        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.card_list);
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
+            .isEqualTo(R.id.card_list);
     }
 
     @Test
@@ -56,7 +60,8 @@ public class NavigationTest {
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
         Espresso.onView(ViewMatchers.withId(R.id.add_button)).perform(ViewActions.click());
-        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.card_details);
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
+            .isEqualTo(R.id.card_details);
     }
 
     @Test
@@ -73,7 +78,8 @@ public class NavigationTest {
         });
         Espresso.onView(atPosition(0, instanceOf(BaseballCardView.class)))
             .perform(click());
-        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.card_details);
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
+            .isEqualTo(R.id.card_details);
     }
 
     @Test
@@ -82,10 +88,14 @@ public class NavigationTest {
         ActivityScenario<LiteActivity> listScenario = ActivityScenario.launch(LiteActivity.class);
         listScenario.onActivity(activity -> {
             navController.setGraph(R.navigation.nav_graph);
-            Navigation.setViewNavController(activity.requireViewById(R.id.nav_host_fragment), navController);
+            Navigation.setViewNavController(
+                activity.requireViewById(R.id.nav_host_fragment),
+                navController
+            );
         });
         Espresso.onView(ViewMatchers.withId(R.id.filter_cards)).perform(ViewActions.click());
-        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.filter_cards);
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
+            .isEqualTo(R.id.filter_cards);
     }
 
     @Test
@@ -101,7 +111,8 @@ public class NavigationTest {
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
         Espresso.onView(ViewMatchers.withId(R.id.save_button)).perform(ViewActions.click());
-        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.card_list);
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
+            .isEqualTo(R.id.card_list);
         Assert.fail("THIS SHOULD FAIL");
     }
 
@@ -118,7 +129,8 @@ public class NavigationTest {
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
         Espresso.onView(ViewMatchers.withId(R.id.confirm_button)).perform(ViewActions.click());
-        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.card_list);
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
+            .isEqualTo(R.id.card_list);
         Assert.fail("THIS SHOULD FAIL");
     }
 
@@ -128,10 +140,14 @@ public class NavigationTest {
         ActivityScenario<LiteActivity> listScenario = ActivityScenario.launch(LiteActivity.class);
         listScenario.onActivity(activity -> {
             navController.setGraph(R.navigation.nav_graph);
-            Navigation.setViewNavController(activity.requireViewById(R.id.nav_host_fragment), navController);
+            Navigation.setViewNavController(
+                activity.requireViewById(R.id.nav_host_fragment),
+                navController
+            );
         });
         Espresso.openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
         Espresso.onView(ViewMatchers.withId(R.id.about)).perform(ViewActions.click());
-        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId()).isEqualTo(R.id.about);
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
+            .isEqualTo(R.id.about);
     }
 }
