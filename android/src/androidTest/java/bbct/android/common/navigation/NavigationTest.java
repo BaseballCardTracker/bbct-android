@@ -114,6 +114,19 @@ public class NavigationTest {
         });
         assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
             .isEqualTo(R.id.card_details);
+        BaseballCard card = new BaseballCard(
+            true,
+            "Mint",
+            "Code Guru Apps",
+            1993,
+            "1",
+            50000,
+            1,
+            "Code Guru",
+            "Code Guru Devs",
+            "Catcher"
+        );
+        BBCTTestUtil.sendKeysToCardDetails(card);
         Espresso.onView(ViewMatchers.withId(R.id.save_button)).perform(ViewActions.click());
         assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
             .isEqualTo(R.id.card_list);
