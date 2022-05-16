@@ -21,9 +21,11 @@ import org.junit.Test;
 import java.util.Objects;
 
 import bbct.android.common.R;
+import bbct.android.common.database.BaseballCard;
 import bbct.android.common.fragment.BaseballCardDetails;
 import bbct.android.common.fragment.BaseballCardList;
 import bbct.android.common.fragment.FilterCards;
+import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.view.BaseballCardView;
 import bbct.android.lite.activity.LiteActivity;
@@ -110,10 +112,11 @@ public class NavigationTest {
             navController.setGraph(R.navigation.nav_graph);
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
+            .isEqualTo(R.id.card_details);
         Espresso.onView(ViewMatchers.withId(R.id.save_button)).perform(ViewActions.click());
         assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
             .isEqualTo(R.id.card_list);
-        Assert.fail("THIS SHOULD FAIL");
     }
 
     @Test
@@ -128,10 +131,11 @@ public class NavigationTest {
             navController.setGraph(R.navigation.nav_graph);
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
+        assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
+            .isEqualTo(R.id.filter_cards);
         Espresso.onView(ViewMatchers.withId(R.id.confirm_button)).perform(ViewActions.click());
         assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
             .isEqualTo(R.id.card_list);
-        Assert.fail("THIS SHOULD FAIL");
     }
 
     @Test
