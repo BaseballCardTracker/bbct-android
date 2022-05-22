@@ -14,7 +14,6 @@ import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 
-import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
