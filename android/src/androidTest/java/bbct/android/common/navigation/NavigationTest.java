@@ -163,7 +163,7 @@ public class NavigationTest {
             );
         });
         Espresso.openActionBarOverflowOrOptionsMenu(ApplicationProvider.getApplicationContext());
-        Espresso.onView(ViewMatchers.withId(R.id.about)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withText(R.string.about_menu)).perform(ViewActions.click());
         assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
             .isEqualTo(R.id.about);
     }
