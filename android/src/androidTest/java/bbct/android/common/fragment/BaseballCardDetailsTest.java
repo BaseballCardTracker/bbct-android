@@ -132,10 +132,7 @@ public class BaseballCardDetailsTest {
 
         int heightdiffBefore = rootView.getRootView().getHeight()
                 - (r.bottom - r.top);
-        boolean condnBefore = false;
-        if (heightdiffBefore > KEYPAD_HEIGHT) {
-            condnBefore = true;
-        }
+        boolean condnBefore = heightdiffBefore > KEYPAD_HEIGHT;
 
         device.pressEnter();
         // Wait for the keyboard to disappear and view to be refreshed
@@ -147,10 +144,7 @@ public class BaseballCardDetailsTest {
         rootView.getWindowVisibleDisplayFrame(r);
         int heightdiffAfter = rootView.getRootView().getHeight()
                 - (r.bottom - r.top);
-        boolean condnAfter = false;
-        if (heightdiffAfter < KEYPAD_HEIGHT) {
-            condnAfter = true;
-        }
+        boolean condnAfter = heightdiffAfter < KEYPAD_HEIGHT;
         Assert.assertTrue(condnBefore && condnAfter);
     }
 
