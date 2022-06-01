@@ -25,8 +25,6 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.Objects;
-
 import bbct.android.common.R;
 import bbct.android.common.fragment.BaseballCardList;
 
