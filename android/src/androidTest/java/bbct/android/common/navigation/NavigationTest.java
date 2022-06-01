@@ -5,6 +5,8 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static bbct.android.common.test.matcher.Matchers.atPosition;
 
+import android.os.Bundle;
+
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.navigation.Navigation;
 import androidx.navigation.testing.TestNavHostController;
@@ -22,6 +24,7 @@ import java.util.Objects;
 import bbct.android.common.R;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.fragment.BaseballCardDetails;
+import bbct.android.common.fragment.BaseballCardDetailsArgs;
 import bbct.android.common.fragment.BaseballCardList;
 import bbct.android.common.fragment.FilterCards;
 import bbct.android.common.test.BBCTTestUtil;
@@ -102,30 +105,19 @@ public class NavigationTest {
     @Test
     public void clickOnSaveNavigatesFromDetailsBackToList() {
         TestNavHostController navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
-        FragmentScenario<BaseballCardDetails> listScenario = FragmentScenario.launchInContainer(
+        FragmentScenario<BaseballCardDetails> detailsScenario = FragmentScenario.launchInContainer(
             BaseballCardDetails.class,
             null,
             R.style.AppTheme
         );
-        listScenario.onFragment(fragment -> {
+        detailsScenario.onFragment(fragment -> {
             navController.setGraph(R.navigation.nav_graph);
+            BaseballCardDetailsArgs args = new BaseballCardDetailsArgs.Builder(0).build();
+            navController.setCurrentDestination(R.id.card_details, args.toBundle());
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
         assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
             .isEqualTo(R.id.card_details);
-        BaseballCard card = new BaseballCard(
-            true,
-            "Mint",
-            "Code Guru Apps",
-            1993,
-            "1",
-            50000,
-            1,
-            "Code Guru",
-            "Code Guru Devs",
-            "Catcher"
-        );
-        BBCTTestUtil.sendKeysToCardDetails(card);
         Espresso.onView(ViewMatchers.withId(R.id.save_button)).perform(ViewActions.click());
         assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
             .isEqualTo(R.id.card_list);
