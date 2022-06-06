@@ -104,16 +104,16 @@ public class NavigationTest {
 
     @Test
     public void clickOnSaveNavigatesFromDetailsBackToList() {
+        Bundle args = new BaseballCardDetailsArgs.Builder(1).build().toBundle();
         TestNavHostController navController = new TestNavHostController(ApplicationProvider.getApplicationContext());
         FragmentScenario<BaseballCardDetails> detailsScenario = FragmentScenario.launchInContainer(
             BaseballCardDetails.class,
-            null,
+            args,
             R.style.AppTheme
         );
         detailsScenario.onFragment(fragment -> {
             navController.setGraph(R.navigation.nav_graph);
-            BaseballCardDetailsArgs args = new BaseballCardDetailsArgs.Builder(0).build();
-            navController.setCurrentDestination(R.id.card_details, args.toBundle());
+            navController.setCurrentDestination(R.id.card_details, args);
             Navigation.setViewNavController(fragment.requireView(), navController);
         });
         assertThat(Objects.requireNonNull(navController.getCurrentDestination()).getId())
