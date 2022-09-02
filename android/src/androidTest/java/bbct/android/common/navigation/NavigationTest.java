@@ -22,12 +22,10 @@ import org.junit.Test;
 import java.util.Objects;
 
 import bbct.android.common.R;
-import bbct.android.common.database.BaseballCard;
 import bbct.android.common.fragment.BaseballCardDetails;
 import bbct.android.common.fragment.BaseballCardDetailsArgs;
 import bbct.android.common.fragment.BaseballCardList;
 import bbct.android.common.fragment.FilterCards;
-import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.rule.DataTestRule;
 import bbct.android.common.view.BaseballCardView;
 import bbct.android.lite.activity.LiteActivity;
