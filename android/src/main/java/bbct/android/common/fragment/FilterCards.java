@@ -33,7 +33,6 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import bbct.android.common.R;
 import butterknife.BindView;
@@ -69,7 +68,7 @@ public class FilterCards extends Fragment {
         public void onClick(View v) {
             EditText input = null;
 
-            Activity activity = Objects.requireNonNull(getActivity());
+            Activity activity = requireActivity();
             for (int i = 0; i < CHECKBOXES.length; i++) {
                 if (v.getId() == CHECKBOXES[i]) {
                     input = activity.findViewById(TEXT_FIELDS[i]);
@@ -103,7 +102,7 @@ public class FilterCards extends Fragment {
         String format = this.getString(R.string.bbct_title);
         String filterCardsTitle = this.getString(R.string.filter_cards_title);
         String title = String.format(format, filterCardsTitle);
-        Activity activity = Objects.requireNonNull(getActivity());
+        Activity activity = requireActivity();
         activity.setTitle(title);
 
         for (int id : CHECKBOXES) {
@@ -133,7 +132,7 @@ public class FilterCards extends Fragment {
         super.onPause();
 
         enabledFields.clear();
-        Activity activity = Objects.requireNonNull(getActivity());
+        Activity activity = requireActivity();
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
             EditText et = activity.findViewById(TEXT_FIELDS[i]);
             if (et.isEnabled()) {
@@ -160,7 +159,7 @@ public class FilterCards extends Fragment {
 
     private int numberChecked() {
         int count = 0;
-        Activity activity = Objects.requireNonNull(getActivity());
+        Activity activity = requireActivity();
         for (int id : CHECKBOXES) {
             CheckBox cb = activity.findViewById(id);
             if (cb != null && cb.isChecked()) {
@@ -173,7 +172,7 @@ public class FilterCards extends Fragment {
 
     private void onConfirm() {
         Bundle filterArgs = new Bundle();
-        FragmentActivity activity = Objects.requireNonNull(getActivity());
+        FragmentActivity activity = requireActivity();
         for (int i = 0; i < TEXT_FIELDS.length; i++) {
             EditText input = activity.findViewById(TEXT_FIELDS[i]);
             if (input.isEnabled() && input.getText().toString().length() > 0) {

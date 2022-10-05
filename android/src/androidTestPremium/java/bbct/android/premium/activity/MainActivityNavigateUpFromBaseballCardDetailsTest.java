@@ -1,4 +1,4 @@
-package bbct.android.premium.activity.test;
+package bbct.android.premium.activity;
 
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.navigation.NavigateUpFromBaseballCardDetailsTest;

@@ -19,11 +19,16 @@
 
 package bbct.android.lite.provider;
 
+import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardProviderTest;
 import bbct.android.lite.provider.LiteProvider;
 
 public class LiteProviderTest extends BaseballCardProviderTest<LiteProvider> {
     public LiteProviderTest() {
-        super(LiteProvider.class);
+        super(
+            LiteProvider.class,
+            BaseballCardContract.LITE_AUTHORITY,
+            BaseballCardContract.LITE_URI
+        );
     }
 }

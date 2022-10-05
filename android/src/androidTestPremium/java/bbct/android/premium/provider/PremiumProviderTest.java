@@ -16,20 +16,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.premium.activity.test;
 
-import bbct.android.common.activity.MainActivity;
-import bbct.android.common.fragment.FilterCardsCombinationTest;
-import bbct.android.common.test.BBCTTestUtil;
-import java.util.Set;
-import junit.framework.Test;
+package bbct.android.premium.provider;
 
-public class MainActivityFilterTest extends FilterCardsCombinationTest<MainActivity> {
-    public MainActivityFilterTest(Set<BBCTTestUtil.FilterOption> inputFieldsFlags) {
-        super(MainActivity.class, inputFieldsFlags);
-    }
+import bbct.android.common.provider.BaseballCardContract;
+import bbct.android.common.provider.BaseballCardProviderTest;
+import bbct.android.premium.provider.PremiumProvider;
 
-    public static Test suite() throws ReflectiveOperationException {
-        return FilterCardsCombinationTest.suite(MainActivityFilterTest.class);
+public class PremiumProviderTest extends BaseballCardProviderTest<PremiumProvider> {
+    public PremiumProviderTest() {
+        super(
+            PremiumProvider.class,
+            BaseballCardContract.PREMIUM_AUTHORITY,
+            BaseballCardContract.PREMIUM_URI
+        );
     }
 }

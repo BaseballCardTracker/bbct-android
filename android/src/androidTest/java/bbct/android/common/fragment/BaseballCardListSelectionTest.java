@@ -1,7 +1,21 @@
 package bbct.android.common.fragment;
 
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.longClick;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.instanceOf;
+import static bbct.android.common.test.matcher.Matchers.atPosition;
+import static bbct.android.common.test.matcher.Matchers.first;
+
 import android.app.Instrumentation;
 
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 
@@ -14,37 +28,27 @@ import org.junit.Test;
 import java.util.List;
 
 import bbct.android.common.R;
+import bbct.android.common.activity.MainActivity;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.DatabaseUtil;
 import bbct.android.common.test.rule.DataTestRule;
-import bbct.android.common.test.rule.SupportFragmentTestRule;
 import bbct.android.common.view.BaseballCardView;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.longClick;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isChecked;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isNotChecked;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static bbct.android.common.test.matcher.Matchers.atPosition;
-import static bbct.android.common.test.matcher.Matchers.first;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.not;
-
-public class BaseballCardListSelectionTest {
+abstract public class BaseballCardListSelectionTest<T extends MainActivity> {
     @Rule
     public DataTestRule dataTestRule = new DataTestRule();
     @Rule
-    public SupportFragmentTestRule fragmentTestRule =
-        new SupportFragmentTestRule(new BaseballCardList());
+    public ActivityScenarioRule<T> activityScenarioRule;
 
     private UiDevice device;
     private Instrumentation inst;
     private DatabaseUtil dbUtil;
     private List<BaseballCard> allCards;
+
+    public BaseballCardListSelectionTest(Class<T> activityClass) {
+        activityScenarioRule = new ActivityScenarioRule<>(activityClass);
+    }
 
     @Before
     public void setUp() {
@@ -63,7 +67,7 @@ public class BaseballCardListSelectionTest {
     public void testPreConditions() {
         BBCTTestUtil.assertDatabaseCreated(inst.getTargetContext());
         Assert.assertTrue(dbUtil.containsAllBaseballCards(this.allCards));
-        BBCTTestUtil.assertListViewContainsItems(this.allCards);
+        BBCTTestUtil.assertListContainsItems(this.allCards);
     }
 
     @Test
@@ -108,9 +112,9 @@ public class BaseballCardListSelectionTest {
         onView(atPosition(index, withId(R.id.checkmark)))
             .perform(click());
         onView(withId(R.id.delete_menu))
-            .check(matches(not(isDisplayed())));
+            .check(doesNotExist());
         onView(withId(R.id.select_all_menu))
-            .check(matches(not(isDisplayed())));
+            .check(doesNotExist());
         assertNoCheckboxesChecked();
     }
 

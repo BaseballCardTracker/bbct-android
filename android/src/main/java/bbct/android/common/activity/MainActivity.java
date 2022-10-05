@@ -30,8 +30,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;

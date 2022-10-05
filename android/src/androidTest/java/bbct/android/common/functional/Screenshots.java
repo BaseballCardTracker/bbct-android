@@ -29,16 +29,12 @@ import androidx.test.uiautomator.UiSelector;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import tools.fastlane.screengrab.Screengrab;
-import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy;
-
-import java.io.File;
 
 import bbct.android.common.R;
 import bbct.android.common.database.BaseballCard;
 import bbct.android.common.test.rule.DataTestRule;
-
-import static junit.framework.Assert.assertTrue;
+import tools.fastlane.screengrab.Screengrab;
+import tools.fastlane.screengrab.UiAutomatorScreenshotStrategy;
 
 public class Screenshots extends UiAutomatorTest {
     @Rule
