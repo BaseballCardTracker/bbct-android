@@ -32,6 +32,7 @@ import org.junit.Test;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 
 import bbct.android.common.R;
@@ -96,6 +97,28 @@ abstract public class BaseballCardListWithoutDataTest<T extends MainActivity> {
         onView(withId(R.id.add_button))
             .perform(click());
         BBCTTestUtil.addCard(card);
+        // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.ADD_MESSAGE);
+        onView(withContentDescription(containsString("Navigate up"))).perform(click());
+
+        Assert.assertTrue(this.dbUtil.containsBaseballCard(card));
+
+        List<BaseballCard> cards = new ArrayList<>();
+        cards.add(card);
+        onView(withId(R.id.card_list))
+            .check(matches(contains(cards)));
+    }
+
+    @Test
+    public void testAddCardWithoutValue() throws Throwable {
+        BaseballCard card = this.cardInput.getNextBaseballCard();
+        card.value = null;
+
+        onView(withId(R.id.add_button))
+            .perform(click());
+        BBCTTestUtil.sendKeysToCardDetails(
+            card,
+            EnumSet.complementOf(EnumSet.of(BBCTTestUtil.EditTexts.VALUE))
+        );
         // BBCTTestUtil.waitForToast(activity, BBCTTestUtil.ADD_MESSAGE);
         onView(withContentDescription(containsString("Navigate up"))).perform(click());
 

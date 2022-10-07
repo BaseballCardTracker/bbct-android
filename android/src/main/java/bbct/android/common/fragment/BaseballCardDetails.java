@@ -271,11 +271,10 @@ public class BaseballCardDetails extends Fragment {
         Log.d(TAG, "getBaseballCard()");
 
         EditText[] allEditTexts = {this.brandText, this.yearText,
-                this.numberText, this.valueText, this.countText,
+                this.numberText, this.countText,
                 this.playerNameText, this.teamText};
         int[] errorIds = {R.string.brand_input_error,
-                R.string.year_input_error, R.string.number_input_error,
-                R.string.value_input_error, R.string.count_input_error,
+                R.string.year_input_error, R.string.number_input_error, R.string.count_input_error,
                 R.string.player_name_input_error, R.string.team_input_error};
         boolean validInput = true;
 
