@@ -28,8 +28,8 @@ android {
     defaultConfig {
         compileSdk 32
         applicationId "bbct.android.common"
-        minSdkVersion 21
-        targetSdkVersion 32
+        minSdk 21
+        targetSdk 32
         versionCode 24
         versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
