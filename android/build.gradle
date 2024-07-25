@@ -102,22 +102,22 @@ if (propFile.canRead()) {
 }
 
 ext {
-    annotationVersion = '1.0.0'
-    appcompatVersion = '1.4.1'
+    annotationVersion = '1.8.0'
+    appcompatVersion = '1.7.0'
     archCompVersion = '1.1.1'
     butterknifeVersion = '10.0.0'
-    espressoVersion = '3.4.0'
+    espressoVersion = '3.6.1'
     fastlaneVersion = '2.1.1'
-    firebaseAnalyticsVersion = '20.1.1'
-    firebaseCrashlyticsVersion = '18.2.9'
-    fragmentVersion = '1.4.1'
-    googleServiceAdsVersion = '20.6.0'
+    firebaseAnalyticsVersion = '22.0.2'
+    firebaseCrashlyticsVersion = '19.0.3'
+    fragmentVersion = '1.8.1'
+    googleServiceAdsVersion = '23.2.0'
     junitVersion = '4.13.1'
-    lifecycleVersion = '2.5.0-alpha04'
-    materialVersion = '1.5.0'
-    roomVersion = '2.5.0-alpha01'
-    testLibVersion = '1.4.0'
-    uiautomatorVersion = '2.2.0'
+    lifecycleVersion = '2.8.4'
+    materialVersion = '1.12.0'
+    roomVersion = '2.6.1'
+    testLibVersion = '1.6.1'
+    uiautomatorVersion = '2.3.0'
 }
 
 dependencies {
