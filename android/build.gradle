@@ -110,7 +110,7 @@ ext {
     fastlaneVersion = '2.1.1'
     firebaseAnalyticsVersion = '22.0.2'
     firebaseCrashlyticsVersion = '19.0.3'
-    fragmentVersion = '1.8.1'
+    fragmentVersion = '1.8.2'
     googleServiceAdsVersion = '23.2.0'
     junitVersion = '4.13.1'
     lifecycleVersion = '2.8.4'
