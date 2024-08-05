@@ -124,7 +124,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:${appcompatVersion}"
     implementation "com.google.android.material:material:${materialVersion}"
     implementation "androidx.room:room-runtime:${roomVersion}"
-    implementation "androidx.lifecycle:lifecycle-livedata:${lifecycleVersion}"
     implementation "com.google.firebase:firebase-analytics:${firebaseAnalyticsVersion}"
     implementation "com.google.firebase:firebase-crashlytics:${firebaseCrashlyticsVersion}"
     implementation "com.jakewharton:butterknife:${butterknifeVersion}"
