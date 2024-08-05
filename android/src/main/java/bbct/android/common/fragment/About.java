@@ -29,8 +29,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import java.util.Objects;
-
 import bbct.android.common.R;
 
 public class About extends Fragment {
@@ -44,7 +42,7 @@ public class About extends Fragment {
 
         String aboutTitle = this.getString(R.string.about_title);
         String title = this.getString(R.string.bbct_title, aboutTitle);
-        Activity activity = Objects.requireNonNull(getActivity());
+        Activity activity = requireActivity();
         activity.setTitle(title);
 
         TextView versionLabel = view.findViewById(R.id.version_label);

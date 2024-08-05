@@ -100,7 +100,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> {
         Assert.assertNotNull(this.activity);
         BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.containsAllBaseballCards(this.allCards));
-        BBCTTestUtil.assertListViewContainsItems(this.allCards);
+        BBCTTestUtil.assertListContainsItems(this.allCards);
     }
 
     @Test

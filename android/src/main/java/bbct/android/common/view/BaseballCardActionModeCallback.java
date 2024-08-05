@@ -25,8 +25,6 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.Objects;
-
 import bbct.android.common.R;
 import bbct.android.common.fragment.BaseballCardList;
 
@@ -43,7 +41,7 @@ public class BaseballCardActionModeCallback implements ActionMode.Callback {
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        Activity activity = Objects.requireNonNull(listFragment.getActivity());
+        Activity activity = listFragment.requireActivity();
         activity.getMenuInflater().inflate(R.menu.context, menu);
         actionMode = mode;
         isStarted = true;

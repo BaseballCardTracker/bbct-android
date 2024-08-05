@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2016 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.premium.activity.test;
-
-import androidx.test.runner.AndroidJUnit4;
-
-import org.junit.runner.RunWith;
+package bbct.android.premium.activity;
 
 import bbct.android.common.activity.MainActivity;
-import bbct.android.common.fragment.BaseballCardListWithoutDataTest;
+import bbct.android.common.fragment.FilterCardsCombinationTest;
+import bbct.android.common.test.BBCTTestUtil;
+import java.util.Set;
+import junit.framework.Test;
 
-@RunWith(AndroidJUnit4.class)
-public class MainActivityWithoutDataTest extends BaseballCardListWithoutDataTest<MainActivity> {
-
-    public MainActivityWithoutDataTest() {
-        super(MainActivity.class);
+public class MainActivityFilterTest extends FilterCardsCombinationTest<MainActivity> {
+    public MainActivityFilterTest(Set<BBCTTestUtil.FilterOption> inputFieldsFlags) {
+        super(MainActivity.class, inputFieldsFlags);
     }
 
+    public static Test suite() throws ReflectiveOperationException {
+        return FilterCardsCombinationTest.suite(MainActivityFilterTest.class);
+    }
 }
