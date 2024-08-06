@@ -102,7 +102,7 @@ if (propFile.canRead()) {
 }
 
 ext {
-    annotationVersion = '1.8.0'
+    annotationVersion = '1.1.0'
     appcompatVersion = '1.7.0'
     archCompVersion = '1.1.1'
     butterknifeVersion = '10.0.0'
