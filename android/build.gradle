@@ -9,9 +9,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
-        classpath 'com.google.gms:google-services:4.3.10'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
+        classpath 'com.android.tools.build:gradle:8.2.2'
+        classpath 'com.google.gms:google-services:4.4.2'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:3.0.2'
     }
 }
 
@@ -23,13 +23,13 @@ allprojects {
 }
 
 android {
-    compileSdkVersion 32
     flavorDimensions "tier"
 
     defaultConfig {
+        compileSdk 34
         applicationId "bbct.android.common"
-        minSdkVersion 21
-        targetSdkVersion 32
+        minSdk 21
+        targetSdk 34
         versionCode 24
         versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -41,8 +41,8 @@ android {
         multiDexEnabled true
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     signingConfigs {
         release
@@ -69,12 +69,15 @@ android {
         }
     }
     packagingOptions {
-        exclude 'LICENSE.txt'
+        resources {
+            excludes += ['LICENSE.txt']
+        }
     }
 
     useLibrary 'android.test.runner'
     useLibrary 'android.test.base'
     useLibrary 'android.test.mock'
+    namespace 'bbct.android.common'
 }
 
 Properties props = new Properties()
@@ -99,29 +102,28 @@ if (propFile.canRead()) {
 }
 
 ext {
-    annotationVersion = '1.0.0'
-    appcompatVersion = '1.4.1'
+    annotationVersion = '1.1.0'
+    appcompatVersion = '1.7.0'
     archCompVersion = '1.1.1'
     butterknifeVersion = '10.0.0'
-    espressoVersion = '3.4.0'
+    espressoVersion = '3.6.1'
     fastlaneVersion = '2.1.1'
-    firebaseAnalyticsVersion = '20.1.1'
-    firebaseCrashlyticsVersion = '18.2.9'
-    fragmentVersion = '1.4.1'
-    googleServiceAdsVersion = '20.6.0'
+    firebaseAnalyticsVersion = '22.0.2'
+    firebaseCrashlyticsVersion = '19.0.3'
+    fragmentVersion = '1.8.2'
+    googleServiceAdsVersion = '23.2.0'
     junitVersion = '4.13.1'
-    lifecycleVersion = '2.5.0-alpha04'
-    materialVersion = '1.5.0'
-    roomVersion = '2.5.0-alpha01'
-    testLibVersion = '1.4.0'
-    uiautomatorVersion = '2.2.0'
+    lifecycleVersion = '2.8.4'
+    materialVersion = '1.12.0'
+    roomVersion = '2.6.1'
+    testLibVersion = '1.6.1'
+    uiautomatorVersion = '2.3.0'
 }
 
 dependencies {
     implementation "androidx.appcompat:appcompat:${appcompatVersion}"
     implementation "com.google.android.material:material:${materialVersion}"
     implementation "androidx.room:room-runtime:${roomVersion}"
-    implementation "androidx.lifecycle:lifecycle-livedata:${lifecycleVersion}"
     implementation "com.google.firebase:firebase-analytics:${firebaseAnalyticsVersion}"
     implementation "com.google.firebase:firebase-crashlytics:${firebaseCrashlyticsVersion}"
     implementation "com.jakewharton:butterknife:${butterknifeVersion}"
@@ -135,7 +137,7 @@ dependencies {
     testImplementation "androidx.room:room-testing:${roomVersion}"
 
     androidTestImplementation "androidx.annotation:annotation:${annotationVersion}"
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation "androidx.test:runner:${testLibVersion}"
     androidTestImplementation "androidx.test:rules:${testLibVersion}"
     androidTestImplementation "androidx.fragment:fragment-testing:${fragmentVersion}"
