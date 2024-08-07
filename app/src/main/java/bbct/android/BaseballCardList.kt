@@ -1,5 +1,6 @@
 package bbct.android
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
@@ -44,8 +45,10 @@ val cards = listOf(
 
 @Composable
 fun BaseballCardList() {
-    cards.forEach { card ->
-        BaseballCardRow(card)
+    Column {
+        cards.forEach { card ->
+            BaseballCardRow(card)
+        }
     }
 }
 
