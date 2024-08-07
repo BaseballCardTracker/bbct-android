@@ -1,5 +1,6 @@
 package bbct.android
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
@@ -59,5 +60,10 @@ fun BaseballCardList(modifier: Modifier) {
 
 @Composable
 fun BaseballCardRow(card: BaseballCard) {
-    Text(text = "${card.playerName} - ${card.year}")
+    Row {
+        Text(text = card.brand)
+        Text(text = "${card.year}")
+        Text(text = card.number)
+        Text(text = card.playerName)
+    }
 }
