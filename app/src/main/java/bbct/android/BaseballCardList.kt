@@ -1,5 +1,8 @@
 package bbct.android
 
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+
 val cards = listOf(
     BaseballCard(
         autographed = false,
@@ -38,3 +41,15 @@ val cards = listOf(
         position = "Left Field",
     ),
 )
+
+@Composable
+fun BaseballCardList() {
+    cards.forEach { card ->
+        BaseballCardRow(card)
+    }
+}
+
+@Composable
+fun BaseballCardRow(card: BaseballCard) {
+    Text(text = "${card.playerName} - ${card.year}")
+}
