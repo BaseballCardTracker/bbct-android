@@ -61,9 +61,9 @@ fun BaseballCardList(modifier: Modifier) {
 @Composable
 fun BaseballCardRow(card: BaseballCard) {
     Row {
-        Text(text = card.brand)
-        Text(text = "${card.year}")
-        Text(text = card.number)
-        Text(text = card.playerName)
+        Text(text = card.brand, modifier = Modifier.weight(0.2f))
+        Text(text = "${card.year}", modifier = Modifier.weight(0.15f))
+        Text(text = card.number, modifier = Modifier.weight(0.15f))
+        Text(text = card.playerName, modifier = Modifier.weight(0.5f))
     }
 }
