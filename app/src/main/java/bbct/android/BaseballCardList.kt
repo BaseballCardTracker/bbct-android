@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 
 val cards = listOf(
     BaseballCard(
+        id = 1,
         autographed = false,
         condition = "Excellent",
         brand = "Topps",
@@ -20,6 +21,7 @@ val cards = listOf(
         position = "Pitcher"
     ),
     BaseballCard(
+        id = 2,
         autographed = true,
         condition = "Mint",
         brand = "Topps",
@@ -32,6 +34,7 @@ val cards = listOf(
         position = "Pitcher"
     ),
     BaseballCard(
+        id = 3,
         autographed = false,
         condition = "Very Good",
         brand = "Topps",
@@ -48,7 +51,7 @@ val cards = listOf(
 @Composable
 fun BaseballCardList(modifier: Modifier) {
     LazyColumn(modifier = modifier) {
-        items(cards) { card ->
+        items(items = cards, key = {card: BaseballCard -> card.id }) { card ->
             BaseballCardRow(card)
         }
     }

@@ -1,6 +1,7 @@
 package bbct.android
 
 data class BaseballCard(
+    val id: Int,
     val autographed: Boolean,
     val condition: String,
     val brand: String,
