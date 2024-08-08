@@ -1,3 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of BBCT for Android.
+
+ Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+
+ BBCT for Android is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ BBCT for Android is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
 <resources>
-    <string name="app_name">bbct</string>
+
+    <string name="provider_name">BBCT Data</string>
+
+    <!-- Activity titles -->
+    <string name="card_details_title">Card Details</string>
+    <string name="filter_cards_title">Filter Cards</string>
+    <string name="about_title">About</string>
+    <string name="duplicate_card_title">Duplicate Card</string>
+
+    <!-- Labels for card details -->
+    <string name="condition_label">Condition:</string>
+    <string name="autograph_label">Autographed?</string>
+    <string name="brand_label">Brand:</string>
+    <string name="year_label">Year:</string>
+    <string name="number_label">Number:</string>
+    <string name="value_label">Value:</string>
+    <string name="count_label">Quantity:</string>
+    <string name="player_name_label">Player Name:</string>
+    <string name="team_label">Team:</string>
+    <string name="player_position_label">Position:</string>
+
+    <!-- Column headings for card list -->
+    <string name="brand">Brand</string>
+    <string name="year">Year</string>
+    <string name="number">Number</string>
+    <string name="value">Value</string>
+    <string name="count">Count</string>
+    <string name="player_name">Player Name</string>
+    <string name="player_position">Position</string>
+    <string name="team">Team</string>
+
+    <!-- Hints for TextEdit widgets -->
+    <string name="condition_hint">Select condition.</string>
+    <string name="brand_hint">Enter brand name.</string>
+    <string name="year_hint">Enter year.</string>
+    <string name="number_hint">Enter number.</string>
+    <string name="value_hint">Enter value.</string>
+    <string name="count_hint">Enter quantity.</string>
+    <string name="player_name_hint">Enter player name.</string>
+    <string name="team_hint">Enter team.</string>
+    <string name="player_position_hint">Select position.</string>
+
+    <!-- Menu text -->
+    <string name="add_menu">Add Cards</string>
+    <string name="filter_menu">Filter Cards</string>
+    <string name="clear_filter_menu">Clear Filter</string>
+    <string name="about_menu">About</string>
+    <string name="delete_menu">Delete</string>
+    <string name="select_all_menu">Select All</string>
+    <string name="save_menu">Save</string>
+
+    <!-- Text in About activity -->
+    <string name="version_text">Version %1$s</string>
+    <string name="version_number">1.1.0</string>
+    <string name="copyright">Copyright 2012–20 by codeguru</string>
+    <string name="email"><b>Email:</b> &lt;bbct-list@lists.sourceforge.net&gt;</string>
+    <string name="website"><b>Website:</b> &lt;https://github.com/BaseballCardTracker/bbct/wiki&gt;</string>
+    <string name="license">This software is licensed under the GPL. Visit\nhttp://www.gnu.org/licenses/ for a copy of the license.</string>
+    <string name="about">BBCT is a simple database app for your baseball card collection. You can add information about the cards in your collection, view details about individual cards, and filter the list of cards according to a limited set of criteria. BBCT helps you organize your collection and quickly look up which cards you own. Feel free to email your feedback and comments or visit the project website.</string>
+
+    <!-- Card details toasts -->
+    <string name="card_added_message">Card added successfully.</string>
+    <string name="card_deleted_message">Cards deleted successfully.</string>
+
+    <!-- Strings for position spinner in card details activity -->
+    <string-array name="positions">
+        <item>Pitcher</item>
+        <item>Catcher</item>
+        <item>First Base</item>
+        <item>Second Base</item>
+        <item>Third Base</item>
+        <item>Shortstop</item>
+        <item>Left Field</item>
+        <item>Center Field</item>
+        <item>Right Field</item>
+    </string-array>
+
+    <!-- Strings for card condition -->
+    <string-array name="condition">
+        <item>Gem Mint</item>
+        <item>Mint</item>
+        <item>Near Mint</item>
+        <item>Excellent</item>
+        <item>Very Good</item>
+        <item>Good</item>
+        <item>Poor</item>
+    </string-array>
+
+    <!-- Error messages -->
+    <string name="brand_input_error">Please enter a brand name.</string>
+    <string name="year_input_error">Please enter a year.</string>
+    <string name="number_input_error">Please enter a card number.</string>
+    <string name="value_input_error">Please enter the card\'s value.</string>
+    <string name="count_input_error">Please enter the number of cards you own.</string>
+    <string name="player_name_input_error">Please enter the player\'s name.</string>
+    <string name="team_input_error">Please enter the player\'s team.</string>
+    <string name="player_position_input_error">Please enter the player\'s position.</string>
+    <string name="invalid_uri_error">Invalid URI: %1$s</string>
+    <string name="duplicate_card_error">Baseball card already exists. Please update its count.</string>
+    <string name="survey1">Help me improve BBCT by answering a short survey with seven questions.</string>
+    <string name="survey2">
+        Thanks for your feedback in the first BBCT survey. Please take a moment to answer 6
+        more questions about upcoming features.
+    </string>
+    <string name="now">Now</string>
+    <string name="later">Later</string>
+
 </resources>
