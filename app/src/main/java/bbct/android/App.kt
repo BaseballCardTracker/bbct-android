@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import bbct.android.ui.theme.BbctTheme
 
 @Composable
@@ -28,19 +29,19 @@ fun App() {
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 private fun TopBar() {
-    TopAppBar(title = { Text("BBCT") }, actions = { MainMenu() })
+    TopAppBar(title = { Text(stringResource(id = R.string.app_name)) }, actions = { MainMenu() })
 }
 
 @Composable
 fun MainMenu() {
     IconButton(onClick = { /*TODO*/ }) {
-        Icon(Icons.Default.Search, contentDescription = "Filter Cards")
+        Icon(Icons.Default.Search, contentDescription = stringResource(id = R.string.filter_menu))
     }
 }
 
 @Composable
 fun AddCardButton() {
     FloatingActionButton(onClick = { /*TODO*/ }) {
-        Icon(Icons.Default.Add, contentDescription = "Add Card")
+        Icon(Icons.Default.Add, contentDescription = stringResource(id = R.string.add_menu))
     }
 }
