@@ -15,17 +15,29 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import bbct.android.ui.theme.BbctTheme
 
 @Composable
 fun App() {
+    val navController = rememberNavController()
+
     BbctTheme {
         Scaffold(
             topBar = { TopBar() },
             floatingActionButton = { AddCardButton() },
             modifier = Modifier.fillMaxSize()
         ) { innerPadding ->
-            BaseballCardListScreen(modifier = Modifier.padding(innerPadding))
+            NavHost(
+                navController = navController,
+                startDestination = BaseballCardListDestination.route,
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                composable(route = BaseballCardListDestination.route) { BaseballCardListDestination.screen() }
+                composable(route = BaseballCardDetailsDestination.route) { BaseballCardDetailsDestination.screen() }
+            }
         }
     }
 }
