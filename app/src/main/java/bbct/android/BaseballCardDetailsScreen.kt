@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 
@@ -50,8 +51,8 @@ fun BaseballCardDetailsScreen(context: Context = LocalContext.current) {
             Select(
                 labelText = stringResource(id = R.string.condition_label),
                 options = conditions,
-                selected = conditions[0],
-                onSelectedChange = { /* TODO */ })
+                selected = state.value.condition,
+                onSelectedChange = { state.value = state.value.copy(condition = it) })
         }
         Row {
             TextField(
@@ -100,8 +101,8 @@ fun BaseballCardDetailsScreen(context: Context = LocalContext.current) {
             Select(
                 labelText = stringResource(id = R.string.player_position_label),
                 options = positions,
-                selected = positions[0],
-                onSelectedChange = { /* TODO */ })
+                selected = state.value.position,
+                onSelectedChange = { state.value = state.value.copy(position = it) })
         }
     }
 }
@@ -127,7 +128,8 @@ fun Select(
                     expanded = expanded
                 )
             },
-            colors = ExposedDropdownMenuDefaults.textFieldColors()
+            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            modifier = Modifier.menuAnchor()
         )
         ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             options.forEach { option ->
