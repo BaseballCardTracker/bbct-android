@@ -122,7 +122,7 @@ fun Select(
             label = { Text(text = labelText) },
             readOnly = true,
             value = selected,
-            onValueChange = { /* TODO */ },
+            onValueChange = { /* Do nothing */ },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded
