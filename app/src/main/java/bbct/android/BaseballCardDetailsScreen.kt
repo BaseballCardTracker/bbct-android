@@ -18,15 +18,32 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 
+data class BaseballCardState(
+    var autographed: Boolean = false,
+    var condition: String = "",
+    var brand: String = "",
+    var year: String = "",
+    var number: String = "",
+    var value: String = "",
+    var count: String = "",
+    var playerName: String = "",
+    var team: String = "",
+    var position: String = ""
+)
+
 @Composable
 fun BaseballCardDetailsScreen(context: Context = LocalContext.current) {
     val resources = context.resources
     val conditions = resources.getStringArray(R.array.condition)
     val positions = resources.getStringArray(R.array.positions)
+    val state = remember { mutableStateOf(BaseballCardState()) }
 
     Column {
         Row {
-            Checkbox(checked = false, onCheckedChange = { /* TODO */ })
+            Checkbox(
+                checked = state.value.autographed,
+                onCheckedChange = { state.value = state.value.copy(autographed = it) },
+            )
             Text(text = stringResource(id = R.string.autograph_label))
         }
         Row {
@@ -39,45 +56,45 @@ fun BaseballCardDetailsScreen(context: Context = LocalContext.current) {
         Row {
             TextField(
                 label = { Text(text = stringResource(id = R.string.brand_label)) },
-                value = "Topps",
-                onValueChange = { /* TODO */ })
+                value = state.value.brand,
+                onValueChange = { state.value = state.value.copy(brand = it) })
         }
         Row {
             TextField(
                 label = { Text(text = stringResource(id = R.string.year_label)) },
-                value = "1991",
-                onValueChange = { /* TODO */ }
+                value = state.value.year,
+                onValueChange = { state.value = state.value.copy(year = it) }
             )
         }
         Row {
             TextField(
                 label = { Text(text = stringResource(id = R.string.number_label)) },
-                value = "278",
-                onValueChange = { /* TODO */ })
+                value = state.value.number,
+                onValueChange = { state.value = state.value.copy(number = it) })
         }
         Row {
             TextField(
                 label = { Text(text = stringResource(id = R.string.value_label)) },
-                value = "500",
-                onValueChange = { /* TODO */ })
+                value = state.value.value,
+                onValueChange = { state.value = state.value.copy(value = it) })
         }
         Row {
             TextField(
                 label = { Text(text = stringResource(id = R.string.count_label)) },
-                value = "1",
-                onValueChange = { /* TODO */ })
+                value = state.value.count,
+                onValueChange = { state.value = state.value.copy(count = it) })
         }
         Row {
             TextField(
                 label = { Text(text = stringResource(id = R.string.player_name_label)) },
-                value = "Alex Fernandez",
-                onValueChange = { /* TODO */ })
+                value = state.value.playerName,
+                onValueChange = { state.value = state.value.copy(playerName = it) })
         }
         Row {
             TextField(
                 label = { Text(text = stringResource(id = R.string.team_label)) },
-                value = "White Sox",
-                onValueChange = { /* TODO */ })
+                value = state.value.team,
+                onValueChange = { state.value = state.value.copy(team = it) })
         }
         Row {
             Select(
