@@ -15,6 +15,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -27,7 +28,7 @@ fun App() {
     BbctTheme {
         Scaffold(
             topBar = { TopBar() },
-            floatingActionButton = { AddCardButton() },
+            floatingActionButton = { AddCardButton(navController) },
             modifier = Modifier.fillMaxSize()
         ) { innerPadding ->
             NavHost(
@@ -56,8 +57,8 @@ fun MainMenu() {
 }
 
 @Composable
-fun AddCardButton() {
-    FloatingActionButton(onClick = { /*TODO*/ }) {
+fun AddCardButton(navController: NavController) {
+    FloatingActionButton(onClick = { navController.navigate(BaseballCardDetailsDestination.route) }) {
         Icon(Icons.Default.Add, contentDescription = stringResource(id = R.string.add_menu))
     }
 }
