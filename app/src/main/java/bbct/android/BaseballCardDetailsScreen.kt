@@ -30,43 +30,58 @@ fun BaseballCardDetailsScreen(context: Context = LocalContext.current) {
             Text(text = stringResource(id = R.string.autograph_label))
         }
         Row {
-            Text(text = stringResource(id = R.string.condition_label))
             Select(
+                labelText = stringResource(id = R.string.condition_label),
                 options = conditions,
                 selected = conditions[0],
                 onSelectedChange = { /* TODO */ })
         }
         Row {
-            Text(text = stringResource(id = R.string.brand_label))
-            TextField(value = "Topps", onValueChange = { /* TODO */ })
+            TextField(
+                label = { Text(text = stringResource(id = R.string.brand_label)) },
+                value = "Topps",
+                onValueChange = { /* TODO */ })
         }
         Row {
-            Text(text = stringResource(id = R.string.year_label))
-            TextField(value = "1991", onValueChange = { /* TODO */ })
+            TextField(
+                label = { Text(text = stringResource(id = R.string.year_label)) },
+                value = "1991",
+                onValueChange = { /* TODO */ }
+            )
         }
         Row {
-            Text(text = stringResource(id = R.string.number_label))
-            TextField(value = "278", onValueChange = { /* TODO */ })
+            TextField(
+                label = { Text(text = stringResource(id = R.string.number_label)) },
+                value = "278",
+                onValueChange = { /* TODO */ })
         }
         Row {
-            Text(text = stringResource(id = R.string.value_label))
-            TextField(value = "500", onValueChange = { /* TODO */ })
+            TextField(
+                label = { Text(text = stringResource(id = R.string.value_label)) },
+                value = "500",
+                onValueChange = { /* TODO */ })
         }
         Row {
-            Text(text = stringResource(id = R.string.count_label))
-            TextField(value = "1", onValueChange = { /* TODO */ })
+            TextField(
+                label = { Text(text = stringResource(id = R.string.count_label)) },
+                value = "1",
+                onValueChange = { /* TODO */ })
         }
         Row {
-            Text(text = stringResource(id = R.string.player_name_label))
-            TextField(value = "Alex Fernandez", onValueChange = { /* TODO */ })
+            TextField(
+                label = { Text(text = stringResource(id = R.string.player_name_label)) },
+                value = "Alex Fernandez",
+                onValueChange = { /* TODO */ })
         }
         Row {
-            Text(text = stringResource(id = R.string.team_label))
-            TextField(value = "White Sox", onValueChange = { /* TODO */ })
+            TextField(
+                label = { Text(text = stringResource(id = R.string.team_label)) },
+                value = "White Sox",
+                onValueChange = { /* TODO */ })
         }
         Row {
-            Text(text = stringResource(id = R.string.player_position_label))
             Select(
+                labelText = stringResource(id = R.string.player_position_label),
                 options = positions,
                 selected = positions[0],
                 onSelectedChange = { /* TODO */ })
@@ -76,11 +91,17 @@ fun BaseballCardDetailsScreen(context: Context = LocalContext.current) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Select(options: Array<String>, selected: String, onSelectedChange: (String) -> Unit) {
+fun Select(
+    labelText: String,
+    options: Array<String>,
+    selected: String,
+    onSelectedChange: (String) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
         TextField(
+            label = { Text(text = labelText) },
             readOnly = true,
             value = selected,
             onValueChange = { /* TODO */ },
