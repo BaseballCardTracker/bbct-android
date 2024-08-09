@@ -50,9 +50,9 @@ val cards = listOf(
 )
 
 @Composable
-fun BaseballCardList(modifier: Modifier) {
+fun BaseballCardListScreen(modifier: Modifier) {
     LazyColumn(modifier = modifier) {
-        items(items = cards, key = {card: BaseballCard -> card.id }) { card ->
+        items(items = cards, key = { card: BaseballCard -> card.id }) { card ->
             BaseballCardRow(card)
         }
     }

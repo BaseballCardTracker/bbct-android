@@ -4,6 +4,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun BaseballCardDetails(card: BaseballCard) {
+fun BaseballCardDetailsScreen(card: BaseballCard) {
     Text("Baseball Card Details")
 }

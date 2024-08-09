@@ -20,8 +20,12 @@ import bbct.android.ui.theme.BbctTheme
 @Composable
 fun App() {
     BbctTheme {
-        Scaffold(topBar = { TopBar() }, floatingActionButton = { AddCardButton() }, modifier = Modifier.fillMaxSize()) { innerPadding ->
-            BaseballCardList(modifier = Modifier.padding(innerPadding))
+        Scaffold(
+            topBar = { TopBar() },
+            floatingActionButton = { AddCardButton() },
+            modifier = Modifier.fillMaxSize()
+        ) { innerPadding ->
+            BaseballCardListScreen(modifier = Modifier.padding(innerPadding))
         }
     }
 }
