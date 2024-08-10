@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  This file is part of BBCT for Android.
 
  Copyright 2012 codeguru <codeguru@users.sourceforge.net>
@@ -18,8 +17,8 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="app_name">BBCT Lite</string>
-    <string name="bbct_title">BBCT Lite - %1$s</string>
+    <string name="app_name">BBCT</string>
+    <string name="bbct_title">BBCT - %1$s</string>
 
     <string name="provider_name">BBCT Data</string>
 
