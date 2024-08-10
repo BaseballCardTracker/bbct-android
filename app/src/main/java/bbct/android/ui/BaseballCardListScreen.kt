@@ -1,5 +1,6 @@
 package bbct.android.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -68,22 +69,22 @@ fun BaseballCardListScreen(navController: NavController) {
         floatingActionButton = { AddCardButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        BaseballCardList(modifier = Modifier.padding(innerPadding))
+        BaseballCardList(navController, modifier = Modifier.padding(innerPadding))
     }
 }
 
 @Composable
-fun BaseballCardList(modifier: Modifier = Modifier) {
+fun BaseballCardList(navController: NavController, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
         items(items = cards, key = { card: BaseballCard -> card.id }) { card ->
-            BaseballCardRow(card)
+            BaseballCardRow(card, navController)
         }
     }
 }
 
 @Composable
-fun BaseballCardRow(card: BaseballCard) {
-    Row {
+fun BaseballCardRow(card: BaseballCard, navController: NavController) {
+    Row(modifier = Modifier.clickable { navController.navigate(BaseballCardDetailsDestination.route) }) {
         Text(text = card.brand, modifier = Modifier.weight(0.2f))
         Text(text = "${card.year}", modifier = Modifier.weight(0.15f))
         Text(text = card.number, modifier = Modifier.weight(0.15f))
