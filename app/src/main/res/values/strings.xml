@@ -28,19 +28,9 @@
     <string name="about_title">About</string>
     <string name="duplicate_card_title">Duplicate Card</string>
 
-    <!-- Labels for card details -->
-    <string name="condition_label">Condition:</string>
-    <string name="autograph_label">Autographed?</string>
-    <string name="brand_label">Brand:</string>
-    <string name="year_label">Year:</string>
-    <string name="number_label">Number:</string>
-    <string name="value_label">Value:</string>
-    <string name="count_label">Quantity:</string>
-    <string name="player_name_label">Player Name:</string>
-    <string name="team_label">Team:</string>
-    <string name="player_position_label">Position:</string>
-
-    <!-- Column headings for card list -->
+    <!-- Field labels -->
+    <string name="autographed">Autographed</string>
+    <string name="condition">Condition</string>
     <string name="brand">Brand</string>
     <string name="year">Year</string>
     <string name="number">Number</string>

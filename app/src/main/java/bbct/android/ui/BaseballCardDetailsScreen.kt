@@ -66,51 +66,51 @@ fun BaseballCardDetails(modifier: Modifier = Modifier, context: Context = LocalC
                 checked = state.value.autographed,
                 onCheckedChange = { state.value = state.value.copy(autographed = it) },
             )
-            Text(text = stringResource(id = R.string.autograph_label))
+            Text(text = stringResource(id = R.string.autographed))
         }
         Select(
-            labelText = stringResource(id = R.string.condition_label),
+            labelText = stringResource(id = R.string.condition),
             options = conditions,
             selected = state.value.condition,
             onSelectedChange = { state.value = state.value.copy(condition = it) }
         )
         TextField(
-            label = { Text(text = stringResource(id = R.string.brand_label)) },
+            label = { Text(text = stringResource(id = R.string.brand)) },
             value = state.value.brand,
             onValueChange = { state.value = state.value.copy(brand = it) }
         )
         TextField(
-            label = { Text(text = stringResource(id = R.string.year_label)) },
+            label = { Text(text = stringResource(id = R.string.year)) },
             value = state.value.year,
             onValueChange = { state.value = state.value.copy(year = it) }
         )
         TextField(
-            label = { Text(text = stringResource(id = R.string.number_label)) },
+            label = { Text(text = stringResource(id = R.string.number)) },
             value = state.value.number,
             onValueChange = { state.value = state.value.copy(number = it) }
         )
         TextField(
-            label = { Text(text = stringResource(id = R.string.value_label)) },
+            label = { Text(text = stringResource(id = R.string.value)) },
             value = state.value.value,
             onValueChange = { state.value = state.value.copy(value = it) }
         )
         TextField(
-            label = { Text(text = stringResource(id = R.string.count_label)) },
+            label = { Text(text = stringResource(id = R.string.count)) },
             value = state.value.count,
             onValueChange = { state.value = state.value.copy(count = it) }
         )
         TextField(
-            label = { Text(text = stringResource(id = R.string.player_name_label)) },
+            label = { Text(text = stringResource(id = R.string.player_name)) },
             value = state.value.playerName,
             onValueChange = { state.value = state.value.copy(playerName = it) }
         )
         TextField(
-            label = { Text(text = stringResource(id = R.string.team_label)) },
+            label = { Text(text = stringResource(id = R.string.team)) },
             value = state.value.team,
             onValueChange = { state.value = state.value.copy(team = it) }
         )
         Select(
-            labelText = stringResource(id = R.string.player_position_label),
+            labelText = stringResource(id = R.string.player_position),
             options = positions,
             selected = state.value.position,
             onSelectedChange = { state.value = state.value.copy(position = it) }
