@@ -19,13 +19,13 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import bbct.android.ui.theme.BbctTheme
+import bbct.android.ui.theme.AppTheme
 
 @Composable
 fun App() {
     val navController = rememberNavController()
 
-    BbctTheme {
+    AppTheme {
         Scaffold(
             topBar = { TopBar() },
             floatingActionButton = { AddCardButton(navController) },
