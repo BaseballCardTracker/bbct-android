@@ -1,4 +1,4 @@
-package bbct.android
+package bbct.android.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,6 +19,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import bbct.android.R
+import bbct.android.ui.navigation.BaseballCardDetailsDestination
+import bbct.android.ui.navigation.BaseballCardListDestination
 import bbct.android.ui.theme.AppTheme
 
 @Composable

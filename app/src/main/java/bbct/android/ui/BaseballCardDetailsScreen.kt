@@ -1,4 +1,4 @@
-package bbct.android
+package bbct.android.ui
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import bbct.android.R
 
 data class BaseballCardState(
     var autographed: Boolean = false,

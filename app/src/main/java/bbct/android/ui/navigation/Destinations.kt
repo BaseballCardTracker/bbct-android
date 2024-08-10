@@ -1,6 +1,8 @@
-package bbct.android
+package bbct.android.ui.navigation
 
 import androidx.compose.runtime.Composable
+import bbct.android.ui.BaseballCardDetailsScreen
+import bbct.android.ui.BaseballCardListScreen
 
 interface Destination {
     val route: String

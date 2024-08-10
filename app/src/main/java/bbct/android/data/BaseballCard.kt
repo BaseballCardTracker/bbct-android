@@ -1,4 +1,4 @@
-package bbct.android
+package bbct.android.data
 
 data class BaseballCard(
     val id: Int,
