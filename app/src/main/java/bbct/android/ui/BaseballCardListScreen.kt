@@ -1,12 +1,24 @@
 package bbct.android.ui
 
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import bbct.android.R
 import bbct.android.data.BaseballCard
+import bbct.android.ui.navigation.BaseballCardDetailsDestination
 
 val cards = listOf(
     BaseballCard(
@@ -51,8 +63,19 @@ val cards = listOf(
 )
 
 @Composable
-fun BaseballCardListScreen() {
-    LazyColumn {
+fun BaseballCardListScreen(navController: NavHostController) {
+    Scaffold(
+        topBar = { TopBar() },
+        floatingActionButton = { AddCardButton(navController) },
+        modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
+        BaseballCardList(modifier = Modifier.padding(innerPadding))
+    }
+}
+
+@Composable
+fun BaseballCardList(modifier: Modifier = Modifier) {
+    LazyColumn(modifier = modifier) {
         items(items = cards, key = { card: BaseballCard -> card.id }) { card ->
             BaseballCardRow(card)
         }
@@ -66,5 +89,12 @@ fun BaseballCardRow(card: BaseballCard) {
         Text(text = "${card.year}", modifier = Modifier.weight(0.15f))
         Text(text = card.number, modifier = Modifier.weight(0.15f))
         Text(text = card.playerName, modifier = Modifier.weight(0.5f))
+    }
+}
+
+@Composable
+fun AddCardButton(navController: NavController) {
+    FloatingActionButton(onClick = { navController.navigate(BaseballCardDetailsDestination.route) }) {
+        Icon(Icons.Default.Add, contentDescription = stringResource(id = R.string.add_menu))
     }
 }

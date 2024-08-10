@@ -3,11 +3,14 @@ package bbct.android.ui
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -18,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
 import bbct.android.R
 
 data class BaseballCardState(
@@ -34,13 +38,25 @@ data class BaseballCardState(
 )
 
 @Composable
-fun BaseballCardDetailsScreen(context: Context = LocalContext.current) {
+fun BaseballCardDetailsScreen(navController: NavHostController) {
+    Scaffold(
+        topBar = { TopBar() },
+        floatingActionButton = { AddCardButton(navController) },
+        modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
+        BaseballCardDetails(modifier = Modifier.padding(innerPadding))
+    }
+}
+
+
+@Composable
+fun BaseballCardDetails(modifier: Modifier = Modifier, context: Context = LocalContext.current) {
     val resources = context.resources
     val conditions = resources.getStringArray(R.array.condition)
     val positions = resources.getStringArray(R.array.positions)
     val state = remember { mutableStateOf(BaseballCardState()) }
 
-    Column {
+    Column(modifier = modifier) {
         Row {
             Checkbox(
                 checked = state.value.autographed,
