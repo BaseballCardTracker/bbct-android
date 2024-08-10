@@ -26,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import bbct.android.R
 
 data class BaseballCardState(
@@ -43,9 +42,9 @@ data class BaseballCardState(
 )
 
 @Composable
-fun BaseballCardDetailsScreen(navController: NavHostController) {
+fun BaseballCardDetailsScreen(navController: NavController) {
     Scaffold(
-        topBar = { TopBar() },
+        topBar = { TopBar(navController) },
         floatingActionButton = { SaveCardButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->

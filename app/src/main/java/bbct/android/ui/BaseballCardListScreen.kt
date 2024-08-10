@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.ui.navigation.BaseballCardDetailsDestination
@@ -63,9 +62,9 @@ val cards = listOf(
 )
 
 @Composable
-fun BaseballCardListScreen(navController: NavHostController) {
+fun BaseballCardListScreen(navController: NavController) {
     Scaffold(
-        topBar = { TopBar() },
+        topBar = { TopBar(navController) },
         floatingActionButton = { AddCardButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->

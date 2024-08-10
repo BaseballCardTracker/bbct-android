@@ -3,6 +3,7 @@ package bbct.android.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import bbct.android.ui.BaseballCardDetailsScreen
+import bbct.android.ui.BaseballCardFilterScreen
 import bbct.android.ui.BaseballCardListScreen
 
 interface Destination {
@@ -20,4 +21,10 @@ object BaseballCardDetailsDestination : Destination {
     override val route = "baseball_card_details"
     override val screen: @Composable (NavHostController) -> Unit =
         { navController -> BaseballCardDetailsScreen(navController) }
+}
+
+object BaseballCardFilterDestination : Destination {
+    override val route = "baseball_card_filter"
+    override val screen: @Composable (NavHostController) -> Unit =
+        { navController -> BaseballCardFilterScreen(navController) }
 }
