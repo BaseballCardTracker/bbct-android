@@ -16,151 +16,178 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.data;
+package bbct.android.data
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.net.Uri;
+import android.content.ContentResolver
+import android.content.ContentValues
+import android.database.Cursor
+import android.net.Uri
 
-import java.util.ArrayList;
-import java.util.List;
+object BaseballCardContract {
+    const val TABLE_NAME: String = "baseball_cards"
 
-public final class BaseballCardContract {
+    const val AUTHORITY: String = "bbct.android.common.provider"
 
-    public static final String TABLE_NAME = "baseball_cards";
+    const val LITE_AUTHORITY: String = "bbct.android.lite.provider"
 
-    public static final String AUTHORITY = "bbct.android.common.provider";
+    const val PREMIUM_AUTHORITY: String = "bbct.android.premium.provider"
 
-    public static final String LITE_AUTHORITY = "bbct.android.lite.provider";
+    val CONTENT_URI: Uri = Uri.Builder().scheme("content")
+        .authority(AUTHORITY).path(TABLE_NAME).build()
 
-    public static final String PREMIUM_AUTHORITY = "bbct.android.premium.provider";
+    val LITE_URI: Uri = Uri.Builder().scheme("content")
+        .authority(LITE_AUTHORITY).path(TABLE_NAME).build()
 
-    public static final Uri CONTENT_URI = new Uri.Builder().scheme("content")
-        .authority(AUTHORITY).path(TABLE_NAME).build();
+    val PREMIUM_URI: Uri = Uri.Builder().scheme("content")
+        .authority(PREMIUM_AUTHORITY).path(TABLE_NAME).build()
 
-    public static final Uri LITE_URI = new Uri.Builder().scheme("content")
-        .authority(LITE_AUTHORITY).path(TABLE_NAME).build();
+    const val BASEBALL_CARD_LIST_MIME_TYPE: String = (ContentResolver.CURSOR_DIR_BASE_TYPE
+                                                      + "/baseball_card")
 
-    public static final Uri PREMIUM_URI = new Uri.Builder().scheme("content")
-        .authority(PREMIUM_AUTHORITY).path(TABLE_NAME).build();
+    const val BASEBALL_CARD_ITEM_MIME_TYPE: String = (ContentResolver.CURSOR_ITEM_BASE_TYPE
+                                                      + "/baseball_card")
 
-    public static final String BASEBALL_CARD_LIST_MIME_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE
-        + "/baseball_card";
+    const val ID_COL_NAME: String = "_id"
 
-    public static final String BASEBALL_CARD_ITEM_MIME_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE
-        + "/baseball_card";
+    const val AUTOGRAPHED_COL_NAME: String = "autographed"
 
-    public static final String ID_COL_NAME = "_id";
+    const val CONDITION_COL_NAME: String = "condition"
 
-    public static final String AUTOGRAPHED_COL_NAME = "autographed";
+    const val BRAND_COL_NAME: String = "brand"
 
-    public static final String CONDITION_COL_NAME = "condition";
+    const val YEAR_COL_NAME: String = "year"
 
-    public static final String BRAND_COL_NAME = "brand";
+    const val NUMBER_COL_NAME: String = "number"
 
-    public static final String YEAR_COL_NAME = "year";
+    const val VALUE_COL_NAME: String = "value"
 
-    public static final String NUMBER_COL_NAME = "number";
+    const val COUNT_COL_NAME: String = "card_count"
 
-    public static final String VALUE_COL_NAME = "value";
+    const val PLAYER_NAME_COL_NAME: String = "player_name"
 
-    public static final String COUNT_COL_NAME = "card_count";
+    const val TEAM_COL_NAME: String = "team"
 
-    public static final String PLAYER_NAME_COL_NAME = "player_name";
+    const val PLAYER_POSITION_COL_NAME: String = "player_position"
 
-    public static final String TEAM_COL_NAME = "team";
-
-    public static final String PLAYER_POSITION_COL_NAME = "player_position";
-
-    public static final String[] PROJECTION = {ID_COL_NAME,
+    val PROJECTION: Array<String> = arrayOf(
+        ID_COL_NAME,
         AUTOGRAPHED_COL_NAME, CONDITION_COL_NAME, BRAND_COL_NAME,
         YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME,
-        PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME};
+        PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME
+    )
 
-    public static final String INT_SELECTION_FORMAT = "%s = ?";
+    const val INT_SELECTION_FORMAT: String = "%s = ?"
 
-    public static final String YEAR_SELECTION = String.format(
-        INT_SELECTION_FORMAT, YEAR_COL_NAME);
+    val YEAR_SELECTION: String = String.format(
+        INT_SELECTION_FORMAT, YEAR_COL_NAME
+    )
 
-    public static final String NUMBER_SELECTION = String.format(
-        INT_SELECTION_FORMAT, NUMBER_COL_NAME);
+    val NUMBER_SELECTION: String = String.format(
+        INT_SELECTION_FORMAT, NUMBER_COL_NAME
+    )
 
-    public static final String STRING_SELECTION_FORMAT = "%s LIKE ?";
+    const val STRING_SELECTION_FORMAT: String = "%s LIKE ?"
 
-    public static final Object BRAND_SELECTION = String.format(
-        STRING_SELECTION_FORMAT, BRAND_COL_NAME);
+    val BRAND_SELECTION: Any = String.format(
+        STRING_SELECTION_FORMAT, BRAND_COL_NAME
+    )
 
-    public static final String PLAYER_NAME_SELECTION = String.format(
-        STRING_SELECTION_FORMAT, PLAYER_NAME_COL_NAME);
+    val PLAYER_NAME_SELECTION: String = String.format(
+        STRING_SELECTION_FORMAT, PLAYER_NAME_COL_NAME
+    )
 
-    public static final String TEAM_SELECTION = String.format(
-        STRING_SELECTION_FORMAT, TEAM_COL_NAME);
+    val TEAM_SELECTION: String = String.format(
+        STRING_SELECTION_FORMAT, TEAM_COL_NAME
+    )
 
-    public static ContentValues getContentValues(BaseballCard card) {
-        ContentValues cv = new ContentValues(7);
-        cv.put(BaseballCardContract.AUTOGRAPHED_COL_NAME, card.autographed);
-        cv.put(BaseballCardContract.CONDITION_COL_NAME, card.condition);
-        cv.put(BaseballCardContract.BRAND_COL_NAME, card.brand);
-        cv.put(BaseballCardContract.YEAR_COL_NAME, card.year);
-        cv.put(BaseballCardContract.NUMBER_COL_NAME, card.number);
-        cv.put(BaseballCardContract.VALUE_COL_NAME, card.value);
-        cv.put(BaseballCardContract.COUNT_COL_NAME, card.quantity);
-        cv.put(BaseballCardContract.PLAYER_NAME_COL_NAME, card.playerName);
-        cv.put(BaseballCardContract.TEAM_COL_NAME, card.team);
+    fun getContentValues(card: BaseballCard): ContentValues {
+        val cv = ContentValues(7)
+        cv.put(AUTOGRAPHED_COL_NAME, card.autographed)
+        cv.put(CONDITION_COL_NAME, card.condition)
+        cv.put(BRAND_COL_NAME, card.brand)
+        cv.put(YEAR_COL_NAME, card.year)
+        cv.put(NUMBER_COL_NAME, card.number)
+        cv.put(VALUE_COL_NAME, card.value)
+        cv.put(COUNT_COL_NAME, card.quantity)
+        cv.put(PLAYER_NAME_COL_NAME, card.playerName)
+        cv.put(TEAM_COL_NAME, card.team)
         cv.put(
-            BaseballCardContract.PLAYER_POSITION_COL_NAME,
+            PLAYER_POSITION_COL_NAME,
             card.position
-        );
-        return cv;
+        )
+        return cv
     }
 
-    public static Uri getUri(String packageName) {
-        if (packageName.equals("bbct.android")) {
-            return LITE_URI;
-        } else if (packageName.equals("bbct.android.premium")) {
-            return PREMIUM_URI;
+    fun getUri(packageName: String): Uri {
+        if (packageName == "bbct.android") {
+            return LITE_URI
+        } else if (packageName == "bbct.android.premium") {
+            return PREMIUM_URI
         }
 
-        return CONTENT_URI;
+        return CONTENT_URI
     }
 
-    public static BaseballCard getBaseballCardFromCursor(Cursor cursor) {
-        boolean autographed = cursor.getInt(cursor
-            .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
-        String condition = cursor.getString(cursor
-            .getColumnIndex(BaseballCardContract.CONDITION_COL_NAME));
-        String brand = cursor.getString(cursor
-            .getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
-        int year = cursor.getInt(cursor
-            .getColumnIndex(BaseballCardContract.YEAR_COL_NAME));
-        String number = cursor.getString(cursor
-            .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
-        int value = cursor.getInt(cursor
-            .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
-        int quantity = cursor.getInt(cursor
-            .getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
-        String name = cursor.getString(cursor
-            .getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
-        String team = cursor.getString(cursor
-            .getColumnIndex(BaseballCardContract.TEAM_COL_NAME));
-        String position = cursor.getString(cursor
-            .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
+    fun getBaseballCardFromCursor(cursor: Cursor): BaseballCard {
+        val id = cursor.getLong(
+            cursor
+                .getColumnIndex(ID_COL_NAME)
+        )
+        val autographed = cursor.getInt(
+            cursor
+                .getColumnIndex(AUTOGRAPHED_COL_NAME)
+        ) != 0
+        val condition = cursor.getString(
+            cursor
+                .getColumnIndex(CONDITION_COL_NAME)
+        )
+        val brand = cursor.getString(
+            cursor
+                .getColumnIndex(BRAND_COL_NAME)
+        )
+        val year = cursor.getInt(
+            cursor
+                .getColumnIndex(YEAR_COL_NAME)
+        )
+        val number = cursor.getString(
+            cursor
+                .getColumnIndex(NUMBER_COL_NAME)
+        )
+        val value = cursor.getInt(
+            cursor
+                .getColumnIndex(VALUE_COL_NAME)
+        )
+        val quantity = cursor.getInt(
+            cursor
+                .getColumnIndex(COUNT_COL_NAME)
+        )
+        val name = cursor.getString(
+            cursor
+                .getColumnIndex(PLAYER_NAME_COL_NAME)
+        )
+        val team = cursor.getString(
+            cursor
+                .getColumnIndex(TEAM_COL_NAME)
+        )
+        val position = cursor.getString(
+            cursor
+                .getColumnIndex(PLAYER_POSITION_COL_NAME)
+        )
 
-        return new BaseballCard(autographed, condition, brand, year, number,
+        return BaseballCard(
+            id, autographed, condition, brand, year, number,
             value, quantity, name, team, position
-        );
+        )
     }
 
-    public static List<BaseballCard> getAllBaseballCardsFromCursor(Cursor cursor) {
-        List<BaseballCard> cards = new ArrayList<>();
+    fun getAllBaseballCardsFromCursor(cursor: Cursor): List<BaseballCard> {
+        val cards: MutableList<BaseballCard> = ArrayList()
 
         while (cursor.moveToNext()) {
-            BaseballCard card = BaseballCardContract.getBaseballCardFromCursor(cursor);
-            cards.add(card);
+            val card = getBaseballCardFromCursor(cursor)
+            cards.add(card)
         }
 
-        return cards;
+        return cards
     }
-
 }
