@@ -10,6 +10,7 @@ class InsertCardTask(
 ) :
     AsyncTask<BaseballCard, Void, Int>() {
 
+    @Deprecated("Deprecated in Java")
     override fun doInBackground(vararg baseballCards: BaseballCard): Int {
         try {
             dao.insertBaseballCard(baseballCards[0])
@@ -24,6 +25,7 @@ class InsertCardTask(
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onPostExecute(status: Int) {
         when (status) {
             STATUS_OK -> onSuccess()
