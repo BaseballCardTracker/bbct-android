@@ -80,9 +80,10 @@ abstract class BaseballCardDatabase : RoomDatabase() {
                 )
             }
         }
-        private var instance: BaseballCardDatabase? = null
+        private var instances: MutableMap<String, BaseballCardDatabase> = HashMap()
 
         fun getInstance(context: Context, dbName: String): BaseballCardDatabase {
+            var instance = instances[dbName]
             if (instance == null) {
                 instance = databaseBuilder(
                     context.applicationContext,
@@ -91,9 +92,10 @@ abstract class BaseballCardDatabase : RoomDatabase() {
                 )
                     .addMigrations(MIGRATION_4_5, MIGRATION_5_6)
                     .build()
+                instances[dbName] = instance
             }
 
-            return instance!!
+            return instance
         }
     }
 }
