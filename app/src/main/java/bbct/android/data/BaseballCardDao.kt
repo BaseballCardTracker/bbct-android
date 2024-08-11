@@ -10,16 +10,16 @@ import androidx.room.Update
 @Dao
 interface BaseballCardDao {
     @Insert
-    fun insertBaseballCard(card: BaseballCard?)
+    fun insertBaseballCard(card: BaseballCard)
 
     @Update
-    fun updateBaseballCard(card: BaseballCard?)
+    fun updateBaseballCard(card: BaseballCard)
 
     @Delete
-    fun deleteBaseballCards(cards: List<BaseballCard?>?)
+    fun deleteBaseballCards(cards: List<BaseballCard>)
 
     @get:Query("SELECT * FROM baseball_cards")
-    val baseballCards: LiveData<List<BaseballCard?>?>?
+    val baseballCards: LiveData<List<BaseballCard>>
 
     @Query(
         "SELECT * FROM baseball_cards " +
@@ -31,17 +31,17 @@ interface BaseballCardDao {
     )
     fun getBaseballCards(
         brand: String?, year: Int, number: String?, playerName: String?, team: String?
-    ): LiveData<List<BaseballCard?>?>?
+    ): LiveData<List<BaseballCard>>
 
     @Query("SELECT * FROM baseball_cards WHERE _id = :id")
     fun getBaseballCard(id: Long): BaseballCard?
 
     @get:Query("SELECT DISTINCT(brand) FROM baseball_cards")
-    val brands: LiveData<List<String?>?>?
+    val brands: LiveData<List<String>>
 
     @get:Query("SELECT DISTINCT(player_name) FROM baseball_cards")
-    val playerNames: LiveData<List<String?>?>?
+    val playerNames: LiveData<List<String>>
 
     @get:Query("SELECT DISTINCT(team) FROM baseball_cards")
-    val teams: LiveData<List<String?>?>?
+    val teams: LiveData<List<String>>
 }
