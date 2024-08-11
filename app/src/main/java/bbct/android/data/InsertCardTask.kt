@@ -1,49 +1,37 @@
-package bbct.android.data;
+package bbct.android.data
 
-import android.database.SQLException;
-import android.os.AsyncTask;
+import android.database.SQLException
+import bbct.android.common.fragment.BaseballCardDetails
 
-import bbct.android.common.fragment.BaseballCardDetails;
+class InsertCardTask(fragment: BaseballCardDetails, private val dao: BaseballCardDao) :
+    AsyncTask<BaseballCard?, Void?, Int?>() {
+    private val fragment: BaseballCardDetails = fragment
 
-public class InsertCardTask extends AsyncTask<BaseballCard, Void, Integer> {
-    private static final int STATUS_OK = 1;
-    private static final int STATUS_DUPLICATE = 2;
-    private static final int STATUS_OTHER = 3;
-
-    private final BaseballCardDetails fragment;
-    private final BaseballCardDao dao;
-
-    public InsertCardTask(BaseballCardDetails fragment, BaseballCardDao dao) {
-        this.fragment = fragment;
-        this.dao = dao;
-    }
-
-    @Override
-    protected Integer doInBackground(BaseballCard... baseballCards) {
+    protected override fun doInBackground(vararg baseballCards: BaseballCard): Int {
         try {
-            dao.insertBaseballCard(baseballCards[0]);
-            return STATUS_OK;
-        } catch (SQLException e) {
-            String message = e.getMessage();
-            if (message.startsWith("UNIQUE constraint failed")) {
-                return STATUS_DUPLICATE;
+            dao.insertBaseballCard(baseballCards[0])
+            return STATUS_OK
+        } catch (e: SQLException) {
+            val message = e.message
+            if (message!!.startsWith("UNIQUE constraint failed")) {
+                return STATUS_DUPLICATE
             }
 
-            return STATUS_OTHER;
+            return STATUS_OTHER
         }
     }
 
-    @Override
-    protected void onPostExecute(Integer status) {
-        switch (status) {
-            case STATUS_OK:
-                fragment.insertSuccessful();
-                break;
-            case STATUS_DUPLICATE:
-                fragment.insertFailed();
-                break;
-            case STATUS_OTHER:
-                break;
+    protected override fun onPostExecute(status: Int) {
+        when (status) {
+            STATUS_OK -> fragment.insertSuccessful()
+            STATUS_DUPLICATE -> fragment.insertFailed()
+            STATUS_OTHER -> {}
         }
+    }
+
+    companion object {
+        private const val STATUS_OK = 1
+        private const val STATUS_DUPLICATE = 2
+        private const val STATUS_OTHER = 3
     }
 }

@@ -1,49 +1,47 @@
-package bbct.android.data;
+package bbct.android.data
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import java.util.List;
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 
 @Dao
-public interface BaseballCardDao {
+interface BaseballCardDao {
     @Insert
-    void insertBaseballCard(BaseballCard card);
+    fun insertBaseballCard(card: BaseballCard?)
 
     @Update
-    void updateBaseballCard(BaseballCard card);
+    fun updateBaseballCard(card: BaseballCard?)
 
     @Delete
-    void deleteBaseballCards(List<BaseballCard> cards);
+    fun deleteBaseballCards(cards: List<BaseballCard?>?)
 
-    @Query("SELECT * FROM baseball_cards")
-    LiveData<List<BaseballCard>> getBaseballCards();
+    @get:Query("SELECT * FROM baseball_cards")
+    val baseballCards: LiveData<List<BaseballCard?>?>?
 
     @Query(
         "SELECT * FROM baseball_cards " +
-            "WHERE brand LIKE :brand " +
-            "  AND (year = :year OR -1 = :year) " +
-            "  AND number LIKE :number " +
-            "  AND player_name LIKE :playerName " +
-            "  AND team LIKE :team"
+                "WHERE brand LIKE :brand " +
+                "  AND (year = :year OR -1 = :year) " +
+                "  AND number LIKE :number " +
+                "  AND player_name LIKE :playerName " +
+                "  AND team LIKE :team"
     )
-    LiveData<List<BaseballCard>> getBaseballCards(
-        String brand, int year, String number, String playerName, String team
-    );
+    fun getBaseballCards(
+        brand: String?, year: Int, number: String?, playerName: String?, team: String?
+    ): LiveData<List<BaseballCard?>?>?
 
     @Query("SELECT * FROM baseball_cards WHERE _id = :id")
-    BaseballCard getBaseballCard(long id);
+    fun getBaseballCard(id: Long): BaseballCard?
 
-    @Query("SELECT DISTINCT(brand) FROM baseball_cards")
-    LiveData<List<String>> getBrands();
+    @get:Query("SELECT DISTINCT(brand) FROM baseball_cards")
+    val brands: LiveData<List<String?>?>?
 
-    @Query("SELECT DISTINCT(player_name) FROM baseball_cards")
-    LiveData<List<String>> getPlayerNames();
+    @get:Query("SELECT DISTINCT(player_name) FROM baseball_cards")
+    val playerNames: LiveData<List<String?>?>?
 
-    @Query("SELECT DISTINCT(team) FROM baseball_cards")
-    LiveData<List<String>> getTeams();
+    @get:Query("SELECT DISTINCT(team) FROM baseball_cards")
+    val teams: LiveData<List<String?>?>?
 }
