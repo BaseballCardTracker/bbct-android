@@ -22,7 +22,7 @@ import bbct.android.ui.navigation.BaseballCardDetailsDestination
 
 val cards = listOf(
     BaseballCard(
-        id = 1,
+        _id = 1,
         autographed = false,
         condition = "Excellent",
         brand = "Topps",
@@ -35,7 +35,7 @@ val cards = listOf(
         position = "Pitcher"
     ),
     BaseballCard(
-        id = 2,
+        _id = 2,
         autographed = true,
         condition = "Mint",
         brand = "Topps",
@@ -48,7 +48,7 @@ val cards = listOf(
         position = "Pitcher"
     ),
     BaseballCard(
-        id = 3,
+        _id = 3,
         autographed = false,
         condition = "Very Good",
         brand = "Topps",
@@ -76,7 +76,7 @@ fun BaseballCardListScreen(navController: NavController) {
 @Composable
 fun BaseballCardList(navController: NavController, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
-        items(items = cards, key = { card: BaseballCard -> card.id }) { card ->
+        items(items = cards, key = { card: BaseballCard -> card._id }) { card ->
             BaseballCardRow(card, navController)
         }
     }
