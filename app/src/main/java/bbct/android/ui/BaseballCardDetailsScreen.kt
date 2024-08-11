@@ -46,7 +46,6 @@ data class BaseballCardState(
 ) {
     fun toBaseballCard(): BaseballCard {
         return BaseballCard(
-            _id = 0,
             autographed = autographed,
             condition = condition,
             brand = brand,

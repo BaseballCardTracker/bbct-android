@@ -77,7 +77,7 @@ fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabas
 @Composable
 fun BaseballCardList(navController: NavController, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier) {
-        items(items = cards, key = { card: BaseballCard -> card._id }) { card ->
+        items(items = cards, key = { card: BaseballCard -> card._id!! }) { card ->
             BaseballCardRow(card, navController)
         }
     }

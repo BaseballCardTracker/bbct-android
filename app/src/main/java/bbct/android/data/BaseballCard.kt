@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "baseball_cards")
 data class BaseballCard(
     @PrimaryKey
-    val _id: Long,
+    val _id: Long? = null,
     val autographed: Boolean,
     val condition: String,
     val brand: String,
