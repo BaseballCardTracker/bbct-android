@@ -17,7 +17,7 @@ abstract class BaseballCardDatabase : RoomDatabase() {
             BaseballCardSQLHelper.AUTO_AND_CONDITION_SCHEMA,
             BaseballCardSQLHelper.ROOM_SCHEMA
         ) {
-            override fun migrate(database: SupportSQLiteDatabase) {
+            override fun migrate(db: SupportSQLiteDatabase) {
             }
         }
         private val MIGRATION_5_6: Migration = object : Migration(
