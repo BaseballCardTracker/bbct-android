@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.google.firebase.crashlytics)
     alias(libs.plugins.compose.compiler)
+    id("com.google.devtools.ksp") version "2.0.10-1.0.24"
 }
 
 android {
@@ -64,7 +65,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.firebase.crashlytics)
     implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
