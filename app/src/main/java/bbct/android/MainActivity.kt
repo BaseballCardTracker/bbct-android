@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         val db = BaseballCardDatabase.getInstance(this)
         setContent {
-            App()
+            App(db)
         }
     }
 }

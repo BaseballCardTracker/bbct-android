@@ -14,13 +14,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import bbct.android.R
+import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.navigation.BaseballCardDetailsDestination
 import bbct.android.ui.navigation.BaseballCardFilterDestination
 import bbct.android.ui.navigation.BaseballCardListDestination
 import bbct.android.ui.theme.AppTheme
 
 @Composable
-fun App() {
+fun App(db: BaseballCardDatabase) {
     val navController = rememberNavController()
 
     AppTheme {
@@ -29,19 +30,13 @@ fun App() {
             startDestination = BaseballCardListDestination.route,
         ) {
             composable(route = BaseballCardListDestination.route) {
-                BaseballCardListDestination.screen(
-                    navController
-                )
+                BaseballCardListDestination.screen(navController, db)
             }
             composable(route = BaseballCardDetailsDestination.route) {
-                BaseballCardDetailsDestination.screen(
-                    navController
-                )
+                BaseballCardDetailsDestination.screen(navController, db)
             }
             composable(route = BaseballCardFilterDestination.route) {
-                BaseballCardFilterDestination.screen(
-                    navController
-                )
+                BaseballCardFilterDestination.screen(navController, db)
             }
         }
     }

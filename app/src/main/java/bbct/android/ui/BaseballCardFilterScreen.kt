@@ -17,9 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import bbct.android.R
+import bbct.android.data.BaseballCardDatabase
 
 @Composable
-fun BaseballCardFilterScreen(navController: NavController) {
+fun BaseballCardFilterScreen(navController: NavController, db: BaseballCardDatabase) {
     Scaffold(
         topBar = { TopBar(navController) },
         floatingActionButton = { ApplyFilterButton(navController) },

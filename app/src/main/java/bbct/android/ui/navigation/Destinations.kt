@@ -1,30 +1,46 @@
 package bbct.android.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
+import androidx.navigation.NavController
+import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.BaseballCardDetailsScreen
 import bbct.android.ui.BaseballCardFilterScreen
 import bbct.android.ui.BaseballCardListScreen
 
 interface Destination {
     val route: String
-    val screen: @Composable (NavHostController) -> Unit
+    val screen: @Composable (NavController, BaseballCardDatabase) -> Unit
 }
 
 object BaseballCardListDestination : Destination {
     override val route = "baseball_card_list"
-    override val screen: @Composable (navController: NavHostController) -> Unit =
-        { navController -> BaseballCardListScreen(navController) }
+    override val screen: @Composable (NavController, BaseballCardDatabase) -> Unit =
+        { navController: NavController, db: BaseballCardDatabase ->
+            BaseballCardListScreen(
+                navController,
+                db,
+            )
+        }
 }
 
 object BaseballCardDetailsDestination : Destination {
     override val route = "baseball_card_details"
-    override val screen: @Composable (NavHostController) -> Unit =
-        { navController -> BaseballCardDetailsScreen(navController) }
+    override val screen: @Composable (NavController, BaseballCardDatabase) -> Unit =
+        { navController: NavController, db: BaseballCardDatabase ->
+            BaseballCardDetailsScreen(
+                navController,
+                db,
+            )
+        }
 }
 
 object BaseballCardFilterDestination : Destination {
     override val route = "baseball_card_filter"
-    override val screen: @Composable (NavHostController) -> Unit =
-        { navController -> BaseballCardFilterScreen(navController) }
+    override val screen: @Composable (NavController, BaseballCardDatabase) -> Unit =
+        { navController: NavController, db: BaseballCardDatabase ->
+            BaseballCardFilterScreen(
+                navController,
+                db,
+            )
+        }
 }

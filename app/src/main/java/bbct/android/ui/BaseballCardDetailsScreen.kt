@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import bbct.android.R
+import bbct.android.data.BaseballCardDatabase
 
 data class BaseballCardState(
     var autographed: Boolean = false,
@@ -42,7 +43,7 @@ data class BaseballCardState(
 )
 
 @Composable
-fun BaseballCardDetailsScreen(navController: NavController) {
+fun BaseballCardDetailsScreen(navController: NavController, db: BaseballCardDatabase) {
     Scaffold(
         topBar = { TopBar(navController) },
         floatingActionButton = { SaveCardButton(navController) },
@@ -161,5 +162,4 @@ fun SaveCardButton(navController: NavController) {
     FloatingActionButton(onClick = { /* TODO */ }) {
         Icon(Icons.Default.Check, contentDescription = stringResource(id = R.string.save_menu))
     }
-
 }

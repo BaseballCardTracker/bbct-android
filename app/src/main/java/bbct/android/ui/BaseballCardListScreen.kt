@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
+import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.navigation.BaseballCardDetailsDestination
 
 val cards = listOf(
@@ -63,7 +64,7 @@ val cards = listOf(
 )
 
 @Composable
-fun BaseballCardListScreen(navController: NavController) {
+fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabase) {
     Scaffold(
         topBar = { TopBar(navController) },
         floatingActionButton = { AddCardButton(navController) },
