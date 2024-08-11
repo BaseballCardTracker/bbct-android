@@ -1,13 +1,16 @@
 package bbct.android.data
 
 import android.database.SQLException
-import bbct.android.common.fragment.BaseballCardDetails
+import android.os.AsyncTask
 
-class InsertCardTask(fragment: BaseballCardDetails, private val dao: BaseballCardDao) :
-    AsyncTask<BaseballCard?, Void?, Int?>() {
-    private val fragment: BaseballCardDetails = fragment
+class InsertCardTask(
+    private val dao: BaseballCardDao,
+    private val onSuccess: () -> Unit,
+    private val onFail: () -> Unit
+) :
+    AsyncTask<BaseballCard, Void, Int>() {
 
-    protected override fun doInBackground(vararg baseballCards: BaseballCard): Int {
+    override fun doInBackground(vararg baseballCards: BaseballCard): Int {
         try {
             dao.insertBaseballCard(baseballCards[0])
             return STATUS_OK
@@ -21,10 +24,10 @@ class InsertCardTask(fragment: BaseballCardDetails, private val dao: BaseballCar
         }
     }
 
-    protected override fun onPostExecute(status: Int) {
+    override fun onPostExecute(status: Int) {
         when (status) {
-            STATUS_OK -> fragment.insertSuccessful()
-            STATUS_DUPLICATE -> fragment.insertFailed()
+            STATUS_OK -> onSuccess()
+            STATUS_DUPLICATE -> onFail()
             STATUS_OTHER -> {}
         }
     }
