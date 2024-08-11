@@ -23,9 +23,9 @@ abstract class BaseballCardDatabase : RoomDatabase() {
         private val MIGRATION_5_6: Migration = object : Migration(
             BaseballCardSQLHelper.ROOM_SCHEMA, BaseballCardSQLHelper.ALPHA_NUMERIC_SCHEMA
         ) {
-            override fun migrate(database: SupportSQLiteDatabase) {
+            override fun migrate(db: SupportSQLiteDatabase) {
                 val temp_table_name = BaseballCardContract.TABLE_NAME + "_new"
-                database.execSQL(
+                db.execSQL(
                     "CREATE TABLE IF NOT EXISTS "
                     + temp_table_name + "("
                     + BaseballCardContract.ID_COL_NAME
@@ -44,7 +44,7 @@ abstract class BaseballCardDatabase : RoomDatabase() {
                     + BaseballCardContract.YEAR_COL_NAME + ", "
                     + BaseballCardContract.NUMBER_COL_NAME + "))"
                 )
-                database.execSQL(
+                db.execSQL(
                     "INSERT INTO " + temp_table_name + " ("
                     + BaseballCardContract.ID_COL_NAME + ", "
                     + BaseballCardContract.BRAND_COL_NAME + ", "
@@ -72,15 +72,15 @@ abstract class BaseballCardDatabase : RoomDatabase() {
                     + " FROM " + BaseballCardContract.TABLE_NAME
                 )
 
-                database.execSQL("DROP TABLE " + BaseballCardContract.TABLE_NAME)
-                database.execSQL(
+                db.execSQL("DROP TABLE " + BaseballCardContract.TABLE_NAME)
+                db.execSQL(
                     "ALTER TABLE " + temp_table_name + " RENAME TO " + BaseballCardContract.TABLE_NAME
                 )
             }
         }
         private var instance: BaseballCardDatabase? = null
 
-        fun getInstance(context: Context): BaseballCardDatabase? {
+        fun getInstance(context: Context): BaseballCardDatabase {
             if (instance == null) {
                 instance = databaseBuilder(
                     context.applicationContext,
@@ -91,7 +91,7 @@ abstract class BaseballCardDatabase : RoomDatabase() {
                     .build()
             }
 
-            return instance
+            return instance!!
         }
     }
 }
