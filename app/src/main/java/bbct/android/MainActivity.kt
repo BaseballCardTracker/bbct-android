@@ -11,7 +11,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val db = BaseballCardDatabase.getInstance(this)
+        val db = BaseballCardDatabase.getInstance(this, BaseballCardDatabase.DATABASE_NAME)
         setContent {
             App(db)
         }
