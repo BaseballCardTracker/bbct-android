@@ -18,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +28,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import bbct.android.R
+import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
+import bbct.android.data.InsertCardTask
 
 data class BaseballCardState(
     var autographed: Boolean = false,
@@ -40,26 +43,47 @@ data class BaseballCardState(
     var playerName: String = "",
     var team: String = "",
     var position: String = ""
-)
+) {
+    fun toBaseballCard(): BaseballCard {
+        return BaseballCard(
+            _id = 0,
+            autographed = autographed,
+            condition = condition,
+            brand = brand,
+            year = year.toInt(),
+            number = number,
+            value = (value.toDouble() * 100).toInt(),
+            quantity = count.toInt(),
+            playerName = playerName,
+            team = team,
+            position = position
+        )
+    }
+}
 
 @Composable
 fun BaseballCardDetailsScreen(navController: NavController, db: BaseballCardDatabase) {
+    val state = remember { mutableStateOf(BaseballCardState()) }
+
     Scaffold(
         topBar = { TopBar(navController) },
-        floatingActionButton = { SaveCardButton(navController) },
+        floatingActionButton = { SaveCardButton(navController, db, state) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        BaseballCardDetails(modifier = Modifier.padding(innerPadding))
+        BaseballCardDetails(state, modifier = Modifier.padding(innerPadding))
     }
 }
 
 
 @Composable
-fun BaseballCardDetails(modifier: Modifier = Modifier, context: Context = LocalContext.current) {
+fun BaseballCardDetails(
+    state: MutableState<BaseballCardState>,
+    modifier: Modifier = Modifier,
+    context: Context = LocalContext.current
+) {
     val resources = context.resources
     val conditions = resources.getStringArray(R.array.condition)
     val positions = resources.getStringArray(R.array.positions)
-    val state = remember { mutableStateOf(BaseballCardState()) }
 
     Column(modifier = modifier) {
         Row {
@@ -158,8 +182,17 @@ fun Select(
 }
 
 @Composable
-fun SaveCardButton(navController: NavController) {
-    FloatingActionButton(onClick = { /* TODO */ }) {
+fun SaveCardButton(
+    navController: NavController,
+    db: BaseballCardDatabase,
+    state: MutableState<BaseballCardState>
+) {
+    FloatingActionButton(onClick = { saveCard(db, state.value) }) {
         Icon(Icons.Default.Check, contentDescription = stringResource(id = R.string.save_menu))
     }
+}
+
+fun saveCard(db: BaseballCardDatabase, cardState: BaseballCardState) {
+    val newCard = cardState.toBaseballCard()
+    InsertCardTask(db.baseballCardDao, {}, {}).execute(newCard)
 }

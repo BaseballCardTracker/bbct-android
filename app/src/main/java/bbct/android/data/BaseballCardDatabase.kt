@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(version = BaseballCardSQLHelper.ALPHA_NUMERIC_SCHEMA, entities = [BaseballCard::class])
 abstract class BaseballCardDatabase : RoomDatabase() {
-    abstract val baseballCardDao: BaseballCardDao?
+    abstract val baseballCardDao: BaseballCardDao
 
     companion object {
         private const val DATABASE_NAME = "bbct.db"
