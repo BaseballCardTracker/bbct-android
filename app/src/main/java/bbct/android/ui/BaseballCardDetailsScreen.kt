@@ -4,7 +4,10 @@ import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Checkbox
@@ -84,7 +87,12 @@ fun BaseballCardDetails(
     val conditions = resources.getStringArray(R.array.condition)
     val positions = resources.getStringArray(R.array.positions)
 
-    Column(modifier = modifier) {
+    val scrollState = rememberScrollState()
+    Column(
+        modifier = modifier
+            .imePadding()
+            .verticalScroll(scrollState)
+    ) {
         Row {
             Checkbox(
                 checked = state.value.autographed,
