@@ -127,7 +127,7 @@ fun BaseballCardDetails(
             onValueChange = { state.value = state.value.copy(value = it) }
         )
         TextField(
-            label = { Text(text = stringResource(id = R.string.count)) },
+            label = { Text(text = stringResource(id = R.string.quantity)) },
             value = state.value.count,
             onValueChange = { state.value = state.value.copy(count = it) }
         )

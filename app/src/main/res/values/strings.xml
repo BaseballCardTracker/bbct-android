@@ -35,7 +35,7 @@
     <string name="year">Year</string>
     <string name="number">Number</string>
     <string name="value">Value</string>
-    <string name="count">Count</string>
+    <string name="quantity">Quantity</string>
     <string name="player_name">Player Name</string>
     <string name="player_position">Position</string>
     <string name="team">Team</string>
