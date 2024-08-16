@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.androidx.room.runtime)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
