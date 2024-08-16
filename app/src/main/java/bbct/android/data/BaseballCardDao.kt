@@ -1,11 +1,11 @@
 package bbct.android.data
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BaseballCardDao {
@@ -19,7 +19,7 @@ interface BaseballCardDao {
     fun deleteBaseballCards(cards: List<BaseballCard>)
 
     @get:Query("SELECT * FROM baseball_cards")
-    val baseballCards: LiveData<List<BaseballCard>>
+    val baseballCards: Flow<BaseballCard>
 
     @Query(
         "SELECT * FROM baseball_cards " +
@@ -35,17 +35,17 @@ interface BaseballCardDao {
         number: String? = null,
         playerName: String? = null,
         team: String? = null
-    ): LiveData<List<BaseballCard>>
+    ): Flow<BaseballCard>
 
     @Query("SELECT * FROM baseball_cards WHERE _id = :id")
-    fun getBaseballCard(id: Long): BaseballCard?
+    suspend fun getBaseballCard(id: Long): BaseballCard?
 
     @get:Query("SELECT DISTINCT(brand) FROM baseball_cards")
-    val brands: LiveData<List<String>>
+    val brands: Flow<String>
 
     @get:Query("SELECT DISTINCT(player_name) FROM baseball_cards")
-    val playerNames: LiveData<List<String>>
+    val playerNames: Flow<String>
 
     @get:Query("SELECT DISTINCT(team) FROM baseball_cards")
-    val teams: LiveData<List<String>>
+    val teams: Flow<String>
 }
