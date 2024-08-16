@@ -10,7 +10,7 @@ import androidx.room.Update
 @Dao
 interface BaseballCardDao {
     @Insert
-    fun insertBaseballCard(card: BaseballCard)
+    suspend fun insertBaseballCard(card: BaseballCard)
 
     @Update
     fun updateBaseballCard(card: BaseballCard)

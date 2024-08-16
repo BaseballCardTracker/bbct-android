@@ -33,7 +33,8 @@ import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
-import bbct.android.data.InsertCardTask
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 data class BaseballCardState(
     var autographed: Boolean = false,
@@ -201,5 +202,9 @@ fun SaveCardButton(
 
 fun saveCard(db: BaseballCardDatabase, cardState: BaseballCardState) {
     val newCard = cardState.toBaseballCard()
-    InsertCardTask(db.baseballCardDao, {}, {}).execute(newCard)
+    runBlocking {
+        launch {
+            db.baseballCardDao.insertBaseballCard(newCard)
+        }
+    }
 }
