@@ -38,7 +38,7 @@ interface BaseballCardDao {
     ): Flow<BaseballCard>
 
     @Query("SELECT * FROM baseball_cards WHERE _id = :id")
-    suspend fun getBaseballCard(id: Long): BaseballCard?
+    suspend fun getBaseballCard(id: Long): BaseballCard
 
     @get:Query("SELECT DISTINCT(brand) FROM baseball_cards")
     val brands: Flow<String>
