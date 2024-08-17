@@ -8,6 +8,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextInput
 import androidx.navigation.compose.rememberNavController
+import androidx.room.Room.inMemoryDatabaseBuilder
 import androidx.test.platform.app.InstrumentationRegistry
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
@@ -34,10 +35,7 @@ class BaseballCardDetailsScreenTest {
         )
 
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val db = BaseballCardDatabase.getInstance(
-            context,
-            BaseballCardDatabase.TEST_DATABASE_NAME
-        )
+        val db = inMemoryDatabaseBuilder(context, BaseballCardDatabase::class.java).build()
 
         composeTestRule.setContent {
             val navController = rememberNavController()
