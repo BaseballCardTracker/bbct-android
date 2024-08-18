@@ -83,7 +83,8 @@ fun BaseballCardList(
     LazyColumn(modifier = modifier) {
         items(
             items = cards,
-            key = { card: BaseballCard -> card._id!! }) { card: BaseballCard ->
+            key = { card: BaseballCard -> card._id!! }
+        ) { card: BaseballCard ->
             BaseballCardRow(card, navController)
         }
     }
