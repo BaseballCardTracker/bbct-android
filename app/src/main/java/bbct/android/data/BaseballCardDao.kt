@@ -35,7 +35,7 @@ interface BaseballCardDao {
         number: String? = null,
         playerName: String? = null,
         team: String? = null
-    ): Flow<BaseballCard>
+    ): Flow<List<BaseballCard>>
 
     @Query("SELECT * FROM baseball_cards WHERE _id = :id")
     suspend fun getBaseballCard(id: Long): BaseballCard
