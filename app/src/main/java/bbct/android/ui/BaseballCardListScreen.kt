@@ -13,6 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -21,48 +22,6 @@ import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.navigation.BaseballCardDetailsDestination
 
-val cards = listOf(
-    BaseballCard(
-        _id = 1,
-        autographed = false,
-        condition = "Excellent",
-        brand = "Topps",
-        year = 1991,
-        number = "278",
-        value = 500,
-        quantity = 1,
-        playerName = "Alex Fernandez",
-        team = "White Sox",
-        position = "Pitcher"
-    ),
-    BaseballCard(
-        _id = 2,
-        autographed = true,
-        condition = "Mint",
-        brand = "Topps",
-        year = 1974,
-        number = "175",
-        value = 1000,
-        quantity = 1,
-        playerName = "Bob Stanley",
-        team = "Red Sox",
-        position = "Pitcher"
-    ),
-    BaseballCard(
-        _id = 3,
-        autographed = false,
-        condition = "Very Good",
-        brand = "Topps",
-        year = 1985,
-        number = "201",
-        value = 200,
-        quantity = 1,
-        playerName = "Vince Coleman",
-        team = "Cardinals",
-        position = "Left Field",
-    ),
-)
-
 @Composable
 fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabase) {
     Scaffold(
@@ -70,7 +29,8 @@ fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabas
         floatingActionButton = { AddCardButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        BaseballCardList(navController, cards, modifier = Modifier.padding(innerPadding))
+        val cards = db.baseballCardDao.getBaseballCards().collectAsState(initial = emptyList())
+        BaseballCardList(navController, cards.value, modifier = Modifier.padding(innerPadding))
     }
 }
 
