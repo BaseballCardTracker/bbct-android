@@ -70,14 +70,20 @@ fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabas
         floatingActionButton = { AddCardButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        BaseballCardList(navController, modifier = Modifier.padding(innerPadding))
+        BaseballCardList(navController, cards, modifier = Modifier.padding(innerPadding))
     }
 }
 
 @Composable
-fun BaseballCardList(navController: NavController, modifier: Modifier = Modifier) {
+fun BaseballCardList(
+    navController: NavController,
+    cards: List<BaseballCard>,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(modifier = modifier) {
-        items(items = cards, key = { card: BaseballCard -> card._id!! }) { card ->
+        items(
+            items = cards,
+            key = { card: BaseballCard -> card._id!! }) { card: BaseballCard ->
             BaseballCardRow(card, navController)
         }
     }
