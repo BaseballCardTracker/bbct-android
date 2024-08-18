@@ -29,7 +29,7 @@ fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabas
         floatingActionButton = { AddCardButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        val cards = db.baseballCardDao.getBaseballCards().collectAsState(initial = emptyList())
+        val cards = db.baseballCardDao.baseballCards.collectAsState(initial = emptyList())
         BaseballCardList(navController, cards.value, modifier = Modifier.padding(innerPadding))
     }
 }
