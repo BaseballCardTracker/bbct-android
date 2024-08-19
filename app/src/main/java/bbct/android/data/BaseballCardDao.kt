@@ -24,17 +24,17 @@ interface BaseballCardDao {
     @Query(
         "SELECT * FROM baseball_cards " +
         "WHERE brand LIKE :brand " +
-        "  AND year = :year " +
+        "  AND (year = :year OR -1 = :year) " +
         "  AND number LIKE :number " +
         "  AND player_name LIKE :playerName " +
         "  AND team LIKE :team"
     )
     fun getBaseballCards(
-        brand: String? = null,
-        year: Int? = null,
-        number: String? = null,
-        playerName: String? = null,
-        team: String? = null
+        brand: String,
+        year: Int,
+        number: String,
+        playerName: String,
+        team: String
     ): Flow<List<BaseballCard>>
 
     @Query("SELECT * FROM baseball_cards WHERE _id = :id")
