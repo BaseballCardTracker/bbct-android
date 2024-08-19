@@ -195,16 +195,17 @@ fun SaveCardButton(
     db: BaseballCardDatabase,
     state: MutableState<BaseballCardState>
 ) {
-    FloatingActionButton(onClick = { saveCard(db, state.value) }) {
+    FloatingActionButton(onClick = { saveCard(db, state) }) {
         Icon(Icons.Default.Check, contentDescription = stringResource(id = R.string.save_menu))
     }
 }
 
-fun saveCard(db: BaseballCardDatabase, cardState: BaseballCardState) {
-    val newCard = cardState.toBaseballCard()
+fun saveCard(db: BaseballCardDatabase, cardState: MutableState<BaseballCardState>) {
+    val newCard = cardState.value.toBaseballCard()
     runBlocking {
         launch {
             db.baseballCardDao.insertBaseballCard(newCard)
+            cardState.value = BaseballCardState()
         }
     }
 }
