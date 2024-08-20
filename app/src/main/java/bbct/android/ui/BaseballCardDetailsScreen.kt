@@ -71,7 +71,8 @@ fun BaseballCardDetailsScreen(navController: NavController, db: BaseballCardData
     Scaffold(
         topBar = {
             TopBar(
-                navigationIcon = { BackIcon(navController = navController) }
+                navigationIcon = { BackIcon(navController = navController) },
+                actions = { OverflowMenu(navController) },
             )
         },
         floatingActionButton = { SaveCardButton(navController, db, state) },

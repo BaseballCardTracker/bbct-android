@@ -38,11 +38,16 @@ fun TopBar(
 
 @Composable
 fun MainMenu(navController: NavController) {
-    var showMenu by remember { mutableStateOf(false) }
-
     IconButton(onClick = { navController.navigate(BaseballCardFilterDestination.route) }) {
         Icon(Icons.Default.Search, contentDescription = stringResource(id = R.string.filter_menu))
     }
+    OverflowMenu(navController)
+}
+
+@Composable
+fun OverflowMenu(navController: NavController) {
+    var showMenu by remember { mutableStateOf(false) }
+
     IconButton(onClick = { showMenu = !showMenu }) {
         Icon(Icons.Default.MoreVert, contentDescription = stringResource(id = R.string.more))
     }
