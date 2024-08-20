@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import bbct.android.data.BaseballCardDatabase
+import bbct.android.ui.navigation.AboutDestination
 import bbct.android.ui.navigation.BaseballCardDetailsDestination
 import bbct.android.ui.navigation.BaseballCardFilterDestination
 import bbct.android.ui.navigation.BaseballCardListDestination
@@ -27,6 +28,9 @@ fun App(db: BaseballCardDatabase) {
             }
             composable(route = BaseballCardFilterDestination.route) {
                 BaseballCardFilterDestination.screen(navController, db)
+            }
+            composable(route = AboutDestination.route) {
+                AboutDestination.screen(navController, db)
             }
         }
     }

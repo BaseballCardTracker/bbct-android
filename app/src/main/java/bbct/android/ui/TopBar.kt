@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import bbct.android.R
+import bbct.android.ui.navigation.AboutDestination
 import bbct.android.ui.navigation.BaseballCardFilterDestination
 
 @Composable
@@ -51,7 +52,7 @@ fun MainMenu(navController: NavController) {
     ) {
         DropdownMenuItem(
             text = { Text(text = stringResource(id = R.string.about_menu)) },
-            onClick = { /*TODO*/ })
+            onClick = { navController.navigate(AboutDestination.route) })
     }
 }
 
