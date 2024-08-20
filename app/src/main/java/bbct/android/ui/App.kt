@@ -44,10 +44,12 @@ fun App(db: BaseballCardDatabase) {
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun TopBar(navController: NavController) {
+fun TopBar(navController: NavController, navigationIcon: @Composable () -> Unit = {}) {
     TopAppBar(
         title = { Text(stringResource(id = R.string.app_name)) },
-        actions = { MainMenu(navController) })
+        actions = { MainMenu(navController) },
+        navigationIcon = navigationIcon,
+    )
 }
 
 @Composable

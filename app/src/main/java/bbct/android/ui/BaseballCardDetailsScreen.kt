@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
@@ -17,6 +18,7 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -65,18 +67,32 @@ data class BaseballCardState(
 }
 
 @Composable
+fun BackIcon(navController: NavController) {
+    IconButton(onClick = { navController.popBackStack() }) {
+        Icon(
+            Icons.AutoMirrored.Default.ArrowBack,
+            contentDescription = stringResource(id = R.string.back)
+        )
+    }
+}
+
+@Composable
 fun BaseballCardDetailsScreen(navController: NavController, db: BaseballCardDatabase) {
     val state = remember { mutableStateOf(BaseballCardState()) }
 
     Scaffold(
-        topBar = { TopBar(navController) },
+        topBar = {
+            TopBar(
+                navController = navController,
+                navigationIcon = { BackIcon(navController = navController) }
+            )
+        },
         floatingActionButton = { SaveCardButton(navController, db, state) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         BaseballCardDetails(state, modifier = Modifier.padding(innerPadding))
     }
 }
-
 
 @Composable
 fun BaseballCardDetails(

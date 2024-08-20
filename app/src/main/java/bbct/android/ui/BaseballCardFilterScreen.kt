@@ -22,7 +22,7 @@ import bbct.android.data.BaseballCardDatabase
 @Composable
 fun BaseballCardFilterScreen(navController: NavController, db: BaseballCardDatabase) {
     Scaffold(
-        topBar = { TopBar(navController) },
+        topBar = { TopBar(navController) { BackIcon(navController) } },
         floatingActionButton = { ApplyFilterButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
