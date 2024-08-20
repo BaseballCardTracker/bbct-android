@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -53,6 +54,7 @@ fun BaseballCardList(
 @Composable
 fun BaseballCardRow(card: BaseballCard, navController: NavController) {
     Row(modifier = Modifier.clickable { navController.navigate(BaseballCardDetailsDestination.route) }) {
+        Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
         Text(text = card.brand, modifier = Modifier.weight(0.2f))
         Text(text = "${card.year}", modifier = Modifier.weight(0.15f))
         Text(text = card.number, modifier = Modifier.weight(0.15f))
