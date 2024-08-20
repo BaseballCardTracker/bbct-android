@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenuItem
@@ -18,7 +17,6 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -62,16 +60,6 @@ data class BaseballCardState(
             playerName = playerName,
             team = team,
             position = position
-        )
-    }
-}
-
-@Composable
-fun BackIcon(navController: NavController) {
-    IconButton(onClick = { navController.popBackStack() }) {
-        Icon(
-            Icons.AutoMirrored.Default.ArrowBack,
-            contentDescription = stringResource(id = R.string.back)
         )
     }
 }
