@@ -27,7 +27,6 @@ fun About(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Text(text = stringResource(id = R.string.app_name))
         Text(text = stringResource(id = R.string.version_text))
-        Text(text = stringResource(id = R.string.about))
         Text(text = stringResource(id = R.string.copyright))
         Text(text = stringResource(id = R.string.about))
         Text(text = stringResource(id = R.string.email))
