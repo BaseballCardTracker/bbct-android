@@ -26,7 +26,7 @@ import bbct.android.ui.navigation.BaseballCardDetailsDestination
 @Composable
 fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabase) {
     Scaffold(
-        topBar = { TopBar(navController) },
+        topBar = { TopBar(actions = { MainMenu(navController) }) },
         floatingActionButton = { AddCardButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->

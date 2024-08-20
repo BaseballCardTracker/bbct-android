@@ -1,5 +1,6 @@
 package bbct.android.ui
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
@@ -16,10 +17,13 @@ import bbct.android.ui.navigation.BaseballCardFilterDestination
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun TopBar(navController: NavController, navigationIcon: @Composable () -> Unit = {}) {
+fun TopBar(
+    navigationIcon: @Composable () -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {},
+) {
     TopAppBar(
         title = { Text(stringResource(id = R.string.app_name)) },
-        actions = { MainMenu(navController) },
+        actions = actions,
         navigationIcon = navigationIcon,
     )
 }
