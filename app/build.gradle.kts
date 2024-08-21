@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.google.firebase.crashlytics)
     alias(libs.plugins.compose.compiler)
-    id("com.google.devtools.ksp") version "2.0.10-1.0.24"
+    alias(libs.plugins.google.devtools.ksp)
 }
 
 android {
