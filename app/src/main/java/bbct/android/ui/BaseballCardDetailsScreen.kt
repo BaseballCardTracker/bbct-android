@@ -1,5 +1,6 @@
 package bbct.android.ui
 
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -96,9 +98,10 @@ fun BaseballCardDetails(
 
     val scrollState = rememberScrollState()
     val textFieldModifier = Modifier.fillMaxWidth()
-    
+
     Column(
         modifier = modifier
+            .focusGroup()
             .padding(12.dp)
             .imePadding()
             .verticalScroll(scrollState),
@@ -121,45 +124,58 @@ fun BaseballCardDetails(
             label = { Text(text = stringResource(id = R.string.brand)) },
             value = state.value.brand,
             onValueChange = { state.value = state.value.copy(brand = it) },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.year)) },
             value = state.value.year,
             onValueChange = { state.value = state.value.copy(year = it) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Number
+            ),
             modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.number)) },
             value = state.value.number,
             onValueChange = { state.value = state.value.copy(number = it) },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.value)) },
             value = state.value.value,
             onValueChange = { state.value = state.value.copy(value = it) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Number
+            ),
             modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.quantity)) },
             value = state.value.quantity,
             onValueChange = { state.value = state.value.copy(quantity = it) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Number
+            ),
             modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.player_name)) },
             value = state.value.playerName,
             onValueChange = { state.value = state.value.copy(playerName = it) },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.team)) },
             value = state.value.team,
             onValueChange = { state.value = state.value.copy(team = it) },
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             modifier = textFieldModifier,
         )
         Select(
