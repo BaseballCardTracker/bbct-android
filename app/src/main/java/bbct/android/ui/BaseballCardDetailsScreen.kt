@@ -3,6 +3,7 @@ package bbct.android.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -32,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
@@ -95,6 +97,7 @@ fun BaseballCardDetails(
     val scrollState = rememberScrollState()
     Column(
         modifier = modifier
+            .padding(12.dp)
             .imePadding()
             .verticalScroll(scrollState),
     ) {
@@ -110,50 +113,59 @@ fun BaseballCardDetails(
             options = conditions,
             selected = state.value.condition,
             onSelectedChange = { state.value = state.value.copy(condition = it) },
+            modifier = Modifier.fillMaxWidth(),
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.brand)) },
             value = state.value.brand,
             onValueChange = { state.value = state.value.copy(brand = it) },
+            modifier = Modifier.fillMaxWidth(),
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.year)) },
             value = state.value.year,
             onValueChange = { state.value = state.value.copy(year = it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth(),
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.number)) },
             value = state.value.number,
-            onValueChange = { state.value = state.value.copy(number = it) }
+            onValueChange = { state.value = state.value.copy(number = it) },
+            modifier = Modifier.fillMaxWidth(),
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.value)) },
             value = state.value.value,
             onValueChange = { state.value = state.value.copy(value = it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth(),
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.quantity)) },
             value = state.value.quantity,
             onValueChange = { state.value = state.value.copy(quantity = it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier.fillMaxWidth(),
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.player_name)) },
             value = state.value.playerName,
-            onValueChange = { state.value = state.value.copy(playerName = it) }
+            onValueChange = { state.value = state.value.copy(playerName = it) },
+            modifier = Modifier.fillMaxWidth(),
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.team)) },
             value = state.value.team,
             onValueChange = { state.value = state.value.copy(team = it) },
+            modifier = Modifier.fillMaxWidth(),
         )
         Select(
             labelText = stringResource(id = R.string.player_position),
             options = positions,
             selected = state.value.position,
             onSelectedChange = { state.value = state.value.copy(position = it) },
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
@@ -165,6 +177,7 @@ fun Select(
     options: Array<String>,
     selected: String,
     onSelectedChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -180,7 +193,7 @@ fun Select(
                 )
             },
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            modifier = Modifier.menuAnchor()
+            modifier = modifier.menuAnchor()
         )
         ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             options.forEach { option ->
