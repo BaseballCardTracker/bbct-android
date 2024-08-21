@@ -3,6 +3,7 @@ package bbct.android.ui
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DropdownMenu
@@ -17,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import bbct.android.R
@@ -67,6 +69,22 @@ fun BackIcon(navController: NavController) {
         Icon(
             Icons.AutoMirrored.Default.ArrowBack,
             contentDescription = stringResource(id = R.string.back)
+        )
+    }
+}
+
+@Composable
+fun ListMenu() {
+    IconButton(onClick = { /*TODO*/ }) {
+        Icon(
+            Icons.Default.Delete,
+            contentDescription = stringResource(id = R.string.delete_menu)
+        )
+    }
+    IconButton(onClick = { /*TODO*/ }) {
+        Icon(
+            painterResource(id = R.drawable.select_all),
+            contentDescription = stringResource(id = R.string.select_all_menu)
         )
     }
 }

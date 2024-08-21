@@ -31,24 +31,40 @@ data class BaseballCardSelectedState(var card: BaseballCard, var selected: Boole
 
 @Composable
 fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabase) {
+    val cards = db.baseballCardDao.baseballCards.collectAsState(initial = emptyList())
+    val stateList by remember {
+        derivedStateOf {
+            mutableStateListOf(
+                *(cards.value.map { card ->
+                    BaseballCardSelectedState(
+                        card,
+                        false
+                    )
+                }).toTypedArray()
+            )
+        }
+    }
+    val isAnySelected by remember(stateList) {
+        derivedStateOf {
+            stateList.any { it.selected }
+        }
+    }
+
     Scaffold(
-        topBar = { TopBar(actions = { MainMenu(navController) }) },
+        topBar = {
+            TopBar(
+                actions = {
+                    if (isAnySelected) {
+                        ListMenu()
+                    } else {
+                        MainMenu(navController)
+                    }
+                }
+            )
+        },
         floatingActionButton = { AddCardButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        val cards = db.baseballCardDao.baseballCards.collectAsState(initial = emptyList())
-        val stateList by remember {
-            derivedStateOf {
-                mutableStateListOf(
-                    *(cards.value.map { card ->
-                        BaseballCardSelectedState(
-                            card,
-                            false
-                        )
-                    }).toTypedArray()
-                )
-            }
-        }
         BaseballCardList(navController, stateList, modifier = Modifier.padding(innerPadding))
     }
 }
