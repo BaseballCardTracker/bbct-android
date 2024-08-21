@@ -95,6 +95,8 @@ fun BaseballCardDetails(
     val positions = stringArrayResource(R.array.positions)
 
     val scrollState = rememberScrollState()
+    val textFieldModifier = Modifier.fillMaxWidth()
+    
     Column(
         modifier = modifier
             .padding(12.dp)
@@ -113,59 +115,59 @@ fun BaseballCardDetails(
             options = conditions,
             selected = state.value.condition,
             onSelectedChange = { state.value = state.value.copy(condition = it) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.brand)) },
             value = state.value.brand,
             onValueChange = { state.value = state.value.copy(brand = it) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.year)) },
             value = state.value.year,
             onValueChange = { state.value = state.value.copy(year = it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.number)) },
             value = state.value.number,
             onValueChange = { state.value = state.value.copy(number = it) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.value)) },
             value = state.value.value,
             onValueChange = { state.value = state.value.copy(value = it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.quantity)) },
             value = state.value.quantity,
             onValueChange = { state.value = state.value.copy(quantity = it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth(),
+            modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.player_name)) },
             value = state.value.playerName,
             onValueChange = { state.value = state.value.copy(playerName = it) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.team)) },
             value = state.value.team,
             onValueChange = { state.value = state.value.copy(team = it) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = textFieldModifier,
         )
         Select(
             labelText = stringResource(id = R.string.player_position),
             options = positions,
             selected = state.value.position,
             onSelectedChange = { state.value = state.value.copy(position = it) },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = textFieldModifier,
         )
     }
 }
