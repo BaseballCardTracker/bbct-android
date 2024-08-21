@@ -26,6 +26,9 @@ import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.navigation.BaseballCardDetailsDestination
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 data class BaseballCardSelectedState(var card: BaseballCard, var selected: Boolean)
 
@@ -55,7 +58,7 @@ fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabas
             TopBar(
                 actions = {
                     if (isAnySelected) {
-                        ListMenu()
+                        ListMenu(onDeleteCards = { deleteCards(db, stateList) })
                     } else {
                         MainMenu(navController)
                     }
@@ -86,6 +89,12 @@ fun BaseballCardList(
                 onSelectedChange = { cards[i] = state.copy(selected = it) }
             )
         }
+    }
+}
+
+fun deleteCards(db: BaseballCardDatabase, cards: List<BaseballCardSelectedState>) {
+    CoroutineScope(Dispatchers.IO).launch {
+        db.baseballCardDao.deleteBaseballCards(cards.filter { it.selected }.map { it.card })
     }
 }
 

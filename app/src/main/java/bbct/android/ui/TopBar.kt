@@ -74,8 +74,8 @@ fun BackIcon(navController: NavController) {
 }
 
 @Composable
-fun ListMenu() {
-    IconButton(onClick = { /*TODO*/ }) {
+fun ListMenu(onDeleteCards: () -> Unit) {
+    IconButton(onClick = onDeleteCards) {
         Icon(
             Icons.Default.Delete,
             contentDescription = stringResource(id = R.string.delete_menu)
