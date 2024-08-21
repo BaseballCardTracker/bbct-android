@@ -34,7 +34,7 @@ fun AboutScreen(navController: NavController, db: BaseballCardDatabase) {
 @Composable
 fun About(modifier: Modifier = Modifier) {
     //https://stackoverflow.com/a/69549929/2781626
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(12.dp)) {
         Row {
             Column {
                 Image(
