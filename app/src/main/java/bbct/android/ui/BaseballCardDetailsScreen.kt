@@ -45,7 +45,7 @@ data class BaseballCardState(
     var year: String = "",
     var number: String = "",
     var value: String = "",
-    var count: String = "",
+    var quantity: String = "",
     var playerName: String = "",
     var team: String = "",
     var position: String = "",
@@ -58,7 +58,7 @@ data class BaseballCardState(
             year = year.toInt(),
             number = number,
             value = (value.toDouble() * 100).toInt(),
-            quantity = count.toInt(),
+            quantity = quantity.toInt(),
             playerName = playerName,
             team = team,
             position = position
@@ -135,8 +135,8 @@ fun BaseballCardDetails(
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.quantity)) },
-            value = state.value.count,
-            onValueChange = { state.value = state.value.copy(count = it) },
+            value = state.value.quantity,
+            onValueChange = { state.value = state.value.copy(quantity = it) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         )
         TextField(
