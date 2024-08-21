@@ -14,7 +14,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -38,38 +37,37 @@ fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabas
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         val cards = db.baseballCardDao.baseballCards.collectAsState(initial = emptyList())
-        BaseballCardList(navController, cards, modifier = Modifier.padding(innerPadding))
+        val stateList by remember {
+            derivedStateOf {
+                mutableStateListOf(
+                    *(cards.value.map { card ->
+                        BaseballCardSelectedState(
+                            card,
+                            false
+                        )
+                    }).toTypedArray()
+                )
+            }
+        }
+        BaseballCardList(navController, stateList, modifier = Modifier.padding(innerPadding))
     }
 }
 
 @Composable
 fun BaseballCardList(
     navController: NavController,
-    cards: State<List<BaseballCard>>,
+    cards: MutableList<BaseballCardSelectedState>,
     modifier: Modifier = Modifier,
 ) {
-    val stateList by remember {
-        derivedStateOf {
-            mutableStateListOf(
-                *(cards.value.map { card ->
-                    BaseballCardSelectedState(
-                        card,
-                        false
-                    )
-                }).toTypedArray()
-            )
-        }
-    }
-
     LazyColumn(modifier = modifier) {
         itemsIndexed(
-            items = stateList,
+            items = cards,
             key = { i, state -> state.card._id!! }
         ) { i, state ->
             BaseballCardRow(
                 navController = navController,
-                state = stateList[i],
-                onSelectedChange = { stateList[i] = state.copy(selected = it) }
+                state = state,
+                onSelectedChange = { cards[i] = state.copy(selected = it) }
             )
         }
     }
