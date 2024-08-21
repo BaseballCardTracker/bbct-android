@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
@@ -107,17 +109,18 @@ fun BaseballCardDetails(
             labelText = stringResource(id = R.string.condition),
             options = conditions,
             selected = state.value.condition,
-            onSelectedChange = { state.value = state.value.copy(condition = it) }
+            onSelectedChange = { state.value = state.value.copy(condition = it) },
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.brand)) },
             value = state.value.brand,
-            onValueChange = { state.value = state.value.copy(brand = it) }
+            onValueChange = { state.value = state.value.copy(brand = it) },
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.year)) },
             value = state.value.year,
-            onValueChange = { state.value = state.value.copy(year = it) }
+            onValueChange = { state.value = state.value.copy(year = it) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.number)) },
@@ -127,12 +130,14 @@ fun BaseballCardDetails(
         TextField(
             label = { Text(text = stringResource(id = R.string.value)) },
             value = state.value.value,
-            onValueChange = { state.value = state.value.copy(value = it) }
+            onValueChange = { state.value = state.value.copy(value = it) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.quantity)) },
             value = state.value.count,
-            onValueChange = { state.value = state.value.copy(count = it) }
+            onValueChange = { state.value = state.value.copy(count = it) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.player_name)) },
@@ -142,13 +147,13 @@ fun BaseballCardDetails(
         TextField(
             label = { Text(text = stringResource(id = R.string.team)) },
             value = state.value.team,
-            onValueChange = { state.value = state.value.copy(team = it) }
+            onValueChange = { state.value = state.value.copy(team = it) },
         )
         Select(
             labelText = stringResource(id = R.string.player_position),
             options = positions,
             selected = state.value.position,
-            onSelectedChange = { state.value = state.value.copy(position = it) }
+            onSelectedChange = { state.value = state.value.copy(position = it) },
         )
     }
 }
