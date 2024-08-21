@@ -34,7 +34,7 @@ interface BaseballCardDao {
         year: Int,
         number: String,
         playerName: String,
-        team: String
+        team: String,
     ): Flow<List<BaseballCard>>
 
     @Query("SELECT * FROM baseball_cards WHERE _id = :id")

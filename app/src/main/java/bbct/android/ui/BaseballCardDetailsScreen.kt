@@ -92,7 +92,7 @@ fun BaseballCardDetails(
     Column(
         modifier = modifier
             .imePadding()
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
     ) {
         Row {
             Checkbox(
