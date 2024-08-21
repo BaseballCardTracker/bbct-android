@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Checkbox
@@ -14,7 +14,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -22,6 +27,8 @@ import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.navigation.BaseballCardDetailsDestination
+
+data class BaseballCardSelectedState(var card: BaseballCard, var selected: Boolean)
 
 @Composable
 fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabase) {
@@ -31,34 +38,58 @@ fun BaseballCardListScreen(navController: NavController, db: BaseballCardDatabas
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         val cards = db.baseballCardDao.baseballCards.collectAsState(initial = emptyList())
-        BaseballCardList(navController, cards.value, modifier = Modifier.padding(innerPadding))
+        BaseballCardList(navController, cards, modifier = Modifier.padding(innerPadding))
     }
 }
 
 @Composable
 fun BaseballCardList(
     navController: NavController,
-    cards: List<BaseballCard>,
-    modifier: Modifier = Modifier
+    cards: State<List<BaseballCard>>,
+    modifier: Modifier = Modifier,
 ) {
+    val stateList by remember {
+        derivedStateOf {
+            mutableStateListOf(
+                *(cards.value.map { card ->
+                    BaseballCardSelectedState(
+                        card,
+                        false
+                    )
+                }).toTypedArray()
+            )
+        }
+    }
+
     LazyColumn(modifier = modifier) {
-        items(
-            items = cards,
-            key = { card: BaseballCard -> card._id!! }
-        ) { card: BaseballCard ->
-            BaseballCardRow(card, navController)
+        itemsIndexed(
+            items = stateList,
+            key = { i, state -> state.card._id!! }
+        ) { i, state ->
+            BaseballCardRow(
+                navController = navController,
+                state = stateList[i],
+                onSelectedChange = { stateList[i] = state.copy(selected = it) }
+            )
         }
     }
 }
 
 @Composable
-fun BaseballCardRow(card: BaseballCard, navController: NavController) {
+fun BaseballCardRow(
+    navController: NavController,
+    state: BaseballCardSelectedState,
+    onSelectedChange: (Boolean) -> Unit,
+) {
     Row(modifier = Modifier.clickable { navController.navigate(BaseballCardDetailsDestination.route) }) {
-        Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
-        Text(text = card.brand, modifier = Modifier.weight(0.2f))
-        Text(text = "${card.year}", modifier = Modifier.weight(0.15f))
-        Text(text = card.number, modifier = Modifier.weight(0.15f))
-        Text(text = card.playerName, modifier = Modifier.weight(0.5f))
+        Checkbox(
+            checked = state.selected,
+            onCheckedChange = onSelectedChange,
+        )
+        Text(text = state.card.brand, modifier = Modifier.weight(0.2f))
+        Text(text = "${state.card.year}", modifier = Modifier.weight(0.15f))
+        Text(text = state.card.number, modifier = Modifier.weight(0.15f))
+        Text(text = state.card.playerName, modifier = Modifier.weight(0.5f))
     }
 }
 
