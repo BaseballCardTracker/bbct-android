@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -95,7 +96,7 @@ fun BaseballCardDetails(
             .imePadding()
             .verticalScroll(scrollState),
     ) {
-        Row {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
                 checked = state.value.autographed,
                 onCheckedChange = { state.value = state.value.copy(autographed = it) },
