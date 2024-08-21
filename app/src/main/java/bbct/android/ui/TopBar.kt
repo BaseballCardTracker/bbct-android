@@ -1,5 +1,7 @@
 package bbct.android.ui
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -39,6 +41,35 @@ fun TopBar(
 }
 
 @Composable
+fun BackIcon(navController: NavController) {
+    IconButton(onClick = { navController.popBackStack() }) {
+        Icon(
+            Icons.AutoMirrored.Default.ArrowBack,
+            contentDescription = stringResource(id = R.string.back)
+        )
+    }
+}
+
+@Composable
+fun ListMenu(
+    navController: NavController,
+    isAnySelected: Boolean,
+    onDeleteCards: () -> Unit,
+) {
+    Crossfade(isAnySelected, label = "") { target ->
+        Row {
+            if (target) {
+                SelectedMenu(
+                    onDeleteCards = onDeleteCards
+                )
+            } else {
+                MainMenu(navController)
+            }
+        }
+    }
+}
+
+@Composable
 fun MainMenu(navController: NavController) {
     IconButton(onClick = { navController.navigate(BaseballCardFilterDestination.route) }) {
         Icon(Icons.Default.Search, contentDescription = stringResource(id = R.string.filter_menu))
@@ -64,17 +95,7 @@ fun OverflowMenu(navController: NavController) {
 }
 
 @Composable
-fun BackIcon(navController: NavController) {
-    IconButton(onClick = { navController.popBackStack() }) {
-        Icon(
-            Icons.AutoMirrored.Default.ArrowBack,
-            contentDescription = stringResource(id = R.string.back)
-        )
-    }
-}
-
-@Composable
-fun ListMenu(onDeleteCards: () -> Unit) {
+fun SelectedMenu(onDeleteCards: () -> Unit) {
     IconButton(onClick = onDeleteCards) {
         Icon(
             Icons.Default.Delete,

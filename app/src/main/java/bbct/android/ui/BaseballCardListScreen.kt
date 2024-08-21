@@ -1,6 +1,5 @@
 package bbct.android.ui
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -60,17 +59,10 @@ fun BaseballCardListScreen(
         topBar = {
             TopBar(
                 actions = {
-                    Crossfade(isAnySelected, label = "") { target ->
-                        Row {
-                            if (target) {
-                                ListMenu(
-                                    onDeleteCards = { scope.launch { deleteCards(db, stateList) } }
-                                )
-                            } else {
-                                MainMenu(navController)
-                            }
-                        }
-                    }
+                    ListMenu(
+                        navController,
+                        isAnySelected,
+                        onDeleteCards = { scope.launch { deleteCards(db, stateList) } })
                 }
             )
         },
