@@ -14,6 +14,10 @@ import androidx.room.Room.inMemoryDatabaseBuilder
 import androidx.test.platform.app.InstrumentationRegistry
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.launch
 import org.junit.Rule
 import org.junit.Test
 
@@ -90,6 +94,11 @@ class BaseballCardDetailsScreenTest {
         composeTestRule
             .onNodeWithContentDescription("Save")
             .performClick()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val savedCard = db.baseballCardDao.baseballCards.single()
+            assert(savedCard == listOf(card))
+        }
     }
 
     @Test
