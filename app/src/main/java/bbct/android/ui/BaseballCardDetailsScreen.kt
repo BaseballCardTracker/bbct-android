@@ -89,10 +89,11 @@ fun BaseballCardDetails(
     val conditions = stringArrayResource(R.array.condition)
     val positions = stringArrayResource(R.array.positions)
 
+    val scrollState = rememberScrollState()
     Column(
         modifier = modifier
             .imePadding()
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(scrollState),
     ) {
         Row {
             Checkbox(
