@@ -17,7 +17,8 @@ class BaseballCardListTest {
     fun testBaseballCardList() {
         composeTestRule.setContent {
             val navController = rememberNavController()
-            BaseballCardList(navController, cards)
+            val cardListState = cards.map { BaseballCardSelectedState(it, false) }.toMutableList()
+            BaseballCardList(navController, cardListState)
         }
 
         for ((i, card) in cards.withIndex()) {
