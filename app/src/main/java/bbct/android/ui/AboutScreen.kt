@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import bbct.android.BuildConfig
 import bbct.android.R
 import bbct.android.data.BaseballCardDatabase
 
@@ -24,9 +25,10 @@ fun AboutScreen(navController: NavController, db: BaseballCardDatabase) {
 
 @Composable
 fun About(modifier: Modifier = Modifier) {
+    //https://stackoverflow.com/a/69549929/2781626
     Column(modifier = modifier) {
         Text(text = stringResource(id = R.string.app_name))
-        Text(text = stringResource(id = R.string.version_text))
+        Text(text = stringResource(id = R.string.version_text, BuildConfig.VERSION_NAME))
         Text(text = stringResource(id = R.string.copyright))
         Text(text = stringResource(id = R.string.about))
         Text(text = stringResource(id = R.string.email))

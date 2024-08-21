@@ -16,7 +16,7 @@ interface BaseballCardDao {
     fun updateBaseballCard(card: BaseballCard)
 
     @Delete
-    fun deleteBaseballCards(cards: List<BaseballCard>)
+    suspend fun deleteBaseballCards(cards: List<BaseballCard>)
 
     @get:Query("SELECT * FROM baseball_cards")
     val baseballCards: Flow<List<BaseballCard>>

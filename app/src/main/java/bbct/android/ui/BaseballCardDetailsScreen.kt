@@ -1,6 +1,5 @@
 package bbct.android.ui
 
-import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,16 +24,16 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 data class BaseballCardState(
     var autographed: Boolean = false,
@@ -46,7 +45,7 @@ data class BaseballCardState(
     var count: String = "",
     var playerName: String = "",
     var team: String = "",
-    var position: String = ""
+    var position: String = "",
 ) {
     fun toBaseballCard(): BaseballCard {
         return BaseballCard(
@@ -86,17 +85,14 @@ fun BaseballCardDetailsScreen(navController: NavController, db: BaseballCardData
 fun BaseballCardDetails(
     state: MutableState<BaseballCardState>,
     modifier: Modifier = Modifier,
-    context: Context = LocalContext.current
 ) {
-    val resources = context.resources
-    val conditions = resources.getStringArray(R.array.condition)
-    val positions = resources.getStringArray(R.array.positions)
+    val conditions = stringArrayResource(R.array.condition)
+    val positions = stringArrayResource(R.array.positions)
 
-    val scrollState = rememberScrollState()
     Column(
         modifier = modifier
             .imePadding()
-            .verticalScroll(scrollState)
+            .verticalScroll(rememberScrollState())
     ) {
         Row {
             Checkbox(
@@ -161,7 +157,7 @@ fun Select(
     labelText: String,
     options: Array<String>,
     selected: String,
-    onSelectedChange: (String) -> Unit
+    onSelectedChange: (String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -197,19 +193,16 @@ fun Select(
 fun SaveCardButton(
     navController: NavController,
     db: BaseballCardDatabase,
-    state: MutableState<BaseballCardState>
+    state: MutableState<BaseballCardState>,
 ) {
-    FloatingActionButton(onClick = { saveCard(db, state) }) {
+    val scope = rememberCoroutineScope()
+    FloatingActionButton(onClick = { scope.launch { saveCard(db, state) } }) {
         Icon(Icons.Default.Check, contentDescription = stringResource(id = R.string.save_menu))
     }
 }
 
-fun saveCard(db: BaseballCardDatabase, cardState: MutableState<BaseballCardState>) {
+suspend fun saveCard(db: BaseballCardDatabase, cardState: MutableState<BaseballCardState>) {
     val newCard = cardState.value.toBaseballCard()
-    runBlocking {
-        launch {
-            db.baseballCardDao.insertBaseballCard(newCard)
-            cardState.value = BaseballCardState()
-        }
-    }
+    db.baseballCardDao.insertBaseballCard(newCard)
+    cardState.value = BaseballCardState()
 }
