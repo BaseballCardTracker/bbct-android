@@ -55,12 +55,14 @@ fun ListMenu(
     navController: NavController,
     isAnySelected: Boolean,
     onDeleteCards: () -> Unit,
+    onSelectAll: () -> Unit,
 ) {
     Crossfade(isAnySelected, label = "") { target ->
         Row {
             if (target) {
                 SelectedMenu(
-                    onDeleteCards = onDeleteCards
+                    onDeleteCards = onDeleteCards,
+                    onSelectAll = onSelectAll,
                 )
             } else {
                 MainMenu(navController)
@@ -95,14 +97,14 @@ fun OverflowMenu(navController: NavController) {
 }
 
 @Composable
-fun SelectedMenu(onDeleteCards: () -> Unit) {
+fun SelectedMenu(onDeleteCards: () -> Unit, onSelectAll: () -> Unit) {
     IconButton(onClick = onDeleteCards) {
         Icon(
             Icons.Default.Delete,
             contentDescription = stringResource(id = R.string.delete_menu)
         )
     }
-    IconButton(onClick = { /*TODO*/ }) {
+    IconButton(onClick = onSelectAll) {
         Icon(
             painterResource(id = R.drawable.select_all),
             contentDescription = stringResource(id = R.string.select_all_menu)

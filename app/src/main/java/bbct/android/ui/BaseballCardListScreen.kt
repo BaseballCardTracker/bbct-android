@@ -19,6 +19,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,7 +63,8 @@ fun BaseballCardListScreen(
                     ListMenu(
                         navController,
                         isAnySelected,
-                        onDeleteCards = { scope.launch { deleteCards(db, stateList) } }
+                        onDeleteCards = { scope.launch { deleteCards(db, stateList) } },
+                        onSelectAll = { selectAll(stateList) },
                     )
                 }
             )
@@ -76,6 +78,16 @@ fun BaseballCardListScreen(
             onCardChanged = { index, card -> stateList[index] = card },
             contentPadding = innerPadding
         )
+    }
+}
+
+private suspend fun deleteCards(db: BaseballCardDatabase, cards: List<BaseballCardSelectedState>) {
+    db.baseballCardDao.deleteBaseballCards(cards.filter { it.selected }.map { it.card })
+}
+
+private fun selectAll(stateList: SnapshotStateList<BaseballCardSelectedState>) {
+    stateList.forEachIndexed { i, card ->
+        stateList[i] = card.copy(selected = true)
     }
 }
 
@@ -102,10 +114,6 @@ fun BaseballCardList(
             )
         }
     }
-}
-
-suspend fun deleteCards(db: BaseballCardDatabase, cards: List<BaseballCardSelectedState>) {
-    db.baseballCardDao.deleteBaseballCards(cards.filter { it.selected }.map { it.card })
 }
 
 @Composable
