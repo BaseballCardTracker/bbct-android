@@ -15,11 +15,13 @@ class BaseballCardListTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private var cardListState = mutableListOf<BaseballCardSelectedState>()
+
     @Before
     fun setup(): Unit {
+        cardListState = cards.map { BaseballCardSelectedState(it, false) }.toMutableList()
         composeTestRule.setContent {
             val navController = rememberNavController()
-            val cardListState = cards.map { BaseballCardSelectedState(it, false) }.toMutableList()
             BaseballCardList(
                 navController = navController,
                 cards = cardListState,
