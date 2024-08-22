@@ -71,7 +71,7 @@ data class BaseballCardState(
 }
 
 @Composable
-fun BaseballCardDetailsScreen(navController: NavController, db: BaseballCardDatabase) {
+fun BaseballCardCreateScreen(navController: NavController, db: BaseballCardDatabase) {
     val state = remember { mutableStateOf(BaseballCardState()) }
 
     Scaffold(

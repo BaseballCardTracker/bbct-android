@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 import org.junit.Rule
 import org.junit.Test
 
-class BaseballCardDetailsScreenTest {
+class BaseballCardCreateTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -45,7 +45,7 @@ class BaseballCardDetailsScreenTest {
 
         composeTestRule.setContent {
             val navController = rememberNavController()
-            BaseballCardDetailsScreen(navController, db)
+            BaseballCardCreateScreen(navController, db)
         }
 
         composeTestRule
@@ -121,7 +121,7 @@ class BaseballCardDetailsScreenTest {
 
         composeTestRule.setContent {
             val navController = rememberNavController()
-            BaseballCardDetailsScreen(navController, db)
+            BaseballCardCreateScreen(navController, db)
         }
 
         composeTestRule
