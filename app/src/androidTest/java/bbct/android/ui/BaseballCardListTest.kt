@@ -1,5 +1,6 @@
 package bbct.android.ui
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
@@ -18,7 +19,12 @@ class BaseballCardListTest {
         composeTestRule.setContent {
             val navController = rememberNavController()
             val cardListState = cards.map { BaseballCardSelectedState(it, false) }.toMutableList()
-            BaseballCardList(navController, cardListState)
+            BaseballCardList(
+                navController = navController,
+                cards = cardListState,
+                onCardChanged = { index, card -> cardListState[index] = card },
+                contentPadding = PaddingValues(),
+            )
         }
 
         for ((i, card) in cards.withIndex()) {
