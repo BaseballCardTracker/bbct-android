@@ -29,6 +29,7 @@ import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.navigation.BaseballCardCreateDestination
+import bbct.android.ui.navigation.navigate
 import kotlinx.coroutines.launch
 
 data class BaseballCardSelectedState(var card: BaseballCard, var selected: Boolean)
@@ -124,7 +125,7 @@ fun BaseballCardRow(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.clickable { navController.navigate(BaseballCardCreateDestination.route) }
+        modifier = Modifier.clickable { navController.navigate(state.card._id!!) }
     ) {
         Checkbox(
             checked = state.selected,

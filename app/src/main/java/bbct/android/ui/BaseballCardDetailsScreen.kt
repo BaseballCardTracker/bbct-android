@@ -23,6 +23,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,6 +55,19 @@ data class BaseballCardState(
     var team: String = "",
     var position: String = "",
 ) {
+    constructor(card: BaseballCard) : this(
+        card.autographed,
+        card.condition,
+        card.brand,
+        card.year.toString(),
+        card.number,
+        (card.value / 100.0).toString(),
+        card.quantity.toString(),
+        card.playerName,
+        card.team,
+        card.position
+    )
+
     fun toBaseballCard(): BaseballCard {
         return BaseballCard(
             autographed = autographed,
@@ -82,6 +96,28 @@ fun BaseballCardCreateScreen(navController: NavController, db: BaseballCardDatab
             )
         },
         floatingActionButton = { CreateCardButton(db, state) },
+        modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
+        BaseballCardDetails(state, modifier = Modifier.padding(innerPadding))
+    }
+}
+
+@Composable
+fun BaseballCardEditScreen(navController: NavController, db: BaseballCardDatabase, cardId: Long) {
+    val state = remember { mutableStateOf(BaseballCardState()) }
+    LaunchedEffect(cardId) {
+        val card = db.baseballCardDao.getBaseballCard(cardId)
+        state.value = BaseballCardState(card)
+    }
+
+    Scaffold(
+        topBar = {
+            TopBar(
+                navigationIcon = { BackIcon(navController = navController) },
+                actions = { OverflowMenu(navController) },
+            )
+        },
+        floatingActionButton = { UpdateCardButton(db, state) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         BaseballCardDetails(state, modifier = Modifier.padding(innerPadding))
@@ -241,5 +277,22 @@ fun CreateCardButton(
 suspend fun createCard(db: BaseballCardDatabase, cardState: MutableState<BaseballCardState>) {
     val newCard = cardState.value.toBaseballCard()
     db.baseballCardDao.insertBaseballCard(newCard)
+    cardState.value = BaseballCardState()
+}
+
+@Composable
+fun UpdateCardButton(
+    db: BaseballCardDatabase,
+    state: MutableState<BaseballCardState>,
+) {
+    val scope = rememberCoroutineScope()
+    FloatingActionButton(onClick = { scope.launch { updateCard(db, state) } }) {
+        Icon(Icons.Default.Check, contentDescription = stringResource(id = R.string.save_menu))
+    }
+}
+
+suspend fun updateCard(db: BaseballCardDatabase, cardState: MutableState<BaseballCardState>) {
+    val newCard = cardState.value.toBaseballCard()
+    db.baseballCardDao.updateBaseballCard(newCard)
     cardState.value = BaseballCardState()
 }

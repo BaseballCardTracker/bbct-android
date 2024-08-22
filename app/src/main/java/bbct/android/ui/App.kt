@@ -1,12 +1,15 @@
 package bbct.android.ui
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.navigation.AboutDestination
 import bbct.android.ui.navigation.BaseballCardCreateDestination
+import bbct.android.ui.navigation.BaseballCardEditDestination
 import bbct.android.ui.navigation.BaseballCardFilterDestination
 import bbct.android.ui.navigation.BaseballCardListDestination
 import bbct.android.ui.theme.AppTheme
@@ -25,6 +28,13 @@ fun App(db: BaseballCardDatabase) {
             }
             composable(route = BaseballCardCreateDestination.route) {
                 BaseballCardCreateDestination.screen(navController, db)
+            }
+            composable(
+                route = BaseballCardEditDestination.route,
+                arguments = listOf(navArgument("cardId") { type = NavType.LongType }),
+            ) { backStackEntry ->
+                val cardId = backStackEntry.arguments?.getLong("cardId")
+                BaseballCardEditDestination.screen(navController, db, cardId!!)
             }
             composable(route = BaseballCardFilterDestination.route) {
                 BaseballCardFilterDestination.screen(navController, db)

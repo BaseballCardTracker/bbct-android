@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.AboutScreen
 import bbct.android.ui.BaseballCardCreateScreen
+import bbct.android.ui.BaseballCardEditScreen
 import bbct.android.ui.BaseballCardFilterScreen
 import bbct.android.ui.BaseballCardListScreen
 
@@ -28,6 +29,23 @@ object BaseballCardCreateDestination {
                 db,
             )
         }
+}
+
+object BaseballCardEditDestination {
+    const val route = "baseball_card_details/{cardId}"
+    val screen: @Composable (NavController, BaseballCardDatabase, Long) -> Unit =
+        { navController, db, cardId ->
+            BaseballCardEditScreen(
+                navController,
+                db,
+                cardId,
+            )
+        }
+
+}
+
+fun NavController.navigate(cardId: Long) {
+    this.navigate("baseball_card_details/$cardId")
 }
 
 object BaseballCardFilterDestination {

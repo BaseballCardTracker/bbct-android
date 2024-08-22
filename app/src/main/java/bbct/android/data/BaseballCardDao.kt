@@ -13,7 +13,7 @@ interface BaseballCardDao {
     suspend fun insertBaseballCard(card: BaseballCard)
 
     @Update
-    fun updateBaseballCard(card: BaseballCard)
+    suspend fun updateBaseballCard(card: BaseballCard)
 
     @Delete
     suspend fun deleteBaseballCards(cards: List<BaseballCard>)
