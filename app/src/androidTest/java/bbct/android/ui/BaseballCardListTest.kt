@@ -30,7 +30,7 @@ class BaseballCardListTest {
     }
 
     @Test
-    fun testBaseballCardList() {
+    fun testDisplaysCards() {
         for ((i, card) in cards.withIndex()) {
             composeTestRule.onAllNodesWithText(card.brand)[i].assertIsDisplayed()
             composeTestRule.onNodeWithText("${card.year}").assertIsDisplayed()
