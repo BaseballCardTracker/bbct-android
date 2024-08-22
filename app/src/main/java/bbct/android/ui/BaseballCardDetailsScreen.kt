@@ -81,7 +81,7 @@ fun BaseballCardCreateScreen(navController: NavController, db: BaseballCardDatab
                 actions = { OverflowMenu(navController) },
             )
         },
-        floatingActionButton = { SaveCardButton(navController, db, state) },
+        floatingActionButton = { CreateCardButton(db, state) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         BaseballCardDetails(state, modifier = Modifier.padding(innerPadding))
@@ -228,18 +228,17 @@ fun Select(
 }
 
 @Composable
-fun SaveCardButton(
-    navController: NavController,
+fun CreateCardButton(
     db: BaseballCardDatabase,
     state: MutableState<BaseballCardState>,
 ) {
     val scope = rememberCoroutineScope()
-    FloatingActionButton(onClick = { scope.launch { saveCard(db, state) } }) {
+    FloatingActionButton(onClick = { scope.launch { createCard(db, state) } }) {
         Icon(Icons.Default.Check, contentDescription = stringResource(id = R.string.save_menu))
     }
 }
 
-suspend fun saveCard(db: BaseballCardDatabase, cardState: MutableState<BaseballCardState>) {
+suspend fun createCard(db: BaseballCardDatabase, cardState: MutableState<BaseballCardState>) {
     val newCard = cardState.value.toBaseballCard()
     db.baseballCardDao.insertBaseballCard(newCard)
     cardState.value = BaseballCardState()
