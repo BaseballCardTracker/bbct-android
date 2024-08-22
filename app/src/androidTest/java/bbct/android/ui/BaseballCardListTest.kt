@@ -7,6 +7,7 @@ import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
 import bbct.android.data.cards
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -14,8 +15,8 @@ class BaseballCardListTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Test
-    fun testBaseballCardList() {
+    @Before
+    fun setup(): Unit {
         composeTestRule.setContent {
             val navController = rememberNavController()
             val cardListState = cards.map { BaseballCardSelectedState(it, false) }.toMutableList()
@@ -26,7 +27,10 @@ class BaseballCardListTest {
                 contentPadding = PaddingValues(),
             )
         }
+    }
 
+    @Test
+    fun testBaseballCardList() {
         for ((i, card) in cards.withIndex()) {
             composeTestRule.onAllNodesWithText(card.brand)[i].assertIsDisplayed()
             composeTestRule.onNodeWithText("${card.year}").assertIsDisplayed()
