@@ -99,7 +99,9 @@ fun BaseballCardCreateScreen(navController: NavController, db: BaseballCardDatab
             )
         },
         floatingActionButton = { CreateCardButton(db, state) },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .imePadding()
     ) { innerPadding ->
         BaseballCardDetails(state, modifier = Modifier.padding(innerPadding))
     }
@@ -121,7 +123,9 @@ fun BaseballCardEditScreen(navController: NavController, db: BaseballCardDatabas
             )
         },
         floatingActionButton = { UpdateCardButton(navController, db, state) },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .imePadding()
     ) { innerPadding ->
         BaseballCardDetails(state, modifier = Modifier.padding(innerPadding))
     }
@@ -142,7 +146,6 @@ fun BaseballCardDetails(
         modifier = modifier
             .focusGroup()
             .padding(12.dp)
-            .imePadding()
             .verticalScroll(scrollState),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
