@@ -8,15 +8,10 @@ import bbct.android.ui.BaseballCardCreateScreen
 import bbct.android.ui.BaseballCardFilterScreen
 import bbct.android.ui.BaseballCardListScreen
 
-interface Destination {
-    val route: String
-    val screen: @Composable (NavController, BaseballCardDatabase) -> Unit
-}
-
-object BaseballCardListDestination : Destination {
-    override val route = "baseball_card_list"
-    override val screen: @Composable (NavController, BaseballCardDatabase) -> Unit =
-        { navController: NavController, db: BaseballCardDatabase ->
+object BaseballCardListDestination {
+    const val route = "baseball_card_list"
+    val screen: @Composable (NavController, BaseballCardDatabase) -> Unit =
+        { navController, db ->
             BaseballCardListScreen(
                 navController,
                 db,
@@ -24,10 +19,10 @@ object BaseballCardListDestination : Destination {
         }
 }
 
-object BaseballCardCreateDestination : Destination {
-    override val route = "baseball_card_details"
-    override val screen: @Composable (NavController, BaseballCardDatabase) -> Unit =
-        { navController: NavController, db: BaseballCardDatabase ->
+object BaseballCardCreateDestination {
+    const val route = "baseball_card_details"
+    val screen: @Composable (NavController, BaseballCardDatabase) -> Unit =
+        { navController, db ->
             BaseballCardCreateScreen(
                 navController,
                 db,
@@ -35,10 +30,10 @@ object BaseballCardCreateDestination : Destination {
         }
 }
 
-object BaseballCardFilterDestination : Destination {
-    override val route = "baseball_card_filter"
-    override val screen: @Composable (NavController, BaseballCardDatabase) -> Unit =
-        { navController: NavController, db: BaseballCardDatabase ->
+object BaseballCardFilterDestination {
+    const val route = "baseball_card_filter"
+    val screen: @Composable (NavController, BaseballCardDatabase) -> Unit =
+        { navController, db ->
             BaseballCardFilterScreen(
                 navController,
                 db,
@@ -46,10 +41,10 @@ object BaseballCardFilterDestination : Destination {
         }
 }
 
-object AboutDestination : Destination {
-    override val route = "about"
-    override val screen: @Composable (NavController, BaseballCardDatabase) -> Unit =
-        { navController: NavController, db: BaseballCardDatabase ->
+object AboutDestination {
+    const val route = "about"
+    val screen: @Composable (NavController, BaseballCardDatabase) -> Unit =
+        { navController, db ->
             AboutScreen(
                 navController,
                 db,
