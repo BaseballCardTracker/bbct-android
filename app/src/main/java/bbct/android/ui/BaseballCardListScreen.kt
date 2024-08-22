@@ -91,7 +91,6 @@ fun BaseballCardList(
         modifier = modifier,
         contentPadding = contentPadding
     ) {
-        //Maybe include a top column to know what each column is?
         itemsIndexed(
             items = cards,
             key = { _, state -> state.card._id!! }
