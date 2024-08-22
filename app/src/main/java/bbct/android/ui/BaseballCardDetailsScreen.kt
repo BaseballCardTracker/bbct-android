@@ -117,7 +117,7 @@ fun BaseballCardEditScreen(navController: NavController, db: BaseballCardDatabas
                 actions = { OverflowMenu(navController) },
             )
         },
-        floatingActionButton = { UpdateCardButton(db, state) },
+        floatingActionButton = { UpdateCardButton(navController, db, state) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         BaseballCardDetails(state, modifier = Modifier.padding(innerPadding))
@@ -282,17 +282,22 @@ suspend fun createCard(db: BaseballCardDatabase, cardState: MutableState<Basebal
 
 @Composable
 fun UpdateCardButton(
+    navController: NavController,
     db: BaseballCardDatabase,
     state: MutableState<BaseballCardState>,
 ) {
     val scope = rememberCoroutineScope()
-    FloatingActionButton(onClick = { scope.launch { updateCard(db, state) } }) {
+    FloatingActionButton(onClick = { scope.launch { updateCard(navController, db, state) } }) {
         Icon(Icons.Default.Check, contentDescription = stringResource(id = R.string.save_menu))
     }
 }
 
-suspend fun updateCard(db: BaseballCardDatabase, cardState: MutableState<BaseballCardState>) {
+suspend fun updateCard(
+    navController: NavController,
+    db: BaseballCardDatabase,
+    cardState: MutableState<BaseballCardState>,
+) {
     val newCard = cardState.value.toBaseballCard()
     db.baseballCardDao.updateBaseballCard(newCard)
-    cardState.value = BaseballCardState()
+    navController.popBackStack()
 }
