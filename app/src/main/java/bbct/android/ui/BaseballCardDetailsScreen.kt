@@ -44,6 +44,7 @@ import bbct.android.data.BaseballCardDatabase
 import kotlinx.coroutines.launch
 
 data class BaseballCardState(
+    var id: Long? = null,
     var autographed: Boolean = false,
     var condition: String = "",
     var brand: String = "",
@@ -56,6 +57,7 @@ data class BaseballCardState(
     var position: String = "",
 ) {
     constructor(card: BaseballCard) : this(
+        card._id,
         card.autographed,
         card.condition,
         card.brand,
@@ -70,6 +72,7 @@ data class BaseballCardState(
 
     fun toBaseballCard(): BaseballCard {
         return BaseballCard(
+            _id = id,
             autographed = autographed,
             condition = condition,
             brand = brand,
