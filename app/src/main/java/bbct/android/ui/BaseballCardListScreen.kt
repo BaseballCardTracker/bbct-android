@@ -62,7 +62,8 @@ fun BaseballCardListScreen(
                     ListMenu(
                         navController,
                         isAnySelected,
-                        onDeleteCards = { scope.launch { deleteCards(db, stateList) } })
+                        onDeleteCards = { scope.launch { deleteCards(db, stateList) } }
+                    )
                 }
             )
         },
