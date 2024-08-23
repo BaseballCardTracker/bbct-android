@@ -1,10 +1,17 @@
 package bbct.android.ui
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.getOrNull
+import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.printToLog
 import androidx.navigation.compose.rememberNavController
 import bbct.android.data.cards
 import org.junit.Before
@@ -39,5 +46,19 @@ class BaseballCardListTest {
             composeTestRule.onNodeWithText(card.number).assertIsDisplayed()
             composeTestRule.onNodeWithText(card.playerName).assertIsDisplayed()
         }
+    }
+
+    @Test
+    fun testSelectCard() {
+        assert(!cardListState[0].selected)
+        composeTestRule.onRoot(useUnmergedTree = true).printToLog("onRoot")
+        composeTestRule.onAllNodes(hasRole(Role.Checkbox))[0].performClick()
+        assert(cardListState[0].selected)
+    }
+}
+
+fun hasRole(role: Role): SemanticsMatcher {
+    return SemanticsMatcher("hasRole $role") {
+        it.config.getOrNull(SemanticsProperties.Role) == role
     }
 }
