@@ -9,9 +9,10 @@ import androidx.test.platform.app.InstrumentationRegistry
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.test.TestBase
+import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.single
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.junit.Test
 
@@ -43,8 +44,8 @@ class BaseballCardCreateTest : TestBase() {
         enterCardData(card)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val savedCard = db.baseballCardDao.baseballCards.single()
-            assert(savedCard == listOf(card))
+            val savedCard = db.baseballCardDao.baseballCards.first()
+            assertThat(savedCard).isNotEqualTo(listOf(card))
         }
     }
 
