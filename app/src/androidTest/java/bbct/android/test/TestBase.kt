@@ -6,7 +6,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
-import androidx.compose.ui.test.performTextInput
+import androidx.compose.ui.test.performTextReplacement
 import bbct.android.data.BaseballCard
 import org.junit.Rule
 
@@ -26,37 +26,38 @@ abstract class TestBase {
         composeTestRule
             .onNodeWithText("Brand")
             .assertIsDisplayed()
-            .performTextInput(card.brand)
+            .performTextReplacement(card.brand)
         composeTestRule
             .onNodeWithText("Year")
             .assertIsDisplayed()
-            .performTextInput(card.year.toString())
+            .performTextReplacement(card.year.toString())
         composeTestRule
             .onNodeWithText("Number")
             .assertIsDisplayed()
-            .performTextInput(card.number)
+            .performTextReplacement(card.number)
         composeTestRule
             .onNodeWithText("Value")
             .assertIsDisplayed()
-            .performTextInput(card.value.toString())
+            .performTextReplacement((card.value / 100.0f).toString())
         composeTestRule
             .onNodeWithText("Quantity")
             .assertIsDisplayed()
-            .performTextInput(card.quantity.toString())
+            .performTextReplacement(card.quantity.toString())
         composeTestRule
             .onNodeWithText("Player Name")
             .assertIsDisplayed()
-            .performTextInput(card.playerName)
+            .performTextReplacement(card.playerName)
         composeTestRule
             .onNodeWithText("Team")
             .assertIsDisplayed()
-            .performTextInput(card.team)
+            .performTextReplacement(card.team)
         composeTestRule
             .onNodeWithText("Position")
             .assertIsDisplayed()
             .performClick()
         composeTestRule
             .onNodeWithText(card.position)
+            .assertIsDisplayed()
             .performClick()
         composeTestRule
             .onNodeWithContentDescription("Save")
