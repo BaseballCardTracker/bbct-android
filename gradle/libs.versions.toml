@@ -15,6 +15,7 @@ googleGmsGoogleServices = "4.4.2"
 googleFirebaseCrashlytics = "3.0.2"
 roomRuntime = "2.6.1"
 uiTestJunit4Android = "1.6.8"
+googleTruth = "1.4.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +39,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
 androidx-ui-test-junit4-android = { group = "androidx.compose.ui", name = "ui-test-junit4-android", version.ref = "uiTestJunit4Android" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruth" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
