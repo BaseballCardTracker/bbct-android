@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.room.Room.inMemoryDatabaseBuilder
 import androidx.test.platform.app.InstrumentationRegistry
 import bbct.android.data.BaseballCardDatabase
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -14,8 +15,8 @@ class BaseballCardFilterScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    @Test
-    fun testBaseballCardFilter() {
+    @Before
+    fun setUp() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val db = inMemoryDatabaseBuilder(context, BaseballCardDatabase::class.java).build()
 
@@ -23,11 +24,14 @@ class BaseballCardFilterScreenTest {
             val navController = rememberNavController()
             BaseballCardFilterScreen(navController = navController, db = db)
         }
+    }
 
+    @Test
+    fun testBaseballCardFilterFieldsAreVisible() {
         composeTestRule.onNodeWithText("Brand").assertIsDisplayed()
         composeTestRule.onNodeWithText("Year").assertIsDisplayed()
         composeTestRule.onNodeWithText("Number").assertIsDisplayed()
         composeTestRule.onNodeWithText("Player Name").assertIsDisplayed()
-        composeTestRule
+        composeTestRule.onNodeWithText("Team").assertIsDisplayed()
     }
 }
