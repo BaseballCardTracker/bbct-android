@@ -4,11 +4,9 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performTextReplacement
-import androidx.compose.ui.test.printToLog
 import bbct.android.data.BaseballCard
 import org.junit.Rule
 
@@ -57,9 +55,6 @@ abstract class TestBase {
             .onNodeWithText("Position")
             .assertIsDisplayed()
             .performClick()
-
-        composeTestRule.onRoot().printToLog("TestBase")
-
         composeTestRule
             .onNodeWithText(card.position)
             .assertIsDisplayed()
