@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import org.junit.Test
 
 class BaseballCardCreateTest : TestBase() {
-
     @Test
     fun testBaseballCardDetailsSaveCard() {
         val card = BaseballCard(
