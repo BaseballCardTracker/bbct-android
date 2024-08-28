@@ -21,7 +21,7 @@ class BaseballCardListTest {
     private var cardListState = mutableListOf<BaseballCardSelectedState>()
 
     @Before
-    fun setup(): Unit {
+    fun setup() {
         cardListState = cards.map { BaseballCardSelectedState(it, false) }.toMutableList()
         composeTestRule.setContent {
             val navController = rememberNavController()
