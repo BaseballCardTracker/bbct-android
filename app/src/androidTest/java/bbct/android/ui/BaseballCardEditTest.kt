@@ -17,7 +17,7 @@ class BaseballCardEditTest : TestBase() {
     @Test
     fun testBaseballCardEdit() {
         val card = cards[0]
-        val editCard = cards[1]
+        val editCard = cards[2]
 
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         val db = inMemoryDatabaseBuilder(context, BaseballCardDatabase::class.java).build()
