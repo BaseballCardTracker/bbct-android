@@ -32,20 +32,32 @@ object BaseballCardContract {
 
     const val PREMIUM_AUTHORITY: String = "bbct.android.premium.provider"
 
-    val CONTENT_URI: Uri = Uri.Builder().scheme("content")
-        .authority(AUTHORITY).path(TABLE_NAME).build()
+    val CONTENT_URI: Uri = Uri
+        .Builder()
+        .scheme("content")
+        .authority(AUTHORITY)
+        .path(TABLE_NAME)
+        .build()
 
-    val LITE_URI: Uri = Uri.Builder().scheme("content")
-        .authority(LITE_AUTHORITY).path(TABLE_NAME).build()
+    val LITE_URI: Uri = Uri
+        .Builder()
+        .scheme("content")
+        .authority(LITE_AUTHORITY)
+        .path(TABLE_NAME)
+        .build()
 
-    val PREMIUM_URI: Uri = Uri.Builder().scheme("content")
-        .authority(PREMIUM_AUTHORITY).path(TABLE_NAME).build()
+    val PREMIUM_URI: Uri = Uri
+        .Builder()
+        .scheme("content")
+        .authority(PREMIUM_AUTHORITY)
+        .path(TABLE_NAME)
+        .build()
 
     const val BASEBALL_CARD_LIST_MIME_TYPE: String = (ContentResolver.CURSOR_DIR_BASE_TYPE
-                                                      + "/baseball_card")
+        + "/baseball_card")
 
     const val BASEBALL_CARD_ITEM_MIME_TYPE: String = (ContentResolver.CURSOR_ITEM_BASE_TYPE
-                                                      + "/baseball_card")
+        + "/baseball_card")
 
     const val ID_COL_NAME: String = "_id"
 
@@ -71,46 +83,85 @@ object BaseballCardContract {
 
     val PROJECTION: Array<String> = arrayOf(
         ID_COL_NAME,
-        AUTOGRAPHED_COL_NAME, CONDITION_COL_NAME, BRAND_COL_NAME,
-        YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME,
-        PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME
+        AUTOGRAPHED_COL_NAME,
+        CONDITION_COL_NAME,
+        BRAND_COL_NAME,
+        YEAR_COL_NAME,
+        NUMBER_COL_NAME,
+        VALUE_COL_NAME,
+        COUNT_COL_NAME,
+        PLAYER_NAME_COL_NAME,
+        TEAM_COL_NAME,
+        PLAYER_POSITION_COL_NAME
     )
 
     const val INT_SELECTION_FORMAT: String = "%s = ?"
 
     val YEAR_SELECTION: String = String.format(
-        INT_SELECTION_FORMAT, YEAR_COL_NAME
+        INT_SELECTION_FORMAT,
+        YEAR_COL_NAME
     )
 
     val NUMBER_SELECTION: String = String.format(
-        INT_SELECTION_FORMAT, NUMBER_COL_NAME
+        INT_SELECTION_FORMAT,
+        NUMBER_COL_NAME
     )
 
     const val STRING_SELECTION_FORMAT: String = "%s LIKE ?"
 
     val BRAND_SELECTION: Any = String.format(
-        STRING_SELECTION_FORMAT, BRAND_COL_NAME
+        STRING_SELECTION_FORMAT,
+        BRAND_COL_NAME
     )
 
     val PLAYER_NAME_SELECTION: String = String.format(
-        STRING_SELECTION_FORMAT, PLAYER_NAME_COL_NAME
+        STRING_SELECTION_FORMAT,
+        PLAYER_NAME_COL_NAME
     )
 
     val TEAM_SELECTION: String = String.format(
-        STRING_SELECTION_FORMAT, TEAM_COL_NAME
+        STRING_SELECTION_FORMAT,
+        TEAM_COL_NAME
     )
 
     fun getContentValues(card: BaseballCard): ContentValues {
         val cv = ContentValues(7)
-        cv.put(AUTOGRAPHED_COL_NAME, card.autographed)
-        cv.put(CONDITION_COL_NAME, card.condition)
-        cv.put(BRAND_COL_NAME, card.brand)
-        cv.put(YEAR_COL_NAME, card.year)
-        cv.put(NUMBER_COL_NAME, card.number)
-        cv.put(VALUE_COL_NAME, card.value)
-        cv.put(COUNT_COL_NAME, card.quantity)
-        cv.put(PLAYER_NAME_COL_NAME, card.playerName)
-        cv.put(TEAM_COL_NAME, card.team)
+        cv.put(
+            AUTOGRAPHED_COL_NAME,
+            card.autographed
+        )
+        cv.put(
+            CONDITION_COL_NAME,
+            card.condition
+        )
+        cv.put(
+            BRAND_COL_NAME,
+            card.brand
+        )
+        cv.put(
+            YEAR_COL_NAME,
+            card.year
+        )
+        cv.put(
+            NUMBER_COL_NAME,
+            card.number
+        )
+        cv.put(
+            VALUE_COL_NAME,
+            card.value
+        )
+        cv.put(
+            COUNT_COL_NAME,
+            card.quantity
+        )
+        cv.put(
+            PLAYER_NAME_COL_NAME,
+            card.playerName
+        )
+        cv.put(
+            TEAM_COL_NAME,
+            card.team
+        )
         cv.put(
             PLAYER_POSITION_COL_NAME,
             card.position
@@ -175,8 +226,17 @@ object BaseballCardContract {
         )
 
         return BaseballCard(
-            id, autographed, condition, brand, year, number,
-            value, quantity, name, team, position
+            id,
+            autographed,
+            condition,
+            brand,
+            year,
+            number,
+            value,
+            quantity,
+            name,
+            team,
+            position
         )
     }
 

@@ -22,7 +22,10 @@ import bbct.android.R
 import bbct.android.data.BaseballCardDatabase
 
 @Composable
-fun AboutScreen(navController: NavController, db: BaseballCardDatabase) {
+fun AboutScreen(
+    navController: NavController,
+    db: BaseballCardDatabase
+) {
     Scaffold(
         topBar = { TopBar(navigationIcon = { BackIcon(navController = navController) }) },
         modifier = Modifier.fillMaxSize()
@@ -44,9 +47,20 @@ fun About(modifier: Modifier = Modifier) {
                     ),
                 )
             }
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(text = stringResource(id = R.string.app_name), fontSize = 26.sp)
-                Text(text = stringResource(id = R.string.version_text, BuildConfig.VERSION_NAME))
+            Column(
+                Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(id = R.string.app_name),
+                    fontSize = 26.sp
+                )
+                Text(
+                    text = stringResource(
+                        id = R.string.version_text,
+                        BuildConfig.VERSION_NAME
+                    )
+                )
             }
         }
         Spacer(modifier = Modifier.padding(10.dp))

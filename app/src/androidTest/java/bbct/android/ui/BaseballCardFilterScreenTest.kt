@@ -18,20 +18,36 @@ class BaseballCardFilterScreenTest {
     @Before
     fun setUp() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val db = inMemoryDatabaseBuilder(context, BaseballCardDatabase::class.java).build()
+        val db = inMemoryDatabaseBuilder(
+            context,
+            BaseballCardDatabase::class.java
+        ).build()
 
         composeTestRule.setContent {
             val navController = rememberNavController()
-            BaseballCardFilterScreen(navController = navController, db = db)
+            BaseballCardFilterScreen(
+                navController = navController,
+                db = db
+            )
         }
     }
 
     @Test
     fun testBaseballCardFilterFieldsAreVisible() {
-        composeTestRule.onNodeWithText("Brand").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Year").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Number").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Player Name").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Team").assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText("Brand")
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText("Year")
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText("Number")
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText("Player Name")
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText("Team")
+            .assertIsDisplayed()
     }
 }

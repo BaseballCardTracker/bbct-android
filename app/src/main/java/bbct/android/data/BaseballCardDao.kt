@@ -23,11 +23,11 @@ interface BaseballCardDao {
 
     @Query(
         "SELECT * FROM baseball_cards " +
-        "WHERE brand LIKE :brand " +
-        "  AND (year = :year OR -1 = :year) " +
-        "  AND number LIKE :number " +
-        "  AND player_name LIKE :playerName " +
-        "  AND team LIKE :team"
+            "WHERE brand LIKE :brand " +
+            "  AND (year = :year OR -1 = :year) " +
+            "  AND number LIKE :number " +
+            "  AND player_name LIKE :playerName " +
+            "  AND team LIKE :team"
     )
     fun getBaseballCards(
         brand: String,

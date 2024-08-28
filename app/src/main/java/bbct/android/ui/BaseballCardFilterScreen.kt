@@ -20,7 +20,10 @@ import bbct.android.R
 import bbct.android.data.BaseballCardDatabase
 
 @Composable
-fun BaseballCardFilterScreen(navController: NavController, db: BaseballCardDatabase) {
+fun BaseballCardFilterScreen(
+    navController: NavController,
+    db: BaseballCardDatabase
+) {
     Scaffold(
         topBar = {
             TopBar(
@@ -39,35 +42,45 @@ fun BaseballCardFilterScreen(navController: NavController, db: BaseballCardDatab
 fun BaseballCardFilter(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Row {
-            Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
+            Checkbox(
+                checked = false,
+                onCheckedChange = { /*TODO*/ })
             TextField(
                 label = { Text(text = stringResource(id = R.string.brand)) },
                 value = "",
                 onValueChange = { /*TODO*/ })
         }
         Row {
-            Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
+            Checkbox(
+                checked = false,
+                onCheckedChange = { /*TODO*/ })
             TextField(
                 label = { Text(text = stringResource(id = R.string.year)) },
                 value = "",
                 onValueChange = { /*TODO*/ })
         }
         Row {
-            Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
+            Checkbox(
+                checked = false,
+                onCheckedChange = { /*TODO*/ })
             TextField(
                 label = { Text(text = stringResource(id = R.string.number)) },
                 value = "",
                 onValueChange = { /*TODO*/ })
         }
         Row {
-            Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
+            Checkbox(
+                checked = false,
+                onCheckedChange = { /*TODO*/ })
             TextField(
                 label = { Text(text = stringResource(id = R.string.player_name)) },
                 value = "",
                 onValueChange = { /*TODO*/ })
         }
         Row {
-            Checkbox(checked = false, onCheckedChange = { /*TODO*/ })
+            Checkbox(
+                checked = false,
+                onCheckedChange = { /*TODO*/ })
             TextField(
                 label = { Text(text = stringResource(id = R.string.team)) },
                 value = "",
@@ -79,6 +92,9 @@ fun BaseballCardFilter(modifier: Modifier = Modifier) {
 @Composable
 fun ApplyFilterButton(navController: NavController) {
     FloatingActionButton(onClick = { /* TODO */ }) {
-        Icon(Icons.Default.Check, contentDescription = stringResource(id = R.string.filter_menu))
+        Icon(
+            Icons.Default.Check,
+            contentDescription = stringResource(id = R.string.filter_menu)
+        )
     }
 }

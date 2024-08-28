@@ -57,7 +57,10 @@ fun ListMenu(
     onDeleteCards: () -> Unit,
     onSelectAll: () -> Unit,
 ) {
-    Crossfade(isAnySelected, label = "") { target ->
+    Crossfade(
+        isAnySelected,
+        label = ""
+    ) { target ->
         Row {
             if (target) {
                 SelectedMenu(
@@ -74,7 +77,10 @@ fun ListMenu(
 @Composable
 fun MainMenu(navController: NavController) {
     IconButton(onClick = { navController.navigate(BaseballCardFilterDestination.route) }) {
-        Icon(Icons.Default.Search, contentDescription = stringResource(id = R.string.filter_menu))
+        Icon(
+            Icons.Default.Search,
+            contentDescription = stringResource(id = R.string.filter_menu)
+        )
     }
     OverflowMenu(navController)
 }
@@ -84,7 +90,10 @@ fun OverflowMenu(navController: NavController) {
     var showMenu by remember { mutableStateOf(false) }
 
     IconButton(onClick = { showMenu = !showMenu }) {
-        Icon(Icons.Default.MoreVert, contentDescription = stringResource(id = R.string.more))
+        Icon(
+            Icons.Default.MoreVert,
+            contentDescription = stringResource(id = R.string.more)
+        )
     }
     DropdownMenu(
         expanded = showMenu,
@@ -97,7 +106,10 @@ fun OverflowMenu(navController: NavController) {
 }
 
 @Composable
-fun SelectedMenu(onDeleteCards: () -> Unit, onSelectAll: () -> Unit) {
+fun SelectedMenu(
+    onDeleteCards: () -> Unit,
+    onSelectAll: () -> Unit
+) {
     IconButton(onClick = onDeleteCards) {
         Icon(
             Icons.Default.Delete,

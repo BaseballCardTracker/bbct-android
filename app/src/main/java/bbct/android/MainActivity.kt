@@ -15,7 +15,10 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val db = BaseballCardDatabase.getInstance(this, BaseballCardDatabase.DATABASE_NAME)
+        val db = BaseballCardDatabase.getInstance(
+            this,
+            BaseballCardDatabase.DATABASE_NAME
+        )
         setContent {
             App(db)
         }

@@ -24,23 +24,39 @@ fun App(db: BaseballCardDatabase) {
             startDestination = BaseballCardListDestination.route,
         ) {
             composable(route = BaseballCardListDestination.route) {
-                BaseballCardListDestination.screen(navController, db)
+                BaseballCardListDestination.screen(
+                    navController,
+                    db
+                )
             }
             composable(route = BaseballCardCreateDestination.route) {
-                BaseballCardCreateDestination.screen(navController, db)
+                BaseballCardCreateDestination.screen(
+                    navController,
+                    db
+                )
             }
             composable(
                 route = BaseballCardEditDestination.route,
                 arguments = listOf(navArgument("cardId") { type = NavType.LongType }),
             ) { backStackEntry ->
                 val cardId = backStackEntry.arguments?.getLong("cardId")
-                BaseballCardEditDestination.screen(navController, db, cardId!!)
+                BaseballCardEditDestination.screen(
+                    navController,
+                    db,
+                    cardId!!
+                )
             }
             composable(route = BaseballCardFilterDestination.route) {
-                BaseballCardFilterDestination.screen(navController, db)
+                BaseballCardFilterDestination.screen(
+                    navController,
+                    db
+                )
             }
             composable(route = AboutDestination.route) {
-                AboutDestination.screen(navController, db)
+                AboutDestination.screen(
+                    navController,
+                    db
+                )
             }
         }
     }

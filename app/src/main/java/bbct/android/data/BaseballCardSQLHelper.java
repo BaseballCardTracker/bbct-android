@@ -67,22 +67,22 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         Log.d(TAG, "onCreate()");
 
         String sqlCreate = "CREATE TABLE IF NOT EXISTS "
-            + BaseballCardContract.TABLE_NAME + "("
-            + BaseballCardContract.ID_COL_NAME
-            + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + BaseballCardContract.BRAND_COL_NAME + " TEXT, "
-            + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
-            + BaseballCardContract.NUMBER_COL_NAME + " TEXT, "
-            + BaseballCardContract.VALUE_COL_NAME + " INTEGER, "
-            + BaseballCardContract.COUNT_COL_NAME + " INTEGER, "
-            + BaseballCardContract.PLAYER_NAME_COL_NAME + " TEXT, "
-            + BaseballCardContract.TEAM_COL_NAME + " TEXT, "
-            + BaseballCardContract.PLAYER_POSITION_COL_NAME + " TEXT,"
-            + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
-            + BaseballCardContract.CONDITION_COL_NAME + " TEXT,"
-            + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", "
-            + BaseballCardContract.YEAR_COL_NAME + ", "
-            + BaseballCardContract.NUMBER_COL_NAME + "))";
+                + BaseballCardContract.TABLE_NAME + "("
+                + BaseballCardContract.ID_COL_NAME
+                + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BaseballCardContract.BRAND_COL_NAME + " TEXT, "
+                + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
+                + BaseballCardContract.NUMBER_COL_NAME + " TEXT, "
+                + BaseballCardContract.VALUE_COL_NAME + " INTEGER, "
+                + BaseballCardContract.COUNT_COL_NAME + " INTEGER, "
+                + BaseballCardContract.PLAYER_NAME_COL_NAME + " TEXT, "
+                + BaseballCardContract.TEAM_COL_NAME + " TEXT, "
+                + BaseballCardContract.PLAYER_POSITION_COL_NAME + " TEXT,"
+                + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
+                + BaseballCardContract.CONDITION_COL_NAME + " TEXT,"
+                + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", "
+                + BaseballCardContract.YEAR_COL_NAME + ", "
+                + BaseballCardContract.NUMBER_COL_NAME + "))";
 
         db.execSQL(sqlCreate);
     }
@@ -91,18 +91,18 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < TEAM_SCHEMA) {
             String sqlUpgrade = "ALTER TABLE "
-                + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
-                + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
+                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
+                    + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
             db.execSQL(sqlUpgrade);
         }
 
         if (oldVersion < AUTO_AND_CONDITION_SCHEMA) {
             String addAutographed = "ALTER TABLE "
-                + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
-                + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER;";
+                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
+                    + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER;";
             String addCondition = "ALTER TABLE "
-                + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
-                + BaseballCardContract.CONDITION_COL_NAME + " TEXT";
+                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
+                    + BaseballCardContract.CONDITION_COL_NAME + " TEXT";
             db.execSQL(addAutographed);
             db.execSQL(addCondition);
         }

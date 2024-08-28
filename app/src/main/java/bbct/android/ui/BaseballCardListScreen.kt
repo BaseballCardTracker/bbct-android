@@ -32,7 +32,10 @@ import bbct.android.ui.navigation.BaseballCardCreateDestination
 import bbct.android.ui.navigation.navigate
 import kotlinx.coroutines.launch
 
-data class BaseballCardSelectedState(var card: BaseballCard, var selected: Boolean)
+data class BaseballCardSelectedState(
+    var card: BaseballCard,
+    var selected: Boolean
+)
 
 @Composable
 fun BaseballCardListScreen(
@@ -43,12 +46,14 @@ fun BaseballCardListScreen(
     val cards by db.baseballCardDao.baseballCards.collectAsState(initial = emptyList())
     val stateList by remember {
         derivedStateOf {
-            cards.map { card ->
-                BaseballCardSelectedState(
-                    card,
-                    false
-                )
-            }.toMutableStateList()
+            cards
+                .map { card ->
+                    BaseballCardSelectedState(
+                        card,
+                        false
+                    )
+                }
+                .toMutableStateList()
         }
     }
     val isAnySelected by remember {
@@ -64,7 +69,14 @@ fun BaseballCardListScreen(
                     ListMenu(
                         navController,
                         isAnySelected,
-                        onDeleteCards = { scope.launch { deleteCards(db, stateList) } },
+                        onDeleteCards = {
+                            scope.launch {
+                                deleteCards(
+                                    db,
+                                    stateList
+                                )
+                            }
+                        },
                         onSelectAll = { selectAll(stateList) },
                     )
                 }
@@ -82,8 +94,14 @@ fun BaseballCardListScreen(
     }
 }
 
-private suspend fun deleteCards(db: BaseballCardDatabase, cards: List<BaseballCardSelectedState>) {
-    db.baseballCardDao.deleteBaseballCards(cards.filter { it.selected }.map { it.card })
+private suspend fun deleteCards(
+    db: BaseballCardDatabase,
+    cards: List<BaseballCardSelectedState>
+) {
+    db.baseballCardDao.deleteBaseballCards(
+        cards
+            .filter { it.selected }
+            .map { it.card })
 }
 
 private fun selectAll(stateList: SnapshotStateList<BaseballCardSelectedState>) {
@@ -111,7 +129,12 @@ fun BaseballCardList(
             BaseballCardRow(
                 navController = navController,
                 state = state,
-                onSelectedChange = { onCardChanged(i, state.copy(selected = it)) }
+                onSelectedChange = {
+                    onCardChanged(
+                        i,
+                        state.copy(selected = it)
+                    )
+                }
             )
         }
     }
@@ -131,16 +154,31 @@ fun BaseballCardRow(
             checked = state.selected,
             onCheckedChange = onSelectedChange,
         )
-        Text(text = state.card.brand, modifier = Modifier.weight(0.2f))
-        Text(text = "${state.card.year}", modifier = Modifier.weight(0.15f))
-        Text(text = state.card.number, modifier = Modifier.weight(0.15f))
-        Text(text = state.card.playerName, modifier = Modifier.weight(0.5f))
+        Text(
+            text = state.card.brand,
+            modifier = Modifier.weight(0.2f)
+        )
+        Text(
+            text = "${state.card.year}",
+            modifier = Modifier.weight(0.15f)
+        )
+        Text(
+            text = state.card.number,
+            modifier = Modifier.weight(0.15f)
+        )
+        Text(
+            text = state.card.playerName,
+            modifier = Modifier.weight(0.5f)
+        )
     }
 }
 
 @Composable
 fun AddCardButton(navController: NavController) {
     FloatingActionButton(onClick = { navController.navigate(BaseballCardCreateDestination.route) }) {
-        Icon(Icons.Default.Add, contentDescription = stringResource(id = R.string.add_menu))
+        Icon(
+            Icons.Default.Add,
+            contentDescription = stringResource(id = R.string.add_menu)
+        )
     }
 }

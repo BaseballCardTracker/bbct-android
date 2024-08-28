@@ -88,7 +88,10 @@ data class BaseballCardState(
 }
 
 @Composable
-fun BaseballCardCreateScreen(navController: NavController, db: BaseballCardDatabase) {
+fun BaseballCardCreateScreen(
+    navController: NavController,
+    db: BaseballCardDatabase
+) {
     val state = remember { mutableStateOf(BaseballCardState()) }
 
     Scaffold(
@@ -98,17 +101,29 @@ fun BaseballCardCreateScreen(navController: NavController, db: BaseballCardDatab
                 actions = { OverflowMenu(navController) },
             )
         },
-        floatingActionButton = { CreateCardButton(db, state) },
+        floatingActionButton = {
+            CreateCardButton(
+                db,
+                state
+            )
+        },
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
     ) { innerPadding ->
-        BaseballCardDetails(state, modifier = Modifier.padding(innerPadding))
+        BaseballCardDetails(
+            state,
+            modifier = Modifier.padding(innerPadding)
+        )
     }
 }
 
 @Composable
-fun BaseballCardEditScreen(navController: NavController, db: BaseballCardDatabase, cardId: Long) {
+fun BaseballCardEditScreen(
+    navController: NavController,
+    db: BaseballCardDatabase,
+    cardId: Long
+) {
     val state = remember { mutableStateOf(BaseballCardState()) }
     LaunchedEffect(cardId) {
         val card = db.baseballCardDao.getBaseballCard(cardId)
@@ -122,12 +137,21 @@ fun BaseballCardEditScreen(navController: NavController, db: BaseballCardDatabas
                 actions = { OverflowMenu(navController) },
             )
         },
-        floatingActionButton = { UpdateCardButton(navController, db, state) },
+        floatingActionButton = {
+            UpdateCardButton(
+                navController,
+                db,
+                state
+            )
+        },
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
     ) { innerPadding ->
-        BaseballCardDetails(state, modifier = Modifier.padding(innerPadding))
+        BaseballCardDetails(
+            state,
+            modifier = Modifier.padding(innerPadding)
+        )
     }
 }
 
@@ -241,7 +265,9 @@ fun Select(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }) {
         TextField(
             label = { Text(text = labelText) },
             readOnly = true,
@@ -255,7 +281,9 @@ fun Select(
             colors = ExposedDropdownMenuDefaults.textFieldColors(),
             modifier = modifier.menuAnchor()
         )
-        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+        ExposedDropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }) {
             options.forEach { option ->
                 DropdownMenuItem(
                     text = { Text(text = option) },
@@ -275,12 +303,25 @@ fun CreateCardButton(
     state: MutableState<BaseballCardState>,
 ) {
     val scope = rememberCoroutineScope()
-    FloatingActionButton(onClick = { scope.launch { createCard(db, state) } }) {
-        Icon(Icons.Default.Check, contentDescription = stringResource(id = R.string.save_menu))
+    FloatingActionButton(onClick = {
+        scope.launch {
+            createCard(
+                db,
+                state
+            )
+        }
+    }) {
+        Icon(
+            Icons.Default.Check,
+            contentDescription = stringResource(id = R.string.save_menu)
+        )
     }
 }
 
-suspend fun createCard(db: BaseballCardDatabase, cardState: MutableState<BaseballCardState>) {
+suspend fun createCard(
+    db: BaseballCardDatabase,
+    cardState: MutableState<BaseballCardState>
+) {
     val newCard = cardState.value.toBaseballCard()
     db.baseballCardDao.insertBaseballCard(newCard)
     cardState.value = BaseballCardState()
@@ -293,8 +334,19 @@ fun UpdateCardButton(
     state: MutableState<BaseballCardState>,
 ) {
     val scope = rememberCoroutineScope()
-    FloatingActionButton(onClick = { scope.launch { updateCard(navController, db, state) } }) {
-        Icon(Icons.Default.Check, contentDescription = stringResource(id = R.string.save_menu))
+    FloatingActionButton(onClick = {
+        scope.launch {
+            updateCard(
+                navController,
+                db,
+                state
+            )
+        }
+    }) {
+        Icon(
+            Icons.Default.Check,
+            contentDescription = stringResource(id = R.string.save_menu)
+        )
     }
 }
 
