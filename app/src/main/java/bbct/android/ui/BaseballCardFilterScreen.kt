@@ -3,6 +3,7 @@ package bbct.android.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCardDatabase
@@ -62,7 +64,9 @@ fun BaseballCardFilter(
     filterState: MutableState<BaseballCardFilterState>,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
+    val textFieldModifier = Modifier.fillMaxWidth()
+
+    Column(modifier = modifier.padding(12.dp)) {
         Row {
             Checkbox(
                 checked = false,
@@ -72,6 +76,7 @@ fun BaseballCardFilter(
                 value = filterState.value.brand,
                 onValueChange = { filterState.value = filterState.value.copy(brand = it) },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                modifier = textFieldModifier,
             )
         }
         Row {
@@ -86,6 +91,7 @@ fun BaseballCardFilter(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Number
                 ),
+                modifier = textFieldModifier,
             )
         }
         Row {
@@ -97,6 +103,7 @@ fun BaseballCardFilter(
                 value = filterState.value.number,
                 onValueChange = { filterState.value = filterState.value.copy(number = it) },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                modifier = textFieldModifier,
             )
         }
         Row {
@@ -108,6 +115,7 @@ fun BaseballCardFilter(
                 value = filterState.value.playerName,
                 onValueChange = { filterState.value = filterState.value.copy(playerName = it) },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                modifier = textFieldModifier,
             )
         }
         Row {
@@ -119,6 +127,7 @@ fun BaseballCardFilter(
                 value = filterState.value.team,
                 onValueChange = { filterState.value = filterState.value.copy(team = it) },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+                modifier = textFieldModifier,
             )
         }
     }
