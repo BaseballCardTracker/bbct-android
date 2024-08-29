@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Checkbox
@@ -18,6 +19,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCardDatabase
@@ -28,13 +31,13 @@ data class BaseballCardFilterState(
     var year: String = "",
     var number: String = "",
     var playerName: String = "",
-    var team: String = ""
+    var team: String = "",
 )
 
 @Composable
 fun BaseballCardFilterScreen(
     navController: NavController,
-    db: BaseballCardDatabase
+    db: BaseballCardDatabase,
 ) {
     Scaffold(
         topBar = {
@@ -57,7 +60,7 @@ fun BaseballCardFilterScreen(
 @Composable
 fun BaseballCardFilter(
     filterState: MutableState<BaseballCardFilterState>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         Row {
@@ -67,7 +70,9 @@ fun BaseballCardFilter(
             TextField(
                 label = { Text(text = stringResource(id = R.string.brand)) },
                 value = filterState.value.brand,
-                onValueChange = { filterState.value = filterState.value.copy(brand = it) })
+                onValueChange = { filterState.value = filterState.value.copy(brand = it) },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            )
         }
         Row {
             Checkbox(
@@ -76,7 +81,12 @@ fun BaseballCardFilter(
             TextField(
                 label = { Text(text = stringResource(id = R.string.year)) },
                 value = filterState.value.year,
-                onValueChange = { filterState.value = filterState.value.copy(year = it) })
+                onValueChange = { filterState.value = filterState.value.copy(year = it) },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                    keyboardType = KeyboardType.Number
+                ),
+            )
         }
         Row {
             Checkbox(
@@ -85,7 +95,9 @@ fun BaseballCardFilter(
             TextField(
                 label = { Text(text = stringResource(id = R.string.number)) },
                 value = filterState.value.number,
-                onValueChange = { filterState.value = filterState.value.copy(number = it) })
+                onValueChange = { filterState.value = filterState.value.copy(number = it) },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            )
         }
         Row {
             Checkbox(
@@ -94,7 +106,9 @@ fun BaseballCardFilter(
             TextField(
                 label = { Text(text = stringResource(id = R.string.player_name)) },
                 value = filterState.value.playerName,
-                onValueChange = { filterState.value = filterState.value.copy(playerName = it) })
+                onValueChange = { filterState.value = filterState.value.copy(playerName = it) },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            )
         }
         Row {
             Checkbox(
@@ -103,7 +117,9 @@ fun BaseballCardFilter(
             TextField(
                 label = { Text(text = stringResource(id = R.string.team)) },
                 value = filterState.value.team,
-                onValueChange = { filterState.value = filterState.value.copy(team = it) })
+                onValueChange = { filterState.value = filterState.value.copy(team = it) },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            )
         }
     }
 }
