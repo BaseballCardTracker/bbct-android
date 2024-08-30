@@ -27,7 +27,18 @@ fun AboutScreen(
     db: BaseballCardDatabase
 ) {
     Scaffold(
-        topBar = { TopBar(navigationIcon = { BackIcon(navController = navController) }) },
+        topBar = {
+            TopBar(
+                title = {
+                    Text(
+                        text = stringResource(
+                            id = R.string.bbct_title,
+                            stringResource(id = R.string.about_title)
+                        )
+                    )
+                },
+                navigationIcon = { BackIcon(navController = navController) })
+        },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         About(modifier = Modifier.padding(innerPadding))

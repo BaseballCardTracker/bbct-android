@@ -98,6 +98,14 @@ fun BaseballCardCreateScreen(
         topBar = {
             TopBar(
                 navigationIcon = { BackIcon(navController = navController) },
+                title = {
+                    Text(
+                        stringResource(
+                            id = R.string.bbct_title,
+                            stringResource(id = R.string.card_details_title)
+                        )
+                    )
+                },
                 actions = { OverflowMenu(navController) },
             )
         },
@@ -134,6 +142,14 @@ fun BaseballCardEditScreen(
         topBar = {
             TopBar(
                 navigationIcon = { BackIcon(navController = navController) },
+                title = {
+                    Text(
+                        stringResource(
+                            id = R.string.bbct_title,
+                            R.string.card_details_title,
+                        )
+                    )
+                },
                 actions = { OverflowMenu(navController) },
             )
         },

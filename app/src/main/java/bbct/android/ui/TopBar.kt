@@ -31,10 +31,11 @@ import bbct.android.ui.navigation.BaseballCardFilterDestination
 @OptIn(ExperimentalMaterial3Api::class)
 fun TopBar(
     navigationIcon: @Composable () -> Unit = {},
+    title: @Composable () -> Unit,
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
-        title = { Text(stringResource(id = R.string.app_name)) },
+        title = title,
         actions = actions,
         navigationIcon = navigationIcon,
     )

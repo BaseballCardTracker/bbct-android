@@ -65,6 +65,7 @@ fun BaseballCardListScreen(
     Scaffold(
         topBar = {
             TopBar(
+                title = { Text(stringResource(id = R.string.app_name)) },
                 actions = {
                     ListMenu(
                         navController,

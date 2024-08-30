@@ -45,6 +45,14 @@ fun BaseballCardFilterScreen(
         topBar = {
             TopBar(
                 navigationIcon = { BackIcon(navController) },
+                title = {
+                    Text(
+                        stringResource(
+                            id = R.string.bbct_title,
+                            stringResource(id = R.string.filter_cards_title)
+                        )
+                    )
+                },
                 actions = { OverflowMenu(navController = navController) }
             )
         },
