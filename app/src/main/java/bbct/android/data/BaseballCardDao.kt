@@ -23,11 +23,11 @@ interface BaseballCardDao {
 
     @Query(
         "SELECT * FROM baseball_cards " +
-            "WHERE brand LIKE :brand " +
-            "  AND (year = :year OR -1 = :year) " +
-            "  AND number LIKE :number " +
-            "  AND player_name LIKE :playerName " +
-            "  AND team LIKE :team"
+        "WHERE brand LIKE :brand " +
+        "  AND (year = :year OR -1 = :year) " +
+        "  AND number LIKE :number " +
+        "  AND player_name LIKE :playerName " +
+        "  AND team LIKE :team"
     )
     fun getBaseballCards(
         brand: String,
@@ -41,11 +41,11 @@ interface BaseballCardDao {
     suspend fun getBaseballCard(id: Long): BaseballCard
 
     @get:Query("SELECT DISTINCT(brand) FROM baseball_cards")
-    val brands: Flow<String>
+    val brands: Flow<List<String>>
 
     @get:Query("SELECT DISTINCT(player_name) FROM baseball_cards")
-    val playerNames: Flow<String>
+    val playerNames: Flow<List<String>>
 
     @get:Query("SELECT DISTINCT(team) FROM baseball_cards")
-    val teams: Flow<String>
+    val teams: Flow<List<String>>
 }
