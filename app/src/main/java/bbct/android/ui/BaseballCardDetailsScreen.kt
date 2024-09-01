@@ -313,6 +313,48 @@ fun Select(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AutoComplete(
+    labelText: String,
+    options: List<String>,
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    val filterOpts = options.filter { it.contains(value, ignoreCase = true) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }) {
+        TextField(
+            label = { Text(text = labelText) },
+            value = value,
+            onValueChange = onValueChange,
+            colors = ExposedDropdownMenuDefaults.textFieldColors(),
+            modifier = modifier.menuAnchor(),
+            keyboardOptions = keyboardOptions,
+        )
+        if (!filterOpts.isEmpty()) {
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }) {
+                filterOpts.forEach { option ->
+                    DropdownMenuItem(
+                        text = { Text(text = option) },
+                        onClick = {
+                            onValueChange(option)
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+    }
+}
+
 @Composable
 fun CreateCardButton(
     db: BaseballCardDatabase,
@@ -336,7 +378,7 @@ fun CreateCardButton(
 
 suspend fun createCard(
     db: BaseballCardDatabase,
-    cardState: MutableState<BaseballCardState>
+    cardState: MutableState<BaseballCardState>,
 ) {
     val newCard = cardState.value.toBaseballCard()
     db.baseballCardDao.insertBaseballCard(newCard)
