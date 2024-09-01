@@ -25,6 +25,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -90,7 +91,7 @@ data class BaseballCardState(
 @Composable
 fun BaseballCardCreateScreen(
     navController: NavController,
-    db: BaseballCardDatabase
+    db: BaseballCardDatabase,
 ) {
     val state = remember { mutableStateOf(BaseballCardState()) }
 
@@ -121,6 +122,7 @@ fun BaseballCardCreateScreen(
     ) { innerPadding ->
         BaseballCardDetails(
             state,
+            db,
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -130,7 +132,7 @@ fun BaseballCardCreateScreen(
 fun BaseballCardEditScreen(
     navController: NavController,
     db: BaseballCardDatabase,
-    cardId: Long
+    cardId: Long,
 ) {
     val state = remember { mutableStateOf(BaseballCardState()) }
     LaunchedEffect(cardId) {
@@ -166,6 +168,7 @@ fun BaseballCardEditScreen(
     ) { innerPadding ->
         BaseballCardDetails(
             state,
+            db,
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -174,8 +177,11 @@ fun BaseballCardEditScreen(
 @Composable
 fun BaseballCardDetails(
     state: MutableState<BaseballCardState>,
+    db: BaseballCardDatabase,
     modifier: Modifier = Modifier,
 ) {
+    val brands = db.baseballCardDao.brands.collectAsState(initial = emptyList())
+
     val conditions = stringArrayResource(R.array.condition)
     val positions = stringArrayResource(R.array.positions)
 
@@ -202,8 +208,9 @@ fun BaseballCardDetails(
             onSelectedChange = { state.value = state.value.copy(condition = it) },
             modifier = textFieldModifier,
         )
-        TextField(
-            label = { Text(text = stringResource(id = R.string.brand)) },
+        AutoComplete(
+            labelText = stringResource(id = R.string.brand),
+            options = brands.value,
             value = state.value.brand,
             onValueChange = { state.value = state.value.copy(brand = it) },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
