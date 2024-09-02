@@ -22,11 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
@@ -101,7 +99,7 @@ fun BaseballCardCreateScreen(
                     Text(
                         stringResource(
                             id = R.string.bbct_title,
-                            stringResource(id = R.string.card_details_title)
+                            stringResource(id = R.string.create_card_title)
                         )
                     )
                 },
@@ -146,7 +144,7 @@ fun BaseballCardEditScreen(
                     Text(
                         stringResource(
                             id = R.string.bbct_title,
-                            R.string.card_details_title,
+                            stringResource(id = R.string.edit_card_title)
                         )
                     )
                 },
