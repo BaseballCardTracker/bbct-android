@@ -13,10 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -25,11 +21,9 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringArrayResource
@@ -41,6 +35,7 @@ import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
+import bbct.android.ui.components.Select
 import kotlinx.coroutines.launch
 
 data class BaseballCardState(
@@ -90,7 +85,7 @@ data class BaseballCardState(
 @Composable
 fun BaseballCardCreateScreen(
     navController: NavController,
-    db: BaseballCardDatabase
+    db: BaseballCardDatabase,
 ) {
     val state = remember { mutableStateOf(BaseballCardState()) }
 
@@ -130,7 +125,7 @@ fun BaseballCardCreateScreen(
 fun BaseballCardEditScreen(
     navController: NavController,
     db: BaseballCardDatabase,
-    cardId: Long
+    cardId: Long,
 ) {
     val state = remember { mutableStateOf(BaseballCardState()) }
     LaunchedEffect(cardId) {
@@ -270,49 +265,6 @@ fun BaseballCardDetails(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Select(
-    labelText: String,
-    options: Array<String>,
-    selected: String,
-    onSelectedChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    var expanded by remember { mutableStateOf(false) }
-
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded }) {
-        TextField(
-            label = { Text(text = labelText) },
-            readOnly = true,
-            value = selected,
-            onValueChange = { /* Do nothing */ },
-            trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(
-                    expanded = expanded
-                )
-            },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            modifier = modifier.menuAnchor()
-        )
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = { Text(text = option) },
-                    onClick = {
-                        onSelectedChange(option)
-                        expanded = false
-                    }
-                )
-            }
-        }
-    }
-}
-
 @Composable
 fun CreateCardButton(
     db: BaseballCardDatabase,
@@ -336,7 +288,7 @@ fun CreateCardButton(
 
 suspend fun createCard(
     db: BaseballCardDatabase,
-    cardState: MutableState<BaseballCardState>
+    cardState: MutableState<BaseballCardState>,
 ) {
     val newCard = cardState.value.toBaseballCard()
     db.baseballCardDao.insertBaseballCard(newCard)
