@@ -13,10 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -42,6 +38,8 @@ import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
+import bbct.android.ui.components.AutoComplete
+import bbct.android.ui.components.Select
 import kotlinx.coroutines.launch
 
 data class BaseballCardState(
@@ -274,91 +272,6 @@ fun BaseballCardDetails(
             onSelectedChange = { state.value = state.value.copy(position = it) },
             modifier = textFieldModifier,
         )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Select(
-    labelText: String,
-    options: Array<String>,
-    selected: String,
-    onSelectedChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    var expanded by remember { mutableStateOf(false) }
-
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded }) {
-        TextField(
-            label = { Text(text = labelText) },
-            readOnly = true,
-            value = selected,
-            onValueChange = { /* Do nothing */ },
-            trailingIcon = {
-                ExposedDropdownMenuDefaults.TrailingIcon(
-                    expanded = expanded
-                )
-            },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            modifier = modifier.menuAnchor()
-        )
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }) {
-            options.forEach { option ->
-                DropdownMenuItem(
-                    text = { Text(text = option) },
-                    onClick = {
-                        onSelectedChange(option)
-                        expanded = false
-                    }
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AutoComplete(
-    labelText: String,
-    options: List<String>,
-    value: String,
-    onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-) {
-    var expanded by remember { mutableStateOf(false) }
-    val filterOpts = options.filter { it.contains(value, ignoreCase = true) }
-
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded }) {
-        TextField(
-            label = { Text(text = labelText) },
-            value = value,
-            onValueChange = onValueChange,
-            colors = ExposedDropdownMenuDefaults.textFieldColors(),
-            modifier = modifier.menuAnchor(),
-            keyboardOptions = keyboardOptions,
-        )
-        if (!filterOpts.isEmpty()) {
-            ExposedDropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }) {
-                filterOpts.forEach { option ->
-                    DropdownMenuItem(
-                        text = { Text(text = option) },
-                        onClick = {
-                            onValueChange(option)
-                            expanded = false
-                        }
-                    )
-                }
-            }
-        }
     }
 }
 
