@@ -36,6 +36,7 @@ fun AutoComplete(
                 }
                 expanded = true
             },
+            keyboardOptions = keyboardOptions,
             modifier = modifier
         )
 
