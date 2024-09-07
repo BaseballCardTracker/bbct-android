@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AutoComplete(
-    labelText: String,
+    label: @Composable () -> Unit,
     options: List<String>,
     value: String,
     onValueChange: (String) -> Unit,
@@ -31,7 +31,7 @@ fun AutoComplete(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded }) {
         TextField(
-            label = { Text(text = labelText) },
+            label = label,
             value = value,
             onValueChange = onValueChange,
             colors = ExposedDropdownMenuDefaults.textFieldColors(),

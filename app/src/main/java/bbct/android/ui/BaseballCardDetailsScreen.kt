@@ -205,7 +205,7 @@ fun BaseballCardDetails(
             modifier = textFieldModifier,
         )
         AutoComplete(
-            labelText = stringResource(id = R.string.brand),
+            label = { Text(text = stringResource(id = R.string.brand)) },
             options = brands.value,
             value = state.value.brand,
             onValueChange = { state.value = state.value.copy(brand = it) },
