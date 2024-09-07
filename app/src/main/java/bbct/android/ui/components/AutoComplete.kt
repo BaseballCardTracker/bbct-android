@@ -1,9 +1,7 @@
 package bbct.android.ui.components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
@@ -27,7 +25,7 @@ fun AutoComplete(
     var expanded by remember { mutableStateOf(false) }
     var filteredOpts by remember { mutableStateOf(options) }
 
-    Column(modifier = modifier.width(IntrinsicSize.Min)) {
+    Column {
         TextField(
             label = label,
             value = value,
@@ -38,6 +36,7 @@ fun AutoComplete(
                 }
                 expanded = true
             },
+            modifier = modifier
         )
 
         if (expanded && filteredOpts.isNotEmpty()) {
