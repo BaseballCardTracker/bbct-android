@@ -313,10 +313,10 @@ fun UpdateCardButton(
     FloatingActionButton(onClick = {
         scope.launch {
             updateCard(
-                navController,
                 db,
                 state
             )
+            navController.popBackStack()
         }
     }) {
         Icon(
@@ -327,11 +327,9 @@ fun UpdateCardButton(
 }
 
 suspend fun updateCard(
-    navController: NavController,
     db: BaseballCardDatabase,
     cardState: MutableState<BaseballCardState>,
 ) {
     val newCard = cardState.value.toBaseballCard()
     db.baseballCardDao.updateBaseballCard(newCard)
-    navController.popBackStack()
 }
