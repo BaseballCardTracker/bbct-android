@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 
 data class BaseballCardSelectedState(
     var card: BaseballCard,
-    var selected: Boolean
+    var selected: Boolean,
 )
 
 @Composable
@@ -43,7 +43,8 @@ fun BaseballCardListScreen(
     db: BaseballCardDatabase,
 ) {
     val scope = rememberCoroutineScope()
-    val cards by db.baseballCardDao.baseballCards.collectAsState(initial = emptyList())
+    val viewModel = BaseballCardListViewModel(db.baseballCardDao)
+    val cards by viewModel.baseballCards.collectAsState(initial = emptyList())
     val stateList by remember {
         derivedStateOf {
             cards
@@ -97,7 +98,7 @@ fun BaseballCardListScreen(
 
 private suspend fun deleteCards(
     db: BaseballCardDatabase,
-    cards: List<BaseballCardSelectedState>
+    cards: List<BaseballCardSelectedState>,
 ) {
     db.baseballCardDao.deleteBaseballCards(
         cards
