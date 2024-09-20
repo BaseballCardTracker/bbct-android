@@ -21,9 +21,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
@@ -87,9 +85,8 @@ data class BaseballCardState(
 fun BaseballCardCreateScreen(
     navController: NavController,
     db: BaseballCardDatabase,
+    viewModel: BaseballCardDetailsViewModel = viewModel(),
 ) {
-    val state = remember { mutableStateOf(BaseballCardState()) }
-
     Scaffold(
         topBar = {
             TopBar(
@@ -108,7 +105,7 @@ fun BaseballCardCreateScreen(
         floatingActionButton = {
             CreateCardButton(
                 db,
-                state
+                viewModel.baseballCardState,
             )
         },
         modifier = Modifier
@@ -116,7 +113,7 @@ fun BaseballCardCreateScreen(
             .imePadding()
     ) { innerPadding ->
         BaseballCardDetails(
-            state,
+            state = viewModel.baseballCardState,
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -128,10 +125,11 @@ fun BaseballCardEditScreen(
     db: BaseballCardDatabase,
     cardId: Long,
 ) {
-    val state = remember { mutableStateOf(BaseballCardState()) }
+    val viewModel: BaseballCardDetailsViewModel = viewModel()
+
     LaunchedEffect(cardId) {
         val card = db.baseballCardDao.getBaseballCard(cardId)
-        state.value = BaseballCardState(card)
+        viewModel.baseballCardState.value = BaseballCardState(card)
     }
 
     Scaffold(
@@ -153,7 +151,7 @@ fun BaseballCardEditScreen(
             UpdateCardButton(
                 navController,
                 db,
-                state
+                viewModel.baseballCardState
             )
         },
         modifier = Modifier
@@ -161,8 +159,8 @@ fun BaseballCardEditScreen(
             .imePadding()
     ) { innerPadding ->
         BaseballCardDetails(
-            state,
-            modifier = Modifier.padding(innerPadding)
+            viewModel.baseballCardState,
+            modifier = Modifier.padding(innerPadding),
         )
     }
 }
