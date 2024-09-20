@@ -85,8 +85,9 @@ data class BaseballCardState(
 fun BaseballCardCreateScreen(
     navController: NavController,
     db: BaseballCardDatabase,
-    viewModel: BaseballCardDetailsViewModel = viewModel(),
 ) {
+    val viewModel: BaseballCardDetailsViewModel = viewModel()
+
     Scaffold(
         topBar = {
             TopBar(
