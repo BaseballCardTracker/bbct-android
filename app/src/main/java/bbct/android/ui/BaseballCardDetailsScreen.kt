@@ -201,7 +201,7 @@ fun BaseballCardDetails(
             Text(text = stringResource(id = R.string.autographed))
         }
         Select(
-            labelText = stringResource(id = R.string.condition),
+            label = { Text(stringResource(id = R.string.condition)) },
             options = conditions,
             selected = state.value.condition,
             onSelectedChange = {
@@ -298,7 +298,7 @@ fun BaseballCardDetails(
             modifier = textFieldModifier,
         )
         Select(
-            labelText = stringResource(id = R.string.player_position),
+            label = { Text(stringResource(id = R.string.player_position)) },
             options = positions,
             selected = state.value.position,
             onSelectedChange = {

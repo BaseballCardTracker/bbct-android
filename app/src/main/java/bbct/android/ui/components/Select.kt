@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Select(
-    labelText: String,
+    label: @Composable () -> Unit,
     options: Array<String>,
     selected: String,
     onSelectedChange: (String) -> Unit,
@@ -29,7 +29,7 @@ fun Select(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded }) {
         TextField(
-            label = { Text(text = labelText) },
+            label = label,
             readOnly = true,
             value = selected,
             onValueChange = { /* Do nothing */ },
