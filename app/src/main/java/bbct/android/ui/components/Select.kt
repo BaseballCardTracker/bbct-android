@@ -20,6 +20,7 @@ fun Select(
     options: Array<String>,
     selected: String,
     onSelectedChange: (String) -> Unit,
+    isError: Boolean,
     modifier: Modifier = Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -32,6 +33,7 @@ fun Select(
             readOnly = true,
             value = selected,
             onValueChange = { /* Do nothing */ },
+            isError = isError,
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded

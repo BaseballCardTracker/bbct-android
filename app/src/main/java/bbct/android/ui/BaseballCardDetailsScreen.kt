@@ -208,6 +208,7 @@ fun BaseballCardDetails(
                 state.value = state.value.copy(condition = it)
                 onValidate()
             },
+            isError = !errors.value.brand.isValid,
             modifier = textFieldModifier,
         )
         TextField(
@@ -304,6 +305,7 @@ fun BaseballCardDetails(
                 state.value = state.value.copy(position = it)
                 onValidate()
             },
+            isError = !errors.value.brand.isValid,
             modifier = textFieldModifier,
         )
     }
