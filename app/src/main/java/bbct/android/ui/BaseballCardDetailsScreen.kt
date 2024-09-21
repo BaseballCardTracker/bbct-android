@@ -22,8 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
@@ -89,7 +88,7 @@ fun BaseballCardCreateScreen(
     navController: NavController,
     db: BaseballCardDatabase,
 ) {
-    val state = remember { mutableStateOf(BaseballCardState()) }
+    val viewModel: BaseballCardDetailsViewModel = viewModel()
 
     Scaffold(
         topBar = {
@@ -109,7 +108,9 @@ fun BaseballCardCreateScreen(
         floatingActionButton = {
             CreateCardButton(
                 db,
-                state
+                viewModel.baseballCardState,
+                viewModel.errors,
+                viewModel::validate,
             )
         },
         modifier = Modifier
@@ -117,9 +118,11 @@ fun BaseballCardCreateScreen(
             .imePadding()
     ) { innerPadding ->
         BaseballCardDetails(
-            state,
-            db,
-            modifier = Modifier.padding(innerPadding)
+            state = viewModel.baseballCardState,
+            db = db,
+            errors = viewModel.errors,
+            onValidate = viewModel::validate,
+            modifier = Modifier.padding(innerPadding),
         )
     }
 }
@@ -130,10 +133,11 @@ fun BaseballCardEditScreen(
     db: BaseballCardDatabase,
     cardId: Long,
 ) {
-    val state = remember { mutableStateOf(BaseballCardState()) }
+    val viewModel: BaseballCardDetailsViewModel = viewModel()
+
     LaunchedEffect(cardId) {
         val card = db.baseballCardDao.getBaseballCard(cardId)
-        state.value = BaseballCardState(card)
+        viewModel.baseballCardState.value = BaseballCardState(card)
     }
 
     Scaffold(
@@ -155,7 +159,9 @@ fun BaseballCardEditScreen(
             UpdateCardButton(
                 navController,
                 db,
-                state
+                viewModel.baseballCardState,
+                viewModel.errors,
+                viewModel::validate,
             )
         },
         modifier = Modifier
@@ -163,9 +169,11 @@ fun BaseballCardEditScreen(
             .imePadding()
     ) { innerPadding ->
         BaseballCardDetails(
-            state,
-            db,
-            modifier = Modifier.padding(innerPadding)
+            state = viewModel.baseballCardState,
+            db = db,
+            errors = viewModel.errors,
+            onValidate = viewModel::validate,
+            modifier = Modifier.padding(innerPadding),
         )
     }
 }
@@ -174,6 +182,8 @@ fun BaseballCardEditScreen(
 fun BaseballCardDetails(
     state: MutableState<BaseballCardState>,
     db: BaseballCardDatabase,
+    errors: MutableState<BaseballCardDetailsErrors>,
+    onValidate: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val brands = db.baseballCardDao.brands.collectAsState(initial = emptyList())
@@ -198,24 +208,36 @@ fun BaseballCardDetails(
             Text(text = stringResource(id = R.string.autographed))
         }
         Select(
-            labelText = stringResource(id = R.string.condition),
+            label = { Text(stringResource(id = R.string.condition)) },
             options = conditions,
             selected = state.value.condition,
-            onSelectedChange = { state.value = state.value.copy(condition = it) },
+            onSelectedChange = {
+                state.value = state.value.copy(condition = it)
+                onValidate()
+            },
+            isError = !errors.value.brand.isValid,
             modifier = textFieldModifier,
         )
         AutoComplete(
             label = { Text(text = stringResource(id = R.string.brand)) },
             options = brands.value,
             value = state.value.brand,
-            onValueChange = { state.value = state.value.copy(brand = it) },
+            onValueChange = {
+                state.value = state.value.copy(brand = it)
+                onValidate()
+            },
+            isError = !errors.value.brand.isValid,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.year)) },
             value = state.value.year,
-            onValueChange = { state.value = state.value.copy(year = it) },
+            onValueChange = {
+                state.value = state.value.copy(year = it)
+                onValidate()
+            },
+            isError = !errors.value.year.isValid,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
                 keyboardType = KeyboardType.Number
@@ -225,14 +247,22 @@ fun BaseballCardDetails(
         TextField(
             label = { Text(text = stringResource(id = R.string.number)) },
             value = state.value.number,
-            onValueChange = { state.value = state.value.copy(number = it) },
+            onValueChange = {
+                state.value = state.value.copy(number = it)
+                onValidate()
+            },
+            isError = !errors.value.number.isValid,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.value)) },
             value = state.value.value,
-            onValueChange = { state.value = state.value.copy(value = it) },
+            onValueChange = {
+                state.value = state.value.copy(value = it)
+                onValidate()
+            },
+            isError = !errors.value.value.isValid,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
                 keyboardType = KeyboardType.Number
@@ -242,7 +272,11 @@ fun BaseballCardDetails(
         TextField(
             label = { Text(text = stringResource(id = R.string.quantity)) },
             value = state.value.quantity,
-            onValueChange = { state.value = state.value.copy(quantity = it) },
+            onValueChange = {
+                state.value = state.value.copy(quantity = it)
+                onValidate()
+            },
+            isError = !errors.value.quantity.isValid,
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next,
                 keyboardType = KeyboardType.Number
@@ -252,22 +286,34 @@ fun BaseballCardDetails(
         TextField(
             label = { Text(text = stringResource(id = R.string.player_name)) },
             value = state.value.playerName,
-            onValueChange = { state.value = state.value.copy(playerName = it) },
+            onValueChange = {
+                state.value = state.value.copy(playerName = it)
+                onValidate()
+            },
+            isError = !errors.value.playerName.isValid,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             modifier = textFieldModifier,
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.team)) },
             value = state.value.team,
-            onValueChange = { state.value = state.value.copy(team = it) },
+            onValueChange = {
+                state.value = state.value.copy(team = it)
+                onValidate()
+            },
+            isError = !errors.value.team.isValid,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             modifier = textFieldModifier,
         )
         Select(
-            labelText = stringResource(id = R.string.player_position),
+            label = { Text(stringResource(id = R.string.player_position)) },
             options = positions,
             selected = state.value.position,
-            onSelectedChange = { state.value = state.value.copy(position = it) },
+            onSelectedChange = {
+                state.value = state.value.copy(position = it)
+                onValidate()
+            },
+            isError = !errors.value.brand.isValid,
             modifier = textFieldModifier,
         )
     }
@@ -277,14 +323,19 @@ fun BaseballCardDetails(
 fun CreateCardButton(
     db: BaseballCardDatabase,
     state: MutableState<BaseballCardState>,
+    errors: MutableState<BaseballCardDetailsErrors>,
+    onValidate: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     FloatingActionButton(onClick = {
-        scope.launch {
-            createCard(
-                db,
-                state
-            )
+        onValidate()
+        if (errors.value.isValid) {
+            scope.launch {
+                createCard(
+                    db,
+                    state
+                )
+            }
         }
     }) {
         Icon(
@@ -308,15 +359,20 @@ fun UpdateCardButton(
     navController: NavController,
     db: BaseballCardDatabase,
     state: MutableState<BaseballCardState>,
+    errors: MutableState<BaseballCardDetailsErrors>,
+    onValidate: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     FloatingActionButton(onClick = {
-        scope.launch {
-            updateCard(
-                db,
-                state
-            )
-            navController.popBackStack()
+        onValidate()
+        if (errors.value.isValid) {
+            scope.launch {
+                updateCard(
+                    db,
+                    state
+                )
+                navController.popBackStack()
+            }
         }
     }) {
         Icon(
