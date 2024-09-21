@@ -15,7 +15,12 @@ data class BaseballCardDetailsErrors(
     var playerName: FormFieldError = FormFieldError(),
     var team: FormFieldError = FormFieldError(),
     var position: FormFieldError = FormFieldError(),
-)
+) {
+    val isValid: Boolean
+        get() {
+            return condition.isValid && brand.isValid && year.isValid && number.isValid && value.isValid && quantity.isValid && playerName.isValid && team.isValid && position.isValid
+        }
+}
 
 class BaseballCardDetailsViewModel : ViewModel() {
     var baseballCardState = mutableStateOf(BaseballCardState())
