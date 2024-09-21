@@ -19,6 +19,7 @@ fun AutoComplete(
     options: List<String>,
     value: String,
     onValueChange: (String) -> Unit,
+    isError: Boolean,
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
 ) {
@@ -36,6 +37,7 @@ fun AutoComplete(
                 }
                 expanded = true
             },
+            isError = isError,
             keyboardOptions = keyboardOptions,
             modifier = modifier
         )
