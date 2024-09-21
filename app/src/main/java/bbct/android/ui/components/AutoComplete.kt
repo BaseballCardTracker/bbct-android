@@ -47,7 +47,7 @@ fun AutoComplete(
         if (expanded && filteredOpts.isNotEmpty()) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
             ) {
                 filteredOpts.forEach { option ->
                     DropdownMenuItem(
