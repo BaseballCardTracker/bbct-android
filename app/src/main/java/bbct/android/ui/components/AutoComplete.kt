@@ -33,7 +33,9 @@ fun AutoComplete(
             onValueChange = {
                 onValueChange(it)
                 filteredOpts = options.filter { option ->
-                    option.lowercase().contains(it.lowercase())
+                    option
+                        .lowercase()
+                        .contains(it.lowercase())
                 }
                 expanded = true
             },
