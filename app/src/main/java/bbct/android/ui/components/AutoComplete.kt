@@ -19,9 +19,9 @@ fun AutoComplete(
     options: List<String>,
     value: String,
     onValueChange: (String) -> Unit,
-    isError: Boolean,
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    isError: Boolean = false,
 ) {
     var expanded by remember { mutableStateOf(false) }
     var filteredOpts by remember { mutableStateOf(options) }

@@ -20,8 +20,8 @@ fun Select(
     options: Array<String>,
     selected: String,
     onSelectedChange: (String) -> Unit,
-    isError: Boolean,
     modifier: Modifier = Modifier,
+    isError: Boolean = false,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
