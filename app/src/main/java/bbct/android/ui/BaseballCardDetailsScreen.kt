@@ -360,7 +360,7 @@ fun UpdateCardButton(
             scope.launch {
                 updateCard(
                     db,
-                    state
+                    state.value
                 )
                 navController.popBackStack()
             }
@@ -375,8 +375,7 @@ fun UpdateCardButton(
 
 suspend fun updateCard(
     db: BaseballCardDatabase,
-    cardState: MutableState<BaseballCardState>,
+    cardState: BaseballCardState,
 ) {
-    val newCard = cardState.value.toBaseballCard()
-    db.baseballCardDao.updateBaseballCard(newCard)
+    db.baseballCardDao.updateBaseballCard(cardState.toBaseballCard())
 }
