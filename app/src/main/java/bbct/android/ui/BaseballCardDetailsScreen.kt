@@ -327,8 +327,8 @@ fun CreateCardButton(
                     db,
                     state.value
                 )
+                state.value = BaseballCardState()
             }
-            state.value = BaseballCardState()
         }
     }) {
         Icon(
