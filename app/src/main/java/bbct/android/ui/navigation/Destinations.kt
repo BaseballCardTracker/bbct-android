@@ -51,7 +51,6 @@ object BaseballCardFilterDestination {
     val screen: @Composable (NavController, BaseballCardDatabase) -> Unit = { navController, db ->
         BaseballCardFilterScreen(
             navController,
-            db,
         )
     }
 }

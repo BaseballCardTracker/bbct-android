@@ -30,8 +30,7 @@ class BaseballCardFilterScreenTest {
         composeTestRule.setContent {
             val navController = rememberNavController()
             BaseballCardFilterScreen(
-                navController = navController,
-                db = db
+                navController = navController
             )
         }
     }

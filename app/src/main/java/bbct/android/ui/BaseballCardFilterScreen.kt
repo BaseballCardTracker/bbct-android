@@ -26,7 +26,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import bbct.android.R
-import bbct.android.data.BaseballCardDatabase
 
 
 data class BaseballCardFilterState(
@@ -40,7 +39,6 @@ data class BaseballCardFilterState(
 @Composable
 fun BaseballCardFilterScreen(
     navController: NavController,
-    db: BaseballCardDatabase,
 ) {
     Scaffold(
         topBar = {
