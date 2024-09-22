@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import bbct.android.R
 
@@ -75,7 +74,7 @@ fun BaseballCardFilter(
 ) {
     val textFieldModifier = Modifier.fillMaxWidth()
 
-    Column(modifier = modifier.padding(12.dp)) {
+    Column(modifier = modifier) {
         Row {
             Checkbox(
                 checked = false,
