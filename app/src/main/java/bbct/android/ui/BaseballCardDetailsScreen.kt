@@ -325,9 +325,10 @@ fun CreateCardButton(
             scope.launch {
                 createCard(
                     db,
-                    state
+                    state.value
                 )
             }
+            state.value = BaseballCardState()
         }
     }) {
         Icon(
@@ -339,11 +340,9 @@ fun CreateCardButton(
 
 suspend fun createCard(
     db: BaseballCardDatabase,
-    cardState: MutableState<BaseballCardState>,
+    cardState: BaseballCardState,
 ) {
-    val newCard = cardState.value.toBaseballCard()
-    db.baseballCardDao.insertBaseballCard(newCard)
-    cardState.value = BaseballCardState()
+    db.baseballCardDao.insertBaseballCard(cardState.toBaseballCard())
 }
 
 @Composable
