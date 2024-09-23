@@ -1,4 +1,4 @@
-package bbct.android.ui
+package bbct.android.ui.details
 
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.hasText

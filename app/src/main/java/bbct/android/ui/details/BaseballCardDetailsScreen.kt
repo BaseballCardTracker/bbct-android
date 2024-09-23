@@ -1,4 +1,4 @@
-package bbct.android.ui
+package bbct.android.ui.details
 
 import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Column
@@ -34,6 +34,9 @@ import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
+import bbct.android.ui.BackIcon
+import bbct.android.ui.OverflowMenu
+import bbct.android.ui.TopBar
 import bbct.android.ui.components.Select
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package bbct.android.ui
+package bbct.android.ui.filter
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule

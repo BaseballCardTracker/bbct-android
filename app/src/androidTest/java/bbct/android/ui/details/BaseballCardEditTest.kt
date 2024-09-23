@@ -1,4 +1,4 @@
-package bbct.android.ui
+package bbct.android.ui.details
 
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room.inMemoryDatabaseBuilder

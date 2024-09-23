@@ -1,4 +1,4 @@
-package bbct.android.ui
+package bbct.android.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
