@@ -29,7 +29,6 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -225,9 +224,9 @@ fun BaseballCardDetails(
         AutoComplete(
             label = { Text(text = stringResource(id = R.string.brand)) },
             options = brands.value,
-            value = TextFieldValue(state.value.brand),
+            value = state.value.brand,
             onValueChange = {
-                state.value = state.value.copy(brand = it.text)
+                state.value = state.value.copy(brand = it)
                 onValidate()
             },
             isError = !errors.value.brand.isValid,
