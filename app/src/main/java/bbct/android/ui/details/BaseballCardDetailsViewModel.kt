@@ -1,4 +1,4 @@
-package bbct.android.ui
+package bbct.android.ui.details
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -40,23 +40,38 @@ class BaseballCardDetailsViewModel : ViewModel() {
             errors.brand.isValid = false
         }
 
-        if (baseballCard.year.isBlank() || baseballCard.year.toIntOrNull() == null) {
+        if (baseballCard.year.isBlank()) {
             errors.year = FormFieldError("Year is required")
             errors.year.isValid = false
         }
 
-        if (baseballCard.number.isBlank() || baseballCard.number.toIntOrNull() == null) {
+        if (baseballCard.year.toIntOrNull() == null) {
+            errors.year = FormFieldError("Year must be a number")
+            errors.year.isValid = false
+        }
+
+        if (baseballCard.number.isBlank()) {
             errors.number = FormFieldError("Number is required")
             errors.number.isValid = false
         }
 
-        if (baseballCard.value.isBlank() || baseballCard.value.toDoubleOrNull() == null) {
+        if (baseballCard.value.isBlank()) {
             errors.value = FormFieldError("Value is required")
             errors.value.isValid = false
         }
 
-        if (baseballCard.quantity.isBlank() || baseballCard.quantity.toIntOrNull() == null) {
+        if (baseballCard.value.toDoubleOrNull() == null) {
+            errors.value = FormFieldError("Value must be a number")
+            errors.value.isValid = false
+        }
+
+        if (baseballCard.quantity.isBlank()) {
             errors.quantity = FormFieldError("Quantity is required")
+            errors.quantity.isValid = false
+        }
+
+        if (baseballCard.quantity.toIntOrNull() == null) {
+            errors.quantity = FormFieldError("Quantity must be a number")
             errors.quantity.isValid = false
         }
 

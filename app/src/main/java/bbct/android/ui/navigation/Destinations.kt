@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.AboutScreen
-import bbct.android.ui.BaseballCardCreateScreen
-import bbct.android.ui.BaseballCardEditScreen
-import bbct.android.ui.BaseballCardFilterScreen
-import bbct.android.ui.BaseballCardListScreen
+import bbct.android.ui.details.BaseballCardCreateScreen
+import bbct.android.ui.details.BaseballCardEditScreen
+import bbct.android.ui.filter.BaseballCardFilterScreen
+import bbct.android.ui.list.BaseballCardListScreen
 
 object BaseballCardListDestination {
     const val route = "baseball_card_list"
@@ -51,7 +51,6 @@ object BaseballCardFilterDestination {
     val screen: @Composable (NavController, BaseballCardDatabase) -> Unit = { navController, db ->
         BaseballCardFilterScreen(
             navController,
-            db,
         )
     }
 }

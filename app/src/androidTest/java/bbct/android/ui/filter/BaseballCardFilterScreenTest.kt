@@ -1,4 +1,4 @@
-package bbct.android.ui
+package bbct.android.ui.filter
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -7,9 +7,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.navigation.compose.rememberNavController
-import androidx.room.Room.inMemoryDatabaseBuilder
-import androidx.test.platform.app.InstrumentationRegistry
-import bbct.android.data.BaseballCardDatabase
 import bbct.android.data.cards
 import org.junit.Before
 import org.junit.Rule
@@ -21,17 +18,10 @@ class BaseballCardFilterScreenTest {
 
     @Before
     fun setUp() {
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val db = inMemoryDatabaseBuilder(
-            context,
-            BaseballCardDatabase::class.java
-        ).build()
-
         composeTestRule.setContent {
             val navController = rememberNavController()
             BaseballCardFilterScreen(
-                navController = navController,
-                db = db
+                navController = navController
             )
         }
     }

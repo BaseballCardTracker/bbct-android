@@ -1,4 +1,4 @@
-package bbct.android.ui
+package bbct.android.ui.list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,10 +24,13 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
+import bbct.android.ui.ListMenu
+import bbct.android.ui.TopBar
 import bbct.android.ui.navigation.BaseballCardCreateDestination
 import bbct.android.ui.navigation.navigate
 import kotlinx.coroutines.launch
@@ -43,7 +46,8 @@ fun BaseballCardListScreen(
     db: BaseballCardDatabase,
 ) {
     val scope = rememberCoroutineScope()
-    val viewModel = BaseballCardListViewModel(db.baseballCardDao)
+    val viewModel: BaseballCardListViewModel =
+        viewModel(factory = BaseballCardListViewModelFactory(db.baseballCardDao))
     val cards by viewModel.baseballCards.collectAsState(initial = emptyList())
     val stateList by remember {
         derivedStateOf {

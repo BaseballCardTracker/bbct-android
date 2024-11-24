@@ -1,4 +1,4 @@
-package bbct.android.ui
+package bbct.android.ui.list
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.semantics.Role

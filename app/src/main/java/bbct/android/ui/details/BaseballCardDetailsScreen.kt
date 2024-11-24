@@ -1,4 +1,4 @@
-package bbct.android.ui
+package bbct.android.ui.details
 
 import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.Column
@@ -36,6 +36,9 @@ import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
+import bbct.android.ui.BackIcon
+import bbct.android.ui.OverflowMenu
+import bbct.android.ui.TopBar
 import bbct.android.ui.components.AutoComplete
 import bbct.android.ui.components.Select
 import kotlinx.coroutines.launch
@@ -334,8 +337,9 @@ fun CreateCardButton(
             scope.launch {
                 createCard(
                     db,
-                    state
+                    state.value
                 )
+                state.value = BaseballCardState()
             }
         }
     }) {
@@ -348,11 +352,9 @@ fun CreateCardButton(
 
 suspend fun createCard(
     db: BaseballCardDatabase,
-    cardState: MutableState<BaseballCardState>,
+    cardState: BaseballCardState,
 ) {
-    val newCard = cardState.value.toBaseballCard()
-    db.baseballCardDao.insertBaseballCard(newCard)
-    cardState.value = BaseballCardState()
+    db.baseballCardDao.insertBaseballCard(cardState.toBaseballCard())
 }
 
 @Composable
@@ -370,7 +372,7 @@ fun UpdateCardButton(
             scope.launch {
                 updateCard(
                     db,
-                    state
+                    state.value
                 )
                 navController.popBackStack()
             }
@@ -385,8 +387,7 @@ fun UpdateCardButton(
 
 suspend fun updateCard(
     db: BaseballCardDatabase,
-    cardState: MutableState<BaseballCardState>,
+    cardState: BaseballCardState,
 ) {
-    val newCard = cardState.value.toBaseballCard()
-    db.baseballCardDao.updateBaseballCard(newCard)
+    db.baseballCardDao.updateBaseballCard(cardState.toBaseballCard())
 }

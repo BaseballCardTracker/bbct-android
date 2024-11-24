@@ -1,4 +1,4 @@
-package bbct.android.ui
+package bbct.android.ui.filter
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,16 +17,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import bbct.android.R
-import bbct.android.data.BaseballCardDatabase
+import bbct.android.ui.BackIcon
+import bbct.android.ui.OverflowMenu
+import bbct.android.ui.TopBar
 
 
 data class BaseballCardFilterState(
@@ -40,7 +40,6 @@ data class BaseballCardFilterState(
 @Composable
 fun BaseballCardFilterScreen(
     navController: NavController,
-    db: BaseballCardDatabase,
 ) {
     Scaffold(
         topBar = {
@@ -62,9 +61,9 @@ fun BaseballCardFilterScreen(
             .fillMaxSize()
             .imePadding()
     ) { innerPadding ->
-        val filterState = remember { mutableStateOf(BaseballCardFilterState()) }
+        val viewModel: BaseballCardFilterViewModel = viewModel()
         BaseballCardFilter(
-            filterState,
+            viewModel.filterState,
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -77,7 +76,7 @@ fun BaseballCardFilter(
 ) {
     val textFieldModifier = Modifier.fillMaxWidth()
 
-    Column(modifier = modifier.padding(12.dp)) {
+    Column(modifier = modifier) {
         Row {
             Checkbox(
                 checked = false,
