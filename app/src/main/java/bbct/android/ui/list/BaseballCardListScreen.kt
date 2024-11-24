@@ -32,7 +32,6 @@ import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.ListMenu
 import bbct.android.ui.TopBar
 import bbct.android.ui.navigation.BaseballCardCreateDestination
-import bbct.android.ui.navigation.navigate
 import kotlinx.coroutines.launch
 
 data class BaseballCardSelectedState(
