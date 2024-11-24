@@ -42,7 +42,7 @@ object BaseballCardEditDestination {
 
 }
 
-fun NavController.navigate(cardId: Long) {
+fun NavController.navigateToDetails(cardId: Long) {
     this.navigate("baseball_card_details/$cardId")
 }
 
