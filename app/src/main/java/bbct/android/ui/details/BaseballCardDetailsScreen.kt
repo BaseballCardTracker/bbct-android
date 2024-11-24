@@ -190,6 +190,8 @@ fun BaseballCardDetails(
     modifier: Modifier = Modifier,
 ) {
     val brands = db.baseballCardDao.brands.collectAsState(initial = emptyList())
+    var playerNames = db.baseballCardDao.playerNames.collectAsState(initial = emptyList())
+    var teams = db.baseballCardDao.teams.collectAsState(initial = emptyList())
 
     val conditions = stringArrayResource(R.array.condition)
     val positions = stringArrayResource(R.array.positions)
@@ -286,8 +288,9 @@ fun BaseballCardDetails(
             ),
             modifier = textFieldModifier,
         )
-        TextField(
+        AutoComplete(
             label = { Text(text = stringResource(id = R.string.player_name)) },
+            options = playerNames.value,
             value = state.value.playerName,
             onValueChange = {
                 state.value = state.value.copy(playerName = it)
@@ -297,8 +300,9 @@ fun BaseballCardDetails(
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             modifier = textFieldModifier,
         )
-        TextField(
+        AutoComplete(
             label = { Text(text = stringResource(id = R.string.team)) },
+            options = teams.value,
             value = state.value.team,
             onValueChange = {
                 state.value = state.value.copy(team = it)
