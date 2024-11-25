@@ -26,15 +26,6 @@ import bbct.android.R
 import bbct.android.ui.CloseButton
 import bbct.android.ui.TopBar
 
-
-data class BaseballCardFilterState(
-    var brand: String = "",
-    var year: Int = -1,
-    var number: String = "",
-    var playerName: String = "",
-    var team: String = "",
-)
-
 @Composable
 fun BaseballCardFilterScreen(
     onApplyFilter: () -> Unit,
