@@ -32,7 +32,7 @@ import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.ListMenu
 import bbct.android.ui.TopBar
 import bbct.android.ui.navigation.BaseballCardCreateDestination
-import bbct.android.ui.navigation.navigateToDetails
+import bbct.android.ui.navigation.BaseballCardEditDestination
 import kotlinx.coroutines.launch
 
 data class BaseballCardSelectedState(
@@ -154,7 +154,9 @@ fun BaseballCardRow(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.clickable { navController.navigateToDetails(state.card._id!!) }
+        modifier = Modifier.clickable {
+            navController.navigate(BaseballCardEditDestination(state.card._id!!))
+        }
     ) {
         Checkbox(
             checked = state.selected,
@@ -181,7 +183,7 @@ fun BaseballCardRow(
 
 @Composable
 fun AddCardButton(navController: NavController) {
-    FloatingActionButton(onClick = { navController.navigate(BaseballCardCreateDestination.route) }) {
+    FloatingActionButton(onClick = { navController.navigate(BaseballCardCreateDestination) }) {
         Icon(
             Icons.Default.Add,
             contentDescription = stringResource(id = R.string.add_menu)

@@ -77,7 +77,7 @@ fun ListMenu(
 
 @Composable
 fun MainMenu(navController: NavController) {
-    IconButton(onClick = { navController.navigate(BaseballCardFilterDestination.route) }) {
+    IconButton(onClick = { navController.navigate(BaseballCardFilterDestination) }) {
         Icon(
             Icons.Default.Search,
             contentDescription = stringResource(id = R.string.filter_menu)
@@ -102,7 +102,7 @@ fun OverflowMenu(navController: NavController) {
     ) {
         DropdownMenuItem(
             text = { Text(text = stringResource(id = R.string.about_menu)) },
-            onClick = { navController.navigate(AboutDestination.route) })
+            onClick = { navController.navigate(AboutDestination) })
     }
 }
 
