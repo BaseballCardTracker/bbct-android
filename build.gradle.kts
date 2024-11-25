@@ -5,12 +5,3 @@ plugins {
     alias(libs.plugins.google.gms.google.services) apply false
     alias(libs.plugins.google.firebase.crashlytics) apply false
 }
-
-buildscript {
-    repositories {
-        google()
-    }
-    dependencies {
-        classpath(libs.androidx.navigation.safe.args.gradle.plugin)
-    }
-}
