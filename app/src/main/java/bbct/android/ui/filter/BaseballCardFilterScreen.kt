@@ -29,7 +29,7 @@ import bbct.android.ui.TopBar
 
 data class BaseballCardFilterState(
     var brand: String = "",
-    var year: String = "",
+    var year: Int = -1,
     var number: String = "",
     var playerName: String = "",
     var team: String = "",
@@ -92,8 +92,8 @@ fun BaseballCardFilter(
                 onCheckedChange = { /*TODO*/ })
             TextField(
                 label = { Text(text = stringResource(id = R.string.year)) },
-                value = filterState.value.year,
-                onValueChange = { filterState.value = filterState.value.copy(year = it) },
+                value = filterState.value.year.toString(),
+                onValueChange = { filterState.value = filterState.value.copy(year = it.toInt()) },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Number
