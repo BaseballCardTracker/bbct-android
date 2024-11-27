@@ -116,7 +116,8 @@ fun BaseballCardListScreen(
             ) {
                 BaseballCardFilterScreen(
                     onApplyFilter = {},
-                    onClose = { showFilterBottomSheet = false })
+                    onClose = { showFilterBottomSheet = false }
+                )
             }
         }
     }
