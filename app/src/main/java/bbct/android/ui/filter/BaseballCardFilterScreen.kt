@@ -92,8 +92,11 @@ fun BaseballCardFilter(
                 onCheckedChange = { /*TODO*/ })
             TextField(
                 label = { Text(text = stringResource(id = R.string.year)) },
-                value = filterState.value.year.toString(),
-                onValueChange = { filterState.value = filterState.value.copy(year = it.toInt()) },
+                value = if (filterState.value.year == -1) "" else filterState.value.year.toString(),
+                onValueChange = {
+                    val year = if (it == "") -1 else it.toInt()
+                    filterState.value = filterState.value.copy(year = year)
+                },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next,
                     keyboardType = KeyboardType.Number
