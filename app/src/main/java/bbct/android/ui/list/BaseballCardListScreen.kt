@@ -12,14 +12,18 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
@@ -32,10 +36,10 @@ import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.ListMenu
 import bbct.android.ui.TopBar
+import bbct.android.ui.filter.BaseballCardFilterScreen
 import bbct.android.ui.navigation.AboutDestination
 import bbct.android.ui.navigation.BaseballCardCreateDestination
 import bbct.android.ui.navigation.BaseballCardEditDestination
-import bbct.android.ui.navigation.BaseballCardFilterDestination
 import kotlinx.coroutines.launch
 
 data class BaseballCardSelectedState(
@@ -70,6 +74,8 @@ fun BaseballCardListScreen(
             stateList.any { it.selected }
         }
     }
+    val sheetState = rememberModalBottomSheetState()
+    var showFilterBottomSheet by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -78,7 +84,7 @@ fun BaseballCardListScreen(
                 actions = {
                     ListMenu(
                         isAnySelected,
-                        onFilterCards = { navController.navigate(BaseballCardFilterDestination) },
+                        onFilterCards = { showFilterBottomSheet = true },
                         onAbout = { navController.navigate(AboutDestination) },
                         onDeleteCards = {
                             scope.launch {
@@ -102,6 +108,17 @@ fun BaseballCardListScreen(
             onCardChanged = { index, card -> stateList[index] = card },
             contentPadding = innerPadding
         )
+
+        if (showFilterBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = { showFilterBottomSheet = false },
+                sheetState = sheetState
+            ) {
+                BaseballCardFilterScreen(
+                    onApplyFilter = {},
+                    onClose = { showFilterBottomSheet = false })
+            }
+        }
     }
 }
 

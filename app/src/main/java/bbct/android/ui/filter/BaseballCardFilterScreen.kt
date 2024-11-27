@@ -22,12 +22,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import bbct.android.R
-import bbct.android.ui.BackIcon
-import bbct.android.ui.OverflowMenu
+import bbct.android.ui.CloseButton
 import bbct.android.ui.TopBar
-import bbct.android.ui.navigation.AboutDestination
 
 
 data class BaseballCardFilterState(
@@ -40,24 +37,23 @@ data class BaseballCardFilterState(
 
 @Composable
 fun BaseballCardFilterScreen(
-    navController: NavController,
+    onApplyFilter: () -> Unit,
+    onClose: () -> Unit,
 ) {
     Scaffold(
         topBar = {
             TopBar(
-                navigationIcon = { BackIcon(navController) },
+                navigationIcon = { CloseButton { onClose } },
                 title = {
                     Text(
                         stringResource(
-                            id = R.string.bbct_title,
-                            stringResource(id = R.string.filter_cards_title)
+                            id = R.string.filter_cards_title,
                         )
                     )
                 },
-                actions = { OverflowMenu(onAbout = { navController.navigate(AboutDestination) }) }
             )
         },
-        floatingActionButton = { ApplyFilterButton(navController) },
+        floatingActionButton = { ApplyFilterButton(onApplyFilter) },
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
@@ -145,8 +141,8 @@ fun BaseballCardFilter(
 }
 
 @Composable
-fun ApplyFilterButton(navController: NavController) {
-    FloatingActionButton(onClick = { /* TODO */ }) {
+fun ApplyFilterButton(onApplyFilter: () -> Unit) {
+    FloatingActionButton(onClick = onApplyFilter) {
         Icon(
             Icons.Default.Check,
             contentDescription = stringResource(id = R.string.filter_menu)

@@ -8,12 +8,10 @@ import androidx.navigation.toRoute
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.details.BaseballCardCreateScreen
 import bbct.android.ui.details.BaseballCardEditScreen
-import bbct.android.ui.filter.BaseballCardFilterScreen
 import bbct.android.ui.list.BaseballCardListScreen
 import bbct.android.ui.navigation.AboutDestination
 import bbct.android.ui.navigation.BaseballCardCreateDestination
 import bbct.android.ui.navigation.BaseballCardEditDestination
-import bbct.android.ui.navigation.BaseballCardFilterDestination
 import bbct.android.ui.navigation.BaseballCardListDestination
 import bbct.android.ui.theme.AppTheme
 
@@ -44,11 +42,6 @@ fun App(db: BaseballCardDatabase) {
                     navController,
                     db,
                     destination.cardId,
-                )
-            }
-            composable<BaseballCardFilterDestination> {
-                BaseballCardFilterScreen(
-                    navController,
                 )
             }
             composable<AboutDestination> {

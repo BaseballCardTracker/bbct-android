@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
@@ -45,6 +46,16 @@ fun BackIcon(navController: NavController) {
         Icon(
             Icons.AutoMirrored.Default.ArrowBack,
             contentDescription = stringResource(id = R.string.back)
+        )
+    }
+}
+
+@Composable
+fun CloseButton(onClose: () -> Unit) {
+    IconButton(onClick = onClose) {
+        Icon(
+            Icons.Default.Close,
+            contentDescription = stringResource(id = R.string.close)
         )
     }
 }
