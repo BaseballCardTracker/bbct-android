@@ -24,8 +24,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import bbct.android.R
-import bbct.android.ui.navigation.AboutDestination
-import bbct.android.ui.navigation.BaseballCardFilterDestination
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,8 +51,9 @@ fun BackIcon(navController: NavController) {
 
 @Composable
 fun ListMenu(
-    navController: NavController,
     isAnySelected: Boolean,
+    onFilterCards: () -> Unit,
+    onAbout: () -> Unit,
     onDeleteCards: () -> Unit,
     onSelectAll: () -> Unit,
 ) {
@@ -69,25 +68,31 @@ fun ListMenu(
                     onSelectAll = onSelectAll,
                 )
             } else {
-                MainMenu(navController)
+                MainMenu(
+                    onFilterCards = onFilterCards,
+                    onAbout = onAbout
+                )
             }
         }
     }
 }
 
 @Composable
-fun MainMenu(navController: NavController) {
-    IconButton(onClick = { navController.navigate(BaseballCardFilterDestination) }) {
+fun MainMenu(
+    onFilterCards: () -> Unit,
+    onAbout: () -> Unit
+) {
+    IconButton(onClick = onFilterCards) {
         Icon(
             Icons.Default.Search,
             contentDescription = stringResource(id = R.string.filter_menu)
         )
     }
-    OverflowMenu(navController)
+    OverflowMenu(onAbout)
 }
 
 @Composable
-fun OverflowMenu(navController: NavController) {
+fun OverflowMenu(onAbout: () -> Unit) {
     var showMenu by remember { mutableStateOf(false) }
 
     IconButton(onClick = { showMenu = !showMenu }) {
@@ -102,7 +107,8 @@ fun OverflowMenu(navController: NavController) {
     ) {
         DropdownMenuItem(
             text = { Text(text = stringResource(id = R.string.about_menu)) },
-            onClick = { navController.navigate(AboutDestination) })
+            onClick = onAbout
+        )
     }
 }
 

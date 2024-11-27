@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -31,8 +32,10 @@ import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.ListMenu
 import bbct.android.ui.TopBar
+import bbct.android.ui.navigation.AboutDestination
 import bbct.android.ui.navigation.BaseballCardCreateDestination
 import bbct.android.ui.navigation.BaseballCardEditDestination
+import bbct.android.ui.navigation.BaseballCardFilterDestination
 import kotlinx.coroutines.launch
 
 data class BaseballCardSelectedState(
@@ -40,6 +43,7 @@ data class BaseballCardSelectedState(
     var selected: Boolean,
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BaseballCardListScreen(
     navController: NavController,
@@ -73,8 +77,9 @@ fun BaseballCardListScreen(
                 title = { Text(stringResource(id = R.string.app_name)) },
                 actions = {
                     ListMenu(
-                        navController,
                         isAnySelected,
+                        onFilterCards = { navController.navigate(BaseballCardFilterDestination) },
+                        onAbout = { navController.navigate(AboutDestination) },
                         onDeleteCards = {
                             scope.launch {
                                 deleteCards(

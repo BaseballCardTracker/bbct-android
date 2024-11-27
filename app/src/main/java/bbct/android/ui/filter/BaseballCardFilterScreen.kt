@@ -27,6 +27,7 @@ import bbct.android.R
 import bbct.android.ui.BackIcon
 import bbct.android.ui.OverflowMenu
 import bbct.android.ui.TopBar
+import bbct.android.ui.navigation.AboutDestination
 
 
 data class BaseballCardFilterState(
@@ -53,7 +54,7 @@ fun BaseballCardFilterScreen(
                         )
                     )
                 },
-                actions = { OverflowMenu(navController = navController) }
+                actions = { OverflowMenu(onAbout = { navController.navigate(AboutDestination) }) }
             )
         },
         floatingActionButton = { ApplyFilterButton(navController) },

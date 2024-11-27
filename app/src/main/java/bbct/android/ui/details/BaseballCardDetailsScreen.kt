@@ -40,6 +40,7 @@ import bbct.android.ui.OverflowMenu
 import bbct.android.ui.TopBar
 import bbct.android.ui.components.AutoComplete
 import bbct.android.ui.components.Select
+import bbct.android.ui.navigation.AboutDestination
 import kotlinx.coroutines.launch
 
 data class BaseballCardState(
@@ -105,7 +106,7 @@ fun BaseballCardCreateScreen(
                         )
                     )
                 },
-                actions = { OverflowMenu(navController) },
+                actions = { OverflowMenu(onAbout = { navController.navigate(AboutDestination) }) },
             )
         },
         floatingActionButton = {
@@ -155,7 +156,7 @@ fun BaseballCardEditScreen(
                         )
                     )
                 },
-                actions = { OverflowMenu(navController) },
+                actions = { OverflowMenu(onAbout = { navController.navigate(AboutDestination) }) },
             )
         },
         floatingActionButton = {
