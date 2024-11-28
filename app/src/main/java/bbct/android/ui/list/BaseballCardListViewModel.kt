@@ -5,10 +5,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDao
+import bbct.android.ui.filter.BaseballCardFilterState
 import kotlinx.coroutines.flow.Flow
 
 class BaseballCardListViewModel(val baseballCardDao: BaseballCardDao) : ViewModel() {
-    val baseballCards: Flow<List<BaseballCard>> = baseballCardDao.baseballCards
+    val filterState = BaseballCardFilterState()
+    val baseballCards: Flow<List<BaseballCard>> = getBaseballCards(
+        filterState.brand,
+        filterState.year,
+        filterState.number,
+        filterState.playerName,
+        filterState.team
+    )
 
     fun getBaseballCards(
         brand: String,
@@ -18,11 +26,11 @@ class BaseballCardListViewModel(val baseballCardDao: BaseballCardDao) : ViewMode
         team: String,
     ): Flow<List<BaseballCard>> {
         return baseballCardDao.getBaseballCards(
-            brand,
+            "%$brand%",
             year,
-            number,
-            playerName,
-            team
+            "%$number%",
+            "%$playerName%",
+            "%$team%",
         )
     }
 }
