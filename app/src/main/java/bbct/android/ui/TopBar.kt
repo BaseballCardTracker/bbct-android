@@ -1,5 +1,7 @@
 package bbct.android.ui
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -21,10 +23,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import bbct.android.BuildConfig
 import bbct.android.R
+import bbct.android.data.BaseballCardCsvFileReader
+import bbct.android.data.BaseballCardDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -116,6 +125,14 @@ fun OverflowMenu(onAbout: () -> Unit) {
         expanded = showMenu,
         onDismissRequest = { showMenu = false }
     ) {
+        if (BuildConfig.DEBUG) {
+            val context = LocalContext.current
+            DropdownMenuItem(
+                text = { Text(text = stringResource(id = R.string.add_cards)) },
+                onClick = { addCards(context) }
+            )
+        }
+
         DropdownMenuItem(
             text = { Text(text = stringResource(id = R.string.about_menu)) },
             onClick = onAbout
@@ -139,5 +156,27 @@ fun SelectedMenu(
             painterResource(id = R.drawable.select_all),
             contentDescription = stringResource(id = R.string.select_all_menu)
         )
+    }
+}
+
+fun addCards(context: Context) {
+    val db = BaseballCardDatabase.getInstance(
+        context = context,
+        dbName = "bbct.db"
+    )
+    val csvReader = BaseballCardCsvFileReader(
+        context.assets.open("cards.csv"),
+        hasColHeaders = true
+    )
+
+    CoroutineScope(Dispatchers.IO).launch {
+        while (csvReader.hasNextBaseballCard()) {
+            val card = csvReader.getNextBaseballCard()
+            Log.d(
+                "Add Cards Menu",
+                "Adding card: $card"
+            )
+            db.baseballCardDao.insertBaseballCard(card)
+        }
     }
 }
