@@ -11,7 +11,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class BaseballCardFilterScreenTest {
+class BaseballCardFilterTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
