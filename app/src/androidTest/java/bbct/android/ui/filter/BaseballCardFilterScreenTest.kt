@@ -21,8 +21,8 @@ class BaseballCardFilterScreenTest {
         composeTestRule.setContent {
             val navController = rememberNavController()
             BaseballCardFilterScreen(
-                navController = navController
-            )
+                onApplyFilter = { },
+                onClose = { })
         }
     }
 
