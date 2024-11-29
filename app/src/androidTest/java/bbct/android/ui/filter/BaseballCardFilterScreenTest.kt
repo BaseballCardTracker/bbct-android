@@ -6,7 +6,6 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import androidx.navigation.compose.rememberNavController
 import bbct.android.data.cards
 import org.junit.Before
 import org.junit.Rule
@@ -19,7 +18,6 @@ class BaseballCardFilterScreenTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            val navController = rememberNavController()
             BaseballCardFilterScreen(
                 onApplyFilter = { },
                 onClose = { })
