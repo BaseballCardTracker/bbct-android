@@ -5,8 +5,8 @@ import bbct.android.data.BaseballCard
 import bbct.android.test.BaseballCardCsvFileReader
 import org.junit.rules.ExternalResource
 
-class CardListTestRule(private val filename: String) : ExternalResource() {
-    var cards: List<BaseballCard>? = null;
+open class CardListTestRule(private val filename: String) : ExternalResource() {
+    var cards: List<BaseballCard>? = null
 
     override fun before() {
         val inst = InstrumentationRegistry.getInstrumentation()
