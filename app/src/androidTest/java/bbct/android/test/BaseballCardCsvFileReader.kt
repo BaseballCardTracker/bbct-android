@@ -94,13 +94,13 @@ class BaseballCardCsvFileReader(
      * @throws IOException If an error occurs while reading the input.
      */
     @Throws(IOException::class)
-    fun getAllBaseballCards(): MutableList<BaseballCard?> {
-        val cards: MutableList<BaseballCard?> = ArrayList<BaseballCard?>()
+    fun getAllBaseballCards(): List<BaseballCard> {
+        val cards: MutableList<BaseballCard> = ArrayList<BaseballCard>()
         while (this.hasNextBaseballCard()) {
             cards.add(this.getNextBaseballCard())
         }
 
-        return cards
+        return cards.toList()
     }
 
     /**
