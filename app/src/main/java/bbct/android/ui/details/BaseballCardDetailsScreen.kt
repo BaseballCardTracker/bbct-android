@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import bbct.android.R
-import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.BackIcon
 import bbct.android.ui.OverflowMenu
@@ -42,50 +41,6 @@ import bbct.android.ui.components.AutoComplete
 import bbct.android.ui.components.Select
 import bbct.android.ui.navigation.AboutDestination
 import kotlinx.coroutines.launch
-
-data class BaseballCardState(
-    var id: Long? = null,
-    var autographed: Boolean = false,
-    var condition: String = "",
-    var brand: String = "",
-    var year: String = "",
-    var number: String = "",
-    var value: String = "",
-    var quantity: String = "",
-    var playerName: String = "",
-    var team: String = "",
-    var position: String = "",
-) {
-    constructor(card: BaseballCard) : this(
-        card._id,
-        card.autographed,
-        card.condition,
-        card.brand,
-        card.year.toString(),
-        card.number,
-        (card.value / 100.0).toString(),
-        card.quantity.toString(),
-        card.playerName,
-        card.team,
-        card.position
-    )
-
-    fun toBaseballCard(): BaseballCard {
-        return BaseballCard(
-            _id = id,
-            autographed = autographed,
-            condition = condition,
-            brand = brand,
-            year = year.toInt(),
-            number = number,
-            value = (value.toDouble() * 100).toInt(),
-            quantity = quantity.toInt(),
-            playerName = playerName,
-            team = team,
-            position = position
-        )
-    }
-}
 
 @Composable
 fun BaseballCardCreateScreen(
