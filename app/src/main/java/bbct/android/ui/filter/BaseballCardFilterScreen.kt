@@ -28,7 +28,7 @@ import bbct.android.ui.TopBar
 
 @Composable
 fun BaseballCardFilterScreen(
-    onApplyFilter: () -> Unit,
+    onApplyFilter: (BaseballCardFilterState) -> Unit,
     onClose: () -> Unit,
 ) {
     Scaffold(
@@ -135,8 +135,9 @@ fun BaseballCardFilter(
 }
 
 @Composable
-fun ApplyFilterButton(onApplyFilter: () -> Unit) {
-    FloatingActionButton(onClick = onApplyFilter) {
+fun ApplyFilterButton(onApplyFilter: (BaseballCardFilterState) -> Unit) {
+    val viewModel: BaseballCardFilterViewModel = viewModel()
+    FloatingActionButton(onClick = { onApplyFilter(viewModel.filterState.value) }) {
         Icon(
             Icons.Default.Check,
             contentDescription = stringResource(id = R.string.filter_menu)

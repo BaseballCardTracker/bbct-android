@@ -17,7 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +28,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import bbct.android.R
@@ -56,7 +56,7 @@ fun BaseballCardListScreen(
     val scope = rememberCoroutineScope()
     val viewModel: BaseballCardListViewModel =
         viewModel(factory = BaseballCardListViewModelFactory(db.baseballCardDao))
-    val cards by viewModel.baseballCards.collectAsState(initial = emptyList())
+    val cards by viewModel.baseballCards.collectAsStateWithLifecycle(initialValue = emptyList())
     val stateList by remember {
         derivedStateOf {
             cards
@@ -115,7 +115,10 @@ fun BaseballCardListScreen(
                 sheetState = sheetState
             ) {
                 BaseballCardFilterScreen(
-                    onApplyFilter = {},
+                    onApplyFilter = { filter ->
+                        viewModel.applyFilter(filter)
+                        showFilterBottomSheet = false
+                    },
                     onClose = { showFilterBottomSheet = false }
                 )
             }
