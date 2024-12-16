@@ -65,7 +65,7 @@ fun CloseButton(onClose: () -> Unit) {
     IconButton(onClick = onClose) {
         Icon(
             Icons.Default.Close,
-            contentDescription = stringResource(id = R.string.close)
+            contentDescription = stringResource(id = R.string.close),
         )
     }
 }
@@ -95,7 +95,7 @@ fun ListMenu(
                     isFiltered = isFiltered,
                     onFilterCards = onFilterCards,
                     onAbout = onAbout,
-                    onClearFilter = onClearFilter
+                    onClearFilter = onClearFilter,
                 )
             }
         }
@@ -164,7 +164,7 @@ fun OverflowMenu(onAbout: () -> Unit) {
 @Composable
 fun SelectedMenu(
     onDeleteCards: () -> Unit,
-    onSelectAll: () -> Unit
+    onSelectAll: () -> Unit,
 ) {
     IconButton(onClick = onDeleteCards) {
         Icon(
