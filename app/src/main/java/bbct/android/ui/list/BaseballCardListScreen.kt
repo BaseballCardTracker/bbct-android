@@ -37,6 +37,7 @@ import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.ListMenu
 import bbct.android.ui.TopBar
 import bbct.android.ui.filter.BaseballCardFilterScreen
+import bbct.android.ui.filter.BaseballCardFilterState
 import bbct.android.ui.navigation.AboutDestination
 import bbct.android.ui.navigation.BaseballCardCreateDestination
 import bbct.android.ui.navigation.BaseballCardEditDestination
@@ -83,8 +84,10 @@ fun BaseballCardListScreen(
                 title = { Text(stringResource(id = R.string.app_name)) },
                 actions = {
                     ListMenu(
-                        isAnySelected,
+                        isAnySelected = isAnySelected,
+                        isFiltered = viewModel.isFiltered(),
                         onFilterCards = { showFilterBottomSheet = true },
+                        onClearFilter = { viewModel.applyFilter(BaseballCardFilterState()) },
                         onAbout = { navController.navigate(AboutDestination) },
                         onDeleteCards = {
                             scope.launch {

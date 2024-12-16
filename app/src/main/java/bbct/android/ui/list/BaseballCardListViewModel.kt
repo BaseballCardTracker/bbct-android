@@ -50,6 +50,8 @@ class BaseballCardListViewModel(val baseballCardDao: BaseballCardDao) : ViewMode
     fun applyFilter(filter: BaseballCardFilterState) {
         filterState.value = filter
     }
+
+    fun isFiltered() = filterState.value != BaseballCardFilterState()
 }
 
 @Suppress("UNCHECKED_CAST")

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.MoreVert
@@ -72,7 +73,9 @@ fun CloseButton(onClose: () -> Unit) {
 @Composable
 fun ListMenu(
     isAnySelected: Boolean,
+    isFiltered: Boolean,
     onFilterCards: () -> Unit,
+    onClearFilter: () -> Unit,
     onAbout: () -> Unit,
     onDeleteCards: () -> Unit,
     onSelectAll: () -> Unit,
@@ -89,8 +92,10 @@ fun ListMenu(
                 )
             } else {
                 MainMenu(
+                    isFiltered = isFiltered,
                     onFilterCards = onFilterCards,
-                    onAbout = onAbout
+                    onAbout = onAbout,
+                    onClearFilter = onClearFilter
                 )
             }
         }
@@ -99,14 +104,30 @@ fun ListMenu(
 
 @Composable
 fun MainMenu(
+    isFiltered: Boolean,
     onFilterCards: () -> Unit,
-    onAbout: () -> Unit
+    onClearFilter: () -> Unit,
+    onAbout: () -> Unit,
 ) {
-    IconButton(onClick = onFilterCards) {
-        Icon(
-            Icons.Default.Search,
-            contentDescription = stringResource(id = R.string.filter_menu)
-        )
+    Crossfade(
+        isFiltered,
+        label = "FilteredCrossfade"
+    ) {
+        if (it) {
+            IconButton(onClick = onClearFilter) {
+                Icon(
+                    Icons.Default.Clear,
+                    contentDescription = stringResource(id = R.string.clear_filter_menu)
+                )
+            }
+        } else {
+            IconButton(onClick = onFilterCards) {
+                Icon(
+                    Icons.Default.Search,
+                    contentDescription = stringResource(id = R.string.filter_menu)
+                )
+            }
+        }
     }
     OverflowMenu(onAbout)
 }
