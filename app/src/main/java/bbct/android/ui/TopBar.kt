@@ -51,7 +51,7 @@ fun TopBar(
 }
 
 @Composable
-fun BackIcon(navController: NavController) {
+fun BackButton(navController: NavController) {
     IconButton(onClick = { navController.popBackStack() }) {
         Icon(
             Icons.AutoMirrored.Default.ArrowBack,
@@ -114,22 +114,32 @@ fun MainMenu(
         label = "FilteredCrossfade"
     ) {
         if (it) {
-            IconButton(onClick = onClearFilter) {
-                Icon(
-                    Icons.Default.Clear,
-                    contentDescription = stringResource(id = R.string.clear_filter_menu)
-                )
-            }
+            ClearFilterButton(onClearFilter)
         } else {
-            IconButton(onClick = onFilterCards) {
-                Icon(
-                    Icons.Default.Search,
-                    contentDescription = stringResource(id = R.string.filter_menu)
-                )
-            }
+            FilterCardsButton(onFilterCards)
         }
     }
     OverflowMenu(onAbout)
+}
+
+@Composable
+private fun FilterCardsButton(onFilterCards: () -> Unit) {
+    IconButton(onClick = onFilterCards) {
+        Icon(
+            Icons.Default.Search,
+            contentDescription = stringResource(id = R.string.filter_menu)
+        )
+    }
+}
+
+@Composable
+private fun ClearFilterButton(onClearFilter: () -> Unit) {
+    IconButton(onClick = onClearFilter) {
+        Icon(
+            Icons.Default.Clear,
+            contentDescription = stringResource(id = R.string.clear_filter_menu)
+        )
+    }
 }
 
 @Composable
@@ -166,12 +176,22 @@ fun SelectedMenu(
     onDeleteCards: () -> Unit,
     onSelectAll: () -> Unit,
 ) {
+    DeleteCardsButton(onDeleteCards)
+    SelectAllButton(onSelectAll)
+}
+
+@Composable
+private fun DeleteCardsButton(onDeleteCards: () -> Unit) {
     IconButton(onClick = onDeleteCards) {
         Icon(
             Icons.Default.Delete,
             contentDescription = stringResource(id = R.string.delete_menu)
         )
     }
+}
+
+@Composable
+private fun SelectAllButton(onSelectAll: () -> Unit) {
     IconButton(onClick = onSelectAll) {
         Icon(
             painterResource(id = R.drawable.select_all),

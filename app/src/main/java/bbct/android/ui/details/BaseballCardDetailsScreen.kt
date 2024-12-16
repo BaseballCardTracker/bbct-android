@@ -34,7 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import bbct.android.R
 import bbct.android.data.BaseballCardDatabase
-import bbct.android.ui.BackIcon
+import bbct.android.ui.BackButton
 import bbct.android.ui.OverflowMenu
 import bbct.android.ui.TopBar
 import bbct.android.ui.components.AutoComplete
@@ -52,7 +52,7 @@ fun BaseballCardCreateScreen(
     Scaffold(
         topBar = {
             TopBar(
-                navigationIcon = { BackIcon(navController = navController) },
+                navigationIcon = { BackButton(navController = navController) },
                 title = {
                     Text(
                         stringResource(
@@ -102,7 +102,7 @@ fun BaseballCardEditScreen(
     Scaffold(
         topBar = {
             TopBar(
-                navigationIcon = { BackIcon(navController = navController) },
+                navigationIcon = { BackButton(navController = navController) },
                 title = {
                     Text(
                         stringResource(

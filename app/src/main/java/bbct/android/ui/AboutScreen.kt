@@ -24,7 +24,7 @@ import bbct.android.data.BaseballCardDatabase
 @Composable
 fun AboutScreen(
     navController: NavController,
-    db: BaseballCardDatabase
+    db: BaseballCardDatabase,
 ) {
     Scaffold(
         topBar = {
@@ -37,7 +37,7 @@ fun AboutScreen(
                         )
                     )
                 },
-                navigationIcon = { BackIcon(navController = navController) })
+                navigationIcon = { BackButton(navController = navController) })
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
