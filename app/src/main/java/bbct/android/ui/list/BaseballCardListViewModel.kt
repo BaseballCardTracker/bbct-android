@@ -1,5 +1,6 @@
 package bbct.android.ui.list
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 
 class BaseballCardListViewModel(val baseballCardDao: BaseballCardDao) : ViewModel() {
     val filterState = MutableStateFlow(BaseballCardFilterState())
+    val isFiltered = mutableStateOf(false)
     private val _baseballCards = MutableStateFlow<List<BaseballCard>>(emptyList())
     val baseballCards: Flow<List<BaseballCard>> = _baseballCards
 
@@ -49,9 +51,8 @@ class BaseballCardListViewModel(val baseballCardDao: BaseballCardDao) : ViewMode
 
     fun applyFilter(filter: BaseballCardFilterState) {
         filterState.value = filter
+        isFiltered.value = filter != BaseballCardFilterState()
     }
-
-    fun isFiltered() = filterState.value != BaseballCardFilterState()
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -59,7 +60,7 @@ class BaseballCardListViewModelFactory(private val baseballCardDao: BaseballCard
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(
         modelClass: Class<T>,
-        extras: CreationExtras
+        extras: CreationExtras,
     ): T {
         if (modelClass.isAssignableFrom(BaseballCardListViewModel::class.java)) {
             return BaseballCardListViewModel(baseballCardDao) as T

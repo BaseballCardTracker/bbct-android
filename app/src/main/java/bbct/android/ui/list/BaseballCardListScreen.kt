@@ -85,7 +85,7 @@ fun BaseballCardListScreen(
                 actions = {
                     ListMenu(
                         isAnySelected = isAnySelected,
-                        isFiltered = viewModel.isFiltered(),
+                        isFiltered = viewModel.isFiltered.value,
                         onFilterCards = { showFilterBottomSheet = true },
                         onClearFilter = { viewModel.applyFilter(BaseballCardFilterState()) },
                         onAbout = { navController.navigate(AboutDestination) },
