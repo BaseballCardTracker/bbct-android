@@ -82,7 +82,7 @@ fun ListMenu(
 ) {
     Crossfade(
         isAnySelected,
-        label = ""
+        label = "SelectedCrossfade"
     ) { target ->
         Row {
             if (target) {
