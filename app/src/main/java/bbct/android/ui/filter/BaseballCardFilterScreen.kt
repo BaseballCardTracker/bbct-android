@@ -34,7 +34,7 @@ fun BaseballCardFilterScreen(
     Scaffold(
         topBar = {
             TopBar(
-                navigationIcon = { CloseButton { onClose } },
+                navigationIcon = { CloseButton(onClose) },
                 title = {
                     Text(
                         stringResource(
