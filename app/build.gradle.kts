@@ -53,6 +53,17 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    flavorDimensions += listOf("tier")
+    productFlavors {
+        create("lite") {
+            dimension = "tier"
+            applicationId = "bbct.android"
+        }
+        create("premium") {
+            dimension = "tier"
+            applicationId = "bbct.android.premium"
+        }
+    }
 }
 
 dependencies {
