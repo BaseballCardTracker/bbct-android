@@ -2,6 +2,7 @@ package bbct.android.ui.filter
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import bbct.android.R
 import bbct.android.ui.CloseButton
@@ -42,6 +44,7 @@ fun BaseballCardFilterScreen(
                         )
                     )
                 },
+                windowInsets = WindowInsets(0.dp),
             )
         },
         floatingActionButton = { ApplyFilterButton(onApplyFilter) },
