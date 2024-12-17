@@ -18,12 +18,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import bbct.android.R
 import bbct.android.ui.CloseButton
 import bbct.android.ui.TopBar
@@ -33,6 +34,7 @@ fun BaseballCardFilterScreen(
     onApplyFilter: (BaseballCardFilterState) -> Unit,
     onClose: () -> Unit,
 ) {
+    var filterState = remember { mutableStateOf(BaseballCardFilterState()) }
     Scaffold(
         topBar = {
             TopBar(
@@ -47,14 +49,13 @@ fun BaseballCardFilterScreen(
                 windowInsets = WindowInsets(0.dp),
             )
         },
-        floatingActionButton = { ApplyFilterButton(onApplyFilter) },
+        floatingActionButton = { ApplyFilterButton(onApplyFilter = { onApplyFilter(filterState.value) }) },
         modifier = Modifier
             .fillMaxSize()
             .imePadding()
     ) { innerPadding ->
-        val viewModel: BaseballCardFilterViewModel = viewModel()
         BaseballCardFilter(
-            viewModel.filterState,
+            filterState,
             modifier = Modifier.padding(innerPadding)
         )
     }
@@ -138,9 +139,8 @@ fun BaseballCardFilter(
 }
 
 @Composable
-fun ApplyFilterButton(onApplyFilter: (BaseballCardFilterState) -> Unit) {
-    val viewModel: BaseballCardFilterViewModel = viewModel()
-    FloatingActionButton(onClick = { onApplyFilter(viewModel.filterState.value) }) {
+fun ApplyFilterButton(onApplyFilter: () -> Unit) {
+    FloatingActionButton(onClick = onApplyFilter) {
         Icon(
             Icons.Default.Check,
             contentDescription = stringResource(id = R.string.filter_menu)
