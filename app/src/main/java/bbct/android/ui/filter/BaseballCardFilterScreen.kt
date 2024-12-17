@@ -2,15 +2,14 @@ package bbct.android.ui.filter
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -44,12 +43,11 @@ fun BaseballCardFilterScreen(
                         )
                     )
                 },
+                actions = { ApplyFilterButton(onApplyFilter = { onApplyFilter(filterState.value) }) },
                 windowInsets = WindowInsets(0.dp),
             )
         },
-        floatingActionButton = { ApplyFilterButton(onApplyFilter = { onApplyFilter(filterState.value) }) },
         modifier = Modifier
-            .fillMaxSize()
             .imePadding()
     ) { innerPadding ->
         BaseballCardFilter(
@@ -113,7 +111,7 @@ fun BaseballCardFilter(
 
 @Composable
 fun ApplyFilterButton(onApplyFilter: () -> Unit) {
-    FloatingActionButton(onClick = onApplyFilter) {
+    IconButton(onClick = onApplyFilter) {
         Icon(
             Icons.Default.Check,
             contentDescription = stringResource(id = R.string.filter_menu)
