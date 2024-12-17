@@ -19,12 +19,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import bbct.android.BuildConfig
 import bbct.android.R
-import bbct.android.data.BaseballCardDatabase
 
 @Composable
 fun AboutScreen(
     navController: NavController,
-    db: BaseballCardDatabase,
 ) {
     Scaffold(
         topBar = {

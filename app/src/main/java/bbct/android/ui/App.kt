@@ -46,8 +46,7 @@ fun App(db: BaseballCardDatabase) {
             }
             composable<AboutDestination> {
                 AboutScreen(
-                    navController,
-                    db
+                    navController
                 )
             }
         }
