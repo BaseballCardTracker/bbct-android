@@ -25,6 +25,10 @@
                 android:name="com.crashlytics.ApiKey"
                 android:value="9cde09037367c7862dce4570593feb1a6387b087" />
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-4313300967266958~1096433226" />
     </application>
 
 </manifest>

@@ -119,5 +119,6 @@
     <string name="more">More</string>
     <string name="close">Close</string>
     <string name="add_cards">Add Cards</string>
+    <string name="ad_id_banner">ca-app-pub-3940256099942544/9214589741</string>
 
 </resources>

@@ -14,6 +14,7 @@ navigationCompose = "2.8.4"
 firebaseCrashlytics = "19.2.1"
 googleGmsGoogleServices = "4.4.2"
 googleFirebaseCrashlytics = "3.0.2"
+playServicesAds = "23.6.0"
 roomRuntime = "2.6.1"
 uiTestJunit4Android = "1.7.5"
 googleTruth = "1.4.4"
@@ -44,6 +45,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 google-truth = { group = "com.google.truth", name = "truth", version.ref = "googleTruth" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "playServicesAds" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -1,9 +1,11 @@
 package bbct.android.ui.list
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
@@ -28,9 +30,11 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import bbct.android.BuildConfig
 import bbct.android.R
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
@@ -41,6 +45,9 @@ import bbct.android.ui.filter.BaseballCardFilterState
 import bbct.android.ui.navigation.AboutDestination
 import bbct.android.ui.navigation.BaseballCardCreateDestination
 import bbct.android.ui.navigation.BaseballCardEditDestination
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import kotlinx.coroutines.launch
 
 data class BaseballCardSelectedState(
@@ -105,6 +112,44 @@ fun BaseballCardListScreen(
         floatingActionButton = { AddCardButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
+        @Suppress("KotlinConstantConditions")
+        Log.d(
+            "BaseballCardListScreen",
+            "Should I load ad banner?"
+        )
+        Log.d(
+            "BaseballCardListScreen",
+            "BuildConfig.APPLICATION_ID: ${BuildConfig.APPLICATION_ID}"
+        )
+        if (BuildConfig.APPLICATION_ID == "bbct.android") {
+            Log.d(
+                "BaseballCardListScreen",
+                "Loading ad banner"
+            )
+            AndroidView(
+                modifier = Modifier.fillMaxWidth(),
+                factory = { context ->
+                    Log.d(
+                        "BaseballCardListScreen",
+                        "Creating AdView"
+                    )
+                    AdView(context).apply {
+                        setAdSize(AdSize.BANNER)
+                        adUnitId = context.getString(R.string.ad_id_banner)
+                        loadAd(
+                            AdRequest
+                                .Builder()
+                                .build()
+                        )
+                    }
+                }
+            )
+        }
+
+        Log.d(
+            "BaseballCardListScreen",
+            "Composing BaseballCardList"
+        )
         BaseballCardList(
             navController = navController,
             cards = stateList,
