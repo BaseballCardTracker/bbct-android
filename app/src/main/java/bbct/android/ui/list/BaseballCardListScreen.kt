@@ -135,7 +135,7 @@ fun BaseballCardListScreen(
                     )
                     AdView(context).apply {
                         setAdSize(AdSize.BANNER)
-                        adUnitId = context.getString(R.string.ad_id_banner)
+                        adUnitId = context.getString(R.string.banner_ad_unit_id)
                         loadAd(
                             AdRequest
                                 .Builder()
