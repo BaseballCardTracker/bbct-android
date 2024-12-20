@@ -1,7 +1,7 @@
 package bbct.android.ui.list
 
-import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -112,63 +112,44 @@ fun BaseballCardListScreen(
         floatingActionButton = { AddCardButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        @Suppress("KotlinConstantConditions")
-        Log.d(
-            "BaseballCardListScreen",
-            "Should I load ad banner?"
-        )
-        Log.d(
-            "BaseballCardListScreen",
-            "BuildConfig.APPLICATION_ID: ${BuildConfig.APPLICATION_ID}"
-        )
-        if (BuildConfig.APPLICATION_ID == "bbct.android") {
-            Log.d(
-                "BaseballCardListScreen",
-                "Loading ad banner"
-            )
-            AndroidView(
-                modifier = Modifier.fillMaxWidth(),
-                factory = { context ->
-                    Log.d(
-                        "BaseballCardListScreen",
-                        "Creating AdView"
-                    )
-                    AdView(context).apply {
-                        setAdSize(AdSize.BANNER)
-                        adUnitId = context.getString(R.string.banner_ad_unit_id)
-                        loadAd(
-                            AdRequest
-                                .Builder()
-                                .build()
-                        )
+        Column(modifier = Modifier.fillMaxSize()) {
+            if (BuildConfig.APPLICATION_ID == "bbct.android") {
+                AndroidView(
+                    modifier = Modifier.fillMaxWidth(),
+                    factory = { context ->
+                        AdView(context).apply {
+                            setAdSize(AdSize.BANNER)
+                            adUnitId = context.getString(R.string.banner_ad_unit_id)
+                            loadAd(
+                                AdRequest
+                                    .Builder()
+                                    .build()
+                            )
+                        }
                     }
-                }
-            )
-        }
-
-        Log.d(
-            "BaseballCardListScreen",
-            "Composing BaseballCardList"
-        )
-        BaseballCardList(
-            navController = navController,
-            cards = stateList,
-            onCardChanged = { index, card -> stateList[index] = card },
-            contentPadding = innerPadding
-        )
-
-        if (showFilterBottomSheet) {
-            ModalBottomSheet(
-                onDismissRequest = { showFilterBottomSheet = false },
-                sheetState = sheetState
-            ) {
-                BaseballCardFilterScreen(
-                    onApplyFilter = { filter ->
-                        viewModel.applyFilter(filter)
-                        showFilterBottomSheet = false
-                    },
-                    onClose = { showFilterBottomSheet = false }
                 )
+            }
+
+            BaseballCardList(
+                navController = navController,
+                cards = stateList,
+                onCardChanged = { index, card -> stateList[index] = card },
+                contentPadding = innerPadding
+            )
+
+            if (showFilterBottomSheet) {
+                ModalBottomSheet(
+                    onDismissRequest = { showFilterBottomSheet = false },
+                    sheetState = sheetState
+                ) {
+                    BaseballCardFilterScreen(
+                        onApplyFilter = { filter ->
+                            viewModel.applyFilter(filter)
+                            showFilterBottomSheet = false
+                        },
+                        onClose = { showFilterBottomSheet = false }
+                    )
+                }
             }
         }
     }
