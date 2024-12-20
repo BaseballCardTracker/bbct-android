@@ -114,20 +114,7 @@ fun BaseballCardListScreen(
     ) { innerPadding ->
         Column(modifier = Modifier.fillMaxSize()) {
             if (BuildConfig.APPLICATION_ID == "bbct.android") {
-                AndroidView(
-                    modifier = Modifier.fillMaxWidth(),
-                    factory = { context ->
-                        AdView(context).apply {
-                            setAdSize(AdSize.BANNER)
-                            adUnitId = context.getString(R.string.banner_ad_unit_id)
-                            loadAd(
-                                AdRequest
-                                    .Builder()
-                                    .build()
-                            )
-                        }
-                    }
-                )
+                AdBanner()
             }
 
             BaseballCardList(
@@ -153,6 +140,24 @@ fun BaseballCardListScreen(
             }
         }
     }
+}
+
+@Composable
+private fun AdBanner() {
+    AndroidView(
+        modifier = Modifier.fillMaxWidth(),
+        factory = { context ->
+            AdView(context).apply {
+                setAdSize(AdSize.BANNER)
+                adUnitId = context.getString(R.string.banner_ad_unit_id)
+                loadAd(
+                    AdRequest
+                        .Builder()
+                        .build()
+                )
+            }
+        }
+    )
 }
 
 private suspend fun deleteCards(
