@@ -1,5 +1,6 @@
 package bbct.android.ui.list
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -45,9 +46,11 @@ import bbct.android.ui.filter.BaseballCardFilterState
 import bbct.android.ui.navigation.AboutDestination
 import bbct.android.ui.navigation.BaseballCardCreateDestination
 import bbct.android.ui.navigation.BaseballCardEditDestination
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
 import kotlinx.coroutines.launch
 
 data class BaseballCardSelectedState(
@@ -155,6 +158,56 @@ private fun AdBanner() {
                         .Builder()
                         .build()
                 )
+                adListener = object : AdListener() {
+                    override fun onAdFailedToLoad(p0: LoadAdError) {
+                        Log.d(
+                            "AdBanner",
+                            "Failed to load ad: ${p0.message}"
+                        )
+                    }
+
+                    override fun onAdLoaded() {
+                        Log.d(
+                            "AdBanner",
+                            "Ad loaded"
+                        )
+                    }
+
+                    override fun onAdClicked() {
+                        Log.d(
+                            "AdBanner",
+                            "Ad clicked"
+                        )
+                    }
+
+                    override fun onAdClosed() {
+                        Log.d(
+                            "AdBanner",
+                            "Ad closed"
+                        )
+                    }
+
+                    override fun onAdImpression() {
+                        Log.d(
+                            "AdBanner",
+                            "Ad impression"
+                        )
+                    }
+
+                    override fun onAdOpened() {
+                        Log.d(
+                            "AdBanner",
+                            "Ad opened"
+                        )
+                    }
+
+                    override fun onAdSwipeGestureClicked() {
+                        Log.d(
+                            "AdBanner",
+                            "Ad swipe gesture clicked"
+                        )
+                    }
+                }
             }
         }
     )
