@@ -116,6 +116,7 @@ fun BaseballCardListScreen(
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
+            @Suppress("KotlinConstantConditions")
             if (BuildConfig.APPLICATION_ID == "bbct.android") {
                 AdBanner()
             }
