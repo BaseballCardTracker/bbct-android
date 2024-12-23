@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.kotlin.plugin.serialization)
+    id("androidx.room")
 }
 
 android {
@@ -63,6 +64,9 @@ android {
             dimension = "tier"
             applicationId = "bbct.android.premium"
         }
+    }
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
 }
 
