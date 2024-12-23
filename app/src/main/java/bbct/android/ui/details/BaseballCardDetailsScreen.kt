@@ -16,12 +16,15 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,8 +51,13 @@ fun BaseballCardCreateScreen(
     db: BaseballCardDatabase,
 ) {
     val viewModel: BaseballCardDetailsViewModel = viewModel()
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
         topBar = {
             TopBar(
                 navigationIcon = { BackButton(navController = navController) },
@@ -70,6 +78,8 @@ fun BaseballCardCreateScreen(
                 viewModel.baseballCardState,
                 viewModel.errors,
                 viewModel::validate,
+                onSuccess = { scope.launch { snackbarHostState.showSnackbar("Card created") } },
+                onFailure = { scope.launch { snackbarHostState.showSnackbar("Failed to create card") } },
             )
         },
         modifier = Modifier
@@ -288,6 +298,8 @@ fun CreateCardButton(
     state: MutableState<BaseballCardState>,
     errors: MutableState<BaseballCardDetailsErrors>,
     onValidate: () -> Unit,
+    onSuccess: () -> Unit,
+    onFailure: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     FloatingActionButton(onClick = {
@@ -296,7 +308,9 @@ fun CreateCardButton(
             scope.launch {
                 createCard(
                     db,
-                    state.value
+                    state.value,
+                    onSuccess,
+                    onFailure,
                 )
                 state.value = BaseballCardState()
             }
@@ -312,8 +326,15 @@ fun CreateCardButton(
 suspend fun createCard(
     db: BaseballCardDatabase,
     cardState: BaseballCardState,
+    onSuccess: () -> Unit,
+    onFailure: () -> Unit,
 ) {
-    db.baseballCardDao.insertBaseballCard(cardState.toBaseballCard())
+    try {
+        db.baseballCardDao.insertBaseballCard(cardState.toBaseballCard())
+        onSuccess()
+    } catch (e: Exception) {
+        onFailure()
+    }
 }
 
 @Composable
