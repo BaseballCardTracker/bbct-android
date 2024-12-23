@@ -1,6 +1,5 @@
 package bbct.android.ui.list
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -39,7 +38,6 @@ class BaseballCardListTest {
                 navController = navController,
                 cards = cardListState,
                 onCardChanged = { index, card -> cardListState[index] = card },
-                contentPadding = PaddingValues(),
             )
         }
     }
