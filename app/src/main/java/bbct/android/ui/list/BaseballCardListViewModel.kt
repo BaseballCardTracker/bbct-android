@@ -16,13 +16,12 @@ import kotlinx.coroutines.launch
 class BaseballCardListViewModel(val baseballCardDao: BaseballCardDao) : ViewModel() {
     val filterState = MutableStateFlow(BaseballCardFilterState())
     val isFiltered = mutableStateOf(false)
-    private val _baseballCards = MutableStateFlow<List<BaseballCard>>(emptyList())
-    val baseballCards: Flow<List<BaseballCard>> = _baseballCards
+    val baseballCards = MutableStateFlow<List<BaseballCard>>(emptyList())
 
     init {
         viewModelScope.launch {
             filterState.collect { filter ->
-                _baseballCards.value = getBaseballCards(
+                baseballCards.value = getBaseballCards(
                     filter.brand,
                     filter.year,
                     filter.number,
