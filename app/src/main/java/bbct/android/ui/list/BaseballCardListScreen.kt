@@ -3,10 +3,10 @@ package bbct.android.ui.list
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
@@ -115,7 +115,7 @@ fun BaseballCardListScreen(
         floatingActionButton = { AddCardButton(navController) },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.padding(innerPadding)) {
             if (BuildConfig.APPLICATION_ID == "bbct.android") {
                 AdBanner()
             }
@@ -124,7 +124,6 @@ fun BaseballCardListScreen(
                 navController = navController,
                 cards = stateList,
                 onCardChanged = { index, card -> stateList[index] = card },
-                contentPadding = innerPadding
             )
 
             if (showFilterBottomSheet) {
@@ -146,9 +145,9 @@ fun BaseballCardListScreen(
 }
 
 @Composable
-private fun AdBanner() {
+private fun AdBanner(modifier: Modifier = Modifier) {
     AndroidView(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         factory = { context ->
             AdView(context).apply {
                 setAdSize(AdSize.BANNER)
@@ -234,12 +233,10 @@ fun BaseballCardList(
     navController: NavController,
     cards: List<BaseballCardSelectedState>,
     onCardChanged: (Int, BaseballCardSelectedState) -> Unit,
-    contentPadding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
         modifier = modifier,
-        contentPadding = contentPadding
     ) {
         itemsIndexed(
             items = cards,
