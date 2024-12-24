@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-class BaseballCardEditTest : TestBase() {
+class EditTest : TestBase() {
     @Test
     fun testBaseballCardEdit() {
         runTest {

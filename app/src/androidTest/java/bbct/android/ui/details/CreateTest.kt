@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.junit.Test
 
-class BaseballCardCreateTest : TestBase() {
+class CreateTest : TestBase() {
     @Test
     fun testBaseballCardDetailsSaveCard() {
         val card = BaseballCard(
@@ -33,11 +33,17 @@ class BaseballCardCreateTest : TestBase() {
         )
 
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val db = inMemoryDatabaseBuilder(context, BaseballCardDatabase::class.java).build()
+        val db = inMemoryDatabaseBuilder(
+            context,
+            BaseballCardDatabase::class.java
+        ).build()
 
         composeTestRule.setContent {
             val navController = rememberNavController()
-            CreateScreen(navController, db)
+            CreateScreen(
+                navController,
+                db
+            )
         }
 
         enterCardData(card)
@@ -64,11 +70,17 @@ class BaseballCardCreateTest : TestBase() {
         )
 
         val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val db = inMemoryDatabaseBuilder(context, BaseballCardDatabase::class.java).build()
+        val db = inMemoryDatabaseBuilder(
+            context,
+            BaseballCardDatabase::class.java
+        ).build()
 
         composeTestRule.setContent {
             val navController = rememberNavController()
-            CreateScreen(navController, db)
+            CreateScreen(
+                navController,
+                db
+            )
         }
 
         enterCardData(card)

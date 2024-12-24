@@ -15,7 +15,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class BaseballCardListScreenTest {
+class ListScreenTest {
     val context = InstrumentationRegistry.getInstrumentation().targetContext
     val db = inMemoryDatabaseBuilder(
         context,
@@ -26,29 +26,51 @@ class BaseballCardListScreenTest {
     val composeTestRule = createComposeRule()
 
     @get:Rule
-    val cardDatabaseTestRule = CardDatabaseTestRule("cards.csv", db)
+    val cardDatabaseTestRule = CardDatabaseTestRule(
+        "cards.csv",
+        db
+    )
 
     @Before
     fun setup() {
         composeTestRule.setContent {
             var navController = rememberNavController()
-            ListScreen(navController, db)
+            ListScreen(
+                navController,
+                db
+            )
         }
     }
 
     @Test
     fun testFilterCardsByYear() {
-        composeTestRule.onNodeWithContentDescription("Filter Cards").performClick()
-        composeTestRule.onNodeWithText("Filter Cards").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Year").performTextInput("1993")
-        composeTestRule.onNodeWithContentDescription("Apply Filter").performClick()
+        composeTestRule
+            .onNodeWithContentDescription("Filter Cards")
+            .performClick()
+        composeTestRule
+            .onNodeWithText("Filter Cards")
+            .assertIsDisplayed()
+        composeTestRule
+            .onNodeWithText("Year")
+            .performTextInput("1993")
+        composeTestRule
+            .onNodeWithContentDescription("Apply Filter")
+            .performClick()
 
         val filteredCards = cardDatabaseTestRule.cards!!.filter { it.year == 1993 }
         for (card in filteredCards) {
-            composeTestRule.onNodeWithText(card.brand).assertIsDisplayed()
-            composeTestRule.onNodeWithText(card.year.toString()).assertIsDisplayed()
-            composeTestRule.onNodeWithText(card.number).assertIsDisplayed()
-            composeTestRule.onNodeWithText(card.playerName).assertIsDisplayed()
+            composeTestRule
+                .onNodeWithText(card.brand)
+                .assertIsDisplayed()
+            composeTestRule
+                .onNodeWithText(card.year.toString())
+                .assertIsDisplayed()
+            composeTestRule
+                .onNodeWithText(card.number)
+                .assertIsDisplayed()
+            composeTestRule
+                .onNodeWithText(card.playerName)
+                .assertIsDisplayed()
         }
     }
 }
