@@ -38,7 +38,7 @@ abstract class TestBase {
         composeTestRule
             .onNodeWithText("Value")
             .assertIsDisplayed()
-            .performTextReplacement((card.value / 100.0f).toString())
+            .performTextReplacement((card.value!! / 100.0f).toString())
         composeTestRule
             .onNodeWithText("Quantity")
             .assertIsDisplayed()
