@@ -8,13 +8,21 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
+const val ORIGINAL_SCHEMA = 1
+const val BAD_TEAM_SCHEMA = 2
+const val TEAM_SCHEMA = 3
+const val AUTO_AND_CONDITION_SCHEMA = 4
+const val ROOM_SCHEMA = 5
+const val ALPHA_NUMERIC_SCHEMA = 6
+const val NOT_NULL_SCHEMA = 7
+
 @Database(
-    version = BaseballCardSQLHelper.NOT_NULL_SCHEMA,
+    version = NOT_NULL_SCHEMA,
     entities = [BaseballCard::class],
     autoMigrations = [
         AutoMigration(
-            from = BaseballCardSQLHelper.ALPHA_NUMERIC_SCHEMA,
-            to = BaseballCardSQLHelper.NOT_NULL_SCHEMA
+            from = ALPHA_NUMERIC_SCHEMA,
+            to = NOT_NULL_SCHEMA
         )
     ]
 )
@@ -26,15 +34,15 @@ abstract class BaseballCardDatabase : RoomDatabase() {
         internal const val TEST_DATABASE_NAME = "bbct_test.db"
 
         private val MIGRATION_4_5: Migration = object : Migration(
-            BaseballCardSQLHelper.AUTO_AND_CONDITION_SCHEMA,
-            BaseballCardSQLHelper.ROOM_SCHEMA
+            AUTO_AND_CONDITION_SCHEMA,
+            ROOM_SCHEMA
         ) {
             override fun migrate(db: SupportSQLiteDatabase) {
             }
         }
         private val MIGRATION_5_6: Migration = object : Migration(
-            BaseballCardSQLHelper.ROOM_SCHEMA,
-            BaseballCardSQLHelper.ALPHA_NUMERIC_SCHEMA
+            ROOM_SCHEMA,
+            ALPHA_NUMERIC_SCHEMA
         ) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 val temp_table_name = BaseballCardContract.TABLE_NAME + "_new"
