@@ -173,7 +173,7 @@ fun BaseballCardDetails(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
-                checked = state.value.autographed == true,
+                checked = state.value.autographed,
                 onCheckedChange = { state.value = state.value.copy(autographed = it) },
             )
             Text(text = stringResource(id = R.string.autographed))
@@ -181,7 +181,7 @@ fun BaseballCardDetails(
         Select(
             label = { Text(stringResource(id = R.string.condition)) },
             options = conditions,
-            selected = state.value.condition ?: "",
+            selected = state.value.condition,
             onSelectedChange = {
                 state.value = state.value.copy(condition = it)
                 onValidate()
@@ -192,7 +192,7 @@ fun BaseballCardDetails(
         AutoComplete(
             label = { Text(text = stringResource(id = R.string.brand)) },
             options = brands.value,
-            value = state.value.brand ?: "",
+            value = state.value.brand,
             onValueChange = {
                 state.value = state.value.copy(brand = it)
                 onValidate()
@@ -203,7 +203,7 @@ fun BaseballCardDetails(
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.year)) },
-            value = state.value.year ?: "",
+            value = state.value.year,
             onValueChange = {
                 state.value = state.value.copy(year = it)
                 onValidate()
@@ -217,7 +217,7 @@ fun BaseballCardDetails(
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.number)) },
-            value = state.value.number ?: "",
+            value = state.value.number,
             onValueChange = {
                 state.value = state.value.copy(number = it)
                 onValidate()
@@ -228,7 +228,7 @@ fun BaseballCardDetails(
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.value)) },
-            value = state.value.value ?: "",
+            value = state.value.value,
             onValueChange = {
                 state.value = state.value.copy(value = it)
                 onValidate()
@@ -242,7 +242,7 @@ fun BaseballCardDetails(
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.quantity)) },
-            value = state.value.quantity ?: "",
+            value = state.value.quantity,
             onValueChange = {
                 state.value = state.value.copy(quantity = it)
                 onValidate()
@@ -257,7 +257,7 @@ fun BaseballCardDetails(
         AutoComplete(
             label = { Text(text = stringResource(id = R.string.player_name)) },
             options = playerNames.value,
-            value = state.value.playerName ?: "",
+            value = state.value.playerName,
             onValueChange = {
                 state.value = state.value.copy(playerName = it)
                 onValidate()
@@ -269,7 +269,7 @@ fun BaseballCardDetails(
         AutoComplete(
             label = { Text(text = stringResource(id = R.string.team)) },
             options = teams.value,
-            value = state.value.team ?: "",
+            value = state.value.team,
             onValueChange = {
                 state.value = state.value.copy(team = it)
                 onValidate()
@@ -281,7 +281,7 @@ fun BaseballCardDetails(
         Select(
             label = { Text(stringResource(id = R.string.player_position)) },
             options = positions,
-            selected = state.value.position ?: "",
+            selected = state.value.position,
             onSelectedChange = {
                 state.value = state.value.copy(position = it)
                 onValidate()
