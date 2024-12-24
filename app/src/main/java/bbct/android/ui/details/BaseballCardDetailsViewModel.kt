@@ -30,62 +30,62 @@ class BaseballCardDetailsViewModel : ViewModel() {
         val baseballCard = baseballCardState.value
         val errors = BaseballCardDetailsErrors()
 
-        if (baseballCard.condition.isBlank()) {
+        if (baseballCard.condition.isNullOrBlank()) {
             errors.condition = FormFieldError("Condition is required")
             errors.condition.isValid = false
         }
 
-        if (baseballCard.brand.isBlank()) {
+        if (baseballCard.brand.isNullOrBlank()) {
             errors.brand = FormFieldError("Brand is required")
             errors.brand.isValid = false
         }
 
-        if (baseballCard.year.isBlank()) {
+        if (baseballCard.year.isNullOrBlank()) {
             errors.year = FormFieldError("Year is required")
             errors.year.isValid = false
         }
 
-        if (baseballCard.year.toIntOrNull() == null) {
+        if (baseballCard.year?.toIntOrNull() == null) {
             errors.year = FormFieldError("Year must be a number")
             errors.year.isValid = false
         }
 
-        if (baseballCard.number.isBlank()) {
+        if (baseballCard.number.isNullOrBlank()) {
             errors.number = FormFieldError("Number is required")
             errors.number.isValid = false
         }
 
-        if (baseballCard.value.isBlank()) {
+        if (baseballCard.value.isNullOrBlank()) {
             errors.value = FormFieldError("Value is required")
             errors.value.isValid = false
         }
 
-        if (baseballCard.value.toDoubleOrNull() == null) {
+        if (baseballCard.value?.toDoubleOrNull() == null) {
             errors.value = FormFieldError("Value must be a number")
             errors.value.isValid = false
         }
 
-        if (baseballCard.quantity.isBlank()) {
+        if (baseballCard.quantity.isNullOrBlank()) {
             errors.quantity = FormFieldError("Quantity is required")
             errors.quantity.isValid = false
         }
 
-        if (baseballCard.quantity.toIntOrNull() == null) {
+        if (baseballCard.quantity?.toIntOrNull() == null) {
             errors.quantity = FormFieldError("Quantity must be a number")
             errors.quantity.isValid = false
         }
 
-        if (baseballCard.playerName.isBlank()) {
+        if (baseballCard.playerName.isNullOrBlank()) {
             errors.playerName = FormFieldError("Player name is required")
             errors.playerName.isValid = false
         }
 
-        if (baseballCard.team.isBlank()) {
+        if (baseballCard.team.isNullOrBlank()) {
             errors.team = FormFieldError("Team is required")
             errors.team.isValid = false
         }
 
-        if (baseballCard.position.isBlank()) {
+        if (baseballCard.position.isNullOrBlank()) {
             errors.position = FormFieldError("Position is required")
             errors.position.isValid = false
         }

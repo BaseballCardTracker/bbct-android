@@ -221,7 +221,7 @@ fun BaseballCardRow(
             onCheckedChange = onSelectedChange,
         )
         Text(
-            text = state.card.brand,
+            text = state.card.brand ?: "",
             modifier = Modifier.weight(0.2f)
         )
         Text(
@@ -229,11 +229,11 @@ fun BaseballCardRow(
             modifier = Modifier.weight(0.15f)
         )
         Text(
-            text = state.card.number,
+            text = state.card.number ?: "",
             modifier = Modifier.weight(0.15f)
         )
         Text(
-            text = state.card.playerName,
+            text = state.card.playerName ?: "",
             modifier = Modifier.weight(0.5f)
         )
     }
