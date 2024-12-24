@@ -55,12 +55,7 @@ class BaseballCardDetailsViewModel : ViewModel() {
             errors.number.isValid = false
         }
 
-        if (baseballCard.value.isBlank()) {
-            errors.value = FormFieldError("Value is required")
-            errors.value.isValid = false
-        }
-
-        if (baseballCard.value.toDoubleOrNull() == null) {
+        if (baseballCard.value != null && baseballCard.value?.toDoubleOrNull() == null) {
             errors.value = FormFieldError("Value must be a number")
             errors.value.isValid = false
         }

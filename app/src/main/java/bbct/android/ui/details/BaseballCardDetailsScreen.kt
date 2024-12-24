@@ -228,7 +228,7 @@ fun BaseballCardDetails(
         )
         TextField(
             label = { Text(text = stringResource(id = R.string.value)) },
-            value = state.value.value,
+            value = state.value.value ?: "",
             onValueChange = {
                 state.value = state.value.copy(value = it)
                 onValidate()

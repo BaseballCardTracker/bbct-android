@@ -13,7 +13,7 @@ data class BaseballCard(
     val brand: String,
     val year: Int,
     val number: String,
-    val value: Int,
+    val value: Int?,
     @ColumnInfo(name = "card_count")
     val quantity: Int,
     @ColumnInfo(name = "player_name")

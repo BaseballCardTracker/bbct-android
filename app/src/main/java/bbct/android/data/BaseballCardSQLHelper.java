@@ -54,6 +54,9 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     public static final int ROOM_SCHEMA = 5;
 
     public static final int ALPHA_NUMERIC_SCHEMA = 6;
+
+    public static final int NOT_NULL_SCHEMA = 7;
+
     private static final String TAG = BaseballCardSQLHelper.class.getName();
 
     public BaseballCardSQLHelper(Context context) {

@@ -1,6 +1,7 @@
 package bbct.android.data
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
@@ -8,8 +9,14 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
-    version = BaseballCardSQLHelper.ALPHA_NUMERIC_SCHEMA,
-    entities = [BaseballCard::class]
+    version = BaseballCardSQLHelper.NOT_NULL_SCHEMA,
+    entities = [BaseballCard::class],
+    autoMigrations = [
+        AutoMigration(
+            from = BaseballCardSQLHelper.ALPHA_NUMERIC_SCHEMA,
+            to = BaseballCardSQLHelper.NOT_NULL_SCHEMA
+        )
+    ]
 )
 abstract class BaseballCardDatabase : RoomDatabase() {
     abstract val baseballCardDao: BaseballCardDao
@@ -33,49 +40,49 @@ abstract class BaseballCardDatabase : RoomDatabase() {
                 val temp_table_name = BaseballCardContract.TABLE_NAME + "_new"
                 db.execSQL(
                     "CREATE TABLE IF NOT EXISTS "
-                        + temp_table_name + "("
-                        + BaseballCardContract.ID_COL_NAME
-                        + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                        + BaseballCardContract.BRAND_COL_NAME + " TEXT, "
-                        + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
-                        + BaseballCardContract.NUMBER_COL_NAME + " TEXT, "
-                        + BaseballCardContract.VALUE_COL_NAME + " INTEGER, "
-                        + BaseballCardContract.COUNT_COL_NAME + " INTEGER, "
-                        + BaseballCardContract.PLAYER_NAME_COL_NAME + " TEXT, "
-                        + BaseballCardContract.TEAM_COL_NAME + " TEXT, "
-                        + BaseballCardContract.PLAYER_POSITION_COL_NAME + " TEXT,"
-                        + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
-                        + BaseballCardContract.CONDITION_COL_NAME + " TEXT,"
-                        + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", "
-                        + BaseballCardContract.YEAR_COL_NAME + ", "
-                        + BaseballCardContract.NUMBER_COL_NAME + "))"
+                    + temp_table_name + "("
+                    + BaseballCardContract.ID_COL_NAME
+                    + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + BaseballCardContract.BRAND_COL_NAME + " TEXT, "
+                    + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
+                    + BaseballCardContract.NUMBER_COL_NAME + " TEXT, "
+                    + BaseballCardContract.VALUE_COL_NAME + " INTEGER, "
+                    + BaseballCardContract.COUNT_COL_NAME + " INTEGER, "
+                    + BaseballCardContract.PLAYER_NAME_COL_NAME + " TEXT, "
+                    + BaseballCardContract.TEAM_COL_NAME + " TEXT, "
+                    + BaseballCardContract.PLAYER_POSITION_COL_NAME + " TEXT,"
+                    + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
+                    + BaseballCardContract.CONDITION_COL_NAME + " TEXT,"
+                    + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", "
+                    + BaseballCardContract.YEAR_COL_NAME + ", "
+                    + BaseballCardContract.NUMBER_COL_NAME + "))"
                 )
                 db.execSQL(
                     "INSERT INTO " + temp_table_name + " ("
-                        + BaseballCardContract.ID_COL_NAME + ", "
-                        + BaseballCardContract.BRAND_COL_NAME + ", "
-                        + BaseballCardContract.YEAR_COL_NAME + ", "
-                        + BaseballCardContract.NUMBER_COL_NAME + ", "
-                        + BaseballCardContract.VALUE_COL_NAME + ", "
-                        + BaseballCardContract.COUNT_COL_NAME + ", "
-                        + BaseballCardContract.PLAYER_NAME_COL_NAME + ", "
-                        + BaseballCardContract.TEAM_COL_NAME + ", "
-                        + BaseballCardContract.PLAYER_POSITION_COL_NAME + ", "
-                        + BaseballCardContract.AUTOGRAPHED_COL_NAME + ", "
-                        + BaseballCardContract.CONDITION_COL_NAME
-                        + ") SELECT "
-                        + BaseballCardContract.ID_COL_NAME + ", "
-                        + BaseballCardContract.BRAND_COL_NAME + ", "
-                        + BaseballCardContract.YEAR_COL_NAME + ", "
-                        + BaseballCardContract.NUMBER_COL_NAME + ", "
-                        + BaseballCardContract.VALUE_COL_NAME + ", "
-                        + BaseballCardContract.COUNT_COL_NAME + ", "
-                        + BaseballCardContract.PLAYER_NAME_COL_NAME + ", "
-                        + BaseballCardContract.TEAM_COL_NAME + ", "
-                        + BaseballCardContract.PLAYER_POSITION_COL_NAME + ", "
-                        + BaseballCardContract.AUTOGRAPHED_COL_NAME + ", "
-                        + BaseballCardContract.CONDITION_COL_NAME
-                        + " FROM " + BaseballCardContract.TABLE_NAME
+                    + BaseballCardContract.ID_COL_NAME + ", "
+                    + BaseballCardContract.BRAND_COL_NAME + ", "
+                    + BaseballCardContract.YEAR_COL_NAME + ", "
+                    + BaseballCardContract.NUMBER_COL_NAME + ", "
+                    + BaseballCardContract.VALUE_COL_NAME + ", "
+                    + BaseballCardContract.COUNT_COL_NAME + ", "
+                    + BaseballCardContract.PLAYER_NAME_COL_NAME + ", "
+                    + BaseballCardContract.TEAM_COL_NAME + ", "
+                    + BaseballCardContract.PLAYER_POSITION_COL_NAME + ", "
+                    + BaseballCardContract.AUTOGRAPHED_COL_NAME + ", "
+                    + BaseballCardContract.CONDITION_COL_NAME
+                    + ") SELECT "
+                    + BaseballCardContract.ID_COL_NAME + ", "
+                    + BaseballCardContract.BRAND_COL_NAME + ", "
+                    + BaseballCardContract.YEAR_COL_NAME + ", "
+                    + BaseballCardContract.NUMBER_COL_NAME + ", "
+                    + BaseballCardContract.VALUE_COL_NAME + ", "
+                    + BaseballCardContract.COUNT_COL_NAME + ", "
+                    + BaseballCardContract.PLAYER_NAME_COL_NAME + ", "
+                    + BaseballCardContract.TEAM_COL_NAME + ", "
+                    + BaseballCardContract.PLAYER_POSITION_COL_NAME + ", "
+                    + BaseballCardContract.AUTOGRAPHED_COL_NAME + ", "
+                    + BaseballCardContract.CONDITION_COL_NAME
+                    + " FROM " + BaseballCardContract.TABLE_NAME
                 )
 
                 db.execSQL("DROP TABLE " + BaseballCardContract.TABLE_NAME)
@@ -88,7 +95,7 @@ abstract class BaseballCardDatabase : RoomDatabase() {
 
         fun getInstance(
             context: Context,
-            dbName: String
+            dbName: String,
         ): BaseballCardDatabase {
             var instance = instances[dbName]
             if (instance == null) {
