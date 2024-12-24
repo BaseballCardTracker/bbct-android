@@ -18,7 +18,7 @@ class BaseballCardFilterTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            BaseballCardFilterScreen(
+            FilterScreen(
                 onApplyFilter = { },
                 onClose = { })
         }

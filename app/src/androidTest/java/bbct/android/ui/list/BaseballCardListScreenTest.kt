@@ -32,7 +32,7 @@ class BaseballCardListScreenTest {
     fun setup() {
         composeTestRule.setContent {
             var navController = rememberNavController()
-            BaseballCardListScreen(navController, db)
+            ListScreen(navController, db)
         }
     }
 

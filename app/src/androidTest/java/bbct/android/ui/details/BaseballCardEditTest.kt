@@ -31,7 +31,7 @@ class BaseballCardEditTest : TestBase() {
 
             composeTestRule.setContent {
                 val navController = rememberNavController()
-                BaseballCardEditScreen(
+                EditScreen(
                     navController = navController,
                     db = db,
                     cardId = card._id!!

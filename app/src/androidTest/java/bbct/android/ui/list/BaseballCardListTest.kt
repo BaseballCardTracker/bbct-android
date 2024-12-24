@@ -20,13 +20,13 @@ class BaseballCardListTest {
     @get:Rule
     val cardListRule = CardListTestRule("three_cards.csv")
 
-    private var cardListState = mutableListOf<BaseballCardSelectedState>()
+    private var cardListState = mutableListOf<SelectedState>()
 
     @Before
     fun setup() {
         cardListState = cardListRule.cards!!
             .map {
-                BaseballCardSelectedState(
+                SelectedState(
                     it,
                     false
                 )

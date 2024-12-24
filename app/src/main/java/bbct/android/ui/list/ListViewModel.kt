@@ -7,14 +7,14 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDao
-import bbct.android.ui.filter.BaseballCardFilterState
+import bbct.android.ui.filter.FilterState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-class BaseballCardListViewModel(val baseballCardDao: BaseballCardDao) : ViewModel() {
-    val filterState = MutableStateFlow(BaseballCardFilterState())
+class ListViewModel(val baseballCardDao: BaseballCardDao) : ViewModel() {
+    val filterState = MutableStateFlow(FilterState())
     val isFiltered = mutableStateOf(false)
     val baseballCards = MutableStateFlow<List<BaseballCard>>(emptyList())
 
@@ -48,21 +48,21 @@ class BaseballCardListViewModel(val baseballCardDao: BaseballCardDao) : ViewMode
         )
     }
 
-    fun applyFilter(filter: BaseballCardFilterState) {
+    fun applyFilter(filter: FilterState) {
         filterState.value = filter
-        isFiltered.value = filter != BaseballCardFilterState()
+        isFiltered.value = filter != FilterState()
     }
 }
 
 @Suppress("UNCHECKED_CAST")
-class BaseballCardListViewModelFactory(private val baseballCardDao: BaseballCardDao) :
+class ListViewModelFactory(private val baseballCardDao: BaseballCardDao) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(
         modelClass: Class<T>,
         extras: CreationExtras,
     ): T {
-        if (modelClass.isAssignableFrom(BaseballCardListViewModel::class.java)) {
-            return BaseballCardListViewModel(baseballCardDao) as T
+        if (modelClass.isAssignableFrom(ListViewModel::class.java)) {
+            return ListViewModel(baseballCardDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

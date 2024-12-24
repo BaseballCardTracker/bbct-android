@@ -37,7 +37,7 @@ class BaseballCardCreateTest : TestBase() {
 
         composeTestRule.setContent {
             val navController = rememberNavController()
-            BaseballCardCreateScreen(navController, db)
+            CreateScreen(navController, db)
         }
 
         enterCardData(card)
@@ -68,7 +68,7 @@ class BaseballCardCreateTest : TestBase() {
 
         composeTestRule.setContent {
             val navController = rememberNavController()
-            BaseballCardCreateScreen(navController, db)
+            CreateScreen(navController, db)
         }
 
         enterCardData(card)

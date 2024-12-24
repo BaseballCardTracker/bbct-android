@@ -2,7 +2,7 @@ package bbct.android.ui.details
 
 import bbct.android.data.BaseballCard
 
-data class BaseballCardState(
+data class DetailsState(
     var id: Long? = null,
     var autographed: Boolean = false,
     var condition: String = "",

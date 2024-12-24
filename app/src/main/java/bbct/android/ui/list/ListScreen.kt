@@ -40,8 +40,8 @@ import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDatabase
 import bbct.android.ui.ListMenu
 import bbct.android.ui.TopBar
-import bbct.android.ui.filter.BaseballCardFilterScreen
-import bbct.android.ui.filter.BaseballCardFilterState
+import bbct.android.ui.filter.FilterScreen
+import bbct.android.ui.filter.FilterState
 import bbct.android.ui.navigation.AboutDestination
 import bbct.android.ui.navigation.BaseballCardCreateDestination
 import bbct.android.ui.navigation.BaseballCardEditDestination
@@ -50,26 +50,26 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import kotlinx.coroutines.launch
 
-data class BaseballCardSelectedState(
+data class SelectedState(
     var card: BaseballCard,
     var selected: Boolean,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BaseballCardListScreen(
+fun ListScreen(
     navController: NavController,
     db: BaseballCardDatabase,
 ) {
     val scope = rememberCoroutineScope()
-    val viewModel: BaseballCardListViewModel =
-        viewModel(factory = BaseballCardListViewModelFactory(db.baseballCardDao))
+    val viewModel: ListViewModel =
+        viewModel(factory = ListViewModelFactory(db.baseballCardDao))
     val cards by viewModel.baseballCards.collectAsStateWithLifecycle(initialValue = emptyList())
     val stateList by remember {
         derivedStateOf {
             cards
                 .map { card ->
-                    BaseballCardSelectedState(
+                    SelectedState(
                         card,
                         false
                     )
@@ -94,7 +94,7 @@ fun BaseballCardListScreen(
                         isAnySelected = isAnySelected,
                         isFiltered = viewModel.isFiltered.value,
                         onFilterCards = { showFilterBottomSheet = true },
-                        onClearFilter = { viewModel.applyFilter(BaseballCardFilterState()) },
+                        onClearFilter = { viewModel.applyFilter(FilterState()) },
                         onAbout = { navController.navigate(AboutDestination) },
                         onDeleteCards = {
                             scope.launch {
@@ -129,7 +129,7 @@ fun BaseballCardListScreen(
                     onDismissRequest = { showFilterBottomSheet = false },
                     sheetState = sheetState
                 ) {
-                    BaseballCardFilterScreen(
+                    FilterScreen(
                         onApplyFilter = { filter ->
                             viewModel.applyFilter(filter)
                             showFilterBottomSheet = false
@@ -162,7 +162,7 @@ private fun AdBanner(modifier: Modifier = Modifier) {
 
 private suspend fun deleteCards(
     db: BaseballCardDatabase,
-    cards: List<BaseballCardSelectedState>,
+    cards: List<SelectedState>,
 ) {
     db.baseballCardDao.deleteBaseballCards(
         cards
@@ -170,7 +170,7 @@ private suspend fun deleteCards(
             .map { it.card })
 }
 
-private fun selectAll(stateList: SnapshotStateList<BaseballCardSelectedState>) {
+private fun selectAll(stateList: SnapshotStateList<SelectedState>) {
     stateList.forEachIndexed { i, card ->
         stateList[i] = card.copy(selected = true)
     }
@@ -179,8 +179,8 @@ private fun selectAll(stateList: SnapshotStateList<BaseballCardSelectedState>) {
 @Composable
 fun BaseballCardList(
     navController: NavController,
-    cards: List<BaseballCardSelectedState>,
-    onCardChanged: (Int, BaseballCardSelectedState) -> Unit,
+    cards: List<SelectedState>,
+    onCardChanged: (Int, SelectedState) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyColumn(
@@ -207,7 +207,7 @@ fun BaseballCardList(
 @Composable
 fun BaseballCardRow(
     navController: NavController,
-    state: BaseballCardSelectedState,
+    state: SelectedState,
     onSelectedChange: (Boolean) -> Unit,
 ) {
     Row(

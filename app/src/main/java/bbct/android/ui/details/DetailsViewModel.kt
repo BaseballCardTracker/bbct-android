@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 
 data class FormFieldError(var message: String? = null, var isValid: Boolean = true)
 
-data class BaseballCardDetailsErrors(
+data class DetailsErrors(
     var condition: FormFieldError = FormFieldError(),
     var brand: FormFieldError = FormFieldError(),
     var year: FormFieldError = FormFieldError(),
@@ -22,13 +22,13 @@ data class BaseballCardDetailsErrors(
         }
 }
 
-class BaseballCardDetailsViewModel : ViewModel() {
-    var baseballCardState = mutableStateOf(BaseballCardState())
-    var errors = mutableStateOf(BaseballCardDetailsErrors())
+class DetailsViewModel : ViewModel() {
+    var detailsState = mutableStateOf(DetailsState())
+    var errors = mutableStateOf(DetailsErrors())
 
     fun validate() {
-        val baseballCard = baseballCardState.value
-        val errors = BaseballCardDetailsErrors()
+        val baseballCard = detailsState.value
+        val errors = DetailsErrors()
 
         if (baseballCard.condition.isBlank()) {
             errors.condition = FormFieldError("Condition is required")

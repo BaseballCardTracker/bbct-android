@@ -46,11 +46,11 @@ import bbct.android.ui.navigation.AboutDestination
 import kotlinx.coroutines.launch
 
 @Composable
-fun BaseballCardCreateScreen(
+fun CreateScreen(
     navController: NavController,
     db: BaseballCardDatabase,
 ) {
-    val viewModel: BaseballCardDetailsViewModel = viewModel()
+    val viewModel: DetailsViewModel = viewModel()
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -75,7 +75,7 @@ fun BaseballCardCreateScreen(
         floatingActionButton = {
             CreateCardButton(
                 db,
-                viewModel.baseballCardState,
+                viewModel.detailsState,
                 viewModel.errors,
                 viewModel::validate,
                 onSuccess = { scope.launch { snackbarHostState.showSnackbar("Card created") } },
@@ -86,8 +86,8 @@ fun BaseballCardCreateScreen(
             .fillMaxSize()
             .imePadding()
     ) { innerPadding ->
-        BaseballCardDetails(
-            state = viewModel.baseballCardState,
+        Details(
+            state = viewModel.detailsState,
             db = db,
             errors = viewModel.errors,
             onValidate = viewModel::validate,
@@ -97,16 +97,16 @@ fun BaseballCardCreateScreen(
 }
 
 @Composable
-fun BaseballCardEditScreen(
+fun EditScreen(
     navController: NavController,
     db: BaseballCardDatabase,
     cardId: Long,
 ) {
-    val viewModel: BaseballCardDetailsViewModel = viewModel()
+    val viewModel: DetailsViewModel = viewModel()
 
     LaunchedEffect(cardId) {
         val card = db.baseballCardDao.getBaseballCard(cardId)
-        viewModel.baseballCardState.value = BaseballCardState(card)
+        viewModel.detailsState.value = DetailsState(card)
     }
 
     Scaffold(
@@ -128,7 +128,7 @@ fun BaseballCardEditScreen(
             UpdateCardButton(
                 navController,
                 db,
-                viewModel.baseballCardState,
+                viewModel.detailsState,
                 viewModel.errors,
                 viewModel::validate,
             )
@@ -137,8 +137,8 @@ fun BaseballCardEditScreen(
             .fillMaxSize()
             .imePadding()
     ) { innerPadding ->
-        BaseballCardDetails(
-            state = viewModel.baseballCardState,
+        Details(
+            state = viewModel.detailsState,
             db = db,
             errors = viewModel.errors,
             onValidate = viewModel::validate,
@@ -148,10 +148,10 @@ fun BaseballCardEditScreen(
 }
 
 @Composable
-fun BaseballCardDetails(
-    state: MutableState<BaseballCardState>,
+fun Details(
+    state: MutableState<DetailsState>,
     db: BaseballCardDatabase,
-    errors: MutableState<BaseballCardDetailsErrors>,
+    errors: MutableState<DetailsErrors>,
     onValidate: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -295,8 +295,8 @@ fun BaseballCardDetails(
 @Composable
 fun CreateCardButton(
     db: BaseballCardDatabase,
-    state: MutableState<BaseballCardState>,
-    errors: MutableState<BaseballCardDetailsErrors>,
+    state: MutableState<DetailsState>,
+    errors: MutableState<DetailsErrors>,
     onValidate: () -> Unit,
     onSuccess: () -> Unit,
     onFailure: () -> Unit,
@@ -312,7 +312,7 @@ fun CreateCardButton(
                     onSuccess,
                     onFailure,
                 )
-                state.value = BaseballCardState()
+                state.value = DetailsState()
             }
         }
     }) {
@@ -325,7 +325,7 @@ fun CreateCardButton(
 
 suspend fun createCard(
     db: BaseballCardDatabase,
-    cardState: BaseballCardState,
+    cardState: DetailsState,
     onSuccess: () -> Unit,
     onFailure: () -> Unit,
 ) {
@@ -341,8 +341,8 @@ suspend fun createCard(
 fun UpdateCardButton(
     navController: NavController,
     db: BaseballCardDatabase,
-    state: MutableState<BaseballCardState>,
-    errors: MutableState<BaseballCardDetailsErrors>,
+    state: MutableState<DetailsState>,
+    errors: MutableState<DetailsErrors>,
     onValidate: () -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -367,7 +367,7 @@ fun UpdateCardButton(
 
 suspend fun updateCard(
     db: BaseballCardDatabase,
-    cardState: BaseballCardState,
+    cardState: DetailsState,
 ) {
     db.baseballCardDao.updateBaseballCard(cardState.toBaseballCard())
 }

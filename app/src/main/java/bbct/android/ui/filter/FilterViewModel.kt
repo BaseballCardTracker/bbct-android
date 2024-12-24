@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 
-class BaseballCardFilterViewModel : ViewModel() {
-    val filterState: MutableState<BaseballCardFilterState> =
-        mutableStateOf(BaseballCardFilterState())
+class FilterViewModel : ViewModel() {
+    val filterState: MutableState<FilterState> =
+        mutableStateOf(FilterState())
 }

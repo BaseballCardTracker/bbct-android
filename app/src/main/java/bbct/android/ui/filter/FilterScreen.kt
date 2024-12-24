@@ -27,11 +27,11 @@ import bbct.android.ui.CloseButton
 import bbct.android.ui.TopBar
 
 @Composable
-fun BaseballCardFilterScreen(
-    onApplyFilter: (BaseballCardFilterState) -> Unit,
+fun FilterScreen(
+    onApplyFilter: (FilterState) -> Unit,
     onClose: () -> Unit,
 ) {
-    var filterState = remember { mutableStateOf(BaseballCardFilterState()) }
+    var filterState = remember { mutableStateOf(FilterState()) }
     Scaffold(
         topBar = {
             TopBar(
@@ -50,7 +50,7 @@ fun BaseballCardFilterScreen(
         modifier = Modifier
             .imePadding()
     ) { innerPadding ->
-        BaseballCardFilter(
+        Filter(
             filterState,
             modifier = Modifier.padding(innerPadding)
         )
@@ -58,8 +58,8 @@ fun BaseballCardFilterScreen(
 }
 
 @Composable
-fun BaseballCardFilter(
-    filterState: MutableState<BaseballCardFilterState>,
+fun Filter(
+    filterState: MutableState<FilterState>,
     modifier: Modifier = Modifier,
 ) {
     val textFieldModifier = Modifier.fillMaxWidth()
