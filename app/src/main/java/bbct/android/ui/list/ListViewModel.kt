@@ -10,24 +10,23 @@ import bbct.android.data.BaseballCardDao
 import bbct.android.ui.filter.FilterState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class ListViewModel(val baseballCardDao: BaseballCardDao) : ViewModel() {
     val filterState = MutableStateFlow(FilterState())
     val isFiltered = mutableStateOf(false)
-    val baseballCards = MutableStateFlow<List<BaseballCard>>(emptyList())
+    var baseballCards = MutableStateFlow<List<BaseballCard>>(emptyList())
 
     init {
         viewModelScope.launch {
             filterState.collect { filter ->
-                baseballCards.value = getBaseballCards(
+                getBaseballCards(
                     filter.brand,
                     filter.year,
                     filter.number,
                     filter.playerName,
                     filter.team
-                ).first()
+                ).collect { baseballCards.value = it }
             }
         }
     }
