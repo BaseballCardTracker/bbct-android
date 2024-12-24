@@ -7,34 +7,43 @@ import bbct.android.data.BaseballCardDatabase
 import bbct.android.data.cards
 import bbct.android.test.TestBase
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
 class BaseballCardEditTest : TestBase() {
     @Test
     fun testBaseballCardEdit() {
-        val card = cards[0]
-        val editCard = cards[2]
+        runTest {
+            val card = cards[0]
+            val editCard = cards[2]
 
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        val db = inMemoryDatabaseBuilder(context, BaseballCardDatabase::class.java).build()
-        CoroutineScope(Dispatchers.IO).launch {
-            db.baseballCardDao.insertBaseballCard(card)
-        }
+            val context = InstrumentationRegistry.getInstrumentation().targetContext
+            val db = inMemoryDatabaseBuilder(
+                context,
+                BaseballCardDatabase::class.java
+            ).build()
 
-        composeTestRule.setContent {
-            val navController = rememberNavController()
-            BaseballCardEditScreen(navController = navController, db = db, cardId = card._id!!)
-        }
+            launch {
+                db.baseballCardDao.insertBaseballCard(card)
+            }
 
-        enterCardData(editCard)
+            composeTestRule.setContent {
+                val navController = rememberNavController()
+                BaseballCardEditScreen(
+                    navController = navController,
+                    db = db,
+                    cardId = card._id!!
+                )
+            }
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val savedCard = db.baseballCardDao.baseballCards.single()
-            assertThat(savedCard).isEqualTo(listOf(editCard))
+            enterCardData(editCard)
+
+            launch {
+                val savedCard = db.baseballCardDao.baseballCards.single()
+                assertThat(savedCard).isEqualTo(listOf(editCard))
+            }
         }
     }
 }
