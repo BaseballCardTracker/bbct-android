@@ -13,20 +13,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class ListViewModel(val baseballCardDao: BaseballCardDao) : ViewModel() {
-    val filterState = MutableStateFlow(FilterState())
     val isFiltered = mutableStateOf(false)
     var baseballCards = MutableStateFlow<List<BaseballCard>>(emptyList())
 
     init {
         viewModelScope.launch {
-            filterState.collect { filter ->
-                getBaseballCards(
-                    filter.brand,
-                    filter.year,
-                    filter.number,
-                    filter.playerName,
-                    filter.team
-                ).collect { baseballCards.value = it }
+            baseballCardDao.baseballCards.collect {
+                baseballCards.value = it
             }
         }
     }
@@ -48,7 +41,17 @@ class ListViewModel(val baseballCardDao: BaseballCardDao) : ViewModel() {
     }
 
     fun applyFilter(filter: FilterState) {
-        filterState.value = filter
+        viewModelScope.launch {
+            getBaseballCards(
+                filter.brand,
+                filter.year,
+                filter.number,
+                filter.playerName,
+                filter.team
+            ).collect {
+                baseballCards.value = it
+            }
+        }
         isFiltered.value = filter != FilterState()
     }
 }
