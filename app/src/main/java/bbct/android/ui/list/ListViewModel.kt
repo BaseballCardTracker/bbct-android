@@ -1,6 +1,7 @@
 package bbct.android.ui.list
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -8,19 +9,31 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import bbct.android.data.BaseballCard
 import bbct.android.data.BaseballCardDao
 import bbct.android.ui.filter.FilterState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class ListViewModel(val baseballCardDao: BaseballCardDao) : ViewModel() {
+    val filterState = mutableStateOf(FilterState())
     val isFiltered = mutableStateOf(false)
     var baseballCards = MutableStateFlow<List<BaseballCard>>(emptyList())
 
     init {
         viewModelScope.launch {
-            baseballCardDao.baseballCards.collect {
-                baseballCards.value = it
-            }
+            snapshotFlow<FilterState> {
+                filterState.value
+            }.flatMapLatest { filter ->
+                getBaseballCards(
+                    filter.brand,
+                    filter.year,
+                    filter.number,
+                    filter.playerName,
+                    filter.team
+                )
+            }.collect { baseballCards.value = it }
         }
     }
 
@@ -41,17 +54,7 @@ class ListViewModel(val baseballCardDao: BaseballCardDao) : ViewModel() {
     }
 
     fun applyFilter(filter: FilterState) {
-        viewModelScope.launch {
-            getBaseballCards(
-                filter.brand,
-                filter.year,
-                filter.number,
-                filter.playerName,
-                filter.team
-            ).collect {
-                baseballCards.value = it
-            }
-        }
+        filterState.value = filter
         isFiltered.value = filter != FilterState()
     }
 }
