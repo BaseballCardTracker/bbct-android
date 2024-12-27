@@ -65,7 +65,7 @@ fun ListScreen(
     val viewModel: ListViewModel =
         viewModel(factory = ListViewModelFactory(db.baseballCardDao))
     val cards by viewModel.baseballCards.collectAsStateWithLifecycle(initialValue = emptyList())
-    val stateList by remember {
+    val selectedState by remember {
         derivedStateOf {
             cards
                 .map { card ->
@@ -79,7 +79,7 @@ fun ListScreen(
     }
     val isAnySelected by remember {
         derivedStateOf {
-            stateList.any { it.selected }
+            selectedState.any { it.selected }
         }
     }
     val sheetState = rememberModalBottomSheetState()
@@ -100,11 +100,11 @@ fun ListScreen(
                             scope.launch {
                                 deleteCards(
                                     db,
-                                    stateList
+                                    selectedState
                                 )
                             }
                         },
-                        onSelectAll = { selectAll(stateList) },
+                        onSelectAll = { selectAll(selectedState) },
                     )
                 }
             )
@@ -120,8 +120,8 @@ fun ListScreen(
 
             BaseballCardList(
                 navController = navController,
-                cards = stateList,
-                onCardChanged = { index, card -> stateList[index] = card },
+                cards = selectedState,
+                onCardChanged = { index, card -> selectedState[index] = card },
             )
 
             if (showFilterBottomSheet) {
